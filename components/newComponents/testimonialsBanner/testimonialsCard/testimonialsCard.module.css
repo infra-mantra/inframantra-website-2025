@@ -1,0 +1,56 @@
+.testimonialCardNameContainer {
+  width: 100%;
+}
+.testimonialCardNameContainer h6 {
+  text-align: left;
+  margin-left: 10%;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.testimonialCardRatingContainer {
+  margin-bottom: -10px;
+  width: 90%;
+  margin-left: 10%;
+}
+.testimonialCardRatingContainer span {
+  align-items: start;
+}
+
+.testimonialCardTextContainer {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+}
+
+.testimonialCardQuoteIcon {
+  font-family: Arial;
+  font-size: 63.068px;
+  color: #e4a951;
+  margin-bottom: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .testimonialCardNameContainer h6 {
+    color: #000;
+    font-family: "Lexend Deca";
+    font-size: 12.699px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+  .testimonialCardRatingContainer span{
+    margin-top: 3px;
+    font-size: 18px;
+  }
+  .testimonialCardTextContainer p{
+    font-size: 14px;
+    text-align: left;
+  }
+  .testimonialCardTextContainer{
+    gap: 3px;
+  }
+  .testimonialCardQuoteIcon{
+    margin-top: -5px;
+  }
+}

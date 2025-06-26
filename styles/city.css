@@ -1,0 +1,331 @@
+.heading_city{
+    color: #000;
+    font-family: "Lexend Deca";
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.top-cities-container{
+    padding: 1.5rem 4rem;
+}
+
+.heading_section ,h2{
+color: #DCAA4C;
+font-family: "Lexend Deca";
+font-size: 27px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+}
+.localities_list,.Property_container{
+    margin-left: 4rem;
+}
+
+.grid-container-cities {
+    display: grid;
+    gap: 2rem;
+    width: 100%;
+    margin: auto;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    column-gap: 1rem;
+  }
+  .grid-container-cities  img:first-child{
+    width: 100%;
+    grid-column: span 2;
+  }
+ 
+  .item{
+    width: 100%;
+    grid-column: span 1;
+    cursor: pointer;
+  }
+
+  .cities_heading{
+    font-family: Lexend Deca;
+font-weight: 500;
+font-size: 34px;
+line-height: 100%;
+letter-spacing: 0%;
+color: #DCAA4C;
+margin: 4rem 0rem;
+
+  }
+   .city_item_cities{
+    height: auto;
+    /* width: 364px; */
+    box-shadow: 0px 2.64px 5.94px 0px #00000033;
+    border-radius: 6.64px;
+    display: inline-block;
+    flex: 0 0 auto;
+    margin: 0.5rem 0.5rem;
+    cursor: pointer;
+
+  } 
+  .city_item{
+    height: 19rem;
+    width: 19.375rem;
+    box-shadow: 0px 2.64px 5.94px 0px #00000033;
+    border-radius: 6.64px;
+    display: inline-block;
+    flex: 0 0 auto;
+    margin: 0.5rem 0.5rem;
+    cursor: pointer;
+
+  }
+
+  .city_item ,.propery_item{
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+  }
+  
+ .city_item:hover ,.propery_item:hover { 
+    transform: scale(1.03); /* Subtle zoom effect */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Softer shadpow */
+  }
+  .item, .main_image {
+    transition: 
+        transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),  /* Smooth movement */
+        box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1), /* Smooth shadow effect */
+        filter 0.5s ease; 
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hover: Parallax shift effect */
+.item:hover, .main_image:hover {
+    transform: translateY(-8px); /* Slightly more lift */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.35); /* More defined soft shadow */
+    filter: contrast(-1) brightness(1.05); /* Gentle contrast and brightness boost */
+}
+
+
+
+  .locality_name{
+font-family: Lexend Deca;
+font-weight: 400;
+font-size: 18px;
+line-height: 100%;
+letter-spacing: 0%;
+margin: 0px 0px;
+
+  }
+.city_name{
+    font-family: Lexend Deca;
+font-weight: 300;
+font-size: 11.87px;
+line-height: 100%;
+letter-spacing: 0%;
+margin: 1rem 0rem;
+
+}
+
+.city_img{
+  width: 100%;
+  height: 13rem;
+}
+.city_text{
+height: 6rem;
+padding: 14px 14px;
+}
+.city_img_cities{
+    width: 326px;
+    height: 249px;
+}
+.city_text_cities{
+height: 120px;
+padding: 14px 14px;
+} 
+.city_list{
+    overflow-x:scroll;
+    overflow-y:hidden;
+    scrollbar-width: none;
+
+   
+}
+.items{
+width: auto;
+  white-space:nowrap; 
+  display: flex;
+  gap: 2rem;
+}
+.propery_item >img{
+    width: 292.03px;
+    height: 288.64px;
+    cursor: pointer;
+}
+.propery_item{
+ 
+}
+.property_items{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    gap: 8rem;
+    
+    
+}
+.property_name{
+    font-family: Lexend Deca;
+    font-weight: 400;
+    font-size: 19.43px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #000000;
+    margin: 0px 0px;
+    padding: 0px 0rem;
+    
+}
+.property_sub{
+    font-family: Lexend Deca;
+    font-weight: 400;
+    font-size: 16.19px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #C5C5C5; 
+    margin: 0px 0px;
+    padding: 0px 0rem; 
+
+}
+
+.top-cities-container-wrapper{
+    margin-bottom: 2rem;
+}
+.property_text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    margin-top:1rem ;
+
+}
+.btn{
+font-weight: 500;
+font-size: 18px;
+line-height: 100%;
+letter-spacing: 0%;
+align-items: center;
+color: #DCAA4C;
+
+
+}
+.ld_more{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem 2rem;
+
+}
+
+.main_image{
+    cursor: pointer;
+}
+
+.heading-list {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* spacing between arrow and text */
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.heading-list img {
+  width: 20px; /* or whatever size fits your design */
+  height: 20px;
+  object-fit: contain;
+}
+.localities-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(325px, 1fr));
+  gap: 3rem;
+  justify-content: center; /* Centers last row */
+  /* max-width: 1200px; Optional max width */
+  margin: 0 auto;     /* Centers the whole grid */
+}
+  @media (max-width: 768px){
+    .grid-container-cities {
+        
+        grid-template-columns: repeat(1, 1fr);
+        
+      }
+      .localities_list{
+        margin-right: 2rem !important;
+        margin-right: 2rem !important;
+      }
+      .Property_container {
+        margin-left: 2rem;
+    }
+    .citiesWapperContainer >img{
+      height: 70vh;
+    }
+      .grid-container-cities > img:first-child {
+        width: 100%;
+        grid-column: span 2;
+        height: 202px;
+    }
+   
+      .top-cities-container{
+        padding: 1.5rem 2rem;
+      }
+      .grid-container-cities  img:first-child{
+        width: 100%;
+        grid-column: span 1;
+      }
+      .property_list{
+        overflow-x: scroll;
+        overflow-y: hidden;
+      }
+      .property_items{
+        width: auto;
+        white-space: nowrap;
+        gap: 1.5rem;
+      }
+
+      .city_item{
+        width: auto;
+        margin: 0rem 0rem;
+      }
+      .cities_heading{
+        font-size: 18px;
+        margin: 3rem 0rem;
+      }
+      .city_list{
+        overflow-y: initial;
+        overflow-x:initial ;
+        scrollbar-width: none;
+      }
+      .items{
+        width: auto;
+      white-space:nowrap; 
+      display: flex;
+      gap: 2rem;
+      flex-direction: column;
+    }
+      .localities_list{
+        margin-left: 2rem;
+        margin-right: 2rem;
+      }
+      .main_image{
+        width: 100%;
+        grid-column: span 1;
+        border-radius: 15px;
+      }
+      .item{
+        width: 100%;
+        grid-column: span 1;
+        border-radius: 15px;
+      }
+      .heading_city{
+        font-size: 14px;
+      }
+      .heading_section ,h2{
+      font-size: 20px;
+     }
+  }
+  
+  @media (min-width:768px) and (max-width:1028px) {
+    .main_image{
+        height: auto;
+    }
+  }

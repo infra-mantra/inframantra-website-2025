@@ -1,0 +1,65 @@
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+}
+
+.arrowBtn {
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #e7b554;
+  color: #e7b554;
+  background: none;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: color 0.3s, border-color 0.3s;
+  height: 30px;
+  width: 30px;
+}
+
+.arrowBtn:disabled {
+  color: #b3b3b3;
+  border-color: #b3b3b3;
+  cursor: default;
+}
+
+.arrowBtn svg {
+  color: inherit;
+  margin: 0;
+}
+
+.arrowBtn:first-of-type svg {
+  transform: translateX(3px);
+}
+
+.track {
+  flex-grow: 1;
+  height: 2px;
+  background-color: #d9d9d9;
+  position: relative;
+  margin: 0 10px;
+}
+
+.progress {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background-color: #e7b554;
+  transition: left 0.3s ease-out;
+}
+
+.pageNumbers {
+  margin-left: 10px;
+  color: #e7b554;
+  font-size: 1.5em;
+  font-weight: 500;
+}
+
+.totalItems {
+  color: #b3b3b3;
+  font-weight: 400;
+}

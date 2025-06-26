@@ -1,0 +1,212 @@
+
+  .servicesSectionWrapper {
+    height: 100vh;
+    width: 100vw;
+    background-image: url('https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/servicesBgd.avif');
+    background-repeat: no-repeat;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    background-size: 100% 75%;
+    background-position: 0px 125px;
+  }
+  
+  .servicesSectionCardWrapperFirst {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 6%;
+    height: 70%;
+    max-width: 25%;
+    margin-top: 8%;
+  }
+  
+  .servicesSectionCardWrapperSecond {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 7%;
+    height: 70%;
+    max-width: 25%;
+    margin-top: 20%;
+  }
+  
+  .servicesSectionHeader {
+    position: absolute;
+    right: 2%;
+    top: -8%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 20%;
+  }
+  
+  .servicesSectionTitle {
+    font-size: 250%;
+    width: 100%;
+    font-weight: bolder;
+    color: #e7b554;
+    cursor: pointer;
+  }
+  
+  .servicesSectionTitleUnderline {
+    width: 100%;
+    margin-top: -40px;
+    height: 2px;
+    background: black;
+  }
+  
+  @media (min-width: 1350px) {
+    .servicesSectionCardWrapperFirst,
+    .servicesSectionCardWrapperSecond {
+      max-width: 20%;
+      height: 80%;
+    }
+    .servicesSectionCardWrapperFirst {
+      margin-top: 2%;
+    }
+    .servicesSectionCardWrapperSecond {
+      margin-top: 10%;
+    }
+    .servicesSectionTitle {
+      font-size: 350%;
+    }
+  }
+  
+  @media (max-width:990px) {
+    .servicesSectionWrapper{
+      height: 800px;
+    }
+    .serviceCardTitle {
+      font-size: 15px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .servicesSectionCardWrapperFirst {
+      height: 70%;
+      max-width: 43%;
+      margin-left: 5%;
+      margin-top: 15%;
+      overflow: hidden;
+    }
+    .servicesSectionCardWrapperFirst > div{
+      box-shadow: none;
+    }
+    .servicesSectionCardWrapperSecond > div{
+      box-shadow: none;
+    }
+    .servicesSectionCardWrapperSecond {
+      height: 70%;
+      max-width: 43%;
+      margin-left: 5%;
+      margin-top: 35%;
+      overflow: hidden;
+    }
+    .servicesSectionTitleUnderline {
+      width: 102%;
+      margin-top: -20px;
+    }
+    .servicesSectionTitle {
+      font-size: 160%;
+    }
+    .servicesSectionHeader {
+      right: 15%;
+      top: 1%;
+    }
+    .serviceCardDescription {
+      line-height: 20px;
+    }
+    .servicesSectionWrapper {
+      background-image: url('https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/servicesBgdMobile.avif');
+    }
+    .servicesSectionTitleUnderline {
+      height: 0.5px;
+    }
+  }
+  .serviceCardIconWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 70%;
+  }
+  
+  .serviceCardIconContainer {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  @media (min-width: 1368px) {
+    .serviceCardIconContainer {
+      height: 40%;
+    }
+  }
+  
+  .serviceCardTitleContainer {
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .serviceCardTitle {
+    font-size: 110%;
+    font-weight: 700;
+    margin-top: 1%;
+  }
+  
+  .serviceCardDescriptionContainer {
+    height: 40%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .serviceCardDescription {
+    margin-top: 0;
+    text-align: center;
+    font-size: 80%;
+    margin-left: 20px;
+    margin-right: 20px;
+    line-height: 20px;
+    font-weight: 300;
+  }
+  
+  .serviceCardIconWrapper > img {
+    height: 100%;
+    width: 100%;
+  }
+  
+  @media (max-width:990px) {
+    .serviceCardDescription{
+      font-size: 70%;
+    }
+    
+  }
+  
+  @media (max-width: 768px) {
+    .serviceCardTitle {
+      font-size: 12px;
+    }
+    .serviceCardDescription {
+      font-size: 60%;
+    }
+    .serviceCardIconWrapper {
+      height: 70%;
+      width: 30%;
+    }
+    .serviceCardTitleContainer {
+      height: 10%;
+    }
+    .serviceCardIconContainer {
+      height: 30%;
+    }
+  }

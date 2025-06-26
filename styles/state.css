@@ -1,0 +1,127 @@
+.m6t {
+    margin-top: -8rem;
+    background: linear-gradient(to bottom, rgba(217, 217, 217, 0.1) 0%, rgba(0, 0, 0, 0.34) 100%);
+    max-height: 98vh;
+   
+}
+  
+  .state-wrapper {
+    margin: 4rem 5rem;
+  text-align: center;
+  }
+  
+  .state-header {
+    color: #DCAA4C;
+    align-items: start;
+    font-family: "Lexend Deca";
+    font-size: 38px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    display: flex;
+    margin: 4rem 0rem;
+  }
+  .marginTop{
+    margin: 4rem 0rem;
+  }
+  
+  .stateItems {
+    display: flex
+    ;
+        flex: grid;
+        /* grid-template-columns: repeat(2, minmax(372px, 1fr)); */
+        /* grid-gap: 2rem; */
+        /* gap: 2rem; */
+        /* align-items: center; */
+        justify-content: left;
+        flex-direction: row;
+        flex-wrap: wrap;
+        /* gap: 3rem; */
+        gap: 4rem;
+  }
+  
+  .stateItem {
+    width: 100%;  /* Flexible width */
+    max-width: 500px; /* Maximum size to prevent overflow */
+    height: 355px;  
+    border-radius: 6px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .stateItem:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+  }
+  
+  .stateItem img {
+    width: 100%;
+    height: 75%;
+    object-fit: cover;
+  }
+  
+  .stateText {
+    height: 80px;
+    color: #E4A951;
+    font-family: "Lexend Deca";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 1024px) {
+    .stateItems {
+      grid-template-columns: repeat(2, 1fr); /* Smaller columns on smaller screens */
+      gap: 1.5rem;
+    }
+  
+    .stateItem {
+      height: 300px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .stateItems {
+      grid-template-columns: 1fr;  /* Single column on smaller screens */
+    }
+    .state-header{
+        font-size: 20px;
+    } 
+    .state-wrapper {
+        margin: 0rem 2rem;
+        text-align: center;
+    }
+    .m6t{
+        margin-top: 0px;
+    }
+    .m6t{
+        height: 55vh;
+    }
+  }
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .m6t{
+        height: 55vh;
+    }
+    .stateItems{
+        display: grid;
+        grid-template-columns: 1fr 1fr ;
+    }
+    
+
+        .items {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr)); 
+            gap: 2rem; /* Optional spacing */
+            width: 100%;
+        }
+   
+  }
+  

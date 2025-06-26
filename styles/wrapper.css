@@ -1,0 +1,283 @@
+.enquiry-popup-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #00000082;
+  z-index: 999;
+  display: none;
+}
+.enquiry-popup-bg.show {
+  display: block;
+}
+
+.enquiry-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  z-index: 9999;
+  width: 700px;
+  border-radius: 10px;
+  padding: 20px 20px 0 0px;
+  display: none;
+}
+.enquiry-popup .row {
+  flex-wrap: wrap;
+}
+.enquiry-popup .row .image-wrapper {
+  width: 40%;
+  display: grid;
+  place-content: flex-end;
+  padding-left: 20px;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: 120%;
+}
+.enquiry-popup .row .form-wrapper {
+  width: 60%;
+  background: #E7B554;
+  border-radius: 10px 10px 0 0;
+  padding: 10px 40px 0 40px;
+}
+.enquiry-popup h3 {
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 25px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-top: 0;
+}
+.enquiry-popup .image-wrap {
+  position: relative;
+  height: 366px;
+}
+.enquiry-popup .loan-form-wrap {
+  box-shadow: none;
+  padding: 0;
+  margin-top: 0;
+}
+
+.enquiry-popup .row .form-wrapper h5 {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #fff;
+  margin: 0 0 10px 0;
+}
+
+.enquiry-popup .row .form-wrapper label {
+  background: transparent;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 0em;
+  display: block;
+}
+.enquiry-popup .sperator {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0em;
+  color: #fff;
+  text-align: center;
+  margin: 10px 0;
+}
+.enquiry-popup .other-way a {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  background: #fff;
+  border-radius: 50%;
+  text-align: center;
+  padding: 5px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.enquiry-popup .other-way a svg {
+  width: 15px;
+}
+.enquiry-popup .other-way {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.enquiry-popup button.close-popup {
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  height: 38px;
+  width: 38px;
+  background: #fff;
+  border: none;
+  outline: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.enquiry-popup button.close-popup svg {
+  width: 20px;
+  height: 20px;
+}
+
+.enquiry-popup button.close-popup svg path {stroke: #e7b554;}
+
+.enquiry-popup button.close-popup:hover {
+  background: #f73636;
+}
+
+.enquiry-popup button.close-popup:hover path {
+  stroke: #ffffff;
+}
+
+.enquiry-popup.show {
+  display: block;
+}
+.row{
+  display: flex;
+}
+.image-wrapper {
+  background-color: #d9d9d9;
+  border-radius: 19.76px 19.76px 0px 0px;
+  height: 224px;
+  left: 0;
+  position: absolute;
+  top: 12px;
+  width: 288px;
+}
+.loan-form-wrap {
+  padding: 20px 40px 30px;
+  box-shadow: 0px 0px 30px 0px #0000001A;
+  max-width: 500px;
+  margin-top: 20px;
+  margin-left: auto;
+}
+.loan-form .radio-group {
+  display: flex;
+  column-gap: 10px;
+}
+.loan-form .radio-item input {
+ position: absolute;
+ top: 0px;
+ left: 0px;
+ margin: 0px;
+ height: 100%;
+ z-index: 2;
+ opacity: 0;
+}
+.loan-form .radio-item input:checked + label{
+  background-color: #e7b554;
+  color: #fff;
+  border-color: #e7b554;
+  font-weight: 500;
+}
+.loan-form .radio-item label {
+  padding: 9px 20px;
+  display: block;
+  position: relative;
+  border: 1px solid #CCCCCC;
+  border-radius: 10px;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+.loan-form .radio-group .radio-item {
+ width: 50%;
+ text-align: center;
+ position: relative;
+}
+.loan-form .accept-wrap {
+  display: flex;
+  align-items: flex-start;
+  column-gap: 10px;
+}
+.loan-form .accept-wrap input {
+  width: 20px;
+}
+
+
+.form-area .form-group:last-child {
+  margin-bottom: 0;
+}
+.unfloat-labels label{
+  position: static;
+  color: #535353;
+}
+.form-area.loan-form.unfloat-labels .form-head h3 {
+  font-size: 16px;
+  font-weight: 600;
+}
+.cta-form .form-row{
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 20px;
+}
+.black-v .form-row {
+  align-items: center;
+}
+.form-row .form-group{
+  margin: 10px 0px;
+}
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 20px;
+}
+.cl-12 {
+  width: 100% !important;
+}
+
+
+@media only screen and (max-width: 900px){
+  .enquiry-popup {
+    width: 95%;
+}
+
+.enquiry-popup .row .image-wrapper {
+    display: none;
+}
+
+.enquiry-popup .row .form-wrapper {
+    width: 100%;
+    padding: 40px 30px 20px 30px;
+    border-radius: 10px;
+}
+
+.enquiry-popup .loan-form-wrap {
+    transform: inherit;
+    background: transparent;
+}
+  .loan-form-wrap {
+        transform: translateY(-75px);
+        padding: 20px 24px;
+        border-radius: 10px;
+        margin-top: 0px;
+        margin-bottom: -30px;
+        background-color: #fff;
+        max-width: 100%;
+    }
+
+
+}
+
+
+
+
+
+
+@media screen and (max-width: 992px) {
+  .loan-form-wrap{
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

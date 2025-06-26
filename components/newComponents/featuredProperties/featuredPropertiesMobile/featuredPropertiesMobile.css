@@ -1,0 +1,265 @@
+.featuredPropertiesMobileWrapper {
+  height: 100%;
+  width: 100%;
+}
+
+.featuredPropertiesMobileImageContainer {
+  height: 65%;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 10px 10px 0px 0px;
+  position: relative;
+}
+
+.featuredPropertiesMobileContent {
+  height: 35%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.featuredPropertiesMobileImage {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.featuredPropertiesMobileContentFirstSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 30%;
+  width: 100%;
+}
+
+.featuredPropertiesMobileContentFirstSectionContent {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.featuredPropertiesMobileContentFirstSectionContent:nth-child(1) {
+  margin-left: 5%;
+}
+.featuredPropertiesMobileContentFirstSectionContent:nth-child(2) {
+  margin-right: 5%;
+}
+
+.featuredPropertiesMobileContentFirstSectionContent > p {
+  font-size: 25px;
+  font-weight: 300;
+}
+
+.featuredPropertiesMobileContentSecondSection {
+  height: 25%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.featuredPropertiesMobileContentSecondSection > p {
+  color: #e7b554;
+  font-size: 25px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-left: 5%;
+}
+
+.featuredPropertiesMobileContentThirdSection {
+  height: 45%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.featuredPropertiesMobileContentThirdSectionContent {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  width: 50%;
+}
+
+.vl {
+  border-left: 2px solid #d9d9d9;
+  height: 100%;
+}
+
+.featuredPropertiesMobileContentThirdSection > hr {
+  width: 90%;
+}
+
+.featuredPropertiesMobileContentThirdSectionContent > p {
+  font-size: 25px;
+  font-weight: 300;
+  margin: 0;
+}
+
+.featuredPropertiesMobileImageContainerBack {
+  height: 100% !important;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 10px 10px 0px 0px;
+  position: relative;
+}
+
+.featuredPropertiesMobileImageBack {
+  height: 100% !important;
+  width: 100%;
+  object-fit: fill;
+}
+
+.carouselFeatured {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+  height: 100%;
+}
+
+.carousel-slide {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.carousel-prev,
+.carousel-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+}
+
+.carousel-prev {
+  left: 10px;
+}
+
+.carousel-next {
+  right: 10px;
+}
+
+.carousel-nav {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+}
+
+
+.carousel-nav-dot.active {
+  background-color: #e7b554;
+}
+
+.ReactFlipCard__container {
+  width: 80%;
+  height: 50%;
+}
+
+.ReactFlipCard__flipCardFront {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.exclusiveIconMobile {
+  width: 15vh;
+  position: absolute;
+  left: -10%;
+  top: -7.5%;
+  transform: rotate(-25deg);
+}
+
+@media (max-width: 550px) {
+  .featuredPropertiesMobileContentFirstSectionContent > p {
+    font-size: 0.8rem;
+  }
+  .featuredPropertiesMobileContentSecondSection > p {
+    font-size: 0.8rem;
+  }
+  .featuredPropertiesMobileContentThirdSectionContent > p {
+    font-size: 0.8rem;
+  }
+}
+
+/* Add these to your CSS file */
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutToLeft {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutToRight {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.city-slide-enter {
+  animation: slideInFromRight 0.5s forwards;
+}
+
+.city-slide-exit {
+  animation: slideOutToLeft 0.5s forwards;
+}
+
+.property-slide-enter {
+  animation: slideInFromLeft 0.5s forwards;
+}
+
+.property-slide-exit {
+  animation: slideOutToRight 0.5s forwards;
+}

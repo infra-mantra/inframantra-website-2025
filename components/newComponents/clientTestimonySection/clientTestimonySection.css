@@ -1,0 +1,232 @@
+.swiper-button-prev, .swiper-button-next {
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 4px solid #e7b554;
+  color: #e7b554;
+  background: none;
+  height: 30px !important;
+  width: 30px !important;
+  cursor: pointer;
+  position: absolute;
+  top: 60%;
+  margin: 0 30px;
+}
+.swiper-button-prev:after, .swiper-button-next:after {
+  font-family: swiper-icons;
+  font-size: 15px !important;
+  text-transform: none !important;
+  letter-spacing: 0;
+  font-variant: initial;
+  line-height: 1;
+  color: #e7b554 !important;
+}
+
+.clientTestimonyWrapper {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.clientTestimonyHeaderSection {
+  height: 50%;
+  margin-top: 4%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.clientTestimonyUpperSectionImg {
+  width: 30%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.clientTestimonyUpperSectionHeaderFlex {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.clientTestimonyUpperSectionText {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+
+.clientTestimonyUpperSectionHeader {
+  font-size: 35px;
+  text-align: center;
+  margin-left: 7%;
+  margin-right: 7%;
+  margin-top: 0;
+  font-weight: 600;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0px;
+}
+
+.clientTestimonyUpperSectionSubHeader {
+  font-size: 20px;
+  margin-left: 9%;
+  margin-right: 9%;
+  margin-top: 0;
+  text-align: center;
+  margin-bottom: 0%;
+}
+
+.clientTestimonyUpperSectionSubHeaderFlex {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  margin-top: -15px;
+}
+
+.clientTestimonyTestimonySection {
+  height: 40%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.testimonyArrowBtn {
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 4px solid #e7b554;
+  color: #e7b554;
+  background: none;
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+  position: absolute;
+  top: 60%;
+}
+
+.testimonyCard {
+  width: 100%;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.fade-in {
+  opacity: 1;
+}
+
+.fade-out {
+  opacity: 0;
+}
+@media screen  and (max-width:950px){
+  .clientTestimonyCardContainer{
+    height: 44vh;
+  }
+}
+
+@media screen  and (max-width:950px) {
+  .clientTestimonyWrapper{
+    height: 600px;
+    margin-top: 3%;
+  }
+  .clientTestimonyHeaderSection {
+    height: 40%;
+    margin-top: 0%;
+  }
+  .clientTestimonyUpperSectionHeader{
+    font-size: 28px;
+  }
+  .clientTestimonyUpperSectionSubHeader{
+    font-size: 14px;
+  }
+  .clientTestimonyTestimonySection{
+    height: 60%;
+  }
+  .clientTestimonyCardContainer{
+     height: auto;
+     padding: 14px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .clientTestimonyHeaderSection {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 20%;
+    margin-top: 0%;
+  }
+  .clientTestimonyUpperSectionImg {
+    width: 50%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .clientTestimonyUpperSectionHeader {
+    font-size: 25px;
+    width: 50%;
+    text-align: center;
+    font-weight: 700;
+    align-self: baseline;
+  }
+  .clientTestimonyUpperSectionSubHeader {
+    font-size: 13px;
+    width: 50%;
+    text-align: center;
+    padding-top: 5%;
+  }
+  .clientTestimonyTestimonySection {
+    height: 55%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  .clientTestimonyBtnMobile {
+    height: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .testimonyArrowBtn {
+    height: 30px;
+    width: 30px;
+  }
+  .swiper-button-prev, .swiper-button-next{
+    height: 20px;
+    width: 20px;
+  }
+
+  .clientTestimonyHeaderSectionContentWrapper {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .clientTestimonyHeaderSectionContentWrapper > p {
+    width: 60%;
+    font-size: 18px;
+    margin: 5px;
+  }
+}

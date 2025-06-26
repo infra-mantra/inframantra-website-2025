@@ -1,0 +1,165 @@
+.testimonialsContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.testimonialsHeader {
+    text-align: center;
+    margin-bottom: 50px;
+    position: relative;
+    width: 50%;
+}
+
+.quoteIcon {
+    position: absolute;
+    top: 10%;
+    left: 2%;
+    color: #E7B554;
+    font-family: Arial;
+    font-size: 110.25px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: capitalize;
+}
+.testimonialsBannerContainerHeader{
+    width: 90%;
+    height: 143px;
+    margin-top: 15%;
+    margin-left: 15%;
+}
+.testimonialsBannerContainerHeader h1 {
+    font-size: 29px;
+    font-weight: 400;
+    margin: 0;
+    text-align: left;
+    font-family: "Lexend Deca";
+}
+
+.testimonialsBannerContainerHeader h2 {
+    font-size: 28px;
+    font-weight: 400;
+    font-style: normal;
+    color: #FDBA30;
+    text-align: left;
+    font-family: "Lexend Deca";
+    margin: 0 auto;
+}
+
+.testimonialsDescription {
+    font-size: 16px;
+    color: #333;
+    text-align: left;
+    max-width: 85%;
+    margin-left: 15%;
+}
+
+.testimonialsImages {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 10px;
+    width: 50%;
+    max-width: 800px;
+    justify-content: center;
+}
+
+.imagePlaceholder {
+    width: 150px;
+    height: 159px;
+    background-color: #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0px 6px 4.6px 1px rgba(0, 0, 0, 0.15)
+}
+.imagePlaceholder img{
+    height: 100%;
+    width: 100%;
+    border-radius: 8px;
+}
+.imageRow .imagePlaceholder:nth-child(1){
+    width: 128px;
+    height: 129px;
+}
+
+.imageRow {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+    justify-content: center;
+    /* width: 50%; */
+}
+
+.imageRow .imagePlaceholder {
+    margin: 0 10px;
+}
+
+
+@media screen and (max-width:900px) {
+    .testimonialsContainer{
+        height: auto;
+        flex-direction: column;
+    }
+    .testimonialsHeader{
+        height: auto;
+        width: 90%;
+    }
+    .testimonialsBannerContainerHeader{
+        margin-left: 10%;
+    }
+    .testimonialsBannerContainerHeader h1{
+        font-size: 30px;
+    }
+    .testimonialsBannerContainerHeader h2{
+        font-size:28px;
+    }
+    .testimonialsDescription{
+        margin-left: 10%;
+        margin-top: -21px;
+    }
+    .quoteIcon{
+        top: 3%;
+        left: 0%;
+        font-size: 80px;
+    }
+}
+
+@media screen and (max-width:768px){
+    .testimonialsBannerContainerHeader h1{
+        font-size: 25px;
+    }
+    .testimonialsDescription{
+        margin-top: 0;
+    }
+    .testimonialsImages{
+        width: 100%;
+    }
+    .testimonialCardContainer{
+        display: flex!important;
+        flex-direction: column;
+        width: auto;
+    }
+}
+
+
+@media screen and (max-width:420px) {
+    .testimonialsBannerContainerHeader h1{
+        font-size: 5vw;
+    }
+    .testimonialsBannerContainerHeader h2{
+        font-size: 20px;
+    }
+    .testimonialsDescription{
+        margin-top: -20px;
+    }
+    .imagePlaceholder{
+        height: 138px;
+        width: 137px;
+    }
+}
+

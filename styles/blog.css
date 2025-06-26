@@ -1,0 +1,74 @@
+/* Global Styles for BlogsGrid Component */
+
+.section-head {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.section-head h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.section-head p {
+    font-size: 1rem;
+    color: #666;
+}
+
+.f-blog-item-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+
+
+.img-wrap {
+    position: relative;
+    width: 164px;
+    height: 159px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+
+.info {
+    padding: 1px;
+    width: calc(100% - 164px);
+    text-align: left;
+    flex: 1;
+}
+
+.info h4 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #333;
+}
+
+.lrn-btn {
+    display: inline-flex;
+    align-items: center;
+    color: #E7B554;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.theme-btn {
+    background-color: #E7B554;
+    border: none;
+    padding: 10px 20px;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mt-5 {
+    margin-top: 30px;
+}

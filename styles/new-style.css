@@ -1,0 +1,11 @@
+@media screen and (max-width:800px) {
+    .scroll-mbl{
+        overflow-x: scroll;
+        overflow-y: hidden;
+        white-space: nowrap;
+
+    }
+}
+.developer-description{
+    margin-top: 100px;
+}

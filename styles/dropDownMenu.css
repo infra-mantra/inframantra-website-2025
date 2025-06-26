@@ -1,0 +1,180 @@
+ .dropDownMenuItems {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-top: 22px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 18px;
+    z-index: 1000;
+    width: 100%;
+    max-height: 190px;
+    overflow: scroll;
+    overflow-x: auto;
+  }
+  
+  .dropDownMenuItemsContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: -30px;
+    text-align: center;
+  }
+  
+  .dropDownMenuItemsText {
+    font-size: 15px;
+    width: 100%;
+    padding: 18px;
+    margin-bottom: -14px;
+  }
+  
+  .dropDownMenuItemsText:hover {
+    background-color: #e6e6e6;
+  }
+  
+  .menuItemSelected {
+    background-color: #e6e6e6;
+  }
+  
+  .propertyTypeDropDownContentWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-top: 22px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 18px;
+    z-index: 1000;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    max-height: 190px;
+  }
+  
+  .propertyTypeDropDownContentFlexContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: -15px;
+  }
+  
+  .propertyTypeDropDownContent {
+    width: 80%;
+    font-size: 15px;
+  }
+  
+  .scrollable-content {
+    max-height: 150px;
+    overflow-y: auto;
+    width: 100%;
+    max-height: 190px;
+    overflow-x: hidden;
+  }
+  
+  .priceRangeDropDownContentWrapper {
+    position: absolute;
+    left: -200px;
+    right: 0;
+    margin-top: 22px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 28px;
+    z-index: 1000;
+    width: 350px;
+  }
+  
+  @media (max-width: 768px) {
+    .priceRangeDropDownContentWrapper {
+      width: 280px;
+      left: -236px;
+    }
+  }
+  .dropDownMenuWrapper {
+    width: 14%;
+    cursor: pointer;
+    border-radius: 10px;
+    background: #e6e6e6;
+    position: relative;
+  }
+  
+  .dropDownMenuFlexContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 50px;
+  }
+  
+  .dropDownMenuIcon {
+    color: #e7b554;
+    font-size: 1.8rem;
+     width: 20% !important;
+    align-self: center;
+    margin-right: 5px;
+    margin-top: 5px;
+  }
+  
+  .dropDownMenuSelectText {
+    color: #000;
+    font-size: 20px;
+    font-weight: 400;
+    text-align: left;
+    width: 70%;
+    margin: 0;
+    overflow-x: hidden;
+  }
+  
+  @media (min-width: 1000px) and (max-width: 1200px) {
+    .dropDownMenuSelectText {
+      font-size: 15px;
+    }
+  }
+  
+  @media (min-width: 1350px) {
+    .dropDownMenuIcon {
+      /* width: 30% !important; */
+    }
+    .dropDownMenuSelectText {
+      width: 70% !important;
+    }
+  }
+  @media  (max-width: 1000px) {
+    .dropDownMenuWrapper {
+      width: 14%;
+    }
+    .dropDownMenuSelectText {
+      font-size: 15px;
+    }
+  }
+  
+  
+  @media (max-width: 768px) {
+    .dropDownMenuWrapper {
+      width: 30%;
+      margin-right: 5px;
+    }
+    .dropDownMenuWrapper:first-child {
+      width: 30%;
+      margin-left: 5px;
+    }
+    .dropDownMenuSelectText {
+      font-size: 12px;
+    }
+    .dropDownMenuIcon {
+      padding-left: 10px;
+      font-size: 1rem;
+    }
+    .dropDownMenuFlexContainer {
+      height: 40px;
+    }
+  }

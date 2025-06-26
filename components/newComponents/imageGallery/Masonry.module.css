@@ -1,0 +1,39 @@
+/* components/Masonry.module.css */
+  .masonry {
+    max-width: 90vw;
+    column-count: 1;
+    column-gap: 8px;
+    overflow-y: scroll;
+  }
+
+  .item {
+    break-inside: avoid;
+    margin-bottom: 8px;
+    background: #e0e0e0; /* Grey placeholder */
+  }
+  
+  .image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  /* Media queries for responsive design */
+  @media (min-width: 600px) {
+    .masonry {
+      column-count: 2;
+    }
+  }
+  
+  @media (min-width: 900px) {
+    .masonry {
+      column-count: 3;
+    }
+  }
+  
+  @media (min-width: 1200px) {
+    .masonry {
+      column-count: 4;
+    }
+  }
+  

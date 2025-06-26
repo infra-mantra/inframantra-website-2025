@@ -1,0 +1,57 @@
+.demoBanner {
+  position: absolute;
+  top: -18px;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+
+/* Slideshow container */
+.slideshow {
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Common styles for all slides */
+.slideImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  animation: fade 15s infinite;
+  z-index: 0;
+}
+
+/* Individual slides with delay to stagger visibility */
+.slideImage1 {
+  background-image: url('https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/d5.avif');
+  animation-delay: 0s;
+}
+
+.slideImage2 {
+  background-image: url('https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/d4.avif');
+  animation-delay: 5s;
+}
+
+.slideImage3 {
+  background-image: url('https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/d3.avif');
+  animation-delay: 10s;
+}
+
+/* Animation to fade in and out */
+@keyframes fade {
+  0%   { opacity: 0; }
+  10%  { opacity: 1; }
+  30%  { opacity: 1; }
+  40%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+

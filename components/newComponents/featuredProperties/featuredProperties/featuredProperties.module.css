@@ -1,0 +1,225 @@
+
+  .featuredPropertiesWrapper {
+    height: 60% ;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .featuredPropertiesLeftSection {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .featuredPropertiesRightSection {
+    width: 50%;
+    height: 105%;
+    margin-top: 3.5%;
+    position: relative;
+  }
+  
+  .exclusiveIcon {
+    width: 18vh;
+    position: absolute;
+    left: 70%;
+    top: -7.5%;
+    transform: rotate(20deg);
+  }
+  
+  .featuredPropertiesLeftSectionBgrd {
+    width: 70%;
+    height: 90%;
+    background-color: #E7B554;
+    border-radius: 11.84px;
+    position: relative;
+  }
+  
+  .featuredPropertiesLeftSectionImages {
+    position: absolute;
+    height: 86%;
+    left: 7%;
+    width: 100%;
+    top: 7%;
+    border-radius: 11.84px;
+  }
+  
+  .featuredPropertiesRightSectionMarginContainer {
+    margin-left: 8%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    color: #000;
+  }
+  
+  .featuredPropertiesRightSectionTitle {
+    font-size: 4vh;
+    font-weight: 600;
+    margin-top: 0;
+  }
+  
+  .featuredPropertiesRightSectionLocation {
+    font-size: 2.5vh;
+    font-weight: 400;
+    margin-top: -1.5%;
+  }
+  
+  .featuredPropertiesRightSectionDescription {
+    font-size: 2vh;
+    font-weight: 300;
+    width: 70%;
+    text-indent: 0;
+  }
+  
+  .featuredPropertiesRightSectionInsightsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  
+  .featuredPropertiesRightSectionInsightsFlex {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 50px;
+    align-self: baseline;
+  }
+  
+  .featuredPropertiesRightSectionInsightsKey {
+    color: #e7b554;
+    font-size: 2.5vh;
+    font-weight: 500;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .featuredPropertiesRightSectionInsightsValue {
+    text-align: center;
+    margin-top: -20px;
+    font-size: 2vh;
+    font-weight: 400;
+  }
+  
+  .featuredPropertiesLeftSectionImages {
+    position: absolute;
+    height: 86%;
+    left: 7%;
+    width: 100%;
+    top: 7%;
+    border-radius: 11.84px;
+    /* opacity: 0; */
+    transition: opacity 2s ease-in-out;
+  }
+  
+  .featuredPropertiesLeftSectionImages.active {
+    opacity: 1;
+  }
+  
+  @media screen and (min-width: 786px) and (max-width: 1200px) {
+    .exclusiveIcon {
+      width: 15vh;
+      left: 70%;
+      top: -4.5%;
+    }
+    .featuredPropertiesRightSectionTitle {
+      font-size: 3.5vh;
+    }
+  }
+  .paginationSliderWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+  }
+  
+  .paginationSliderArrowBtn:nth-child(2) {
+    margin-right: 60px;
+  }
+  
+  .paginationSliderPageNumbers {
+    margin-left: 60px;
+    color: #e7b554;
+    font-size: 1.5em;
+    font-weight: 500;
+  }
+  
+  .paginationSliderPageNumbers .totalItems {
+    color: #b3b3b3;
+    font-weight: 400;
+  }
+  
+  .paginationSliderArrowBtn {
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #e7b554;
+    color: #e7b554;
+    background: none;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: color 0.3s, border-color 0.3s;
+    height: 30px;
+    width: 30px;
+  }
+  
+  .paginationSliderArrowBtn:disabled {
+    color: #b3b3b3;
+    border-color: #b3b3b3;
+    cursor: default;
+  }
+  
+  .paginationSliderArrowBtn svg {
+    color: inherit;
+    margin: 0;
+  }
+  
+  .paginationSliderArrowBtn:first-of-type svg {
+    transform: translateX(3px);
+  }
+.featuredPropertiesButton{
+    -webkit-box-pack: center;
+    position: relative;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    user-select: none;
+    vertical-align: middle;
+    appearance: none;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.75;
+    letter-spacing: 0.02857em;
+    min-width: 64px;
+    color: rgb(255, 255, 255);
+    width: 60%;
+    background-color: rgb(231, 181, 84);
+    box-shadow: rgba(8, 8, 8, 0.25) 0px 3.879px 3.879px 0px;
+    font-size: 2.5vh;
+    font-weight: 700;
+    text-transform: none;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    justify-content: space-around;
+    outline: 0px;
+    border-width: 0px;
+    border-style: initial;
+    border-color: initial;
+    border-image: initial;
+    margin: 4% 0px 0px;
+    text-decoration: none;
+    padding: 6px 16px;
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1), border-color 250ms cubic-bezier(0.4, 0, 0.2, 1), color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 10px;
+}
+
+  
+  
+  
