@@ -6,33 +6,32 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { toast } from 'react-toastify';
 import Ajax1 from '../helper/Ajax1';
 import { useRouter } from 'next/router';
-import {downloadBrochure} from '../helper/downloadBrochurePdf'
-import ctaStyle from "./cta.module.css"
+import { downloadBrochure } from '../helper/downloadBrochurePdf';
+import ctaStyle from "./cta.module.css";
 
-function App({name , popUpenable=false , onClickOff , text, pdf}) {
+function App({ name, popUpenable = false, onClickOff, text, pdf }) {
   const [isPopupOpen, setIsPopupOpen] = useState(popUpenable);
   const [isAnimating, setIsAnimating] = useState(popUpenable);
-  const [message, setMessage] = useState(popUpenable ?"Contact us by downloading Brochures.":"");
+  const [message, setMessage] = useState(popUpenable ? "Contact us by downloading Brochures." : "");
   const router = useRouter();
   const apiUrl = process.env.NEXT_PUBLIC_SITE_KEY;
- 
+
   const [formData, setFormData] = useState({
     name: '',
     phoneNumber: '',
     email: '',
     projectName: name,
-   
   });
+
   const [captchaToken, setCaptchaToken] = useState(null);
   const recaptchaRef = useRef(null);
 
   const handleChange = (e) => {
     setFormData((prevFormData) => ({
-      ...prevFormData,  // Keep all existing fields (including message)
-      [e.target.name]: e.target.value, // Update the changed field
+      ...prevFormData,
+      [e.target.name]: e.target.value,
     }));
   };
-  
 
   const handleCaptchaChange = (token) => {
     setCaptchaToken(token);
@@ -40,7 +39,7 @@ function App({name , popUpenable=false , onClickOff , text, pdf}) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (recaptchaRef.current) {
       try {
         const token = await recaptchaRef.current.executeAsync();
@@ -48,33 +47,26 @@ function App({name , popUpenable=false , onClickOff , text, pdf}) {
         const action = {
           method: 'POST',
           url: '/enquiry/project',
-          data: { ...formData, captchaToken: token,
-          message,
-         },
+          data: { ...formData, captchaToken: token, message },
           token: false,
         };
-  
+
         const response = await Ajax1(action);
-  
+
         if (response.data.status === 'success') {
-          toast.success('Form submitted successfully:', response.data);
-          setFormData({
-            name: '',
-            phoneNumber: '',
-            email: '',
-          });
-          if(popUpenable){
-            downloadBrochure(pdf,name)
-          }
-         
-          const timer = setTimeout(() => {
+          toast.success('Form submitted successfully');
+          setFormData({ name: '', phoneNumber: '', email: '' });
+
+          if (popUpenable) downloadBrochure(pdf, name);
+
+          setTimeout(() => {
             router.push('/thank-you');
           }, 5000);
         } else {
-          toast.error('Form submission failed:', response);
+          toast.error('Form submission failed');
         }
       } catch (error) {
-        toast.error('Error submitting form:', error);
+        toast.error('Error submitting form');
         console.error('Error submitting form:', error);
       }
     } else {
@@ -93,46 +85,41 @@ function App({name , popUpenable=false , onClickOff , text, pdf}) {
 
   const handleClose = () => {
     setIsAnimating(false);
-   if(popUpenable){onClickOff(false)}
+    if (popUpenable) onClickOff(false);
     setTimeout(() => setIsPopupOpen(false), 300);
   };
 
   return (
-    <div className="App">
+    <div className={ctaStyle.app}>
       {isPopupOpen && (
-        <div
-          className={`popup-overlay ${isAnimating ? "popup-animating" : "popup-closing"}`}
-        >
-          <div className="popup-form">
-            <div className="image-container">
+        <div className={`${ctaStyle.popupOverlay} ${isAnimating ? ctaStyle.popupAnimating : "popup-closing"}`}>
+          <div className={`${ctaStyle.popupForm} ${isAnimating ? ctaStyle.popupAnimatingForm : ""}`}>
+            <div className={ctaStyle.imageContainer}>
               <img src="/logos/pop-up-logo.png" alt="Inframantra-logo" />
-              <div className="crossBtn" onClick={handleClose}>
+              <div className={ctaStyle.crossBtn} onClick={handleClose}>
                 <RxCross2 />
               </div>
             </div>
-            <div className="headingForm">
-              <p className="popUpHead">Please share your contact details</p>
-              <p className="popUpHead2">{text ?text:"TO UNLOCK EXCLUSIVE DEALS"}</p>
+            <div className={ctaStyle.headingForm}>
+              <p className={ctaStyle.popUpHead}>Please share your contact details</p>
+              <p className={ctaStyle.popUpHead2}>{text ? text : "TO UNLOCK EXCLUSIVE DEALS"}</p>
             </div>
-
             <form onSubmit={handleSubmit}>
-              <div className="form-group">
+              <div className={ctaStyle.formGroup}>
                 <input
                   type="text"
                   id="username"
                   name="username"
                   placeholder="Name"
                   value={formData.name}
-                      onChange={(e) => {
-                      const alphabeticValue = e.target.value.replace(/[^a-zA-Z\s]/g, ''); 
-                       setFormData({ ...formData, name: alphabeticValue });
-                 }}
+                  onChange={(e) => {
+                    const alphabeticValue = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+                    setFormData({ ...formData, name: alphabeticValue });
+                  }}
                   required
-                 
                 />
               </div>
-
-              <div className="form-group">
+              <div className={ctaStyle.formGroup}>
                 <input
                   type="tel"
                   id="mobile"
@@ -140,17 +127,16 @@ function App({name , popUpenable=false , onClickOff , text, pdf}) {
                   placeholder="Phone Number"
                   value={formData.phoneNumber}
                   onChange={(e) => {
-                    const onlyNumbers = e.target.value.replace(/[^0-9]/g, ''); 
+                    const onlyNumbers = e.target.value.replace(/[^0-9]/g, '');
                     setFormData({ ...formData, phoneNumber: onlyNumbers });
                   }}
-                  inputMode="numeric" 
-                  pattern="[0-9]*" 
+                  inputMode="numeric"
+                  pattern="[0-9]*"
                   maxLength="10"
                   required
                 />
               </div>
-
-              <div className="form-group">
+              <div className={ctaStyle.formGroup}>
                 <input
                   type="email"
                   id="email"
@@ -162,12 +148,12 @@ function App({name , popUpenable=false , onClickOff , text, pdf}) {
                 />
               </div>
               <div className="recaptcha-container">
-              <ReCAPTCHA
-            sitekey={`6LfrSTUqAAAAAOy2-j9cNvTIujOI5GKjtMVsn2Uk`}
-            size="invisible"
-            ref={recaptchaRef} // Reference to the ReCAPTCHA component
-          />
-          </div>
+                <ReCAPTCHA
+                  sitekey="6LfrSTUqAAAAAOy2-j9cNvTIujOI5GKjtMVsn2Uk"
+                  size="invisible"
+                  ref={recaptchaRef}
+                />
+              </div>
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <button
                   type="submit"
@@ -184,51 +170,28 @@ function App({name , popUpenable=false , onClickOff , text, pdf}) {
                   Submit
                 </button>
               </div>
-
-              <p
-                className="propertyPageHeaderContactUsDisclaimer"
-                style={{ padding: "10px" }}
-              >
-                *By submitting, I accept Inframantra{" "}
-                <a
-                  href="https://inframantra.com/page/terms-conditions"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ color: "blue" }}
-                >
+              <p className={ctaStyle.propertyPageHeaderContactUsDisclaimer} style={{ padding: "10px" }}>
+                *By submitting, I accept Inframantra{' '}
+                <a href="https://inframantra.com/page/terms-conditions" target="_blank" rel="noopener noreferrer" style={{ color: "blue" }}>
                   Terms & Conditions
-                </a>{" "}
-                and{" "}
-                <a
-                  href="https://inframantra.com/page/privacy-policy"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ color: "blue" }}
-                >
-                  Privacy Policy. 
+                </a>{' '}and{' '}
+                <a href="https://inframantra.com/page/privacy-policy" target="_blank" rel="noopener noreferrer" style={{ color: "blue" }}>
+                  Privacy Policy.
                 </a>
               </p>
             </form>
-
-            <div className="propertyPageHeaderContactIconContainer2">
+            <div className={ctaStyle.propertyPageHeaderContactIconContainer2}>
               <hr width="100%" color="#DCAA4C" size="1" />
-              <div className="" style={
-                   {display:"flex"}
-                }>
-                <div className="ctaText">
-                  <p className="numberFor">
-                    <span
-                      role="img"
-                      aria-label="phone"
-                      style={{ color: "green", marginRight: "1rem" }}
-                    >
+              <div style={{ display: "flex" }}>
+                <div className={ctaStyle.ctaText}>
+                  <p className={ctaStyle.numberFor}>
+                    <span role="img" aria-label="phone" style={{ color: "green", marginRight: "1rem" }}>
                       <FaPhoneAlt />
                     </span>
                     +91 86 9800 9900
                   </p>
-                  <p className="textForm">Give us a call and book your visit now!</p>
+                  <p className={ctaStyle.textForm}>Give us a call and book your visit now!</p>
                 </div>
-
                 <img src="/guruCollection/guru_call.png" alt="Call Icon" />
               </div>
             </div>

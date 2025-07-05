@@ -1,10 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-
 import { SocialIcon } from 'react-social-icons';
-
 import { MdLocationOn, MdEmail, MdArrowDropDown   } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
 import Link from 'next/link';
+import styles from './footer.module.css'; // Assuming you have a CSS module for styles
 
 function Footer() {
   const [openDropDown, setOpenDropdown] = useState(null);
@@ -55,14 +54,14 @@ function Footer() {
     }
   };
   return (
-    <div className="footerWrapper" id="footer" ref={footerRef}>
-      <div className="footerFirstSectionContainer">
-        <div className="footerFirstSectionCompanyDetailsWrapper">
+    <div className={styles.footerWrapper} id="footer" ref={footerRef}>
+      <div className={styles.footerFirstSectionContainer}>
+        <div className={styles.footerFirstSectionCompanyDetailsWrapper}>
           <img
             src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/inframantraLogo.png"
             alt="Infra logo white"
           />
-          <div className="footerFirstSectionCompanyDetailsFlex">
+          <div className={styles.footerFirstSectionCompanyDetailsFlex}>
             <MdLocationOn style={{
                 color: '#E7B554',
                 fontSize: '25px',
@@ -70,7 +69,7 @@ function Footer() {
               }}/>
             <p>95, Institutional Area, Sector 32, Gurugram</p>
           </div>
-          <div className="footerFirstSectionCompanyDetailsFlex">
+          <div className={styles.footerFirstSectionCompanyDetailsFlex}>
             <FaPhoneAlt style={{
                 color: '#E7B554',
                 fontSize: '20px',
@@ -78,7 +77,7 @@ function Footer() {
               }}/>
             <p>+91 86 9800 9900 </p>
           </div>
-          <div className="footerFirstSectionCompanyDetailsFlex">
+          <div className={styles.footerFirstSectionCompanyDetailsFlex}>
             <MdEmail
               style={{
                 color: '#E7B554',
@@ -91,7 +90,7 @@ function Footer() {
         </div>
         {isDesktop && (
           <>
-            <div className="footerSecondSectionCompanyDetailsWrapper">
+            <div className={styles.footerSecondSectionCompanyDetailsWrapper}>
               <h4>INFRAMANTRA</h4>
               <p><Link  legacyBehavior={true} href='/'>Home</Link></p>
               <p><Link  legacyBehavior={true} href='/about-us'>About Us</Link></p>
@@ -102,18 +101,18 @@ function Footer() {
               <p><Link  legacyBehavior={true} href='/developer'>Developers</Link></p>
               <p><Link  legacyBehavior={true} href='/contact-us'>Contact Us</Link></p>
             </div>
-            <div className="footerThirdSectionCompanyDetailsWrapper">
+            <div className={styles.footerThirdSectionCompanyDetailsWrapper}>
               <h4>Quick Search</h4>
-              <div className="footerThirdSectionDropdownFlex">
-                <div className="footerThirdSectionDropdownHeaderFlex">
+              <div className={styles.footerThirdSectionDropdownFlex}>
+                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
                   <p   onClick={() => handleFooterDropdownClick(1)}>Top Properties In Gurgaon</p>
                   <MdArrowDropDown
                     onClick={() => handleFooterDropdownClick(1)}
                   />
                 </div>
-              {loading  && openDropDown ==1 &&  <div className="spinner"></div>}
+              {loading  && openDropDown ==1 &&  <div className={styles.spinner}></div>}
                 {openDropDown === 1 && (
-                  <div className="footerThirdSectionDropdownLinkWrapper">
+                  <div className={styles.footerThirdSectionDropdownLinkWrapper}>
                     <p><Link  legacyBehavior={true} href='/property/vatika-sovereign-park-sector-99-gurgaon'>Vatika Sovereign Park</Link></p>
                     <p><Link  legacyBehavior={true} href='/property/vatika-seven-elements-sector-89a-gurgaon'>Vatika Seven Elements</Link></p>
                      <p><Link  legacyBehavior={true} href='/property/tulip-crimson-sector-70-gurgaon'>Tulip Crimson</Link></p>
@@ -126,16 +125,16 @@ function Footer() {
                 )}
               </div>
 
-              <div className="footerThirdSectionDropdownFlex">
-                <div className="footerThirdSectionDropdownHeaderFlex">
+              <div className={styles.footerThirdSectionDropdownFlex}>
+                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
                   <p   onClick={() => handleFooterDropdownClick(2)}>Top Properties In Pune</p>
                   <MdArrowDropDown
                     onClick={() => handleFooterDropdownClick(2)}
                   />
                 </div>
-                {loading  && openDropDown ==2 &&  <div className="spinner"></div>}
+                {loading  && openDropDown ==2 &&  <div className={styles.spinner}></div>}
                 {openDropDown === 2 && (
-                  <div className="footerThirdSectionDropdownLinkWrapper">
+                  <div className={styles.footerThirdSectionDropdownLinkWrapper}>
                       <p><Link  legacyBehavior={true} href='/property/pristine-o2-world-kharadi-pune'>Pristine O2 World</Link></p>
                       <p><Link  legacyBehavior={true} href='/property/lodha-estilo-kharadi-pune'>Lodha Estilo</Link></p>
                       <p><Link  legacyBehavior={true} href='/property/majestique-towers-kharadi-pune-east'>Majestique Towers</Link></p>
@@ -144,16 +143,16 @@ function Footer() {
                   </div>
                 )}
               </div>
-              <div className="footerThirdSectionDropdownFlex">
-                <div className="footerThirdSectionDropdownHeaderFlex">
+              <div className={styles.footerThirdSectionDropdownFlex}>
+                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
                   <p  onClick={() => handleFooterDropdownClick(3)}>Top Properties In Noida</p>
                   <MdArrowDropDown
                     onClick={() => handleFooterDropdownClick(3)}
                   />
                 </div>
-                {loading  && openDropDown ==3 &&  <div className="spinner"></div>}
+                {loading  && openDropDown ==3 &&  <div className={styles.spinner}></div>}
                 {openDropDown === 3 && (
-                  <div className="footerThirdSectionDropdownLinkWrapper">
+                  <div className={styles.footerThirdSectionDropdownLinkWrapper}>
                     <p><Link  legacyBehavior={true} href='/property/experion-elements-sector-45-noida'>Experion Elements</Link></p>
                     <p><Link  legacyBehavior={true} href='/property/ace-hanei-sector-12-noida'>ACE HAN'EI                    </Link></p>
                     <p><Link  legacyBehavior={true} href='/property/godrej-woods-sector-43-noida'>Godrej Woods
@@ -163,16 +162,16 @@ function Footer() {
                   </div>
                 )}
               </div>
-              <div className="footerThirdSectionDropdownFlex">
-                <div className="footerThirdSectionDropdownHeaderFlex">
+              <div className={styles.footerThirdSectionDropdownFlex}>
+                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
                   <p  onClick={() => handleFooterDropdownClick(4)}>Premium Properties</p>
                   <MdArrowDropDown
                     onClick={() => handleFooterDropdownClick(4)}
                   />
                 </div>
-                {loading  && openDropDown ==4 &&  <div className="spinner"></div>}
+                {loading  && openDropDown ==4 &&  <div className={styles.spinner}></div>}
                 {openDropDown === 4 && (
-                  <div className="footerThirdSectionDropdownLinkWrapper">
+                  <div className={styles.footerThirdSectionDropdownLinkWrapper}>
                     <p><Link  legacyBehavior={true} href='/property/signature-global-cloverdale-sector-71-gurgaon'>Signature Global Cloverdale</Link></p>
                      <p><Link  legacyBehavior={true} href='/property/dlf-privana-north-sector-76-gurgaon'>Dlf Privana North</Link></p>
                     <p><Link  legacyBehavior={true} href='/property/experion-the-trillion-sector-48-gurgaon'>Experion The Trillion</Link></p>
@@ -182,16 +181,16 @@ function Footer() {
                   </div>
                 )}
               </div>
-              <div className="footerThirdSectionDropdownFlex">
-                <div className="footerThirdSectionDropdownHeaderFlex">
+              <div className={styles.footerThirdSectionDropdownFlex}>
+                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
                   <p   onClick={() => handleFooterDropdownClick(5)}>Exclusive Properties</p>
                   <MdArrowDropDown
                     onClick={() => handleFooterDropdownClick(5)}
                   />
                 </div>
-                {loading  && openDropDown ==5 &&  <div className="spinner"></div>}
+                {loading  && openDropDown ==5 &&  <div className={styles.spinner}></div>}
                 {openDropDown === 5 && (
-                  <div className="footerThirdSectionDropdownLinkWrapper">
+                  <div className={styles.footerThirdSectionDropdownLinkWrapper}>
                     <p><Link  legacyBehavior={true} href='/property/vatika-seven-elements-sector-89a-gurgaon'>Vatika Seven Elements</Link></p>
                      <p><Link  legacyBehavior={true} href='/property/4s-the-aurrum-sector-59-gurgaon'>4S The Aurrum</Link></p>
                     <p><Link  legacyBehavior={true} href='/property/tulip-crimson-sector-70-gurgaon'>Tulip Crimson</Link></p>
@@ -204,8 +203,8 @@ function Footer() {
           </>
         )}
         {!isDesktop && (
-          <div className="footerSecondSectionMobileContainer">
-            <div className="footerSecondSectionCompanyDetailsWrapper">
+          <div className={styles.footerSecondSectionMobileContainer}>
+            <div className={styles.footerSecondSectionCompanyDetailsWrapper}>
               <h4>INFRAMANTRA</h4>
               <p><Link  legacyBehavior={true} href='/'>Home</Link></p>
               <p><Link  legacyBehavior={true} href='/about-us'>About Us</Link></p>
@@ -216,18 +215,18 @@ function Footer() {
               <p><Link  legacyBehavior={true} href='/contact-us'>Contact Us</Link></p>
               <p><Link  legacyBehavior={true} href='/developer'>Developers</Link></p>
             </div>
-            <div className="footerThirdSectionCompanyDetailsWrapper">
+            <div className={styles.footerThirdSectionCompanyDetailsWrapper}>
               <h4>Quick Search</h4>
-              <div className="footerThirdSectionDropdownFlex">
-                <div className="footerThirdSectionDropdownHeaderFlex">
+              <div className={styles.footerThirdSectionDropdownFlex}>
+                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
                   <p  onClick={() => handleFooterDropdownClick(1)}>Top Properties In Gurgaon</p>
                   <MdArrowDropDown
                     onClick={() => handleFooterDropdownClick(1)}
                   />
                 </div>
-                {loading  && openDropDown ==1 &&  <div className="spinner"></div>}
+                {loading  && openDropDown ==1 &&  <div className={styles.spinner}></div>}
                 {openDropDown === 1 && (
-                  <div className="footerThirdSectionDropdownLinkWrapper">
+                  <div className={styles.footerThirdSectionDropdownLinkWrapper}>
                        <p><Link  legacyBehavior={true} href='/property/vatika-sovereign-park-sector-99-gurgaon'>Vatika Sovereign Park</Link></p>
                     <p><Link  legacyBehavior={true} href='/property/vatika-seven-elements-sector-89a-gurgaon'>Vatika Seven Elements</Link></p>
                      <p><Link  legacyBehavior={true} href='/property/tulip-crimson-sector-70-gurgaon'>Tulip Crimson</Link></p>
@@ -240,16 +239,16 @@ function Footer() {
                 )}
               </div>
 
-              <div className="footerThirdSectionDropdownFlex">
-                <div className="footerThirdSectionDropdownHeaderFlex">
+              <div className={styles.footerThirdSectionDropdownFlex}>
+                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
                   <p  onClick={() => handleFooterDropdownClick(2)}>Top Properties In Pune</p>
                   <MdArrowDropDown
                     onClick={() => handleFooterDropdownClick(2)}
                   />
                 </div>
-                {loading  && openDropDown ==2 &&  <div className="spinner"></div>}
+                {loading  && openDropDown ==2 &&  <div className={styles.spinner}></div>}
                 {openDropDown === 2 && (
-                  <div className="footerThirdSectionDropdownLinkWrapper">
+                  <div className={styles.footerThirdSectionDropdownLinkWrapper}>
                      <p><Link  legacyBehavior={true} href='/property/pristine-o2-world-kharadi-pune'>Pristine O2 World</Link></p>
                       <p><Link  legacyBehavior={true} href='/property/lodha-estilo-kharadi-pune'>Lodha Estilo</Link></p>
                       <p><Link  legacyBehavior={true} href='/property/majestique-towers-kharadi-pune-east'>Majestique Towers</Link></p>
@@ -258,16 +257,16 @@ function Footer() {
                   </div>
                 )}
               </div>
-              <div className="footerThirdSectionDropdownFlex">
-                <div className="footerThirdSectionDropdownHeaderFlex">
+              <div className={styles.footerThirdSectionDropdownFlex}>
+                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
                   <p  onClick={() => handleFooterDropdownClick(3)}>Top Properties In Noida</p>
                   <MdArrowDropDown
                     onClick={() => handleFooterDropdownClick(3)}
                   />
                 </div>
-                {loading  && openDropDown ==3 &&  <div className="spinner"></div>}
+                {loading  && openDropDown ==3 &&  <div className={styles.spinner}></div>}
                 {openDropDown === 3 && (
-                  <div className="footerThirdSectionDropdownLinkWrapper">
+                  <div className={styles.footerThirdSectionDropdownLinkWrapper}>
                      <p><Link  legacyBehavior={true} href='/property/experion-elements-sector-45-noida'>Experion Elements</Link></p>
                     <p><Link  legacyBehavior={true} href='/property/ace-hanei-sector-12-noida'>ACE HAN'EI                    </Link></p>
                     <p><Link  legacyBehavior={true} href='/property/godrej-woods-sector-43-noida'>Godrej Woods
@@ -278,16 +277,16 @@ function Footer() {
                   </div>
                 )}
               </div>
-              <div className="footerThirdSectionDropdownFlex">
-                <div className="footerThirdSectionDropdownHeaderFlex">
+              <div className={styles.footerThirdSectionDropdownFlex}>
+                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
                   <p  onClick={() => handleFooterDropdownClick(4)}>Premium Properties</p>
                   <MdArrowDropDown
                     onClick={() => handleFooterDropdownClick(4)}
                   />
                 </div>
-                {loading  && openDropDown ==4 &&  <div className="spinner"></div>}
+                {loading  && openDropDown ==4 &&  <div className={styles.spinner}></div>}
                 {openDropDown === 4 && (
-                  <div className="footerThirdSectionDropdownLinkWrapper">
+                  <div className={styles.footerThirdSectionDropdownLinkWrapper}>
                      <p><Link  legacyBehavior={true} href='/property/signature-global-cloverdale-sector-71-gurgaon'>Signature Global Cloverdale</Link></p>
                      <p><Link  legacyBehavior={true} href='/property/dlf-privana-north-sector-76-gurgaon'>Dlf Privana North</Link></p>
                     <p><Link  legacyBehavior={true} href='/property/experion-the-trillion-sector-48-gurgaon'>Experion The Trillion</Link></p>
@@ -297,16 +296,16 @@ function Footer() {
                   </div>
                 )}
               </div>
-              <div className="footerThirdSectionDropdownFlex">
-                <div className="footerThirdSectionDropdownHeaderFlex">
+              <div className={styles.footerThirdSectionDropdownFlex}>
+                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
                   <p  onClick={() => handleFooterDropdownClick(5)}>Exclusive Properties</p>
                   <MdArrowDropDown
                     onClick={() => handleFooterDropdownClick(5)}
                   />
                 </div>
-                {loading  && openDropDown ==5 &&  <div className="spinner"></div>}
+                {loading  && openDropDown ==5 &&  <div className={styles.spinner}></div>}
                 {openDropDown === 5 && (
-                  <div className="footerThirdSectionDropdownLinkWrapper">
+                  <div className={styles.footerThirdSectionDropdownLinkWrapper}>
                     <p><Link  legacyBehavior={true} href='/property/vatika-seven-elements-sector-89a-gurgaon'>Vatika Seven Elements</Link></p>
                      <p><Link  legacyBehavior={true} href='/property/4s-the-aurrum-sector-59-gurgaon'>4S The Aurrum</Link></p>
                     <p><Link  legacyBehavior={true} href='/property/tulip-crimson-sector-70-gurgaon'>Tulip Crimson</Link></p>
@@ -318,16 +317,16 @@ function Footer() {
             </div>
           </div>
         )}
-        <div className="footerForthSectionCompanyDetailsWrapper">
+        <div className={styles.footerForthSectionCompanyDetailsWrapper}>
           <h4>Follow Us</h4>
           {isDesktop && (
             <>
-              <div className="footerForthSectionIconWrapper">
+              <div className={styles.footerForthSectionIconWrapper}>
                 <SocialIcon url="https://www.facebook.com/inframantraofficial" style={{ height: '40px', width: '40px' }} />
                 <SocialIcon url="https://x.com/INFRAMANTRA_" style={{ height: '40px', width: '40px' }} />
                 <SocialIcon url="https://www.instagram.com/inframantraofficial/" style={{ height: '40px', width: '40px' }} />
               </div>
-              <div className="footerForthSectionIconWrapper">
+              <div className={styles.footerForthSectionIconWrapper}>
                 <SocialIcon url="https://www.youtube.com/@inframantraofficial" style={{ height: '40px', width: '40px' }} />
                 <SocialIcon url="https://in.linkedin.com/company/inframantra" style={{ height: '40px', width: '40px' }} />
                 <SocialIcon url="https://in.pinterest.com/inframantraofficial/" style={{ height: '40px', width: '40px' }} />
@@ -335,7 +334,7 @@ function Footer() {
             </>
           )}
           {!isDesktop && (
-            <div className="footerForthSectionIconWrapper">
+            <div className={styles.footerForthSectionIconWrapper}>
               <SocialIcon url="https://www.facebook.com/inframantraofficial" style={{ height: '40px', width: '40px' }} />
               <SocialIcon url="https://x.com/INFRAMANTRA_" style={{ height: '40px', width: '40px' , backdropFilter: "#FFF"}} />
               <SocialIcon url="https://www.instagram.com/inframantraofficial/" style={{ height: '40px', width: '40px' }} />
@@ -346,16 +345,16 @@ function Footer() {
           )}
         </div>
       </div>
-      <div className="footerSecondSectionContainer">
+      <div className={styles.footerSecondSectionContainer}>
         {isDesktop && (
           <>
-            <div className="footerSecondSectionLinksFlex">
+            <div className={styles.footerSecondSectionLinksFlex}>
               <p><Link  legacyBehavior={true} href='/page/terms-conditions'>Terms And Conditions</Link></p>
               <p><Link  legacyBehavior={true} href='/page/privacy-policy'>Privacy Policy</Link></p>
               <p><Link  legacyBehavior={true} href='/page/user-agreement'>User Agreement</Link></p>
               <p><Link  legacyBehavior={true} href='/page/disclaimer'>Disclaimer</Link></p>
             </div>
-            <div className="footerSecondSectionCopyRightFlex">
+            <div className={styles.footerSecondSectionCopyRightFlex}>
               <p>Copyright @ 2025 Inframantra</p>
               <p>All Rights Reserved</p>
             </div>
@@ -363,13 +362,13 @@ function Footer() {
         )}
         {!isDesktop && (
           <>
-            <div className="footerSecondSectionLinksFlex">
+            <div className={styles.footerSecondSectionLinksFlex}>
               <p><Link  legacyBehavior={true} href='/page/terms-conditions'>Terms And Conditions</Link></p>
               <p><Link  legacyBehavior={true} href='/page/privacy-policy'>Privacy Policy</Link></p>
               <p><Link  legacyBehavior={true} href='/page/user-agreement'>User Agreement</Link></p>
               <p><Link  legacyBehavior={true} href='/page/disclaimer'>Disclaimer</Link></p>
             </div>
-            <div className="footerSecondSectionCopyRightFlex">
+            <div className={styles.footerSecondSectionCopyRightFlex}>
               <p>Copyright @ 2025 Inframantra</p>
               <p>All Rights Reserved</p>
             </div>

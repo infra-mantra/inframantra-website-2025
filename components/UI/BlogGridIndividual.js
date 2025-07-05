@@ -5,8 +5,6 @@ import Link from "next/link";
 import NoImage from "./NoImage";
 
 function BlogsGrid({ section_title, title_desc, blogs, button, initial, loadMore, blogBtn, latestNews }) {
-    // Restrict blogs to the first 3
-    const [showAll, setShowAll] = useState(false); // State to toggle between showing all blogs or only the first three
 
     const displayedBlogs = blogs
     
@@ -74,16 +72,7 @@ function BlogsGrid({ section_title, title_desc, blogs, button, initial, loadMore
                     </button>
                 </div>
             )}
-        {/* {blogs.length > 3 && (
-        <div className="text-center mt-5" style={{ display: "flow" }}>
-          <button
-            onClick={() => setShowAll(!showAll)} // Toggle state on click
-            className="theme-btn"
-          >
-            {showAll ? "Show Less" : "View More"}
-          </button>
-        </div>
-      )} */}
+       
         </Section>
     );
 }

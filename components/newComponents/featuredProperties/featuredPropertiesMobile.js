@@ -168,6 +168,7 @@ function FeaturedPropertiesMobileSection() {
         <div
           style={featuredPropertiesMobileStyles.arrowBackProperty}
           onClick={handlePrevProperty}
+          // style={{position:'absolute',color:'black',width:'40px',left:'0%',top:'53.5%'}}
         >
           <MdKeyboardArrowLeft style={{fontSize:'3rem'}}/>
         </div>

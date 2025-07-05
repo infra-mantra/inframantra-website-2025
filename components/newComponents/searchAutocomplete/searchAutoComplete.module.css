@@ -1,0 +1,109 @@
+.inputWrapper{
+    width: 420px;
+    border: 1px solid rgb(217, 217, 217);
+    background-color: rgb(230, 230, 230);
+    border-radius: 10px;
+    padding: 8px;
+    display: inline-flex;
+    flex-wrap: nowrap;
+    overflow: auto hidden;
+    -webkit-box-align: center;
+    align-items: center;
+    scrollbar-width: thin;
+    scrollbar-color: rgb(193, 193, 193) rgb(240, 240, 240);
+  }
+  .inputWrapper input{
+    background-color: rgb(230, 230, 230);
+    color: rgba(0, 0, 0, 0.85);
+    height: 30px;
+    box-sizing: border-box;
+    padding: 4px 6px;
+    border-radius: 10px;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    min-width: 150px;
+    border: 0px;
+    margin: 0px;
+    outline: 0px;
+   
+  }
+  .listbox{
+    width: 500px;
+    max-width: 100%;
+    margin: 20px 0px 0px;
+    padding: 0px;
+    position: absolute;
+    list-style: none;
+    background-color: rgb(255, 255, 255);
+    overflow: auto;
+    max-height: 225px;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+    z-index: 1;
+  }
+  .listbox li{
+    padding: 5px 12px;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  .listbox li span{
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    font-size: 15px;
+    color: rgba(0, 0, 0, 0.6);
+  }
+  .listbox li span svg:hover{
+    color: goldenrod;
+  }
+  .inputSelection{
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 20px;
+    margin: 5px;
+    line-height: 22px;
+    background-color: rgb(250, 250, 250);
+    border: 1px solid rgb(232, 232, 232);
+    border-radius: 5px;
+    box-sizing: content-box;
+    padding: 0px 4px 0px 10px;
+    outline: 0px;
+    overflow: hidden;
+    min-width: max-content;
+  }
+  
+    .searchIcon {
+    position: absolute;
+    right: 25px;
+    color: rgb(218, 158, 39);
+    cursor: pointer;
+    /* display: none; */
+    width: 1.4rem;
+    height: 1.4rem;
+}
+  @media  (max-width: 768px) {
+    .root {
+      width: 90vw;
+    }
+    .inputWrapper{
+      width: 100%;
+      position: relative;
+    }
+    .listbox{
+      width: 335px!important;
+      margin: 5px 0px 0px;
+        z-index: 1;
+    }
+    .listbox li span{
+      font-size: 12px;
+    }
+    .optionType{
+      font-size: 10px !important;
+      color: #0009;
+    }
+  }

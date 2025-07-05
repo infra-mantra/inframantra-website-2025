@@ -1,0 +1,23 @@
+/* Property Listing */
+.propertyListingDesktopNav {
+  height: 8vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+  padding: 5px 0px;
+}
+.clearfiltersbutton{
+  background-color: #e7b554;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  height: 57%;
+  padding: 5px 10px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background-color 0.3s;
+}

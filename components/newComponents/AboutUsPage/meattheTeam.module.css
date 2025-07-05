@@ -1,0 +1,232 @@
+
+/* Meet The Team */
+.meetTheTeamHeaderflex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.meetTheTeamHeaderflex > h4 {
+  color: #c78911;
+  font-size: 38px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.meetTeamDescriptionQuotesWrapper {
+  height: 100%;
+  margin-left: 100px;
+  position: relative;
+}
+
+.teamPhotoAboutUsWrapper {
+  width: 50vw;
+  height: 50vh;
+}
+.teamPhotoAboutUsWrapper .teamPhotoAboutUs{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 20px;
+}
+
+/* .meetTheTeamDescription{
+  height: 50vh;
+  width: 100%;
+} */
+
+
+@media screen and (max-width: 768px) {
+  .meetTeamDescriptionQuotesWrapper {
+    margin-left: 0px;
+  }
+  .meetTheTeamHeaderflex > h4 {
+    font-size: 22px;
+  }
+  .css-ahj2mt-MuiTypography-root {
+    font-size: 13px !important;
+  }
+  .css-19kzrtu {
+    padding: 0 !important;
+  }
+  .css-j7qwjs{
+    flex-direction: row !important;
+    width: 100% !important;
+    overflow: scroll;
+  }
+  .css-v5lgdj{
+    position: absolute;
+  }
+  .css-lfwcke-MuiTabs-flexContainer {
+    flex-direction: row !important;
+    width: 100% !important;
+    overflow: scroll;
+  }
+  .css-q3epkg-MuiTabs-root {
+    width: 100% !important;
+  }
+  .css-1qwqd6u {
+    width: 100vw !important;
+  }
+  .teamDescription{
+    /* margin-left: 10px;
+    margin-right: 10px; */
+    width: 90%;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .teamPhotoAboutUsWrapper {
+    width: 100vw;
+    height: 29vh;
+    display: flex;
+    justify-content: center;
+  }
+  .teamPhotoAboutUsWrapper .teamPhotoAboutUs{
+    width: 90%;
+    object-fit: cover;
+    /* border-radius: 10px; */
+  }
+}
+
+
+
+.meetTheTeamHeaderflex {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.meetTheTeamContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 90vw;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.tabsContainer {
+  display: flex;
+  flex-direction: column;
+  /* flex-wrap: wrap; */
+  justify-content: center;
+  margin-bottom: 20px;
+  width: 35vw;
+}
+
+.tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.3s, border-bottom 0.3s;
+  display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    background-color: transparent;
+    outline: 0px;
+    border: 0px;
+    margin: 0px;
+    border-radius: 0px;
+    cursor: pointer;
+    user-select: none;
+    vertical-align: middle;
+    appearance: none;
+    text-decoration: none;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: 0.02857em;
+    text-transform: uppercase;
+    max-width: 360px;
+    min-width: 90px;
+    position: relative;
+    min-height: 48px;
+    flex-shrink: 0;
+    padding: 12px 16px;
+    overflow: hidden;
+    white-space: normal;
+    text-align: center;
+    flex-direction: column;
+    font-size: 1.3rem;
+}
+
+.tab.selected {
+  color: #E7B554;
+  /* border-bottom: 2px solid #E7B554; */
+}
+
+.descriptionContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+  /* background-color: #f9f9f9; */
+  border-radius: 10px;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+  position: relative;
+}
+
+.quoteIcon {
+  font-size: 80px;
+  color: rgba(231, 181, 84, 0.56);
+  transform: rotate(0deg);
+  margin-bottom: 20px;
+}
+
+.tabPanelContent {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.teamDescription {
+  font-size: 1em;
+  margin-bottom: 20px;
+  width: 90%;
+}
+
+.teamPhotoAboutUsWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.teamPhotoAboutUs {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+}
+
+@media (max-width: 768px) {
+  .meetTheTeamContainer {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  .tabsContainer {
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow-x: auto;
+    width: 100%;
+  }
+  .tab{
+    width: max-content;
+  }
+}
+.clear-filters-button{
+  background-color: #e7b554;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  height: 57%;
+  padding: 5px 10px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background-color 0.3s;
+}
+

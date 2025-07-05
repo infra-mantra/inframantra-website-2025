@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100" height="45" viewBox="0 0 100 45">
+  <defs>
+    <style>
+      .cls-1 {
+        font-size: 19.195px;
+        text-anchor: middle;
+        font-family: Poppins;
+        font-weight: 600;
+      }
+    </style>
+  </defs>
+  <image id="Background" width="100" height="45" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAAtCAYAAABYtc7wAAAAfElEQVR4nO3RQQHAQAwEobT+Pe/Z4DFY4Nu2C+OvwlIIphBMIZhCMIVgCsEUgikEUwimEEwhmEIwhWAKwRSCKQRTCKYQTCGYQjCFYArBFIIpBFMIphBMIZhCMIVgCsEUgikEUwimEEwhmEIwhWAKwRSCKQRTCKYQTCGSu3uLtwRWzSIaywAAAABJRU5ErkJggg=="/>
+  <image id="Inframantra_Logo_Black" data-name="Inframantra Logo Black" x="1" y="9" width="97" height="18" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGEAAAASCAYAAABLsLDMAAAFe0lEQVRYhe2YCWxVVRCGvxYoLQGk0LIFKiC7oDQVCRZalKAC0RQFEpZUFo2KIQaJiIqoQVFMRIKGRUEBZZGlCcYFhNKyFkIIq9BURSq0yCoFCrSlHHPI/8jwLFubBomd5Oae87+5c+fMzPnP3BcCvAVUAS5SOikCmgOzgIxS2vhfS2WgNnAa6A64WwyGT+JZ4CDQsSIJpROfhCPAIKBdGewsBvbfzoXcyRKq60gZ1uBprECUViGlkNCKoN1+uekktG5agxeSOzB9WhLRkRHXU+0FvK7xdGB+0O/LgHc0ngB8D2Tpmg2EA3OAtUAmsALoVsJ7FslWuMFGAUuAmkG6IcLfD8IXyEY1g3UU1sdgXYXVAF6Trz/IZpbshGm9a+R3KvBYCX5/JVu1LPgGsFqH8pWrReMI1++RKDdlVHO3e3GCcznDnHMfOucWupwdL7q6taoGdH13NM84Pc8c8Ic0ftu8z89/M2N/LdXlO7UGwk4BPwInNbeJSDTPDjB4mrBxQQsfLvx3gz1kbAwx+ACDBwI1UvNY4BkgxeikKLm1NC+Q339p3tvYbm+eG3lVEqpFVFndvnWUS05q7maOj3O7Fsa782nxzm3p6vJSE1za553dpNFxrktcQzcoqb1zbqI7uSvZxdSLKCkJ35gkpJuXtjCBTzXjlUEBu0f4wKDELTXz9UqSX+g+g88zCWwprDpwoIR3+YrNA3KDkvOk8XmzsCTNuxs9v4ZLZl5bOqOD/E438++A88Cfeu9l8d0RTWMi2bXPJyYfMvezOSObSV8fZtOe0+w9cJ5DRwuuWNmwLZeDHU+wNq0v2Wt60W1wKmu3n7JBLDBj//3wE1AV2Caa+NvQoN8RneVoiLZvYPf4iisGOkh3me6eC7sAyVpMunbPYTUHF4C7gHdV1Z4+7lZiAjzq9R4GngP2qLWOkb0w6UzQzvQ+bRdWaNZmKSwQcN+kPKUANxe+0Og8AYwRBe8F2vr75ST8cfAUH41dyZ6sI6zbnEP24XMkJUaTGFebzrFVeLpHDItX5RLbqRVRDeqQ2PML2rabw6p5XQmvet1jxVfhOZ0T3snPgBMKbsDxkEAxGMxfnYBHhfUzO2G47ksUcC8vA2MVmOPAl8B44FngFeBTJTNAL4N0/xY4o/Fo2QnR/AN1jf5MevN6izRSpMAuEDTYnIn9dV+k7ypUIL7YSj4Tpr3a0mUv7+y2zI13x9N7u0uZQ11GykDnij92WVtHWN1gOppt6MgHZLfGQ8wzc03A1wctpInwvoYaGpnftwrLUwCd6AYt3ldrJeCoqq1QOyBTuxEd+gHaOqvxYf3WU/OOmh8yfscbPzKC6ChSOs8DCRq3Nb//LOy0CjMwvnZ3FBYWQkRYKLFtIhkzeSeDx2ygcZtopr6XSoumNTmxM5lGdcNLerS+GdfRNkcdzyqNo41O66DnA5V4nzg0X5XjKa0V8IAqeLzoYobopo12RhXttMnCloiHWyloDRWkFDUM47RTvN/3m2+mZronGN/sgpsYX1HivTwIrJOdX8QGPg49tKvGqfAnqdt6ydLAVbJhRx5n8oupXiOfnGOFrMw4xIqNs7hwrohPZqxn/szu9O/RkCkL9nPp6j870g33ej48Zn7ro+24SfPlng2DXn1GnBn4An9cDvug1NXhOkzVFJAYVZ2vtihhM9QBTdR8mYLTUnpDDBWhhuBedVj+/b8K936MEKXmGv355vBHBeCf22n8nqoiK1QBDlUzERD/L0U9rkVHN3uF/JuOyksqlbP98pKQG9kt8xfzrf7jVwYpLjfL5Ss3DFGo2qr6ZXCjstq6ov/Iou848QFsrIMuvpTOnxW3NrsJ3QopQXwScvS1t7WUAbqog3FjRYBLIcA/dVPmiAg+JXQAAAAASUVORK5CYII="/>
+  <text id="NEWS" class="cls-1" transform="translate(49.739 34.24) scale(0.543)"><tspan x="0">NEWS</tspan></text>
+</svg>

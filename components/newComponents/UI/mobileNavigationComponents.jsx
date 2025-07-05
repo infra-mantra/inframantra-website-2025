@@ -18,7 +18,7 @@ const MobileMenu = () => {
   };
 
   const isActive = (path) => {
-    return router.pathname === `/${path}` ? '#E4A01D' : 'inherit';
+    return router.pathname === `/${path}` ? '#E4A01D' : '#00000';
   };
 
   const handleNavigation = useCallback((path) => {
@@ -44,13 +44,14 @@ const MobileMenu = () => {
       overflowX: 'hidden',
     }}>
       {/* Header with Logo and Close Button */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' , color:"#0000"}}>
         <img
           src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/inframantraLogoBlack.png"
           alt="Inframantra Logo"
           style={{ width: '150px' }}
         />
-        <IoClose size={30} onClick={toggleDrawer(false)} style={{ cursor: 'pointer' }} />
+       <IoClose size={30} onClick={toggleDrawer(false)} style={{ cursor: 'pointer', color: "#000" }} />
+
       </div>
 
       {/* Navigation Items */}

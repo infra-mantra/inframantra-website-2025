@@ -1,0 +1,343 @@
+.main {
+  text-align: center;
+  padding: 10px;
+  background-color: rgb(240, 240, 240);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* margin-top: 40px; */
+  
+}
+.offerCardContainer {
+  margin-top: 30px;
+  width: 100%;
+  display: flex;
+  height: 500px;
+  justify-content: center;
+}
+
+
+.offerCard {
+  background-color: #fff;
+  color: #fff;
+  padding: 70px 30px;
+  width: 80%;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.396);
+  transform: perspective(800px) rotateX(0);
+  transition: transform 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.offerCard::before {
+  content: "Special Offer";
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #000;
+  z-index: -4;
+  font-size: 80px;
+  background: linear-gradient(45deg, #000, gold, #daa520, #000, #daa520, gold, #000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.offerCard::after {
+  content: "";
+  position: absolute;
+  top: 5%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('/assets/offer-image-guru-randhawa.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  z-index: -1;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.offerContent {
+  position: absolute;
+  top: 75%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.8);
+  transition: transform 0.3s ease;
+  text-align: center;
+  width: 50%;
+}
+
+.offerIcon {
+  font-size: 70px;
+  color: #daa520;
+}
+
+.rightOffer {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  animation: float 1s infinite alternate;
+}
+
+.contactContainer {
+  position: relative;
+  width: 100%;
+  padding: 2rem;
+  background-color: #fafafa;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bigCircle,
+.bigCircle::after {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.bigCircle {
+  width: 500px;
+  height: 500px;
+  background: linear-gradient(180deg, #1cd4af, #159b80);
+  bottom: 50%;
+  right: 50%;
+  transform: translate(-40%, 38%);
+}
+
+.bigCircle::after {
+  content: "";
+  width: 360px;
+  height: 360px;
+  background-color: #fafafa;
+  top: calc(50% - 180px);
+  left: calc(50% - 180px);
+}
+
+.form {
+  width: 90%;
+  min-width: 820px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.1);
+  z-index: 99;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.contactInfoOffer {
+  background: url('/guruCollection/guru-form-image.jpg');
+  background-position: center 0;
+  background-size: cover;
+}
+
+.offerContactForm {
+  background-color: #cac6dd;
+  position: relative;
+}
+
+.contactInfoOffer::before {
+  content: "";
+  background: url('/icons/home-icon.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  height: 90px;
+  width: 100px;
+  position: absolute;
+  top: 30%;
+  right: 50%;
+  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+}
+
+.offerContactForm::before {
+  content: "";
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  background-color: #daa520;
+  transform: rotate(45deg);
+  top: 50px;
+  left: -13px;
+}
+
+.circleOne {
+  width: 130px;
+  height: 130px;
+  top: 130px;
+  right: -40px;
+}
+
+.circle {
+  border-radius: 50%;
+  background: linear-gradient(135deg, transparent 20%, #149279);
+  position: absolute;
+}
+
+.offerContactForm form {
+  padding: 2.3rem 2.2rem;
+  z-index: 10;
+  overflow: hidden;
+  position: relative;
+}
+
+.inputContainer {
+  position: relative;
+  margin: 1rem 0;
+}
+
+.textarea {
+  padding: 0.8rem 1.2rem;
+  min-height: 150px;
+  border-radius: 5px;
+  resize: none;
+  overflow-y: auto;
+}
+
+.input {
+  width: 100%;
+  outline: none;
+  border: 2px solid #fafafa;
+  background: none;
+  padding: 0.6rem 1.2rem;
+  color: #757575;
+  font-weight: 500;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.btn {
+  padding: 0.6rem 1.3rem;
+  background-color: #fff;
+  border: 2px solid #fafafa;
+  color: #daa520;
+  font-size: 20px;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 100%;
+}
+.inputcontainerText  {
+    padding: 0.8rem 1.2rem;
+    min-height: 150px;
+    border-radius: 5px;
+    resize: none;
+    overflow-y: auto;
+        width: 100%;
+}
+.input {
+
+    outline: none;
+    border: 2px solid #fafafa;
+    background: none;
+    padding: 0.6rem 1.2rem;
+    color: #757575;
+    font-weight: 500;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+@media screen and (max-width: 767px) {
+  .offerCard {
+    width: 95%;
+    height: 500px;
+    background-color: #b8bbbb9a;
+  }
+
+  .offerCard::after {
+    top: 3%;
+    margin: 0 10px;
+  }
+
+  .contactContainer {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .offerCard h1 {
+    font-size: 15px;
+  }
+
+  .offerCard::before {
+    top: 30px;
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 850px) {
+  .offerContactForm::before {
+    top: -13px;
+    left: auto;
+    right: 70px;
+  }
+
+  .bigCircle {
+    bottom: 75%;
+    transform: scale(0.9) translate(-40%, 30%);
+    right: 50%;
+  }
+
+  .form {
+    grid-template-columns: 1fr;
+    min-width: 100%;
+  }
+
+  .contactInfoOffer {
+    height: 450px;
+    background-size: cover;
+  }
+
+  .contactInfoOffer::before {
+    top: 16%;
+    right: 65px;
+    transform: scale(0.95);
+  }
+}
+
+@media (max-width: 480px) {
+  .contactInfoOffer::before {
+    height: 50px;
+    top: 10%;
+    right: 15px;
+    transform: scale(0.95);
+  }
+
+  .contactContainer {
+    padding: 1.5rem;
+  }
+
+  .bigCircle {
+    display: none;
+  }
+
+  .btn,
+  .input {
+    padding: 0.45rem 1.2rem;
+  }
+
+  .contactInfoOffer {
+    height: 400px;
+    padding: 20px;
+    background-position: 50%;
+  }
+}
+@media screen and (max-width: 767px) {
+    .offerSectionHead h1 {
+        color: #daa520;
+        text-align: center;
+        font-style: italic;
+        font-family: Times New Roman, Times, serif;
+    }
+}

@@ -79,28 +79,7 @@ function SideMenu({data}) {
             </div>
 
                 <div className="site-config">
-                    {/* <div className="config-item">
-                        <div className="setting-label">
-                            Push notification
-                        </div>
-                        <div className='setting-field'>
-                            <label className="switch">
-                                <input type="checkbox"/>
-                                <span className="slider round"></span>
-                            </label>
-                        </div>
-                    </div>
-                    <div className="config-item">
-                        <div className="setting-label">
-                            Preferred Language
-                        </div>
-                        <div className='setting-field'>
-                            <select name="language" id="language">
-                                <option value="English">English</option>
-                                <option value="Hindi">Hindi</option>
-                            </select>
-                        </div>
-                    </div> */}
+                    
                     <div className="extra-links">
                         <ul className='smenu-links mob-show'>
                             <li className='smenu-link'><Link href='/'><a>Home</a></Link></li>
@@ -140,7 +119,6 @@ function SideMenu({data}) {
                             </li>
                         </ul>
                         <ul className='smenu-links'>
-                        {/* <li className='smenu-link'><Link href='/careers'><a>Careers</a></Link></li> */}
                             {extra_links.map((link_item, index)=>(
                                 <li className='smenu-link' key={index}><Link href={link_item.link}><a>{link_item.link_title}</a></Link></li>
                             ))}
@@ -216,42 +194,10 @@ function SideMenu({data}) {
                                     <a>{extra_info_item.link_title}</a>
                                 </Link></li>
                             ))}
-                            {/* {extra_info.map((extra_info_item, index)=>(
-                                <li className='smenu_info_item' key={index}><Link href={extra_info_item.link}><a>{extra_info_item.link_title}</a></Link></li>
-                            ))} */}
+                        
                         </ul>
                      </div>
-                    {/* <div className="extra-info">
-                        <ul className="menu-socials">
-                            <div className="social-label">Follow Us</div>
-                            <li>
-                                <a href={data === null ? '' : data.setting[0].facebook} target="_blank" rel="noreferrer">
-                                    <div className="icon">
-                                        <Image src="/assets/images/menu-facebook.png" alt="fb" layout="fill" objectFit="contain" />
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href={data === null ? '' : data.setting[0].instagram} target="_blank" rel="noreferrer">
-                                    <div className="icon">
-                                        <Image src="/assets/images/menu-instagram.png" alt="insta" layout="fill" objectFit="contain" />
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                            <a href={data === null ? '' : data.setting[0].twitter} target="_blank" rel="noreferrer">
-                                    <div className="icon">
-                                        <Image src="/assets/images/menu-twitter.png" alt="fb" layout="fill" objectFit="contain" />
-                                    </div>
-                                </a>
-                            </li>
-                        </ul>
-                        <ul className='smenu-info-items'>
-                            {extra_info.map((extra_info_item, index)=>(
-                                <li className='smenu_info_item' key={index}><Link href={extra_info_item.link}><a>{extra_info_item.link_title}</a></Link></li>
-                            ))}
-                        </ul>
-                    </div> */}
+                   
                 </div>
             </div>
         </div>

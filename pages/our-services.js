@@ -1,6 +1,7 @@
 
 import React, { useEffect,useState } from 'react';
 import Wrapper from '../components/UI/Wrapper';
+import styles from '../styles/ourservice.module.css'
 
 function ServicesPage() {
    const [isDesktop, setIsDesktop] = useState(true);
@@ -26,30 +27,30 @@ function ServicesPage() {
      description={'INFRAMANTRA is a Real Estate Firm that helps to Build Value on Commercial and Residential properties. We work with the top Builders in Gurgaon, Pune, and Noida. '}
      keywords={'Home Loans, Home Interiors, Property Buying, Property Management'}
     >
-      <div className="servicePageWrapper">
-      <h1 className="servicePageHeader">OUR SERVICES</h1>
-      <hr className="servicePageHeaderBorderBottom" />
+      <div className={styles.servicePageWrapper}>
+      <h1 className={styles.servicePageHeader}>OUR SERVICES</h1>
+      <hr className={styles.servicePageHeaderBorderBottom} />
       <div></div>
       {isDesktop ? (
-        <div className="servicePageFirstSalePointContainer" id="Site-Visits">
-          <div className="servicePageFirstPointImgWrapper">
+        <div className={styles.servicePageFirstSalePointContainer} id="Site-Visits">
+          <div className={styles.servicePageFirstPointImgWrapper}>
             <img
-              className="servicePageFirstPointImg"
+              className={styles.servicePageFirstPointImg}
               src="https://inframantra.blr1.cdn.digitaloceanspaces.com/servicesPage/siteVisit.avif"
               alt="Inframantra Site Visit"
             />
-            <div className="servicePageFirstPointImgBgrd" />
+            <div className={styles.servicePageFirstPointImgBgrd} />
           </div>
-          <div className="servicePageFirstPointDescriptionWrapper">
-            <div className="servicePageFirstPointDescriptionHeaderFlex">
+          <div className={styles.servicePageFirstPointDescriptionWrapper}>
+            <div className={styles.servicePageFirstPointDescriptionHeaderFlex}>
               <img
-                className="servicePageFirstPointDescriptionHeaderIcon"
+                className={styles.servicePageFirstPointDescriptionHeaderIcon}
                 src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/siteVisits.svg"
                 alt="siteVisit"
               />
               <h4>SITE VISIT</h4>
             </div>
-            <div className="servicePageFirstPointDescriptionContentWrapper">
+            <div className={styles.servicePageFirstPointDescriptionContentWrapper}>
               <p>
                 Explore your dream home with our property experts and understand
                 every detail like surroundings, locality, and all the amenities
@@ -59,24 +60,24 @@ function ServicesPage() {
           </div>
         </div>
       ) : (
-        <div className="servicePageFirstSalePointContainer" id="Site-Visits">
-          <div className="servicePageFirstPointDescriptionHeaderFlex">
+        <div className={styles.servicePageFirstSalePointContainer} id="Site-Visits">
+          <div className={styles.servicePageFirstPointDescriptionHeaderFlex}>
             <img
-              className="servicePageFirstPointDescriptionHeaderIcon"
+              className={styles.servicePageFirstPointDescriptionHeaderIcon}
               src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/siteVisits.svg"
               alt="siteVisit"
             />
             <h4>SITE VISIT</h4>
           </div>
-          <div className="servicePageFirstPointImgWrapper">
+          <div className={styles.servicePageFirstPointImgWrapper}>
             <img
-              className="servicePageFirstPointImg"
+              className={styles.servicePageFirstPointImg}
               src="https://inframantra.blr1.cdn.digitaloceanspaces.com/servicesPage/siteVisit.avif"
               alt="Inframantra Site Visit"
             />
-            <div className="servicePageFirstPointImgBgrd" />
+            <div className={styles.servicePageFirstPointImgBgrd} />
           </div>
-          <div className="servicePageFirstPointDescriptionContentWrapper">
+          <div className={styles.servicePageFirstPointDescriptionContentWrapper}>
             <p>
               Explore your dream home with our property experts and understand
               every detail like surroundings, locality and all the amenities of
@@ -88,17 +89,17 @@ function ServicesPage() {
 
       {isDesktop ? (
         <>
-          <div className="servicePageFirstSalePointContainer" id="Consultancy">
-            <div className="servicePageFirstPointDescriptionWrapper servicePageFirstPointDescriptionWrapperSecondSectionNew">
-              <div className="servicePageFirstPointDescriptionHeaderFlex">
+          <div className={styles.servicePageFirstSalePointContainer} id="Consultancy">
+            <div className={`${styles.servicePageFirstPointDescriptionWrapper} ${styles.servicePageFirstPointDescriptionWrapperSecondSectionNew}`}>
+              <div className={styles.servicePageFirstPointDescriptionHeaderFlex}>
                 <img
-                  className="servicePageFirstPointDescriptionHeaderIcon"
+                  className={styles.servicePageFirstPointDescriptionHeaderIcon}
                   src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/consultancy.svg"
                   alt="siteVisit"
                 />
                 <h4>CONSULTANCY</h4>
               </div>
-              <div className="servicePageFirstPointDescriptionContentWrapper">
+              <div className={styles.servicePageFirstPointDescriptionContentWrapper}>
                 <p>
                   Get valuable insights and personalised advice from our real
                   estate consultants, who will help you out in exploring
@@ -106,18 +107,18 @@ function ServicesPage() {
                 </p>
               </div>
             </div>
-            <div className="servicePageFirstPointImgWrapper servicePageFirstPointImgWrapperSecondSectionNew">
+            <div className={`${styles.servicePageFirstPointImgWrapper} ${styles.servicePageFirstPointImgWrapperSecondSectionNew}`}>
               <img
-                className="servicePageFirstPointImg"
+                className={styles.servicePageFirstPointImg}
                 src="https://inframantra.blr1.cdn.digitaloceanspaces.com/servicesPage/consultancy.avif"
                 alt="Inframantra Consultancy"
               />
-              <div className="servicePageFirstPointImgBgrd servicePageFirstPointImgBgrdSecondSectionNew" />
+              <div className={`${styles.servicePageFirstPointImgBgrd} ${styles.servicePageFirstPointImgBgrdSecondSectionNew}`} />
             </div>
           </div>
-          <div className="servicePageSecondSectionIconWrapper">
-            <div className="servicePageSecondSectionIconFlexContainer">
-              <div className="servicePageSecondSectionIconFlex">
+          <div className={styles.servicePageSecondSectionIconWrapper}>
+            <div className={styles.servicePageSecondSectionIconFlexContainer}>
+              <div className={styles.servicePageSecondSectionIconFlex}>
                 <img
                   src="https://inframantra.blr1.cdn.digitaloceanspaces.com/servicesPage/Market%20analysis%20and%20insights.svg"
                   alt="Market Analysis And Insights"
@@ -127,9 +128,9 @@ function ServicesPage() {
               </div>
               <div></div>
             </div>
-            <div className="servicePageSecondSectionIconFlexContainer">
+            <div className={styles.servicePageSecondSectionIconFlexContainer}>
               <div></div>
-              <div className="servicePageSecondSectionIconFlex">
+              <div className={styles.servicePageSecondSectionIconFlex}>
                 <img
                   src="https://inframantra.blr1.cdn.digitaloceanspaces.com/servicesPage/Assistance%20with%20legal%20and%20regulatory%20requirements.svg"
                   alt="Market Analysis And Insights"
@@ -137,8 +138,8 @@ function ServicesPage() {
                 <p> Assistance with Legal and Regulatory Requirements</p>
               </div>
             </div>
-            <div className="servicePageSecondSectionIconFlexContainer">
-              <div className="servicePageSecondSectionIconFlex">
+            <div className={styles.servicePageSecondSectionIconFlexContainer}>
+              <div className={styles.servicePageSecondSectionIconFlex}>
                 <img
                   src="https://inframantra.blr1.cdn.digitaloceanspaces.com/servicesPage/Investment%20optimization%20strategies.svg"
                   alt="Market Analysis And Insights"
@@ -147,9 +148,9 @@ function ServicesPage() {
               </div>
               <div></div>
             </div>
-            <div className="servicePageSecondSectionIconFlexContainer">
+            <div className={styles.servicePageSecondSectionIconFlexContainer}>
               <div></div>
-              <div className="servicePageSecondSectionIconFlex">
+              <div className={styles.servicePageSecondSectionIconFlex}>
                 <img
                   src="https://inframantra.blr1.cdn.digitaloceanspaces.com/servicesPage/Personalized%20real%20estate%20advice.svg"
                   alt="Market Analysis And Insights"
@@ -157,7 +158,7 @@ function ServicesPage() {
                 <p> Personalized Real Estate Advice </p>
               </div>
             </div>
-            <div className="servicePageSecondSectionIconFlexContainer">
+            <div className={styles.servicePageSecondSectionIconFlexContainer}>
               <div className="servicePageSecondSectionIconFlex">
                 <img
                   src="https://inframantra.blr1.cdn.digitaloceanspaces.com/servicesPage/Customized%20solutions%20for%20buying,%20selling,%20or%20leasing%20properties.svg"
@@ -173,37 +174,37 @@ function ServicesPage() {
           </div>
         </>
       ) : (
-        <div className="servicePageFirstSalePointContainer" id="Consultancy">
-          <div className="servicePageFirstPointDescriptionHeaderFlex">
+        <div className={styles.servicePageFirstSalePointContainer} id="Consultancy">
+          <div className={styles.servicePageFirstPointDescriptionHeaderFlex} >
             <img
-              className="servicePageFirstPointDescriptionHeaderIcon"
+              className={styles.servicePageFirstPointDescriptionHeaderIcon}
               src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/consultancy.svg"
               alt="consultancy"
             />
             <h4>CONSULTANCY</h4>
           </div>
-          <div className="servicePageFirstPointImgWrapper">
+          <div className={styles.servicePageFirstPointImgWrapper}>
             <img
-              className="servicePageFirstPointImg"
+              className={styles.servicePageFirstPointImg}
               src="https://inframantra.blr1.cdn.digitaloceanspaces.com/servicesPage/consultancy.avif"
               alt="Inframantra Consultancy"
             />
-            <div className="servicePageFirstPointImgBgrd servicePageFirstPointImgBgrdRight" />
+            <div className={`${styles.servicePageFirstPointImgBgrd} ${styles.servicePageFirstPointImgBgrdRight}`} />
           </div>
-          <div className="servicePageFirstPointDescriptionContentWrapper">
+          <div className={styles.servicePageFirstPointDescriptionContentWrapper}>
             <p>
               Get valuable insights and personalised advice from our real estate
               consultants, who will help you out in exploring the best options,
               and finalise your dream home.
             </p>
           </div>
-          <div className="servicePageSecondPointIconsContainer">
-            <div className="servicePageSecondPointIconsColumnFlexContainer">
-              <div className="servicePageSecondPointIconFlex iconContentFlexStart">
+          <div className={styles.servicePageSecondPointIconsContainer}>
+            <div className={styles.servicePageSecondPointIconsColumnFlexContainer}>
+              <div className={`${styles.servicePageSecondPointIconFlex} ${styles.iconContentFlexStart}`}>
                 <img
                   src="https://inframantra.blr1.cdn.digitaloceanspaces.com/servicesPage/Market%20analysis%20and%20insights.svg"
                   alt="Market Analysis And Insights"
-                  className="servicePageSecondPointIconStyles"
+                  className={styles.servicePageSecondPointIconStyles}
                 />
                 <p
                   style={{
@@ -214,11 +215,11 @@ function ServicesPage() {
                   Market Analysis And Insights
                 </p>
               </div>
-              <div className="servicePageSecondPointIconFlex iconContentFlexEnd ">
+              <div className={`${styles.servicePageSecondPointIconFlex} ${styles.iconContentFlexEnd} `}>
                 <img
                   src="https://inframantra.blr1.cdn.digitaloceanspaces.com/servicesPage/Assistance%20with%20legal%20and%20regulatory%20requirements.svg"
                   alt="Market Analysis And Insights"
-                  className="servicePageSecondPointIconStyles"
+                  className={styles.servicePageSecondPointIconStyles}
                   style={{ marginLeft: '30%' }}
                 />
                 <p
@@ -234,7 +235,7 @@ function ServicesPage() {
                 <img
                   src="https://inframantra.blr1.cdn.digitaloceanspaces.com/servicesPage/Investment%20optimization%20strategies.svg"
                   alt="Market Analysis And Insights"
-                  className="servicePageSecondPointIconStyles"
+                  className={styles.servicePageSecondPointIconStyles}
                 />
                 <p
                   style={{
@@ -245,11 +246,11 @@ function ServicesPage() {
                   Investment Optimization Strategies
                 </p>
               </div>
-              <div className="servicePageSecondPointIconFlex iconContentFlexEnd">
+              <div className={`${styles.servicePageSecondPointIconFlex} ${styles.iconContentFlexEnd}`}>
                 <img
                   src="https://inframantra.blr1.cdn.digitaloceanspaces.com/servicesPage/Personalized%20real%20estate%20advice.svg"
                   alt="Market Analysis And Insights"
-                  className="servicePageSecondPointIconStyles"
+                  className={styles.servicePageSecondPointIconStyles}
                 />
                 <p
                   style={{
@@ -260,11 +261,11 @@ function ServicesPage() {
                   Personalized Real Estate Advice
                 </p>
               </div>
-              <div className="servicePageSecondPointIconFlex iconContentFlexStart">
+              <div className={`${styles.servicePageSecondPointIconFlex} ${styles.iconContentFlexStart}`}>
                 <img
                   src="https://inframantra.blr1.cdn.digitaloceanspaces.com/servicesPage/Customized%20solutions%20for%20buying,%20selling,%20or%20leasing%20properties.svg"
                   alt="Market Analysis And Insights"
-                  className="servicePageSecondPointIconStyles"
+                  className={styles.servicePageSecondPointIconStyles}
                 />
                 <p
                   style={{
@@ -283,38 +284,38 @@ function ServicesPage() {
       )}
 
       {isDesktop ? (
-        <div className="servicePageThirdSalePointContainer" id="Hand-Holding">
-          <div className="servicePageThirdSalePointDescriptionHeaderFlex">
+        <div className={styles.servicePageThirdSalePointContainer} id="Hand-Holding">
+          <div className={styles.servicePageThirdSalePointDescriptionHeaderFlex}>
             <img
-              className="servicePageFirstPointDescriptionHeaderIcon"
+              className={styles.servicePageFirstPointDescriptionHeaderIcon}
               src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/handHolding.svg"
               alt="hand holding"
             />
             <h2>Seamless Assistance</h2>
           </div>
-          <p className="servicePageThirdSalePointDescription">
+          <p className={styles.servicePageThirdSalePointDescription}>
             From home assistance to key handover, we ensure a seamless and a
             hassle-free experience, letting you settle into your new home with
             ease.
           </p>
-          <div className="servicePageFirstSalePointContainer">
-            <div className="servicePageFirstPointImgWrapper">
+          <div className={styles.servicePageFirstSalePointContainer}>
+            <div className={styles.servicePageFirstPointImgWrapper}>
               <img
-                className="servicePageFirstPointImg"
+                className={styles.servicePageFirstPointImg}
                 src="https://inframantra.blr1.cdn.digitaloceanspaces.com/servicesPage/paperWork.avif"
                 alt="Inframantra Documentation"
               />
-              <div className="servicePageFirstPointImgBgrd" />
+              <div className={styles.servicePageFirstPointImgBgrd} />
             </div>
-            <div className="servicePageThirdPointDescriptionWrapper">
-              <div className="servicePageThirdPointDescriptionHeaderFlex">
-                <p className="servicePageHandHoldingPointers">01</p>
+            <div className={styles.servicePageThirdPointDescriptionWrapper}>
+              <div className={styles.servicePageThirdPointDescriptionHeaderFlex}>
+                <p className={styles.servicePageHandHoldingPointers}>01</p>
               </div>
-              <div className="servicePageThirdPointDescriptionContentWrapper">
-                <h4 className="servicePageThirdPointDescriptionContentHeader">
+              <div className={styles.servicePageThirdPointDescriptionContentWrapper}>
+                <h4 className={styles.servicePageThirdPointDescriptionContentHeader}>
                   DOCUMENTATION
                 </h4>
-                <p className="servicePageThirdPointDescriptionContentHeaderData">
+                <p className={styles.servicePageThirdPointDescriptionContentHeaderData}>
                   Simplify your paperwork with our expert help, ensuring a
                   smooth, hassle-free transaction at every step, so that you can experience
                   efficiency and ease like never before.
@@ -322,24 +323,24 @@ function ServicesPage() {
               </div>
             </div>
           </div>
-          <div className="servicePageFirstSalePointContainer">
-            <div className="servicePageFirstPointImgWrapper">
+          <div className={styles.servicePageFirstSalePointContainer}>
+            <div className={styles.servicePageFirstPointImgWrapper}>
               <img
-                className="servicePageFirstPointImg"
+                className={styles.servicePageFirstPointImg}
                 src="https://inframantra.blr1.cdn.digitaloceanspaces.com/servicesPage/developerCordination.avif"
                 alt="Inframantra Developer coordination"
               />
-              <div className="servicePageFirstPointImgBgrd servicePageFirstPointImgBgrdRight" />
+              <div className={`${styles.servicePageFirstPointImgBgrd} ${styles.servicePageFirstPointImgBgrdRight}`} />
             </div>
-            <div className="servicePageThirdPointDescriptionWrapper">
-              <div className="servicePageThirdPointDescriptionHeaderFlex">
-                <p className="servicePageHandHoldingPointers">02</p>
+            <div className={styles.servicePageThirdPointDescriptionWrapper}>
+              <div className={styles.servicePageThirdPointDescriptionHeaderFlex}>
+                <p className={styles.servicePageHandHoldingPointers}>02</p>
               </div>
-              <div className="servicePageThirdPointDescriptionContentWrapper">
-                <h4 className="servicePageThirdPointDescriptionContentHeader">
+              <div className={styles.servicePageThirdPointDescriptionContentWrapper}>
+                <h4 className={styles.servicePageThirdPointDescriptionContentHeader}>
                   DEVELOPER COORDINATION
                 </h4>
-                <p className="servicePageThirdPointDescriptionContentHeaderData">
+                <p className={styles.servicePageThirdPointDescriptionContentHeaderData}>
                   Easily connect with developers through our premium services, timely updates and smooth communication throughout
                   your home-buying journey. We ensure a streamlined experience
                   from start to finish!
@@ -347,24 +348,24 @@ function ServicesPage() {
               </div>
             </div>
           </div>
-          <div className="servicePageFirstSalePointContainer">
-            <div className="servicePageFirstPointImgWrapper">
+          <div className={styles.servicePageFirstSalePointContainer}>
+            <div className={styles.servicePageFirstPointImgWrapper}>
               <img
-                className="servicePageFirstPointImg"
+                className={styles.servicePageFirstPointImg}
                 src="https://inframantra.blr1.cdn.digitaloceanspaces.com/servicesPage/homeAssisstance.avif"
                 alt="aHome Loan"
               />
-              <div className="servicePageFirstPointImgBgrd" />
+              <div className={styles.servicePageFirstPointImgBgrd} />
             </div>
-            <div className="servicePageThirdPointDescriptionWrapper">
-              <div className="servicePageThirdPointDescriptionHeaderFlex">
-                <p className="servicePageHandHoldingPointers">03</p>
+            <div className={styles.servicePageThirdPointDescriptionWrapper}>
+              <div className={styles.servicePageThirdPointDescriptionHeaderFlex}>
+                <p className={styles.servicePageHandHoldingPointers}>03</p>
               </div>
-              <div className="servicePageThirdPointDescriptionContentWrapper">
-                <h4 className="servicePageThirdPointDescriptionContentHeader">
+              <div className={styles.servicePageThirdPointDescriptionContentWrapper}>
+                <h4 className={styles.servicePageThirdPointDescriptionContentHeader}>
                   HOME LOAN ASSISTANCE
                 </h4>
-                <p className="servicePageThirdPointDescriptionContentHeaderData">
+                <p className={styles.servicePageThirdPointDescriptionContentHeaderData}>
                   We offer various home loan solutions from top loan providers that are tailored to your needs,
                   so that you can secure the best offers and
                   terms for your home loan.
@@ -372,24 +373,24 @@ function ServicesPage() {
               </div>
             </div>
           </div>
-          <div className="servicePageFirstSalePointContainer">
-            <div className="servicePageFirstPointImgWrapper">
+          <div className={styles.servicePageFirstSalePointContainer}>
+            <div className={styles.servicePageFirstPointImgWrapper}>
               <img
-                className="servicePageFirstPointImg"
+                className={styles.servicePageFirstPointImg}
                 src="https://inframantra.blr1.cdn.digitaloceanspaces.com/servicesPage/keyHandOver.avif"
                 alt="Key Hand Over"
               />
-              <div className="servicePageFirstPointImgBgrd servicePageFirstPointImgBgrdRight" />
+              <div className={`${styles.servicePageFirstPointImgBgrd} ${styles.servicePageFirstPointImgBgrdRight}`} />
             </div>
-            <div className="servicePageThirdPointDescriptionWrapper">
-              <div className="servicePageThirdPointDescriptionHeaderFlex">
-                <p className="servicePageHandHoldingPointers">04</p>
+            <div className={styles.servicePageThirdPointDescriptionWrapper}>
+              <div className={styles.servicePageThirdPointDescriptionHeaderFlex}>
+                <p className={styles.servicePageHandHoldingPointers}>04</p>
               </div>
-              <div className="servicePageThirdPointDescriptionContentWrapper">
-                <h4 className="servicePageThirdPointDescriptionContentHeader">
+              <div className={styles.servicePageThirdPointDescriptionContentWrapper}>
+                <h4 className={styles.servicePageThirdPointDescriptionContentHeader}>
                   KEY HANDOVER
                 </h4>
-                <p className="servicePageThirdPointDescriptionContentHeaderData">
+                <p className={styles.servicePageThirdPointDescriptionContentHeaderData}>
                   Experience a smooth key handover, where each and every detail
                   is managed to ensure a smooth and effortless move-in to your
                   dream home.
@@ -400,65 +401,65 @@ function ServicesPage() {
         </div>
       ) : (
         <div
-          className="servicePageFirstSalePointContainer"
+          className={styles.servicePageFirstSalePointContainer}
           style={{ marginTop: '25px' }}
           id="Hand-Holding"
         >
-          <div className="servicePageFirstPointDescriptionHeaderFlex">
+          <div className={styles.servicePageFirstPointDescriptionHeaderFlex}>
             <img
-              className="servicePageFirstPointDescriptionHeaderIcon"
+              className={styles.servicePageFirstPointDescriptionHeaderIcon}
               src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/handHolding.svg"
               alt="hand holding"
             />
             <h4>Seamless Assistance</h4>
           </div>
-          <div className="servicePageFirstPointDescriptionContentWrapper">
+          <div className={styles.servicePageFirstPointDescriptionContentWrapper}>
             <p style={{ marginBottom: '35px' }}>
               From home assistance to key handover, we ensure a seamless and a
               hassle-free experience, letting you settle into your new home with
               ease.
             </p>
           </div>
-          <div className="servicePageFirstPointImgWrapper noBottomMargin">
+          <div className={`${styles.servicePageFirstPointImgWrapper} ${styles.noBottomMargin}`}>
             <img
-              className="servicePageFirstPointImg"
+              className={styles.servicePageFirstPointImg}
               src="https://inframantra.blr1.cdn.digitaloceanspaces.com/servicesPage/paperWork.avif"
               alt="aboutUsPageHeaderImg"
             />
-            <div className="servicePageFirstPointImgBgrd" />
+            <div className={styles.servicePageFirstPointImgBgrd} />
           </div>
-          <div className="servicePageThirdPointDescriptionWrapper">
-            <div className="servicePageThirdPointDescriptionHeaderFlex">
-              <p className="servicePageHandHoldingPointers">01</p>
+          <div className={styles.servicePageThirdPointDescriptionWrapper}>
+            <div className={styles.servicePageThirdPointDescriptionHeaderFlex}>
+              <p className={styles.servicePageHandHoldingPointers}>01</p>
             </div>
-            <div className="servicePageThirdPointDescriptionContentWrapper">
-              <h4 className="servicePageThirdPointDescriptionContentHeader">
+            <div className={styles.servicePageThirdPointDescriptionContentWrapper}>
+              <h4 className={styles.servicePageThirdPointDescriptionContentHeader}>
                 DOCUMENTATION
               </h4>
-              <p className="servicePageThirdPointDescriptionContentHeaderData">
+              <p className={styles.servicePageThirdPointDescriptionContentHeaderData}>
                 Simplify your paperwork with our expert help, ensuring a smooth,
                 hassle-free transaction at every step, so that you can experience efficiency
                 and ease like never before.
               </p>
             </div>
           </div>
-          <div className="servicePageFirstPointImgWrapper noBottomMargin">
+          <div className={`${styles.servicePageFirstPointImgWrapper} ${styles.noBottomMargin}`}>
             <img
-              className="servicePageFirstPointImg"
+              className={styles.servicePageFirstPointImg}
               src="https://inframantra.blr1.cdn.digitaloceanspaces.com/servicesPage/developerCordination.avif"
               alt="aboutUsPageHeaderImg"
             />
-            <div className="servicePageFirstPointImgBgrd servicePageFirstPointImgBgrdRight" />
+            <div className={`${styles.servicePageFirstPointImgBgrd} ${styles.servicePageFirstPointImgBgrdRight}`} />
           </div>
-          <div className="servicePageThirdPointDescriptionWrapper">
-            <div className="servicePageThirdPointDescriptionHeaderFlex">
-              <p className="servicePageHandHoldingPointers">02</p>
+          <div className={styles.servicePageThirdPointDescriptionWrapper}>
+            <div className={styles.servicePageThirdPointDescriptionHeaderFlex}>
+              <p className={styles.servicePageHandHoldingPointers}>02</p>
             </div>
-            <div className="servicePageThirdPointDescriptionContentWrapper">
-              <h4 className="servicePageThirdPointDescriptionContentHeader">
+            <div className={styles.servicePageThirdPointDescriptionContentWrapper}>
+              <h4 className={styles.servicePageThirdPointDescriptionContentHeader}>
                 DEVELOPER COORDINATION
               </h4>
-              <p className="servicePageThirdPointDescriptionContentHeaderData">
+              <p className={styles.servicePageThirdPointDescriptionContentHeaderData}>
                 Easily connect with developers through our premium
                 services, timely updates and smooth communication throughout
                 your home-buying journey. We ensure a streamlined experience
@@ -466,46 +467,46 @@ function ServicesPage() {
               </p>
             </div>
           </div>
-          <div className="servicePageFirstPointImgWrapper noBottomMargin">
+          <div className={`${styles.servicePageFirstPointImgWrapper} ${styles.noBottomMargin}`}>
             <img
-              className="servicePageFirstPointImg"
+              className={styles.servicePageFirstPointImg}
               src="https://inframantra.blr1.cdn.digitaloceanspaces.com/servicesPage/homeAssisstance.avif"
               alt="aboutUsPageHeaderImg"
             />
-            <div className="servicePageFirstPointImgBgrd" />
+            <div className={styles.servicePageFirstPointImgBgrd} />
           </div>
-          <div className="servicePageThirdPointDescriptionWrapper">
-            <div className="servicePageThirdPointDescriptionHeaderFlex">
-              <p className="servicePageHandHoldingPointers">03</p>
+          <div className={styles.servicePageThirdPointDescriptionWrapper}>
+            <div className={styles.servicePageThirdPointDescriptionHeaderFlex}>
+              <p className={styles.servicePageHandHoldingPointers}>03</p>
             </div>
-            <div className="servicePageThirdPointDescriptionContentWrapper">
-              <h4 className="servicePageThirdPointDescriptionContentHeader">
+            <div className={styles.servicePageThirdPointDescriptionContentWrapper}>
+              <h4 className={styles.servicePageThirdPointDescriptionContentHeader}>
                 HOME LOAN ASSISTANCE
               </h4>
-              <p className="servicePageThirdPointDescriptionContentHeaderData">
+              <p className={styles.servicePageThirdPointDescriptionContentHeaderData}>
               We offer various home loan solutions from top loan providers that are tailored to your needs,
                 so that you can secure the best offers and
                 terms for your home loan.
               </p>
             </div>
           </div>
-          <div className="servicePageFirstPointImgWrapper noBottomMargin">
+          <div className={`${styles.servicePageFirstPointImgWrapper} ${styles.noBottomMargin}`}>
             <img
-              className="servicePageFirstPointImg"
+              className={styles.servicePageFirstPointImg}
               src="https://inframantra.blr1.cdn.digitaloceanspaces.com/servicesPage/keyHandOver.avif"
               alt="aboutUsPageHeaderImg"
             />
-            <div className="servicePageFirstPointImgBgrd servicePageFirstPointImgBgrdRight" />
+            <div className={`${styles.servicePageFirstPointImgBgrd} ${styles.servicePageFirstPointImgBgrdRight}`} />
           </div>
-          <div className="servicePageThirdPointDescriptionWrapper">
-            <div className="servicePageThirdPointDescriptionHeaderFlex">
-              <p className="servicePageHandHoldingPointers">04</p>
+          <div className={styles.servicePageThirdPointDescriptionWrapper}>
+            <div className={styles.servicePageThirdPointDescriptionHeaderFlex}>
+              <p className={styles.servicePageHandHoldingPointers}>04</p>
             </div>
-            <div className="servicePageThirdPointDescriptionContentWrapper">
-              <h4 className="servicePageThirdPointDescriptionContentHeader">
+            <div className={styles.servicePageThirdPointDescriptionContentWrapper}>
+              <h4 className={styles.servicePageThirdPointDescriptionContentHeader}>
                 KEY HANDOVER
               </h4>
-              <p className="servicePageThirdPointDescriptionContentHeaderData">
+              <p className={styles.servicePageThirdPointDescriptionContentHeaderData}>
                 Experience a smooth key handover, where each and every detail is
                 managed to ensure a smooth and effortless move-in to your dream
                 home.
@@ -516,17 +517,17 @@ function ServicesPage() {
       )}
 
       {isDesktop ? (
-        <div className="servicePageResaleContainer" id="Resale-Services">
-          <div className="servicePageResaleDescriptionWrapper">
-            <div className="servicePageResaleDescriptionHeaderContainer">
-              <div className="servicePageResaleDescriptionHeaderContainerRight">
+        <div className={styles.servicePageResaleContainer} id="Resale-Services">
+          <div className={styles.servicePageResaleDescriptionWrapper}>
+            <div className={styles.servicePageResaleDescriptionHeaderContainer}>
+              <div className={styles.servicePageResaleDescriptionHeaderContainerRight}>
                 <img
-                  className="servicePageFirstPointDescriptionHeaderIcon"
+                  className={styles.servicePageFirstPointDescriptionHeaderIcon}
                   src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/resaleServices.svg"
                   alt="resale service"
                 />
               </div>
-              <div className="servicePageResaleDescriptionHeaderContainerLeft">
+              <div className={styles.servicePageResaleDescriptionHeaderContainerLeft}>
                 <h4>RESALE SERVICES</h4>
               </div>
             </div>
@@ -542,27 +543,27 @@ function ServicesPage() {
               onClick={() => navigate('/contact-us')}
             />
           </div>
-          <div className="servicePageResaleImgWrapper">
+          <div className={styles.servicePageResaleImgWrapper}>
             <img
-              className="servicePageResaleImg"
+              className={styles.servicePageResaleImg}
               src="https://inframantra.blr1.cdn.digitaloceanspaces.com/servicesPage/resale.avif"
               alt="aboutUsPageHeaderImg"
             />
           </div>
         </div>
       ) : (
-        <div className="servicePageResaleContainer" id="Resale-Services">
-          <div className="servicePageFirstPointDescriptionHeaderFlex">
+        <div className={styles.servicePageResaleContainer} id="Resale-Services">
+          <div className={styles.servicePageFirstPointDescriptionHeaderFlex}>
             <img
-              className="servicePageFirstPointDescriptionHeaderIcon"
+              className={styles.servicePageFirstPointDescriptionHeaderIcon}
               src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/resaleServices.svg"
               alt="resale service"
             />
             <h4>RESALE SERVICES</h4>
           </div>
-          <div className="servicePageResaleImgWrapper">
+          <div className={styles.servicePageResaleImgWrapper}>
             <img
-              className="servicePageResaleImg"
+              className={styles.servicePageResaleImg}
               src="https://inframantra.blr1.cdn.digitaloceanspaces.com/servicesPage/resale.avif"
               alt="aboutUsPageHeaderImg"
             />
@@ -589,116 +590,3 @@ export default ServicesPage;
 
 
 
-
-// import React from "react";
-// import Wrapper from "../components/UI/Wrapper";
-// import PageHeader from "../components/UI/PageHeader";
-// import Section from "../components/UI/Section";
-// import Image from "next/image";
-// import Link from "next/link";
-
-// const OurServices = ({ allData }) => {
-//   const data = {
-//     image: allData.heading.image,
-//     title: allData.heading.meta_title,
-//   };
-// //   console.log(allData.services);
-//   return (
-//     <Wrapper
-//       title={allData.heading.meta_title}
-//       description={allData.heading.meta_description}
-//       image={allData.heading.image}
-//     >
-//       <PageHeader data={data} />
-//       <Section >
-//       <h2 className="service-section">Our Core Services</h2>
-//          <div className="service-section-wrap">
-//               <div className="section-service-item">
-//                  <div className="img-wrap">
-//                     <Image src={allData.services[0].file.path} alt={allData.services[0].name} layout="fill"/>
-//                  </div>
-//                  <div className="info">
-//                      <h2>{allData.services[0].name}</h2>
-//                      <Link href={`/property-buying`}>
-//                         <a className="lrn-btn">
-//                            Read More
-//                         </a>
-//                      </Link>
-//                  </div>
-//               </div>
-//               <div className="section-service-item">
-//                  <div className="img-wrap">
-//                     <Image src={allData.services[1].file.path} alt={allData.services[1].name} layout="fill"/>
-//                  </div>
-//                  <div className="info">
-//                      <h2>{allData.services[1].name}</h2>
-//                      <Link href={`/home-loans`}>
-//                         <a className="lrn-btn">
-//                            Read More
-//                         </a>
-//                      </Link>
-//                  </div>
-//               </div>
-//               <div className="section-service-item">
-//                  <div className="img-wrap">
-//                     <Image src={allData.services[2].file.path} alt={allData.services[2].name} layout="fill"/>
-//                  </div>
-//                  <div className="info">
-//                      <h2>{allData.services[2].name}</h2>
-//                      <Link href={`home-interiors`}>
-//                         <a className="lrn-btn">
-//                            Read More
-//                         </a>
-//                      </Link>
-//                  </div>
-//               </div>
-//               <div className="section-service-item">
-//                  <div className="img-wrap">
-//                     <Image src={allData.services[3].file.path} alt={allData.services[3].name} layout="fill"/>
-//                  </div>
-//                  <div className="info">
-//                      <h2>{allData.services[3].name}</h2>
-//                      <Link href={`/property-management-services`}>
-//                         <a className="lrn-btn">
-//                            Read More
-//                         </a>
-//                      </Link>
-//                  </div>
-//               </div>
-//          </div>
-//       </Section>
-//     </Wrapper>
-//   );
-// };
-
-// export async function getStaticProps() {
-//   const res = await fetch(
-//     `${process.env.apiUrl}/setting/getmeta?link=our-services`
-//   );
-//   // const res = await fetch(searchApi)
-//   const data = await res.json();
-
-//   const heading = {
-//     name: data.result[0].name,
-//     title: data.result[0].title,
-//     meta_title: data.result[0].meta_title,
-//     meta_description: data.result[0].meta_description,
-//     meta_keywords: data.result[0].meta_keyword,
-//     ...(data.result[0].file && { image: data.result[0].file.path }),
-//   };
-//   const res1 = await fetch(`${process.env.apiUrl}/home`);
-//   const data1 = await res1.json();
-
-//   const allData = {
-//     heading: heading,
-//     services: data1.result.services,
-//   };
-//   return {
-//     props: {
-//       allData,
-//     },
-//     revalidate: 10,
-//   };
-// }
-
-// export default OurServices;

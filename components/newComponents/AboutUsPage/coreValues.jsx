@@ -1,12 +1,12 @@
 import React from 'react';
 // import './aboutUsPage.css';
-
+import styles  from './aboutUs.module.css'
 function CoreValues() {
   return (
-    <div className="coreValuesWrapper">
+    <div className={styles.coreValuesWrapper}>
       <h2>Core Values</h2>
-      <div className="coreValuesContentGrid">
-        <div className="coreValuesContentGridItem">
+      <div className={styles.coreValuesContentGrid}>
+        <div className={styles.coreValuesContentGridItem}>
           <h2>01</h2>
           <h4>Process Oriented</h4>
           <p>
@@ -18,7 +18,7 @@ function CoreValues() {
             process.
           </p>
         </div>
-        <div className="coreValuesContentGridItem">
+        <div className={styles.coreValuesContentGridItem}>
           <h2 style={{ color: 'black' }}>02</h2>
           <h4>Client Centric</h4>
           <p>
@@ -28,7 +28,7 @@ function CoreValues() {
             a reality for them.
           </p>
         </div>
-        <div class="coreValuesContentGridItem">
+        <div class={styles.coreValuesContentGridItem}>
           <h2 style={{ color: 'black' }}>03</h2>
           <h4>Respect for People</h4>
           <p>
@@ -37,7 +37,7 @@ function CoreValues() {
             their needs, fostering trust and long lasting relationships.
           </p>
         </div>
-        <div class="coreValuesContentGridItem">
+        <div class={styles.coreValuesContentGridItem}>
           <h2>04</h2>
           <h4>Integrity, Simplicity and Transparency</h4>
           <p>

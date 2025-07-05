@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 // import './navDropdown.css';
+import styles from './navDropdown.module.css'
 
 function NavDropdown({
   bgd = false,
@@ -51,7 +52,7 @@ function NavDropdown({
 
   return (
     <div
-      className="navDropdownWrapper"
+      className={styles.navDropdownWrapper}
       onClick={handleNavDropdownClick}
       style={{
         backgroundColor: bgd ? '#E7B554' : '#FFF',
@@ -64,7 +65,7 @@ function NavDropdown({
       {typeof currentVal === 'string' ? currentVal : 'Select'}{' '}
       {openDropDown && (
         <div
-          className="listingNavDropdownContentWrapper"
+          className={styles.listingNavDropdownContentWrapper}
           onClick={stopPropagation}
         >
           {React.cloneElement(children, { handleSelectionChange })}

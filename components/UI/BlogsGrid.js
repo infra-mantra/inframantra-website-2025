@@ -8,6 +8,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper";
+import styles from './blogGrid.module.css'
 
 function BlogsGrid({
   blogs,
@@ -51,11 +52,11 @@ const formatDate = (dateString) => {
   
 
   return (
-    <Section classes="featured-blogs sec-p pt-0" pageWidth="container">
-      <div className="blogs-layout">
-        <div className="blogs-section">
-          <h2 className="blogs-title">| Blogs</h2>
-          <div className="f-blog-item-list">
+    <Section classes={`${styles.featuredblogs} ${styles.secp} ${styles.pt0}`} pageWidth="container">
+      <div className={styles.blogslayout}>
+        <div className={styles.blogssection}>
+          <h2 className={styles.blogstitle}>| Blogs</h2>
+          <div className={styles.fblogitemlist}>
             {blogs.map((blog, index) => {
         
          
@@ -66,11 +67,11 @@ const formatDate = (dateString) => {
                 passHref
               >
                 <a
-                  className="f-blog-item"
+                  className={styles.fblogitem}
                   target={blog.link ? "_blank" : "_self"}
                   rel={blog.link ? "noreferrer" : ""}
                 >
-                  <div className="blog-card-image">
+                  <div className={styles.blogcardimage}>
                     {blog.file ? (
                       <Image
                         src={blog.file.path}
@@ -82,9 +83,9 @@ const formatDate = (dateString) => {
                       <NoImage />
                     )}
                   </div>
-                  <div className="info">
+                  <div className={styles.info}>
                     <h4>{blog.name}</h4>
-                    {isDesktop ?(<p className="two-line-text">{blog?.shortDescription?.substring(0,200)}...</p>):(null)}
+                    {isDesktop ?(<p className={styles.twolinetext}>{blog?.shortDescription?.substring(0,200)}...</p>):(null)}
                     <p>
                       {formatDate(blog.createdAt)} | {blog?.writer_name}
                     </p>
@@ -96,8 +97,8 @@ const formatDate = (dateString) => {
      
             })}
           </div>
-          <div className="btn-wrap text-center mt-5" style={{display:"flex", justifyContent:"center"}}>
-          <button type="button" className="theme-btn" onClick={loadMore}>
+          <div className={`${styles.btnwrap}  ${styles.mt5}`}  >
+          <button type="button" className={styles.themebtn} onClick={loadMore}>
             Load More
           </button>
         </div>
@@ -105,18 +106,18 @@ const formatDate = (dateString) => {
     
 
         {/* Sidebar Section */} 
-        <div className="sidebar-section">
+        <div className={styles.sidebarsection}>
           {/* Trending Section */}
-          <div className="trending-section">
-            <h3 className="trending-title">| Trending News</h3>
+          <div className={styles.trendingsection}>
+            <h3 className={styles.trendingtitle}>| Trending News</h3>
             <Swiper
               pagination={{
                 clickable: true,
                 el: ".trending-pagination", 
               }}
               navigation={{
-                prevEl: ".custom-prev", 
-                nextEl: ".custom-next", 
+                prevEl: ".customprev", 
+                nextEl: ".customnext", 
               }}
               modules={[Pagination, Navigation]}
               className="mySwiper"
@@ -134,16 +135,16 @@ const formatDate = (dateString) => {
             passHref
             
             >
-        <a className="trending-card" target={article.link ? "_blank" : "_self"} rel={article.link ? "noopener noreferrer" : ""}>
+        <a className={styles.trendingcard} target={article.link ? "_blank" : "_self"} rel={article.link ? "noopener noreferrer" : ""}>
           <div>
-            {/* <p className="trending-source">{trendingBlogs[index]?.source || "Source Unknown"}</p> */}
-            <img  src="./assets/images/INFRAMANTRA NEWS B.svg"/>
-            <h4 className="trending-heading">{article?.title}</h4>
-            <p className="trending-description">{article?.shortDescription.substring(0,200)}... </p>
-            <div className="trending-meta">
-              <p className="trending-author">{article?.writer_name || "Anonymous"}</p>
+            {/* <p className={styles.trending-source">{trendingBlogs[index]?.source || "Source Unknown"}</p> */}
+            <img  src="./logos/INFRAMANTRA NEWS B.svg"/>
+            <h4 className={styles.trendingheading}>{article?.title}</h4>
+            <p className={styles.trendingdescription}>{article?.shortDescription.substring(0,200)}... </p>
+            <div className={styles.trendingmeta}>
+              <p className={styles.trendingauthor}>{article?.writer_name || "Anonymous"}</p>
               <p>|</p>
-              <p className="trending-date">{formatDate(article?.createdAt)}</p>
+              <p className={styles.trendingdate}>{formatDate(article?.createdAt)}</p>
             </div>
           </div>
         </a>
@@ -152,17 +153,17 @@ const formatDate = (dateString) => {
           )
 })}
               {/* Add Arrows Inside Swiper */}
-              <div className="custom-prev">‹</div>
-              <div className="custom-next">›</div>
+              <div className={styles.customprev}>‹</div>
+              <div className={styles.customnext}>›</div>
             </Swiper>
             {/* Custom Pagination Element */}
             <div className="trending-pagination"></div>
           </div>
 
           {/* News Section */}
-          <div className="news-section">
-            <h3 className="news-heading">| Trending Articles</h3>
-            <div className="news-list">
+          <div className={styles.newssection}>
+            <h3 className={styles.newsheading}>| Trending Articles</h3>
+            <div className={styles.newslist}>
             {latestNews?.map((item, index) => {
 
 
@@ -172,11 +173,11 @@ const formatDate = (dateString) => {
                 href={`/blog/${item.slug}`}
                 passHref
               >
-        <div className="news-card">
-          <div className="news-rank">#{index + 1}</div>
-          <div className="news-content">
-            <h4 className="news-title">{item.title}</h4>
-            <p className="news-meta">
+        <div className={styles.newscard}>
+          <div className={styles.newsrank}>#{index + 1}</div>
+          <div className={styles.newscontent}>
+            <h4 className={styles.newstitle}>{item.title}</h4>
+            <p className={styles.newsmeta}>
               {formatDate(item.createdAt)} | {item?.writer_name ||item?.writer_name}
             </p>
           </div>
@@ -194,9 +195,9 @@ const formatDate = (dateString) => {
  
 
       {blogBtn && (
-        <div className="text-center mt-5">
+        <div className={`${styles.textcenter} ${styles.mt5}`}>
           <Link href="/blogs">
-            <a className="theme-btn">View More</a>
+            <a className={styles.theme-btn}>View More</a>
           </Link>
         </div>
       )}

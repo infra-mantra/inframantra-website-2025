@@ -5,6 +5,7 @@ import { clientData } from './clientTestimonyData';
 import { useRouter } from 'next/router'; // Import useRouter from Next.js
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from 'swiper';
+import styles from './clientTestimonySection.module.css'; // Assuming you have a CSS module for styles
 
 import "swiper/css";
 import 'swiper/swiper-bundle.css';
@@ -56,38 +57,38 @@ function ClientTestimonySection() {
   };
 
   return (
-    <div className="clientTestimonyWrapper">
+    <div className={styles.clientTestimonyWrapper}>
       {isDesktop && (
         <>
-          <div className="clientTestimonyHeaderSection">
+          <div className={styles.clientTestimonyHeaderSection}>
             <img
               src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/Satisfied%20Customers%201.avif"
               alt="Testimony1"
-              className="clientTestimonyUpperSectionImg"
+              className={styles.clientTestimonyUpperSectionImg}
               style={{
                 borderTopRightRadius: '20px',
                 borderBottomRightRadius: '20px',
               }}
             />
-            <div className="clientTestimonyUpperSectionText">
-              <div className="clientTestimonyUpperSectionHeaderFlex">
-                <p className="clientTestimonyUpperSectionHeader">Hear From</p>
-                <p className="clientTestimonyUpperSectionHeader">
+            <div className={styles.clientTestimonyUpperSectionText}>
+              <div className={styles.clientTestimonyUpperSectionHeaderFlex}>
+                <p className={styles.clientTestimonyUpperSectionHeader}>Hear From</p>
+                <p className={styles.clientTestimonyUpperSectionHeader}>
                   Our
                   <span style={{ color: '#E7B554', marginLeft: '15px' }}>
                     Satisfied
                   </span>
                 </p>
-                <p className="clientTestimonyUpperSectionHeader">Customers</p>
+                <p className={styles.clientTestimonyUpperSectionHeader}>Customers</p>
               </div>
-              <div className="clientTestimonyUpperSectionSubHeaderFlex">
-                <p className="clientTestimonyUpperSectionSubHeader">
+              <div className={styles.clientTestimonyUpperSectionSubHeaderFlex}>
+                <p className={styles.clientTestimonyUpperSectionSubHeader}>
                   Discover why our clients love our
                 </p>
-                <p className="clientTestimonyUpperSectionSubHeader">
+                <p className={styles.clientTestimonyUpperSectionSubHeader}>
                   work through their own words.
                 </p>
-                <p className="clientTestimonyUpperSectionSubHeader">
+                <p className={styles.clientTestimonyUpperSectionSubHeader}>
                   Real feedback from real customers!
                 </p>
               </div>
@@ -103,16 +104,16 @@ function ClientTestimonySection() {
             <img
               src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/Satisfied%20Customers%202.avif"
               alt="Testimony1"
-              className="clientTestimonyUpperSectionImg"
+              className={styles.clientTestimonyUpperSectionImg}
               style={{
                 borderTopLeftRadius: '20px',
                 borderBottomLeftRadius: '20px',
               }}
             />
           </div>
-          <div className="clientTestimonyTestimonySection">
+          <div className={styles.clientTestimonyTestimonySection}>
             <button
-              className="testimonyArrowBtn"
+              className={styles.testimonyArrowBtn}
               style={{ left: '3%' }}
               onClick={handlePrev}
             >
@@ -141,7 +142,7 @@ function ClientTestimonySection() {
             </Swiper>
 
             <button
-              className="testimonyArrowBtn"
+              className={styles.testimonyArrowBtn}
               style={{ right: '3%' }}
               onClick={handleNext}
             >
@@ -153,17 +154,17 @@ function ClientTestimonySection() {
 
       {!isDesktop && (
         <>
-          <div className="clientTestimonyHeaderSection">
+          <div className={styles.clientTestimonyHeaderSection}>
             <img
               src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/Satisfied%20Customers%201.avif"
               alt="Testimony1"
-              className="clientTestimonyUpperSectionImg"
+              className={styles.clientTestimonyUpperSectionImg}
               style={{
                 borderTopRightRadius: '20px',
                 borderBottomRightRadius: '20px',
               }}
             />
-            <div className="clientTestimonyHeaderSectionContentWrapper">
+            <div className={styles.clientTestimonyHeaderSectionContentWrapper}>
               <p>Hear From</p>
               <p>
                 Our <span style={{ color: '#E7B554' }}>Satisfied</span>
@@ -171,29 +172,29 @@ function ClientTestimonySection() {
               <p>Customers</p>
             </div>
           </div>
-          <div className="clientTestimonyHeaderSection">
-            <p className="clientTestimonyUpperSectionSubHeader">
+          <div className={styles.clientTestimonyHeaderSection}>
+            <p className={styles.clientTestimonyUpperSectionSubHeader}>
               Discover why our clients love our work through their own words.
               Real feedback from real customers!
             </p>
             <img
               src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/Satisfied%20Customers%202.avif"
               alt="Testimony1"
-              className="clientTestimonyUpperSectionImg"
+              className={styles.clientTestimonyUpperSectionImg}
               style={{
                 borderTopLeftRadius: '20px',
                 borderBottomLeftRadius: '20px',
               }}
             />
           </div>
-          <div className="clientTestimonyTestimonySection">
-            <button
-              className="testimonyArrowBtn"
+          <div className={styles.clientTestimonyTestimonySection}>
+            {/* <button
+              className={styles.testimonyArrowBtn}
               style={{ left: '2%' }}
               onClick={handlePrev}
             >
               &#9664;
-            </button>
+            </button> */}
 
             <Swiper
               spaceBetween={30}
@@ -216,15 +217,15 @@ function ClientTestimonySection() {
               ))}
             </Swiper>
 
-            <button
-              className="testimonyArrowBtn"
+            {/* <button
+              className={styles.testimonyArrowBtn}
               style={{ right: '2%' }}
               onClick={handleNext}
             >
               &#9654;
-            </button>
+            </button> */}
           </div>
-          <div className="clientTestimonyBtnMobile">
+          <div className={styles.clientTestimonyBtnMobile}>
             <Button
               btnText="READ MORE"
               width="50%"

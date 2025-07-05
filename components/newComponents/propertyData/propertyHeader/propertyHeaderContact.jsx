@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import ReCAPTCHA from 'react-google-recaptcha';
-// import { sendProjectEnquiry } from '../../../reduxSlices/enquirySlice';
-// import '../propertyPage.css';
+
 import { FaPhoneAlt } from "react-icons/fa";
 import { toast } from 'react-toastify';
 import Ajax1 from '../../../helper/Ajax1';
@@ -164,40 +163,7 @@ function PropertyHeaderContact({ name }) {
   + 91 86 9800 9900
 </p>
 
-        {/* <div className="propertyPageHeaderContactIconFlex">
-          <div className="propertyPageHeaderContactIcon">
-            <img
-              style={{ width: '2vw' }}
-              src="https://inframantra.blr1.cdn.digitaloceanspaces.com/propertyPage/brokerage%20free%202.svg"
-              alt="contactIcon"
-            />
-            <p>Zero Brokerage</p>
-          </div>
-          <div className="propertyPageHeaderContactIcon">
-            <img
-              style={{ width: '2vw' }}
-              src="https://inframantra.blr1.cdn.digitaloceanspaces.com/propertyPage/exclusive%20inventory.svg"
-              alt="contactIcon"
-            />
-            <p>Exclusive Inventory</p>
-          </div>
-          <div className="propertyPageHeaderContactIcon">
-            <img
-              style={{ width: '2vw' }}
-              src="https://inframantra.blr1.cdn.digitaloceanspaces.com/propertyPage/lowest%20price%20assurance.svg"
-              alt="contactIcon"
-            />
-            <p>Lowest Price</p>
-          </div>
-          <div className="propertyPageHeaderContactIcon">
-            <img
-              style={{ width: '2vw' }}
-              src="https://inframantra.blr1.cdn.digitaloceanspaces.com/propertyPage/comprehensive%20support.svg"
-              alt="contactIcon"
-            />
-            <p>Comprehensive Support</p>
-          </div>
-        </div> */}
+       
       </div>
     </div>
   );

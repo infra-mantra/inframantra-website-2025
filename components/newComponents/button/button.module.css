@@ -1,4 +1,4 @@
-.search-button {
+.searchbutton {
   background: #E7b554;
   color: white;
   border: none;
@@ -10,7 +10,7 @@
   align-items: center;
 }
 
-.search-button:hover {
+.searchbutton:hover {
   background: #e0a800;
 }
 

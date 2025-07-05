@@ -1,10 +1,7 @@
 .disclaimer.bottom{
     display: none;
 }
-.section-blog h2 {
-    color:green !important;
-    display: flex;
-}
+
 .section-blog-dir h2 {
    display: flex;
 }
@@ -64,9 +61,7 @@
 @media screen and (max-width: 768px){
     .section-head h2{
       
-    }.section-head-category{
-     font-size: 17px !important;
-      }
+    }
    
     .contactUsSectionFormFlex > h4 {
         font-size: 25px !;

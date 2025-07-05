@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { MapContainer, TileLayer, Marker, useMap, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import styles from './map.module.css'
 
 delete L.Icon.Default.prototype._getIconUrl;
 
@@ -23,7 +24,7 @@ const SetViewOnChange = ({ center, zoom }) => {
 const CustomMarker = ({ point, onHover, onLeave }) => {
   const customIcon = new L.DivIcon({
     className: 'custom-marker-icon',
-    html: '<div class="custom-marker"></div>',
+    html: `<div class="${styles.custommarker}"></div>`,
   });
 
   return (
@@ -40,12 +41,12 @@ const CustomMarker = ({ point, onHover, onLeave }) => {
 
 const PropertyPopup = ({ property, onMouseEnter, onMouseLeave }) => (
   <div 
-    className="property-popup" 
+    className={styles.propertypopup} 
     onMouseEnter={onMouseEnter} // Keep the popup open
     onMouseLeave={onMouseLeave} // Close the popup on mouse leave
   >
-    <img src={property.image} alt={property.name} className="property-image" />
-    <div className="property-details">
+    <img src={property.image} alt={property.name} className={styles.propertyimage} />
+    <div className={styles.propertydetails}>
       <h4>{property.name}</h4>
       <p>{property.location}</p>
       <p>{property.price}</p>

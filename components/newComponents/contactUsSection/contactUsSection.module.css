@@ -32,6 +32,7 @@ color: #0000004D;
     align-items: center;
   }
   
+
   .contactUsSectionHeader {
     color: rgb(231, 181, 84);
     font-size: 35px;
@@ -46,6 +47,13 @@ color: #0000004D;
     margin-right: 9%;
     margin-top: 12%;
     margin-bottom: 2%;
+  }
+    .contactUsTop{
+       display: flex
+;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
   }
   
   .contactUsSectionWrapper {

@@ -9,6 +9,7 @@
       import { debounce } from "lodash";
 
       import { IoSearchSharp } from "react-icons/io5";
+      import styles from './searchAutoComplete.module.css';
 
       // Dummy icons
       const RoofingOutlinedIcon = () => <span role="img" aria-label="roof" ><MdRoofing/></span>;
@@ -193,8 +194,8 @@
       
 
         return (
-          <div className="root">
-            <div className="inputWrapper" ref={handleRef}>
+          <div className={styles.root}>
+            <div className={styles.inputWrapper} ref={handleRef}>
               {selectedOptions.map((option, index) => (
                 <Tag key={index} label={option.title} onDelete={() => handleDelete(option)} />
               ))}
@@ -204,10 +205,10 @@
                 value={inputValue}
                 onChange={handleInputChange}
               />
-              {!isDesktop && <IoSearchSharp className="searchIcon" onClick={handleSearch} />}
+              {!isDesktop && <IoSearchSharp className={styles.searchIcon} onClick={handleSearch} />}
             </div>
             {searchOptionsAvailable.length > 0 && inputValue && (
-              <ul className="listbox">
+              <ul className={styles.listbox}>
                 {searchOptionsAvailable
                   .filter(option => option?.title?.toLowerCase()?.includes(inputValue?.toLowerCase()))
                   .map((option, index) => (
@@ -218,7 +219,7 @@
                         {option.type === 'subLocality' && <RoomOutlinedIcon />}
                         {option.title}
                       </span>
-                      <span className="optionType">{option.type === 'subLocality' ? 'sub-locality' : option.type}</span>
+                      <span className={styles.optionType}>{option.type === 'subLocality' ? 'sub-locality' : option.type}</span>
                     </li>
                   ))}
               </ul>

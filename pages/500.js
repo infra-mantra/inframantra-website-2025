@@ -1,24 +1,25 @@
 import React, { useEffect, useState, useRef } from "react";
 import Button from '../common/button/button.jsx';
 import { useRouter } from 'next/router';
+import styles from '../styles/error.module.css';
+import Wrapper from "../components/UI/Wrapper.js";
 
 const ErrorStack = () => {
   const router = useRouter();
   const stackErrorContainerRef = useRef(null);
   const [counter, setCounter] = useState(5);
 
-   // Auto-redirect when counter hits 0
-   useEffect(() => {
+  useEffect(() => {
     if (counter === 0) {
       const timeout = setTimeout(() => {
         router.push('/');
-      }, 1500); // wait a bit for the animation to finish
+      }, 1500);
       return () => clearTimeout(timeout);
     }
   }, [counter, router]);
 
   useEffect(() => {
-    if(counter === 0) {
+    if (counter === 0) {
       router.push('/');
     }
     const intervalId = setInterval(() => {
@@ -27,25 +28,24 @@ const ErrorStack = () => {
 
     return () => clearInterval(intervalId);
   }, []);
-  // Function to generate random number
 
   const randomIntFromInterval = (min, max) =>
     Math.floor(Math.random() * (max - min + 1) + min);
 
   useEffect(() => {
     const stackErrorContainer = stackErrorContainerRef.current;
-    const cardNodes = stackErrorContainer.querySelectorAll(".card-ErrorContainer");
-    const perspecNodes = stackErrorContainer.querySelectorAll(".perspec");
-    const card = stackErrorContainer.querySelector(".card");
+    const cardNodes = stackErrorContainer.querySelectorAll(`.${styles.cardErrorContainer}`);
+    const perspecNodes = stackErrorContainer.querySelectorAll(`.${styles.perspec}`);
+    const card = stackErrorContainer.querySelector(`.${styles.card}`);
 
     const handleCardAnimationEnd = () => {
-      perspecNodes.forEach((elem) => elem.classList.add("explode"));
+      perspecNodes.forEach((elem) => elem.classList.add(styles.explode));
     };
 
     const handlePerspecAnimationEnd = (e) => {
-      if (e.animationName === "explode") {
+      if (e.animationName.includes("explode")) {
         cardNodes.forEach((elem, index) => {
-          elem.classList.add("pokeup");
+          elem.classList.add(styles.pokeup);
 
           const handleClick = () => {
             const updown = [800, -800];
@@ -59,41 +59,37 @@ const ErrorStack = () => {
             setCounter((prevCounter) => {
               const newCounter = prevCounter - 1;
               if (newCounter === 0) {
-                stackErrorContainer.style.width = "0";
-                stackErrorContainer.style.height = "0";
+               
               }
               return newCounter;
             });
 
-            elem.removeEventListener("click", handleClick); // Prevent multiple clicks
+            elem.removeEventListener("click", handleClick);
           };
 
           elem.addEventListener("click", handleClick);
 
-          // Generate random lines of code
           let numLines = randomIntFromInterval(5, 10);
           for (let i = 0; i < numLines; i++) {
             let lineLength = randomIntFromInterval(25, 97);
             let node = document.createElement("li");
-            node.classList.add(`node-${i}`);
+            node.className = `node-${i} ${styles.writeLine}`;
             node.style.setProperty("--linelength", `${lineLength}%`);
-            elem.querySelector(".code ul").appendChild(node);
+            elem.querySelector(`.${styles.code} ul`).appendChild(node);
 
-            if (i === 0) {
-              node.classList.add("writeLine");
-            } else {
-              elem
-                .querySelector(`.code ul .node-${i - 1}`)
-                .addEventListener("animationend", () => {
-                  node.classList.add("writeLine");
+            if (i !== 0) {
+              const prevNode = elem.querySelector(`ul .node-${i - 1}`);
+              if (prevNode) {
+                prevNode.addEventListener("animationend", () => {
+                  node.classList.add(styles.writeLine);
                 });
+              }
             }
           }
         });
       }
     };
 
-    // Event listeners
     card.addEventListener("animationend", handleCardAnimationEnd);
     stackErrorContainer.addEventListener("animationend", handlePerspecAnimationEnd);
 
@@ -104,8 +100,9 @@ const ErrorStack = () => {
   }, []);
 
   return (
-    <div className="ErrorContainer">
-      <div className="error">
+    <Wrapper>
+    <div className={styles.ErrorContainer}>
+      <div className={styles.error}>
         <h1>500</h1>
         <h2>Error</h2>
         <p>
@@ -115,35 +112,34 @@ const ErrorStack = () => {
 
         <Button
           btnText={"Back To Home"}
-          width={typeof window !== 'undefined' && window.innerWidth <= 768 ? '70vw' : '40vw'}
+          width={typeof window !== 'undefined' && window.innerWidth <= 768 ? '70vw' : '23svw'}
           padding={typeof window !== 'undefined' && window.innerWidth < 768 ? '8px' : '12px'}
           otherStyles={{
             fontSize: typeof window !== 'undefined' && window.innerWidth < 768 ? '14px' : '16px',
           }}
-         
           onClick={() => router.push('/')}
         />
       </div>
 
-      <div className="stack-ErrorContainer" ref={stackErrorContainerRef}>
+      <div className={styles.stackErrorContainer} ref={stackErrorContainerRef}>
         {[...Array(6)].map((_, index) => (
-          <div className="card-ErrorContainer" key={index}>
+          <div className={styles.cardErrorContainer} key={index}>
             <div
-              className="perspec"
+              className={styles.perspec}
               style={{
-                "--spreaddist": `${125 - index * 25}px`,
-                "--scaledist": `${0.75 + index * 0.05}`,
-                "--vertdist": `${-25 + index * 5}px`
+                '--spreaddist': `${125 - index * 25}px`,
+                '--scaledist': `${0.75 + index * 0.05}`,
+                '--vertdist': `${-25 + index * 5}px`
               }}
             >
-              <div className="card">
-                <div className="writing">
-                  <div className="topbar">
-                    <div className="red"></div>
-                    <div className="yellow"></div>
-                    <div className="green"></div>
+              <div className={styles.card}>
+                <div className={styles.writing}>
+                  <div className={styles.topbar}>
+                    <div className={styles.red}></div>
+                    <div className={styles.yellow}></div>
+                    <div className={styles.green}></div>
                   </div>
-                  <div className="code">
+                  <div className={styles.code}>
                     <ul></ul>
                   </div>
                 </div>
@@ -153,6 +149,7 @@ const ErrorStack = () => {
         ))}
       </div>
     </div>
+    </Wrapper>
   );
 };
 

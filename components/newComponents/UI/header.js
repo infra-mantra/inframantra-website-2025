@@ -108,8 +108,8 @@ function NavigationBar({ pageBgd }) {
       className="navBarWrapper"
       style={isMobile ? navBarStyles : { height: pageBgd ? '' : '10vh', position: !pageBgd ? 'absolute' : 'relative' }}
     >
-      {/* Left Tabs */}
-      <div className="navBarTabsWrapper" style={{ color: textColor }}>
+
+      <div className="navBarTabsWrapper" style={isDesktop ? { color: textColor } : {}}>
         {isDesktop && (
           <p
             className="navBarTabs"
@@ -152,7 +152,6 @@ function NavigationBar({ pageBgd }) {
         loading="lazy"
       />
 
-      {/* Right Tabs */}
       <div className="navBarTabsWrapper" style={{ color: textColor }}>
         {isDesktop &&
           rightSideTabs.map((tab, index) => {

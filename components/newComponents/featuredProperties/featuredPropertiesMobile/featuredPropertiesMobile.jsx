@@ -5,6 +5,7 @@ import { MdSquareFoot } from "react-icons/md";
 import { IoIosHome } from "react-icons/io";
 import { IoLocationSharp } from "react-icons/io5";
 import { MdOutlineCurrencyRupee, MdKeyboardArrowRight } from "react-icons/md";
+import styles from './featuredPropertiesMobile.module.css'; // Assuming you have a CSS module for stylesx
 
 
 const featuredPropertiesMobileStyles = {
@@ -47,8 +48,19 @@ const featuredPropertiesMobileStyles = {
     width: '50px',
     height: '50px',
     cursor: 'pointer',
+    
   },
 };
+ const arrowButton = {
+    position: 'absolute',
+    color: 'rgb(231, 181, 84)',
+    width: '40px',
+    right: '1%',
+    top: '53.5%',
+    height: '40px',
+    zIndex: 100,
+    cursor: 'pointer',
+  };
 
 function FeaturedPropertiesMobile({ property }) {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -58,8 +70,8 @@ function FeaturedPropertiesMobile({ property }) {
   };
 
   return (
-    <div className={`featuredPropertiesMobileCard ${isFlipped ? 'flipped' : ''}`}>
-      <div className="featuredPropertiesMobileCardInner">
+    <div className={`${styles.featuredPropertiesMobileCard} ${isFlipped ? 'flipped' : ''}`}>
+      <div className={styles.featuredPropertiesMobileCardInner}>
         <div className={`cardSide cardFront`}>
           <CardFrontComponent property={property} handleFlip={handleFlip} />
         </div>
@@ -90,22 +102,23 @@ const CardFrontComponent = ({ property, handleFlip }) => {
       style={featuredPropertiesMobileStyles.paper}
       onClick={() => handlePaperClick(property.slug)}
     >
-      <div className="featuredPropertiesMobileImageContainer">
+      <div className={styles.featuredPropertiesMobileImageContainer}>
         <img
-          className="featuredPropertiesMobileImage"
+          className={styles.featuredPropertiesMobileImage}
           src={property.images[0].url}
           alt="featured"
         />
         <div
+          className={arrowButton}
           style={featuredPropertiesMobileStyles.arrowIcon}
           onClick={handleArrowClick}
         >
           <MdKeyboardArrowRight />
         </div>
       </div>
-      <div className="featuredPropertiesMobileContent">
-        <div className="featuredPropertiesMobileContentFirstSection">
-          <div className="featuredPropertiesMobileContentFirstSectionContent">
+      <div className={styles.featuredPropertiesMobileContent}>
+        <div className={styles.featuredPropertiesMobileContentFirstSection}>
+          <div className={styles.featuredPropertiesMobileContentFirstSectionContent}>
             <span style={featuredPropertiesMobileStyles.icon}><MdOutlineCurrencyRupee/></span>
             <p>
               {
@@ -115,18 +128,18 @@ const CardFrontComponent = ({ property, handleFlip }) => {
               }
             </p>
           </div>
-          <div className="featuredPropertiesMobileContentFirstSectionContent">
+          <div className={styles.featuredPropertiesMobileContentFirstSectionContent}>
             <span style={featuredPropertiesMobileStyles.icon}><IoLocationSharp /></span>
             <p>{property.location}</p>
           </div>
         </div>
-        <div className="featuredPropertiesMobileContentSecondSection">
+        <div className={styles.featuredPropertiesMobileContentSecondSection}>
           <p>{property.title}</p>
         </div>
-        <div className="featuredPropertiesMobileContentThirdSection">
+        <div className={styles.featuredPropertiesMobileContentThirdSection}>
           <hr />
-          <div className="featuredPropertiesMobileContentThirdSectionContentFlex">
-            <div className="featuredPropertiesMobileContentThirdSectionContent">
+          <div className={styles.featuredPropertiesMobileContentThirdSectionContentFlex}>
+            <div className={styles.featuredPropertiesMobileContentThirdSectionContent}>
               <span style={featuredPropertiesMobileStyles.icon}><MdSquareFoot/></span>
               <p>
                 {
@@ -136,8 +149,8 @@ const CardFrontComponent = ({ property, handleFlip }) => {
                 }
               </p>
             </div>
-            <div className="vl">|</div>
-            <div className="featuredPropertiesMobileContentThirdSectionContent">
+            <div className={styles.vl}>|</div>
+            <div className={styles.featuredPropertiesMobileContentThirdSectionContent}>
               <span style={featuredPropertiesMobileStyles.icon}><IoIosHome/></span>
               <p>
                 {
@@ -186,23 +199,23 @@ const CardBackComponent = ({ property, handleFlip }) => {
 
   return (
     <div style={featuredPropertiesMobileStyles.paper}>
-      <div className="featuredPropertiesMobileImageContainerBack">
-        <div className="carouselFeatured">
-          <div className="carousel-track" ref={carouselTrackRef}>
+      <div className={styles.featuredPropertiesMobileImageContainerBack}>
+        <div className={styles.carouselFeatured}>
+          <div className={styles.carouseltrack} ref={carouselTrackRef}>
             {property.images.slice(0, 3).map((img, index) => (
               <img
                 key={index}
-                className="carousel-slide"
+                className={styles.carouselslide}
                 src={img.url}
                 alt={`Featured Property ${index + 1}`}
               />
             ))}
           </div>
-          <div className="carousel-nav">
+          <div className={styles.carouselnav}>
             {property.images.slice(0, 3).map((_, index) => (
               <button
                 key={index}
-                className={`carousel-nav-dot ${index === currentImageIndex ? 'active' : ''
+                className={`${styles.carouselnavdot} ${index === currentImageIndex ? 'active' : ''
                   }`}
                 onClick={() => handleDotClick(index)}
               ></button>

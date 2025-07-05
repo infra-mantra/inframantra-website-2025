@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
-// import './clientTestimony.css';
-
+import styles from './clientTestimony.module.css';
 
 const iconStyle = {
   quoteIcon: {
@@ -12,6 +11,7 @@ const iconStyle = {
   },
   stars: {
     marginTop: '10px',
+    color: '#e0a800'
   },
   starsMobile: {
     color: '#ffff',
@@ -27,65 +27,68 @@ const iconStyle = {
 function ClientTestimony({ name, testimony, img }) {
   const [isDesktop, setIsDesktop] = useState(true);
   const [isMobile, setIsMobile] = useState(true);
+
   const checkScreenWidth = () => {
-    setIsDesktop(window.innerWidth >= 769); // You can adjust the threshold for desktop here
-    setIsMobile(window.innerWidth <=768);
+    setIsDesktop(window.innerWidth >= 769);
+    setIsMobile(window.innerWidth <= 768);
   };
+
   useEffect(() => {
     checkScreenWidth();
     window.addEventListener('resize', checkScreenWidth);
-  
+
     return () => {
       window.removeEventListener('resize', checkScreenWidth);
     };
   }, []);
+
   const renderStars = () => {
     const starCount = 5;
-    let stars = [];
-    for (let i = 0; i < starCount; i++) {
-      stars.push(<span key={i} className="star">&#9733;</span>); // Use Unicode star character
-    }
-    return stars;
+    return Array.from({ length: starCount }, (_, i) => (
+      <span key={i} className={styles.star}>&#9733;</span>
+    ));
   };
 
   return (
-    <div className="clientTestimonyCardWrapper">
+    <div className={styles.clientTestimonyCardWrapper}>
       {isDesktop && (
         <>
-          <div className="clientTestimonyCardHeader">
-            <p className="clientTestimonyName">{name}</p>
-            <div className="stars" style={iconStyle.stars}>
+          <div className={styles.clientTestimonyCardHeader}>
+            <p className={styles.clientTestimonyName}>{name}</p>
+            <div className={styles.stars} style={iconStyle.stars}>
               {renderStars()}
             </div>
           </div>
-          <div className="clientTestimonyCardContainer">
+          <div className={styles.clientTestimonyCardContainer}>
             <img
               src={img}
               alt="testimonyFace"
-              className="clientTestimonyCardFace"
+              className={styles.clientTestimonyCardFace}
             />
-            <div className="clientTestimonyCardTextPseudoFlex"></div>
-            <div className="clientTestimonyCardTextFlex">
-              <span className="quoteIcon" style={iconStyle.quoteIcon}>&#8220;</span>
-              <p className="clientTestimonyCardText">{testimony}</p>
+            <div className={styles.clientTestimonyCardTextPseudoFlex}></div>
+            <div className={styles.clientTestimonyCardTextFlex}>
+              <span className={styles.quoteIcon} style={iconStyle.quoteIcon}>&#8220;</span>
+              <p className={styles.clientTestimonyCardText}>{testimony}</p>
             </div>
           </div>
         </>
       )}
       {!isDesktop && (
-        <div className="clientTestimonyCardContainer">
+        <div className={styles.clientTestimonyCardContainer}>
           <img
             src={img}
             alt="testimonyFace"
-            className="clientTestimonyCardFace"
+            className={styles.clientTestimonyCardFace}
           />
-          <div className="clientTestimonyCardMobileFlex">
-            <div className="starsMobile" style={iconStyle.starsMobile}>
+          <div className={styles.clientTestimonyCardMobileFlex}>
+            <div className={styles.starsMobile} style={iconStyle.starsMobile}>
               {renderStars()}
             </div>
-            <p className="clientTestimonyName">{name}</p>
-            <p className="clientTestimonyCardText">
-              <span className="quoteIconMobile" style={iconStyle.quoteIconMobile}>&#8220;</span>
+            <p className={styles.clientTestimonyName}>{name}</p>
+            <p className={styles.clientTestimonyCardText}>
+              <span className={styles.quoteIconMobile} style={iconStyle.quoteIconMobile}>
+                &#8220;
+              </span>
               {testimony}
             </p>
           </div>

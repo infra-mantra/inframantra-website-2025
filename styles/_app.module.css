@@ -1,0 +1,262 @@
+
+ .bottom_cta .left,
+.bottom_cta .right {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.bottom_cta .left {
+  background: white;
+}
+
+.bottom_cta .right {
+  background: #D69D2E;
+}
+
+.bottom_cta a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+ 
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.bottom_cta a.whatsapp {
+  color: #0B6E21;
+  font-family: "Lexend Deca";
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.bottom_cta a.contact {
+  color: #FFF;
+  font-family: "Lexend Deca";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.bottom_cta a:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+ 
+  .bottom_cta {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+   z-index: 99999;
+   box-shadow: 0px 0px 4.8px 0px rgba(0, 0, 0, 0.25);
+  
+  }
+}
+
+
+/*-------------------------------------------------------------------- Home fix mobile and whats app icons -----------------------------------------------------------*/
+.floatingcontactbtn {
+  position: fixed;
+  top: 46%;
+  right: -30px;
+  color: #fff;
+  /* background-color: #e7b554; */
+  z-index: 99;
+  /* transform: translateY(-50%) rotate(270deg); */
+  padding: 12px 30px;
+  border-radius: 15px 15px 0 0;
+  /* height: 300px; */
+  /* width: max(200px, 15%); */
+  display: none;
+}
+.floatingcontactbtnmob{
+  position: fixed;
+  top: 46%;
+  right: -50px;
+  color: #fff;
+  background-color: #e7b554;
+  z-index: 99;
+  transform: translateY(-50%) rotate(270deg);
+  padding: 12px 30px;
+  border-radius: 15px 15px 0 0;
+}
+.floatingcontactbtn img{
+  cursor: pointer;
+  object-fit: cover;
+  transition: 0.5s;
+}
+.floatingcontactbtn img:hover{
+  padding-right: 14px;
+  -webkit-filter: drop-shadow(5px 5px 5px #daa520);
+  filter: drop-shadow(-5px -5px 3px #daa520);
+}
+
+.floatingcontactbtn span {
+  cursor: pointer;
+}
+
+.floatingwhatsapp {
+  position: fixed;
+  width: 65px;
+  height: 65px;
+  bottom: 20px;
+  right: 10px;
+  box-shadow: 0px 4px 10px 0px #00000040;
+  padding: 16px;
+  border-radius: 50%;
+  background-color: #fff;
+  z-index: 99;
+}
+
+.floatingwhatsapp a {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: inline-block;
+}
+
+.floatingcall {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 100px;
+  right: 10px;
+  box-shadow: 0px 4px 10px 0px #00000040;
+  padding: 14px;
+  border-radius: 50%;
+  background-color: #fff;
+  z-index: 99;
+}
+
+.floatingcall a {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: inline-block;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.btnfloating:hover img {
+  margin-bottom: -3px
+}
+.pricerangelabels {
+  display: flex
+;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.btnfloating {
+    position: fixed;
+    right: 8px;
+    overflow: hidden;
+    width: 50px;
+    height: 50px;
+    border-radius: 100px;
+    border: 0;
+    z-index: 9999;
+    color: white;
+    transition: .2s;
+}
+
+.btnfloating:hover {
+    width: auto;
+    padding: 0 10px;
+    cursor: pointer;
+}
+
+
+.btnfloating span {
+    font-size: 16px;
+    margin-left: 5px;
+    transition: .2s;
+    line-height: 0px;
+    display: none;
+}
+
+.btnfloating:hover span {
+    display: inline-block;
+}
+
+/* Phone */
+.btnfloating.phone {
+    bottom: 85px;
+    background-color:  #34af23;
+}
+
+.btnfloating.phone:hover {
+    background-color: #1f7a12;
+}
+
+/* WhatsApp */
+.btnfloating.whatsapp {
+    background-color: #34af23;
+    bottom: 25px;
+}
+
+.btnfloating.whatsapp:hover {
+    background-color: #1f7a12
+}
+
+.bottom_cta {
+  position: fixed;
+  bottom: 0;
+
+  left: 0;
+  width: 100%;
+  display: none;
+ 
+z-index: 99999;
+box-shadow: 0px 0px 4.8px 0px rgba(0, 0, 0, 0.25);
+
+}
+
+@media screen and(max-width:768px) {
+ .cta_visible{
+    display: none;
+  } 
+  .bottom_cta {
+     display: block;
+  }
+}
+
+
+/* ---------- base (desktop) ---------- */
+.bottom_cta{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  display:none;             /* hide on desktop */
+  z-index:99999;
+  box-shadow:0 0 4.8px rgba(0,0,0,.25);
+}
+
+/* ---------- phone / tablet ---------- */
+@media (max-width:768px){            /* ✅ correct syntax */
+  .bottom_cta{
+    display:flex;                    /* show on mobile */
+  }
+
+  .cta_visible{                      /* hide the floating buttons */
+    display:none;
+  }
+}
+
+

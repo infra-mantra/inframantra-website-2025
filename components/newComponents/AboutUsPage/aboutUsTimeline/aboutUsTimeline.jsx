@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-// import './customizedSteppers.css';
+import styles from'./aboutUsTimeline.module.css';
 
 const stepLabelStyles = {
   active: {
@@ -79,14 +79,14 @@ export default function CustomizedSteppers({ currentStep }) {
         <button
           disabled={activeStep === 0}
           onClick={handleBack}
-          className='stepperBackButton'
+          className={styles.stepperBackButton}
         >
           Previous
         </button>
         <button
           disabled={activeStep === steps.length - 1}
           onClick={handleNext}
-          className='stepperForwardButton'
+          className={styles.stepperForwardButton}
         >
           Next
         </button>

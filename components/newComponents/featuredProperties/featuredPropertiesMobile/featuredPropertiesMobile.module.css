@@ -1,0 +1,628 @@
+ /*----------------------------------------------------------------  feature properties section home page -----------------------------------------------------------------------*/
+  
+  .featuredPropertiesMobileCard {
+    perspective: 1000px;
+  }
+  .featuredPropertiesMobileCard.flipped .cardFront{
+    display: none;
+  }
+  .featuredPropertiesMobileCard.flipped .cardBack{
+    display: block;
+    display: flex;
+    justify-content: end;
+    height: 20rem;
+  }
+  .featuredPropertiesMobileCard .cardBack{
+    display: none;
+  }
+  
+  .featuredPropertiesMobileCardInner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+  }
+  
+  .featuredPropertiesMobileCard.flipped .featuredPropertiesMobileCardInner {
+    transform: rotateY(180deg);
+  }
+  
+  .featuredPropertiesMobileCardFront,
+  .featuredPropertiesMobileCardBack {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+  }
+  
+  .featuredPropertiesMobileCardBack {
+    transform: rotateY(180deg);
+  }
+  
+  .featuredPropertiesMobileImageContainer,
+  .featuredPropertiesMobileImageContainerBack {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+  }
+  
+  .featuredPropertiesMobileImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .carouselFeatured {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+  }
+  
+  .carouseltrack {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .carouselslide {
+    min-width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .carouselnav {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+  }
+  
+  .carouselnavdot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+  }
+  
+  .carouselnavdot.active {
+    background-color: rgba(255, 255, 255, 1);
+  }
+ 
+ 
+  
+  .featuredPropertiesSectionHeaderTitle {
+    color: #000;
+    font-size: 37.888px;
+    width: 50%;
+  }
+  
+  .featuredPropertiesSectionHeaderCityName {
+    color: #E7B554;
+    font-size: 37.888px;
+  }
+  
+
+  
+  .featuredPropertiesSectionHeaderCityName:nth-child(1) {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .featuredPropertiesSectionHeaderCityNameIcon {
+    cursor: pointer;
+    margin-top: 5px;
+    margin-left: 15px;
+  }
+  
+  .featuredPropertiesMobileSectionContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 80%;
+    width: 100%;
+  }
+  
+ 
+  
+  
+  
+  .fade-enter {
+    opacity: 0;
+  }
+  .fade-enter-active {
+    opacity: 1;
+    transition: opacity 300ms ease-in;
+  }
+  .fade-exit {
+    opacity: 1;
+  }
+  .fade-exit-active {
+    opacity: 0;
+    transition: opacity 300ms ease-out;
+  }
+  
+  @media screen and (max-width: 900px) {
+   
+    .featuredPropertiesSectionHeader {
+      height: 8%;
+      justify-content: center;
+    }
+    .featuredPropertiesMobileNewHeader {
+      margin: 15px;
+      font-size: 20px;
+      font-weight: 500;
+      color: #e7b554;
+    }
+ .featuredPropertiesMobileContentFirstSection {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 30%;
+    width: 100%;
+  }
+    .featuredPropertiesMobileSectionContainerCityNavigation {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+      height: 5%;
+    }
+        .featuredPropertiesMobileSectionContainer {
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+        justify-content: flex-start;
+    }
+  
+    .featureedPropertiesMobilePaperContainer {
+      height: 90%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      margin-left: 20%;
+      margin-top: 2%;
+    }
+    .featureedPropertiesMobilePaperContainerPropertyWrapper {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        justify-content: space-evenly;
+        width: 100%;
+    }
+    .featuredPropertiesMobileCard{
+        margin-top: 10px;
+        column-gap: 15px;
+    }
+  }
+  
+  @media screen and (max-width: 550px) {
+    .featuredPropertiesSectionHeader {
+      align-items: baseline;
+    }
+    .featuredPropertiesSectionHeaderTitle {
+      font-size: 15px;
+    }
+    .featuredPropertiesSectionHeaderCityName {
+      font-size: 15px;
+    }
+    .featuredPropertiesSectionHeader {
+      height: 6%;
+    }
+  }
+  
+  /* Add these to your CSS file */
+  
+  @keyframes slideInFromRight {
+    0% {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideOutToLeft {
+    0% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes slideInFromLeft {
+    0% {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideOutToRight {
+    0% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+  }
+  
+  .city-slide-enter {
+    animation: slideInFromRight 0.5s forwards;
+  }
+  
+  .city-slide-exit {
+    animation: slideOutToLeft 0.5s forwards;
+  }
+  
+  .property-slide-enter {
+    animation: slideInFromLeft 0.5s forwards;
+  }
+  
+  .property-slide-exit {
+    animation: slideOutToRight 0.5s forwards;
+  }
+
+  
+  
+  
+ 
+
+  .swiper-button-prev, .swiper-button-next {
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 4px solid #e7b554;
+    color: #e7b554;
+    background: none;
+    height: 30px !important;
+    width: 30px !important;
+    cursor: pointer;
+    position: absolute;
+    top: 60%;
+    margin: 0 30px;
+  }
+  .swiper-button-prev:after, .swiper-button-next:after {
+    font-family: swiper-icons;
+    font-size: 15px !important;
+    text-transform: none !important;
+    letter-spacing: 0;
+    font-variant: initial;
+    line-height: 1;
+    color: #e7b554 !important;
+  }
+
+
+
+
+  
+  /* Featured Properties */
+  .featuredslide {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    transition: transform 500ms ease-out, opacity 500ms ease-out;
+    position: absolute;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+
+  .featuredPropertiesMobileWrapper {
+    height: 100%;
+    width: 100%;
+  }
+  
+  .featuredPropertiesMobileImageContainer {
+    height: 65%;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 10px 10px 0px 0px;
+    position: relative;
+  }
+  
+  .featuredPropertiesMobileContent {
+    height: 35%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  
+  .featuredPropertiesMobileImage {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+  }
+  
+  .featuredPropertiesMobileContentFirstSection {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 30%;
+    width: 100%;
+  }
+  
+  .featuredPropertiesMobileContentFirstSectionContent {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .featuredPropertiesMobileContentFirstSectionContent:nth-child(1) {
+    margin-left: 5%;
+  }
+  .featuredPropertiesMobileContentFirstSectionContent:nth-child(2) {
+    margin-right: 5%;
+  }
+  
+  .featuredPropertiesMobileContentFirstSectionContent > p {
+    font-size: 25px;
+    /* font-weight: 300; */
+  }
+  
+  .featuredPropertiesMobileContentSecondSection {
+    height: 25%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  
+  .featuredPropertiesMobileContentSecondSection > p {
+    color: #e7b554;
+    font-size: 25px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-left: 5%;
+  }
+  
+  .featuredPropertiesMobileContentThirdSection {
+    height: 45%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: -10px;
+  }
+  
+  .featuredPropertiesMobileContentThirdSectionContentFlex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+  }
+  
+  .featuredPropertiesMobileContentThirdSectionContent {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    width: 35%;
+  }
+  
+  .vl {
+    /* border-left: 2px solid #d9d9d9; */
+    color: #d9d9d9;
+    height: 100%;
+  }
+  
+  .featuredPropertiesMobileContentThirdSection > hr {
+    width: 90%;
+  }
+  
+  .featuredPropertiesMobileContentThirdSectionContent > p {
+    font-size: 25px;
+    /* font-weight: 300; */
+    margin: 0;
+  }
+  
+  .featuredPropertiesMobileImageContainerBack {
+    height: 100% !important;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 10px 10px 0px 0px;
+    position: relative;
+  }
+  
+  .featuredPropertiesMobileImageBack {
+    height: 100% !important;
+    width: 100%;
+    object-fit: fill;
+  }
+  
+  .carouselFeatured {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+  }
+  
+  .carouseltrack {
+    display: flex;
+    transition: transform 0.3s ease-in-out;
+    height: 100%;
+  }
+  
+  .carouselslide {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  
+  .carousel-prev,
+  .carousel-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+  }
+  
+  .carousel-prev {
+    left: 10px;
+  }
+  
+  .carousel-next {
+    right: 10px;
+  }
+  
+  .carousel-nav {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+  }
+  
+  .carouselnavdot {
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #ccc;
+    margin: 0 10px;
+  }
+  
+  .carouselnavdot.active {
+    background-color: #e7b554;
+  }
+  
+  .ReactFlipCard__container {
+    width: 80%;
+    height: 50%;
+  }
+  
+  .ReactFlipCard__flipCardFront {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .exclusiveIconMobile {
+    width: 15vh;
+    position: absolute;
+    left: -10%;
+    top: -7.5%;
+    transform: rotate(-25deg);
+  }
+  
+  @media (max-width: 550px) {
+    .featuredPropertiesMobileContentFirstSectionContent > p {
+      font-size: 1rem;
+    }
+    .featuredPropertiesMobileContentSecondSection > p {
+      font-size: 1.3rem;
+      margin-top: -6px;
+    }
+    .featuredPropertiesMobileContentThirdSectionContent > p {
+      font-size: 1rem;
+    }
+    .carousel-nav-dot {
+      height: 15px;
+      width: 10px;
+      border-radius: 50%;
+    }
+  }
+  
+  /* Add these to your CSS file */
+  
+  @keyframes slideInFromRight {
+    0% {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideOutToLeft {
+    0% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes slideInFromLeft {
+    0% {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideOutToRight {
+    0% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+  }
+  
+  .city-slide-enter {
+    animation: slideInFromRight 0.5s forwards;
+  }
+  
+  .city-slide-exit {
+    animation: slideOutToLeft 0.5s forwards;
+  }
+  
+  .property-slide-enter {
+    animation: slideInFromLeft 0.5s forwards;
+  }
+  
+  .property-slide-exit {
+    animation: slideOutToRight 0.5s forwards;
+  }
+
+
+
+
+
+
+
+

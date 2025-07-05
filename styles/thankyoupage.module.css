@@ -1,0 +1,100 @@
+
+/* Thank-you page css */
+.thankyousection {
+  flex-grow: 1; /* Ensures it takes up the remaining space below the header */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.thankyoubackground {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  /* background: url('https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/Thankyou-background.jpg') no-repeat center center / cover; */
+  display: flex;
+  flex-direction: column; 
+}
+
+.thankyoucontainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1; /* Ensures it fills the remaining space between the header and footer */
+}
+
+.thankyouoverlay {
+  background: rgba(255, 255, 255, 0.90);
+  padding: 40px 20px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 600px;
+  width: 90%;
+}
+
+.thankyouoverlay h1 {
+  font-size: 2.5rem;
+
+  margin-bottom: 15px;
+  color: #000;
+text-align: center;
+font-family: "Lexend Deca";
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
+
+.thankyouoverlay p {
+  font-size: 1.2rem;
+  color: #000;
+
+text-align: center;
+font-family: "Lexend Deca";
+/* font-size: 17.548px; */
+font-style: normal;
+font-weight: 300;
+line-height: normal;
+  /* color: #555; */
+  margin-bottom: 35px;
+}
+
+.backhomebtn {
+  background-color: #28a745;
+  color: #fff;
+  padding: 12px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.backhomebtn:hover {
+  background-color: #218838;
+}
+.thankyouheader {
+  padding: 20px;
+  text-align: center;
+  color: #fff;
+  font-size: 1.5rem;
+  background: transparent; /* Ensures it doesn't block the background image */
+}
+
+.thankyoupage{
+  margin-bottom: -69px;
+  position: relative;
+  top: -69px;
+  background: url(https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/Thankyou-background.jpg) no-repeat center center / cover;
+}
+
+
+.thankyoupage .thankyoubackground {
+
+}
+
+
+.thankyouheader {
+  background-color: transparent; /* Transparent background for Thank You page */
+  color: #e7b554; /* Text color for Thank You page */
+  position: relative;
+  z-index: 100;
+}

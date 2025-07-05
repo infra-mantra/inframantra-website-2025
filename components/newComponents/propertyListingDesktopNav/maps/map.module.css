@@ -1,0 +1,26 @@
+
+/* Custom Maker */
+.custommarker {
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.custommarker:hover {
+  background-color: blue;
+  border-color: 1px solid gold;
+  transform: scale(1.2);
+}
+.propertypopup {
+  width: 200px;
+  text-align: center;
+}
+.propertyimage {
+  width: 100%;
+  height: auto;
+}
+.propertydetails {
+  margin-top: 10px;
+}
+

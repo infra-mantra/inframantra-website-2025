@@ -11,6 +11,7 @@ import BrandAmbassador from "./brandAmbassador";
 import AwardsSlider from "./awardSlider";
 import MeetTheTeam from "./meettheTeam";
 import DeveloperSlider from "./developerSlider";
+import styles from './aboutUs.module.css'; // Assuming you have a CSS module for styles
 
 const AboutUsPageHeader = () => {
     const [isDesktop, setIsDesktop] = useState(true);
@@ -37,7 +38,7 @@ const AboutUsPageHeader = () => {
     const MobileBannerImage = 'https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/About%20us%20banner%20Phone.avif';
     return (
         <>
-            <div className="aboutUsPageHeader">
+            <div className={styles.aboutUsPageHeader}>
                 <h2>Hi There</h2>
                 <h2>
                     We`re{' '}
@@ -46,39 +47,39 @@ const AboutUsPageHeader = () => {
                     </span>
                 </h2>
             </div>
-            <div className="aboutUsPageHeaderImgContainer">
+            <div className={styles.aboutUsPageHeaderImgContainer}>
                 <img
                     src={isDesktop ? BannerImage : MobileBannerImage}
                     alt="aboutUsPageHeaderImg"
-                    className="aboutUsPageHeaderImg"
+                    className={styles.aboutUsPageHeaderImg}
                 />
             </div>
-            <p className="aboutUsPageHeaderDescription">
+            <p className={styles.aboutUsPageHeaderDescription}>
                 INFRAMANTRA stands as a premier PropTech advisory firm with a mission to
                 guide clients seamlessly through the journey of searching, discovering,
                 purchasing, and managing residential and commercial properties built by
                 India’s top real estate developers.
             </p>
-            <p className="aboutUsPageHeaderDescription">
+            <p className={styles.aboutUsPageHeaderDescription}>
                 Rooted in a process-oriented approach, we ensure every home buying
                 experience remains deeply customer-centric, embodying our core value of
                 respect for all individuals. Discover a new standard in property
                 advisory with INFRAMANTRA, where expertise meets excellence, and your
                 aspirations find their perfect match.
             </p>
-            <div className="aboutUsPageVisionContainer">
-                <div className="aboutUsPageVisionFlex">
-                    <FaRegEye className="targetIcon" sx={{ fontSize: '2.5rem', color: '#0B8C27' }} />
-                    <p className="aboutUsPageVisionHeader">Our Vision</p>
-                    <p className="aboutUsPageVisionContent">
+            <div className={styles.aboutUsPageVisionContainer}>
+                <div className={styles.aboutUsPageVisionFlex}>
+                    <FaRegEye className={styles.targetIcon} sx={{ fontSize: '2.5rem', color: '#0B8C27' }} />
+                    <p className={styles.aboutUsPageVisionHeader}>Our Vision</p>
+                    <p className={styles.aboutUsPageVisionContent}>
                         To be the most preferred partner for all real estate stakeholders
                         through transparency, simplicity, and choice.
                     </p>
                 </div>
-                <div className="aboutUsPageVisionFlex">
-                    <TbTargetArrow className="targetIcon" sx={{ fontSize: '2.5rem', color: '#0B8C27' }} />
-                    <p className="aboutUsPageVisionHeader">Our Mission</p>
-                    <p className="aboutUsPageVisionContent">
+                <div className={styles.aboutUsPageVisionFlex}>
+                    <TbTargetArrow className={styles.targetIcon} sx={{ fontSize: '2.5rem', color: '#0B8C27' }} />
+                    <p className={styles.aboutUsPageVisionHeader}>Our Mission</p>
+                    <p className={styles.aboutUsPageVisionContent}>
                         We aim to build a dynamic market landscape through innovative
                         strategies and new-age marketing tools, creating a seamless value
                         chain that includes end-users, industry stakeholders, and investors.
@@ -87,27 +88,27 @@ const AboutUsPageHeader = () => {
                     </p>
                 </div>
             </div>
-            <div className="aboutUsPageTimelineWrapper">
+            <div className={styles.aboutUsPageTimelineWrapper}>
                 <AboutUsTimelineContent currentStep={currentStep} />
                 <CustomizedSteppers currentStep={handleStepChange} />
             </div>
             <CoreValues />
             <MeetOwners />
-            <div className="aboutUsPageStatisticalDataWrapper">
-                <div className="aboutUsPageStatisticalDataItemContainer  aboutUsPageStatisticalDataItemContainer1">
-                    <div className="aboutUsPageStatisticalDataItem">
+            <div className={styles.aboutUsPageStatisticalDataWrapper}>
+                <div className={`${styles.aboutUsPageStatisticalDataItemContainer}  ${styles.aboutUsPageStatisticalDataItemContainer1}`}>
+                    <div className={styles.aboutUsPageStatisticalDataItem}>
                         <h4>2017</h4>
                         <p>Founded In</p>
                     </div>
                 </div>
-                <div className="aboutUsPageStatisticalDataItemContainer aboutUsPageStatisticalDataItemContainer2 bottomStyledStats">
-                    <div className="aboutUsPageStatisticalDataItem bottomStyledStatsItem">
+                <div className={`${styles.aboutUsPageStatisticalDataItemContainer} ${styles.aboutUsPageStatisticalDataItemContainer2} ${styles.bottomStyledStats}`}>
+                    <div className={`${styles.aboutUsPageStatisticalDataItem} ${styles.bottomStyledStatsItem}`}>
                         <h4>50+</h4>
                         <p>Awards & Recognition</p>
                     </div>
                 </div>
-                <div className="aboutUsPageStatisticalDataItemContainer aboutUsPageStatisticalDataItemContainer3">
-                    <div className="aboutUsPageStatisticalDataItem">
+                <div className={`${styles.aboutUsPageStatisticalDataItemContainer} ${styles.aboutUsPageStatisticalDataItemContainer3}`}>
+                    <div className={styles.aboutUsPageStatisticalDataItem}>
                         <h4>45000</h4>
                         <p>Customers Reached</p>
                     </div>

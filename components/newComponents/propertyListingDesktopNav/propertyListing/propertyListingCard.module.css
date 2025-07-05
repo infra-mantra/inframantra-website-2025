@@ -1,0 +1,324 @@
+
+.propertyListingCardWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  overflow: scroll;
+  height: auto;
+  overflow-x: hidden;
+}
+
+
+.propertyListPageSectionFlex {
+  width: 100vw;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: hidden;
+}
+
+.propertyListPageLeftSection {
+  width: 58%;
+  height: auto;
+  margin-left: 2%;
+}
+
+.propertyListPageRightSection {
+  position: fixed; 
+  top: 20%; 
+  width: 37%;
+  right: -2%;
+  height: 40vh; 
+  max-height: 80vh; 
+  overflow: hidden; 
+}
+
+
+
+.propertyListingCardLeftSection {
+  width: 45%;
+  height: 100%;
+  position: relative;
+}
+
+.propertyListingCardRightSection {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+  height: 100%;
+  margin-left: 3%;
+}
+
+.propertyListingCardLeftSectionImg {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  border-radius: 10px;
+  position: relative;
+}
+
+.propertyListingCardLeftSectionImgTag {
+  position: absolute;
+  width: 6vw;
+  z-index: 10;
+  border-radius: 10px;
+  left: 0%;
+  top: 0%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.propertyListingTagExclusive {
+  background: #e7b554;
+}
+
+.propertyListingTagFeatured {
+  background: #0ca92e;
+}
+
+.propertyListingCardRightSectionBtnContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  width: 100%;
+}
+
+.propertyListingCardHeaderFlex {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.propertyListingCardHeaderFlex > h4 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.propertyListingCardRightSection > p {
+  margin: 0;
+}
+
+.propertyListingCardRightSectionGridContainer {
+  display: grid;
+  grid-template-columns: 48% 48%;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+  width: 100%;
+}
+
+.propertyListingCardRightSectionGridContainer > p {
+  margin: 0;
+  font-size: 15px;
+}
+
+.propertyListingCardRightSectionDescription {
+  font-size: 15px;
+  width: 100%;
+  font-weight: 600;
+}
+
+.propertyListingCardRightSectionLocation {
+  font-size: 15px;
+}
+
+.propertyPageListingPaginationWrapper {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  column-gap: 6px;
+  align-items: center;
+  height: 10vh;
+}
+.propertyPageListingPaginationWrapper .pagination-button{
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  border: 1px solid #b8b8b8;
+}
+.pagination-button.active{
+  border: 1px solid #e7b554;
+  color: #e7b554;
+}
+ .pagination-buttons{
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  font-family: sans-serif;
+  padding: 25px;
+  background: #fff;
+  color: #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pagination-buttons {
+  display: flex;
+  align-items: center;
+}
+
+
+@media (max-width: 768px) {
+ .propertyPageListNavWrapper {
+    height: 8vh;
+    display: flex
+;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    width: 100vw;
+    overflow: hidden;
+    margin-top: 6%;
+}
+
+  .propertyListingSearchBarWrapper {
+    width: 60%;
+  }
+
+  .propertyListPageSectionFlex {
+    flex-direction: column;
+    height: auto;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+  }
+  .propertyListPageMobileImgSection {
+    height: 55%;
+    width: 100%;
+    position: relative;
+  }
+  .propertyListPageMobileDetailSection {
+    height: 45%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .propertyListPageSectionHeaderFlex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    margin-bottom: 20px;
+  }
+
+  .propertyListPageMobileImgSection > img {
+    height: 100%;
+    width: 100%;
+    object-fit: fill;
+  }
+
+  .propertyListPageMobileDetailHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 95%;
+  }
+
+  .propertyListPageMobileDetailLocation {
+    max-width: 70%;
+  }
+
+  .propertyListPageMobileDetailLocation > * {
+    margin: 0;
+  }
+
+  .propertyListPageMobileDetailLocation > h4 {
+    font-weight: 800;
+  }
+
+  .propertyListPageMobileDetailLocation > p {
+    font-size: 12px;
+  }
+
+  .propertyListPageSectionHeaderLocation {
+    margin: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .propertyListPageMobileDetailDescription {
+    font-size: 12px;
+    width: 95%;
+    text-align: center;
+    margin: 0;
+  }
+
+  .propertyListPageMobileDetailOverview {
+    background: rgba(217, 217, 217, 0.3);
+    margin-left: 10px;
+    font-size: 12px;
+    margin-right: 10px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 95%;
+  }
+
+
+  .propertyListPageMobileDetailOverview > * {
+    margin: 5px 0px;
+  }
+
+  .propertyListPageMobileDetailBtnWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 95%;
+  }
+
+  .propertyListPageMobileDetailOverviewValueFlex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .propertyListPageMobileDetailLocation > p:nth-child(2) {
+    font-size: 14px;
+  }
+
+  .propertyListingFilterBtn {
+    padding: 10px;
+    border-radius: 10px;
+    width: 25vw;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 16px;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    background: #fff;
+    border: 0.5px solid rgb(221, 219, 219);
+  }
+
+  .propertyListingSelectWrapper {
+    width: 25vw;
+  }
+  .propertyListingSelect {
+    height: 30px;
+    width: 25vw;
+  }
+}
+
+
+

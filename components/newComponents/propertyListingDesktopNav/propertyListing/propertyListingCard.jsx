@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaStar, FaTag } from 'react-icons/fa';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
+import styles from './propertyListingCard.module.css'
 
 const Mapho = dynamic(() => import('../maps/maps'), { ssr: false });
 
@@ -109,9 +110,9 @@ function PropertyListingCard({
   };
 
   return (
-    <div className="propertyListingCardWrapper">
-      <div className="propertyListPageSectionFlex">
-        <div className="propertyListPageLeftSection">
+    <div className={styles.propertyListingCardWrapper}>
+      <div className={styles.propertyListPageSectionFlex}>
+        <div className={styles.propertyListPageLeftSection}>
           <h3>Properties In {propertyData[0]?.city?.name}</h3>
           {fetchedProperties.length > 0 ? fetchedProperties
               .slice((currentPage - 1) * 10, currentPage * 10)
@@ -124,9 +125,9 @@ function PropertyListingCard({
                     setCurrentZoom(17);
                   }}
                 >
-                  <div className="propertyListingCardLeftSection">
+                  <div className={styles.propertyListingCardLeftSection}>
                     <img
-                      className="propertyListingCardLeftSectionImg"
+                      className={styles.propertyListingCardLeftSectionImg}
                       src={prop.imageGallery[0].url}
                       alt="featured"
                     />
@@ -153,14 +154,14 @@ function PropertyListingCard({
                       </div>
                     )}
                   </div>
-                  <div className="propertyListingCardRightSection">
-                    <div className="propertyListingCardHeaderFlex">
+                  <div className={styles.propertyListingCardRightSection}>
+                    <div className={styles.propertyListingCardHeaderFlex}>
                       <h4>{prop.name}</h4>
                     </div>
-                    <p className="propertyListingCardRightSectionLocation">
+                    <p className={styles.propertyListingCardRightSectionLocation}>
                       {prop.subLocality?.name}, {prop.locality?.name}, {prop.city?.name}
                     </p>
-                    <div className="propertyListingCardRightSectionGridContainer">
+                    <div className={styles.propertyListingCardRightSectionGridContainer}>
                       <p>
                         Price:
                         <span
@@ -210,10 +211,10 @@ function PropertyListingCard({
                         </span>
                       </p>
                     </div>
-                    <p className="propertyListingCardRightSectionDescription">
+                    <p className={styles.propertyListingCardRightSectionDescription}>
                       {`" ${prop.tagLine} "`}
                     </p>
-                    <div className="propertyListingCardRightSectionBtnContainer">
+                    <div className={styles.propertyListingCardRightSectionBtnContainer}>
                       <button
                         style={{
                           background: '#0ca92e',
@@ -246,9 +247,9 @@ function PropertyListingCard({
                     </div>
                   </div>
                 </div>
-              )) : <h3 className='noPropertiesSection'>No Properties Found</h3> 
+              )) : <h3 className={styles.noPropertiesSection}>No Properties Found</h3> 
               }
-          <div className="propertyPageListingPaginationWrapper">
+          <div className={styles.propertyPageListingPaginationWrapper}>
             {Array.from({ length: totalPages }, (_, index) => (
               <button
                 key={index}
@@ -260,7 +261,7 @@ function PropertyListingCard({
             ))}
           </div>
         </div>
-        <div className="propertyListPageRightSection">
+        <div className={styles.propertyListPageRightSection}>
           <Mapho center={mapCenter} zoom={currentZoom} points={points} setMapCenter={setMapCenter} setZoom={setCurrentZoom} />
         </div>
       </div>

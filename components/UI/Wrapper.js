@@ -99,28 +99,7 @@ const Wrapper = (props) => {
     }
   }
 
-//   useEffect(() => {
-//     const triggerPopup = () => {
-//       document.querySelector(".enquiry-popup-bg").classList.add("show")
-//       document.querySelector(".enquiry-popup").classList.add("show")
-//     }
-//     const closePopup = () => {
-//       document.querySelector(".enquiry-popup-bg").classList.remove("show")
-//       document.querySelector(".enquiry-popup").classList.remove("show")
-//     }
-//     const popupBtn = document.querySelectorAll(".open-enquiry-popup")
-//     const closeBtn = document.querySelector(".close-popup")
-//     for (let i = 0; i < popupBtn.length; i++) {
-//       popupBtn[i].addEventListener('click', triggerPopup)
-//     }
-//     closeBtn.addEventListener('click', closePopup)
-//     return () => {
-//       for (let i = 0; i < popupBtn.length; i++) {
-//         popupBtn[i].removeEventListener('click', triggerPopup)
-//       }
-//       closeBtn.removeEventListener('click', closePopup)
-//     }
-//   })
+
   const addJsonData = () => {
     return {
       __html: `
@@ -212,15 +191,6 @@ const Wrapper = (props) => {
     };
   }, []);
 
-//   function showExitPopup() {
-//     const popupBg = document.querySelector('.enquiry-popup-bg');
-//     const popup = document.querySelector('.enquiry-popup');
-
-//     if (popupBg && popup) {
-//       popupBg.classList.add('show');
-//       popup.classList.add('show');
-//     }
-//   }
 
 
 
@@ -322,13 +292,7 @@ const Wrapper = (props) => {
         )}
         <FormLoader />
         {props.children}
-        {/* {isDesktop ? ('') 
-           : (showMainFooter ? <FooterMain selectedItems={props.selectedItem} toggleSelection={props.toggleSelection} /> : '')
-          } */}
-        {/* {isDesktop ? ('') 
-           :
-           (propertyPath ?  <FooterBar detail={props.detail}/> : '' )
-         } */}
+       
       </main>
       
       {pathname === '/thank-you' && (

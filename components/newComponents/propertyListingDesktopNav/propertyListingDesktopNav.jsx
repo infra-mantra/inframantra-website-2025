@@ -8,7 +8,8 @@ import {
   PriceRangeDropdown,
   ProjectStatusDropdown,
 } from './propertyListingSearch/propertyListingDropdownComponents/propertyListingDropdownComponent.jsx';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/router'
+import styles from './propertyListingDesktopNav.module.css'
 
 function PropertyListingDesktopNav({
   currentCitySearch,
@@ -73,7 +74,7 @@ function PropertyListingDesktopNav({
   };
 
   return (
-    <div className="propertyListingDesktopNav">
+    <div className={styles.propertyListingDesktopNav}>
       <NavDropdown
         bgd={true}
         title="City"
@@ -114,7 +115,7 @@ function PropertyListingDesktopNav({
         />
       </NavDropdown>
       <ListingNavSortBy />
-      <button onClick={handleClearFilters} className='clear-filters-button'>Clear Filters</button>
+      <button onClick={handleClearFilters} className={styles.clearfiltersbutton}>Clear Filters</button>
     </div>
   );
 }

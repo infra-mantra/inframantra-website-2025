@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import useMediaQuery from '../utils/useMediaQuery.js';
 import Button from '../common/button/button.jsx';
+import styles from '../styles/notFound.module.css'
+import Wrapper from '../components/UI/Wrapper.js';
 
 
 export const config = {
@@ -14,11 +16,13 @@ function NotFoundPage() {
   const router = useRouter();
 
   return (
-    <div className="notFoundPageWrapper">
+    <Wrapper>
+
+    <div className={styles.notFoundPageWrappe}>
       {isDesktop ? (
-        <div className="notFoundPageDesktopContainer">
-          <div className="notFoundPageDesktopLeftContainer">
-            <div className="notFoundPageDesktopLeftFlex">
+        <div className={styles.notFoundPageDesktopContainer}>
+          <div className={styles.notFoundPageDesktopLeftContainer}>
+            <div className={styles.notFoundPageDesktopLeftFlex}>
               <h2>404</h2>
               <h4>
                 <span style={{ color: '#E4A951' }}>Oops! </span>Seems You've Taken a Wrong Turn.
@@ -35,7 +39,7 @@ function NotFoundPage() {
               />
             </div>
           </div>
-          <div className="notFoundPageDesktopRightContainer">
+          <div className={styles.notFoundPageDesktopRightContainer}>
             <Image
               src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/home-building.png"
               alt="404 not found"
@@ -45,7 +49,7 @@ function NotFoundPage() {
           </div>
         </div>
       ) : (
-        <div className="notFoundPageDesktopContainer">
+        <div className={styles.notFoundPageDesktopContainer}>
           <h2>404</h2>
           <h4>
             <span style={{ color: '#E4A951' }}>Oops! </span>Seems You've Taken a Wrong Turn.
@@ -69,6 +73,7 @@ function NotFoundPage() {
         </div>
       )}
     </div>
+    </Wrapper>
   );
 }
 

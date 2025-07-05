@@ -1,0 +1,212 @@
+.sectionHeadCategory{
+  font-family: Lexend Deca;
+font-weight: 600;
+font-size: 30px;
+line-height: 37.5px;
+letter-spacing: 0%;
+text-align: center;
+margin: 8px;
+}
+/*---------------------------------------------------------------------------------------Feature Blogs ----------------------------------------------------------*/
+ 
+.featuredblog {
+  /* margin: 2rem 0; */
+  padding: 1rem;
+}
+.featuredblogmainstory {
+  position: relative;
+  height: 429px;
+  overflow: hidden;
+  cursor: pointer; 
+}
+.featuredblogmainimage {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  border-radius: 8px;
+}
+.featuredblogcontent {
+  position: absolute;
+  width: 30%;
+  top: 20%; /* Adjust based on desired placement */
+  left: 5%;
+  z-index: 2;
+  color: white;
+  display: flex;
+  flex-direction: column; /* Stack title and button */
+  gap: 10px; /* Space between title and button */
+}
+.featuredblogoverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
+  color: white;
+  padding: 15px; /* Adjust padding to prevent overflow */
+  padding-top: 0px;
+  box-sizing: border-box; /* Include padding within the height */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Other Stories Section */
+.featuredblogotherstories {
+  /* margin-top: 10px; */
+  margin: 10px;
+}
+.featuredblogotherheading {
+  font-size: 20px;
+  position: relative;
+  font-weight: bold;
+  display: flex;
+  bottom: 12px;
+  font-family: "Lexend Deca";
+  margin-bottom: 15px;
+}
+.featuredblogstorycards {
+  display: flex;
+  gap: 85px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  scroll-snap-type: x mandatory;
+}
+.featuredblogstorycards::-webkit-scrollbar {
+  display: none; /* Hides scrollbar in Chrome, Edge, and Safari */
+}
+.featuredblogstorycard {
+  width: 17.938rem;
+  height: 6rem;
+  /* overflow-x: ; */
+  display: flex;
+  background: #EDEBEB;
+  padding-right: 14px;
+  padding-bottom: 14px;
+  padding-top: 14px;
+  align-items: center;
+  border-radius: 8px;
+  text-align: center;
+  min-width: 200px;
+  flex-shrink: 0;
+  scroll-snap-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  position: relative;
+}
+
+.featuredblogstorynumber {
+  background: #898986;
+  margin-top: 2rem;
+  color: white;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  margin: 0 auto 10px auto;
+}
+.featuredblogstorytitle {
+    font-size: 12px;
+    align-items: center;
+    width: 80%;
+    height: 100%;
+    font-weight: 600;
+    color: #333;
+}
+.sectionblog.sectionhead h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-align: center;
+  color: #333;
+  margin-bottom: 1rem;
+}
+.sectionblog h2 {
+    color:green !important;
+    display: flex;
+}
+.blogslideimage {
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    border-radius: 12px;
+    display: block;
+}
+.customslider {
+    position: relative;
+    overflow-x: auto;
+    display: flex
+;
+    align-items: center;
+    scrollbar-width: none;
+    gap: 1.8rem;
+}
+.blogslide {
+    flex: 0 0 auto;
+    width: 257px;
+    height: 290px;
+    border-radius: 12px;
+    margin-right: 25px;
+    overflow: hidden;
+    background-color: #f4f4f4;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+@media (max-width: 768px){
+  .sectionblog.sectionhead h2 {
+    /* margin-top: 15rem; */
+}
+    .sectionHeadCategory {
+        font-size: 20px !important;
+    }
+}
+
+@media  screen and (max-width:768px) {
+  .featuredblogoverlay {
+    position: relative; /* Make the overlay sit as a normal block element */
+    background: rgba(0, 0, 0, 0.7); /* Optional: Adjust background */
+    color: white;
+    padding: 15px;
+    /* bottom: 230px; */
+    margin-bottom: 10px; /* Space between the overlay and the main image */
+    text-align: center;
+    border-radius: 8px;
+}
+.featuredblogotherstories {
+  background: rgba(237, 237, 237, 0.80);
+  border-radius: 10px;
+  margin: 10px;
+}
+.featuredblogotherheading {
+  visibility: hidden;
+  
+}
+.featuredblogstorycards{
+  gap: 25px;
+}
+
+.featuredblogstorycard{
+  background-color: #DBDBDB;
+}
+  .sectionheadcategory{
+     font-size: 17px !important;
+      } 
+      
+
+
+
+}
+.blogslayout {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}
+@media (max-width: 768px) {
+    .blogslayout {
+        flex-direction: column;
+    }
+}

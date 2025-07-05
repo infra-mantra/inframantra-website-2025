@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FaTimes } from 'react-icons/fa';
 import PropertyListingSearchData from "./PropertyListingSearchData";
+import styles from './propertyListingSearch.module.css'
 
 function PropertyListingSearch({ searchData , onSelected , onClear}) {
   const [searchSelectionBox, setSearchSelectionBox] = useState(false);
@@ -50,9 +51,9 @@ function PropertyListingSearch({ searchData , onSelected , onClear}) {
   }, []);
 
   return (
-    <div className='propertyListingSearcContainer' ref={wrapperRef}>
+    <div className={styles.propertyListingSearcContainer} ref={wrapperRef}>
       <input
-        className={`propertyListingSearchWrapper ${selectedValueText ? "disabled" : ""}`}
+        className={`${styles.propertyListingSearchWrapper} ${selectedValueText ? "disabled" : ""}`}
         placeholder='Search by property or locality'
         onClick={handleSearchDropdownOpen}
         onChange={handlePropertyListSearchChange}
@@ -80,7 +81,7 @@ export default PropertyListingSearch;
 
 const SelectedTextBox = ({ selectedOption = "", onClear }) => {
   return (
-    <div className='selectedTextBoxWrapper'>
+    <div className={styles.selectedTextBoxWrapper}>
       <p>{selectedOption}</p>
       <FaTimes onClick={onClear} />
     </div>

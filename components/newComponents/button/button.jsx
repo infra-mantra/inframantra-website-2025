@@ -1,5 +1,6 @@
 import React from "react";
 // import "./button.css";
+import styles from './button.module.css'; // Adjust the path as necessary
 
 function Button({
   btnText = "Search",
@@ -11,7 +12,7 @@ function Button({
 }) {
   return (
     <button
-      className='search-button'
+      className={styles.searchbutton}
       style={{
         padding: `${padding}`,
         width: `${width}`,

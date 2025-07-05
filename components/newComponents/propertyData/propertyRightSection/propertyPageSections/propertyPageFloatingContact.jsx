@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import PropertyWrapper from '../../propertyLeftSection/propertyPageSections/propertyWrapper';
 import ReCAPTCHA from 'react-google-recaptcha';
 // import './PropertyPageFloatingContact.css';
+import styles from './propertyPageFloatingContact.module.css'
 
 import Ajax1 from '../../../../helper/Ajax1';
 import { toast } from 'react-toastify';
@@ -108,8 +109,8 @@ function PropertyPageFloatingContact({ name,propertyType }) {
 
     return (
         <PropertyWrapper>
-            <form className="aboutProjectWrapper" onSubmit={handleSubmit}>
-                <div className="propertyPageFloatingContactHeaderWrapper">
+            <form className={styles.aboutProjectWrapper} onSubmit={handleSubmit}>
+                <div className={styles.propertyPageFloatingContactHeaderWrapper}>
                     <p>Get Expert Advice and Information for</p>
                     <p
                         style={{
@@ -122,7 +123,7 @@ function PropertyPageFloatingContact({ name,propertyType }) {
                         {name}
                     </p>
                 </div>
-                <div className="propertyPageFloatingContactWrapper">
+                <div className={styles.propertyPageFloatingContactWrapper}>
                     <div className="form-group-project">
                         {/* <label htmlFor="name">Name</label> */}
                         <div className='form-group-input'>

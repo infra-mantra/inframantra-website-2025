@@ -1,6 +1,7 @@
 import Section from "../UI/Section";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
+import styles from './featureBlog.module.css'
 
 function FeaturedBlogs({ blogs, PRS }) {
   const [isDesktop, setIsDesktop] = useState(false);
@@ -47,36 +48,36 @@ function FeaturedBlogs({ blogs, PRS }) {
 
   return (
     <Section classes="featured-blog" pageWidth="container">
-      <div className="section-head-category">BLOGS AND TRENDING NEWS</div>
+      <div className={styles.sectionHeadCategory}>BLOGS AND TRENDING NEWS</div>
       {blogs && blogs.length > 0 && (
-        <div className="featured-blog-container">
+        <div className={styles.featuredblogcontainer}>
           {/* Different HTML structure for PC and Mobile */}
           {isDesktop ? (
             // PC HTML Structure
-            <div className="featured-blog-main-story">
-              <Link href={`/blog/${activeSlug}`} className="featured-blog-read-button">
+            <div className={styles.featuredblogmainstory}>
+              <Link href={`/blog/${activeSlug}`} className={styles.featuredblogreadbutton}>
                 <img
                   src={activeImage} // Use the active image for desktop
                   alt="Featured Background"
-                  className="featured-blog-main-image"
+                  className={styles.featuredblogmainimage}
                 />
               </Link>
-              <div className="featured-blog-content"></div>
-              <div className="featured-blog-overlay">
-                <div className="featured-blog-other-stories">
-                  <h3 className="featured-blog-other-heading">Other Stories</h3>
-                  <div className="featured-blog-story-cards">
+              <div className={styles.featuredblogcontent}></div>
+              <div className={styles.featuredblogoverlay}>
+                <div className={styles.featuredblogotherstories}>
+                  <h3 className={styles.featuredblogotherheading}>Other Stories</h3>
+                  <div className={styles.featuredblogstorycards}>
                     {blogs.slice(1).map((item, index) => (
                       <div
                         key={item.slug} // Use a unique identifier like slug
-                        className="featured-blog-story-card"
+                        className={styles.featuredblogstorycard}
                         ref={(el) => (storyRefs.current[index] = el)}
                         onClick={() =>
                           handleStoryClick(item.image, item.title, item.slug, index)
                         }
                       >
-                        <div className="featured-blog-story-number">{index + 2}</div>
-                        <p className="featured-blog-story-title">{item.title}</p>
+                        <div className={styles.featuredblogstorynumber}>{index + 2}</div>
+                        <p className={styles.featuredblogstorytitle}>{item.title}</p>
                       </div>
                     ))}
                   </div>
@@ -86,36 +87,36 @@ function FeaturedBlogs({ blogs, PRS }) {
           ) : (
             // Mobile HTML Structure
             <>
-              <div className="featured-blog-main-story">
+              <div className={styles.featuredblogmainstory}>
                 <Link href={`/blog/${activeSlug}`}>
                   <img
                     src={activeImage} // Use the active image for mobile
                     alt="Featured Background"
-                    className="featured-blog-main-image"
+                    className={styles.featuredblogmainimage}
                   />
                 </Link>
-                <div className="featured-blog-content"></div>
+                <div className={styles.featuredblogcontent}></div>
               </div>
-              <div className="featured-blog-mobile-overlay">
-                <div className="featured-blog-other-stories">
-                  <h3 className="featured-blog-other-heading">Other Stories</h3>
-                  <div className="featured-blog-story-cards">
+              <div className={styles.featuredblogmobileoverlay}>
+                <div className={styles.featuredblogotherstories}>
+                  <h3 className={styles.featuredblogotherheading}>Other Stories</h3>
+                  <div className={styles.featuredblogstorycards}>
                     {blogs.slice(1).map((item, index) => (
                       <div
                         key={item.slug} // Use a unique identifier like slug
-                        className="featured-blog-story-card"
+                        className={styles.featuredblogstorycard}
                         ref={(el) => (storyRefs.current[index] = el)}
                         onClick={() =>
                           handleStoryClick(item.thumbnail, item.title, item.slug, index) // Use the thumbnail for mobile
                         }
                       >
-                        <div className="featured-blog-story-number">{index + 2}</div>
-                        <p className="featured-blog-story-title">{item.title}</p>
+                        <div className={styles.featuredblogstorynumber}>{index + 2}</div>
+                        <p className={styles.featuredblogstorytitle}>{item.title}</p>
                       </div>
                     ))}
                   </div>
                   {/* New Bullet Navigation */}
-                  <div className="mobile-bullet-navigation">
+                  <div className={styles.mobilebulletnavigation}>
                     {blogs.slice(1).map((_, index) => (
                       <span
                         key={index}
@@ -141,17 +142,17 @@ function FeaturedBlogs({ blogs, PRS }) {
       {/* Custom Slider for Featured Blogs */}
       {PRS && PRS.length > 0 && (
         <div>
-          <div className="section-blog section-head">
+          <div className={styles.sectionblogsectionhead}>
             <h2>| Featured Media</h2>
           </div>
-          <div className="custom-slider">
+          <div className={styles.customslider}>
             {PRS.map((item, index) => (
-              <div key={index} className="blog-slide">
+              <div key={index} className={styles.blogslide}>
                 <Link href={`/pr/${item.slug}`}>
                   <img
                     src={item.image}
                     alt={item.title}
-                    className="blog-slide-image"
+                    className={styles.blogslideimage}
                   />
                 </Link>
               </div>

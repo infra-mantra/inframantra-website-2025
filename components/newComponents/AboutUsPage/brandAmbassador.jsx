@@ -1,20 +1,19 @@
 import React from 'react';
-// import './brandAmbassador.css';
-
+import styles from './brandAmbassador.module.css';
 function BrandAmbassador() {
   return (
-    <div className="brandAmbassadorWrapper">
+    <div className={styles.brandAmbassadorWrapper}>
       <h4>MEET OUR BRAND AMBASSADOR</h4>
-      <div className="brandAmbassadorContentWrapper">
-        <div className="brandAmbassadorImageWrapper">
+      <div className={styles.brandAmbassadorContentWrapper}>
+        <div className={styles.brandAmbassadorImageWrapper}>
           <img
             src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/guruContactPage.png"
             alt=""
           />
-          <p className="brandAmbassadorName">Guru Randhawa</p>
-          <p className="brandAmbassadorSubHeader">Musical Superstar</p>
+          <p className={styles.brandAmbassadorName}>Guru Randhawa</p>
+          <p className={styles.brandAmbassadorSubHeader}>Musical Superstar</p>
         </div>
-        <div className="brandAmbassadorDescriptionWrapper">
+        <div className={styles.brandAmbassadorDescriptionWrapper}>
           <p>
             InfraMantra is proud to announce that we have signed the musical
             sensation, Mr. Guru Randhawa as our new face. We welcome Mr.

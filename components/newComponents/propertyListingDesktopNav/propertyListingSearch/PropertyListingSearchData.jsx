@@ -1,5 +1,6 @@
 import React from "react";
 import { FaHome, FaMapMarkerAlt } from "react-icons/fa";
+import styles from './PropertyListingSearchData.module.css'
 
 function PropertyListingSearchData({ searchOptionValue, selectedValue, searchData }) {
   const keyword = searchOptionValue.toLowerCase();
@@ -23,13 +24,13 @@ function PropertyListingSearchData({ searchOptionValue, selectedValue, searchDat
   const hasResults = filteredResultsProperties.length > 0 || filteredResultsLocations.length > 0;
 
   return (
-    <div className="searchDropdown">
+    <div className={styles.searchDropdown}>
       {hasResults ? (
         <>
           {filteredResultsProperties.map((name, index) => (
             <div
               key={`property-${index}`}
-              className="searchDropdownItem"
+              className={styles.searchDropdownItem}
               onClick={() => selectedValue(name)}
             >
               <div className="propertyLine">
@@ -42,18 +43,18 @@ function PropertyListingSearchData({ searchOptionValue, selectedValue, searchDat
           {filteredResultsLocations.map((location, index) => (
             <div
               key={`location-${index}`}
-              className="searchDropdownItem"
+              className={styles.searchDropdownItem}
               onClick={() => selectedValue(location)}
             >
-              <div className="locationLine">
-                <FaMapMarkerAlt className="icon" />
+              <div className={styles.locationLine}>
+                <FaMapMarkerAlt className={styyles.icon} />
                 <span>{location}</span>
               </div>
             </div>
           ))}
         </>
       ) : (
-        <div className="noResults">No results found</div>
+        <div className={styles.noResults}>No results found</div>
       )}
     </div>
   );

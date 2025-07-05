@@ -6,6 +6,7 @@ import Link from "next/link";
 import PropertyListingSearch from "../propertyListingDesktopNav/propertyListingSearch/propertyListingSearch";
 import PropertyListingPageMobileFilter from "./propertyListingFilter";
 import { useRouter } from "next/router";
+import styles from "./propertyListingCardMobile.module.css";
 
 const propertyListCardStyles = {
   paper: {
@@ -253,18 +254,18 @@ function PropertyListingCardMobile({ propertyData, onOpenBackdrop, name, type })
 
   return (
     <>
-      <div className="propertyListingCardWrapper">
-        <div className="propertyPageListNavWrapper">
+      <div className={styles.propertyListingCardWrapper}>
+        <div className={styles.propertyPageListNavWrapper}>
           <PropertyListingSearch searchData={searchData}  onSelected={handleSelected} onClear={handleOnClear}/>
           <div>
             <button
-              className="propertyListingFilterBtn"
+              className={styles.propertyListingFilterBtn}
               onClick={toggleDrawer(true)}
             >
-              Filters <img src="/assets/images/filterIcon.svg" alt="filter icons "/ >
+              Filters <img src="/icons/filterIcon.svg" alt="filter icons "/ >
             </button>
             {state.bottom && (
-              <div style={{ height: "95vh" }} className="swipable_drawer">
+              <div style={{ height: "95vh" }} className={styles.swipable_drawer}>
                 <PropertyListingPageMobileFilter
                   toggleDrawer={toggleDrawer(false)}
                   applyFilters={applyFilters}
@@ -276,9 +277,9 @@ function PropertyListingCardMobile({ propertyData, onOpenBackdrop, name, type })
           </div>
         </div>
 
-        <div className="propertyListPageSectionFlex">
-          <div className="propertyListPageSectionHeaderFlex">
-            <p className="propertyListPageSectionHeaderLocation">
+        <div className={styles.propertyListPageSectionFlex}>
+          <div className={styles.propertyListPageSectionHeaderFlex}>
+            <p className={styles.propertyListPageSectionHeaderLocation}>
               Properties In
               <span style={{ color: "#DCAA4C", marginLeft: "6px" }}>
                 {selectedCity}
@@ -307,8 +308,8 @@ function PropertyListingCardMobile({ propertyData, onOpenBackdrop, name, type })
                 ))}
               </div>
             )}
-            <div className="propertyListingSelectWrapper">
-            <select className="propertyListingSelect" onChange={handleSortChange}>
+            <div className={styles.propertyListingSelectWrapper}>
+            <select className={styles.propertyListingSelect} onChange={handleSortChange}>
                               <option>Sort By</option>
                                {options.map((option, index) => (
                                <option key={index} value={option}>
@@ -320,68 +321,68 @@ function PropertyListingCardMobile({ propertyData, onOpenBackdrop, name, type })
           </div>
           {fetchedProperties.length > 0 &&
             fetchedProperties.map((property) => (
-              <div key={property.slug} className="propertyListingCardMobile">
-                <div className="propertyListPageMobileImgSection">
+              <div key={property.slug} className={styles.propertyListingCardMobile}>
+                <div className={styles.propertyListPageMobileImgSection}>
                   <img
                     src={property.imageGallery[0].url}
                     alt={property.title}
-                    className="propertyListingImage"
+                    className={styles.propertyListingImage}
                   />
                
                   {property.exclusive && (
-                    <div className="propertyImageChip">
-                      <span className="propertyListPageMobileImageChip">
+                    <div className={styles.propertyImageChip}>
+                      <span className={styles.propertyListPageMobileImageChip}>
                         Exclusive
                       </span>
                     </div>
                   )}
                   {property.featured && (
-                    <div className="propertyImageChip">
-                      <span className="propertyListPageMobileImageChip">
+                    <div className={styles.propertyImageChip}>
+                      <span className={styles.propertyListPageMobileImageChip}>
                         Featured
                       </span>
                     </div>
                   )}
                 </div>
-                <div className="propertyListPageMobileDetailSection">
-                  <div className="propertyListPageMobileDetailHeader">
-                    <div className="propertyListPageMobileDetailLocation">
+                <div className={styles.propertyListPageMobileDetailSection}>
+                  <div className={styles.propertyListPageMobileDetailHeader}>
+                    <div className={styles.propertyListPageMobileDetailLocation}>
                       <h3>{property.name}</h3>
                       <p>
                         {property.subLocality.name},{property.city.name}
                       </p>
                     </div>
-                    <div className="propertyListPageMobileDetailLocation">
+                    <div className={styles.propertyListPageMobileDetailLocation}>
                       <p>Starting Price</p>
                       <h3 style={{ color: "#dcaa4c", fontSize: "18px" }}>
                         {property.startingPrice}
                       </h3>
                     </div>
                   </div>
-                  <div className="propertyListPageMobileDetailOverview">
-                    <div className="propertyListPageMobileDetailOverviewValueFlex FlexValueMobile">
-                      <FaHome className="propertyListingPageIcon" />
+                  <div className={styles.propertyListPageMobileDetailOverview}>
+                    <div className={`${styles.propertyListPageMobileDetailOverviewValueFlex} ${styles.FlexValueMobile}`}>
+                      <FaHome className={styles.propertyListingPageIcon} />
                       <p>{property.configuration}</p>
                     </div>
-                    <div className="propertyListPageMobileDetailOverviewValueFlex FlexValueMobile">
-                      <TfiRulerAlt2 className="propertyListingPageIcon" />
+                    <div className={`${styles.propertyListPageMobileDetailOverviewValueFlex} ${styles.FlexValueMobile}`}>
+                      <TfiRulerAlt2 className={styles.propertyListingPageIcon} />
                       <p>{property.area}</p>
                     </div>
-                    <div className="propertyListPageMobileDetailOverviewValueFlex FlexValueMobile">
-                      <CiClock2 className="propertyListingPageIcon" />
+                    <div className={`${styles.propertyListPageMobileDetailOverviewValueFlex} ${styles.FlexValueMobile}`}>
+                      <CiClock2 className={styles.propertyListingPageIcon} />
                       <p>{property.possesion}</p>
                     </div>
                   </div>
-                  <div className="propertyListPageMobileDetailBtnWrapper">
+                  <div className={styles.propertyListPageMobileDetailBtnWrapper}>
                     <button
-                      className="search-button"
+                      className={styles.searchbutton}
                       style={{ padding: '5px 25px', borderRadius: '5px',height:'30px' }}
                       onClick={() => handleViewMorePropertyClick(property.slug)}
                     >
                       View More
                     </button>
                     <button
-                      className="search-button"
+                      className={styles.searchbutton}
                       style={{ padding: '5px 25px', borderRadius: '5px', backgroundColor: '#0b6e21', height:'30px' }}
                       onClick={() => onOpenBackdrop(property.name)}
                     >

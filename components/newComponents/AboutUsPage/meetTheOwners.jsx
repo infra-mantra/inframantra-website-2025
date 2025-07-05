@@ -1,14 +1,14 @@
 import React from 'react';
-// import './aboutUsPage.css';
+import styles from './aboutUs.module.css';
 
 function MeetOwners() {
   return (
-    <div className="meetOwnersWrapper">
+    <div className={styles.meetOwnersWrapper}>
       <h2>The Minds Behind INFRAMANTRA</h2>
-      <div className="meetOwnersContentFlex">
-        <div className="meetOwnersContentImgWrapper">
-          {/* className="meetOwnersContentImg" */}
-          <div className='meetOwnersContentImg'>
+      <div className={styles.meetOwnersContentFlex}>
+        <div className={styles.meetOwnersContentImgWrapper}>
+          {/* className={styles.meetOwnersContentImg" */}
+          <div className={styles.meetOwnersContentImg}>
             <img
               src="https://inframantra.blr1.cdn.digitaloceanspaces.com/aboutUsPage/shiwangSolo.avif"
               alt="Shiwang Suraj"
@@ -16,10 +16,10 @@ function MeetOwners() {
             <span></span>
           </div>
         </div>
-        <div className="meetOwnersContentDescriptionFlex">
-          <h4 className="meetOwnersContentHeader">Shiwang Suraj</h4>
-          <p className="meetOwnersContentSubHeader">Founder & Director</p>
-          <p className="meetOwnersContentDescription">
+        <div className={styles.meetOwnersContentDescriptionFlex}>
+          <h4 className={styles.meetOwnersContentHeader}>Shiwang Suraj</h4>
+          <p className={styles.meetOwnersContentSubHeader}>Founder & Director</p>
+          <p className={styles.meetOwnersContentDescription}>
             <span
               style={{ color: '#0B8C27', fontSize: '20px', fontWeight: '800' }}
             >
@@ -37,13 +37,13 @@ function MeetOwners() {
           </p>
         </div>
       </div>
-      <div className="meetOwnersContentFlex secondOwnerContent">
-        <div className="meetOwnersContentDescriptionFlex secondSectionDescriptionFlex">
-          <h4 className="meetOwnersContentHeader" style={{ marginLeft: '15%' }}>
+      <div className={`${styles.meetOwnersContentFlex} ${styles.secondOwnerContent}`}>
+        <div className={`${styles.meetOwnersContentDescriptionFlex} ${styles.secondSectionDescriptionFlex}`}>
+          <h4 className={styles.meetOwnersContentHeader} style={{ marginLeft: '15%' }}>
             Garvit Tiwari
           </h4>
-          <p className="meetOwnersContentSubHeader">Co-Founder & Director</p>
-          <p className="meetOwnersContentDescription">
+          <p className={styles.meetOwnersContentSubHeader}>Co-Founder & Director</p>
+          <p className={styles.meetOwnersContentDescription}>
             <span
               style={{ color: '#0B8C27', fontSize: '20px', fontWeight: '800' }}
             >
@@ -60,8 +60,8 @@ function MeetOwners() {
             real estate market.
           </p>
         </div>
-        <div className="meetOwnersContentImgWrapper">
-          <div className="meetOwnersContentImg secondSectionImg">
+        <div className={styles.meetOwnersContentImgWrapper}>
+          <div className={`${styles.meetOwnersContentImg} ${styles.secondSectionImg}`}>
             <img
               src="https://inframantra.blr1.cdn.digitaloceanspaces.com/aboutUsPage/garvitSolo.avif"
               alt="Garvit Tiwari"
