@@ -34,7 +34,7 @@ const Share = ({ content }) => {
           rel="noreferrer"
         >
           {/* WhatsApp Icon */}
-          <img src="/assets/share/whatapp.png" alt="WhatsApp" />
+          <img src="/icons/share/whatapp.png" alt="WhatsApp" />
         </a>
         
         {/* LinkedIn Share */}
@@ -47,7 +47,7 @@ const Share = ({ content }) => {
           style={{ marginBottom: "4px" }}
         >
           {/* LinkedIn Icon */}
-          <img src="/assets/share/linkdin.png" alt="LinkedIn" height="29px" width="29px" />
+          <img src="/icons/share/linkdin.png" alt="LinkedIn" height="29px" width="29px" />
         </a>
 
         {/* Facebook Share */}
@@ -60,7 +60,7 @@ const Share = ({ content }) => {
           style={{ marginBottom: "8px" }}
         >
           {/* Facebook Icon */}
-          <img src="/assets/share/facebook.png" alt="Facebook" />
+          <img src="/icons/share/facebook.png" alt="Facebook" />
         </a>
 
         {/* Twitter Share */}
@@ -77,7 +77,7 @@ const Share = ({ content }) => {
           }}
         >
           {/* Twitter Icon */}
-          <img src="/assets/share/x.png" alt="Twitter" height="29px" width="29px" />
+          <img src="/icons/share/x.png" alt="Twitter" height="29px" width="29px" />
         </a>
 
         {/* Copy Link (Email Share) */}
@@ -85,7 +85,7 @@ const Share = ({ content }) => {
           className="menu-item twitter_copy_clip"
           style={{ display: "inline-block" }}
           onClick={handleCopy}        >
-          <img src="/assets/share/Vector.svg" alt="Email" />
+          <img src="/icons/share/Vector.svg" alt="Email" />
         </p>
 
         {/* Success Message */}

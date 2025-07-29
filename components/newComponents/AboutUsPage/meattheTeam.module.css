@@ -34,6 +34,18 @@
   height: 50vh;
   width: 100%;
 } */
+ .quoteIcon {
+    position: absolute;
+    top: 0;
+    left: 2%;
+    color: #e7b554;
+    font-family: Arial;
+    font-size: 110.25px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: capitalize;
+}
 
 
 @media screen and (max-width: 768px) {
@@ -217,6 +229,11 @@
   .tab{
     width: max-content;
   }
+      .quoteIcon {
+        top: 0;
+        left: 0;
+        font-size: 50px !important;
+    }
 }
 .clear-filters-button{
   background-color: #e7b554;

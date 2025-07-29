@@ -1,0 +1,92 @@
+
+    /* Blog read page */
+    .blogPageHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px 0;
+    }
+    .blogHeaderContent{
+    position: relative;
+    font-size: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: left;
+    }
+
+    
+    .blogBannerContent {
+    flex: 0 0 40%;
+    width: 70%;
+    /* width: 20%; */
+    }
+    .blogBannerContent .pageWidth h1 {
+    color: #000;
+    font-family: "Lexend Deca";
+    font-size: 3rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    }
+    .pageWidth {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+    .blogDivider {
+    width: 68%;
+    height: 0.0625rem; 
+    background-color: #000000; 
+    margin: 10px 0; 
+    }
+    .blogHeaderImageContainer {
+        overflow: hidden;
+        height: 28.688rem;
+        width: 55rem;
+        border-radius: 1.25rem;
+        margin-left: auto;
+        margin-right: 3.81rem;
+        display: flex
+    ;
+        justify-content: center;
+        align-items: center;
+    }
+    .blogHeaderImage {
+    width: 55rem;
+}
+.blogHeaderImage {
+    -o-object-fit: fill;
+    object-fit: fill;
+    height: 28.688rem;
+}
+
+    @media (max-width: 768px) {
+        .blogBannerContent {
+    flex: 0 0 40%;
+    width: 100%;
+    /* width: 20%; */
+    }
+    .blogHeaderContent{
+        flex-direction: column;
+    
+    }
+    .blogHeaderImageContainer {
+        overflow: hidden;
+        height: 20.688rem;
+        width: 100%;
+        border-radius: 1.25rem;
+        margin-left: auto;
+        margin-right: 3.81rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+    }
+        .blogHeaderImage {
+        -o-object-fit: fill;
+        width: 99%;
+            object-fit: fill;
+    height: 28.688rem;
+    }
+    }

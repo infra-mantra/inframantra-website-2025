@@ -2,8 +2,11 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react'
 import EmiChart from '../../../../UI/EmiChart';
 import Section from '../../../../UI/Section';
+import styles from './emiCalculator.module.css'
 
 function EMICalculator({ title, description, classes }) {
+
+  console.log(styles)
 
   const [amountValue, setAmountValue] = useState(500000);
   function amountValueHandler(e) {

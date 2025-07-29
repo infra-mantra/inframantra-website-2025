@@ -1,0 +1,141 @@
+.sec-p {
+    padding: 60px 0;
+}
+.propertyWrapper {
+    background-color: #fff;
+    color: rgba(0, 0, 0, .87);
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, .2), 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12);
+    height: -moz-max-content;
+    height: max-content;
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    transition: box-shadow .3s cubic-bezier(.4,0,.2,1);
+    border-radius: 10px;
+    padding: 0 20px;
+}
+.emi-calulator-container-project {
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex
+;
+    flex-direction: column;
+    -moz-column-gap: 20px;
+    column-gap: 20px;
+    justify-items: center;
+    align-items: center;
+}
+.projectEmiCalculator {
+    width: 100%;
+}
+.cl-6 {
+    width: calc(50% - 10px);
+}
+.emi-chart-col {
+    padding-left: 20px;
+    display: flex
+;
+    align-items: center;
+}
+
+.projectEmiWrap {
+    display: flex
+;
+    justify-content: center;
+}
+.chart-wrap-project {
+    width: 350px;
+    height: 250px;
+    position: relative;
+}
+.emi-value-wrap-project {
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    position: absolute;
+    display: flex
+;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.emi-val-label-project {
+    font-size: 10px;
+    font-weight: 400;
+    color: #535353;
+}
+.emi-value-wrap-project {
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    position: absolute;
+    display: flex
+;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.emi-val-project {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+}
+.project-emi-wrap {
+    width: 100%;
+    background-color: transparent;
+}
+.cl-6 {
+    width: calc(50% - 10px);
+}
+.emi-controls-wrap {
+    padding: 40px;
+    background-color: #f8f6f2;
+    border-radius: 10px;
+}
+.range-group {
+    margin-bottom: 36px;
+}
+.range-group .range-head {
+    display: flex
+;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+input.range-control[type=range] {
+    -webkit-appearance: none !important;
+    height: 5px;
+    background: #e6e6e6;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    margin: 0;
+}
+.range-group input.range-control {
+    width: 100%;
+}
+@media only screen and (max-width: 900px) {
+    .emi-chart-col {
+        display: block;
+        width: 100%;
+        padding: 15px;
+        margin-top: 20px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .sec-p {
+        padding: 0;
+    }
+        .chart-wrap-project {
+        width: 281px;
+        height: 250px;
+        position: relative;
+    }
+}

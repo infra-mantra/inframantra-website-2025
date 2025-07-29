@@ -894,24 +894,9 @@ line-height: normal;
   /* border-bottom: 2px solid #E7B554; */
 }
 
-.descriptionContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  padding: 20px;
-  /* background-color: #f9f9f9; */
-  border-radius: 10px;
-  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
-  position: relative;
-}
 
-.quoteIcon {
-  font-size: 80px;
-  color: rgba(231, 181, 84, 0.56);
-  transform: rotate(0deg);
-  margin-bottom: 20px;
-}
+
+
 
 .tabPanelContent {
   text-align: center;

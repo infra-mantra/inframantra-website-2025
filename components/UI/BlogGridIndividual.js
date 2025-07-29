@@ -3,6 +3,7 @@ import Section from "../UI/Section";
 import Image from "next/image";
 import Link from "next/link";
 import NoImage from "./NoImage";
+import styles from './blogGridIndividual.module.css'
 
 function BlogsGrid({ section_title, title_desc, blogs, button, initial, loadMore, blogBtn, latestNews }) {
 
@@ -10,12 +11,12 @@ function BlogsGrid({ section_title, title_desc, blogs, button, initial, loadMore
     
 
     return (
-        <Section classes="featured-blogs sec-p pt-0" pageWidth="container">
-            <div className="section-head">
+        <Section classes="sec-p pt-0" pageWidth="container">
+            <div className={styles.sectionHead}>
                 <h2>{section_title}</h2>
                 {title_desc && <p>{title_desc}</p>}
             </div>
-                <div className="in-f-blogs-wrap">
+                <div className={styles.inFBlogsWrap}>
                     {displayedBlogs.map((item) => (
                         <Link
                             key={item._id}
@@ -23,8 +24,8 @@ function BlogsGrid({ section_title, title_desc, blogs, button, initial, loadMore
                             passHref
                         >
                             <a target={item.link ? "_blank" : "_self"} rel={item.link ? "noreferrer" : ""}>
-                                <div className="in-f-blog-item">
-                                    <div className="img-wrap">
+                                <div className={styles.inFBlogItem}>
+                                    <div className={styles.imgWrap}>
                                         {item.image ? (
                                             <Image
                                                 src={item.image}
@@ -36,7 +37,7 @@ function BlogsGrid({ section_title, title_desc, blogs, button, initial, loadMore
                                             <NoImage />
                                         )}
                                     </div>
-                                    <div className="info">
+                                    <div className={styles.info}>
                                         <h4>{item.name}</h4>
                                     </div>
                                 </div>
@@ -44,35 +45,7 @@ function BlogsGrid({ section_title, title_desc, blogs, button, initial, loadMore
                         </Link>
                     ))}
                 </div>
-            {button !== "hide" && blogs && blogs.length === 2 && (
-                <div className="btn-wrap text-center mt-5">
-                    <button type="button" className="theme-btn" onClick={loadMore}>
-                        Load More
-                        <svg
-                            width="12"
-                            height="12"
-                            viewBox="0 0 12 12"
-                            fill="none"
-                        >
-                            <path
-                                d="M1 6H11"
-                                stroke="#E7B554"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            />
-                            <path
-                                d="M6 1L11 6L6 11"
-                                stroke="#E7B554"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            />
-                        </svg>
-                    </button>
-                </div>
-            )}
-       
+      
         </Section>
     );
 }
