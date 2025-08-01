@@ -1,0 +1,73 @@
+.blogPageHeader {
+    display: flex
+;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px 0;
+}
+.blogBannerContent {
+    flex: 0 0 40%;
+    width: 70%;
+}
+.blogHeaderImageContainerNews {
+    /* height: 26.688rem; */
+    width: 64rem;
+}
+ .blogHeaderImageContainerNews {
+    overflow: hidden;
+    border-radius: 1.25rem;
+    margin-left: auto;
+    margin-right: 3.81rem;
+    display: flex
+;
+    justify-content: center;
+    align-items: center;
+}
+.blogHeaderImageContainerNews {
+    overflow: hidden;
+    border-radius: 1.25rem;
+    margin-left: auto;
+    margin-right: 3.81rem;
+    display: flex
+;
+    justify-content: center;
+    align-items: center;
+}
+.blogHeaderImageContainerNews {
+    overflow: hidden;
+    border-radius: 1.25rem;
+    margin-left: auto;
+    margin-right: 3.81rem;
+    display: flex
+;
+    justify-content: center;
+    align-items: center;
+}
+.pageWidth {
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+.blogDivider {
+  width: 68%;
+  height: 0.0625rem; 
+  background-color: #000000; 
+  margin: 10px 0; 
+}
+p.date {
+    color: #000;
+    font-family: Lexend Deca;
+    font-size: 19.194px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: capitalize;
+}
+.blogBannerContent .pageWidth h1 {
+    color: #000;
+    font-family: Lexend Deca;
+    font-size: 3rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}

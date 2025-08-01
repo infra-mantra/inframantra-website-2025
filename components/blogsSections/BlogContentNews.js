@@ -2,13 +2,13 @@ import Section from "../UI/Section";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import Ajax from "../helper/Ajax";
+import styles from './blogContentNews.module.css'
 
 export default function BlogContent({ detailContent, popular, recent, data, name }) {
   const [isDesktop, setIsDesktop] = useState(false);
   const [blogtype, setBlogType] = useState(null);
 
   useEffect(() => {
-    // Determine screen width for responsive design
     const screenWidth = window.innerWidth;
     setIsDesktop(screenWidth >= 768);
 
@@ -59,37 +59,37 @@ export default function BlogContent({ detailContent, popular, recent, data, name
   };
 
   return (
-    <Section classes="blog-content sec-p" pageWidth="container">
-      <div className="blog-content-wrap">
-        <div className="flex-layout">
+    <Section classes={styles.secP} pageWidth="container">
+      <div className={styles.blogContentWrap}>
+        <div className={styles.flexLayout}>
           {/* Table of Contents */}
-          <div className="toc">
+          <div className={styles.toc}>
             <h1>Table of Contents</h1>
             <ul>{generateTOC(detailContent.description)}</ul>
           </div>
 
           {/* Blog Content */}
-          <div className="text-wrap">
+          <div className={styles.textWrap}>
             <div
-              className="content"
+              className={styles.content}
               dangerouslySetInnerHTML={{ __html: addHeadingIDs(detailContent.description) }}
             ></div>
-            <div className="written-by">
+            <div className={styles.writtenBy}>
               <h4>✍️ Written By: </h4>
               <span>{name}</span>
             </div>
           </div>
 
           {/* Sidebar */}
-          <div className="sidebar" style={data === "news" && isDesktop ? { marginTop: "-215px" } : {}}>
-            <div className="sd-card-news">
-              <div className="sd-card-head-news">
+          <div className={styles.sidebar} style={data === "news" && isDesktop ? { marginTop: "-215px" } : {}}>
+            <div className={styles.sdCardNews}>
+              <div className={styles.sdCardHeadNews}>
                 <h3>Recent Blogs</h3>
               </div>
-              <div className="sd-latest-blogs-news">
+              <div className={styles.sdLatestBlogsNews}>
                 {recent.map((blog) => (
                   <Link href={data === "news" ? `/news/${blog.slug}` : `/blog/${blog.slug}`} key={blog.id}>
-                    <a className="sd-blg-item-news">
+                    <a className={styles.sdBlgItemNews}>
                       <div>
                         <p className="date">{blog.date}</p>
                         <h3>{blog.title.substring(0, 200)}</h3>

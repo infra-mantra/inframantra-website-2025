@@ -1,0 +1,27 @@
+.blog-banner-content {
+    flex: 0 0 40%;
+    width: 70%;
+}
+.blog-header-image-container-news {
+    height: 26.688rem;
+    width: 64rem;
+}
+/* image-container, .blog-header-image-container-news {
+    overflow: hidden;
+    border-radius: 1.25rem;
+    margin-left: auto;
+    margin-right: 3.81rem;
+    display: flex
+;
+    justify-content: center;
+    align-items: center;
+} */
+
+.blogBannerContent .pageWidth h1 {
+    color: #000;
+    font-family: Lexend Deca;
+    font-size: 3rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}

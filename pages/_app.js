@@ -3,21 +3,10 @@ import { useRouter } from "next/router";
 import "../styles/globals.css";
 import "../styles/responsive.css";
 import "react-toastify/dist/ReactToastify.css";
-import "../styles/developer.css";
-// import "../styles/Footermain.css";
 import "swiper/css/bundle";
 import "swiper/css";
 import "../styles/newHome.css";
-// import "../styles/notFound.css";
-// import "../styles/button.css";
-// import "../styles/on_spot_offers.css";
-// import "../styles/CTA.css";
-import "../styles/city.css";
-import "../styles/navbar.css";
-// import "../styles/error.css";
-import "../styles/state.css";
 import "../styles/filter.css";
-// import "../styles/wrapper.css";
 import "../styles/dropDownMenu.css"
 import "../styles/featureProperties.css"
 import styles from '../styles/_app.module.css'

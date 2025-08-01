@@ -3,6 +3,8 @@ import Image from 'next/image';
 import Section from './Section';
 import Share from '../../pages/share';
 import PropertyContact from '../newComponents/propertyData/propertyHeader/propertyHeaderContact';
+import styles from './pageHeader.module.css';
+
 
 const formatDate = (dateString) => {
   const [day, month, year] = dateString.split('/');
@@ -32,13 +34,13 @@ const PageHeader = ({ data }) => {
   }, []);
 
   return (
-    <Section classes="blog-page-header" id="" pageWidth="fluid">
-      <div className="blog-banner-content">
+    <Section classes="" id="" pageWidth="fluid">
+      <div className={styles.blogBannerContent}>
         {isDesktop ? (
           // Desktop Layout
           <div style={{ display: 'flex', gap: '67px', marginLeft: '2rem' }}>
             <div>
-            <picture className="blog-header-image-container-news">
+            <picture className={styles.blogHeaderImageContainerNews}>
               <img
                 src={image}
                 alt="Banner"
@@ -49,7 +51,7 @@ const PageHeader = ({ data }) => {
                   width: '100%',
                   height: 'auto',
                 }}
-                  className="blog-header-image-news"
+                  className={styles.blogHeaderImageNews}
 
                 priority
               />
@@ -78,7 +80,7 @@ const PageHeader = ({ data }) => {
               marginLeft: '1rem',
               marginRight: '1rem',
             }}
-            className="responsive-banner-container-news"
+            className={styles.responsiveBannerContainerNews}
           >
             <div>
               <Image
@@ -107,11 +109,11 @@ const PageHeader = ({ data }) => {
           </div>
         )}
 
-        <div className="page-width">
-          <p className="date">{formatDate(date)}</p>
+        <div className={styles.pageWidth}>
+          <p className={styles.date}>{formatDate(date)}</p>
           <h1>{title}</h1>
-          <div className="blog-divider"></div>
-          <Share className="share-section" content={detailContent} />
+          <div className={styles.blogDivider}></div>
+          <Share className={styles.shareSection} content={detailContent} />
         </div>
       </div>
     </Section>

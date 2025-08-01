@@ -37,6 +37,7 @@ body {
   transform: translate(3s) ease;
   /* color: #333; */
   font-size: 13px;
+  /* overflow-x: hidden; */
 }
 
 a {
@@ -68,5 +69,33 @@ h6 {
     font-weight: 600;
     line-height: normal;
 }
+.react-pdf__Page {
+    display: flex !important
+;
+    justify-content: center !important;
+}
+
+input.rangeControl[type=range] {
+     -webkit-appearance: none !important; /* For Chrome, Safari, Opera */
+  -moz-appearance: none !important;    /* For Firefox */
+  appearance: none !important;         /* Standard */
+
+    height: 5px;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    margin: 0;
+}
+input.rangeControl[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  width: 24px;
+  height:24px;
+  background: #E7B554;
+  border: 5px solid #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0px 4px 4px 0px #00000040;
+}
+
 
  

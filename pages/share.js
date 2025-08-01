@@ -24,7 +24,7 @@ const Share = ({ content }) => {
 
   return (
     <div>
-      <div>
+      <div className="share">
         {/* WhatsApp Share */}
         <a
           href={`https://api.whatsapp.com//send?text=${url}`}

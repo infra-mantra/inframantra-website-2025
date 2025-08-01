@@ -1,0 +1,124 @@
+.toc {
+    width: 25%;
+    position: sticky;
+    top: 20px;
+}
+.secP {
+    padding: 60px 0;
+}
+
+.blogContentWrap, .flexLayout {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+.toc a {
+    text-decoration: none;
+    color: #c78911;
+    padding: .5rem 0;
+    display: block;
+}
+.textWrap .content p {
+    text-align: justify;
+}
+.textWrap p {
+    font-size: 16px;
+    line-height: 24px;
+    color: #535353;
+}
+
+.blogContentWrap .sidebar {
+    width: calc(33% - 60px);
+    margin-left: 60px;
+}
+
+.sidebar {
+    width: 25% !important;
+}
+.sidebar {
+    width: 12%;
+    position: relative;
+}
+.sdCardNews {
+    width: 100%;
+    padding: 20px;
+    position: relative;
+    top: -63px;
+}
+.sdLatestBlogsNews {
+    display: flex
+;
+    flex-direction: column;
+    padding: 0;
+    margin-top: 10px;
+    text-align: left;
+}
+.sdBlgItemNews {
+    display: flex
+;
+    width: 100%;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #000;
+    text-align: left;
+    color: #000;
+    font-family: Lexend Deca;
+    font-size: 11.872px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: capitalize;
+}
+
+p.date {
+    color: #000;
+    font-family: Lexend Deca;
+    font-size: 19.194px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: capitalize;
+}
+.writtenBy span {
+    color: #b8860b;
+    font-size: 20px;
+    display: flex;
+    flex-direction: row;
+}
+.blogContentWrap .textWrap {
+    width: 50%;
+}
+.toc ul {
+    list-style: none;
+    padding: 0;
+}
+
+@media (max-width: 768px){
+   .blogBannerContent {
+     width: 100%;
+} 
+.toc {
+   display: none;
+}
+
+.blogContentWrap, .flexLayout {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.blogContentWrap .textWrap{
+    width: 100%;
+}
+.blogContentWrap .sidebar{
+    width:100%;
+    margin-left: 0px;
+}
+.sidebar {
+    position: relative;
+    width:100% !important;
+
+}
+.sdCardNews{
+    top:0px
+}
+
+}

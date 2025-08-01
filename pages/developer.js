@@ -4,7 +4,7 @@ import Wrapper from "../components/UI/Wrapper";
 import Link from "next/link";
 import NoImage from "../components/UI/NoImage";
 import PageHeader from "../components/UI/PageHeader";
-import axios from "axios";
+import styles from "../styles/developer.module.css";
 
 export default function Developers({ allData }) {
   let data = {
@@ -12,29 +12,30 @@ export default function Developers({ allData }) {
     title: allData.meta.bannerTitle,
   };
 
-  const itemsPerPage = 9; // Items per page
-  const maxPaginationButtons = 5; // Max number of pagination buttons displayed
-  const [currentPage, setCurrentPage] = useState(1); // Current active page
-  const [developerData, setDeveloperData] = useState(allData.developer); // Developer data state
-  const [totalDevelopers, setTotalDevelopers] = useState(allData.totalPages); // Total developers count
-
+  const itemsPerPage = 9;
+  const maxPaginationButtons = 5;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [developerData, setDeveloperData] = useState(allData.developer);
+  const [totalDevelopers, setTotalDevelopers] = useState(allData.totalPages);
   const totalPages = Math.ceil(totalDevelopers / itemsPerPage);
 
-  const handlePageClick = (page) => {
-    setCurrentPage(page);
+  const [image, setImage] = useState("");
+
+  const handleImage = () => {
+    setImage(window.innerWidth >= 769 ? "desktop" : "mobile");
+    data.image =
+      window.innerWidth >= 769
+        ? "https://inframantra.blr1.cdn.digitaloceanspaces.com/developer/bannerImages/website%20%20developers2.1.avif"
+        : "https://inframantra.blr1.cdn.digitaloceanspaces.com/developer/bannerImages/website%20%20developers2.2.avif";
   };
 
-  const handlePrevClick = () => {
-    if (currentPage > 1) setCurrentPage((prev) => prev - 1);
-  };
-
-  const handleNextClick = () => {
-    if (currentPage < totalPages) setCurrentPage((prev) => prev + 1);
-  };
-
-  const handleStartClick = () => setCurrentPage(1);
-
-  const handleEndClick = () => setCurrentPage(totalPages);
+  useEffect(() => {
+    handleImage();
+    window.addEventListener("resize", handleImage);
+    return () => {
+      window.removeEventListener("resize", handleImage);
+    };
+  }, []);
 
   useEffect(() => {
     const fetchDevelopers = async () => {
@@ -42,7 +43,6 @@ export default function Developers({ allData }) {
         `${process.env.apiUrl1}/developer?page=${currentPage}&limit=${itemsPerPage}`
       );
       const data = await res.json();
-
       setDeveloperData(data.data.developers);
       setTotalDevelopers(data.data.totalDevelopers);
     };
@@ -52,32 +52,19 @@ export default function Developers({ allData }) {
 
   const visibleItems = developerData;
 
-  // Calculate range of pagination buttons
+  const handlePageClick = (page) => setCurrentPage(page);
+  const handlePrevClick = () => currentPage > 1 && setCurrentPage((prev) => prev - 1);
+  const handleNextClick = () => currentPage < totalPages && setCurrentPage((prev) => prev + 1);
+  const handleStartClick = () => setCurrentPage(1);
+  const handleEndClick = () => setCurrentPage(totalPages);
+
   const getPaginationRange = () => {
     const start = Math.max(currentPage - Math.floor(maxPaginationButtons / 2), 1);
     const end = Math.min(start + maxPaginationButtons - 1, totalPages);
-
-    const paginationRange = [];
-    for (let i = start; i <= end; i++) {
-      paginationRange.push(i);
-    }
-
-    return paginationRange;
+    return Array.from({ length: end - start + 1 }, (_, i) => start + i);
   };
-const [image, setImage] = useState('');
-  const paginationRange = getPaginationRange();
-const handleImage=()=>{
-setImage(window.innerWidth >= 769 ? 'desktop' : 'mobile')
-data.image=window.innerWidth >= 769 ? 'https://inframantra.blr1.cdn.digitaloceanspaces.com/developer/bannerImages/website%20%20developers2.1.avif' : 'https://inframantra.blr1.cdn.digitaloceanspaces.com/developer/bannerImages/website%20%20developers2.2.avif'
-}
 
-  useEffect(() => {
-    handleImage()
-    window.addEventListener('resize', handleImage);
-    return () => {
-      window.removeEventListener('resize', handleImage)
-  }
-   },[])
+  const paginationRange = getPaginationRange();
 
   return (
     <Wrapper
@@ -86,19 +73,16 @@ data.image=window.innerWidth >= 769 ? 'https://inframantra.blr1.cdn.digitalocean
       image={allData.meta.bannerImage}
     >
       <PageHeader data={data} />
-      <Section classes="aboutProjectWrapper page-width-container-deve" pageWidth="container">
-        <div className="section-head-developer">
+      <Section classes={`${styles.aboutProjectWrapper} ${styles.pageWidthContainerDeve}`} pageWidth="container">
+        <div className={styles.sectionHeadDeveloper}>
           <h2>Developers</h2>
         </div>
-        <div className="d-wraps">
+
+        <div className={styles.dWraps}>
           {visibleItems.map((item) => (
-            <div key={item.id} className="d-items">
-              <div className="img-wrap width-image">
-                <Link
-                  href={`/property-listing/developer/${item.name}`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
+            <div key={item.id} className={styles.dItems}>
+              <div className={styles.imgWrap}>
+                <Link href={`/property-listing/developer/${item.name}`} target="_blank" rel="noreferrer">
                   {item.developerImg ? (
                     <picture>
                       <img
@@ -114,82 +98,63 @@ data.image=window.innerWidth >= 769 ? 'https://inframantra.blr1.cdn.digitalocean
                   )}
                 </Link>
               </div>
-              <div className="info-devloper">
+
+              <div className={styles.infoDeveloper}>
                 <h4>{item.name}</h4>
-                <p className="p-developer">
-                  {item.description.split(" ").length
-                    ? (
-                        <>
-                          {item.description.split(" ").slice(0, 25).join(" ")}...
-                          {item.link ? (
-                            <a
-                              href={item.link}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="custom-read-more-btn-link"
-                              style={{
-                                marginLeft: "5px",
-                                color: "#DCAA4C",
-                                cursor: "pointer",
-                              }}
-                            >
-                              Read More
-                            </a>
-                          ) : (
-                            <Link href={`/property-listing/developer/${item.name}`}>
-                              <span
-                                className="custom-read-more-btn"
-                                style={{
-                                  marginLeft: "5px",
-                                  color: "#DCAA4C",
-                                  cursor: "pointer",
-                                }}
-                              >
-                                Read More
-                              </span>
-                            </Link>
-                          )}
-                        </>
-                      )
-                    : item.description}
+                <p className={styles.pDeveloper}>
+                  {item.description.split(" ").length ? (
+                    <>
+                      {item.description.split(" ").slice(0, 25).join(" ")}...
+                      {item.link ? (
+                        <a
+                          href={item.link}
+                          target="_blank"
+                          rel="noreferrer"
+                          style={{ marginLeft: "5px", color: "#DCAA4C", cursor: "pointer" }}
+                        >
+                          Read More
+                        </a>
+                      ) : (
+                        <Link href={`/property-listing/developer/${item.name}`}>
+                          <span style={{ marginLeft: "5px", color: "#DCAA4C", cursor: "pointer" }}>Read More</span>
+                        </Link>
+                      )}
+                    </>
+                  ) : (
+                    item.description
+                  )}
                 </p>
-                <div className="developer-stats">
-                  <div className="stats-row">
+
+                <div className={styles.developerStats}>
+                  <div className={styles.statsRow}>
                     <p>Total Projects: <span>{item.totalProperties}</span></p>
-                    <p className="stats-row-item-2">Years of Experience: <span>{item.experienceYears}</span></p>
+                    <p className={styles.statsRowItem2}>Years of Experience: <span>{item.experienceYears}</span></p>
                   </div>
-                  {/* <div className="stats-row">
-                    <p>Total Cities: <span>09</span></p>
-                    <p>Years of Experience: <span>14</span></p>
-                  </div> */}
                 </div>
+                    <div className={styles.WrapDeveloper}>
                 {item.link ? (
-                  <a
-                    href={item.link}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="lrn-btn"
-                  >
-                    <button type="submit" className="developer-button">
+                  <a href={item.link} target="_blank" rel="noreferrer">
+                    <button type="submit" className={styles.developerButton}>
                       View All Properties
                     </button>
                   </a>
                 ) : (
                   <Link href={`/property-listing/developer/${item.name}`}>
-                    <div className="wrap-developer">
-                      <button type="submit" className="developer-button">
+                    <div>
+                      <button type="submit" className={styles.developerButton}>
                         View All Properties
                       </button>
                     </div>
                   </Link>
                 )}
+                </div>
               </div>
             </div>
           ))}
         </div>
 
         {/* Pagination */}
-        <div className="pagination-buttons" style={{ textAlign: "center", margin: "2rem 0" }}>
+          <div className="pagination-buttons" style={{ textAlign: "center", margin: "2rem 0" }}>
           <button
             type="button"
             className="page-btn start-page"
@@ -252,7 +217,6 @@ export async function getStaticProps() {
   const res = await fetch(`${process.env.apiUrl1}/developer?page=1&limit=9`);
   const data = await res.json();
 
-
   const allData = {
     developer: data.data.developers,
     meta,
@@ -260,9 +224,7 @@ export async function getStaticProps() {
   };
 
   return {
-    props: {
-      allData,
-    },
+    props: { allData },
     revalidate: 10,
   };
 }

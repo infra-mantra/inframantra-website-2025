@@ -4,6 +4,7 @@ import Wrapper from "../../components/UI/Wrapper"
 import PageHeader from '../../components/UI/PageHeaderNews'
 import BlogContentNews from "../../components/blogsSections/BlogContentNews"
 import moment from 'moment/moment'
+import styles from './news.module.css'
 const BlogDetail = ({allData}) => {
     const data = {
         title: allData.detail.title,
