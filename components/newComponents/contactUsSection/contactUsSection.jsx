@@ -15,7 +15,6 @@ function ContactUsSection() {
     setIsDesktop(window.innerWidth >= 768);
     setIsMobile(window.innerWidth <= 768);
   };
- console.log(styles)
 
   useEffect(() => {
     checkScreenWidth();

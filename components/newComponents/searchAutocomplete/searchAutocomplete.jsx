@@ -83,7 +83,7 @@
               data: { searchQuery: inputValue } 
             });
 
-            console.log(filterData.data.data)
+            // console.log(filterData.data.data)
             setSearchData(filterData.data.data);
           } catch (error) {
             console.error('Error fetching data:', error);

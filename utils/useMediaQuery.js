@@ -1,16 +1,14 @@
   import { useState, useEffect } from "react";
 
   function useMediaQuery(breakpoint) {
-    const [matches, setMatches] = useState(false); // Default to `false` to match server rendering.
+    const [matches, setMatches] = useState(false); 
 
     useEffect(() => {
-      // Only run on the client.
       const handleResize = () => {
         setMatches(window.innerWidth > breakpoint);
       };
 
-      handleResize(); // Set the initial value on mount.
-
+      handleResize(); 
       window.addEventListener("resize", handleResize);
       return () => window.removeEventListener("resize", handleResize);
     }, [breakpoint]);

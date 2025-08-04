@@ -6,7 +6,7 @@ import styles from './emiCalculator.module.css'
 
 function EMICalculator({ title, description, classes }) {
 
-  console.log(styles)
+  // console.log(styles)
 
   const [amountValue, setAmountValue] = useState(500000);
   function amountValueHandler(e) {

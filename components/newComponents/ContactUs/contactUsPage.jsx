@@ -115,7 +115,6 @@ export default function ContactUsPage() {
         router.push('/thank-you');
       } else {
         toast.error('Form submission failed:', response);
-        console.log('Form submission failed:', response);
       }
     } catch (error) {
       toast.error('Error submitting form:', error);

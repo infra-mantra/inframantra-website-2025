@@ -42,7 +42,6 @@ class ErrorBoundary extends React.Component {
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
-  console.log(styles)
   // Check if the current route is not the home page
   const isHomePage = router.pathname === "/";
   const [isMobile, setIsMobile] = React.useState(false);

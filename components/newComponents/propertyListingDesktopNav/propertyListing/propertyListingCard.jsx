@@ -57,7 +57,6 @@ function PropertyListingCard({
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const router = useRouter();
-  console.log('propertyData', propertyData);
 
   useEffect(() => {
     let filteredProperties = propertyData;

@@ -5,7 +5,7 @@ import 'pdfjs-dist/web/pdf_viewer.css';
 pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
 
 export const pdfToImages = async (pdfUrl) => {
-    console.log('Starting PDF to images conversion...');
+    // console.log('Starting PDF to images conversion...');
     try {
         const pdf = await pdfjsLib.getDocument(pdfUrl).promise;
         const numPages = pdf.numPages;

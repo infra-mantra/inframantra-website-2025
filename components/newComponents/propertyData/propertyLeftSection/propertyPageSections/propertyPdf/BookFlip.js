@@ -10,9 +10,9 @@ const BookFlip = ({ pdfUrl }) => {
     useEffect(() => {
         const fetchAndConvertPdf = async () => {
             try {
-                console.log('Fetching and converting PDF...');
+                // console.log('Fetching and converting PDF...');
                 const pageImages = await pdfToImages(pdfUrl);
-                console.log('PDF conversion complete', pageImages);
+                // console.log('PDF conversion complete', pageImages);
                 setPages(pageImages);
                 setLoading(false);
             } catch (err) {

@@ -21,7 +21,7 @@ const featuredPropertiesMobileStyles = {
 };
 
 function PropertyMobileHeaderImg({ imageGallery = [] ,name}) {
-  console.log('imageGallery', name);
+  // console.log('imageGallery', name);
   return <CardBackComponent imageGallery={imageGallery} name={name} />;
 }
 
