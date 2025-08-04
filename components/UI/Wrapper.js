@@ -1,11 +1,10 @@
 import Head from 'next/head';
 import Script from 'next/script';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import NavigationBar from '../newComponents/UI/header';
 import FooterNavigation from '../newComponents/UI/footer';
-import FormLoader from './FormLoader';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Wrapper = (props) => {
@@ -118,10 +117,6 @@ const Wrapper = (props) => {
         <meta httpEquiv="Content-Language" content="en" />
         <meta name="viewport" content="width=device-width,user-scalable=no" />
         <link rel="canonical" href={canonicalUrl} />
-        <link
-          href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Inter:wght@400;500;600;700&family=Lexend+Deca:wght@100..900&display=swap"
-          rel="stylesheet"
-        />
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCBX4PWTKJ"></script>
         <script dangerouslySetInnerHTML={{ __html: `
           window.dataLayer = window.dataLayer || [];
