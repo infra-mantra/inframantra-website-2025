@@ -5,7 +5,7 @@ import { MdMail } from "react-icons/md";
 import Link from 'next/link';
 import Ajax1 from '../../helper/Ajax1';
 import { toast } from 'react-toastify';
-import styles from './ContactUsSection.module.css';
+import styles from './contactUsSection.module.css';
 
 function ContactUsSection() {
   const [isDesktop, setIsDesktop] = useState(true);

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import EmiChart from './emiChart';
 import Section from '../../../../UI/Section';
-import styles from './EmiCalculator.module.css'; // Make sure the path is correct
+import styles from './emiCalculator.module.css'; // Make sure the path is correct
 
 function EMICalculator({ title, description, classes }) {
   const [amountValue, setAmountValue] = useState(500000);

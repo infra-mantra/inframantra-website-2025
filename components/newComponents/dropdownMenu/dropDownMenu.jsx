@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import styles from './DropDownMenu.module.css'; // CSS module
+import styles from './dropDownMenu.module.css'; // CSS module
 
 function DropDownMenu({
   icon: Icon,
