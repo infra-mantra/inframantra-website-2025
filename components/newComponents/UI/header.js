@@ -150,6 +150,8 @@ function NavigationBar({ pageBgd }) {
         alt="Inframantra-logo"
         onClick={logoClickHandler}
         loading="lazy"
+         fetchpriority="high"
+        
       />
 
       <div className="navBarTabsWrapper" style={{ color: textColor }}>

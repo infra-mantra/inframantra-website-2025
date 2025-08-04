@@ -181,9 +181,7 @@ const Wrapper = (props) => {
       )}
 
       <FooterNavigation />
-      <div className="enquiry-popup-bg"></div>
-      <div className="enquiry-popup">
-      </div>
+    
 
       <ToastContainer position="top-right" autoClose={2000} pauseOnHover theme="light" />
     </div>
