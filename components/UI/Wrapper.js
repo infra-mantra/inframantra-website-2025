@@ -117,13 +117,7 @@ const Wrapper = (props) => {
         <meta httpEquiv="Content-Language" content="en" />
         <meta name="viewport" content="width=device-width,user-scalable=no" />
         <link rel="canonical" href={canonicalUrl} />
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCBX4PWTKJ"></script>
-        <script dangerouslySetInnerHTML={{ __html: `
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-CCBX4PWTKJ');
-        `}} />
+        
         <script dangerouslySetInnerHTML={{ __html: `
           (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({
             'gtm.start':new Date().getTime(), event:'gtm.js'
@@ -136,17 +130,7 @@ const Wrapper = (props) => {
         <script type="application/ld+json" dangerouslySetInnerHTML={addJson()} />
         <script type="application/ld+json" dangerouslySetInnerHTML={addJson2()} />
         {schema && <script type="application/ld+json" dangerouslySetInnerHTML={addJson3({...schema, image})} />}
-        {(pathname === '/property/[propertyId]' || pathname === '/thank-you') && (
-          <>
-            <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16667923552"></script>
-            <script dangerouslySetInnerHTML={{ __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'AW-16667923552');
-            `}} />
-          </>
-        )}
+      
         {schema && <script type="application/ld+json" dangerouslySetInnerHTML={addJson4(schema)} />}
         {schema && <script type="application/ld+json" dangerouslySetInnerHTML={addJson5(schema)} />}
         <meta property="og:site_name" content="INFRAMANTRA" />
@@ -167,13 +151,7 @@ const Wrapper = (props) => {
         {props.children}
       </main>
 
-      {(pathname === '/thank-you') && (
-        <Script dangerouslySetInnerHTML={{ __html: `
-          if(typeof gtag === 'function'){
-            gtag('event','conversion',{'send_to':'AW-16667923552/kjRoCIa1xKkaEOCo8Ys-'});
-          }
-        `}} />
-      )}
+    
 
       <FooterNavigation />
     
