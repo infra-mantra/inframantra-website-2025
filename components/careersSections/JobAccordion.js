@@ -4,6 +4,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from 'yup';
 import Ajax from '../../components/helper/Ajax'
 import { toast } from 'react-toastify';
+import style from './jobAccordion.module.css';
 
 
 const JobAccordion = (props) => {
@@ -115,22 +116,22 @@ const JobAccordion = (props) => {
   
 
   return (
-    <div className="accordion-item">
-      <div role="button" className="accordion-title" onClick={() => setIsActive(!isActive)}>
-        <div className='job-title'>{title}</div>
-        <div className='job-location'>{location}</div>
-        <div className='job-type'>{type}</div>
+    <div className={style.accordionItem}>
+      <div role="button" className={style.accordionTitle} onClick={() => setIsActive(!isActive)}>
+        <div className={style.jobTitle}>{title}</div>
+        <div className={style.jobLocation}>{location}</div>
+        <div className={style.jobType}>{type}</div>
 
-        <div className='icon'>{isActive ? '-' : '+'}</div>
+        <div className={style.icon}>{isActive ? '-' : '+'}</div>
       </div>
       {isActive && 
-      <div className="accordion-content">
-        <div className="text-wrap" dangerouslySetInnerHTML={{__html: content}} />
+      <div className={style.accordionContent}>
+        <div className={style.textWrap} dangerouslySetInnerHTML={{__html: content}} />
 
         <Popup
           trigger={
-            <div className="btn-wrap mt-3">
-                <button  className="theme-btn">
+            <div className={style.btnWrap}>
+                <button  className={style.themeBtn}>
                 Apply Now
                 <svg
                 width="12"
@@ -160,13 +161,13 @@ const JobAccordion = (props) => {
           nested
         >
           {close => (
-            <div className="modal career-modal">
-              <div className="modal-body">
-                <button className="close" onClick={close}>
+            <div className={`${style.modal} ${style.careerModal}`}>
+              <div className={`${style.modalBody}`}>
+                <button className={`${style.close}`} onClick={close}>
                   &times;
                 </button>
-                <div className="content">
-                  <div className="contact-form-wrap career-form">
+                <div className={`${style.content}`}>
+                  <div className={`${style.contactFormWrap} ${style.careerForm}`}>
                     <Formik
                       initialValues={{ name: "", city: "", state: "", type: "", email: "", phone: "", appliedFor: "", jobs: props.data.id }}
                       validationSchema={Yup.object({
@@ -188,65 +189,65 @@ const JobAccordion = (props) => {
                       }}
                     >
                       <Form>
-                        <div className="form-area contact-form unfloat-labels">
-                          <div className="form-head">
+                        <div className={`${style.formArea} ${style.contactForm} ${style.unfloatLabels}`}>
+                          <div className={style.formHead}>
                             <h3>Apply for {title}</h3>
                           </div>
-                          <div className="form-row">
-                            <div className="form-group cl-12">
+                          <div className={style.formRow}>
+                            <div className={`${style.formGroup} ${style.cl12}`}>
                               <Field name="name" type="text" placeholder="Full name" />
-                              <div className="error">
+                              <div className={`${style.error}`}>
                               <ErrorMessage name="name" />
                               </div>
                             </div>
-                            <div className="form-group cl-6">
+                            <div className={`${style.formGroup} ${style.cl6}`}>
                               <Field name="email" type="email" placeholder="Email" />
-                              <div className="error">
+                              <div className={`${style.error}`}>
                                 <ErrorMessage name="email" />
                               </div>
                             </div>
-                            <div className="form-group cl-6">
+                            <div className={`${style.formGroup} ${style.cl6}`}>
                               <Field name="phone" type="tel" maxLength="10" placeholder="Contact No." />
-                              <div className="error">
+                              <div className={`${style.error}`}>
                                 <ErrorMessage name="phone" />
                               </div>
                             </div>
-                            <div className="form-group cl-6">
-                              <Field as="select" name="state" className="form-select">
+                            <div className={`${style.formGroup} ${style.cl6}`}>
+                              <Field as="select" name="state" className={`${style.formSelect}`} >
                                 <option value="" disabled>Select</option>
                                 {stateList === null ? <option>State Loading...</option> : stateList.map((data)=>(
                                     <option key={data._id} value={data._id}>{data.name}</option>
                                 ))}
                               </Field>
-                              <div className="error">
+                              <div className={`${style.error}`}>
                                 <ErrorMessage name="state" />
                               </div>
                             </div>
-                            <div className="form-group cl-6">
+                            <div className={`${style.formGroup} ${style.cl6}`}>
                               <Field name="city" type="text" placeholder="City" />
-                              <div className="error">
+                              <div className={`${style.error}`}>
                                 <ErrorMessage name="city" />
                               </div>
                             </div>
-                            <div className="form-group cl-6">
+                            <div className={`${style.formGroup} ${style.cl6}`}>
                               <Field name="type" type="text" placeholder="Job Type" />
-                              <div className="error">
+                              <div className={`${style.error}`}>
                                 <ErrorMessage name="type" />
                               </div>
                             </div>
-                            <div className="form-group cl-6">
+                            <div className={`${style.formGroup} ${style.cl6}`}>
                               <Field name="appliedFor" type="text" placeholder="Applied For" />
-                              <div className="error">
+                              <div className={`${style.error}`}>
                                 <ErrorMessage name="appliedFor" />
                               </div>
                             </div>
-                            <div className="form-group cl-12">
+                            <div className={`${style.formGroup} ${style.cl12}`}>
                               <label>Upload Resume</label>
                               <input type="file" accept='.pdf,.docx,.txt' ref={resumeFile} name="resume" />
                             </div>
                             <Field name="jobs" type="hidden"></Field>
-                            <div className="form-group cl-12">
-                              <button type="submit" className="theme-btn">
+                            <div className={`${style.formGroup} ${style.cl12}`}>
+                              <button type="submit" className={`${style.themeBtn}`}>
                                 Submit
                                 <svg
                                   width="12"

@@ -1,0 +1,65 @@
+.featuredArticlesSlider.secP {
+    padding-top: 0;
+}
+.secP {
+    padding: 60px 0;
+}
+.featuredArticlesSlider .sectionHead {
+    margin-bottom: 10px;
+    align-items: flex-end;
+}
+.sectionHead.splitHead, .sliderArrows>div {
+    display: flex;
+    flex-wrap: wrap;
+}
+.sectionHead {
+    text-align: center;
+    margin-bottom: 20px;
+        color: #313131;
+}
+.sectionHead.splitHead .head {
+    width: 100%;
+}
+.sectionHead h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    color: #333;
+    margin-bottom: 2rem;
+    line-height: 38.73px;
+        padding: 0;
+}
+.sectionHead p {
+    font-size: 1rem;
+    color: #666;
+    font-weight: 400;
+    line-height: 24px;
+}
+.sectionHead.splitHead .arrows {
+    width: 10%;
+    position: absolute;
+    right: 50px;
+}
+.featuredArticlesSlider .sliderArrows {
+    justify-content: flex-end;
+}
+.sliderArrows {
+    display: flex;
+    gap: 7px;
+    margin: 25px 0;
+}
+.sectionHead.splitHead, .sliderArrows>div {
+    display: flex;
+    flex-wrap: wrap;
+}
+.sliderArrows>div {
+    background-color: #e7b554;
+    width: 70px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: .3s;
+    box-shadow: 0 4px 10px 0 #00000026;
+}

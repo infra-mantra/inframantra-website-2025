@@ -10,7 +10,7 @@ import Steps from "../components/brandAmbassador/discoverAmb";
 const BrandAmbassador = () => {
     const banner_data = {
         title: "Brand Ambassador",
-        image: '/assets/guru/guru-main-banner.jpg',
+        image: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/brandAmbassador/guru-main-banner.jpg',
     }
     const data = {
        meta_title : "Guru Randhawa X InfraMantra - Brand Ambassador Of InfraMantra",

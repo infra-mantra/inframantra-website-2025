@@ -1,0 +1,65 @@
+section.jobOpenings {
+    background-color: #f5f5f5;
+}
+.sectionHead p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #020202;
+}
+.sectionHead h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    color: #333;
+    margin-bottom: 2rem;
+    line-height: 38.73px;
+        padding: 0;
+}
+.sectionHead {
+    margin-bottom: 10px;
+    color: #313131;
+}
+.sectionHead {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.sectionHead p {
+    font-size: 1rem;
+    color: #666;
+}
+.secP {
+    padding: 60px 0;
+}
+@media screen and (max-width: 767px) {
+    .secP {
+        padding: 0;
+    }
+        .sectionHead h2 {
+        font-size: 1.8rem;
+    }
+}
+@media only screen and (max-width: 900px) {
+        .sectionHead p {
+        font-size: 14px;
+        margin-top: 0;
+        line-height: 20px;
+    }
+        .sectionHead h2 {
+        margin-bottom: 0;
+    }
+        .sectionHead h2 {
+        font-size: 22px;
+    }
+    .careerBenefits.secP, .jobOpenings.secP {
+        padding-top: 0;
+    }
+}
+@media screen and (max-width: 990px) {
+    .sectionHead {
+        text-align: center;
+    }
+        .sectionHead h2 {
+        font-size: 24px;
+    }
+}

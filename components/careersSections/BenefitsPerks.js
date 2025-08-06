@@ -1,5 +1,6 @@
 import Section from "../UI/Section"
 import Image from "next/image"
+import style from "./benefitsPerk.module.css"
 
 function BenefitsPerks({title, description, list}) {
     let data = [
@@ -31,18 +32,18 @@ function BenefitsPerks({title, description, list}) {
     ]
 
   return (
-    <Section classes="career-benefits sec-p" pageWidth="container">
-        <div className="section-head">
+    <Section classes={`${style.careerBenefits} ${style.secP}`} pageWidth="container">
+        <div className={`${style.sectionHead}`}>
             <h2>{title}</h2>
             <p>{description}</p>
         </div>
-        <div className="row benefits-wrapper">
+        <div className={`${style.benefitsWrapper}`}>
             {list.map((element) => (
-                <div className="bnf-item" key={element.id}>
-                    <div className="icon">
+                <div className={`${style.bnfItem}`} key={element.id}>
+                    <div className={`${style.icon}`}>
                         <Image src={element.image} alt="Benefit 1" layout="fill" objectFit="contain" objectPosition="left" />
                     </div>
-                    <div className="info">
+                    <div className={`${style.info}`}>
                         <h4>{element.name}</h4>
                     </div>
                 </div>

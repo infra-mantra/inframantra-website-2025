@@ -1,0 +1,13 @@
+.brandAmb {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+}
+.brandAmb .container {
+    height: 100%;
+    width: 90%;
+}
+.container {
+    padding: 0 15px;
+    margin: 0 auto;
+}

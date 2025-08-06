@@ -4,6 +4,7 @@ import Section from '../UI/Section';
 import Image from 'next/image';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import NoImage from '../UI/NoImage';
+import style from './memberTimeline.module.css';
 gsap.registerPlugin(ScrollTrigger);
 
 const MemberTimeline = ({journey, content}) => {
@@ -57,16 +58,16 @@ if (el && !revealRefs.current.includes(el)) {
 }
 };
     return journey.length > 0 ? (
-        <Section classes="sec-p member-timeline" pageWidth="fluid">
-            <div className="tml-container">
-                <div className="section-head text-center">
+        <Section classes={`${style.secP} ${style.memberTimeline}`} pageWidth="fluid">
+            <div className={style.tmlContainer}>
+                <div className={`${style.sectionHead} ${style.textCenter}`}>
                     <h2>{content.name} Journey</h2>
                     <p>{content.description}</p>
                 </div>
-                <div className="timeline-with-img">
-                    <div className="sticky-img-wrap">
+                <div className={style.timelineWithImg}>
+                    <div className={style.stickyImgWrap}>
                         {journey.map((data, index)=>(
-                            <div key={`image-${data.id}`} className="mem-tml-img" id={`mem-tml-${index+1}`}>
+                            <div key={`image-${data.id}`} className={`${style.memTmlImg}`} id={`mem-tml-${index+1}`}>
                                 {data.image ?
                                   <picture>
                                       <img src={data.image} alt='Timeline Images' layout="fill" objectFit='cover' />
@@ -75,14 +76,14 @@ if (el && !revealRefs.current.includes(el)) {
                             </div>
                         ))}
                     </div>
-                    <div className="timeline-wrapper">
-                        <div className="main-dot"></div>
+                    <div className={style.timelineWrapper}>
+                        <div className={style.mainDot}></div>
                         {journey.map((data, index)=>(
-                            <div key={data.id} className="timeline-item"  ref={addToRefs} id={index+1} target-img="mem-tml-1">
-                                <div className="tml-dot"></div>
-                                <div className="tml-content">
+                            <div key={data.id} className= {style.timelineItem}  ref={addToRefs} id={index+1} target-img="mem-tml-1">
+                                <div className={style.tmlDot}></div>
+                                <div className={style.tmlContent}>
                                     <h3>{data.title}</h3>
-                                    <div key={`image-${data.id}`} className="mob-show mobile-time-image">
+                                    <div key={`image-${data.id}`} className={`${style.mobShow} ${style.mobileTimeImage}`}>
                                         {data.image ?
                                           <picture>
                                              <img src={data.image} alt='Timeline Images' layout="fill" objectFit='contain' objectPosition='left' />

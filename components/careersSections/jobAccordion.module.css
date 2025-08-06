@@ -1,0 +1,220 @@
+.modal {
+  display: flex; /* Use flexbox */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* High z-index to ensure it appears above other elements */
+  left: 0;
+  top: 0;
+  width: 100vw; /* Full viewport width */
+  height: 100vh; /* Full viewport height */
+  background-color: rgba(0,0,0,0.8); /* Black overlay with transparency */
+}
+.modalBody {
+  max-width: 800px;
+  background: #fff;
+  padding: 30px;
+  padding-top: 20px;
+  box-shadow: 0px 5px 20px -10px rgb(0 0 0 / 70%);
+  border-radius: 15px;
+  width: 100%;
+  position: relative;
+}
+.modalBody .close {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  font-size: 30px;
+  width: 35px;
+  height: 35px;
+  padding: 5px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 0px;
+  background: #C3972F;
+  color: #fff;
+  opacity: 0.6;
+  z-index: 99;
+  transition: 0.2s ease-in-out;
+  cursor: pointer;
+}
+.form-area .form-group:last-child {
+  margin-bottom: 0;
+}
+.contact-form {
+    width: 100%;
+  }
+.modalBody .close:hover{
+  opacity: 1;
+}
+.contact-form-wrap .form-group input,
+.contact-form-wrap .form-group textarea {
+    padding: 10px 15px;
+}
+.modalContent {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+.modalContent {  
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+  from {transform: scale(0.1)} 
+  to {transform: scale(1)}
+}
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+.jobsWrapper .accordionItem {
+    background-color: transparent;
+    border: 0;
+    border-bottom: 1px solid #d9d9d9;
+    border-radius: 0;
+    margin-bottom: 0;
+    padding: 30px 0;
+}
+
+.accordionTitle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 500;
+    color: #434343;
+}
+.jobsWrapper .accordionItem .jobTitle {
+    font-size: 20px;
+    color: #313131;
+    width: 40%;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-family: Inter, sans-serif;
+}
+.jobsWrapper .accordionItem .jobLocation {
+    width: 15%;
+    font-size: 18px;
+    color: #313131;
+    font-weight: 400;
+}
+.jobsWrapper .accordionItem .jobType {
+    width: 10%;
+    font-size: 18px;
+    color: #313131;
+    font-weight: 400;
+}
+.accordionTitle .icon {
+    min-width: 28px;
+    min-height: 28px;
+    background-color: #c3972f;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    line-height: 1;
+}
+.accordionContent {
+    margin-top: 16px;
+    color: #898989;
+}
+.jobsWrapper .accordionContent {
+    margin-top: 24px;
+}
+.jobsWrapper .textWrap p {
+    color: #6e6e6e;
+}
+.themeBtn {
+    position: relative;
+    background-color: #313131;
+    font-size: 16px;
+    padding: 10px 30px 12px;
+    display: inline-block;
+    border-radius: 40px;
+    border: 0;
+    font-weight: 500;
+    transition: .3s;
+}
+.themeBtn svg {
+    margin-left: 15px;
+}
+.themeBtn svg path {
+    transition: .3s;
+}
+.textWrap p {
+    font-size: 16px;
+    line-height: 24px;
+    color: #535353;
+}
+.mt3 {
+    margin-top: 1.5rem;
+}
+.themeBtn {
+    background-color: #e7b554;
+    border: none;
+    padding: 10px 20px;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+}
+.lrnBtn, .themeBtn {
+    display: inline-flex;
+    align-items: center;
+}
+@media (max-width: 768px) {
+        .themeBtn {
+        font-size: .875rem;
+        padding: .75rem 1.5rem;
+        border-radius: 8px;
+    }
+    .modalContent {
+    width: 100%;
+  }
+    .sidebar, .textWrap {
+        width: 100%;
+    }
+        .btnWrap {
+        text-align: center;
+        margin-top: 1rem;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+        .text-wrap p {
+        line-height: 22px;
+        font-size: 14px;
+        margin: 5px;
+    }
+    .jobs-wrapper .accordion-item .job-title {
+        width: 100%;
+        font-size: 16px;
+    }
+        .accordion-title .icon {
+        font-size: 20px;
+    }
+        .jobs-wrapper .accordion-item .job-type {
+        display: none;
+    }
+        .jobs-wrapper .accordion-item .job-location {
+        display: none;
+    }
+}
