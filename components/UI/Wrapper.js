@@ -117,6 +117,11 @@ const Wrapper = (props) => {
         <meta httpEquiv="Content-Language" content="en" />
         <meta name="viewport" content="width=device-width,user-scalable=no" />
         <link rel="canonical" href={canonicalUrl} />
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Inter:wght@400;500;600;700&family=Lexend+Deca:wght@100..900&display=swap" rel="stylesheet"/>
+
         
         <script dangerouslySetInnerHTML={{ __html: `
           (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({
