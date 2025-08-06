@@ -40,11 +40,16 @@ export default function BlogContent({ detailContent, popular, recent, data, name
     if (!headings) return [];
 
     return headings.map((heading, index) => {
-      const text = heading.replace(/<h[2-3][^>]*>/, "").replace(/<\/h[2-3]>/, "");
-      const id = text.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+     const rawText = heading.replace(/<[^>]*>/g, "");
+    const id = rawText
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, "-") // Replace non-alphanumeric with dashes
+      .replace(/^-+|-+$/g, "");     // Remove leading/trailing dashes
+
       return (
         <li key={index}>
-          <a href={`#${id}`}>{text}</a>
+          <a href={`#${id}`}>{rawText}</a>
         </li>
       );
     });
@@ -53,10 +58,17 @@ export default function BlogContent({ detailContent, popular, recent, data, name
   // Add IDs to headings in the description for TOC linking
   const addHeadingIDs = (content) => {
     return content.replace(/<h([2-3])>(.*?)<\/h\1>/g, (match, level, text) => {
-      const id = text.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-      return `<h${level} id="${id}">${text}</h${level}>`;
-    });
-  };
+      const cleanText = text.replace(/<[^>]*>/g, "");
+      const id = cleanText
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, "-") // Replace non-alphanumerics with hyphen
+      .replace(/^-+|-+$/g, "");    // Remove trailing/leading hyphens
+
+    return `<h${level} id="${id}">${text}</h${level}>`;
+  });
+};
+
 
   return (
     <Section classes={styles.secP} pageWidth="container">

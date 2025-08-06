@@ -5,34 +5,32 @@ import { useEffect ,useState } from "react";
 import styles from './blogHeader.module.css'
 
 const PageHeader = (props) => {
-    const { image, title, date, detailContent,thumbnail } = props.data;
+  const {
+    image,
+    title,
+    date,
+    detailContent,
+    thumbnail,
+    imageAlt, // ✅ get imageAlt from props.data
+  } = props.data;
+  
     const [isDesktop, setIsDesktop] = useState(false);
 
 
-  useEffect(() => {
-    const screenWidth = window.innerWidth;
-    setIsDesktop(screenWidth >= 768);
-    function handleResize() {
-      const newScreenWidth = window.innerWidth;
-      setIsDesktop(newScreenWidth >= 768);
-    }
-    window.addEventListener('resize', handleResize);
+   useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+
+    handleResize(); // Set on initial render
+    window.addEventListener("resize", handleResize);
+
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
-    const formatDate = (dateString) => {
-        const [day, month, year] = dateString.split("/");
-      
-        const monthNames = [
-          "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-          "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-        ];
-      
-        const monthName = monthNames[parseInt(month, 10) - 1];
-       return `${monthName} ${day}  ${year}`;
-      };
+  
 
     return (
         <Section classes={styles.blogPageHeader} id="" pageWidth="fluid">
@@ -40,7 +38,7 @@ const PageHeader = (props) => {
                 {/* Title and Date */}
                 <div className={styles.blogBannerContent}>
                     <div className={styles.pageWidth}>
-                        <p className={styles.date}>{formatDate(date)}</p>
+                        <p className={styles.date}>{date}</p>
                         <h1>{title}</h1>
                         {/* Share Section */}
                         <div className={styles.blogDivider}></div>
@@ -54,7 +52,7 @@ const PageHeader = (props) => {
                     <picture className={styles.blogHeaderImageContainer}>
                         <img
                             src={isDesktop?image:thumbnail}
-                            alt="Banner"
+                            alt={imageAlt || title || "Blog Image"}
                         className={styles.blogHeaderImage}
                         />
                     

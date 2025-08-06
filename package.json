@@ -24,6 +24,7 @@
     "chartjs-plugin-datalabels": "^2.2.0",
     "formik": "^2.2.9",
     "gsap": "^3.11.3",
+    "he": "^1.2.0",
     "leaflet": "^1.9.4",
     "moment": "^2.29.4",
     "next": "^12.3.2",
