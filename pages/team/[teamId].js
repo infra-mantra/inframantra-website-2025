@@ -7,6 +7,7 @@ import Section from '../../components/UI/Section';
 import NoImage from '../../components/UI/NoImage';
 import Image from 'next/image';
 import Link from 'next/link';
+import style from './team.module.css';
 
 const TeamDetail = ({ allData }) => {
     return (
@@ -17,22 +18,22 @@ const TeamDetail = ({ allData }) => {
             image={allData.heading.image || '/default-image.jpg'}
         >
             <TeamBanner
-                bg_img="/assets/images/team-detail_banner.jpg"
+                bg_img="https://inframantra.blr1.cdn.digitaloceanspaces.com/ourTeam/team-detail_banner.jpg"
                 member_image={allData.heading.image || '/default-image.jpg'}
                 title={allData.heading.name || 'Team Member'}
                 position={allData.heading.designation || 'Position'}
             />
             <MemberTimeline journey={allData.journey} content={allData.heading} />
-            <div className="desk-show">
+            <div className={style.deskShow}>
                 <ArticleSlider heading={allData.blogHeading} articles={allData.articles} />
             </div>
-            <div className="mob-show">
-                <Section classes="featured-blogs sec-p pt-0" pageWidth="container">
-                    <div className="section-head">
+            <div className={style.mobShow}>
+                <Section classes={`${style.featuredBlogs} ${style.secP} ${style.pt0}`} pageWidth="container">
+                    <div className={style.sectionHead}>
                         <h2>{allData.blogHeading.title || 'Related Blogs'}</h2>
                         {allData.blogHeading.description && <p>{allData.blogHeading.description}</p>}
                     </div>
-                    <div className="f-blogs-wrap team-blogs">
+                    {/* <div className={`${style.fBlogsWrap} ${style.teamBlogs}`}>
                         {allData.articles.map((item) => (
                             <div key={`key-${item.id}`} className="f-blog-item">
                                 <div className="img-wrap">
@@ -105,7 +106,7 @@ const TeamDetail = ({ allData }) => {
                                 </div>
                             </div>
                         ))}
-                    </div>
+                    </div> */}
                 </Section>
             </div>
         </Wrapper>

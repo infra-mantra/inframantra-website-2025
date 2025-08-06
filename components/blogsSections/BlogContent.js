@@ -5,127 +5,118 @@ import Ajax from "../helper/Ajax";
 import { useRouter } from "next/router";
 import styles from './blogContent.module.css'
 
+
+/* ------------------------------------------------------------------ */
+/* 1.  Universal HTML‑entity decoder (works the same on SSR & client) */
+/* ------------------------------------------------------------------ */
+const entityMap = {
+  nbsp : " ", // non‑breaking space
+  amp  : "&",
+  quot : "\"",
+  lt   : "<",
+  gt   : ">",
+};
+
+const decodeEntities = (str = "") =>
+  str
+    // named entities
+    .replace(/&([a-z]+);/gi, (_, name) => entityMap[name] || _)
+    // numeric entities
+    .replace(/&#(x?\d+);?/gi, (_, num) =>
+      String.fromCharCode(/^x/i.test(num) ? parseInt(num.slice(1), 16) : +num)
+    );
+
+    /* 2.  Strip tags helper */
+const stripTags = (html = "") => html.replace(/<[^>]+>/g, "");
+
+/* 3.  Inject IDs into h2‑h4 AFTER decoding entities                 */
+const addHeadingIDs = (html = "") =>
+  html.replace(/<h([2-4])([^>]*)>([\s\S]*?)<\/h\1>/gi, (_, lvl, attrs, inner) => {
+    const plain = decodeEntities(stripTags(inner));
+    const id    = plain.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+    return `<h${lvl}${attrs} id="${id}">${inner}</h${lvl}>`;
+  });
+
 export default function BlogContent({
-  detailContent,
-  popular,
-  recent,
-  data,
-  name,
-}) {
-  const router = useRouter();
+  detailContent = {},
+  recent        = [],
+  data          = {},
+  name          = "",
+}) { /* viewport breakpoint */
   const [isDesktop, setIsDesktop] = useState(false);
-  const [blogtype, setBlogType] = useState(null);
-
-  const handleSelectClick = () => {
-    props.toggleSelection(props.item); 
-  };
-
   useEffect(() => {
-    const screenWidth = window.innerWidth;
-    setIsDesktop(screenWidth >= 768);
-    function handleResize() {
-      const newScreenWidth = window.innerWidth;
-      setIsDesktop(newScreenWidth >= 768);
-    }
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+    const update = () => setIsDesktop(window.innerWidth >= 768);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
   }, []);
 
-  useEffect(() => {
-    const fetchBlogType = async () => {
-      const getData = await Ajax({
-        url: `/blog/blogType/`,
-        loader: true,
-      });
-      setBlogType(getData.data.result);
-    };
-    fetchBlogType();
-  }, []);
+  /* prepare article & ToC */
+  const raw   = detailContent.description || detailContent.content || "";
+  const html  = addHeadingIDs(decodeEntities(raw));
 
-  const generateTOC = (content) => {
-    const headings = content.match(/<h[2-3][^>]*>(.*?)<\/h[2-3]>/g);
-    if (!headings) return [];
-
-    return headings.map((heading, index) => {
-      const text = heading
-        .replace(/<h[2-3][^>]*>/, "")
-        .replace(/<\/h[2-3]>/, "");
-      const id = text.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-      heading.replace(/<\/?[^>]+(>|$)/g, "");
+  const tocItems =
+    [...html.matchAll(/<h([2-4])[^>]*>([\s\S]*?)<\/h\1>/gi)].map(([_, __, inner], i) => {
+      const txt = decodeEntities(stripTags(inner));
+      const id  = txt.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
       return (
-        <li key={index}>
-          <a href={`#${id}`}>
-            {cleanText(text.replace(/<\/?[^>]+(>|$)/g, ""))}
-          </a>
+        <li key={i}>
+          <a href={`#${id}`}>{txt}</a>
         </li>
       );
     });
-  };
-  const cleanText = (text) => {
-    return text
-      .replace(/&rsquo;/g, "'") 
-      .replace(/&nbsp;/g, " ") 
-      .replace(/<[^>]+>/g, ""); 
-  };
-  const addHeadingIDs = (content) => {
-    return content.replace(/<h([2-3])>(.*?)<\/h\1>/g, (match, level, text) => {
-      const id = text.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-      return `<h${level} id="${id}">${text}</h${level}>`;
-    });
-  };
 
 
   return (
     <Section classes={styles.secP} pageWidth="container">
       <div className={styles.blogContentWrap}>
         <div className={styles.flexLayout}>
-          <div className={styles.toc}>
+          <aside className={styles.toc}>
             <h4>Table of Contents</h4>
-            <ul>{generateTOC(detailContent.description)}</ul>
-          </div>
+            <ul>{tocItems}</ul>
+          </aside>
 
-          <div className={styles.textWrap}>
+          <article className={styles.textWrap}>
             <div
           
-              dangerouslySetInnerHTML={{
-                __html: addHeadingIDs(detailContent.description),
-              }}
+             className="content prose lg:prose-lg max-w-none"
+              dangerouslySetInnerHTML={{ __html: html }}
             ></div>
-            <div className={styles.writtenby}>
-              <h4>✍️ Written By: </h4>
-              <span>{name}</span>
-            </div>
-          </div>
+            <p className={styles.writtenby}>
+              <b>✍️ Written By: </b>{name}
+            </p>
+          </article>
 
           
-          <div className={styles.sidebar} style={data=='news' && isDesktop ? {"marginTop":"-215px"}:{}}>
+          <aside className={styles.sidebar} style={data.type =='news' && isDesktop ? {"marginTop":"-215px"}:{}}>
             <div className={styles.sdCard}>
               <div className={styles.sdCardHead}>
                 <h3>Recent Blogs</h3>
               </div>
               <div className={styles.sdLatestBlogs}>
-                {recent.map((blog) => (
-                  <Link href={data=='news'?`/news/${blog.slug}`:`/blog/${blog.slug}`} key={blog.id}>
+                {recent.map((b) => {
+                  const title = decodeEntities(b.title);
+                  return (
+                  <Link href={`/blog/${b.slug}`} key={b.slug}>
                     <a className={styles.sdBlgItem}>
                       <div className="icon">
-                        {blog.image ? (
-                          <img src={blog.image} layout="fill" alt={blog.title.substring(0,20)} />
+                        {b.image ? (
+                          <img src={b.image} layout="fill" alt={title} />
                         ) : (
                           <div style={{ width: "60px", height: "60px", background: "#ccc" }} />
                         )}
                       </div>
                       <div className={styles.info}>
-                        <p className={styles.date}>{blog.date}</p>
-                        <h3 >{blog.title.substring(0,40)}...</h3>
+                        <p className={styles.date}>{b.date}</p>
+                        <h3 > {title.length > 40 ? title.slice(0, 37) + "…" : title}</h3>
                       </div>
                     </a>
                   </Link>
-                ))}
+                  );
+                })}
               </div>
             </div>
-          </div>
+          </aside>
         </div>
       </div>
     </Section>

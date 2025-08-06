@@ -6,7 +6,7 @@ import NoImage from "./NoImage";
 import styles from './blogGridIndividual.module.css'
 
 function BlogsGrid({ section_title, title_desc, blogs, button, initial, loadMore, blogBtn, latestNews }) {
-
+const [showAll, setShowAll] = useState(false);
     const displayedBlogs = blogs
     
 
@@ -38,13 +38,14 @@ function BlogsGrid({ section_title, title_desc, blogs, button, initial, loadMore
                                         )}
                                     </div>
                                     <div className={styles.info}>
-                                        <h4>{item.name}</h4>
+                                        <h4>{item.name || item.title}</h4>
                                     </div>
                                 </div>
                             </a>
                         </Link>
                     ))}
                 </div>
+                
       
         </Section>
     );

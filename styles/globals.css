@@ -93,6 +93,39 @@ input.rangeControl[type="range"]::-webkit-slider-thumb {
   cursor: pointer;
   box-shadow: 0px 4px 4px 0px #00000040;
 }
+ul.wp-block-list li {
+   font-size: 16px;
+}
+/* Media & PR Page CSS */
+.media-page {
+    width: 100%;
+}
+.media-content {
+    width: 69%;
+}
+.media-sidebar {
+    width: 29%;
+}
+.media-content .content-media figure img {
+    width: 100% ;
+}
+.media-content .content-media figure {
+    margin: 0px;
+}
+@media only screen and (max-width: 768px) {
+ .media-content {
+    width: 100%;
+}
+.media-content>h2 {
+    display: none;
+}
+}
 
+/* Media & PR Page CSS  - END*/
 
- 
+ h2.wp-block-heading {
+    font-weight: 400 !important;
+}
+.in-f-blog-item{
+  min-height: 0px!important;;
+}

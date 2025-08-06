@@ -1,0 +1,70 @@
+.homeHero{
+    width: 100%;
+    padding: 2rem .3rem;
+    background-color: #fff;
+}
+.container {
+    padding: 0 15px;
+    margin: 0 auto;
+    width: 100%;
+}
+.homeHero .container {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    padding-right: 15px;
+    padding-left: 15px;
+    display: flex;
+}
+.homeHero .container .homeContainer{
+    width: 60%;
+    min-height: 300px;
+}
+.homeHero .container .homeContainer h1 {
+    font-size: 28px;
+    color: #daa520;
+}
+.homeHero .container .homeContainer p {
+    font-size: 17px;
+    color: #787777;
+    text-align: justify;
+}
+.homeHero .homeAmb {
+    width: 40%;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.homeHero .container .homeAmb img {
+    border-radius: 5%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    min-height: 100px;
+    width: 200px;
+    height: 307px;
+    width: 320px;
+    transition: all .5s;
+}
+.homeHero .container .homeAmb img:hover {
+    transform: scale(1.02);
+}
+
+
+@media (max-width: 767px) {
+    .homeHero .container .homeAmb {
+        width: 98% !important;
+    }
+}
+
+@media (max-width: 900px) {
+    .home-hero .container .home-amb{
+         width: 100%;
+    }
+    .homeHero .container {
+        flex-direction: column !important;
+    }
+    .homeHero .container .homeContainer {
+        width: 100%;
+    }
+}

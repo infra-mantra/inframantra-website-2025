@@ -1,21 +1,21 @@
 import Section from "../UI/Section"
 import Image from "next/image"
-
+import style from "./careerText.module.css"
 function CareerText({title, description, image}) {
   return (
-    <Section classes="career-text-image sec-p" pageWidth="container">
-        <div className="row">
-            <div className="cl-6 order-2">
-                <div className="section-head mb-0">
+    <Section classes={`${style.careerTextImage} ${style.secP}`} pageWidth="container">
+        <div className={style.row}>
+            <div className={`${style.cl6} ${style.order2}`}>
+                <div className={`${style.sectionHead} ${style.mb0}`}>
                     <h2>{title}</h2>
                 </div>
-                <div className="img-wrap mob-show">
+                <div className={`${style.imgWrap} ${style.mobShow}`}>
                     <Image src={image} layout="fill" alt="career-img" objectFit="cover"/>
                 </div>
-                <div className="text-wrap" dangerouslySetInnerHTML={{__html: description}} />
+                <div className={`${style.textWrap}`} dangerouslySetInnerHTML={{__html: description}} />
             </div>
-            <div className="cl-6 order-1 desk-show">
-                <div className="img-wrap">
+            <div className={`${style.cl6} ${style.order1} ${style.deskShow}`}>
+                <div className={style.imgWrap}>
                     <Image src={image} layout="fill" alt="career-img" objectFit="cover"/>
                 </div>
             </div>

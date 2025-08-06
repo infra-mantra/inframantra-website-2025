@@ -1,20 +1,21 @@
 import Image from "next/image";
 import Section from "../UI/Section";
+import style from "../TeamDetailsSections/teamBanner.module.css";
 
 function TeamBanner(props) {
   return (
-    <Section classes="team-page-header" id="" pageWidth="fluid">
+    <Section classes={style.teamPageHeader} id="" pageWidth="fluid">
       <picture>
         <img src={props.bg_img} alt="Banner" layout="fill" objectFit="cover" />
       </picture>
-      <div className="overlay"></div>
-      <div className="page-banner-content">
-        <div className="page-width">
+      <div className={style.overlay}></div>
+      <div className={style.pageBannerContent}>
+        <div className={style.pageWidth}>
           <h1>{props.title}</h1>
-          <p className="postion">{props.position}</p>
+          <p className={style.position}>{props.position}</p>
         </div>
       </div>
-      <div className="team-member-img">
+      <div className={style.teamMemberImg}>
         <picture>
           <img
             src={props.member_image}

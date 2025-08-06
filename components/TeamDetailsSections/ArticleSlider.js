@@ -7,17 +7,19 @@ import Image from "next/image";
 import Link from "next/link";
 import SliderArrows from "../UI/SliderArrows";
 import NoImage from "../UI/NoImage";
+import style from './articleSlider.module.css';
 function ArticleSlider({articles, heading}) {
 
   return (
-    <Section classes="sec-p featured-articles-slider" pageWidth="container" >
-        
-        <div className="section-head split-head">
-            <div className="head">
+
+    <Section classes={`${style.secP} ${style.featuredArticlesSlider}`} pageWidth="container" >
+
+        <div className={`${style.ArticleSlider} ${style.sectionHead} ${style.splitHead}`}>
+            <div className={style.head}>
                 <h2>{heading.title}</h2>
                 <p>{heading.description}</p>
             </div>
-            <div className="arrows">
+            <div className={style.arrows}>
                 <SliderArrows prevClass="partners-left" nextClass="partners-right"/>
             </div>
         </div>

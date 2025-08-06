@@ -1,9 +1,10 @@
 import React from "react";
 import Section from "../UI/Section";
+import style from "./embed.module.css";
 const VideoEmbed = () => {
     return(
-        <Section classes="brand-amb">
-          <div className="container">
+        <Section classes={style.brandAmb}>
+          <div className={style.container}>
             <iframe
               width="100%"
               height="400"

@@ -1,0 +1,149 @@
+.teamPageHeader{
+    position: relative;
+    height: 75vh;
+    min-height: 500px;
+}
+.teamPageHeader picture img {
+    border: none;
+    margin: auto;
+    width: 0;
+    height: 0;
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 100%;
+    max-height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+.teamPageHeader picture, .teamPageHeader picture img {
+    box-sizing: border-box;
+    display: block;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+.teamPageHeader picture {
+    overflow: hidden;
+    width: auto;
+    height: auto;
+    background: none;
+    opacity: 1;
+    border: 0;
+    margin: 0;
+}
+ .teamPageHeader .overlay {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(180deg, rgba(0, 0, 0, .05), rgba(0, 0, 0, .7));
+    z-index: 1;
+    top: 0;
+    left: 0;
+}
+.teamPageHeader .pageBannerContent {
+    background: rgba(0, 0, 0, .67);
+    padding: 24px 8%;
+    text-align: left;
+    z-index: 2;
+    position: absolute;
+    color: #fff;
+    width: 100%;
+    top: 55%;
+    transform: translateY(-20%);
+}
+.pageWidth {
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+.teamPageHeader .pageBannerContent h1 {
+    font-size: 70px;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 12px;
+}
+.teamPageHeader p.position {
+    font-size: 20px;
+    color: #e7b554;
+}
+.teamPageHeader .teamMemberImg {
+    position: absolute;
+    z-index: 2;
+    height: 445px;
+    width: 445px;
+    right: 8%;
+    bottom: -3px;
+}
+.teamPageHeader picture, .teamPageHeader picture img {
+    box-sizing: border-box;
+    display: block;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+.teamPageHeader picture {
+    overflow: hidden;
+    width: auto;
+    height: auto;
+    background: none;
+    opacity: 1;
+    border: 0;
+    margin: 0;
+}
+.teamPageHeader picture img {
+    border: none;
+    margin: auto;
+    width: 0;
+    height: 0;
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 100%;
+    max-height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+
+
+
+@media (max-width: 600px) {
+    .pageWidth {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+@media (max-width: 900px) {
+    .teamPageHeader .teamMemberImg {
+        position: absolute;
+        width: 150px;
+        bottom: 25px;
+        height: 140px;
+        right: 10px;
+    }
+    .teamPageHeader p.position {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 24px;
+        letter-spacing: 0;
+        text-align: left;
+        margin: 0;
+    }
+    .teamPageHeader {
+        position: relative;
+        height: 35vh;
+        min-height: 320px;
+    }
+    .teamPageHeader .pageBannerContent h1 {
+        margin: 0;
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 26px;
+        letter-spacing: 0;
+        text-align: left;
+    }
+}

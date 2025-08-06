@@ -19,10 +19,11 @@ function News({ allData }) {
   };
 
   return (
-    <Wrapper
-      title={allData?.metaTitle || ''}
-      description={allData?.metaDescription || ''}
-      image={allData?.image || null}
+    <Wrapper 
+    title={allData?.detail?.metaTitle || ''}
+    description={allData?.detail?.metaDescription || ''} 
+    image={allData?.detail?.image || null} 
+    keyword={allData?.detail?.metaKeyword || ''}
     >
       <div className={styles['media-container-individual']}>
         {/* Search Section */}
@@ -50,7 +51,7 @@ function News({ allData }) {
         <div className={styles['media-page']}>
           {/* Content Section */}
           <div className={styles['media-content']}>
-            {!isDesktop && (
+            {allData?.isCMSPost && !isDesktop && (
               <div className={styles['media-image-placeholder']}>
                 <img src={allData?.detail?.image} alt={allData?.detail?.title || 'Media Image'} />
               </div>
@@ -58,7 +59,7 @@ function News({ allData }) {
 
             <h2>{allData?.detail?.title}</h2>
 
-            {isDesktop && (
+            {allData?.isCMSPost && isDesktop && (
               <div className={styles['media-image-placeholder']}>
                 <img src={allData?.detail?.image} alt={allData?.detail?.title || 'Media Image'} />
               </div>
@@ -69,7 +70,7 @@ function News({ allData }) {
               dangerouslySetInnerHTML={{ __html: allData?.detail?.description || '' }}
             ></div> 
             <div>
-            {isDesktop && <Share content="Best Tips To Become A Successful Real Estate Investor in 2024" />}
+            {isDesktop && <Share content={allData?.detail?.title || ''} />}
             </div>
           </div>
 
@@ -135,51 +136,111 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
+  const slug = params.media;
+  const apiUrl = process.env.apiUrl;
+
+  // Fetch CMS PRs
+  const cmsPRRes = await fetch(`${apiUrl}/blog/pageDetail?blogType=PressRelease&limit=100`);
+  const cmsPRRaw = await cmsPRRes.json();
+  const cmsRecent = (cmsPRRaw?.result?.latestBlogList || []).map((e) => ({
+    id: e._id,
+    title: e.name,
+    image: e.file?.thumbnail || e.file?.path || '',
+    slug: e.slug,
+    source: 'cms',
+  }));
+
+  // Fetch WP PRs
+  let wpRecent = [];
   try {
-    const res = await fetch(`${process.env.apiUrl}/blog/pageDetail?slug=${params.media}`);
-    const data = await res.json();
+    const wpRes = await fetch(`https://cms.inframantra.com/wp-json/wp/v2/posts?_embed&per_page=50`);
+    const wpRaw = await wpRes.json();
 
-    if (!data?.result?.detail?.length) {
-      return { notFound: true };
-    }
+    wpRecent = wpRaw
+      .filter((p) => {
+        const cat = p._embedded?.['wp:term']?.[0]?.find((t) => t.taxonomy === 'category');
+        return cat?.slug === 'pr-media';
+      })
+      .map((p) => ({
+        id: p.id,
+        title: p.title.rendered.replace(/<[^>]+>/g, ''),
+        image: p._embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
+        slug: p.slug,
+        source: 'wp',
+      }));
+  } catch (err) {
+    console.warn('⚠️ WP PR fetch failed:', err.message);
+  }
 
+  const recent = [...cmsRecent, ...wpRecent].slice(0, 6);
+
+  // Try CMS post
+  const cmsRes = await fetch(`${apiUrl}/blog/pageDetail?slug=${slug}`);
+  const cmsData = await cmsRes.json();
+  const cmsPost = cmsData?.result?.detail?.[0];
+
+  if (cmsPost) {
     const detail = {
-      title: data?.result?.detail[0]?.name || '',
-      description: data?.result?.detail[0]?.description || '',
-      metaTitle: data?.result?.detail[0]?.metaTitle || '',
-      metaDescription: data?.result?.detail[0]?.metaDescription || '',
-      metaKeyword: data?.result?.detail[0]?.metaKeyword || '',
-      image: data?.result?.detail[0]?.file?.path || '',
-      date: moment(data?.result?.detail[0]?.createdAt).format('DD/MM/YYYY'),
-      name: data?.result?.detail[0]?.writer_name || '',
+      title: cmsPost.name || '',
+      description: cmsPost.description || '',
+      metaTitle: cmsPost.metaTitle || '',
+      metaDescription: cmsPost.metaDescription || '',
+      metaKeyword: cmsPost.metaKeyword || '',
+      image: cmsPost.file?.path || '',
+      date: moment(cmsPost.createdAt).format('DD/MM/YYYY'),
+      name: cmsPost.writer_name || '',
     };
 
-    const relatedData = (data?.result?.reletedBlogs || []).map((e) => ({
+    const related = (cmsData?.result?.reletedBlogs || []).map((e) => ({
       _id: e._id,
       name: e.name,
       image: e.file?.thumbnail || '',
       slug: e.slug,
+      link: `/pr/${e.slug}`,
     }));
 
-    const recentData = (data?.result?.recentBlogs || []).map((e) => ({
-      id: e._id,
-      title: e.name,
-      image: e.file?.smallFile || '',
-      slug: e.slug,
-    }));
+    return {
+      props: {
+        allData: {
+          isCMSPost: true,
+          detail,
+          related,
+          recent,
+        },
+      },
+      revalidate: 10,
+    };
+  }
 
-    const allData = {
-      detail,
-      related: relatedData,
-      recent: recentData,
+  // Fallback to WordPress
+  try {
+    const wpSingleRes = await fetch(`https://cms.inframantra.com/wp-json/wp/v2/posts?slug=${slug}&_embed`);
+    const wpPost = (await wpSingleRes.json())?.[0];
+    if (!wpPost) return { notFound: true };
+const focusKeyword = wpPost.meta?._yoast_wpseo_focuskw || "";
+    const detail = {
+      title: wpPost.title.rendered,
+      description: wpPost.content.rendered,
+      metaTitle: wpPost.title.rendered,
+      metaDescription: wpPost.excerpt.rendered.replace(/<[^>]+>/g, ''),
+      metaKeyword: focusKeyword,
+      image: '',
+      date: moment(wpPost.date).format('DD/MM/YYYY'),
+      name: wpPost._embedded?.author?.[0]?.name || '',
     };
 
     return {
-      props: { allData },
+      props: {
+        allData: {
+          isCMSPost: false,
+          detail,
+          related: [],
+          recent,
+        },
+      },
       revalidate: 10,
     };
-  } catch (error) {
-    console.error(`Error fetching data for slug "${params.media}":`, error);
+  } catch (err) {
     return { notFound: true };
   }
 }

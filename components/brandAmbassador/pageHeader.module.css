@@ -1,0 +1,59 @@
+.pageHeader.brandAmbassador{
+    position: relative;
+}
+.pageHeaderImg{
+  height: 500px;
+  width:91%;
+  margin: auto;
+  object-fit: cover;
+  display: flex;
+  margin-top: 2rem;
+  border-radius: 20px;
+}
+.pageHeader .overlay{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(180deg, rgba(0, 0, 0, .05), rgba(0, 0, 0, .7));
+}
+.overlay{
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.pageHeader .pageBannerContent {
+    z-index: 2;
+    position: absolute;
+    color: #fff;
+    text-align: center;
+    width: 100%;
+    top: 55%;
+    transform: translateY(-20%);
+}
+.pageHeader .pageBannerContent h1 {
+    font-size: 50px;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+.pageWidth{
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+ @media (max-width: 768px) {
+       .pageHeaderImg{
+        width: 100%;
+        object-fit: fill;
+        height: 300px;
+    }
+    .pageHeader .pageBannerContent h1 {
+        font-size: 28px;
+    }
+ }
+
+@media (max-width: 990px) {
+ .pageHeader .pageBannerContent h1 {
+        font-size: 40px;
+    }
+}
