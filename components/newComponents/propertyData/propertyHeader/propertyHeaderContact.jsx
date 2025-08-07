@@ -93,10 +93,7 @@ function PropertyHeaderContact({ name }) {
     <div className="propertyPageHeaderContactUs" style={name === "display" ? { width: "120%",height:"100%" } : {}}>
       <h4 className=''>Please share your contact details<br/>
         TO UNLOCK EXCLUSIVE DEALS</h4>
-      {/* <div className="propertyPageHeaderContactUsPhoneFlex" >
-         <span role="img" aria-label="phone" style={{ color: 'green' }}><FaPhoneAlt/></span
-        <p style={{ margin: '0' }}>+ 91 86 9800 9900</p>
-      </div> */}
+ 
       <form onSubmit={handleSubmit} className="propertyTopFormContact">
         <div style={CustomTextFieldWrapper} className="propertyTopForm">
           <input

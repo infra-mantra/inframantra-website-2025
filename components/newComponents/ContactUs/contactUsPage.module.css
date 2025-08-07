@@ -1,0 +1,295 @@
+.contactPageGuruImg {
+    width: 22vw;
+    height: 60vh;
+    left: 0%;
+    top: 21%;
+}
+.contactUsPageWrapper {
+    display: flex
+;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100vw;
+    height: auto;
+    margin-top: 2%;
+}
+.contactUsPageBannerContainer {
+    height: 40vh;
+    width: 90vw;
+    border-radius: 10px;
+}
+.contactUsPageBannerContainer > img {
+    height: 100%;
+    width: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    border-radius: 10px;
+}
+.contactUsPageFormSectionContainer {
+    width: 70vw;
+    height: 60vh;
+    display: flex
+;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 5%;
+}
+
+.contactUsPageFormSectionGuruImgContainer {
+    width: 30%;
+    height: 100%;
+    display: flex
+;
+    justify-content: flex-end;
+    align-items: center;
+}
+.contactPageGuruImg {
+    width: 22vw;
+    height: 60vh;
+    left: 0%;
+    top: 21%;
+}
+.contactUsPageSecondSectionHeader {
+    width: 100%;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 400;
+    font-size: 22px;
+    padding-top: 20px;
+}
+.contactUsPageSecondSectionFormWrapper {
+    display: flex
+;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 50vh;
+    width: 100%;
+}
+.contactUsPageConditions {
+    width: 90%;
+    font-size: 12px;
+    color: #cccaca;
+    margin-bottom: 10px;
+}
+.contactUsPageSecondSectionFormWrapper input {
+    font: inherit;
+    letter-spacing: inherit;
+    color: currentcolor;
+    padding: 4px 0px 5px;
+    border: 0px;
+    /* box-sizing: content-box; */
+    background: none;
+    height: 1.4375em;
+    margin: 0px;
+    -webkit-tap-highlight-color: transparent;
+    display: block;
+    min-width: 0px;
+    width: 80%;
+    border-bottom: 1px solid #0f0f0f3d;
+}
+.searchButton {
+    background: #DCAA4C;
+    width: 121px;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 10px;
+    cursor: pointer;
+    display: flex
+;
+    justify-content: center;
+    align-items: center;
+}
+.contactUsPageConditions {
+    width: 90%;
+    font-size: 12px;
+    color: #cccaca;
+    margin-bottom: 10px;
+}
+.contactUsPageLocationSectionContainer {
+    display: flex
+;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 70vw;
+    height: 60vh;
+    margin-top: 5%;
+}
+.contactUsPageLocationSectionMapContainer {
+    width: 60%;
+    height: 100%;
+}
+.contactUsPageLocationSectionAddressContainer {
+    display: flex
+;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    width: 40%;
+}
+.contactUsPageLastSectionContainerHeader {
+    color: #e4a951;
+    font-size: 22px;
+    margin: 0;
+}
+.contactUsPageLastSectionContainerSubHeader {
+    display: flex
+;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+.contactUsPageLocationSectionAddressDataFlex {
+    display: flex
+;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.contactUsPageThirdSectionLocationAddress {
+    width: 80%;
+    font-size: 17px;
+    margin-top: 10px;
+    font-weight: 300;
+}
+.contactUsPageThirdSectionLocationCity {
+    display: flex
+;
+    flex-direction: row;
+    margin: 0;
+    font-size: 25px;
+}
+.contactUsPageLastSectionContainer {
+    display: flex
+;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 10vh;
+    width: 80vw;
+    margin-top: 1%;
+}
+.contactUsPageLastSectionDivider {
+    width: 80%;
+}
+.contactUsPageLocationSectionAddressFlex {
+    align-items: flex-start;
+    display: flex
+;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-bottom: 30px;
+}
+.inputField {
+  width: 80%;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  background-color: transparent;
+  font-size: 16px;
+}
+
+.inputField:focus {
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #000;
+  box-shadow: none;
+}
+.contactUsPageThirdSectionIconFlex {
+    display: flex
+;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .contactPageGuruImg {
+        position: absolute;
+        z-index: 100;
+        width: 38vw;
+        height: 38vh;
+        left: 62%;
+        top: 14.3%;
+        overflow: hidden;
+    }
+.searchButton{
+        width: 80vw;
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 8px;
+}
+.contactUsPageThirdSectionLocationUpper {
+        width: 100vw;
+        display: flex
+;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        margin-top: 35px;
+        height: 20vh;
+    }
+    .contactUsPageThirdSectionLocationCity {
+        margin-right: 0px;
+    }
+    .contactUsPageThirdSectionLocationCity {
+        font-size: 17px;
+    }
+        .contactUsPageThirdSectionLocationAddress {
+        font-size: 14px;
+        text-align: center;
+    }
+    .contactUsPageThirdSectionLocationAddress {
+    width: 80%;
+    font-size: 17px;
+    margin-top: 10px;
+    font-weight: 300;
+}
+.contactUsPageLocationSectionAddressFlex {
+        background-color: rgb(255, 255, 255);
+        color: rgba(0, 0, 0, 0.87);
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 5px -3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px, rgba(0, 0, 0, 0.12) 0px 3px 14px 2px;
+        width: 46vw;
+        height: auto;
+        display: flex
+;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding-top: 20px;
+        transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
+        border-radius: 10px;
+    }
+    .contactUsPageThirdSectionSocialMediaFlex {
+        display: flex
+;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+        width: 90%;
+    }
+        .contactUsPageSecondSectionHeader {
+        font-size: 16px;
+        padding-top: 0;
+    }
+        .contactUsPageThirdSectionIconDivider {
+        width: 80%;
+        opacity: 0.7;
+    }
+        .contactUsPageThirdSectionIconFlex {
+        font-size: 13px;
+        flex-direction: column;
+        height: 35%;
+        justify-self: center;
+    align-items: center;
+    }
+}

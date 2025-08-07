@@ -37,24 +37,84 @@ const ImageGallerySection = () => {
 export default ImageGallerySection;
 
 const itemData = [
-  { img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/inframantra%202.4.avif", title: "Shweta Birthday, 2019" },
-  { img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/2.avif", title: "2" },
-  { img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/3.avif", title: "3" },
-  { img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/4.avif", title: "4" },
-  { img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/5.avif", title: "5" },
-  { img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/6.avif", title: "6" },
-  { img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/7.avif", title: "7" },
-  { img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/8.avif", title: "8" },
-  { img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/9.avif", title: "9" },
-  { img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/10.avif", title: "10" },
-  { img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/inframantra%202.9.avif", title: "11" },
-  { img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/award%20.avif", title: "12" },
-  { img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/13.avif", title: "13" },
-  { img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/14.avif", title: "14" },
-  { img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/15.avif", title: "15" },
-  { img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/16.avif", title: "16" },
-  { img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/17.avif", title: "17" },
-  { img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/g-s%20copy.avif", title: "18" },
-  { img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/GURU.avif", title: "19" },
-  { img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/SOLO-SHIWANG-SIR.avif", title: "20" }
+  {
+    img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/inframantra%202.4.avif",
+    alt: "Shweta's Birthday Celebration, 2019"
+  },
+  {
+    img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/2.avif",
+    alt: "Office team group photo with certificates"
+  },
+  {
+    img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/3.avif",
+    alt: "Inframantra team annual party photo"
+  },
+  {
+    img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/4.avif",
+    alt: "Award ceremony at Inframantra office"
+  },
+  {
+    img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/5.avif",
+    alt: "Colleagues at project site visit"
+  },
+  {
+    img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/6.avif",
+    alt: "Team discussion in conference room"
+  },
+  {
+    img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/7.avif",
+    alt: "Client meeting at Inframantra office"
+  },
+  {
+    img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/8.avif",
+    alt: "Employee appreciation ceremony"
+  },
+  {
+    img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/9.avif",
+    alt: "Office workspace with team members"
+  },
+  {
+    img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/10.avif",
+    alt: "Outdoor team-building event"
+  },
+  {
+    img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/inframantra%202.9.avif",
+    alt: "Inframantra awards wall photo"
+  },
+  {
+    img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/award%20.avif",
+    alt: "Award recognition by leadership"
+  },
+  {
+    img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/13.avif",
+    alt: "Festive decoration at office"
+  },
+  {
+    img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/14.avif",
+    alt: "Team posing in traditional attire"
+  },
+  {
+    img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/15.avif",
+    alt: "New year office celebration"
+  },
+  {
+    img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/16.avif",
+    alt: "Leadership panel at seminar"
+  },
+  {
+    img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/17.avif",
+    alt: "Staff working at their desks"
+  },
+  {
+    img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/g-s%20copy.avif",
+    alt: "CEO with leadership team"
+  },
+  {
+    img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/GURU.avif",
+    alt: "Guruji blessing the Inframantra team"
+  },
+  {
+    img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/SOLO-SHIWANG-SIR.avif",
+    alt: "Shiwang Sir speaking at event"
+  }
 ];

@@ -10,6 +10,7 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { MdMail } from "react-icons/md";
 import Ajax1 from '../../helper/Ajax1';
 import { toast } from 'react-toastify';
+import styles from './contactUsPage.module.css'
 
 
 const formPaperStyles = {
@@ -23,6 +24,7 @@ const formPaperStyles = {
   padding: '20px',
   boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
 };
+
 
 const formPaperMobileStyles = {
   width: '95vw',
@@ -123,31 +125,31 @@ export default function ContactUsPage() {
   };
 
   return (
-    <div className="contactUsPageWrapper">
+    <div className={styles.contactUsPageWrapper}>
       {isDesktop && (
         <>
-          <div className="contactUsPageBannerContainer">
+          <div className={styles.contactUsPageBannerContainer}>
             <img
               src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/contact-us-banner%20f%20copy.avif"
               alt="infra-banner"
             />
           </div>
 
-          <div className="contactUsPageFormSectionContainer">
-            <div className="contactUsPageFormSectionGuruImgContainer">
+          <div className={styles.contactUsPageFormSectionContainer}>
+            <div className={styles.contactUsPageFormSectionGuruImgContainer}>
               <img
-                className="contactPageGuruImg"
+                className={styles.contactPageGuruImg}
                 src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/guruContactPage.png"
                 alt="Guru Randhawa Inframantra"
               />
             </div>
             <div style={formPaperStyles}>
-              <h3 className="contactUsPageSecondSectionHeader">
+              <h3 className={styles.contactUsPageSecondSectionHeader}>
                 Let`s Find Your{' '}
                 <span style={{ color: '#E7B554' }}>Dream Home </span>Together!
               </h3>
               <form
-                className="contactUsPageSecondSectionFormWrapper"
+                className={styles.contactUsPageSecondSectionFormWrapper}
                 onSubmit={handleSubmit}
               >
                 <input
@@ -182,23 +184,23 @@ export default function ContactUsPage() {
                   required
                 />
                 <button
-                  className='search-button'
+                  className={styles.searchButton}
                   style={{ borderRadius: '8px', width: '20vw', fontSize: '20px', padding: '10px' }}
                   type="submit"
                 >
                   Contact Now
                 </button>
               </form>
-              <p className='contactUsPageConditions'>By submitting, I accept Inframantra <Link href="/page/disclaimer">Terms &amp; Conditions</Link> and <Link href="/page/privacy-policy">Privacy Policy</Link></p>
+              <p className={styles.contactUsPageConditions}>By submitting, I accept Inframantra <Link href="/page/disclaimer">Terms &amp; Conditions</Link> and <Link href="/page/privacy-policy">Privacy Policy</Link></p>
             </div>
           </div>
-          <div className="contactUsPageLocationSectionContainer">
-            <div className="contactUsPageLocationSectionMapContainer">
+          <div className={styles.contactUsPageLocationSectionContainer}>
+            <div className={styles.contactUsPageLocationSectionMapContainer}>
             <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14032.085916196966!2d77.0413113!3d28.4487689!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d193e2433c0cf%3A0xef40ba926f65e0ec!2sINFRAMANTRA!5e0!3m2!1sen!2sin!4v1731478063313!5m2!1sen!2sin" width="500" height="300"  allowfullscreen="" loading="lazy"style={{border:"0px"}}referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
               
-            <div className="contactUsPageLocationSectionAddressContainer">
-              <div className="contactUsPageLocationSectionAddressFlex">
+          <div className={styles.contactUsPageLocationSectionAddressContainer}>
+              <div className={styles.contactUsPageLocationSectionAddressFlex}>
                 <span
                   style={{
                     color: '#E4A951',
@@ -208,16 +210,16 @@ export default function ContactUsPage() {
                 >
                   <MdLocationOn />
                 </span>
-                <div className="contactUsPageLocationSectionAddressDataFlex">
-                  <p className="contactUsPageThirdSectionLocationCity">
+                <div className={styles.contactUsPageLocationSectionAddressDataFlex}>
+                  <p className={styles.contactUsPageThirdSectionLocationCity}>
                     Gurgaon
                   </p>
-                  <p className="contactUsPageThirdSectionLocationAddress">
+                  <p className={styles.contactUsPageThirdSectionLocationAddress}>
                     95, Institutional Area, Sector 32, Gurugram, Haryana 122002
                   </p>
                 </div>
               </div>
-              <div className="contactUsPageLocationSectionAddressFlex">
+              <div className={styles.contactUsPageLocationSectionAddressFlex}>
                 <span
                   style={{
                     color: '#E4A951',
@@ -227,15 +229,15 @@ export default function ContactUsPage() {
                 >
                   <MdLocationOn />
                 </span>
-                <div className="contactUsPageLocationSectionAddressDataFlex">
-                  <p className="contactUsPageThirdSectionLocationCity">Noida</p>
-                  <p className="contactUsPageThirdSectionLocationAddress">
+                <div className={styles.contactUsPageLocationSectionAddressDataFlex}>
+                  <p className={styles.contactUsPageThirdSectionLocationCity}>Noida</p>
+                  <p className={styles.contactUsPageThirdSectionLocationAddress}>
                     Assotech Business Cresterra, Unit No: 416, Tower 1,
                     Sector-135, Noida, U.P., 201301
                   </p>
                 </div>
               </div>
-              <div className="contactUsPageLocationSectionAddressFlex">
+              <div className={styles.contactUsPageLocationSectionAddressFlex}>
                 <span
                   style={{
                     color: '#E4A951',
@@ -245,29 +247,29 @@ export default function ContactUsPage() {
                 >
                   <MdLocationOn />
                 </span>
-                <div className="contactUsPageLocationSectionAddressDataFlex">
-                  <p className="contactUsPageThirdSectionLocationCity">Pune</p>
-                  <p className="contactUsPageThirdSectionLocationAddress">
+                <div className={styles.contactUsPageLocationSectionAddressDataFlex}>
+                  <p className={styles.contactUsPageThirdSectionLocationCity}>Pune</p>
+                  <p className={styles.contactUsPageThirdSectionLocationAddress}>
                     Pune - 2nd Floor, Mantri Court, near RTO Office, Narveer Tanaji Wadi, Shivajinagar, Pune, Maharashtra 411001
                   </p>
                 </div>
               </div>
             </div>
           </div>
-          <hr className="contactUsPageLastSectionDivider" />
-          <div className="contactUsPageLastSectionContainer">
-            <p className="contactUsPageLastSectionContainerHeader">
+          <hr className={styles.contactUsPageLastSectionDivider}/>
+          <div className={styles.contactUsPageLastSectionContainer}>
+            <p className={styles.contactUsPageLastSectionContainerHeader}>
               Contact Us Now!
             </p>
-            <p className="contactUsPageLastSectionContainerSubHeader">
+            <p className={styles.contactUsPageLastSectionContainerSubHeader}>
               <span style={{ color: '#E4A951', marginRight: '15px', fontSize: '1.5rem' }}><FaPhoneAlt /></span>
               + 91 86 9800 9900
             </p>
-            <p className="contactUsPageLastSectionContainerSubHeader">
+            <p className={styles.contactUsPageLastSectionContainerSubHeader}>
               <span style={{ color: '#E4A951', marginRight: '15px', fontSize: '1.5rem' }}><MdMail /></span>
               info@inframantra.com
             </p>
-            <p className="contactUsPageLastSectionContainerSubHeader">
+            <p className={styles.contactUsPageLastSectionContainerSubHeader}>
               <span style={{ color: '#E4A951', marginRight: '15px', fontSize: '1.5rem' }}><MdMail /></span>
               marketing@inframantra.com
             </p>
@@ -276,60 +278,54 @@ export default function ContactUsPage() {
       )}
       {!isDesktop && (
         <>
-          <h3 className="contactUsPageSecondSectionHeader">
+          <h3 className={styles.contactUsPageSecondSectionHeader}>
             Let`s Find Your{' '}
             <span style={{ color: '#E7B554' }}>Dream Home </span>Together!
           </h3>
           <div style={formPaperMobileStyles}>
-            <form
-              className="contactUsPageSecondSectionFormWrapper"
-              onSubmit={handleSubmit}
-            >
-              <input
-                name="name"
-                placeholder="Full Name"
-                value={formData.name}
-                onChange={handleInputChange}
-                style={{ width: '80%', padding: '10px', margin: '10px 0' }}
-                required
-              />
-              <input
-                name="phoneNumber"
-                placeholder="Phone Number"
-                value={formData.phoneNumber}
-                onChange={handleInputChange}
-                style={{ width: '80%', padding: '10px', margin: '10px 0' }}
-                required
-                maxLength={10}
-                minLength={10}
-              />
-              <input
-                name="email"
-                placeholder="E-mail"
-                value={formData.email}
-                onChange={handleInputChange}
-                style={{ width: '80%', padding: '10px', margin: '10px 0' }}
-                required
-              />
-              <button
-                style={{
-                  width: '80vw',
-                  fontSize: '20px',
-                  padding: '10px',
-                  borderRadius: '8px',
-                }}
-                className='search-button'
-                type="submit"
-              >
-                Contact Now
-              </button>
-            </form>
-            <p className='contactUsPageConditions'>By submitting, I accept Inframantra <Link href="/page/disclaimer">Terms &amp; Conditions</Link> and <Link href="/page/privacy-policy">Privacy Policy</Link></p>
-            <img className="contactPageGuruImg" src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/guruContactPage.png" alt="Guru Randhawa Brand Ambassador Inframantra"></img>
+          <form
+      className={styles.contactUsPageSecondSectionFormWrapper}
+      onSubmit={handleSubmit}
+    >
+      <input
+        name="name"
+        placeholder="Full Name"
+        value={formData.name}
+        onChange={handleInputChange}
+        className={styles.inputField}
+        required
+      />
+      <input
+        name="phoneNumber"
+        placeholder="Phone Number"
+        value={formData.phoneNumber}
+        onChange={handleInputChange}
+        className={styles.inputField}
+        required
+        maxLength={10}
+        minLength={10}
+      />
+      <input
+        name="email"
+        placeholder="E-mail"
+        value={formData.email}
+        onChange={handleInputChange}
+        className={styles.inputField}
+        required
+      />
+      <button
+        className={styles.searchButton}
+        type="submit"
+      >
+        Contact Now
+      </button>
+    </form>
+            <p className={styles.contactUsPageConditions}>By submitting, I accept Inframantra <Link href="/page/disclaimer">Terms &amp; Conditions</Link> and <Link href="/page/privacy-policy">Privacy Policy</Link></p>
+            <img className={styles.contactPageGuruImg} src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/guruContactPage.png" alt="Guru Randhawa Brand Ambassador Inframantra"></img>
           </div>
-          <div className='contactUsPageThirdSectionContainer'>
-            <div className='contactUsPageThirdSectionLocationUpper'>
-              <div className="contactUsPageLocationSectionAddressFlex">
+          <div className={styles.contactUsPageThirdSectionContainer}>
+            <div className={styles.contactUsPageThirdSectionLocationUpper}>
+              <div className={styles.contactUsPageLocationSectionAddressFlex}>
                 <div className='contactUsPageThirdSectionLocationCity'>
                   <span
                     style={{
@@ -342,12 +338,12 @@ export default function ContactUsPage() {
                   </span>
                   Gurgaon
                 </div>
-                <p className="contactUsPageThirdSectionLocationAddress">
+                <p className={styles.contactUsPageThirdSectionLocationAddress}>
                   95, Institutional Area, Sector 32, Gurugram, Haryana 122002
                 </p>
               </div>
-              <div className="contactUsPageLocationSectionAddressFlex">
-                <div className='contactUsPageThirdSectionLocationCity'>
+              <div className={styles.contactUsPageLocationSectionAddressFlex}>
+                <div className={styles.contactUsPageThirdSectionLocationCity}>
                   <span
                     style={{
                       color: '#E4A951',
@@ -359,15 +355,15 @@ export default function ContactUsPage() {
                   </span>
                   Noida
                 </div>
-                <p className="contactUsPageThirdSectionLocationAddress">
+                <p className={styles.contactUsPageThirdSectionLocationAddress}>
                   Assotech Business Cresterra, Unit No: 416, Tower 1, Sector-135,
                   Noida, U.P., 201301
                 </p>
               </div>
             </div>
-            <div className='contactUsPageThirdSectionLocationUpper'>
-              <div className="contactUsPageLocationSectionAddressFlex">
-                <div className='contactUsPageThirdSectionLocationCity'>
+            <div className={styles.contactUsPageThirdSectionLocationUpper}>
+              <div className={styles.contactUsPageLocationSectionAddressFlex}>
+                <div className={styles.contactUsPageThirdSectionLocationCity}>
                   <span
                     style={{
                       color: '#E4A951',
@@ -379,12 +375,12 @@ export default function ContactUsPage() {
                   </span>
                   Pune
                 </div>
-                <p className="contactUsPageThirdSectionLocationAddress">
+                <p className={styles.contactUsPageThirdSectionLocationAddress}>
                   Pune - 2nd Floor, Mantri Court, near RTO Office, Narveer Tanaji Wadi, Shivajinagar, Pune, Maharashtra 411001
                 </p>
               </div>
-              <div className="contactUsPageLocationSectionAddressFlex">
-                <div class="contactUsPageThirdSectionIconFlex">
+              <div className={styles.contactUsPageLocationSectionAddressFlex}>
+                <div class={styles.contactUsPageThirdSectionIconFlex}>
                   <span style={{
                     color: '#E4A951',
                     height: '100%',
@@ -392,8 +388,8 @@ export default function ContactUsPage() {
                   }}><FaPhoneAlt /></span>
                   <p>+ 91 86 9800 9900</p>
                 </div>
-                <hr class="contactUsPageThirdSectionIconDivider"></hr>
-                <div class="contactUsPageThirdSectionIconFlex">
+                <hr class={styles.contactUsPageThirdSectionIconDivider}></hr>
+                <div class={styles.contactUsPageThirdSectionIconFlex}>
                   <span style={{
                     color: '#E4A951',
                     height: '100%',
@@ -405,7 +401,7 @@ export default function ContactUsPage() {
             </div>
             <div style={mobileIconPaper}>
               <h4 style={{ fontSize: '14px', color: '#e4a951' }}>Follow Us For Latest Updates</h4>
-              <div className="contactUsPageThirdSectionSocialMediaFlex">
+              <div className={styles.contactUsPageThirdSectionSocialMediaFlex}>
               <SocialIcon url="https://www.facebook.com/inframantraofficial" style={{ height: '40px', width: '40px' }} />
                 <SocialIcon url="https://x.com/INFRAMANTRA_" style={{ height: '40px', width: '40px' , backdropFilter: "#FFF"}} />
                 <SocialIcon url="https://www.instagram.com/inframantraofficial/" style={{ height: '40px', width: '40px' }} />
