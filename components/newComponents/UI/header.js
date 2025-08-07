@@ -150,7 +150,7 @@ function NavigationBar({ pageBgd }) {
         alt="Inframantra-logo"
         onClick={logoClickHandler}
         loading="lazy"
-         fetchpriority="high"
+        fetchpriority="high"
         
       />
 
