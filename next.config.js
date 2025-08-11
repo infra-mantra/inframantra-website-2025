@@ -45,20 +45,18 @@ const nextConfig = {
   swcMinify       : true,
 
   /* ------  Images  ------ */
-  images : {
-    loader          : 'custom',
-    unoptimized     : true,
-    deviceSizes     : [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    minimumCacheTTL : 31536000,
-    domains         : [
-      'infra-mantra.s3.ap-south-1.amazonaws.com',
-      'i.ytimg.com',
-      'infra-mantra.s3.amazonaws.com',
-      'infra-mantra-new.s3.ap-south-1.amazonaws.com',
-      'infra-mantra-new.s3.amazonaws.com',
-      'inframantra.blr1.cdn.digitaloceanspaces.com',
-    ],
-  },
+images: {
+  deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+  minimumCacheTTL: 63072000, // 2 years in seconds
+  domains: [
+    'infra-mantra.s3.ap-south-1.amazonaws.com',
+    'i.ytimg.com',
+    'infra-mantra.s3.amazonaws.com',
+    'infra-mantra-new.s3.ap-south-1.amazonaws.com',
+    'infra-mantra-new.s3.amazonaws.com',
+    'inframantra.blr1.cdn.digitaloceanspaces.com',
+  ],
+},
 
   /* ------  Env  ------ */
   env : {

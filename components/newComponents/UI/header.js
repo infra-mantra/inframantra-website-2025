@@ -143,8 +143,8 @@ function NavigationBar({ pageBgd }) {
         className="navBarLogo"
         src={
           (isMobile && (scrolledPast90vh || pageBgd)) || (!isMobile && pageBgd)
-            ? 'https://inframantra.blr1.cdn.digitaloceanspaces.com/logos/inframantraLogoBlack(2).png'
-            : 'https://inframantra.blr1.cdn.digitaloceanspaces.com/logos/inframantraLogo(1).png'
+            ? 'https://inframantra.blr1.cdn.digitaloceanspaces.com/logos/inframantraLogoBlack(2).webp'
+            : 'https://inframantra.blr1.cdn.digitaloceanspaces.com/logos/inframantraLogo(1).webp'
         }
         style={{ marginBottom: !pageBgd ? '12px' : '', cursor: 'pointer' }}
         alt="Inframantra-logo"
