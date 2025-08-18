@@ -110,7 +110,7 @@ const Wrapper = (props) => {
         <meta name="author" content="INFRAMANTRA" />
         <meta name="copyright" content="inframantra.com" />
         <meta httpEquiv="Content-Language" content="en" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=0" />
         <link rel="canonical" href={canonicalUrl} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />

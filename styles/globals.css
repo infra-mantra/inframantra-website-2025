@@ -128,3 +128,7 @@ ul.wp-block-list li {
 .in-f-blog-item{
   min-height: 0px!important;;
 }
+
+td {
+    border: 1px solid black;
+}
