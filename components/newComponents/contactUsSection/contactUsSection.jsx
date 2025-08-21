@@ -105,7 +105,7 @@ function ContactUsSection() {
           />
           <div className={styles.contactUsSectionForm}>
             <form onSubmit={handleSubmit} className={styles.contactUsSectionFormFlex}>
-              <h4>Please shars your contact details <br />TO UNLOCK EXLUSIVE DEALS</h4>
+              <h4>Please share your contact details <br />TO UNLOCK EXCLUSIVE DEALS</h4>
               <div className={styles.contactUsTop}>
                 <div className={styles.iconGreen} style={{color:'green',fontSize:'25px'}}><IoMdCall /></div>
                 <p><a href='tel:+91 86 9800 9900'>+91 86 9800 9900</a></p>
