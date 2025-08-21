@@ -65,7 +65,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const slug = params.blogId;
 
-  // Try CMS first
+  // ---------------- CMS Fetch ----------------
   try {
     const res = await fetch(`${process.env.apiUrl}/blog/pageDetail?slug=${slug}`);
     const cms = await res.json();
@@ -115,7 +115,6 @@ export async function getStaticProps({ params }) {
         date: moment(x.date).format("DD MMM YYYY"),
       }));
 
-      
       const merged = Array.from(
         new Map(
           [...cmsRecents, ...wpRecents]
@@ -133,14 +132,14 @@ export async function getStaticProps({ params }) {
             source: "cms",
           },
         },
-        revalidate: 10,
+        revalidate: 60,
       };
     }
   } catch (err) {
     console.warn("CMS detail fetch error:", err.message);
   }
 
-  // Try WordPress fallback
+  // ---------------- WordPress Fallback ----------------
   try {
     const wpArr = await fetch(`https://cms.inframantra.com/wp-json/wp/v2/posts?slug=${slug}&_embed`).then(r => r.json());
     const post = Array.isArray(wpArr) && wpArr[0];
@@ -150,13 +149,14 @@ export async function getStaticProps({ params }) {
 
       const detail = {
         title: post.title?.rendered?.replace(/<[^>]*>/g, ""),
-        description: post.content?.rendered.replace(/id="h-([^"]+)"/g, 'id="$1"')
-  .replace(/href="#h-([^"]+)"/g, 'href="#$1"') || "",
+        description: post.content?.rendered
+          .replace(/id="h-([^"]+)"/g, 'id="$1"')
+          .replace(/href="#h-([^"]+)"/g, 'href="#$1"') || "",
         metaTitle: yoast.title || post.title.rendered,
         metaDescription: yoast.description || post.excerpt?.rendered,
         metaKeyword: post.meta?._yoast_wpseo_focuskw || "",
-       image: yoast.og_image?.[0]?.url || media.source_url || "",
-thumbnail: yoast.og_image?.[0]?.url || media.source_url || "",
+        image: yoast.og_image?.[0]?.url || media.source_url || "",
+        thumbnail: yoast.og_image?.[0]?.url || media.source_url || "",
         imageAlt: media.alt_text || "",
         date: moment(post.date).format("DD MMM YYYY"),
         name: post._embedded?.author?.[0]?.name || "",
@@ -181,7 +181,7 @@ thumbnail: yoast.og_image?.[0]?.url || media.source_url || "",
       const wpRecents = wpRecentArr.map(x => ({
         id: x.id,
         title: x.title?.rendered?.replace(/<[^>]*>/g, "") || "",
-       image: x.yoast_head_json?.og_image?.[0]?.url || x._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "",
+        image: x.yoast_head_json?.og_image?.[0]?.url || x._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "",
         slug: x.slug,
         date: moment(x.date).format("DD MMM YYYY"),
       }));
@@ -210,5 +210,12 @@ thumbnail: yoast.og_image?.[0]?.url || media.source_url || "",
     console.warn("WP detail fetch error:", err.message);
   }
 
-  return { notFound: true };
+  // ---------------- Soft Fallback ----------------
+  return {
+    props: {
+      allData: null, // <-- no poisoning with notFound:true
+    },
+    revalidate: 30,
+  };
 }
+
