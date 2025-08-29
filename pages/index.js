@@ -9,12 +9,15 @@ import moment from "moment/moment";
 
 import MainBanner1 from '../components/newComponents/homepage/MainBanner.js';
 import FeaturedProperties from '../components/newComponents/featuredProperties/featuredProperties'
-import PopularLocalities from "../components/newComponents/popularLocalities/popularLocalities.js";
 import ServiceSection from '../components/newComponents/serviceSection/serviceSection.js';
+import LocalitySection from '../components/newComponents/localityProperties/LocalityPropertiesSection.jsx';
 import StatisticalInsightsSection from "../components/newComponents/statisticalInsights/staticalInsight";
 import ImageGallerySection from "../components/newComponents/imageGallery/imageGallerySection";
 import ClientTestimonySection from "../components/newComponents/clientTestimonySection/clientTestimonySection.jsx";
-import ContactUsSection from "../components/newComponents/contactUsSection/contactUsSection.jsx";
+import BlogsMedia from "../components/newComponents/blogsSection/blogsMedia.js";
+import PremiumPicksSection from '../components/newComponents/premiumPicks/PremiumPicksSection.jsx';
+import CtaForHome from '../components/detailSections/ctaForHome.js'
+
 
 function Home({allData}) {
   const bannerItems = [
@@ -91,12 +94,16 @@ function Home({allData}) {
       {/* <NewPoPUp /> */}
       <MainBanner1 />
       <FeaturedProperties />
-      <PopularLocalities />
+      <PremiumPicksSection />
       <ServiceSection />
+      <LocalitySection />
+      <BlogsMedia />
       <StatisticalInsightsSection />
       <ImageGallerySection />
       <ClientTestimonySection />
-      <ContactUsSection />
+      
+   
+      <CtaForHome name={'Form Submitted from Home page'} />
     </Wrapper>
   );
 }

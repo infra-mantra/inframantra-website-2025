@@ -3,15 +3,20 @@ import styles from './clientTestimony.module.css';
 
 const iconStyle = {
   quoteIcon: {
-    transform: 'rotate(180deg)',
+    transform: 'rotate(0deg)',
     transition: 'transform 0.3s',
     color: '#000',
     marginRight: '10px',
-    fontSize: '40px',
+    fontSize: '75px',
+    fontFamily: 'Arial, sans-serif',
+    position: 'absolute',
+    top: '-25px',
+    left: '-25px',
+
   },
   stars: {
     marginTop: '10px',
-    color: '#e0a800'
+    color: '#ffffffff'
   },
   starsMobile: {
     color: '#ffff',
@@ -53,19 +58,24 @@ function ClientTestimony({ name, testimony, img }) {
     <div className={styles.clientTestimonyCardWrapper}>
       {isDesktop && (
         <>
+         
+            
+
           <div className={styles.clientTestimonyCardHeader}>
-            <p className={styles.clientTestimonyName}>{name}</p>
-            <div className={styles.stars} style={iconStyle.stars}>
-              {renderStars()}
-            </div>
-          </div>
-          <div className={styles.clientTestimonyCardContainer}>
-            <img
+              
+             <img
               src={img}
               alt="testimonyFace"
               className={styles.clientTestimonyCardFace}
             />
-            <div className={styles.clientTestimonyCardTextPseudoFlex}></div>
+            <div className={styles.stars} style={iconStyle.stars}>
+              {renderStars()}
+            </div>
+            <p className={styles.clientTestimonyName}>{name}</p>
+          </div>
+          <div className={styles.clientTestimonyCardContainer}>
+          
+            
             <div className={styles.clientTestimonyCardTextFlex}>
               <span className={styles.quoteIcon} style={iconStyle.quoteIcon}>&#8220;</span>
               <p className={styles.clientTestimonyCardText}>{testimony}</p>

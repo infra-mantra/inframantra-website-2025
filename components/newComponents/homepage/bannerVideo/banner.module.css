@@ -24,7 +24,7 @@
   height: 100%;
   width: 100%;
   background-size: cover;
-  background-position: center;
+  background-position: bottom center;
   opacity: 0;
   animation: fade 15s infinite;
   z-index: 0;

@@ -1,11 +1,11 @@
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import StatisticalInsight from "./statisticalInsightWrapper/statisticalInsighData";
 import { FaBuilding, FaRegLaugh } from "react-icons/fa";
 import { GrGroup } from "react-icons/gr";
 import {
-  MdCurrencyRupee,
+
   MdSquareFoot,
-  MdOutlineCreditScore,
+  
 } from "react-icons/md";
 import styles from "./staticInsight.module.css";
 
@@ -35,19 +35,7 @@ function StatisticalInsightsSection() {
       end: "18153396",
       duration: "10",
     },
-    {
-      title: "Total Business Generated",
-      icon: <MdCurrencyRupee />,
-      end: "1140",
-      suffix: " Crores",
-      duration: "10",
-    },
-    {
-      title: "Total Loans Provided",
-      icon: <MdOutlineCreditScore />,
-      end: "167",
-      duration: "10",
-    },
+   
   ]);
 
   const [isVisible, setIsVisible] = useState(

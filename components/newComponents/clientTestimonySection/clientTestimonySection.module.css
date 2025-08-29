@@ -1,13 +1,42 @@
 .clientTestimonyWrapper {
-    width: 100vw;
-    overflow: hidden;
+     overflow: hidden;
     overflow-y: hidden;
     overflow-x: hidden;
-    display: flex
-;
+    display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    padding: 0% 6%;
+}
+.testimonialHeadingTextContainer{
+    display: block;
+    width: 100%;
+    justify-content: left;
+    align-items: center;
+    margin-top: 5%;
+    flex-direction: column;
+    padding-bottom: 20px;
+}
+.testimonialHeadingText{
+    font-size: 32px;
+    font-weight: 600;
+    text-align: left;
+}
+.testimonialHeadingTextContainer p {
+    font-size: 20px;
+}
+.exploreMoreLink{
+  border-radius: 15px;
+    background-color: #DCAA4C;
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 10px 20px;
+    display: flex;
+    width: -moz-fit-content;
+    width: fit-content;
+    margin: 1% auto;
+    box-shadow:0px 2.22px 4.45px rgba(0, 0, 0, 0.15);
 }
 .clientTestimonyHeaderSection {
   height: 50%;
@@ -17,62 +46,15 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-          padding: 13px;
+  padding: 13px;
 }
 
-.clientTestimonyUpperSectionImg {
-  width: 30%;
-  height: 100%;
-  object-fit: fill;
-}
-
-.clientTestimonyUpperSectionHeaderFlex {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.clientTestimonyUpperSectionText {
-  width: 40%;
-  gap: 2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  height: 100%;
-}
-
-.clientTestimonyUpperSectionHeader {
-  font-size: 35px;
-  text-align: center;
-  margin-left: 7%;
-  margin-right: 7%;
-  margin-top: 0;
-  font-weight: 600;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 0px;
-}
-
-.clientTestimonyUpperSectionSubHeader {
-  font-size: 20px;
-  margin-left: 9%;
-  margin-right: 9%;
-  margin-top: 0;
-  text-align: center;
-  margin-bottom: 0%;
-}
-
-.clientTestimonyUpperSectionSubHeaderFlex {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  width: 100%;
-  margin-top: -15px;
+.clientTestimonyCardText {
+    color: #000000;
+    font-weight: 500;
+    text-align: left;
+    width: 100%;
+    font-size: 13px!important;
 }
 
 .clientTestimonyTestimonySection {
@@ -82,23 +64,45 @@
   justify-content: center;
   align-items: center;
   position: relative;
-}
 
-.testimonyArrowBtn {
+}
+.clientTestimonyTestimonySection .swiper-wrapper {
+    padding-top: 100px;
+    align-items: stretch;
+    padding-bottom: 60px;
+}
+.clientTestimonyTestimonySection .swiper-slide-next {
+    font-size: 18px;
+    scale: 1.13;
+    padding: 0 10px;
+}
+.clientTestimonyTestimonySection .swiper-wrapper .swiper-slide{
+  height: auto;
+  display: flex;
+}
+.swiper-button-next.testimonyArrowBtn:after {
+  content: '>';
+font-size: 35px;
+    font-weight: 900;
+    font-family: monospace;
+}
+.swiper-button-next.testimonyArrowBtn {
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 4px solid #e7b554;
-  color: #e7b554;
-  background: none;
-  height: 50px;
-  width: 50px;
+  background-color: #ffffff61;
+  color: #DCAA4C;
+
+height: 40px;
+    width: 40px;
   cursor: pointer;
   position: absolute;
   top: 60%;
 }
-
+.clientTestimonyCardWrapper{
+ box-shadow:0px 2.22px 4.45px rgba(0, 0, 0, 0.15);
+}
 .testimonyCard {
   width: 100%;
   transition: opacity 0.5s ease-in-out;
@@ -111,104 +115,61 @@
 .fade-out {
   opacity: 0;
 }
-@media screen  and (max-width:950px){
-  .clientTestimonyCardContainer{
-    height: 44vh;
-  }
+.testimonyArrowBtn {
+    display: none!important;
 }
-@media screen and (max-width: 950px) {
-    .clientTestimonyWrapper {
-        height: 900px;
-        margin-top: 3%;
-    }
+@media (max-width: 768px) {
+  
+.testimonialHeadingText{
+  font-size: 20px;
+  margin-bottom: 12px;
 }
-
-@media screen  and (max-width:950px) {
-  .clientTestimonyWrapper{
-    height: 900px;
-    margin-top: 3%;
-  }
-  .clientTestimonyHeaderSection {
-    height: 40%;
-    margin-top: 0%;
-  }
-  .clientTestimonyUpperSectionHeader{
-    font-size: 28px;
-  }
-  .clientTestimonyUpperSectionSubHeader{
-    font-size: 14px;
-  }
-  .clientTestimonyTestimonySection{
-    height: 60%;
-  }
-  .clientTestimonyCardContainer{
-     height: auto;
-     padding: 14px;
-  }
+.testimonialHeadingTextContainer p{
+  font-size: 14px;
 }
-
-@media screen and (max-width: 768px) {
-  .clientTestimonyHeaderSection {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    height: 20%;
-    margin-top: 0%;
-  }
-  .clientTestimonyUpperSectionImg {
-    width: 50%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .clientTestimonyUpperSectionHeader {
-    font-size: 25px;
-    width: 50%;
-    text-align: center;
-    font-weight: 700;
-    align-self: baseline;
-  }
-  .clientTestimonyUpperSectionSubHeader {
-    font-size: 13px;
-    width: 50%;
-    text-align: center;
-    padding-top: 5%;
-  }
-  .clientTestimonyTestimonySection {
-    height: 55%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-  }
-  .clientTestimonyBtnMobile {
-    height: 5%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-  }
-  .testimonyArrowBtn {
-    height: 30px;
-    width: 30px;
-  }
-  .swiper-button-prev, .swiper-button-next{
-    height: 20px;
-    width: 20px;
-  }
-
-  .clientTestimonyHeaderSectionContentWrapper {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-  }
-
-  .clientTestimonyHeaderSectionContentWrapper > p {
-    width: 60%;
+  .clientTestimonyTestimonySection .swiper-slide-next {
     font-size: 18px;
-    margin: 5px;
-  }
+    scale: 1;
+    padding: 0 10px;
 }
+p.clientTestimonyName {
+    text-align: center;
+}
+.clientTestimonyCardWrapper{
+  padding: 0px;
+}
+.clientTestimonyCardContainer>div>div {
+    text-align: center;
+    font-size: 30px;
+    padding-top: 20px;
+}
+.clientTestimonyCardFace{
+  width: 35%;
+}
+.clientTestimonyCardContainer{
+      width: 100%;
+      padding: 20px;
+}
+.clientTestimonyCardText{
+  font-size: 16px;
+}
+button.swiper-button-prev.testimonyArrowBtn {
+    display: none;
+}
+button.swiper-button-next.testimonyArrowBtn {
+    display: block!important;
+}
+.testimonialHeadingTextContainer{
+  margin-top: 8%;
+      padding-bottom: 0px;
+}
+.clientTestimonyTestimonySection .swiper-wrapper{
+      padding-top: 80px;
+}
+.clientTestimonyTestimonySection .swiper-wrapper{
+      padding-bottom: 40px;
+}
+}
+
+
+

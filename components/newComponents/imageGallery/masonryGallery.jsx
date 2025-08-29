@@ -1,28 +1,33 @@
 // components/Masonry.js
 import React from "react";
 import styles from "./Masonry.module.css";
+import Image from "next/image";
 
 const Masonry = ({ images, columns, gap }) => {
   return (
-    <div
-      className={styles.masonry}
-      style={{ columnCount: columns, columnGap: `${gap}px` }}
-    >
+  <>
       {images.map((image, index) => (
         <div
           key={index}
           className={styles.item}
-          style={{ marginBottom: `${gap}px` }}
+          style={{ marginBottom: `${gap}px` }} position="relative"
         >
-          <img
+          <Image
             src={image.img}
             alt={image.alt}
             loading="lazy"
             className={styles.image}
+            width={500}
+            height={280}
+            style={{
+              borderRadius: "10px",
+              objectFit: "cover"
+            }}
           />
         </div>
+
       ))}
-    </div>
+   </>
   );
 };
 

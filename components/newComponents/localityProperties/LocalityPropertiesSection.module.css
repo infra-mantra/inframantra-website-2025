@@ -1,0 +1,205 @@
+/* Locality Properties Container Styles */
+
+
+.localityContentWrapper {
+  padding: 0 6%;
+}
+
+/* Locality Properties Header Styles */
+.localitySectionHeader {
+ display: flex;
+    flex-direction: column;
+    justify-content: left;
+    gap: 25px;
+    padding-bottom: 40px;
+}
+
+.localityMainTitle {
+    color: #DCAA4C;
+    font-family: Inter;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    align-self: stretch;
+    margin: 0px;
+}
+
+.localitySubtitle {
+align-self: stretch;
+    color: #000;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin: 0px;
+}
+
+/* Locality Section */
+.localitySection {
+  margin-bottom: 50px;
+}
+
+.localityTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: #000000;
+}
+
+/* Locality Carousel Container */
+.localityCarouselContainer {
+  position: relative;
+}
+
+/* Locality Navigation Arrows */
+.localityNavButton {
+  position: absolute;
+  border-radius: 50%;
+  justify-content: center;
+    align-items: center;
+    background-color: #ffffffde;
+    color: #DCAA4C;
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+    top: 45%;
+    z-index: 999;
+}
+.localityNavButton:after{
+    content: '>';
+    font-size: 35px;
+    font-weight: 900;
+    font-family: monospace;
+}
+
+
+.localityNavButtonPrev {
+  display: none;
+}
+
+.localityNavButtonNext {
+  right: -20px;
+}
+
+/* Locality Loading Styles */
+.localityLoadingContainer {
+  padding: 60px 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.localityLoadingSpinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #f0f0f0;
+  border-top: 3px solid #D4A574;
+  border-radius: 50%;
+  animation: localitySpin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+.localityLoadingText {
+  color: #666;
+  font-size: 16px;
+  margin: 0;
+}
+
+/* Locality View More Button */
+.localityViewMoreContainer {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.localityViewMoreButton {
+  font-size: 24px;
+  font-weight: 500;
+  color: #DCAA4C;
+  cursor: pointer;
+  font-family: 'Inter';
+}
+
+/* Locality Animations */
+@keyframes localitySpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+@media (max-width: 768px) {
+  .localityMainTitle {
+    font-size: 28px;
+  }
+  
+  .localityTitle {
+    font-size: 20px;
+  }
+  
+  .localityContentWrapper {
+    padding: 0 16px;
+    padding-right: 0px!important;
+  }
+  
+  
+  .localityNavButtonPrev,
+  .localityNavButtonNext {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .localityMainTitle {
+    font-size: 20px;
+  }
+  .localitySectionHeader{
+    gap: 12px;
+    padding-bottom: 20px;
+    padding-top: 40px;
+  }
+  .localitySubtitle {
+    font-size: 14px;
+  }
+  .localityViewMoreContainer{
+        margin-top: 20px;
+  }
+  .localitySection{
+    margin-bottom: 30px;
+  }
+  
+  .localityTitle {
+    font-size: 18px;
+  }
+  .localityViewMoreButton{
+    font-size: 14px;
+  }
+}
+
+/* Locality Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .localityNavButton,
+  .localityViewMoreButton {
+    transition: none;
+  }
+  
+  .localityLoadingSpinner {
+    animation: none;
+  }
+  
+  .localityViewMoreButton:hover {
+    transform: none;
+  }
+}
+
+/* Locality High contrast support */
+@media (prefers-contrast: high) {
+  .localityMainTitle {
+    color: #000;
+  }
+  
+  .localityNavButton,
+  .localityViewMoreButton {
+    border: 2px solid #000;
+    color: #000;
+  }
+}

@@ -18,42 +18,42 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  background: #E7B554;
+  border-radius: 12px;
+  padding: 0px 20px 0px 40px;
 }
 
 .clientTestimonyName {
-  font-weight: 700;
-  font-size: 28px;
-  margin-bottom: 0;
+  font-weight: 500;
+  font-size: 20px;
+  margin: 0;
 }
 
 .clientTestimonyCardHeader {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  margin-bottom: 20px;
-  margin-left: -9%;
+  justify-content: center;
+  align-items: center; 
 }
 
 .clientTestimonyCardContainer {
   border-radius: 20px;
-  background: #e7b554;
-  height: 25vh;
-  width: 80%;
+  width: 100%;
   position: relative;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
+  height: auto;
 }
 
 .clientTestimonyCardText {
-  color: #fff;
+  color: #000000;
   font-weight: 500;
   text-align: left;
-  width: 85%;
+  width: 100%;
   font-size: 16px;
 }
 
@@ -66,16 +66,16 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 70%;
+  width: 100%;
 }
 
 .clientTestimonyCardFace {
-  position: absolute;
+
   border-radius: 50%;
-  width: 22%;
-  bottom: 35%;
-  left: 4%;
+  width: 40%;
   object-fit: cover;
+  margin-top: -65px;
+  box-shadow: 0px 6.52px 6.52px 0px rgba(0, 0, 0, 0.25);
 }
 .swiper-button-next{
   right: -7% !important;
@@ -84,34 +84,4 @@
   left: -7% !important;
 }
 
-@media screen and (max-width: 768px) {
-  .clientTestimonyCardContainer {
-    border-radius: 20px;
-    background: #e7b554;
-    height: auto;
-    width: 75%;
-    position: relative;
-    margin-top: 15%;
-  }
-  .clientTestimonyCardFace {
-    left: 33%;
-    bottom: 80%;
-    width: 25%;
-    height: 24%;
-  }
-  .clientTestimonyCardMobileFlex {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 15%;
-  }
-  .clientTestimonyName {
-    font-size: 15px;
-  }
-  .clientTestimonyCardText {
-    margin: 0;
-    width: 85%;
-    font-size: 12px;
-  }
-}
+

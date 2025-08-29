@@ -8,7 +8,7 @@ import "swiper/css";
 import "../styles/newHome.css";
 import "../styles/filter.css";
 import "../styles/dropDownMenu.css"
-import "../styles/featureProperties.css"
+
 import styles from '../styles/_app.module.css'
 
 

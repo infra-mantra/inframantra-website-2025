@@ -1,132 +1,66 @@
 
-  .servicesSectionWrapper {
-    height: 100vh;
-    width: 100vw;
-    background-image: url('https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/servicesBgd.avif');
+.servicesSectionWrapper {
+width: 100%;
+    margin: 40px 0px; 
+    background: url(https://inframantra.blr1.cdn.digitaloceanspaces.com/60251%201.png);
     background-repeat: no-repeat;
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    background-size: 100% 75%;
-    background-position: 0px 125px;
-  }
-  
+    background-size: cover;
+    background-position: bottom;
+    padding: 20px 0px;
+}
   .servicesSectionCardWrapperFirst {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-left: 6%;
-    height: 70%;
-    max-width: 25%;
-    margin-top: 8%;
-  }
-  
-  .servicesSectionCardWrapperSecond {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-left: 7%;
-    height: 70%;
-    max-width: 25%;
-    margin-top: 20%;
-  }
-  
-  .servicesSectionHeader {
-    position: absolute;
-    right: 2%;
-    top: -8%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 20%;
-  }
-  
-  .servicesSectionTitle {
-    font-size: 250%;
     width: 100%;
-    font-weight: bolder;
-    color: #e7b554;
-    cursor: pointer;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 2% 6%;
+   gap:20px;
+}
+  .servicesSectionCardWrapperFirst > .serviceCard {
+   width: 23%!important;
+   box-shadow:0px 2.22px 4.45px rgba(0, 0, 0, 0.15)
   }
+ 
   
-  .servicesSectionTitleUnderline {
-    width: 100%;
-    margin-top: -40px;
-    height: 2px;
-    background: black;
-  }
+.servicesSectionHeader
+ {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: center;
+    gap: 25px;
+    padding: 0% 6%;
+    padding-bottom: 40px!important;
+}
   
-  @media (min-width: 1350px) {
-    .servicesSectionCardWrapperFirst,
-    .servicesSectionCardWrapperSecond {
-      max-width: 20%;
-      height: 80%;
-    }
-    .servicesSectionCardWrapperFirst {
-      margin-top: 2%;
-    }
-    .servicesSectionCardWrapperSecond {
-      margin-top: 10%;
-    }
-    .servicesSectionTitle {
-      font-size: 350%;
-    }
-  }
+ .servicesSectionTitle {
+    color: #000;
+    font-family: Inter;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    align-self: stretch;
+    margin: 0px;
+}
+.servicesSectionHeader p {
+    align-self: stretch;
+    color: #000;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin: 0px;
+}
   
-  @media (max-width:990px) {
-    .servicesSectionWrapper{
-      height: 800px;
-    }
-    .serviceCardTitle {
-      font-size: 15px;
-    }
-  }
+
   
-  @media (max-width: 768px) {
-    .servicesSectionCardWrapperFirst {
-      height: 70%;
-      max-width: 43%;
-      margin-left: 5%;
-      margin-top: 15%;
-      overflow: hidden;
-    }
-    .servicesSectionCardWrapperFirst > div{
-      box-shadow: none;
-    }
-    .servicesSectionCardWrapperSecond > div{
-      box-shadow: none;
-    }
-    .servicesSectionCardWrapperSecond {
-      height: 70%;
-      max-width: 43%;
-      margin-left: 5%;
-      margin-top: 35%;
-      overflow: hidden;
-    }
-    .servicesSectionTitleUnderline {
-      width: 102%;
-      margin-top: -20px;
-    }
-    .servicesSectionTitle {
-      font-size: 160%;
-    }
-    .servicesSectionHeader {
-      right: 15%;
-      top: 1%;
-    }
-    .serviceCardDescription {
-      line-height: 20px;
-    }
-    .servicesSectionWrapper {
-      background-image: url('https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/servicesBgdMobile.avif');
-    }
-    .servicesSectionTitleUnderline {
-      height: 0.5px;
-    }
-  }
+ 
+ 
+ 
   .serviceCardIconWrapper {
     display: flex;
     flex-direction: row;
@@ -139,15 +73,11 @@
     width: 100%;
     height: 30%;
     display: flex;
-    justify-content: center;
+    justify-content: left;
     align-items: center;
   }
   
-  @media (min-width: 1368px) {
-    .serviceCardIconContainer {
-      height: 40%;
-    }
-  }
+ 
   
   .serviceCardTitleContainer {
     height: 10%;
@@ -157,9 +87,12 @@
   }
   
   .serviceCardTitle {
-    font-size: 110%;
-    font-weight: 700;
-    margin-top: 1%;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin: 0px;
   }
   
   .serviceCardDescriptionContainer {
@@ -171,42 +104,64 @@
   }
   
   .serviceCardDescription {
-    margin-top: 0;
-    text-align: center;
-    font-size: 80%;
-    margin-left: 20px;
-    margin-right: 20px;
-    line-height: 20px;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
     font-weight: 300;
+    line-height: normal;
+    margin: 0px;
   }
   
   .serviceCardIconWrapper > img {
-    height: 100%;
-    width: 100%;
+    height: 38px;
+    width: 38px;
   }
-  
-  @media (max-width:990px) {
-    .serviceCardDescription{
-      font-size: 70%;
-    }
-    
+  .serviceCard:nth-child(odd) {
+    background: #DCAA4C !important;
+    color: white;
+}
+
+@media  (min-width: 768px) and (max-width: 991px) {
+.serviceCardDescription {
+    font-size: 14px;  
   }
-  
-  @media (max-width: 768px) {
-    .serviceCardTitle {
-      font-size: 12px;
-    }
-    .serviceCardDescription {
-      font-size: 60%;
-    }
-    .serviceCardIconWrapper {
-      height: 70%;
-      width: 30%;
-    }
-    .serviceCardTitleContainer {
-      height: 10%;
-    }
-    .serviceCardIconContainer {
-      height: 30%;
-    }
+.serviceCardTitle {
+    font-size: 20px;  
   }
+}
+
+@media (max-width: 768px) {
+.servicesSectionWrapper{
+  margin: 0px 0px;
+  padding: 0px 0px;
+}
+.serviceCardDescription {
+    font-size: 14px;  
+  }
+.serviceCardTitle {
+    font-size: 18px;  
+  }
+.servicesSectionCardWrapperFirst > .serviceCard {
+    width: 47% !important;
+}
+.servicesSectionCardWrapperFirst{
+  gap:20px;
+}
+.serviceCard.order2 {
+    background: none !important;
+    color: black;
+}
+.serviceCard.order3 {
+    color: white;
+    background: #DCAA4C ! Important;
+}
+.servicesSectionTitle{
+  font-size: 20px;
+}
+.servicesSectionHeader p{
+  font-size: 14px;
+}
+.servicesSectionHeader{
+  gap: 12px;
+}
+}

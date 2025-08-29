@@ -1,20 +1,31 @@
-import { RxCross2 } from "react-icons/rx";
-import React, { useEffect, useState, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import {  useState, useRef , useEffect } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
-import { FaPhoneAlt } from "react-icons/fa";
 import { toast } from 'react-toastify';
 import Ajax1 from '../helper/Ajax1';
 import { useRouter } from 'next/router';
-import { downloadBrochure } from '../helper/downloadBrochurePdf';
 import ctaStyle from "./cta.module.css";
+import style from "./ctaForHome.module.css"
+import { MdLocationOn } from "react-icons/md";
+import { IoMdCall } from "react-icons/io";
+import { MdMail } from "react-icons/md";
+function App({name}) {
+  
+  const [isDesktop, setIsDesktop] = useState(true);
+  const [isMobile, setIsMobile] = useState(true);
 
-function App({ name, popUpenable = false, onClickOff, text, pdf }) {
-  const [isPopupOpen, setIsPopupOpen] = useState(popUpenable);
-  const [isAnimating, setIsAnimating] = useState(popUpenable);
-  const [message, setMessage] = useState(popUpenable ? "Contact us by downloading Brochures." : "");
+  const checkScreenWidth = () => {
+    setIsDesktop(window.innerWidth >= 768);
+    setIsMobile(window.innerWidth <= 768);
+  };
+
+  useEffect(() => {
+    checkScreenWidth();
+    window.addEventListener('resize', checkScreenWidth);
+    return () => window.removeEventListener('resize', checkScreenWidth);
+  }, []);
+
   const router = useRouter();
-  const apiUrl = process.env.NEXT_PUBLIC_SITE_KEY;
+
 
   const [formData, setFormData] = useState({
     name: '',
@@ -74,37 +85,61 @@ function App({ name, popUpenable = false, onClickOff, text, pdf }) {
     }
   };
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsAnimating(true);
-      setIsPopupOpen(true);
-    }, 3);
 
-    return () => clearTimeout(timer);
-  }, []);
 
-  const handleClose = () => {
-    setIsAnimating(false);
-    if (popUpenable) onClickOff(false);
-    setTimeout(() => setIsPopupOpen(false), 300);
-  };
+
 
   return (
-    <div className={ctaStyle.app}>
-      {isPopupOpen && (
-        <div className={`${ctaStyle.popupOverlay} ${isAnimating ? ctaStyle.popupAnimating : "popup-closing"}`}>
-          <div className={`${ctaStyle.popupForm} ${isAnimating ? ctaStyle.popupAnimatingForm : ""}`}>
-            <div className={ctaStyle.imageContainer}>
-              <img src="/logos/pop-up-logo.png" alt="Inframantra-logo" />
-              <div className={ctaStyle.crossBtn} onClick={handleClose}>
-                <RxCross2 />
-              </div>
+    <div className={style.homeApp}>
+     
+        <div className={style.homeCtaMainWrapper}>
+            
+          <div className={style.homePageContactUsLeftDetailSection}>
+          {isDesktop && (
+            <div className={style.homePageContactUsLeftMapPhotoContainer}>
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14032.085916196966!2d77.0413113!3d28.4487689!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d193e2433c0cf%3A0xef40ba926f65e0ec!2sINFRAMANTRA!5e0!3m2!1sen!2sin!4v1731478063313!5m2!1sen!2sin"
+                width="500"
+                height="300"
+                style={{ border: "0px" }}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+              <div className={style.homePageMapPhotoBgdTopLeft}></div>
+              <div className={style.homePageMapPhotoBgdBottomRight}></div>
             </div>
-            <div className={ctaStyle.headingForm}>
-              <p className={ctaStyle.popUpHead}>Please share your contact details</p>
-              <p className={ctaStyle.popUpHead2}>{text ? text : "TO UNLOCK EXCLUSIVE DEALS"}</p>
+          )}
+         
+            <img
+              className={style.homePageContactUsLeftDetailSectionImg}
+              src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/inframantraLogoBlack.png"
+              alt="Inframantra-Logo"
+            />
+   
+          <div className={style.homePageContactUsLeftDetailsContainer}>
+            <div className={style.homePageContactUsLeftDetailFlex}>
+              <div  style={{ color: '#E7B554', fontSize: '25px', marginRight: '10px' }}><MdLocationOn /></div>
+              <p>95, Institutional Area, Sector 32, Gurugram</p>
             </div>
+            <div className={style.homePageContactUsLeftDetailFlex}>
+              <div style={{ color: '#E7B554', fontSize: '25px', marginRight: '10px' }}><IoMdCall /></div>
+              <p>+91 86 9800 9900</p>
+            </div>
+            <div className={style.homePageContactUsLeftDetailFlex}>
+              <div style={{ color: '#E7B554', fontSize: '25px', marginRight: '10px' }}><MdMail /></div>
+              <p>marketing@inframantra.com</p>
+            </div>
+          </div>
+        </div>
+
+          <div className={style.homeCtaInnerWrapper}>
             <form onSubmit={handleSubmit}>
+   <div className={ctaStyle.headingForm}>
+              <p style ={{marginTop:'0px!important'}} className={ctaStyle.popUpHead}>Please share your contact details</p>
+              <p className={ctaStyle.popUpHead2}> TO UNLOCK EXCLUSIVE DEALS</p>
+            </div>
+
               <div className={ctaStyle.formGroup}>
                 <input
                   type="text"
@@ -170,7 +205,7 @@ function App({ name, popUpenable = false, onClickOff, text, pdf }) {
                   Submit
                 </button>
               </div>
-              <p className={ctaStyle.propertyPageHeaderContactUsDisclaimer} style={{ padding: "10px" }}>
+              <p className={style.homePropertyPageHeaderContactUsDisclaimer} style={{ padding: "10px" }}>
                 *By submitting, I accept Inframantra{' '}
                 <a href="https://inframantra.com/page/terms-conditions" target="_blank" rel="noopener noreferrer" style={{ color: "blue" }}>
                   Terms & Conditions
@@ -180,24 +215,18 @@ function App({ name, popUpenable = false, onClickOff, text, pdf }) {
                 </a>
               </p>
             </form>
-            <div className={ctaStyle.propertyPageHeaderContactIconContainer2}>
+            <div className={style.homePagePropertyPageHeaderContactIconContainer2}>
               <hr width="100%" color="#DCAA4C" size="1" />
               <div style={{ display: "flex" }}>
-                <div className={ctaStyle.ctaText}>
-                  <p className={ctaStyle.numberFor}>
-                    <span role="img" aria-label="phone" style={{ color: "green", marginRight: "1rem" }}>
-                      <FaPhoneAlt />
-                    </span>
-                    +91 86 9800 9900
-                  </p>
-                  <p className={ctaStyle.textForm}>Give us a call and book your visit now!</p>
+                <div className={style.homeCtaText}>
+                  <p className={style.hometextForm}>Give us a call and book your visit now!</p>
                 </div>
                 <img src="/guruCollection/guru_call.png" alt="Call Icon" />
               </div>
             </div>
           </div>
         </div>
-      )}
+      
     </div>
   );
 }

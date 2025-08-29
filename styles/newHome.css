@@ -153,13 +153,6 @@
   }
  
  
-  .homePageheader {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    height: 65vh;
-  }
 
   .homePageheaderdemo {
     display: flex;
@@ -192,8 +185,9 @@
     padding: 10px;
     border-radius: 15px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 90%;
+    width: 75%;
     position: relative;
+    height: 55px;
   }
   
   .search-field {

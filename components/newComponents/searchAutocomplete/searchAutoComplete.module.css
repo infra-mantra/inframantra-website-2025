@@ -11,6 +11,8 @@
     align-items: center;
     scrollbar-width: thin;
     scrollbar-color: rgb(193, 193, 193) rgb(240, 240, 240);
+    height: 40px;
+    
   }
   .inputWrapper input{
     background-color: rgb(230, 230, 230);
@@ -79,7 +81,7 @@
   
     .searchIcon {
     position: absolute;
-    right: 25px;
+    right: 5px;
     color: rgb(218, 158, 39);
     cursor: pointer;
     /* display: none; */

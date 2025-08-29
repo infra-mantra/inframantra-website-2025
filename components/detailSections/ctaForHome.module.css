@@ -1,0 +1,107 @@
+.homeCtaMainWrapper{
+    padding: 80px 6%;
+    display: flex;
+    width: 100%;
+    gap: 25px;
+}
+.homeCtaInnerWrapper{
+    display: flex;
+    width: 35%;
+    flex-direction: column;
+}
+.homePagePropertyPageHeaderContactIconContainer2{
+   width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+.homeCtaText {
+    display: flex;
+    align-items: center;
+}
+
+ .homePageContactUsLeftDetailSection {
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+  }
+  .homePageContactUsLeftDetailSection > h1 {
+    font-size: 50px;
+    color: #e7b554;
+  }
+   .homePageContactUsLeftMapPhotoContainer {
+    width: 100%;
+  }
+    .homePageMapPhotoBgdTopLeft {
+    position: absolute;
+    height: 30%;
+    width: 30%;
+  
+    left: 23%;
+    top: -2%;
+    z-index: -1;
+  }
+   .homePageMapPhotoBgdBottomRight {
+    position: absolute;
+    height: 30%;
+    width: 30%;
+
+    left: 47%;
+    bottom: 48%;
+    z-index: -1;
+  }
+    .homePageContactUsLeftDetailSectionImg {
+    /* height: 10%; */
+    width: 50%;
+    object-fit: cover;
+    align-self: baseline;
+    padding-top: 20px;
+  }
+    .homePageContactUsLeftDetailFlex {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+  }
+  .homePageContactUsLeftDetailsContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding-top: 20px;
+  }
+ .homePropertyPageHeaderContactUsDisclaimer {
+    font-size: 9px;
+    text-align: center;
+}
+.homeApp{
+background-color: none!important;
+}
+.homeCtaInnerWrapper{
+    background-color: #faf3e4;
+    border-radius: 12px;
+       box-shadow: 0px 2.22px 4.45px rgba(0, 0, 0, 0.15);
+       padding: 20px;
+}
+@media screen and (max-width: 768px) {
+    .homeCtaMainWrapper{
+        flex-direction: column-reverse;
+        
+    }
+    .homeCtaInnerWrapper{
+        width: 100%;
+    }
+    .homePageContactUsLeftDetailSection{
+        width: 100%;
+    }
+    .homeCtaMainWrapper{
+        padding-top: 60px;
+    }
+    
+}

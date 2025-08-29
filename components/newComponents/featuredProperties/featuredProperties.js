@@ -1,11 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { IoIosArrowForward } from "react-icons/io";
-import { CSSTransition } from 'react-transition-group';
-import FeaturedProperties from './featuredProperties/featuredProperties';
-import PaginationSlider from './paginationSlider/paginationSlider';
-import FeaturedPropertiesMobileSection from './featuredPropertiesMobile';
-import Ajax1 from '../../helper/Ajax1';
-// import './featuredPropertiesSection.css';
+import  { useState, useEffect } from 'react';
+import {data } from './DummyData.js';
 
 const featuredPropertiesStyles = {
   headerIcon: {
@@ -20,10 +14,6 @@ const featuredPropertiesStyles = {
 function FeaturedPropertiesSection() {
   const [isDesktop, setIsDesktop] = useState(true);
   const [isMobile, setIsMobile] = useState(true);
-  const [currentCityIndex, setCurrentCityIndex] = useState(0);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [inProp, setInProp] = useState(true);
-  const [propertyIn, setPropertyIn] = useState(true);
   const [featuredProperties, setFeaturedProperties] = useState([]);
 
   const checkScreenWidth = () => {
@@ -52,48 +42,21 @@ function FeaturedPropertiesSection() {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    if (featuredProperties && featuredProperties.length > 0) {
-      setCurrentCityIndex(0); // Set initial city index
-      setCurrentIndex(0); // Set initial property index
-    }
-  }, [featuredProperties]);
 
-  useEffect(() => {
-    setPropertyIn(false);
-    const timeout = setTimeout(() => {
-      setPropertyIn(true);
-    }, 0);
-    return () => clearTimeout(timeout);
-  }, [currentIndex]);
 
-  const handleNextCity = () => {
-    setInProp(false);
-  };
 
-  const handleExited = () => {
-    const nextIndex = (currentCityIndex + 1) % featuredProperties.length;
-    setCurrentCityIndex(nextIndex);
-  };
 
-  useEffect(() => {
-    setCurrentIndex(0);
-    const timeoutId = setTimeout(() => {
-      setInProp(true);
-    }, 0);
-    return () => clearTimeout(timeoutId);
-  }, [currentCityIndex]);
 
-  if (!featuredProperties || featuredProperties.length === 0) {
-    return <div>Loading...</div>; // Or some other loading indicator
-  }
 
-  const currentCityData = featuredProperties[currentCityIndex];
-  const currentProperty = currentCityData.properties[currentIndex];
+
+  // if (!featuredProperties || featuredProperties.length === 0) {
+  //   return <div>Loading...</div>; // Or some other loading indicator
+  // }
+
 
   return (
     <div className="featuredPropertiesSectionWrapper">
-      {isDesktop && (
+      {/* {isDesktop && (
         <div className="featuredPropertiesSectionHeader">
           <h2 className="featuredPropertiesSectionHeaderTitle">
             Premium Listings
@@ -167,7 +130,7 @@ function FeaturedPropertiesSection() {
             setCurrentIndex={setCurrentIndex}
           />
         </div>
-      )}
+      )} */}
     </div>
   );
 }
@@ -176,16 +139,3 @@ export default FeaturedPropertiesSection;
 
 
 
-
-export const getStaticProps = async () => {
-    const filterData = await fetch(`${process.env.apiUrl1}/property/featured-properties`);
-    const featuredProperties = await filterData.json();
-
-
-    return {
-        props: {
-            featuredProperties,
-        },
-        revalidate: 10,
-    };
-};

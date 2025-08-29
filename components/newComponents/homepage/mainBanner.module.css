@@ -1,0 +1,15 @@
+.homePageheader {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 65vh;
+}
+
+.homePageheaderContainer {
+    height: 60vh;
+    width: 100vw;
+    position: relative;
+    overflow: visible;
+}
+

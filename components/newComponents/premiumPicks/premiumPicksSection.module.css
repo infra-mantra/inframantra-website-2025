@@ -1,0 +1,219 @@
+/* Premium Picks Container Styles */
+.premiumPicksContainer {
+  padding-top: 60px;
+  background-color: #ffffff;
+}
+
+.premiumContentWrapper {
+  padding: 0 6%;
+}
+
+/* Premium Picks Header Styles */
+.premiumSectionHeader {
+  display: flex;
+    flex-direction: column;
+    justify-content: left;
+    gap: 25px;
+    padding-bottom: 25px;
+}
+
+.premiumMainTitle {
+color: #000;
+    font-family: Inter;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    align-self: stretch;
+    margin: 0px;
+}
+
+.premiumSubtitle {
+align-self: stretch;
+    color: #000;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin: 0px;
+}
+
+/* Premium Picks City Selector Container */
+.premiumCitySelectorContainer {
+  margin-bottom: 48px;
+}
+
+/* Premium Picks Location Status Messages */
+.premiumLocationStatus {
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  display: none;
+}
+
+.premiumLocationDetecting {
+  background: #f0f9ff;
+  border: 1px solid #0ea5e9;
+}
+
+.premiumLocationFound {
+  background: #f0fdf4;
+  border: 1px solid #22c55e;
+  display: none;
+}
+
+.premiumLocationDetectingText {
+  color: #0369a1;
+  font-size: 14px;
+}
+
+.premiumLocationFoundText {
+  color: #15803d;
+  font-size: 14px;
+}
+
+.premiumLocationIcon {
+  font-size: 16px;
+}
+
+/* Premium Picks Error Message Styles */
+.premiumErrorContainer {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.premiumErrorText {
+  color: #dc2626;
+  margin: 0 0 12px 0;
+}
+
+.premiumErrorButton {
+  background: #dc2626;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.premiumErrorButton:hover {
+  background: #b91c1c;
+}
+
+.premiumErrorButton:focus {
+  outline: 2px solid #D4A574;
+  outline-offset: 2px;
+}
+
+/* Premium Picks No Properties Message */
+.premiumNoPropertiesContainer {
+  text-align: center;
+  padding: 80px 20px;
+  color: #666666;
+  font-size: 16px;
+}
+
+/* Premium Picks Loading Styles */
+.premiumLoadingContainer {
+  padding: 60px 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.premiumLoadingSpinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #f0f0f0;
+  border-top: 3px solid #D4A574;
+  border-radius: 50%;
+  animation: premiumSpin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+.premiumLoadingText {
+  color: #666;
+  font-size: 16px;
+  margin: 0;
+}
+
+/* Premium Picks Carousel Container */
+.premiumCarouselContainer {
+  position: relative;
+}
+
+/* Premium Picks Swiper Custom Styles */
+.premiumCarouselContainer :global(.swiper-slide) {
+  height: auto;
+}
+
+.premiumCarouselContainer :global(.swiper-wrapper) {
+  align-items: stretch;
+}
+
+/* Premium Picks Animations */
+@keyframes premiumSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Premium Picks Responsive Design */
+@media (max-width: 768px) {
+  .premiumMainTitle {
+    font-size: 36px;
+  }
+
+  
+  .premiumContentWrapper {
+    padding: 0 16px;
+    padding-right: 0px!important;
+  }
+  
+  .premiumPicksContainer {
+    padding: 40px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .premiumMainTitle {
+    font-size: 20px;
+  }
+    .premiumSectionHeader{
+    gap: 12px;
+  }
+  .premiumSubtitle {
+    font-size: 14px;
+  }
+}
+
+/* Premium Picks Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .premiumErrorButton {
+    transition: none;
+  }
+  
+  .premiumLoadingSpinner {
+    animation: none;
+  }
+}
+
+/* Premium Picks High contrast support */
+@media (prefers-contrast: high) {
+  .premiumMainTitle {
+    color: #000;
+  }
+  
+  .premiumErrorButton {
+    border: 2px solid #000;
+  }
+}

@@ -1,0 +1,126 @@
+/* Property Card Styles */
+.propertyCard {
+  background-color: #ffffff;
+  border-radius: 12px;
+ 
+
+  height: 100%;
+  cursor: pointer;
+
+}
+
+
+.propertyImageContainer {
+  height: 150px;
+  overflow: hidden;
+  position: relative;
+}
+
+.propertyImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+}
+
+
+.propertyContent {
+  padding: 20px;
+}
+
+.propertyTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #000000;
+  margin: 0 0 7px 0;
+  
+  overflow: hidden;
+}
+
+.propertyLocation {
+  font-size: 14px;
+  color: #666666;
+  margin: 0 0 8px 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.propertyConfig {
+  font-size: 14px;
+  color: #000000;
+  margin: 0 0 7px 0;
+  font-weight: 400;
+}
+
+.propertyPrice {
+  font-size: 16px;
+  font-weight: 700;
+  color: #D4A574;
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .propertyImageContainer {
+    height: 180px;
+  }
+  
+  .propertyContent {
+    padding: 16px;
+  }
+  
+  .propertyTitle {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .propertyImageContainer {
+    height: 160px;
+  }
+  
+  .propertyContent {
+    padding: 12px;
+  }
+  
+  .propertyTitle {
+    font-size: 15px;
+  }
+  
+  .propertyLocation {
+    font-size: 13px;
+  }
+  
+  .propertyPrice {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 320px) {
+  .propertyImageContainer {
+    height: 140px;
+  }
+}
+
+/* Accessibility improvements */
+
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+
+  
+  .propertyTitle {
+    color: #000;
+  }
+  
+  .propertyPrice {
+    color: #000;
+    font-weight: 900;
+  }
+}
+
+/* Reduced motion support */
+

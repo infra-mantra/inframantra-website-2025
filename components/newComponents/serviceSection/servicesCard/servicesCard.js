@@ -4,16 +4,17 @@ import styles from '../service.module.css'; // Assuming you have a CSS module fo
 
 const serviceCardStyles = {
   paper: {
-    height: '45%',
-    width: '90%',
-    borderRadius: '20px',
-    background: '#FFF7E9',
-    marginBottom: '10%',
+    
+    width: '100%',
+    borderRadius: '10px',
+    padding: '22px',
+    background: '#ffffffff',
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'space-evenly',
     cursor: 'pointer',
+    gap: '15px',
     // Note: media queries inside JS objects don’t apply unless you use a CSS-in-JS library
   },
   icon: {
@@ -22,9 +23,10 @@ const serviceCardStyles = {
   },
 };
 
-function ServicesCard({ title, Icon, description, key, id, alt }) {
+function ServicesCard({ title, Icon, description, key, id, alt, index }) {
   const router = useRouter();
   const [isDesktop, setIsDesktop] = useState(true);
+  console.log("##########",key,index)
 
   useEffect(() => {
     const checkScreenWidth = () => {
@@ -51,9 +53,9 @@ function ServicesCard({ title, Icon, description, key, id, alt }) {
   return (
     <div
       id={id}
-      key={key}
+      key={index}
       style={serviceCardStyles.paper}
-      className="serviceCard"
+      className={`serviceCard order${index}`}
       onClick={handleCardClick}
     >
       <div className={styles.serviceCardIconContainer}>
