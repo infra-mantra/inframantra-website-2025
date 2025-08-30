@@ -52,7 +52,7 @@ export default function LocalityPropertiesSection({ data, loading, selectedCity 
   };
 
   return (
-    <div className={styles.localityContainer}>
+    <div  className={styles.localityContainer}>
       <div className={styles.localityContentWrapper}>
         {/* Section Header */}
         <div className={styles.localitySectionHeader}>
@@ -76,12 +76,19 @@ export default function LocalityPropertiesSection({ data, loading, selectedCity 
             <div className={styles.localityCarouselContainer}>
               <Swiper
                 modules={[Navigation, Pagination, Autoplay]}
-                slidesPerView="3" // Use auto for proper width control
+          
                 spaceBetween={20}
                 navigation={{
                   nextEl: `.locality-next-${index}`,
                   prevEl: `.locality-prev-${index}`,
                 }}
+                 breakpoints={{
+      320: { slidesPerView: 1.2, spaceBetween: 16 },
+      480: { slidesPerView: 1.5, spaceBetween: 16 },
+      768: { slidesPerView: 2.5, spaceBetween: 20 },
+      1024: { slidesPerView: Math.min(3, data.length), spaceBetween: 24 },
+      1200: { slidesPerView: Math.min(3, data.length), spaceBetween: 24 },
+    }}
                 autoplay={{
                   delay: 4000,
                   disableOnInteraction: false,
