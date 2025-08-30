@@ -1,7 +1,8 @@
 import React from 'react';
 import styles from './PropertyCard.module.css';
 
-export default function PropertyCard({ property }) {
+export default function PropertyCard({ property ,  location}) {
+  console.log("popererer",property)
   return (
     <div className={styles.propertyCard}>
       {/* Property Image */}
@@ -37,7 +38,7 @@ export default function PropertyCard({ property }) {
         )}
         
         <p className={styles.propertyPrice}>
-          Rs. {property.startingPrice}
+          Starting From Rs. {property.startingPrice}
         </p>
       </div>
     </div>

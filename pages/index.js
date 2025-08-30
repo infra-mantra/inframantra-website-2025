@@ -9,15 +9,13 @@ import moment from "moment/moment";
 
 import MainBanner1 from '../components/newComponents/homepage/MainBanner.js';
 import FeaturedProperties from '../components/newComponents/featuredProperties/featuredProperties'
-import ServiceSection from '../components/newComponents/serviceSection/serviceSection.js';
-import LocalitySection from '../components/newComponents/localityProperties/LocalityPropertiesSection.jsx';
 import StatisticalInsightsSection from "../components/newComponents/statisticalInsights/staticalInsight";
 import ImageGallerySection from "../components/newComponents/imageGallery/imageGallerySection";
 import ClientTestimonySection from "../components/newComponents/clientTestimonySection/clientTestimonySection.jsx";
 import BlogsMedia from "../components/newComponents/blogsSection/blogsMedia.js";
-import PremiumPicksSection from '../components/newComponents/premiumPicks/PremiumPicksSection.jsx';
 import CtaForHome from '../components/detailSections/ctaForHome.js'
-import OtherCityPropertiesSection from "../components/newComponents/otherProperties/OtherCityPropertiesSection.jsx";
+import PremiumPropertyMainComponent from "../components/newComponents/premiumPicks/PremiumPropertyMainComponent.jsx";
+
 
 function Home({allData}) {
   const bannerItems = [
@@ -91,13 +89,8 @@ function Home({allData}) {
       keyword={'InfraMantra, Residential Properties, Commercial Properties,  Apartments, Flats, Buy flat in gurgaon, buy property in gurgaon,gurgaon property prices, Apartments for sale in gurugram, buy apartment in gurgaon, buy Properties in gurgaon, real estate in gurgaon, best property to buy in gurgaon, noida   apartment for sale, Pune property prices, buy property noida, buy residential property in pune, Property for purchase in gurugram'}
       selectedItem={selectedItems}
     >
-      {/* <NewPoPUp /> */}
       <MainBanner1 />
-      <FeaturedProperties />
-      <PremiumPicksSection />
-      <ServiceSection />
-      <LocalitySection />
-      <OtherCityPropertiesSection otherCityProperties={allData.otherCityProperties} initialCity="Gurgaon" />
+      <PremiumPropertyMainComponent/>
       <BlogsMedia />
       <StatisticalInsightsSection />
       <ImageGallerySection />
