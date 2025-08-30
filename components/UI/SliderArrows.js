@@ -3,6 +3,7 @@ export default function SliderArrows(props) {
     <div className="slider-arrows">
       <div className="slider-left" id={props.prevClass}>
         <svg
+        
           width="16"
           height="16"
           viewBox="0 0 16 16"
