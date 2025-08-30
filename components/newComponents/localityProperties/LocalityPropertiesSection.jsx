@@ -14,7 +14,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 export default function LocalityPropertiesSection({data,loading,selectedCity}) {
- console.log("*************",data)
+
   if (loading) {
     return (
       <div className={styles.localityContainer}>

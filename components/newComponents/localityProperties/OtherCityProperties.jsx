@@ -14,7 +14,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 export default function LocalityPropertiesSection({data,loading,selectedCity}) {
- console.log("pppppp",data)
+  
   if (loading) {
     return (
       <div className={styles.localityContainer}>
@@ -35,14 +35,10 @@ export default function LocalityPropertiesSection({data,loading,selectedCity}) {
     <div className={styles.localityContainer}>
       <div className={styles.localityContentWrapper}>
         {/* Section Header */}
-        <div className={styles.localitySectionHeader}>
-          <h2 className={styles.localityMainTitle}>
-            Discover Your Dream Home
-          </h2>
-          <p className={styles.localitySubtitle}>
-           Discover Properties in Other Cities
-          </p>
-        </div>
+        <h3 className={styles.localityTitle}>
+          Discover Properties in Other Cities
+        </h3>
+
 
 
 <div className={styles.localityCarouselContainer}>

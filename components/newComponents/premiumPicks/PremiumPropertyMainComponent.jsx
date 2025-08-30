@@ -75,7 +75,7 @@ export default function PremiumPropertyMainComponent() {
 
   return (
     <>
-      <PremiumPicksSection data={cityPremiumProperties} loading={loading} onUpdate={handleCityUpdate} /> 
+      <PremiumPicksSection data={cityPremiumProperties} loading={loading} onUpdate={handleCityUpdate}  /> 
       <ServiceSection />
       <LocalitySection data={localitiesPremiumProperties} loading={loading} selectedCity={selectedCity} />
        <OtherCityPropertiesSection data={otherCityPremiumProperties} loading={loading} selectedCity={selectedCity} />
