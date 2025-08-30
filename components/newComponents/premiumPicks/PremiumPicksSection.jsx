@@ -1,90 +1,43 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper';
-import { fetchCityProperties } from '../utils/propertyApi';
-import { cityEventManager } from '../utils/cityEventManager';
 import PropertyCard from '../shared/PropertyCard';
 import CitySelector from './CitySelector';
-import { useLocationDetection } from './hooks/useLocationDetection';
 import styles from './premiumPicksSection.module.css';
 
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-export default function PremiumPicksSection() {
-  const [selectedCity, setSelectedCity] = useState('Gurgaon');
-  const [properties, setProperties] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  
-  // Track if user has manually selected a city
-  const hasManuallySelected = useRef(false);
-  const hasAutoSelected = useRef(false);
+export default function PremiumPicksSection({ 
+  data, 
+  loading, 
+  onUpdate, 
+  selectedCity, 
+  detectedCity, 
+  locationStatus 
+}) {
+  // Use selectedCity from props, no local state needed
+  const [localSelectedCity, setLocalSelectedCity] = useState(selectedCity);
 
-  // Use location detection hook
-  const { detectedCity, locationStatus } = useLocationDetection();
-
+  // Update local state when prop changes
   useEffect(() => {
-    loadProperties(selectedCity);
+    setLocalSelectedCity(selectedCity);
   }, [selectedCity]);
 
-  // Auto-select detected city ONLY ONCE and ONLY if user hasn't manually selected
-  useEffect(() => {
-    if (detectedCity && 
-        !hasAutoSelected.current && 
-        !hasManuallySelected.current && 
-        detectedCity !== selectedCity) {
-      
-      console.log(`🎯 Auto-selecting detected city: ${detectedCity}`);
-      setSelectedCity(detectedCity);
-      cityEventManager.emitCityChange(detectedCity);
-      hasAutoSelected.current = true;
-    }
-  }, [detectedCity, selectedCity]);
-
-  async function loadProperties(city) {
-    try {
-      setLoading(true);
-      setError(null);
-      
-      console.log(`🎯 Loading properties for: ${city}`);
-      
-      const data = await fetchCityProperties(city);
-      
-      // Get properties from the combined allProperties array
-      const cityProperties = data.allProperties || [];
-      console.log(`🎯 Loaded ${cityProperties.length} properties for ${city}`);
-      
-      setProperties(cityProperties);
-    } catch (err) {
-      console.error('🎯 Error loading properties:', err);
-      setError(err.message);
-      setProperties([]);
-    } finally {
-      setLoading(false);
-    }
-  }
-
   const handleCityChange = (city) => {
-    if (city !== selectedCity) {
-      console.log(`🎯 Manual city selection: ${selectedCity} → ${city}`);
-      hasManuallySelected.current = true;
-      setSelectedCity(city);
-      
-      // Emit the city change event for other components to listen
-      cityEventManager.emitCityChange(city);
-    }
+    console.log(`🎯 Manual city selection: ${localSelectedCity} → ${city}`);
+    setLocalSelectedCity(city);
+    onUpdate(city); // This updates parent state
   };
 
   if (loading) {
     return (
       <div className={styles.premiumLoadingContainer}>
         <div className={styles.premiumLoadingSpinner}></div>
-        <p className={styles.premiumLoadingText}>Loading {selectedCity} properties...</p>
+        <p className={styles.premiumLoadingText}>Loading {localSelectedCity} properties...</p>
       </div>
     );
   }
@@ -101,7 +54,7 @@ export default function PremiumPicksSection() {
         </div>
 
         {/* Location Detection Status */}
-        {locationStatus === 'detecting' && !hasManuallySelected.current && (
+        {locationStatus === 'detecting' && (
           <div className={`${styles.premiumLocationStatus} ${styles.premiumLocationDetecting}`}>
             <span className={styles.premiumLocationIcon}>🌍</span>
             <span className={styles.premiumLocationDetectingText}>
@@ -110,11 +63,11 @@ export default function PremiumPicksSection() {
           </div>
         )}
 
-        {locationStatus === 'found' && detectedCity && !hasManuallySelected.current && (
+        {locationStatus === 'found' && detectedCity && (
           <div className={`${styles.premiumLocationStatus} ${styles.premiumLocationFound}`}>
             <span className={styles.premiumLocationIcon}>📍</span>
             <span className={styles.premiumLocationFoundText}>
-              {detectedCity === selectedCity 
+              {detectedCity === localSelectedCity 
                 ? `Showing properties near you (${detectedCity})`
                 : `We detected you're in ${detectedCity}`
               }
@@ -125,35 +78,13 @@ export default function PremiumPicksSection() {
         {/* City Selector */}
         <div className={styles.premiumCitySelectorContainer}>
           <CitySelector
-            selectedCity={selectedCity}
+            selectedCity={localSelectedCity}
             onCityChange={handleCityChange}
           />
         </div>
 
-        {/* Error Message */}
-        {error && (
-          <div className={styles.premiumErrorContainer}>
-            <p className={styles.premiumErrorText}>
-              Error loading properties: {error}
-            </p>
-            <button 
-              onClick={() => loadProperties(selectedCity)}
-              className={styles.premiumErrorButton}
-            >
-              Try Again
-            </button>
-          </div>
-        )}
-
-        {/* No Properties Message */}
-        {!loading && !error && properties.length === 0 && (
-          <div className={styles.premiumNoPropertiesContainer}>
-            <p>No properties found in {selectedCity}</p>
-          </div>
-        )}
-
         {/* Property Carousel */}
-        {!loading && !error && properties.length > 0 && (
+        {data && data.length > 0 && (
           <div className={styles.premiumCarouselContainer}>
             <Swiper
               modules={[Navigation, Pagination, Autoplay]}
@@ -177,18 +108,18 @@ export default function PremiumPicksSection() {
                   spaceBetween: 20,
                 },
                 1024: {
-                  slidesPerView: Math.min(4, properties.length),
+                  slidesPerView: Math.min(4, data.length),
                   spaceBetween: 24,
                 },
                 1200: {
-                  slidesPerView: Math.min(4, properties.length),
+                  slidesPerView: Math.min(4, data.length),
                   spaceBetween: 24,
                 },
               }}
-              loop={properties.length > 4}
+              loop={data.length > 4}
               grabCursor={true}
             >
-              {properties.map((property) => (
+              {data.map((property) => (
                 <SwiperSlide key={property._id}>
                   <PropertyCard property={property} />
                 </SwiperSlide>

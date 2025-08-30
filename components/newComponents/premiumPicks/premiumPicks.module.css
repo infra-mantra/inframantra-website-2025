@@ -9,7 +9,9 @@
   margin: 0 auto;
   padding: 0 24px;
 }
-
+.premiumCarouselContainer .swiper-slide {
+    width: 23.6%!important;
+}
 
 
 .title {
@@ -85,6 +87,7 @@
   border-radius: 12px;
   height: 100%;
 padding-bottom: 10px;  
+   
 }
 
 

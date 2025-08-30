@@ -5,81 +5,87 @@ import LocalitySection from "../localityProperties/LocalityPropertiesSection.jsx
 import OtherCityPropertiesSection from "../localityProperties/OtherCityProperties.jsx";
 import ServiceSection from '../../newComponents/serviceSection/serviceSection.js';
 
-import {useLocationDetection} from './hooks/useLocationDetection'
+import { useLocationDetection } from './hooks/useLocationDetection'
 import axios from "axios";
 
 export default function PremiumPropertyMainComponent() {
-   const [selectedCity, setSelectedCity] = useState("Gurgaon")
+  const [selectedCity, setSelectedCity] = useState("Gurgaon")
   const [cityPremiumProperties, setCityPremiumProperties] = useState([]);
   const [localitiesPremiumProperties, setLocalitiesPremiumProperties] = useState([]);
   const [otherCityPremiumProperties, setOtherCityPremiumProperties] = useState([]);
- 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [hasAutoSelected, setHasAutoSelected] = useState(false); // Track if we've auto-selected
 
-  const {detectedCity,locationStatus} = useLocationDetection()
-
+  const { detectedCity, locationStatus } = useLocationDetection()
 
   const handleCityUpdate = (city) => {
+    console.log("🎯 City updated from child component:", city);
     setSelectedCity(city);
+    setHasAutoSelected(true); // Mark as manually selected
   };
 
-
-
-   useEffect(() => {
-    (async (detectedCity) => {
-      try {
-
-        const response = await axios.get(`https://apitest.inframantra.com/api/v1/property/citywise/${detectedCity}`);
-
-
-        const data = response.data;
-        if (data) {
-
-        setCityPremiumProperties(data?.mainCity?.properties)
-        setLocalitiesPremiumProperties(data?.localities);
-        console.log("9999999",data)
-        setOtherCityPremiumProperties(data?.otherCityProperties)   
-        }
-      } catch (err) {
-        console.error("Error fetching premium properties:", err);
-        setError("Failed to load premium properties.");
-      } finally {
-        setLoading(false);
-      }
-    })(detectedCity);
-  }, []);
-
+  // Auto-select detected city ONLY ONCE when available
   useEffect(() => {
-    (async (selectedCity) => {
+    if (detectedCity && !hasAutoSelected && detectedCity !== selectedCity) {
+      console.log("📍 Auto-selecting detected city:", detectedCity);
+      setSelectedCity(detectedCity);
+      setHasAutoSelected(true);
+    }
+  }, [detectedCity, hasAutoSelected, selectedCity]);
+
+  // Fetch data whenever selectedCity changes
+  useEffect(() => {
+    const fetchCityData = async (city) => {
       try {
-        const response = await axios.get(`https://apitest.inframantra.com/api/v1/property/citywise/${selectedCity}`);
-
-
+        setLoading(true);
+        setError(null);
+        
+        console.log("🔄 Fetching data for city:", city);
+        const response = await axios.get(`https://apitest.inframantra.com/api/v1/property/citywise/${city}`);
+        
         const data = response.data;
         if (data) {
-        setCityPremiumProperties(data?.mainCity?.properties)
-        setLocalitiesPremiumProperties(data?.localities);
-        setOtherCityPremiumProperties(data?.otherCityProperties)   
+          setCityPremiumProperties(data?.mainCity?.properties || []);
+          setLocalitiesPremiumProperties(data?.localities || []);
+          setOtherCityPremiumProperties(data?.otherCityProperties || []);
+          console.log("✅ Data fetched successfully for:", city, data);
         }
       } catch (err) {
-        console.error("Error fetching premium properties:", err);
+        console.error("❌ Error fetching premium properties:", err);
         setError("Failed to load premium properties.");
       } finally {
         setLoading(false);
       }
-    })(selectedCity);
+    };
+
+    // Only fetch if we have a valid city
+    if (selectedCity) {
+      fetchCityData(selectedCity);
+    }
   }, [selectedCity]);
-
-
 
   return (
     <>
-      <PremiumPicksSection data={cityPremiumProperties} loading={loading} onUpdate={handleCityUpdate}  /> 
+      <PremiumPicksSection 
+        data={cityPremiumProperties} 
+        loading={loading} 
+        onUpdate={handleCityUpdate}
+        selectedCity={selectedCity}
+        detectedCity={detectedCity}
+        locationStatus={locationStatus}
+      /> 
       <ServiceSection />
-      <LocalitySection data={localitiesPremiumProperties} loading={loading} selectedCity={selectedCity} />
-       <OtherCityPropertiesSection data={otherCityPremiumProperties} loading={loading} selectedCity={selectedCity} />
-      {/* <OtherCityPropertiesSection data={otherCityPremiumProperties} />  */}
+      <LocalitySection 
+        data={localitiesPremiumProperties} 
+        loading={loading} 
+        selectedCity={selectedCity} 
+      />
+      <OtherCityPropertiesSection 
+        data={otherCityPremiumProperties} 
+        loading={loading} 
+        selectedCity={selectedCity} 
+      />
     </>
   );
 }
