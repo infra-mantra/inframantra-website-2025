@@ -8,7 +8,7 @@ import { cityEventManager } from '../utils/cityEventManager';
 import PropertyCard from '../shared/PropertyCard';
 import CitySelector from './CitySelector';
 import { useLocationDetection } from './hooks/useLocationDetection';
-import styles from './PremiumPicksSection.module.css';
+import styles from './premiumPicksSection.module.css';
 
 // Import Swiper styles
 import 'swiper/css';
