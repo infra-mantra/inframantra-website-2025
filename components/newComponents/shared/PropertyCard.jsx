@@ -18,11 +18,12 @@ export default function PropertyCard({ property ,  location}) {
       </div>
       
       {/* Property Content */}
-      <div className={styles.propertyContent}>
-        <h3 className={styles.propertyTitle}>
-          {property.name}
-        </h3>
-        
+      <a href={`/property/${property.slug}`}>
+        <div className={styles.propertyContent}>
+          <h3 className={styles.propertyTitle}>
+            {property.name}
+          </h3>
+
         <p className={styles.propertyLocation}>
           {[
             property.subLocality?.name, 
@@ -41,6 +42,7 @@ export default function PropertyCard({ property ,  location}) {
           Starting From Rs. {property.startingPrice}
         </p>
       </div>
+      </a>
     </div>
   );
 }

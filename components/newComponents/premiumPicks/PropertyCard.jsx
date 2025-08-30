@@ -16,6 +16,9 @@ export default function PropertyCard({ property }) {
   };
 
   return (
+    
+      
+  
     <div className={styles.propertyCard}>
       <div className={styles.propertyImageContainer}>
         <img 
@@ -30,6 +33,7 @@ export default function PropertyCard({ property }) {
       <div className={styles.propertyContent}>
         <h3 className={styles.propertyTitle}>{property.name}</h3>
         
+        
         {location && (
           <p className={styles.propertyLocation}>{location}</p>
         )}
@@ -39,5 +43,6 @@ export default function PropertyCard({ property }) {
         )}
       </div>
     </div>
+  
   );
 }
