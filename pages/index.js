@@ -17,7 +17,7 @@ import ClientTestimonySection from "../components/newComponents/clientTestimonyS
 import BlogsMedia from "../components/newComponents/blogsSection/blogsMedia.js";
 import PremiumPicksSection from '../components/newComponents/premiumPicks/PremiumPicksSection.jsx';
 import CtaForHome from '../components/detailSections/ctaForHome.js'
-
+import OtherCityPropertiesSection from "../components/newComponents/otherProperties/OtherCityPropertiesSection.jsx";
 
 function Home({allData}) {
   const bannerItems = [
@@ -97,6 +97,7 @@ function Home({allData}) {
       <PremiumPicksSection />
       <ServiceSection />
       <LocalitySection />
+      <OtherCityPropertiesSection otherCityProperties={allData.otherCityProperties} initialCity="Gurgaon" />
       <BlogsMedia />
       <StatisticalInsightsSection />
       <ImageGallerySection />
