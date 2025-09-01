@@ -143,6 +143,8 @@ width: 100%;
   }
 .servicesSectionCardWrapperFirst > .serviceCard {
     width: 47% !important;
+    padding: 15px !important;
+        gap: 8px !important;
 }
 .servicesSectionCardWrapperFirst{
   gap:20px;
