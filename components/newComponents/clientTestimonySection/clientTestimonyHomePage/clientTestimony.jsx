@@ -79,7 +79,7 @@ function ClientTestimony({ name, testimony, img }) {
             
             <div className={styles.clientTestimonyCardTextFlex}>
               <span className={styles.quoteIcon} style={iconStyle.quoteIcon}>&#8220;</span>
-              <pre className={styles.clientTestimonyCardText}>{testimony}</pre>
+              <p className={styles.clientTestimonyCardText}>{testimony}</p>
             </div>
           </div>
         </>
