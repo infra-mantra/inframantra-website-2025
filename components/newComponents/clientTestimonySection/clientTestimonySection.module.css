@@ -137,18 +137,25 @@ p.clientTestimonyName {
 }
 .clientTestimonyCardWrapper{
   padding: 0px;
+          width: 96%;
+}
+.clientTestimonyTestimonySection .swiper-wrapper .swiper-slide{
+  justify-content: center;
+}
+.swiper-button-next{
+      right: -5% !important;
 }
 .clientTestimonyCardContainer>div>div {
-    text-align: center;
-    font-size: 30px;
-    padding-top: 20px;
+text-align: center;
+        font-size: 22px;
+        padding-top: 12px;
 }
 .clientTestimonyCardFace{
   width: 35%;
 }
 .clientTestimonyCardContainer{
       width: 100%;
-      padding: 20px;
+      padding: 22px 37px;
 }
 .clientTestimonyCardText{
   font-size: 16px;
@@ -168,6 +175,14 @@ button.swiper-button-next.testimonyArrowBtn {
 }
 .clientTestimonyTestimonySection .swiper-wrapper{
       padding-bottom: 40px;
+}
+.clientTestimonyName{
+      font-weight: 500;
+    font-size: 16px;
+    margin-top: 5px;
+}
+.clientTestimonyCardText{
+      margin-top: -23px;
 }
 }
 

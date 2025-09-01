@@ -136,10 +136,10 @@ width: 100%;
   padding: 0px 0px;
 }
 .serviceCardDescription {
-    font-size: 14px;  
+    font-size: 12px;  
   }
 .serviceCardTitle {
-    font-size: 18px;  
+    font-size: 14px;  
   }
 .servicesSectionCardWrapperFirst > .serviceCard {
     width: 47% !important;

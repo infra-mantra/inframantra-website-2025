@@ -119,4 +119,7 @@ box-shadow:0px 2.22px 4.45px rgba(0, 0, 0, 0.15);
 .imageGalleryHeaderFlex p {
     font-size: 14px;
 }
+.imageGalleryHeaderFlex{
+      padding-bottom: 20px;
+}
   }

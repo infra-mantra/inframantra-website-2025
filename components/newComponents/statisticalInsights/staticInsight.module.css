@@ -31,7 +31,8 @@
   @media (max-width: 768px) {
   
     .statisticalInsightsSectionGridContainer {
-    gap: 20px;
+        gap: 8px;
+        row-gap: 24px;
     }
     
   }
@@ -57,8 +58,12 @@
   
   @media (max-width: 768px) {
     .statisticalInsightValues {
-      font-size: 25px;
-      margin-top: 15px;
+      font-size: 20px;
+      
+    }
+    .statisticalInsightTitle{
+      font-size: 14px!important;
+      margin-top: 8px !important;
     }
   }
   .statisticalInsightTitle{

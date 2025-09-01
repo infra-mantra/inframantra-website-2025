@@ -4,6 +4,22 @@
     width: 100%;
     gap: 25px;
 }
+.popUpHead{
+     color: #000;
+    text-align: left;
+    font-family: "Lexend Deca";
+    font-size: 16px;
+    font-weight: 400;
+}
+.popUpHead2 {
+    color: #E4A951;
+    text-align: left;
+    font-family: "Lexend Deca";
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin: 0;
+}
 .homeCtaInnerWrapper{
     display: flex;
     width: 35%;
@@ -88,6 +104,12 @@ background-color: none!important;
     border-radius: 12px;
        box-shadow: 0px 2.22px 4.45px rgba(0, 0, 0, 0.15);
        padding: 20px;
+       padding-bottom: 0px;
+}
+.homeCtaText p {
+    font-size: 18px;
+    font-weight: 600;
+    width: 85%;
 }
 @media screen and (max-width: 768px) {
     .homeCtaMainWrapper{
@@ -99,9 +121,12 @@ background-color: none!important;
     }
     .homePageContactUsLeftDetailSection{
         width: 100%;
+        padding: 0 6%;
     }
     .homeCtaMainWrapper{
         padding-top: 60px;
+        padding-right: 0px;
+        padding-left: 0px;
     }
     
 }

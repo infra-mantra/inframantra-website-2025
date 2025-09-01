@@ -22,10 +22,11 @@ const iconStyle = {
     color: '#ffff',
   },
   quoteIconMobile: {
-    transform: 'rotate(180deg)',
+    transform: 'rotate(0deg)',
     transition: 'transform 0.3s',
     color: '#000',
     fontSize: '30px',
+    display: 'inherit',
   },
 };
 
@@ -78,7 +79,7 @@ function ClientTestimony({ name, testimony, img }) {
             
             <div className={styles.clientTestimonyCardTextFlex}>
               <span className={styles.quoteIcon} style={iconStyle.quoteIcon}>&#8220;</span>
-              <p className={styles.clientTestimonyCardText}>{testimony}</p>
+              <pre className={styles.clientTestimonyCardText}>{testimony}</pre>
             </div>
           </div>
         </>

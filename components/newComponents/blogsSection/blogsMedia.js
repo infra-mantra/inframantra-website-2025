@@ -21,7 +21,7 @@ function BlogsMedia(props) {
 
   return (
     <div className={style.blogsMediaSectionWrapper}>
-      <h3>Media and Updates</h3>
+      <h3>Media and Latest Updates</h3>
 
       {data && (
         <Swiper
@@ -63,7 +63,7 @@ function BlogsMedia(props) {
       )}
 
       <a className={style.moreBlogs} href={`/blog`}>
-        Explore Media blogs and more
+        Explore More
       </a>
     </div>
   );

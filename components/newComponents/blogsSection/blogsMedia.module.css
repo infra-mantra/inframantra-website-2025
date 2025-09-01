@@ -72,7 +72,16 @@ padding: 60px 6%;
         font-size: 14px;
     }
     .blogsMediaSectionWrapper{
-            padding-top: 40px ;
+            padding-top: 20px ;
             padding-bottom: 40px;
+    }
+    .blogPostCard h3{
+        font-size: 16px;
+        font-weight: 600;
+        margin-top: 8px;
+    }
+    .blogPostCard div p{
+            font-size: 12px;
+            margin-top: 8px;
     }
 }

@@ -67,7 +67,7 @@ function ClientTestimonySection() {
       </div>
 
       <a className={styles.exploreMoreLink} href={`/testimonials`}>
-        Explore Media blogs and more
+        Read More
       </a>
     </div>
   );
