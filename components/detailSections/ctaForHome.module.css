@@ -118,6 +118,7 @@ background-color: none!important;
     }
     .homeCtaInnerWrapper{
         width: 100%;
+        border-radius: 0px!important;
     }
     .homePageContactUsLeftDetailSection{
         width: 100%;
