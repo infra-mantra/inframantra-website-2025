@@ -136,8 +136,8 @@ function App({name}) {
           <div className={style.homeCtaInnerWrapper}>
             <form onSubmit={handleSubmit}>
    <div className={ctaStyle.headingForm}>
-              <p style ={{marginTop:'0px!important'}} className={style.popUpHead}>Please share your contact details</p>
-              <p className={style.popUpHead2}> TO UNLOCK EXCLUSIVE DEALS</p>
+              <p style ={{marginTop:'0px!important'}} className={style.homePopUpHead}>Please share your contact details</p>
+              <p className={style.homePopUpHead2}> TO UNLOCK EXCLUSIVE DEALS</p>
             </div>
 
               <div className={ctaStyle.formGroup}>

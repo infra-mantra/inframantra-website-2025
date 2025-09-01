@@ -4,14 +4,14 @@
     width: 100%;
     gap: 25px;
 }
-.popUpHead{
+.homePopUpHead{
      color: #000;
-    text-align: left;
+    text-align: left!important;
     font-family: "Lexend Deca";
     font-size: 16px;
     font-weight: 400;
 }
-.popUpHead2 {
+.homePopUpHead2 {
     color: #E4A951;
     text-align: left;
     font-family: "Lexend Deca";
