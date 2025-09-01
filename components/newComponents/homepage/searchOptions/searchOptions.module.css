@@ -6,10 +6,12 @@
   align-items: flex-end;
   height: 94%;
 }
-
+.searchOptionsFlexContainer .root {
+    width: 100%;
+}
 .searchOptionsFlexContainer {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
   background: #ffffff;
   padding: 10px;
@@ -120,6 +122,9 @@
   /* For Firefox */
   border: 0;
 }
+.searchOptionsMobileFlexContainer{
+  display: none;
+}
 
 @media (max-width: 768px) {
   .searchOptionsWrapper {
@@ -129,9 +134,13 @@
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: 60%;
+    top: 94%;
     left: 50%;
     transform: translate(-50%, -50%);
+    
+  }
+   .searchOptionsWrapper .inputWrapper {
+box-shadow: 0px 6.96px 13.22px 0px rgba(0, 0, 0, 0.25);
   }
 
   .searchOptionsMobileFlexContainer {
@@ -141,5 +150,6 @@
     align-items: center;
     width: 100%;
     margin-top: 15px;
+    display: none;
   }
 }

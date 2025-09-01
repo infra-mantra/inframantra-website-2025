@@ -13,7 +13,9 @@
     overflow: scroll;
     overflow-x: auto;
   }
-  
+  .dropDownMenuWrapper{
+    display: none;
+  }
   .dropDownMenuItemsContainer {
     display: flex;
     flex-direction: column;
