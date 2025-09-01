@@ -10,8 +10,10 @@
   padding: 0 24px;
 }
 
-.premiumCarouselContainer .swiper-slide {
-    width: 23.6%!important;
+@media (min-width: 1024px) {
+  .premiumCarouselContainer .swiper-slide {
+    width: 23.6% !important;
+  }
 }
 
 
