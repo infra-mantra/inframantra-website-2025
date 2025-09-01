@@ -256,12 +256,7 @@ padding-bottom: 10px;
   .container {
     padding: 0 16px;
   }
-   .premiumCarouselContainer .swiper-slide {
-  width:initial !important
-}
-.swiper-wrapper{
- transform: none !important;
-}
+ 
   .title {
     font-size: 36px;
   }
