@@ -1,5 +1,6 @@
 .blogsMediaSectionWrapper{
 padding: 60px 6%;
+padding-top: 0px;
 }    
 .blogPostCardWrapper{
     width: 100%;
@@ -39,7 +40,7 @@ padding: 60px 6%;
     font-size: 32px;
     font-weight: 600;
     font-family: 'Inter';
-        margin: 5% 0%;
+        margin: 40px 0%;
 }
 .blogPostCard div p{
     font-size: 14px;
