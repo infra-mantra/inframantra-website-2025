@@ -23,10 +23,10 @@ function AdsBanner() {
 
   // Desktop & Mobile image URLs
   const desktopBanner =
-    'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/revampHomePage/banner%202%20sora%20(1).webp';
+    'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/revampHomePage/AdDesktop.webp';
 
   const mobileBanner =
-    'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/mobilebanner/ad%20banner%20sora%20400x200.jpg';
+    'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/revampHomePage/AdMobile.webp';
 
   return (
     <div className={styles.imgContainer}>
