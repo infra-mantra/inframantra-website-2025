@@ -40,15 +40,15 @@ export default ImageGallerySection;
 
 const itemData = [
   {
-    img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/inframantra%202.4.avif",
+    img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/IMG_2514-min.webp",
     alt: "Shweta's Birthday Celebration, 2019"
   },
   {
-    img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/award%20.avif",
+    img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/IMG_4972-min.webp",
     alt: "Award recognition by leadership"
   },
   {
-    img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/13.avif",
+    img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/IMG_5639-min.webp",
     alt: "Festive decoration at office"
   },
   {

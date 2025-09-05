@@ -81,12 +81,14 @@ export default function PremiumPropertyMainComponent() {
         loading={loading} 
         selectedCity={selectedCity} 
       />
+        <AdsBanner/>
+
       <OtherCityPropertiesSection 
         data={otherCityPremiumProperties} 
         loading={loading} 
         selectedCity={selectedCity} 
       />
-      <AdsBanner/>
+    
     </>
   );
 }

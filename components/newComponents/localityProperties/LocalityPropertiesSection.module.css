@@ -38,13 +38,14 @@ align-self: stretch;
 
 /* Locality Section */
 .localitySection {
-  margin-bottom: 50px;
+  margin-bottom: 25px;
 }
 
 .localityTitle {
   font-size: 20px;
   font-weight: 600;
   color: #000000;
+  margin-top: 3px;
 }
 
 /* Locality Carousel Container */
@@ -109,7 +110,7 @@ align-self: stretch;
 /* Locality View More Button */
 .localityViewMoreContainer {
   text-align: center;
-  margin-top: 40px;
+  margin-top: 25px;
 }
 
 .localityViewMoreButton {
@@ -152,6 +153,10 @@ align-self: stretch;
   .localityMainTitle {
     font-size: 20px;
   }
+  .localityTitle {
+  font-weight: 500;
+  
+}
   .localitySectionHeader{
     gap: 12px;
     padding-bottom: 20px;

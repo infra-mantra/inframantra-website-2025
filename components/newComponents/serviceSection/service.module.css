@@ -2,7 +2,7 @@
 .servicesSectionWrapper {
 width: 100%;
     margin: 40px 0px; 
-    background: url(https://inframantra.blr1.cdn.digitaloceanspaces.com/60251%201.png);
+    background: url(https://inframantra.blr1.cdn.digitaloceanspaces.com/servicesBgImages/35-min.png);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: bottom;
@@ -32,7 +32,7 @@ width: 100%;
     align-items: center;
     gap: 25px;
     padding: 0% 6%;
-    padding-bottom: 40px!important;
+    padding-bottom: 20px!important;
 }
   
  .servicesSectionTitle {
@@ -133,7 +133,7 @@ width: 100%;
 @media (max-width: 768px) {
 .servicesSectionWrapper{
   margin: 0px 0px;
-  padding: 0px 0px;
+  padding: 15px 0px;
 }
 .serviceCardDescription {
     font-size: 12px;  

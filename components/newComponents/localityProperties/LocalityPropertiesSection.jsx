@@ -69,7 +69,7 @@ export default function LocalityPropertiesSection({ data, loading, selectedCity 
           <div key={locality.name || locality._id || index} className={styles.localitySection}>
             {/* Locality Title */}
             <h3 className={styles.localityTitle}>
-              Property in {locality?.locality?.name || 'Unknown Area'}
+              Properties in {locality?.locality?.name || 'Unknown Area'}
             </h3>
 
             {/* Properties Swiper for this locality */}

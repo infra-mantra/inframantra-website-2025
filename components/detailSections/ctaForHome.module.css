@@ -1,5 +1,5 @@
 .homeCtaMainWrapper{
-    padding: 80px 6%;
+    padding: 50px 6%;
     display: flex;
     width: 100%;
     gap: 25px;
@@ -133,5 +133,10 @@ background-color: none!important;
         padding-right: 0px;
         padding-left: 0px;
     }
+    .homeCtaMainWrapper{
+    padding: 21px 6%;
+    padding-top: 43px;
+   
+}
     
 }

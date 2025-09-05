@@ -6,20 +6,23 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 0% 6%;
+    padding: 1% 6%;
+    margin-top: 40px;
+  
 }
 .testimonialHeadingTextContainer{
     display: block;
     width: 100%;
     justify-content: left;
     align-items: center;
-    margin-top: 5%;
+    margin-top: 2%;
     flex-direction: column;
     padding-bottom: 20px;
 }
 .testimonialHeadingText{
     font-size: 32px;
     font-weight: 600;
+    margin: 0px 0px ;
     text-align: left;
 }
 .testimonialHeadingTextContainer p {
@@ -118,6 +121,8 @@ height: 40px;
 .testimonyArrowBtn {
     display: none!important;
 }
+
+
 @media (max-width: 768px) {
   
 .testimonialHeadingText{
@@ -184,7 +189,20 @@ button.swiper-button-next.testimonyArrowBtn {
 .clientTestimonyCardText{
       margin-top: -23px;
 }
+  .clientTestimonyWrapper {
+    margin-top: 10px;
+  }
 }
+
+@media screen and (min-width:1024px) {
+  .clientTestimonyWrapper {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url(https://inframantra.blr1.cdn.digitaloceanspaces.com/servicesBgImages/35-min.png);
+}
+}
+
+
 
 
 
