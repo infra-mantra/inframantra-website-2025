@@ -4,7 +4,7 @@ import PremiumPicksSection from "./PremiumPicksSection.jsx";
 import LocalitySection from "../localityProperties/LocalityPropertiesSection.jsx";
 import OtherCityPropertiesSection from "../localityProperties/OtherCityProperties.jsx";
 import ServiceSection from '../../newComponents/serviceSection/serviceSection.js';
-
+import AdsBanner from "./AdsBanner.jsx";
 import { useLocationDetection } from './hooks/useLocationDetection'
 import axios from "axios";
 
@@ -86,6 +86,7 @@ export default function PremiumPropertyMainComponent() {
         loading={loading} 
         selectedCity={selectedCity} 
       />
+      <AdsBanner/>
     </>
   );
 }

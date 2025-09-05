@@ -132,7 +132,7 @@ function App({ name, popUpenable = false, onClickOff, text, pdf }) {
                   }}
                   inputMode="numeric"
                   pattern="[0-9]*"
-                  maxLength="10"
+                  minLength="10"
                   required
                 />
               </div>

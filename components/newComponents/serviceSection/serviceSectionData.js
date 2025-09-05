@@ -1,7 +1,7 @@
 const serviceCardDataSection = [
   {
     title: "Consultancy",
-    icon: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/servicesPage/consultancyHome.svg',
+    icon: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/servicesPage/Consultancy.png',
     description:
       "Get comprehensive advice from Inframantra property experts.",
     alt: 'Consultancy Services',
@@ -15,7 +15,7 @@ const serviceCardDataSection = [
   },
   {
     title: "Post-Sales Support",
-    icon: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/servicesPage/HandholdingHome.svg',
+    icon: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/servicesPage/POST%20SALES%20SUPPORT_.png',
     description:
       "From home loans to key-handovers, we take care of everything.",
     alt: 'Post-Sales Support',

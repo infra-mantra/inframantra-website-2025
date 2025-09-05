@@ -68,7 +68,7 @@ function App({name}) {
           toast.success('Form submitted successfully');
           setFormData({ name: '', phoneNumber: '', email: '' });
 
-          if (popUpenable) downloadBrochure(pdf, name);
+          
 
           setTimeout(() => {
             router.push('/thank-you');
@@ -167,7 +167,7 @@ function App({name}) {
                   }}
                   inputMode="numeric"
                   pattern="[0-9]*"
-                  maxLength="10"
+                  minLength="10"
                   required
                 />
               </div>

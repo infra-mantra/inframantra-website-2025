@@ -92,44 +92,5 @@ const Steps = () => {
 export default Steps;
 
 {
-  /* <div className="service-grid">
-          <div className="home-discover-icon">Home Loan</div>
-          <div className="content">
-           <p> Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eum
-            repellat at blanditiis expedita nisi. Illum animi atque hic minima
-            sint dolorum nam voluptatem facilis eos iure rerum at molestiae
-            deleniti impedit aspernatur necessitatibus ipsum, temporibus, quod
-            maxime pariatur enim repudiandae?</p>
-          </div>
-        </div>
-        <div className="service-grid">
-          <div className="home-discover-icon">Property Buying</div>
-          <div className="content">
-           <p> Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eum
-            repellat at blanditiis expedita nisi. Illum animi atque hic minima
-            sint dolorum nam voluptatem facilis eos iure rerum at molestiae
-            deleniti impedit aspernatur necessitatibus ipsum, temporibus, quod
-            maxime pariatur enim repudiandae?</p>
-          </div>
-        </div>
-        <div className="service-grid">
-          <div className="home-discover-icon">Home Interiors</div>
-          <div className="content">
-           <p> Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eum
-            repellat at blanditiis expedita nisi. Illum animi atque hic minima
-            sint dolorum nam voluptatem facilis eos iure rerum at molestiae
-            deleniti impedit aspernatur necessitatibus ipsum, temporibus, quod
-            maxime pariatur enim repudiandae?</p>
-          </div>
-        </div>
-        <div className="service-grid">
-          <div className="home-discover-icon">Home Management</div>
-          <div className="content">
-           <p> Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eum
-            repellat at blanditiis expedita nisi. Illum animi atque hic minima
-            sint dolorum nam voluptatem facilis eos iure rerum at molestiae
-            deleniti impedit aspernatur necessitatibus ipsum, temporibus, quod
-            maxime pariatur enim repudiandae?</p>
-          </div>
-        </div> */
+
 }

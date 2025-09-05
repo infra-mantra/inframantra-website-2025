@@ -5,7 +5,6 @@ export default function PropertyCard({ property ,  location}) {
   console.log("popererer",property)
   return (
     <div className={styles.propertyCard}>
-      {/* Property Image */}
       <div className={styles.propertyImageContainer}>
         <img 
           src={property.imageGallery?.url || 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&h=300&fit=crop&auto=format'}
@@ -17,7 +16,6 @@ export default function PropertyCard({ property ,  location}) {
         />
       </div>
       
-      {/* Property Content */}
       <a href={`/property/${property.slug}`}>
         <div className={styles.propertyContent}>
           <h3 className={styles.propertyTitle}>
@@ -31,7 +29,6 @@ export default function PropertyCard({ property ,  location}) {
           ].filter(Boolean).join(', ')}
         </p>
         
-        {/* Show configuration only if it exists (for locality properties) */}
         {property.configuration && (
           <p className={styles.propertyConfig}>
             {property.configuration}

@@ -1,44 +1,76 @@
-import React, { useEffect, useRef, useState } from 'react';
-import styles from './banner.module.css'; // Assuming you have a CSS module for styles
+import React, { useState, useEffect } from 'react';
+import styles from './banner.module.css';
 
 const BannerVideo = () => {
-  const desktopVideo = 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/webbanner3.png';
-  const placeholderImageUrl = 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/mobile%20bannerimagev3.png';
-
-
-  const videoRef = useRef(null);
-  const [videoLoaded, setVideoLoaded] = useState(false);
-  const [videoError, setVideoError] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(null); 
-  const [videoSrc, setVideoSrc] = useState(true);
-
-  const checkScreenWidth = () => {
-    const newIsDesktop = window.innerWidth >= 768;
-    setIsDesktop(newIsDesktop);
-     setVideoSrc(newIsDesktop ? desktopVideo : placeholderImageUrl);
-  };
+  const [width, setWidth] = useState(0);
 
   useEffect(() => {
-    checkScreenWidth(); // Only runs on the client
-    window.addEventListener('resize', checkScreenWidth);
+    // set initial width on client
+    setWidth(window.innerWidth);
 
+    function handleWindowSizeChange() {
+      setWidth(window.innerWidth);
+    }
+
+    window.addEventListener('resize', handleWindowSizeChange);
     return () => {
-      window.removeEventListener('resize', checkScreenWidth);
+      window.removeEventListener('resize', handleWindowSizeChange);
     };
   }, []);
 
+  const isMobile = width <= 768;
 
- 
+  // Desktop images
+  const desktopImages = [
+    {
+      src: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/revampHomePage/sora.jpg',
+      alt: 'Godrej Sora',
+      className: styles.slideImage1,
+    },
+    {
+      src: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/revampHomePage/tulip%20monsella.jpg',
+      alt: 'Tulip Monsella',
+      className: styles.slideImage2,
+    },
+    {
+      src: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/revampHomePage/vatika%20seven%20elements.jpg',
+      alt: 'Vatika Seven Elements',
+      className: styles.slideImage3,
+    },
+  ];
+
+  // Mobile images
+  const mobileImages = [
+    {
+      src: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/mobilebanner/godrej%20sora.jpg',
+      alt: 'Godrej Sora Mobile',
+      className: styles.slideImage1,
+    },
+    {
+      src: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/mobilebanner/monsella.jpg',
+      alt: 'Tulip Monsella Mobile',
+      className: styles.slideImage2,
+    },
+    {
+      src: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/mobilebanner/seven%20elements.jpg',
+      alt: 'Vatika Seven Elements Mobile',
+      className: styles.slideImage3,
+    },
+  ];
+
+  const imagesToRender = isMobile ? mobileImages : desktopImages;
 
   return (
-    <div
-      className={styles.demoBanner}
-      
-    >
+    <div className={styles.demoBanner}>
       <div className={styles.slideshow}>
-        <div className={`${styles.slideImage} ${styles.slideImage1}`}></div>
-        <div className={`${styles.slideImage} ${styles.slideImage2}`}></div>
-        <div className={`${styles.slideImage} ${styles.slideImage3}`}></div>
+        {imagesToRender.map((img, index) => (
+          <img
+            key={index}
+            src={img.src}
+            alt={img.alt}
+            className={`${styles.slideImage} ${img.className}`}
+          />
+        ))}
       </div>
     </div>
   );
