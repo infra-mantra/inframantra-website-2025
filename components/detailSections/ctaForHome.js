@@ -58,7 +58,7 @@ function App({name}) {
         const action = {
           method: 'POST',
           url: '/enquiry/project',
-          data: { ...formData, captchaToken: token, message },
+          data: { ...formData, captchaToken: token },
           token: false,
         };
 
