@@ -210,5 +210,11 @@ thumbnail: yoast.og_image?.[0]?.url || media.source_url || "",
     console.warn("WP detail fetch error:", err.message);
   }
 
-  return { notFound: true };
+ // ---------------- Soft Fallback ----------------
+  return {
+    props: {
+      allData: null, // <-- no poisoning with notFound:true
+    },
+    revalidate: 30,
+  };
 }
