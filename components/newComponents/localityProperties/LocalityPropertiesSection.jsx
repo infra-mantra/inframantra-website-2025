@@ -33,18 +33,18 @@ export default function LocalityPropertiesSection({ data, loading, selectedCity 
   }
 
   // Filter out localities with no properties
-  const localitiesWithProperties = data.filter(locality => 
-    locality.properties && locality.properties.length > 0
+  const localitiesWithProperties = data.filter(
+    (locality) => locality.properties && locality.properties.length > 0
   );
 
   // Only show the first N localities based on visibleLocalities state
   const displayedLocalities = localitiesWithProperties.slice(0, visibleLocalities);
-  
+
   // Check if there are more localities to show
   const hasMoreLocalities = visibleLocalities < localitiesWithProperties.length;
 
   const handleViewMore = () => {
-    setVisibleLocalities(prev => prev + 2); // Show 2 more localities each time
+    setVisibleLocalities((prev) => prev + 2); // Show 2 more localities each time
   };
 
   const handleViewLess = () => {
@@ -52,7 +52,7 @@ export default function LocalityPropertiesSection({ data, loading, selectedCity 
   };
 
   return (
-    <div  className={styles.localityContainer}>
+    <div className={styles.localityContainer}>
       <div className={styles.localityContentWrapper}>
         {/* Section Header */}
         <div className={styles.localitySectionHeader}>
@@ -76,19 +76,24 @@ export default function LocalityPropertiesSection({ data, loading, selectedCity 
             <div className={styles.localityCarouselContainer}>
               <Swiper
                 modules={[Navigation, Pagination, Autoplay]}
-          
                 spaceBetween={20}
                 navigation={{
                   nextEl: `.locality-next-${index}`,
                   prevEl: `.locality-prev-${index}`,
                 }}
-                 breakpoints={{
-      320: { slidesPerView: 1.2, spaceBetween: 16 },
-      480: { slidesPerView: 1.5, spaceBetween: 16 },
-      768: { slidesPerView: 2.5, spaceBetween: 20 },
-      1024: { slidesPerView: Math.min(3, data.length), spaceBetween: 24 },
-      1200: { slidesPerView: Math.min(3, data.length), spaceBetween: 24 },
-    }}
+                breakpoints={{
+                  320: { slidesPerView: 1.2, spaceBetween: 16 },
+                  480: { slidesPerView: 1.5, spaceBetween: 16 },
+                  768: { slidesPerView: 2.5, spaceBetween: 20 },
+                  1024: {
+                    slidesPerView: Math.min(3, locality.properties.length),
+                    spaceBetween: 24,
+                  },
+                  1400: {
+                    slidesPerView: Math.min(4, locality.properties.length),
+                    spaceBetween: 28,
+                  },
+                }}
                 autoplay={{
                   delay: 4000,
                   disableOnInteraction: false,
@@ -108,15 +113,11 @@ export default function LocalityPropertiesSection({ data, loading, selectedCity 
               <button
                 className={`locality-prev-${index} ${styles.localityNavButton} ${styles.localityNavButtonPrev}`}
                 aria-label="Previous properties"
-              >
-       
-              </button>
+              ></button>
               <button
                 className={`locality-next-${index} ${styles.localityNavButton} ${styles.localityNavButtonNext}`}
                 aria-label="Next properties"
-              >
-             
-              </button>
+              ></button>
             </div>
           </div>
         ))}
@@ -125,14 +126,14 @@ export default function LocalityPropertiesSection({ data, loading, selectedCity 
         {localitiesWithProperties.length > 2 && (
           <div className={styles.localityViewMoreContainer}>
             {hasMoreLocalities ? (
-              <button 
+              <button
                 className={styles.localityViewMoreButton}
                 onClick={handleViewMore}
               >
                 View more Localities
               </button>
             ) : (
-              <button 
+              <button
                 className={styles.localityViewMoreButton}
                 onClick={handleViewLess}
               >

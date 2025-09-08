@@ -42,7 +42,7 @@ export default function PremiumPropertyMainComponent() {
         setError(null);
         
         console.log("🔄 Fetching data for city:", city);
-        const response = await axios.get(`https://apitest.inframantra.com/api/v1/property/citywise/${city}?localityLimit=4`);
+        const response = await axios.get(`http://localhost:5001/api/v1/property/citywise/${city}?localityLimit=4`);
 
         const data = response.data;
         if (data) {
