@@ -129,3 +129,23 @@ ul.wp-block-list li {
   min-height: 0px!important;;
 }
 
+.listingScrollbar{
+  display: flex
+;
+    flex-direction: column;
+    display: flex
+;
+    flex-direction: column;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    height: 100vh;
+    overflow-x: hidden;
+    padding-right: 8px;
+}
+
+
+
+
+
+
+

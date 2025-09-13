@@ -1,0 +1,93 @@
+
+.listHeader {
+    display: flex
+;
+    align-items: center;
+    margin-bottom: 16px;
+    gap: 12px;
+    /* flex-wrap: wrap; */
+    /* width: 100vw; */
+    justify-content: normal;
+ 
+}
+
+
+.searchBar {
+    display: flex
+;
+    align-items: center;
+    border: 1px solid #ddd;
+    padding: 6px 12px;
+    border-radius: 5px;
+    background: #EEE;
+    min-width: 75%;
+}
+
+.searchBar input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+}
+
+.searchBar button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #666;
+}
+
+.sortDropdown {
+  padding: 6px 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  min-width: 20%;
+}
+
+/* ✅ Styling the options (limited by browser support) */
+.sortDropdown option {
+  background: #fff;
+  color: #333;
+  font-size: 14px;
+}
+
+ .listbox{
+    width: 500px;
+    max-width: 100%;
+    /* margin: 20px 0px 0px; */
+    top:7%;
+    padding: 0px;
+    position: absolute;
+    list-style: none;
+    background-color: rgb(255, 255, 255);
+    overflow: auto;
+    max-height: 225px;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+    z-index: 1;
+  }
+  .listbox li{
+    padding: 5px 12px;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  .listbox li span{
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    font-size: 15px;
+    color: rgba(0, 0, 0, 0.6);
+  }
+  .listbox li span svg:hover{
+    color: goldenrod;
+  }

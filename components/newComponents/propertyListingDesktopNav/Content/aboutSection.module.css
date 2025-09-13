@@ -1,0 +1,71 @@
+.contentWrapper{
+border-radius: 5.491px;
+background: #FFF;
+/* width:60%; */
+padding: 1rem;
+box-shadow: 0 0.384px 1.806px 0 rgba(0, 0, 0, 0.35);
+margin: 1rem 2rem;
+margin-bottom: 2rem;
+}
+.headerAbout{
+color: #000;
+font-family: "Lexend Deca";
+font-size: 22px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+margin-bottom: 0px;
+}
+.pageNumberAbout{
+color: rgba(0, 0, 0, 0.35);
+font-family: "Lexend Deca";
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+.aboutSection{
+    color: #000;
+font-family: "Lexend Deca";
+font-size: 15px;
+font-style: normal;
+font-weight: 300;
+line-height: normal;
+}
+.aboutSection {
+  font-size: 15px;
+  color: #444;
+  line-height: 1.6;
+  margin: 0;
+  transition: max-height 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+/* Collapsed state - show only first 3 lines */
+.collapsed {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Limit to 3 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Expanded state - show all text */
+.expanded {
+  display: block;
+}
+
+.readMoreBtn {
+  display: inline-block;
+  margin-top: 10px;
+  background: none;
+  border: none;
+  color: #DCAA4C;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: none
+}
+
+.readMoreBtn:hover {
+  color: #DCAA4C;
+}

@@ -1,0 +1,163 @@
+.containerWrapper {
+  /* width: 45%; */
+  height: fit-content;
+  margin-left: 50px;
+  border-radius: 5px;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  padding: 2rem;
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 2rem;
+}
+
+/* Header buttons */
+.buttonWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+  padding-bottom: 1.5rem;
+}
+
+.filterbtn {
+  color: #0B6E21;
+  font-size: 16px;
+  font-weight: 600;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.resetbtn {
+  color: #000;
+  font-family: 'Lexend Deca', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+
+
+/* Section header (non-collapsible like Location) */
+.sectionTitle {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #000;
+}
+
+/* Collapsible section headers (green with underline) */
+.sectionHeader {
+  margin-top: 1.5rem;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #0B6E21;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.sectionHeader span:last-child {
+  color: #0B6E21;
+  font-size: 2rem;
+}
+
+/* Location tags */
+.locationTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+
+.tag {
+  background-color: #E4F5EA;
+  color: #0B6E21;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.active {
+  
+  color: #0B6E21;
+
+}
+
+/* Checkboxes (shared between all sections) */
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 0.75rem;
+  margin-bottom: 1rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.checkboxItem {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #000;
+  gap: 10px;
+}
+
+.checkboxItem input[type="checkbox"] {
+  accent-color: #0B6E21;
+}
+
+/* Badge inside Configuration section */
+.badge {
+  background-color: #F95C2B;
+  color: white;
+  border-radius: 12px;
+  padding: 2px 8px;
+  font-size: 12px;
+  margin-left: auto;
+}
+
+/* Price range slider section */
+.priceRange {
+  padding-top: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.priceRange input[type="range"] {
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.priceLabels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 0.5rem;
+}
+
+.minMaxInputs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.minMaxInputs input {
+  flex: 1;
+  padding: 5px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+/* Fade-in for expanding content */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}

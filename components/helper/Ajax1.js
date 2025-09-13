@@ -10,6 +10,7 @@ const Ajax1 = async (action) => {
             },
             method: action.method ? action.method : 'GET',
             url: process.env.apiUrl1 + action.url,
+            ...(action.params && { params: action.params }),
             ...(action.data && { data: action.data})
         });
         // if(action.loader === true) {document.querySelector(".cs-loader").classList.remove("show") }

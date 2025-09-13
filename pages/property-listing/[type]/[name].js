@@ -1,40 +1,89 @@
-// pages/property-listing/[type]/[name].js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense, useRef } from 'react';
 import { useRouter } from 'next/router';
-import PropertyListingCard from '../../../components/newComponents/propertyListingDesktopNav/propertyListing/propertyListingCard.jsx';
-import PropertyListingDesktopNav from '../../../components/newComponents/propertyListingDesktopNav/propertyListingDesktopNav.jsx';
-import PropertyListingCardMobile from '../../../components/newComponents/propertyListingPage/propertyListingCardMobile.jsx';
-import CustomBackdrop from '../../../components/newComponents/backdrop/backdrop.jsx';
-import Wrapper from '../../../components/UI/Wrapper';
 
-import PropertyPageFloatingContact from '../../../components/newComponents/propertyData/propertyRightSection/propertyPageSections/propertyPageFloatingContact.jsx';
+// Lazy load components
+const PropertyListingCard = lazy(() =>
+  import('../../../components/newComponents/propertyListingDesktopNav/propertyListing/propertyListingCard.jsx')
+);
+const ListingFilters = lazy(() =>
+  import('../../../components/newComponents/propertyListingDesktopNav/propertyListingSearch/ListingFilters.jsx')
+);
+const SearchBar = lazy(() =>
+  import('../../../components/newComponents/propertyListingDesktopNav/propertyListingSearch/searBar.jsx')
+);
+const PropertyListingCardMobile = lazy(() =>
+  import('../../../components/newComponents/propertyListingPage/propertyListingCardMobile.jsx')
+);
+const CustomBackdrop = lazy(() =>
+  import('../../../components/newComponents/backdrop/backdrop.jsx')
+);
+const Wrapper = lazy(() => import('../../../components/UI/Wrapper'));
+const FaqSection = lazy(() =>
+  import('../../../components/newComponents/propertyListingDesktopNav/Content/faqSection.jsx')
+);
+const Content = lazy(() =>
+  import('../../../components/newComponents/propertyListingDesktopNav/Content/aboutSection.jsx')
+);
+const PropertyPageFloatingContact = lazy(() =>
+  import('../../../components/newComponents/propertyData/propertyRightSection/propertyPageSections/propertyPageFloatingContact.jsx')
+);
 
-const PropertyListingPage = ({ propertyData }) => {
+const PropertyListingPage = () => {
   const router = useRouter();
   const { type, name } = router.query;
+
   const [isDesktop, setIsDesktop] = useState(true);
   const [isMobile, setIsMobile] = useState(true);
-  
-  
-  const checkScreenWidth = () => {
-    setIsDesktop(window.innerWidth >= 769); // Adjust the threshold for desktop here
-    setIsMobile(window.innerWidth <= 768);
-  };
 
-  useEffect(() => {
-    checkScreenWidth();
-    window.addEventListener('resize', checkScreenWidth);
-
-    return () => {
-      window.removeEventListener('resize', checkScreenWidth);
-    };
-  }, []);
+  // ✅ Keep both original and filtered data
+  const [allPropertyData, setAllPropertyData] = useState([]);
+  const [propertyData, setPropertyData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const [backdropOpen, setBackdropOpen] = useState(false);
   const [selectedPropertyName, setSelectedPropertyName] = useState('');
   const [propertyTypeFilter, setPropertyTypeFilter] = useState(null);
   const [priceRangeFilter, setPriceRangeFilter] = useState([1000000, 800000000]);
   const [projectStatusFilter, setProjectStatusFilter] = useState(null);
+
+  const contentRef = useRef(null);
+  const filterRef = useRef(null);
+
+  // ✅ Detect screen size
+  useEffect(() => {
+    const checkScreenWidth = () => {
+      setIsDesktop(window.innerWidth >= 769);
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkScreenWidth();
+    window.addEventListener('resize', checkScreenWidth);
+    return () => window.removeEventListener('resize', checkScreenWidth);
+  }, []);
+
+  // ✅ Sync listing content height with filters
+  useEffect(() => {
+    if (!filterRef.current || !contentRef.current) return;
+
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        contentRef.current.style.height = `${entry.contentRect.height}px`;
+      }
+    });
+
+    observer.observe(filterRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  // ✅ Smooth scroll to top when filters/search change
+  useEffect(() => {
+    if (contentRef.current) {
+      contentRef.current.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
+  }, [type, name, propertyTypeFilter, priceRangeFilter, projectStatusFilter]);
 
   const handleClose = () => {
     setBackdropOpen(false);
@@ -46,85 +95,155 @@ const PropertyListingPage = ({ propertyData }) => {
     setBackdropOpen(true);
   };
 
-  const [fetchedData , setFetchedData] = useState([]);
-  useEffect(() => {
-    setFetchedData(propertyData.data.properties);
-    
-  })
-  const handleFilterChange = (type, value) => {
-    if (type === 'propertyType') {
-      setPropertyTypeFilter(value);
-    } else if (type === 'priceRange') {
-      setPriceRangeFilter(value);
-    } else if (type === 'projectStatus') {
-      setProjectStatusFilter(value);
-    }
+  // ✅ Apply filters on original data
+  const handleFilterChange = (filterType, value) => {
+    console.log('Applying Filter:', filterType, value);
+    setLoading(true)
+
+    const filtered = (allPropertyData || []).filter((property) => {
+      if (filterType === 'city' && value.length > 0) {
+        console.log("5555555555",filterType,value)
+        return value.includes(property.city?.name);
+      }
+      if (filterType === 'unitType' && value.length > 0) {
+        return property.propertyType?.subType?.some((sub) => value.includes(sub));
+      }
+      if (filterType === 'configuration' && value.length > 0) {
+        return property.configurationForSearch?.some((config) =>
+          value.includes(config.toString())
+        );
+      }
+      if (filterType === 'projectStatus' && value.length > 0) {
+        return value.includes(property.status);
+      }
+      if (filterType === 'priceRange' && value.length === 2) {
+        return property.price >= value[0] && property.price <= value[1];
+      }
+      return true;
+    });
+
+    setPropertyData(filtered);
+    setLoading(false)
   };
 
+  // ✅ Sort function
+  const handleSortChange = (sortType) => {
+    console.log('Sorting by:', sortType);
+    setLoading(true)
+    setPropertyData((prevData) => {
+      const sortedData = [...prevData];
+
+      switch (sortType) {
+        case 'priceLowHigh':
+          sortedData.sort((a, b) => (a.priceInFigure || 0) - (b.priceInFigure || 0));
+          break;
+        case 'priceHighLow':
+          sortedData.sort((a, b) => (b.priceInFigure || 0) - (a.priceInFigure || 0));
+          break;
+        case 'newest':
+          sortedData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+          break;
+        case 'oldest':
+          sortedData.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+          break;
+        default:
+          return prevData;
+      }
+
+      return sortedData;
+    });
+    setLoading(true)
+  };
+
+  // ✅ Fetch data from API
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!type || !name) return;
+      setLoading(true);
+      try {
+        const res = await fetch(`${process.env.apiUrl1}/search?q=${name.toString()}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        const data = await res.json();
+        setAllPropertyData(data.hits || []);
+        setPropertyData(data.hits || []);
+      } catch (err) {
+        console.error('Failed to fetch property data:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [type, name]);
 
   return (
-    <Wrapper>
-      {isDesktop ? (
-        <>
-          <PropertyListingDesktopNav
-            currentCitySearch={name}
-            onFilterChange={handleFilterChange}
-            propertyTypeFilter={propertyTypeFilter}
-            priceRangeFilter={priceRangeFilter}
-            projectStatusFilter={projectStatusFilter}
-          />
-          <PropertyListingCard
-            name={decodeURIComponent(name)}
-            type={type}
-            onOpenBackdrop={handleOpen}
-            propertyData={fetchedData} // Pass the fetched property data
-            propertyTypeFilter={propertyTypeFilter}
-            priceRangeFilter={priceRangeFilter}
-            projectStatusFilter={projectStatusFilter}
-          />
-        </>
-      ) : (
-        <PropertyListingCardMobile 
-         
-          propertyData={fetchedData} 
-          onOpenBackdrop={handleOpen} 
-        />
-      )}
-      <CustomBackdrop open={backdropOpen} onClose={handleClose}>
-        <PropertyPageFloatingContact name={selectedPropertyName} />
-      </CustomBackdrop>
-    </Wrapper>
+    <Suspense
+      fallback={
+        <div style={{ padding: '2rem', textAlign: 'center' }}>
+          <div className="loader-container">
+            <div className="spinner" />
+          </div>
+        </div>
+      }
+    >
+      <Wrapper>
+        {isDesktop ? (
+          <div
+            className="Wrapper"
+            style={{
+              display: 'flex',
+              gap: '1rem',
+              overflow: 'hidden',
+            }}
+          >
+            {/* Filter Sidebar */}
+            <div className="listingFilters" ref={filterRef} style={{ padding: '1rem' }}>
+              <ListingFilters onFilterChange={handleFilterChange} />
+            </div>
+
+            {/* Listing Content */}
+            <div
+              className="listingScrollbar"
+              ref={contentRef}
+              style={{
+                flex: 1,
+                overflowY: 'auto',
+                marginTop: '1rem',
+                scrollBehavior: 'smooth',
+                willChange: 'transform',
+                WebkitOverflowScrolling: 'touch',
+                scrollbarWidth: 'none',
+              }}
+            >
+              <SearchBar onSearch={setPropertyData} onSortChange={handleSortChange} />
+              <Content />
+              <PropertyListingCard
+                name={decodeURIComponent(name)}
+                type={type}
+                onOpenBackdrop={handleOpen}
+                propertyData={propertyData}
+                propertyTypeFilter={propertyTypeFilter}
+                priceRangeFilter={priceRangeFilter}
+                projectStatusFilter={projectStatusFilter}
+                loading={loading}
+              />
+              <FaqSection />
+            </div>
+          </div>
+        ) : (
+          <PropertyListingCardMobile propertyData={propertyData} onOpenBackdrop={handleOpen} />
+        )}
+
+        <CustomBackdrop open={backdropOpen} onClose={handleClose}>
+          <PropertyPageFloatingContact name={selectedPropertyName} />
+        </CustomBackdrop>
+      </Wrapper>
+    </Suspense>
   );
 };
-
-export async function getStaticPaths() {
-  const res = await fetch(`${process.env.apiUrl1}/property/locationData`);
-  const properties = await res.json();
-
-  const paths = properties.data.map((property) => ({
-    params: { type: property.type, name: property.name },
-  }));
-
-  return { paths, fallback: 'blocking' };
-}
-
-export async function getStaticProps({ params }) {
-  const { type, name } = params;
-
-  const res = await fetch(`${process.env.apiUrl1}/property/location`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ type, name, page: 1, limit: 70 }),
-  });
-  const data = await res.json();
-  return {
-    props: {
-      propertyData: data,
-    },
-    revalidate: 10,
-  };
-}
 
 export default PropertyListingPage;

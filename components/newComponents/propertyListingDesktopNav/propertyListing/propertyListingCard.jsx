@@ -4,11 +4,10 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import styles from './propertyListingCard.module.css'
 
-const Mapho = dynamic(() => import('../maps/maps'), { ssr: false });
 
 const propertyListCardStyles = {
   card: {
-    width: '100%',
+    
     height: '32vh',
     marginBottom: '20px',
     borderRadius: '10px',
@@ -50,6 +49,7 @@ function PropertyListingCard({
   priceRangeFilter,
   projectStatusFilter,
   propertyData,
+  loading
 }) {
   const [mapCenter, setMapCenter] = useState({ lat: 28.4595, lng: 77.0266 });
   const [currentZoom, setCurrentZoom] = useState(12);
@@ -67,18 +67,7 @@ function PropertyListingCard({
       );
     }
 
-    if (priceRangeFilter) {
-      filteredProperties = filteredProperties.filter((property) => {
-        const priceInCr = parseFloat(
-          property.startingPrice.replace('₹', '').replace(' Cr', '').replace(/,/g, '')
-        );
-        const priceInNumber = priceInCr * 10000000;
-        return (
-          priceInNumber >= priceRangeFilter[0] &&
-          priceInNumber <= priceRangeFilter[1]
-        );
-      });
-    }
+
 
     if (projectStatusFilter) {
       filteredProperties = filteredProperties.filter(
@@ -95,24 +84,27 @@ function PropertyListingCard({
     setCurrentPage(page);
   };
 
-  const points = fetchedProperties.map((property) => ({
-    lat: property.coordinates.lat,
-    lng: property.coordinates.lng,
-    key: property._id,
-    name: property.name,
-    image: property.imageGallery[0].url,
-    location: `${property.subLocality.name}, ${property.locality.name}, ${property.city.name}`,
-    price: property.startingPrice,
-  }));
+
   const handleViewMorePropertyClick = (id) => {
     router.push(`/property/${id}`);
   };
+  if(loading){
+    return (
+      <>
+       <div style={{ padding: '2rem', textAlign: 'center' }}>
+          <div className="loader-container">
+            <div className="spinner" />
+          </div>
+        </div>
+      </>
+    )
+    
+  }
 
   return (
     <div className={styles.propertyListingCardWrapper}>
       <div className={styles.propertyListPageSectionFlex}>
         <div className={styles.propertyListPageLeftSection}>
-          <h3>Properties In {propertyData[0]?.city?.name}</h3>
           {fetchedProperties.length > 0 ? fetchedProperties
               .slice((currentPage - 1) * 10, currentPage * 10)
               .map((prop) => (
@@ -260,9 +252,7 @@ function PropertyListingCard({
             ))}
           </div>
         </div>
-        <div className={styles.propertyListPageRightSection}>
-          <Mapho center={mapCenter} zoom={currentZoom} points={points} setMapCenter={setMapCenter} setZoom={setCurrentZoom} />
-        </div>
+      
       </div>
     </div>
   );
