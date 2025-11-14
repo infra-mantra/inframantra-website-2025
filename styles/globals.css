@@ -138,7 +138,7 @@ ul.wp-block-list li {
     flex-direction: column;
     overflow-y: auto;
     scroll-behavior: smooth;
-    height: 100vh;
+   
     overflow-x: hidden;
     padding-right: 8px;
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Ajax1 from '../../helper/Ajax1';
 import { debounce } from 'lodash';
@@ -18,9 +18,12 @@ function CustomizedHook({ onSearch }) {
   const [isDesktop, setIsDesktop] = useState(false);
   const router = useRouter();
 
-
   useEffect(() => {
-    const handleResize = () => setIsDesktop(window.innerWidth >= 769);
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 769);
+    };
+
+    handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -29,7 +32,7 @@ function CustomizedHook({ onSearch }) {
     if (!value.trim()) return;
 
     try {
-       const response = await Ajax1({
+      const response = await Ajax1({
         url: `/suggest`,
         method: 'GET',
         params: { q: value }
@@ -41,66 +44,67 @@ function CustomizedHook({ onSearch }) {
     }
   }, 300);
 
-  // Input change handler
   const handleInputChange = (e) => {
     const value = e.target.value;
     setInputValue(value);
     fetchSuggestions(value);
   };
 
-  const handleSearchClick=()=>{
-    router.push(`property-listing/search/${inputValue}`)
-  }
-
-
-  // Handle suggestion selection
-  const handleSelect = (option) => {
-    let encodedTitle = encodeURIComponent(option.title.split(',')[0]);
-    encodedTitle = slugify(option.title.split(',')[0])
-
-
-    switch(option.type){
-     case "property":
-       router.push(`/property/${option.slug}`);
-       break;
-    case "locality":
-       router.push(`property-listing/${option.type}/${encodedTitle}`)
-       break;
-    case "subLocality":
-        router.push(`property-listing/${option.type}/${encodedTitle}`)
-       break;
-    case "city":
-         router.push(`property-listing/${option.type}/${encodedTitle}`)
-       break;
-    case "state":
-         router.push(`property-listing/${option.type}/${encodedTitle}`)
-      break;
+  const handleSearchClick = () => {
+    if (inputValue.trim()) {
+      router.push(`property-listing/search/${inputValue}`);
     }
-  
+  };
+
+  const handleSelect = (option) => {
+    let encodedTitle = slugify(option.title.split(',')[0]);
+
+    switch (option.type) {
+      case 'property':
+        router.push(`/property/${option.slug}`);
+        break;
+      case 'locality':
+      case 'subLocality':
+      case 'city':
+      case 'state':
+        router.push(`property-listing/${option.type}/${encodedTitle}`);
+        break;
+    }
+
     setInputValue(option.title);
     setSuggestions([]);
-    onSearch(option); 
+    onSearch(option);
   };
 
   return (
     <div className={styles.root}>
-      <div className={styles.inputWrapper}>
-        <input
-          type="text"
-          placeholder="Search By Property Name or Location"
-          value={inputValue}
-          onChange={handleInputChange}
-        />
-        {!isDesktop && <IoSearchSharp className={styles.searchIcon}  />}
-         { isDesktop && ( <Button
-                width="14%"
-                otherStyles={{ height: '50px', fontSize: '22px', borderRadius: '5px' }}
-                btnText='Search'
-                onClick={handleSearchClick}
-              />
-         )
-         }
-      </div>
+<div className={styles.inputWrapper}>
+  <input
+    type="text"
+    placeholder="Search By Property Name or Location"
+    value={inputValue}
+    onChange={handleInputChange}
+    onKeyDown={(e) => e.key === 'Enter' && handleSearchClick()}
+  />
+
+  {!isDesktop && (
+    <IoSearchSharp
+      className={styles.searchIcon}
+      onClick={handleSearchClick}
+      size={22}
+    />
+  )}
+
+  {isDesktop && (
+    <Button
+      width="14%"
+      otherStyles={{ height: '50px', fontSize: '22px', borderRadius: '5px' }}
+      btnText="Search"
+      onClick={handleSearchClick}
+    />
+  )}
+</div>
+
 
       {suggestions.length > 0 && inputValue && (
         <ul className={styles.listbox}>

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './PropertyCard.module.css';
 
-export default function PropertyCard({ property ,  location}) {
+export default function PropertyCard({ property}) {
   return (
     <div className={styles.propertyCard}>
        <a href={`/property/${property.slug}`}>

@@ -7,53 +7,19 @@ import { RoofingOutlined as RoofingOutlinedIcon } from '@mui/icons-material';
 import { MapOutlined as MapOutlinedIcon } from '@mui/icons-material';
 import { RoomOutlined as RoomOutlinedIcon } from '@mui/icons-material';
 import { useRouter } from 'next/router';
+import SortDropdown from './propertyListingDropdownComponents/properListingSortBy';
 import { slugify } from '../../../../utils/slugify';
+import { colors } from '@mui/material';
 
-function SearchBar({ onSearch, onSortChange }) {
+function SearchBar({ onSearch, onSortChange , isDesktop , isMobile,handleCloseFilterToggle}) {
   const router = useRouter();
 
   const [searchValue, setSearchValue] = useState('');
   const [sortValue, setSortValue] = useState('relevance');
   const [desktop, setDesktop] = useState(false);
+  
   const [suggested, setSuggestions] = useState([]);
-
-  // ✅ Search API Call
-  const fetchData = async (query) => {
-    if (!query) return;
-    debugger;
-    try {
-      const res = await fetch(`${process.env.apiUrl1}/search?q=${encodeURIComponent(query)}`, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-      });
-      const data = await res.json();
-      console.log(data)
-      onSearch?.(data.hits || []);
-    } catch (err) {
-      console.error('Failed to fetch property data:', err);
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    fetchData(searchValue)
-    setSuggestions([]);
-  };
-
-  // ✅ Handle sort change
-  const handleSortChange = (e) => {
-    const newSort = e.target.value;
-    setSortValue(newSort);
-    onSortChange?.(newSort);
-  };
-
-  // ✅ Detect Desktop vs Mobile
-  useEffect(() => {
-    const handleResize = () => setDesktop(window.innerWidth >= 769);
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+    console.log(isMobile,isDesktop)
 
   // ✅ Debounced suggestions fetch
   const fetchSuggestions = useCallback(
@@ -75,6 +41,28 @@ function SearchBar({ onSearch, onSortChange }) {
     }, 300),
     []
   );
+
+
+  const handleSubmit = (e) => {
+   
+    e.preventDefault();
+    if (!searchValue.trim()) return;
+
+    const encodedSearch = slugify(searchValue, { lower: true });
+    router.push(`/property-listing/search/${encodedSearch}`);
+      setSuggestions([]);
+    setSuggestions([]);
+    fetchSuggestions.cancel();
+  };
+
+
+
+  useEffect(() => {
+    const handleResize = () => setDesktop(window.innerWidth >= 769);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleInputChange = (e) => {
     const value = e.target.value;
@@ -101,26 +89,37 @@ function SearchBar({ onSearch, onSortChange }) {
 
     setSearchValue(option.title);
     setSuggestions([]);
+    fetchSuggestions.cancel(); // cancel pending suggestions
   };
+
+  const handleSortChange = (sortValue) => {
+    // const newSort = e.target.value;
+    setSortValue(sortValue);
+    onSortChange?.(sortValue);
+  };
+
 
   return (
     <div className={styles.listHeader}>
       {/* 🔎 Search Input */}
       <form className={styles.searchBar} onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={searchValue}
-          onChange={handleInputChange}
-          placeholder="Search By Property Name or Location"
-        />
+      <input
+  type="text"
+  value={searchValue}
+  onChange={handleInputChange}
+  onKeyDown={(e) => e.key === 'Enter' && handleSubmit(e)} // ✅ Correct implementation
+  placeholder="Search By Property Name or Location"
+/>
         <button type="submit">
-          <IoSearchSharp size={20} />
+          <IoSearchSharp size={20}  />
+        
         </button>
+       
       </form>
+       {isMobile && ( <div class="ftr" onClick={handleCloseFilterToggle}><span style={{color:"rgb(11, 110, 33)"}}>Filters</span><img src="/icons/fiterIconGreen.svg"  class="ftrIcon" / ></div>)} 
 
-      {/* 💡 Suggestions Dropdown */}
       {suggested.length > 0 && searchValue && (
-        <ul className={styles.listbox}>
+       <ul className={`${styles.listbox} mts`}>
           {suggested.map((option, index) => (
             <li key={index} onClick={() => handleSelect(option)}>
               <span>
@@ -137,18 +136,7 @@ function SearchBar({ onSearch, onSortChange }) {
         </ul>
       )}
 
-      {/* ⬇️ Sort Dropdown */}
-      <select
-        className={styles.sortDropdown}
-        value={sortValue}
-        onChange={handleSortChange}
-      >
-        <option value="relevance">SORT BY</option>
-        <option value="priceLowHigh">Price: Low to High</option>
-        <option value="priceHighLow">Price: High to Low</option>
-        <option value="newest">Newest First</option>
-        <option value="oldest">Oldest First</option>
-      </select>
+     <SortDropdown onSortChange={handleSortChange} defaultValue={sortValue} />
     </div>
   );
 }

@@ -10,8 +10,9 @@
     justify-content: normal;
  
 }
-
-
+.mts{
+   top: 6%;
+}
 .searchBar {
     display: flex
 ;
@@ -30,6 +31,8 @@
   background: transparent;
   font-size: 14px;
 }
+
+ 
 
 .searchBar button {
   background: none;
@@ -57,11 +60,10 @@
   font-size: 14px;
 }
 
+
  .listbox{
     width: 500px;
     max-width: 100%;
-    /* margin: 20px 0px 0px; */
-    top:7%;
     padding: 0px;
     position: absolute;
     list-style: none;
@@ -91,3 +93,49 @@
   .listbox li span svg:hover{
     color: goldenrod;
   }
+  .mts{
+    top:6%
+  }
+
+@media only screen and (max-width: 768px) {
+
+  .mts{
+    top:14%
+  }
+  
+.searchBar {
+   width: 75%;
+  justify-content: center;
+  border-radius: 9px;
+  padding: 4px 8px;
+  
+}
+.searchBar input {
+  font-size: 12px;
+}
+.ftr{
+    display: flex;
+    flex-direction: column;
+        justify-content: center;
+        align-items: center;
+}
+.ftrIcon{
+    height: 1.3rem;
+    width: 3rem;
+}
+
+.sortDropdown{
+    position: absolute;
+    top: 9rem;
+    right: 21px;
+    width: 31%;
+    margin-left: 1rem;
+}
+.listHeader{
+  justify-content: center;
+  margin-top: 5rem;
+}
+
+
+
+}

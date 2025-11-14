@@ -74,9 +74,6 @@ function Home({allData}) {
     }
   };
 
-  // console.log("locality", allData.locality);
-
-  // console.log("From New Inframantra MAin");
 
 
 

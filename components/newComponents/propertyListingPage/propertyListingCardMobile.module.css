@@ -28,8 +28,8 @@
     box-sizing: border-box;
     position: absolute;
     width: 30%;
-    left: 0%;
-    top: 0%;
+    left: 2%;
+    top: 5%;
     color: rgb(255, 255, 255);
     font-size: 15px;
     font-weight: 700;
@@ -42,12 +42,89 @@
     border-color: initial;
     border-image: initial;
     padding: 0px;
-    background: rgb(220, 170, 76);
-    border-radius: 5px;
+
+
+    border-radius: 2.783px;
+background: #0CA92E;
+box-shadow: 0 0 3.71px 0 rgba(0, 0, 0, 0.25);
+}
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 25px 0;
 }
 
-/* Property Listing Card  Mobile */
+.paginationCircle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid #d4af37; /* gold border */
+  background: #fff;
+  color: #333;
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
 
+.paginationCircle:hover {
+  background: #f7f3e9;
+}
+
+.activePage {
+  background: #f7f3e9;
+  border: 2px solid #d4af37;
+  color: #d4af37;
+  font-weight: 600;
+}
+
+.paginationArrow {
+    border: none;
+    background: transparent;
+    color: #d4af37;
+    font-size: 5rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: color 0.3s 
+ease;
+}
+
+.paginationArrow:hover {
+  color: #b89025;
+}
+
+.paginationArrow:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+
+/* Property Listing Card  Mobile */
+.clampTwoLines {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Number of lines to show */
+  -webkit-box-orient: vertical;
+  margin: 0px 0px;
+
+color: #000;
+font-family: "Lexend Deca";
+font-size: 13px;
+font-style: normal;
+font-weight: 300;
+line-height: normal;
+}
+
+.description{
+  width: 95%;
+
+
+}
 
 
 .propertyListPageLeftSection {
@@ -183,6 +260,11 @@
     background: #fff;
     border: 0.5px solid rgb(221, 219, 219);
   }
+  .propertyListingCardMobile {
+ 
+  box-shadow: 0 0 3.525px 0.928px rgba(0, 0, 0, 0.25);
+   
+}
 
  
  
@@ -343,7 +425,7 @@
 @media screen and (max-width: 768px) {
     .propertyListingCardMobile {
         height: auto;
-        width: 85%;
+        width: 92%;
         flex-direction: column;
         padding: 0px;
         position: relative;
@@ -526,24 +608,24 @@
   display: flex;
   align-items: center;
 }
+
+
+.searchbutton:hover {
+  background: #f5b800 !important;
+}
+
 .searchbutton {
   background: #cea24b;
   color: white;
   border: none;
   padding: 10px 20px;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 10px;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 5px;
 }
-
-.searchbutton:hover {
-  background: #f5b800 !important;
-}
-
-
 @media (max-width: 768px) {
   .propertyPageListNavWrapper {
     height: 8vh;
@@ -552,6 +634,12 @@
     justify-content: space-around;
     align-items: center;
     overflow: visible;
+  }
+  .searchbutton {
+    width: 50%;
+    font-size: 12px;
+   justify-content: center;
+
   }
 
   .propertyListingSearchBarWrapper {
@@ -577,12 +665,19 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    margin-bottom: 10%;
+    margin-bottom: 5%;
+    margin-top: 1rem;
+    gap:1rem
   }
       .propertyListPageMobileDetailLocation > * {
         margin: 0;
         font-size: 12px;
-        font-weight: 500;
+        font-weight: 300;
+    }
+    .propertyListPageMobileDetailLocation > h3 {
+        margin: 0;
+        font-size: 12px;
+      
     }
 
   .propertyListPageSectionHeaderFlex {
@@ -622,6 +717,7 @@
 
   .propertyListPageMobileDetailLocation > p {
     font-size: 12px;
+    color:#0B6E21
   }
 
   .propertyListPageSectionHeaderLocation {
@@ -646,9 +742,11 @@
     border-radius: 5px;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
+    padding: 0px 9px;
     width: 95%;
+
   }
 
 
@@ -659,9 +757,10 @@
   .propertyListPageMobileDetailBtnWrapper {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: flex-end;
     align-items: center;
     width: 95%;
+    gap:10px;
   }
 
   .propertyListPageMobileDetailOverviewValueFlex {

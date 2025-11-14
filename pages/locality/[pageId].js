@@ -39,7 +39,6 @@ const PropertyListingPage = ({}) => {
 
     const fetchData = async (url, data) => {
       try {
-        debugger
         const response = await Ajax1({
           method: 'POST',
           url: url,

@@ -78,7 +78,7 @@ function App({ name, popUpenable = false, onClickOff, text, pdf }) {
     const timer = setTimeout(() => {
       setIsAnimating(true);
       setIsPopupOpen(true);
-    }, 3);
+    }, 10000);
 
     return () => clearTimeout(timer);
   }, []);

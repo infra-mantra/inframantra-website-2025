@@ -10,6 +10,7 @@
   margin-bottom: 2rem;
 }
 
+
 /* Header buttons */
 .buttonWrapper {
   display: flex;
@@ -79,18 +80,38 @@
 }
 
 .tag {
-  background-color: #E4F5EA;
-  color: #0B6E21;
   padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 14px;
   cursor: pointer;
-}
-.active {
-  
-  color: #0B6E21;
+  border-radius: 5px;
+background: #FFF;
+box-shadow: 0 0 4.2px 0 rgba(0, 0, 0, 0.20);
+color: rgba(0, 0, 0, 0.76);
 
+font-family: Inter;
+font-size: 14px;
+font-style: normal;
+font-weight: 300;
+line-height: normal;
 }
+
+.active {
+  color: white;
+}
+.arrowIcon {
+  font-size: 1rem;
+  color: #0b6e21;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.rotateDown {
+  transform: rotate(0deg);
+}
+
+.rotateUp {
+  transform: rotate(180deg);
+}
+
 
 /* Checkboxes (shared between all sections) */
 .checkboxGroup {
@@ -124,40 +145,514 @@
   margin-left: auto;
 }
 
-/* Price range slider section */
-.priceRange {
-  padding-top: 0.75rem;
-  margin-bottom: 1rem;
+/* --- PRICE RANGE --- */
+.priceRangeContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
 
-.priceRange input[type="range"] {
+.sliderWrapper {
+  position: relative;
   width: 100%;
-  margin-bottom: 0.5rem;
+  height: 6px;
+}
+
+.sliderTrack {
+  width: 100%;
+  height: 1.2rem;
+  border-radius: 5px;
+}
+
+.thumb {
+  position: absolute;
+  width: 100%;
+  pointer-events: none;
+  appearance: none;
+  height: 1rem;
+  background: transparent;
+}
+
+.thumb::-webkit-slider-thumb {
+  appearance: none;
+  pointer-events: all;
+  width: 2.5ch;
+  height: 2.5rem;
+  border-radius: 50%;
+  background-color: #0b6e21;
+  border: 3px solid #fff;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
 }
 
 .priceLabels {
   display: flex;
   justify-content: space-between;
-  font-size: 14px;
-  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+  color: #000;
 }
 
-.minMaxInputs {
+.priceInputs {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 0.5rem;
 }
 
-.minMaxInputs input {
+.priceInputs input {
   flex: 1;
-  padding: 5px 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 12px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 0.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #000;
+  background-color: #fff;
 }
 
+.dash {
+  font-weight: bold;
+  color: #aaa;
+}
+
+
+/* ✅ Mobile Toggle Button */
+.mobileToggleBtn {
+  display: inline-block;
+  background: #0070f3;
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+/* Common button style for reset */
+.resetButton {
+  background-color: #ffffff; 
+  border: 1px solid #0b6e21; 
+  color: #0b6e21; 
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  box-sizing: border-box; 
+}
+
+.resetButton:hover {
+  background-color: #095a1a; 
+  color: #ffffff; 
+  border: 1px solid #095a1a; 
+}
+
+
+
+
+@media (min-width: 769px) {
+  .mobileToggleBtn {
+    display: none;
+  }
+}
 /* Fade-in for expanding content */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-5px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+
+
+/* ✅ Mobile Header */
+.mobileHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 0.8rem;
+  margin-bottom: 1.2rem;
+}
+
+.mobileTitle {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #0b6e21;
+}
+
+.resetMobileBtn {
+  background: none;
+  border: none;
+  color: #000;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #000;
+}
+
+/* ✅ Hide Drawer on Desktop */
+
+
+
+@media (max-width: 768px) {
+  .mobileDrawer {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+    transition: right 0.3s ease-in-out;
+    z-index: 1000;
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+
+  .mobileDrawer.open {
+    right: 0;
+  }
+
+  .mobileDrawer.cls {
+    right: -100% ;
+   
+  }
+  .containerWrapper {
+  /* width: 45%; */
+  height: fit-content;
+  margin-left: 50px;
+  border-radius: 5px;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  padding: 2rem;
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 2rem;
+}
+
+
+/* Header buttons */
+.buttonWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+  padding-bottom: 1.5rem;
+}
+
+.filterbtn {
+  color: #0B6E21;
+  font-size: 16px;
+  font-weight: 600;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.resetbtn {
+  color: #000;
+  font-family: 'Lexend Deca', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+
+
+/* Section header (non-collapsible like Location) */
+.sectionTitle {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #000;
+}
+
+/* Collapsible section headers (green with underline) */
+.sectionHeader {
+  margin-top: 1.5rem;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #0B6E21;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.sectionHeader span:last-child {
+  color: #0B6E21;
+  font-size: 2rem;
+}
+
+/* Location tags */
+.locationTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+
+.tag {
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+background: #FFF;
+box-shadow: 0 0 4.2px 0 rgba(0, 0, 0, 0.20);
+color: rgba(0, 0, 0, 0.76);
+
+font-family: Inter;
+font-size: 14px;
+font-style: normal;
+font-weight: 300;
+line-height: normal;
+}
+
+.active {
+  background-color: #0B6E21;
+  color: white;
+}
+.arrowIcon {
+  font-size: 1rem;
+  color: #0b6e21;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.rotateDown {
+  transform: rotate(0deg);
+}
+
+.rotateUp {
+  transform: rotate(180deg);
+}
+
+
+/* Checkboxes (shared between all sections) */
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 0.75rem;
+  margin-bottom: 1rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.checkboxItem {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #000;
+  gap: 10px;
+}
+
+.checkboxItem input[type="checkbox"] {
+  accent-color: #0B6E21;
+}
+
+/* Badge inside Configuration section */
+.badge {
+  background-color: #F95C2B;
+  color: white;
+  border-radius: 12px;
+  padding: 2px 8px;
+  font-size: 12px;
+  margin-left: auto;
+}
+
+/* --- PRICE RANGE --- */
+.priceRangeContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.sliderWrapper {
+  position: relative;
+  width: 100%;
+  height: 6px;
+}
+
+.sliderTrack {
+  width: 100%;
+  height: 1.2rem;
+  border-radius: 5px;
+}
+
+.thumb {
+  position: absolute;
+  width: 100%;
+  pointer-events: none;
+  appearance: none;
+  height: 1rem;
+  background: transparent;
+}
+
+.thumb::-webkit-slider-thumb {
+  appearance: none;
+  pointer-events: all;
+  width: 2.5ch;
+  height: 2.5rem;
+  border-radius: 50%;
+  background-color: #0b6e21;
+  border: 3px solid #fff;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+.priceLabels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+  color: #000;
+}
+
+.priceInputs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.priceInputs input {
+  flex: 1;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 0.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #000;
+  background-color: #fff;
+}
+
+.dash {
+  font-weight: bold;
+  color: #aaa;
+}
+
+
+/* ✅ Mobile Toggle Button */
+.mobileToggleBtn {
+  display: inline-block;
+  background: #0070f3;
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+@media (min-width: 769px) {
+  .mobileToggleBtn {
+    display: none;
+  }
+}
+/* Fade-in for expanding content */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+
+/* ✅ Mobile Header */
+.mobileHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 0.8rem;
+  margin-bottom: 1.2rem;
+}
+
+.mobileTitle {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #0b6e21;
+}
+
+.resetMobileBtn {
+  background: none;
+  border: none;
+  color: #000;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #000;
+}
+
+/* ✅ Hide Drawer on Desktop */
+
+}
+
+@media (max-width: 768px) {
+  .mobileDrawer {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+    transition: right 0.3s ease-in-out;
+    z-index: 1000;
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+
+  .mobileDrawer.open {
+    right: 0;
+  }
+
+  .mobileDrawer.cls {
+    right: -100% ;
+   
+  }
+  .mobileDrawer {
+  transform: translateX(100%);      /* hidden */
+  transition: transform 0.32s ease;
+}
+.mobileDrawer.open {
+  transform: translateX(0);        /* visible */
+}
+.mobileDrawer.cls {
+  transform: translateX(100%);
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+

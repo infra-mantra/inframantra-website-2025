@@ -15,7 +15,11 @@ const Wrapper = (props) => {
     keyword = 'Infra Mantra',
     image = 'https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/Inframantra-Web-OG-Image.jpg',
     location: metaLoc = 'Infra Mantra',
+    seo ="index, follow" 
   } = props;
+ 
+
+
 
   const router = useRouter();
   const pathname = router.pathname;
@@ -103,7 +107,7 @@ const Wrapper = (props) => {
     <div className="body-wrapper">
       <Head>
         <title>{title}</title>
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content={seo} />
         <meta name="description" content={description} />
         <meta name="keywords" content={keyword} />
         <meta name="location" content={metaLoc} />

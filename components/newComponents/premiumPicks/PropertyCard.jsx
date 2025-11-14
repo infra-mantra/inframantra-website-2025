@@ -1,4 +1,5 @@
 import styles from './premiumPicks.module.css';
+import { useRouter } from 'next/router';
 
 export default function PropertyCard({ property }) {
   const imageUrl = property.imageGallery?.url || 
@@ -14,12 +15,21 @@ export default function PropertyCard({ property }) {
   const handleImageError = (e) => {
     e.target.src = 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&h=300&fit=crop&auto=format';
   };
+  const router = useRouter();
+
+const handleNavigateIndividualProperty = () => {
+  if (!property?.slug) {
+    console.error("❌ Property slug is missing, cannot navigate!");
+    return;
+  }
+
+  router.push(`/property/${property.slug}`);
+};
 
   return (
     
-      
-  
-    <div className={styles.propertyCard}>
+    <>
+    <div className={styles.propertyCard} onClick={handleNavigateIndividualProperty}>
       <div className={styles.propertyImageContainer}>
         <img 
           src={imageUrl} 
@@ -43,6 +53,8 @@ export default function PropertyCard({ property }) {
         )}
       </div>
     </div>
+    
+    </>
   
   );
 }

@@ -93,6 +93,41 @@
   align-items: flex-end;
   width: 100%;
 }
+.clampTwoLines {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Number of lines to show */
+  -webkit-box-orient: vertical;
+  margin: 0px 0px;
+
+color: #000;
+font-family: "Lexend Deca";
+font-size: 13px;
+font-style: normal;
+font-weight: 300;
+line-height: normal;
+}
+
+.description{
+  width: 95%;
+
+
+}
+.listingDetailRow {
+  font-size: 12px;
+  color: #000;
+  margin: 0.5rem 0;
+  display: flex;
+  align-items: center;
+}
+
+.listingDetailValue {
+  margin-left: 1rem;
+  font-weight: 500;
+  color: #000;
+}
+
 
 .propertyListingCardHeaderFlex {
   display: flex;
@@ -105,10 +140,13 @@
 .propertyListingCardHeaderFlex > h4 {
   margin: 0;
   font-size: 20px;
+  font-weight: 500;
 }
 
 .propertyListingCardRightSection > p {
   margin: 0;
+ color: rgba(0, 0, 0, 0.40);
+
 }
 
 .propertyListingCardRightSectionGridContainer {
@@ -125,13 +163,25 @@
 }
 
 .propertyListingCardRightSectionDescription {
-  font-size: 15px;
   width: 100%;
-  font-weight: 600;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Limit to 3 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: #000;
+
+font-family: "Lexend Deca";
+font-size: 15px;
+font-style: normal;
+font-weight: 300;
+line-height: normal;
+
 }
 
 .propertyListingCardRightSectionLocation {
   font-size: 15px;
+
 }
 
 .propertyPageListingPaginationWrapper {
@@ -148,26 +198,60 @@
   border-radius: 50%;
   border: 1px solid #b8b8b8;
 }
-.pagination-button.active{
-  border: 1px solid #e7b554;
-  color: #e7b554;
-}
- .pagination-buttons{
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  font-family: sans-serif;
-  padding: 25px;
-  background: #fff;
-  color: #111;
+.paginationContainer {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 10px;
+  margin: 25px 0;
 }
-.pagination-buttons {
+
+.paginationArrow {
+    border: none;
+    background: transparent;
+    color: #d4af37;
+    font-size: 5rem;
+    cursor: pointer;
+    transition: color 0.3s 
+ease;
+    margin-bottom: 1.2rem;
+}
+
+.paginationArrow:hover {
+  color: #b89025;
+}
+
+.paginationArrow:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.paginationCircle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid #d4af37; /* gold border */
+  background: #fff;
+  color: #333;
+  font-size: 15px;
   display: flex;
+  justify-content: center;
   align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
+
+.paginationCircle:hover {
+  background: #f7f3e9;
+}
+
+.activePage {
+  background: #f7f3e9;
+  border: 2px solid #d4af37;
+  color: #d4af37;
+  font-weight: 600;
+}
+
 
 
 @media (max-width: 768px) {
@@ -244,7 +328,11 @@
   .propertyListPageMobileDetailLocation > h4 {
     font-weight: 800;
   }
-
+ .propertyListPageMobileDetailLocation > h3 {
+    color:#000;
+            font-size: 18px;
+        font-weight: 700;
+  }
   .propertyListPageMobileDetailLocation > p {
     font-size: 12px;
   }
@@ -284,7 +372,7 @@
   .propertyListPageMobileDetailBtnWrapper {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: flex-end;
     align-items: center;
     width: 95%;
   }

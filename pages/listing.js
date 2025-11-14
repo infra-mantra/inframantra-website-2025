@@ -88,7 +88,7 @@ const PropertyListingPage = ({}) => {
             projectStatusFilter={projectStatusFilter}
           />
           <PropertyListingCard
-            // name={decodeURIComponent(propertyDataSet[0]?.city?.name)}
+            name={decodeURIComponent(propertyDataSet[0]?.city?.name)}
             type={type}
             onOpenBackdrop={handleOpen}
             propertyData={propertyDataSet} // Pass the fetched property data

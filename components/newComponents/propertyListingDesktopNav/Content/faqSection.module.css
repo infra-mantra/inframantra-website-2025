@@ -60,3 +60,11 @@ background: rgba(220, 170, 76, 0.15);
   color: #555;
   line-height: 1.5;
 }
+
+
+@media screen and (max-width:768px) {
+  .faqHeading {
+  font-size: 1.2rem;
+
+  }
+}
