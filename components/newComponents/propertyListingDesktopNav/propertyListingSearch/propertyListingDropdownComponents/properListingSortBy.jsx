@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from '../SearchBar.module.css';
+import styles from '../searchBar.module.css';
 
 const SortDropdown = ({ onSortChange, defaultValue = "relevance" }) => {
   const [sortValue, setSortValue] = useState(defaultValue);
