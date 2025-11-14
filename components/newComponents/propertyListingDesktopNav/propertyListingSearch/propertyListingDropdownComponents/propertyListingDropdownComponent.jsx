@@ -1,4 +1,3 @@
-// src/pages/propertyListingPage/propertyListingDesktopNav/propertyListingSearch/propertyListingDropdownComponents/propertyListingDropdownComponent.jsx
 
 export const CityChangeDropdown = ({ handleSelectionChange }) => {
     const cityDataSchema = [
