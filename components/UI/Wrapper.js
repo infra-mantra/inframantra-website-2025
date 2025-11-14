@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Script from 'next/script';
 import { useEffect } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter  } from 'next/router';
 import NavigationBar from '../newComponents/UI/header';
 import FooterNavigation from '../newComponents/UI/footer';
 import { ToastContainer } from 'react-toastify';

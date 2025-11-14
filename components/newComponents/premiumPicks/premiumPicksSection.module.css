@@ -17,6 +17,19 @@
     padding-bottom: 25px;
 }
 
+.localityViewMoreContainer {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.localityViewMoreButton {
+  font-size: 24px;
+  font-weight: 500;
+  color: #DCAA4C;
+  cursor: pointer;
+  font-family: 'Inter';
+}
+
 .premiumMainTitle {
 color: #000;
     font-family: Inter;

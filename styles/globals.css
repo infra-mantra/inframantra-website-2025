@@ -141,6 +141,7 @@ ul.wp-block-list li {
    
     overflow-x: hidden;
     padding-right: 8px;
+    max-height: 1020px;
 }
 
 

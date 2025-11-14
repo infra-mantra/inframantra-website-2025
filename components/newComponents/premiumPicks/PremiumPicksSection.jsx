@@ -6,6 +6,7 @@ import { Navigation, Pagination, Autoplay } from 'swiper';
 import PropertyCard from '../shared/PropertyCard';
 import CitySelector from './CitySelector';
 import styles from './premiumPicksSection.module.css';
+import { useRouter } from 'next/router';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -21,7 +22,7 @@ export default function PremiumPicksSection({
 }) {
   // Use selectedCity from props, no local state needed
   const [localSelectedCity, setLocalSelectedCity] = useState(selectedCity);
-
+   const router = useRouter();
   // Update local state when prop changes
   useEffect(() => {
     setLocalSelectedCity(selectedCity);
@@ -32,6 +33,11 @@ export default function PremiumPicksSection({
     setLocalSelectedCity(city);
     onUpdate(city); // This updates parent state
   };
+
+ const handleViewMore = () => {
+ 
+  router.push(`/property-listing/city/${selectedCity}`);
+};
 
   if (loading) {
     return (
@@ -127,6 +133,16 @@ export default function PremiumPicksSection({
             </Swiper>
           </div>
         )}
+      
+                  <div className={styles.localityViewMoreContainer}>    
+                      <button
+                        className={styles.localityViewMoreButton}
+                        onClick={handleViewMore}
+                      >
+                        View  all
+                      </button>
+                  </div>
+                
       </div>
     </div>
   );

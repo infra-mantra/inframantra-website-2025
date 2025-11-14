@@ -48,11 +48,12 @@ function PropertyListingCardMobile({ propertyData = [], onOpenBackdrop , current
           currentProperties.map((property) => (
             <div key={property.slug} className={styles.propertyListingCardMobile}>
               {/* Property Image Section */}
-              <div className={styles.propertyListPageMobileImgSection}>
+              <div className={styles.propertyListPageMobileImgSection}   onClick={() => handleViewMorePropertyClick(property.slug)}>
                 <img
                   src={property.imageGallery?.[0]?.url || "/default-property.jpg"}
                   alt={property.name}
                   className={styles.propertyListingImage}
+                  
                 />
 
                 {/* Badges */}

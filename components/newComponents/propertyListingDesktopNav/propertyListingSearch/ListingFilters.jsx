@@ -159,7 +159,7 @@ if (isMobile) {
           <span
             key={city}
             className={`${style.tag} ${
-              selectedCities.includes(city) ? style.active : ""
+              selectedCities.includes(city) ? style.active1 : ""
             }`}
             onClick={() =>
               handleTagClick(city, selectedCities, setSelectedCities, "city")
@@ -198,7 +198,7 @@ if (isMobile) {
             <span
               key={type}
               className={`${style.tag} ${
-                selectedUnitTypes.includes(type) ? style.active : ""
+                selectedUnitTypes.includes(type) ? style.active1 : ""
               }`}
               onClick={() =>
                 handleTagClick(
@@ -239,7 +239,7 @@ if (isMobile) {
                 <span
                   key={config}
                   className={`${style.tag} ${
-                    selectedConfigurations.includes(value) ? style.active : ""
+                    selectedConfigurations.includes(value) ? style.active1 : ""
                   }`}
                   onClick={() =>
                     handleTagClick(
@@ -351,7 +351,7 @@ if (isMobile) {
             <span
               key={status}
               className={`${style.tag} ${
-                selectedStatuses.includes(status) ? style.active : ""
+                selectedStatuses.includes(status) ? style.active1 : ""
               }`}
               onClick={() =>
                 handleTagClick(
@@ -390,7 +390,7 @@ if (isMobile) {
         {["Gurgaon", "Noida", "Pune", "Jaipur"].map((city) => (
           <span
             key={city}
-            className={`${style.tag} ${selectedCities.includes(city) ? style.active : ""}`}
+            className={`${style.tag} ${selectedCities.includes(city) ? style.active1 : ""}`}
             onClick={() =>
               handleTagClick(city, selectedCities, setSelectedCities, "city")
             }

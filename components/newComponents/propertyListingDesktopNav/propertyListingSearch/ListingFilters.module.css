@@ -94,7 +94,12 @@ font-weight: 300;
 line-height: normal;
 }
 
-.active {
+.active1 {
+  color: white;
+}
+
+.active1 {
+  background-color: #0B6E21;
   color: white;
 }
 .arrowIcon {
@@ -422,7 +427,7 @@ font-weight: 300;
 line-height: normal;
 }
 
-.active {
+.active1 {
   background-color: #0B6E21;
   color: white;
 }
