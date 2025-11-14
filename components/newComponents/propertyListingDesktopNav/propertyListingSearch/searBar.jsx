@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import styles from './SearchBar.module.css';
+import styles from './searchBar.module.css';
 import { debounce } from 'lodash';
 import Ajax1 from '../../../helper/Ajax1';
 import { IoSearchSharp } from 'react-icons/io5';
