@@ -9,6 +9,46 @@
   font-family: 'Inter', sans-serif;
   margin-bottom: 2rem;
 }
+.mobileActionBar {
+  position: sticky;
+  bottom: 0;
+  background: white;
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+  border-top: 1px solid #ddd;
+}
+
+.applyBtn {
+  flex: 1;
+  background: #0b6e21;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.resetMobileBtn {
+  flex: 1;
+  background: #0b6e21;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.mobileHeader {
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  font-size: 20px;
+}
 
 
 /* Header buttons */

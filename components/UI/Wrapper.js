@@ -1,143 +1,176 @@
 import Head from 'next/head';
 import Script from 'next/script';
-import { useEffect } from 'react';
-import { useRouter  } from 'next/router';
+import { useEffect, useMemo, useState } from 'react';
+import { useRouter } from 'next/router';
 import NavigationBar from '../newComponents/UI/header';
 import FooterNavigation from '../newComponents/UI/footer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Wrapper = (props) => {
-  const {
-    schema,
-    title = 'Infra Mantra',
-    description = 'Infra Mantra',
-    keyword = 'Infra Mantra',
-    image = 'https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/Inframantra-Web-OG-Image.jpg',
-    location: metaLoc = 'Infra Mantra',
-    seo ="index, follow" 
-  } = props;
- 
-
-
-
+const Wrapper = ({
+  schema,
+  title = 'Infra Mantra',
+  description = 'Infra Mantra',
+  keyword = 'Infra Mantra',
+  image = 'https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/Inframantra-Web-OG-Image.jpg',
+  location: metaLoc = 'Infra Mantra',
+  seo = 'index, follow',
+  ...props
+}) => {
   const router = useRouter();
-  const pathname = router.pathname;
-  const canonicalUrl = ('https://inframantra.com' + (router.asPath === '/' ? '' : router.asPath)).split('?')[0];
 
+  /** 🟢 ALWAYS generate fresh meta values on route change */
+  const meta = useMemo(() => {
+    return {
+      title,
+      description,
+      keyword,
+      seo,
+    };
+  }, [title, description, keyword, seo, router.asPath]);
+
+  /** Canonical URL (KEEPS IT CLEAN) */
+  const canonicalUrl = useMemo(() => {
+    return (
+      'https://inframantra.com' +
+      (router.asPath === '/' ? '' : router.asPath.split('?')[0])
+    );
+  }, [router.asPath]);
+
+  /** Scroll to top */
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [pathname]);
+  }, [router.asPath]);
 
-  const structuredData = [
-    {
-      '@context': 'https://schema.org',
-      '@type': 'Organization',
-      name: 'INFRAMANTRA',
-      url: 'https://inframantra.com/',
-      logo: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/inframantraLogo.png',
-      contactPoint: {
-        '@type': 'ContactPoint',
-        telephone: '+91 86 9800 9900',
-        contactType: 'customer service',
-        contactOption: 'TollFree',
-        areaServed: 'IN',
-        availableLanguage: ['en', 'Hindi'],
+  /** Schema.org JSON-LD */
+  const structuredData = useMemo(() => {
+    const base = [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: 'INFRAMANTRA',
+        url: 'https://inframantra.com/',
+        logo: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/inframantraLogo.png',
+        contactPoint: {
+          '@type': 'ContactPoint',
+          telephone: '+91 86 9800 9900',
+          contactType: 'customer service',
+          contactOption: 'TollFree',
+          areaServed: 'IN',
+          availableLanguage: ['en', 'Hindi'],
+        },
+        sameAs: [
+          'https://www.facebook.com/inframantraofficial',
+          'https://x.com/INFRAMANTRA_',
+          'https://www.instagram.com/inframantraofficial/',
+          'https://www.youtube.com/@inframantraofficial',
+          'https://in.linkedin.com/company/inframantra',
+          'https://in.pinterest.com/inframantraofficial/',
+        ],
       },
-      sameAs: [
-        'https://www.facebook.com/inframantraofficial',
-        'https://x.com/INFRAMANTRA_',
-        'https://www.instagram.com/inframantraofficial/',
-        'https://www.youtube.com/@inframantraofficial',
-        'https://in.linkedin.com/company/inframantra',
-        'https://in.pinterest.com/inframantraofficial/',
-      ],
-    },
-    {
-      '@context': 'https://schema.org/',
-      '@type': 'WebSite',
-      name: 'INFRAMANTRA',
-      url: 'https://inframantra.com/',
-      potentialAction: {
-        '@type': 'SearchAction',
-        target: '{search_term_string}',
-        'query-input': 'required name=search_term_string',
+      {
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: 'INFRAMANTRA',
+        url: 'https://inframantra.com/',
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: '{search_term_string}',
+          'query-input': 'required name=search_term_string',
+        },
       },
-    },
-  ];
+    ];
 
-  if (schema) {
-    structuredData.push(
-      {
-        '@context': 'https://schema.org/',
-        '@type': 'Product',
-        name: schema.name || 'Property',
-        image: schema.image || image,
-        url: `https://inframantra.com${schema.url || '/'}`,
-        offers: {
-          '@type': 'Offer',
-          priceCurrency: 'INR',
-          price: `${schema.price || 0}.0`,
+    if (schema) {
+      base.push(
+        {
+          '@context': 'https://schema.org',
+          '@type': 'Product',
+          name: schema.name || 'Property',
+          image: schema.image || image,
+          url: `https://inframantra.com${schema.url || '/'}`,
+          offers: {
+            '@type': 'Offer',
+            priceCurrency: 'INR',
+            price: `${schema.price || 0}.0`,
+          },
         },
-      },
-      {
-        '@context': 'https://schema.org/',
-        '@type': 'Place',
-        name: 'coordinates',
-        geo: {
-          '@type': 'GeoCoordinates',
-          latitude: schema.lat,
-          longitude: schema.lon,
+        {
+          '@context': 'https://schema.org',
+          '@type': 'Place',
+          name: schema.loc || 'Location',
+          geo: {
+            '@type': 'GeoCoordinates',
+            latitude: schema.lat || 0,
+            longitude: schema.lon || 0,
+          },
         },
-      },
-      {
-        '@context': 'https://schema.org/',
-        '@type': 'Residence',
-        name: 'Residence',
-        address: {
-          '@type': 'PostalAddress',
-          addressLocality: schema.loc,
-          addressRegion: schema.sub,
-        },
-      }
-    );
-  }
+        {
+          '@context': 'https://schema.org',
+          '@type': 'Residence',
+          name: schema.name || 'Residence',
+          address: {
+            '@type': 'PostalAddress',
+            addressLocality: schema.loc,
+            addressRegion: schema.sub,
+          },
+        }
+      );
+    }
+
+    return base;
+  }, [schema, image]);
 
   return (
     <div className="body-wrapper">
       <Head>
-        <title>{title}</title>
-        <meta name="robots" content={seo} />
-        <meta name="description" content={description} />
-        <meta name="keywords" content={keyword} />
-        <meta name="location" content={metaLoc} />
-        <meta name="author" content="INFRAMANTRA" />
-        <meta name="copyright" content="inframantra.com" />
-        <meta httpEquiv="Content-Language" content="en" />
-        <meta name="viewport" content="width=device-width, user-scalable=no"/>
-        <link rel="canonical" href={canonicalUrl} />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <title key="title">{meta.title}</title>
+
+        <meta key="robots" name="robots" content={meta.seo} />
+        <meta key="description" name="description" content={meta.description} />
+        <meta key="keywords" name="keywords" content={meta.keyword} />
+        <meta key="location" name="location" content={metaLoc} />
+
+        <link key="canonical" rel="canonical" href={canonicalUrl} />
+        
+        {/* Avoid duplicates using keys */}
+        <meta key="author" name="author" content="INFRAMANTRA" />
+        <meta key="copyright" name="copyright" content="inframantra.com" />
+        <meta key="lang" httpEquiv="Content-Language" content="en" />
+        <meta key="viewport" name="viewport" content="width=device-width, user-scalable=no" />
+
+        {/* Structured Data */}
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
           href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Inter:wght@400;500;600;700&family=Lexend+Deca:wght@100..900&display=swap"
           rel="stylesheet"
         />
         {structuredData.map((entry, i) => (
-          <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(entry) }} />
+          <script
+            key={`schema-${i}`}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(entry) }}
+          />
         ))}
-        <meta property="og:site_name" content="INFRAMANTRA" />
-        <meta property="og:title" content={title} />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:description" content={description} />
-        <meta property="og:type" content="website" />
-        <meta property="og:image" content={image} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@INFRAMANTRA_" />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content={image} />
+
+        {/* OG Meta */}
+        <meta key="ogsite" property="og:site_name" content="INFRAMANTRA" />
+        <meta key="ogtitle" property="og:title" content={meta.title} />
+        <meta key="ogurl" property="og:url" content={canonicalUrl} />
+        <meta key="ogdesc" property="og:description" content={meta.description} />
+        <meta key="ogtype" property="og:type" content="website" />
+        <meta key="ogimg" property="og:image" content={image} />
+
+        {/* Twitter */}
+        <meta key="twcard" name="twitter:card" content="summary_large_image" />
+        <meta key="twsite" name="twitter:site" content="@INFRAMANTRA_" />
+        <meta key="twtitle" name="twitter:title" content={meta.title} />
+        <meta key="twdesc" name="twitter:description" content={meta.description} />
+        <meta key="twimg" name="twitter:image" content={image} />
       </Head>
 
+      {/* Google Tag Manager */}
       <Script
         id="gtm-script"
         strategy="afterInteractive"
@@ -145,7 +178,7 @@ const Wrapper = (props) => {
           __html: `
             (function(w,d,s,l,i){
               w[l]=w[l]||[];
-              w[l].push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
+              w[l].push({'gtm.start': new Date().getTime(), event:'gtm.js'});
               var f=d.getElementsByTagName(s)[0],
                   j=d.createElement(s),
                   dl=l!='dataLayer'?'&l='+l:'';
@@ -161,7 +194,7 @@ const Wrapper = (props) => {
         <NavigationBar
           selectedItems={props.selectedItem}
           toggleSelection={props.toggleSelection}
-          pageBgd={pathname !== '/'}
+          pageBgd={router.pathname !== '/'}
         />
         {props.children}
       </main>

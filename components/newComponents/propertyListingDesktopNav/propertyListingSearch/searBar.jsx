@@ -19,7 +19,6 @@ function SearchBar({ onSearch, onSortChange , isDesktop , isMobile,handleCloseFi
   const [desktop, setDesktop] = useState(false);
   
   const [suggested, setSuggestions] = useState([]);
-    console.log(isMobile,isDesktop)
 
   // ✅ Debounced suggestions fetch
   const fetchSuggestions = useCallback(
@@ -47,12 +46,12 @@ function SearchBar({ onSearch, onSortChange , isDesktop , isMobile,handleCloseFi
    
     e.preventDefault();
     if (!searchValue.trim()) return;
-
-    const encodedSearch = slugify(searchValue, { lower: true });
-    router.push(`/property-listing/search/${encodedSearch}`);
-      setSuggestions([]);
+  setSuggestions([]);
     setSuggestions([]);
     fetchSuggestions.cancel();
+    const encodedSearch = slugify(searchValue, { lower: true });
+    router.push(`/property-listing/search/${encodedSearch}`);
+    
   };
 
 

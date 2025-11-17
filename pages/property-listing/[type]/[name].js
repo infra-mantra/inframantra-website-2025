@@ -303,6 +303,7 @@ const handleFilterChange = (filterType, value) => {
 
  
 useEffect(() => {
+
   let area = '';
   let parentArea = '';
   let newTitle = '';
@@ -313,35 +314,37 @@ useEffect(() => {
     area = city;
     parentArea = state;
     newTitle = `Properties in ${area} | Real Estate in ${area}`;
-    newDescription = `Find “${totalProperties}+” properties for sale in “${area}”, only on Inframantra. Explore a wide range of properties options including 2BHK to 5BHK apartments and penthouses.`;
-    newKeyword = `InfraMantra, Residential Properties, Commercial Properties, Apartments, Flats, Buy flat in ${area.toLowerCase()}, buy property in ${area.toLowerCase()}, ${area.toLowerCase()} property prices, Apartments for sale in ${area.toLowerCase()}, buy apartment in ${area.toLowerCase()}, buy Properties in ${area.toLowerCase()}, real estate in ${area.toLowerCase()}, best property to buy in ${area.toLowerCase()}, ${area.toLowerCase()} apartment for sale, ${area.toLowerCase()} property prices, buy property ${area.toLowerCase()}, buy residential property in ${area.toLowerCase()}, Property for purchase in ${area.toLowerCase()}`;
+    newDescription = `Find “${totalProperties}+” properties for sale in “${area}”, only on Inframantra. Explore a wide range of property options including 2BHK to 5BHK apartments and penthouses.`;
+    newKeyword = `InfraMantra, Residential Properties, Commercial Properties, Apartments, Flats, Buy flat in ${area.toLowerCase()}, buy property in ${area.toLowerCase()}, ${area.toLowerCase()} property prices, Apartments for sale in ${area.toLowerCase()}, buy apartment in ${area.toLowerCase()}, buy Properties in ${area.toLowerCase()}, real estate in ${area.toLowerCase()}, best property to buy in ${area.toLowerCase()}, ${area.toLowerCase()} apartment for sale, ${area.toLowerCase()} property prices, buy property in ${area.toLowerCase()}, buy residential property in ${area.toLowerCase()}, Property for purchase in ${area.toLowerCase()}`;
   }
+
   else if (type === 'locality' && locality && city) {
     area = locality;
     parentArea = city;
     newTitle = `Properties in ${area}, ${parentArea} | Real Estate in ${area}`;
-    newDescription = `Find “${totalProperties}+” properties for sale in “${area}, ${parentArea}”, only on Inframantra.`;
-    newKeyword = `InfraMantra, Residential Properties, Commercial Properties, Apartments, Flats, Buy flat in ${parentArea.toLowerCase()}, buy property in ${area.toLowerCase()}, ${parentArea.toLowerCase()} property prices, Apartments for sale in ${area.toLowerCase()}, buy apartment in ${area.toLowerCase()}`;
+    newDescription = `Find “${totalProperties}+” properties for sale in “${area}, ${parentArea}”, only on Inframantra. Explore a wide range of property options including 2BHK to 5BHK apartments and penthouses.`;
+    newKeyword = `InfraMantra, Residential Properties, Commercial Properties, Apartments, Flats, Buy flat in ${area.toLowerCase()}, buy property in ${area.toLowerCase()}, ${parentArea.toLowerCase()} property prices, Apartments for sale in ${area.toLowerCase()}, buy apartment in ${area.toLowerCase()}, buy Properties in ${area.toLowerCase()}, real estate in ${parentArea.toLowerCase()}, best property to buy in ${parentArea.toLowerCase()}, ${parentArea.toLowerCase()} apartment for sale, ${area.toLowerCase()} property prices, buy property in ${area.toLowerCase()}, buy residential property in ${area.toLowerCase()}, Property for purchase in ${area.toLowerCase()}`;
   }
+
   else if (type === 'subLocality' && subLocality && locality && city) {
     area = subLocality;
     parentArea = `${locality}, ${city}`;
     newTitle = `Properties in ${area}, ${parentArea} | Real Estate in ${area}`;
-    newDescription = `Find “${totalProperties}+” properties for sale in “${area}, ${parentArea}”, only on Inframantra.`;
-    newKeyword = `InfraMantra, Residential Properties, Commercial Properties, Apartments, Flats, Buy flat in ${city.toLowerCase()}, buy property in ${area.toLowerCase()}, ${city.toLowerCase()} property prices`;
+    newDescription = `Find “${totalProperties}+” properties for sale in “${area}, ${parentArea}”, only on Inframantra. Explore a wide range of property options including 2BHK to 5BHK apartments and penthouses.`;
+    newKeyword = `InfraMantra, Residential Properties, Commercial Properties, Apartments, Flats, Buy flat in ${city.toLowerCase()}, buy property in ${area.toLowerCase()}, ${city.toLowerCase()} property prices, Apartments for sale in ${area.toLowerCase()}, buy apartment in ${area.toLowerCase()}, buy Properties in ${area.toLowerCase()}, real estate in ${city.toLowerCase()}, best property to buy in ${city.toLowerCase()}, ${city.toLowerCase()} apartment for sale, ${city.toLowerCase()} property prices, buy property in ${area.toLowerCase()}, buy residential property in ${area.toLowerCase()}, Property for purchase in ${area.toLowerCase()}`;
   }
-  else if (type === 'search') {
+
+  else if (type === "search") {
     newTitle = 'Search Results | Inframantra';
-    newDescription = `Explore all properties listed under your search results. Find “${totalProperties}+” verified properties.`;
-    newKeyword = `InfraMantra, Real Estate Search, Property Search, Buy properties`;
+    newDescription = `Explore all properties listed under your search results. Find “${totalProperties}+” verified properties on Inframantra including apartments, villas, plots, and more.`;
+    newKeyword = `InfraMantra, Real Estate Search, Property Search, Buy properties, Buy apartments, Search results, Properties near me, Search real estate options`;
   }
 
   setTitle(newTitle);
   setDescription(newDescription);
   setKeyword(newKeyword);
 
-}, [type, locality, city, subLocality, state, totalProperties]);
-
+}, [ type , name ]);
 
 
   const handleCloseFilterToggle = () => setOpenCloseFilter((prev) => !prev);

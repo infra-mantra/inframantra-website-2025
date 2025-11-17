@@ -23,6 +23,7 @@ export default function ListingFilters({
   const [maxInput, setMaxInput] = useState("");
   const [inputError, setInputError] = useState("");
   const [isMobile, setIsMobile] = useState(false);
+  const [apply,setApply] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 768);
@@ -39,6 +40,7 @@ export default function ListingFilters({
       ? state.filter((item) => item !== value)
       : [...state, value];
     setter(updated);
+    if(isMobile) return;
     onFilterChange?.(type, updated);
   };
 
@@ -47,6 +49,7 @@ export default function ListingFilters({
       ? state.filter((item) => item !== value)
       : [...state, value];
     setter(updated);
+      if(isMobile) return;
     onFilterChange?.(type, updated);
   };
 
@@ -55,6 +58,7 @@ export default function ListingFilters({
     updated[index] = parseFloat(value);
     if (updated[0] <= updated[1]) {
       setPriceRange(updated);
+      if(isMobile) return;
       onFilterChange?.("priceRange", updated);
       setMinInput("");
       setMaxInput("");
@@ -80,6 +84,7 @@ export default function ListingFilters({
 
     setInputError("");
     setPriceRange([min, max]);
+      if(isMobile) return;
     onFilterChange?.("priceRange", [min, max]);
     return true;
   };
@@ -120,7 +125,17 @@ export default function ListingFilters({
     onFilterChange?.("projectStatus", []);
     onFilterChange?.("priceRange", [1, 6]);
   };
-
+a
+  const applyFilters = () => {
+    if(apply){
+    onFilterChange?.("city", selectedCities);
+    onFilterChange?.("unitType", selectedUnitTypes);
+    onFilterChange?.("configuration", selectedConfigurations);
+    onFilterChange?.("projectStatus", selectedStatuses);
+    onFilterChange?.("priceRange", priceRange);
+    handleCloseFilterToggle?.();
+    }
+  };
   // Mobile render (entire mobile tree)
  
 if (isMobile) {
@@ -141,9 +156,12 @@ if (isMobile) {
     >
       {/* Header */}
       <div className={style.mobileHeader}>
-        <span className={style.mobileTitle}>FILTERS</span>
+        
         <button className={style.resetMobileBtn} onClick={resetFilters}>
           Reset
+        </button>
+          <button className={style.resetMobileBtn} onClick={applyFilters}>
+          APPLY
         </button>
         <button className={style.closeBtn} onClick={handleCloseFilterToggle}>
           ✖
