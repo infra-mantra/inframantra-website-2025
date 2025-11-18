@@ -110,6 +110,7 @@ export default function ListingFilters({
     return `linear-gradient(to right, #e5e5e5 ${min}%, #0b6e21 ${min}%, #0b6e21 ${max}%, #e5e5e5 ${max}%)`;
   };
 
+  
   const resetFilters = () => {
     setSelectedCities([]);
     setSelectedUnitTypes([]);
