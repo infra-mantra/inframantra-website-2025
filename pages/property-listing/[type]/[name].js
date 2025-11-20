@@ -117,7 +117,6 @@ const PropertyListingPage = () => {
 const handleFilterChange = (filterType, value, isMobile) => {
   setLoading(true);
 
-
   let filtered = [...allPropertyData];
 
   // If filterType is not array (single change), convert into array
@@ -143,12 +142,16 @@ const handleFilterChange = (filterType, value, isMobile) => {
   setLoading(false);
 };
 
-
-
-
 function applySingleFilter(property, filterType, value) {
   
     if (filterType === "city" && value.length > 0) {
+     if (type === "city" && Array.isArray(value) && name) {
+       for( let i=0; i<value.length;i++){
+        if(value[i]!=name){
+          router.push(`/property-listing/city/${value[i]}`);
+        }
+       }
+  }
       return value.includes(property.city?.name);
     }
 
@@ -408,7 +411,7 @@ useEffect(() => {
           >
             
             <div className="listingFilters" ref={filterRef} style={{ padding: '1rem' }}>
-            <ListingFilters onFilterChange={handleFilterChange}  type={type} ref={divRef} />
+            <ListingFilters onFilterChange={handleFilterChange}  type={type} ref={divRef} name={name} />
             </div>
 
             <div
@@ -429,6 +432,8 @@ useEffect(() => {
                 onSortChange={handleSortChange}
                 isDesktop={isDesktop}
                 isMobile={isMobile}
+                name={name}
+                type={name}
               />
               <Content
                 totalProperties={totalProperties}
@@ -478,12 +483,16 @@ useEffect(() => {
               isDesktop={isDesktop}
               isMobile={isMobile}
               handleCloseFilterToggle={handleCloseFilterToggle}
+              name={name}
+              type={name}
               
             />
             <ListingFilters
               onFilterChange={handleFilterChange}
               openClosefilter={openClosefilter}
               handleCloseFilterToggle={handleCloseFilterToggle}
+              name={name}
+              type={name}
             />
             <Content
                totalProperties={totalProperties}

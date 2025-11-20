@@ -11,7 +11,7 @@ import SortDropdown from './propertyListingDropdownComponents/properListingSortB
 import { slugify } from '../../../../utils/slugify';
 import { colors } from '@mui/material';
 
-function SearchBar({ onSearch, onSortChange , isDesktop , isMobile,handleCloseFilterToggle}) {
+function SearchBar({ onSearch, onSortChange , isDesktop , isMobile,handleCloseFilterToggle,type,name}) {
   const router = useRouter();
 
   const [searchValue, setSearchValue] = useState('');
@@ -40,6 +40,10 @@ function SearchBar({ onSearch, onSortChange , isDesktop , isMobile,handleCloseFi
     }, 300),
     []
   );
+
+  useEffect(()=>{
+    setSearchValue('')
+  },[name,type])
 
 
   const handleSubmit = (e) => {

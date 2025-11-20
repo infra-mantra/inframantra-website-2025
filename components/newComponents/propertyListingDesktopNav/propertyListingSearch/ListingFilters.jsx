@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import style from "./ListingFilters.module.css";
+import { useRouter } from "next/router";
 export default function ListingFilters({
+  
   onFilterChange,
   openClosefilter,
   handleCloseFilterToggle,
+  
 }) {
   // ---------------- STATES ----------------
   const [expanded, setExpanded] = useState({
@@ -24,6 +27,17 @@ export default function ListingFilters({
   const [inputError, setInputError] = useState("");
 
   const [isMobile, setIsMobile] = useState(false);
+ const router = useRouter();
+  let { type, name } = router.query;
+  console.log(type,name)
+useEffect(() => {
+  if (type === "city") {
+      resetFilters()
+      setSelectedCities([name]);
+  }else{
+    resetFilters()
+  }
+}, [name]);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -43,7 +57,21 @@ const toggleSection = (key) => {
   // ----------------------------------------------------
   // 🔥 FIX: Always send **latest** filter values
   // ----------------------------------------------------
-  const notifyAllFilters = (override = {}) => {
+  const notifyAllFilters = (override = {}, reset=false ) => {
+    if(reset){
+      const payload = [
+      override.city ?? [],
+      override.unitType ?? [],
+      override.configuration ?? [],
+      override.projectStatus ?? [],
+      override.priceRange ?? [null,null],
+    ];
+      onFilterChange?.(
+      ["city", "unitType", "configuration", "projectStatus", "priceRange"],
+        payload
+    );
+    return 
+    }
     const payload = [
       override.city ?? selectedCities,
       override.unitType ?? selectedUnitTypes,
@@ -153,9 +181,9 @@ const toggleSection = (key) => {
   setInputError("");
 
 // Notify parent
-  setTimeout(() => notifyAllFilters({
+  notifyAllFilters({
     priceRange: [null, null], // FIX: send default values
-  }), 0);
+  },true)
 };
 
 
