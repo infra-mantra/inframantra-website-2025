@@ -6,7 +6,7 @@ class CityEventManager {
 
   // Emit city change event
   emitCityChange(newCity) {
-    console.log('🌍 CityEventManager: Emitting city change to:', newCity);
+    // console.log('🌍 CityEventManager: Emitting city change to:', newCity);
     const event = new CustomEvent('cityChanged', {
       detail: { city: newCity }
     });
@@ -15,7 +15,7 @@ class CityEventManager {
 
   // Subscribe to city change events
   onCityChange(callback) {
-    console.log('🌍 CityEventManager: Component subscribed to city changes');
+    // console.log('🌍 CityEventManager: Component subscribed to city changes');
     this.eventTarget.addEventListener('cityChanged', callback);
     
     // Return unsubscribe function

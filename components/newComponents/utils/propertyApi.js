@@ -12,7 +12,7 @@ export async function fetchCityProperties(city) {
     
     const apiCityName = apiCityMap[city] || city;
     
-    console.log(`Fetching properties for: ${city} -> API: ${apiCityName}`);
+    // console.log(`Fetching properties for: ${city} -> API: ${apiCityName}`);
     
     const response = await fetch(`${API_BASE_URL}${encodeURIComponent(apiCityName)}`, {
       cache: 'no-store',
@@ -48,7 +48,7 @@ export async function fetchCityProperties(city) {
       });
     }
 
-    console.log(`Found ${allProperties.length} total properties for ${city}`);
+    // console.log(`Found ${allProperties.length} total properties for ${city}`);
 
     return {
       ...data,

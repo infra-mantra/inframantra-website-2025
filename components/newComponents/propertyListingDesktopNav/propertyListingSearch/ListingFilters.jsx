@@ -1,143 +1,230 @@
-import React, { useState, useEffect , useRef } from "react";
+import React, { useState, useEffect } from "react";
 import style from "./ListingFilters.module.css";
-
 export default function ListingFilters({
   onFilterChange,
   openClosefilter,
   handleCloseFilterToggle,
-  ref
 }) {
+  // ---------------- STATES ----------------
   const [expanded, setExpanded] = useState({
+    city: true,
     unitType: true,
     configuration: true,
-    priceRange: true,
     projectStatus: true,
+    priceRange: true,
   });
 
   const [selectedCities, setSelectedCities] = useState([]);
   const [selectedUnitTypes, setSelectedUnitTypes] = useState([]);
   const [selectedConfigurations, setSelectedConfigurations] = useState([]);
   const [selectedStatuses, setSelectedStatuses] = useState([]);
-  const [priceRange, setPriceRange] = useState([1, 6]);
-  const [minInput, setMinInput] = useState("");
+  const [priceRange, setPriceRange] = useState([null, null]);
+    const [minInput, setMinInput] = useState("");
   const [maxInput, setMaxInput] = useState("");
   const [inputError, setInputError] = useState("");
+
   const [isMobile, setIsMobile] = useState(false);
-  const [apply,setApply] = useState(false);
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const toggleSection = (key) =>
-    setExpanded((prev) => ({ ...prev, [key]: !prev[key] }));
+ // 🔥 Unified toggle function for all sections
+const toggleSection = (key) => {
+  setExpanded((prev) => ({
+    ...prev,
+    [key]: !prev[key],
+  }));
+};
 
+  // ----------------------------------------------------
+  // 🔥 FIX: Always send **latest** filter values
+  // ----------------------------------------------------
+  const notifyAllFilters = (override = {}) => {
+    const payload = [
+      override.city ?? selectedCities,
+      override.unitType ?? selectedUnitTypes,
+      override.configuration ?? selectedConfigurations,
+      override.projectStatus ?? selectedStatuses,
+      override.priceRange ?? priceRange,
+    ];
+
+    onFilterChange?.(
+      ["city", "unitType", "configuration", "projectStatus", "priceRange"],
+        payload
+    );
+
+  };
+
+  // 🔥 FIX: Ensures newValue is passed, not old state
+  const updateAndMaybeNotify = (setter, newValue, type) => {
+    setter(newValue);
+
+    if (!isMobile) {
+      notifyAllFilters({ [type]: newValue });
+    }
+  };
+
+  // ----------------------------------------------------
+  // 🔥 CHECKBOX & TAG CLICK HANDLER
+  // ----------------------------------------------------
   const handleCheckboxChange = (value, state, setter, type) => {
     const updated = state.includes(value)
       ? state.filter((item) => item !== value)
       : [...state, value];
-    setter(updated);
-    if(isMobile) return;
-    onFilterChange?.(type, updated);
+
+    updateAndMaybeNotify(setter, updated, type);
   };
 
   const handleTagClick = (value, state, setter, type) => {
     const updated = state.includes(value)
       ? state.filter((item) => item !== value)
       : [...state, value];
-    setter(updated);
-      if(isMobile) return;
-    onFilterChange?.(type, updated);
+
+    updateAndMaybeNotify(setter, updated, type);
   };
 
-  const handlePriceChange = (index, value) => {
-    const updated = [...priceRange];
-    updated[index] = parseFloat(value);
-    if (updated[0] <= updated[1]) {
-      setPriceRange(updated);
-      if(isMobile) return;
-      onFilterChange?.("priceRange", updated);
-      setMinInput("");
-      setMaxInput("");
-      setInputError("");
-    }
-  };
-
-  const validateAndApplyInputPrice = (min, max) => {
-    if (isNaN(min) || isNaN(max)) {
-      setInputError("Please enter valid numbers");
-      return false;
-    }
-
-    if (min <= 0 || max <= 0) {
-      setInputError("Amount must be a positive number");
-      return false;
-    }
-
+  // ----------------------------------------------------
+  // 🔥 PRICE INPUT CHANGE (desktop auto-apply)
+  // ----------------------------------------------------
+ const handlePriceChange = (index, newValue) => {
+  const updated = [...priceRange];   // [min, max]
+ // Allow empty input → set null
+  updated[index] = newValue !== "" ? Number(newValue) : null;
+  const [min, max] = updated;
+   // ---- Compare only when both values are not null ----
+  if (min !== null && max !== null) {
+    // If min becomes larger than max → fix max
     if (min > max) {
-      setInputError("Min amount cannot be greater than max amount");
-      return false;
+      updated[1] = min;
+    }
+   // If max becomes smaller than min → fix min
+    if (max < min) {
+      updated[0] = max;
+    }
+  }
+
+  setPriceRange(updated);
+
+  if (!isMobile) {
+    notifyAllFilters({ priceRange: updated });
+  }
+};
+
+
+  // ----------------------------------------------------
+  // 🔥 VALIDATE PRICE (mobile)
+  // ----------------------------------------------------
+  const validateAndApplyInputPrice = () => {
+    const [min, max] = priceRange;
+
+    if (min && max && min > max) {
+      alert("Minimum price cannot be greater than maximum price!");
+      return;
     }
 
-    setInputError("");
-    setPriceRange([min, max]);
-      if(isMobile) return;
-    onFilterChange?.("priceRange", [min, max]);
-    return true;
+    notifyAllFilters({ priceRange });
   };
 
-  const handlePriceInputChange = (e, type) => {
-    const value = e.target.value.replace(/[^0-9.]/g, "");
-    if (type === "min") {
-      setMinInput(value);
-      const min = parseFloat(value);
-      const max = parseFloat(maxInput) || priceRange[1];
-      validateAndApplyInputPrice(min, max);
-    } else {
+  // ----------------------------------------------------
+  // 🔥 APPLY (mobile)
+  // ----------------------------------------------------
+  const applyFilters = () => {
+    notifyAllFilters();
+    handleCloseFilterToggle?.();
+  };
+
+  // ----------------------------------------------------
+  // 🔥 RESET ALL FILTERS
+  // ----------------------------------------------------
+  const resetFilters = () => {
+  setSelectedCities([]);
+  setSelectedUnitTypes([]);
+  setSelectedConfigurations([]);
+  setSelectedStatuses([]);
+  setPriceRange([null, null]);
+
+  // CLEAR INPUT BOXES
+  setMinInput("");
+  setMaxInput("");
+  setInputError("");
+
+// Notify parent
+  setTimeout(() => notifyAllFilters({
+    priceRange: [null, null], // FIX: send default values
+  }), 0);
+};
+
+
+
+
+
+const handlePriceInputChange = (e, type) => {
+  const raw = e.target.value.trim();
+
+  // Allow empty input
+  if (raw === "") {
+    if (type === "min") setMinInput("");
+    else setMaxInput("");
+
+    return; 
+  }
+
+  // ❌ If not a valid number → IGNORE the update (prevents NaN)
+  if (!/^\d+$/g.test(raw)) {
+    return; 
+  }
+
+  const value = Number(raw);
+
+  let updatedRange = [...priceRange]; // [min, max]
+
+  if (type === "min") {
+    setMinInput(value);
+    updatedRange[0] = value;
+
+    if (updatedRange[1] !== null && value > updatedRange[1]) {
+      updatedRange[1] = value;
       setMaxInput(value);
-      const max = parseFloat(value);
-      const min = parseFloat(minInput) || priceRange[0];
-      validateAndApplyInputPrice(min, max);
     }
-  };
 
-  const getTrackBackground = () => {
-    const min = ((priceRange[0] - 1) / 5) * 100;
-    const max = ((priceRange[1] - 1) / 5) * 100;
-    return `linear-gradient(to right, #e5e5e5 ${min}%, #0b6e21 ${min}%, #0b6e21 ${max}%, #e5e5e5 ${max}%)`;
-  };
+  } else {
+    setMaxInput(value);
+    updatedRange[1] = value;
+
+    if (updatedRange[0] !== null && value < updatedRange[0]) {
+      updatedRange[0] = value;
+      setMinInput(value);
+    }
+  }
+
+  setPriceRange(updatedRange);
+
+  if (!isMobile) {
+    notifyAllFilters({ priceRange: updatedRange });
+  }
+};
+
+
+
 
   
-  const resetFilters = () => {
-    setSelectedCities([]);
-    setSelectedUnitTypes([]);
-    setSelectedConfigurations([]);
-    setSelectedStatuses([]);
-    setPriceRange([1, 6]);
-    setMinInput("");
-    setMaxInput("");
-    setInputError("");
-    onFilterChange?.("city", []);
-    onFilterChange?.("unitType", []);
-    onFilterChange?.("configuration", []);
-    onFilterChange?.("projectStatus", []);
-    onFilterChange?.("priceRange", [1, 6]);
-  };
-a
-  const applyFilters = () => {
-    if(apply){
-    onFilterChange?.("city", selectedCities);
-    onFilterChange?.("unitType", selectedUnitTypes);
-    onFilterChange?.("configuration", selectedConfigurations);
-    onFilterChange?.("projectStatus", selectedStatuses);
-    onFilterChange?.("priceRange", priceRange);
-    handleCloseFilterToggle?.();
-    }
-  };
-  // Mobile render (entire mobile tree)
+const getTrackBackground = () => {
+  const minPercent = ((priceRange[0] ?? 1) - 1) * 20; 
+  const maxPercent = ((priceRange[1] ?? 10) - 1) * 20;
+
+  return `linear-gradient(
+    to right,
+    #ddd ${minPercent}%,
+    #0b6e21 ${minPercent}%,
+    #0b6e21 ${maxPercent}%,
+    #ddd ${maxPercent}%
+  )`;
+};
+
  
 if (isMobile) {
   // ✅ Only show the mobile drawer if it's open
@@ -158,10 +245,10 @@ if (isMobile) {
       {/* Header */}
       <div className={style.mobileHeader}>
         
-        <button className={style.resetMobileBtn} onClick={resetFilters}>
+        <button className={style.resetButton} onClick={resetFilters}>
           Reset
         </button>
-          <button className={style.resetMobileBtn} onClick={applyFilters}>
+          <button className={style.resetButton} onClick={applyFilters}>
           APPLY
         </button>
         <button className={style.closeBtn} onClick={handleCloseFilterToggle}>
@@ -208,11 +295,9 @@ if (isMobile) {
           {[
             "Low Rise Apartment",
             "High Rise Apartment",
-            "Villa",
-            "Builder Floor",
-            "Independent Floor",
-            "Plot",
-            "Studio Apartment",
+            "Villa"
+          
+           
           ].map((type) => (
             <span
               key={type}
@@ -299,7 +384,7 @@ if (isMobile) {
               min="1"
               max="6"
               step="0.1"
-              value={priceRange[0]}
+              value={(priceRange[0] ?? 1) }
               onChange={(e) => handlePriceChange(0, e.target.value)}
               className={style.thumb}
             />
@@ -308,7 +393,7 @@ if (isMobile) {
               min="1"
               max="6"
               step="0.1"
-              value={priceRange[1]}
+              value={(priceRange[1] ?? 10) }
               onChange={(e) => handlePriceChange(1, e.target.value)}
               className={style.thumb}
             />
@@ -319,21 +404,21 @@ if (isMobile) {
           </div>
 
           <div className={style.priceLabels}>
-            <span>{priceRange[0]} Cr</span>
-            <span>{priceRange[1]} Cr</span>
+           <span>{(priceRange[0] ?? 1) + " Cr"}</span>
+           <span>{(priceRange[1] ?? 10) + " Cr"}</span>
           </div>
 
           <div className={style.priceInputs}>
             <input
               type="text"
-              placeholder="Min Amount"
+              placeholder="Min Amount in Cr.*"
               value={minInput}
               onChange={(e) => handlePriceInputChange(e, "min")}
             />
             <span className={style.dash}>—</span>
             <input
               type="text"
-              placeholder="Max Amount"
+              placeholder="Max Amount in Cr.*"
               value={maxInput}
               onChange={(e) => handlePriceInputChange(e, "max")}
             />
@@ -362,10 +447,10 @@ if (isMobile) {
       {expanded.projectStatus && (
         <div className={style.locationTags}>
           {[
+             "New Launch",
+             "Under Construction",
             "Near Possession",
-            "New Launch",
-            "Ready to move",
-            "Under Construction",
+            "Ready to Move In",
           ].map((status) => (
             <span
               key={status}
@@ -392,12 +477,14 @@ if (isMobile) {
 
   if(!isMobile){
     return (
-    <div className={style.containerWrapper} ref={ref}>
+    <div className={style.containerWrapper} >
       <div className={style.buttonWrapper}>
         <button className={style.filterbtn}>Filters</button>
-     <button className={`${style.resetMobileBtn} ${style.resetButton}`} onClick={resetFilters}>
+     <button className={`${style.resetButton}`} onClick={resetFilters}>
   Reset
 </button>
+
+
 
       </div>
 
@@ -434,11 +521,8 @@ if (isMobile) {
           {[
             "Low Rise Apartment",
             "High Rise Apartment",
-            "Villa",
-            "Builder Floor",
-            "Independent Floor",
-            "Plot",
-            "Studio Apartment",
+            "Villa"
+          
           ].map((type) => (
             <label className={style.checkboxItem} key={type}>
               <input
@@ -505,7 +589,7 @@ if (isMobile) {
               min="1"
               max="6"
               step="0.1"
-              value={priceRange[0]}
+              value={(priceRange[0] ?? 1) }
               onChange={(e) => handlePriceChange(0, e.target.value)}
               className={style.thumb}
             />
@@ -514,7 +598,7 @@ if (isMobile) {
               min="1"
               max="6"
               step="0.1"
-              value={priceRange[1]}
+              value={(priceRange[1] ?? 10) }
               onChange={(e) => handlePriceChange(1, e.target.value)}
               className={style.thumb}
             />
@@ -522,21 +606,21 @@ if (isMobile) {
           </div>
 
           <div className={style.priceLabels}>
-            <span>{priceRange[0]} Cr</span>
-            <span>{priceRange[1]} Cr</span>
+<span>{(priceRange[0] ?? 1) + " Cr"}</span>
+<span>{(priceRange[1] ?? 10) + " Cr"}</span>
           </div>
 
           <div className={style.priceInputs}>
             <input
               type="text"
-              placeholder="Min Amount"
+              placeholder="Min Amount in Cr.*"
               value={minInput}
               onChange={(e) => handlePriceInputChange(e, "min")}
             />
             <span className={style.dash}>—</span>
             <input
               type="text"
-              placeholder="Max Amount"
+              placeholder="Max Amount in Cr.*"
               value={maxInput}
               onChange={(e) => handlePriceInputChange(e, "max")}
             />
@@ -559,10 +643,11 @@ if (isMobile) {
       {expanded.projectStatus && (
         <div className={style.checkboxGroup}>
           {[
-            "Near Possession",
             "New Launch",
-            "Ready to move",
-            "Under Construction",
+             "Under Construction",
+            "Near Possession",
+            "Ready to Move In",
+           
           ].map((status) => (
             <label className={style.checkboxItem} key={status}>
               <input

@@ -29,14 +29,7 @@
   font-weight: 600;
 }
 
-.resetMobileBtn {
-  flex: 1;
-  background: #0b6e21;
-  border: none;
-  padding: 12px;
-  border-radius: 6px;
-  font-weight: 600;
-}
+
 
 .mobileHeader {
   display: flex;
@@ -291,9 +284,8 @@ line-height: normal;
 }
 
 .resetButton:hover {
-  background-color: #095a1a; 
-  color: #ffffff; 
-  border: 1px solid #095a1a; 
+  background: #0B6E21; /* green */
+  color: #fff;         /* white */
 }
 
 
@@ -640,8 +632,12 @@ line-height: normal;
   color: #000;
   font-size: 0.9rem;
   cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
 }
-
+.resetMobileBtn:hover {
+  background: #4caf50; /* green */
+  color: #fff;         /* white */
+}
 .closeBtn {
   background: none;
   border: none;

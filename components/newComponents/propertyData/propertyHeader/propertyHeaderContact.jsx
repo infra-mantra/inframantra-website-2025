@@ -28,7 +28,6 @@ const CustomTextFieldWrapper = {
 };
 
 function PropertyHeaderContact({ name }) {
-// console.log(name,"#######")
   const router = useRouter();
   const apiUrl = process.env.NEXT_PUBLIC_SITE_KEY;
   const [formData, setFormData] = useState({
@@ -56,8 +55,6 @@ function PropertyHeaderContact({ name }) {
       try {
         const token = await recaptchaRef.current.executeAsync(); // Execute reCAPTCHA
         setCaptchaToken(token); // Set the token in state
-        // console.log('reCAPTCHA token:', token);
-        // console.log(formData);
         const action = {
           method: 'POST',
           url: '/enquiry/project', // Adjust this URL to your API endpoint
@@ -78,7 +75,6 @@ function PropertyHeaderContact({ name }) {
           router.push('/thank-you'); // Redirect to Thank You page
         } else {
           toast.error('Form submission failed:', response);
-          // console.log('Form submission failed:', response);
         }
       } catch (error) {
         toast.error('Error submitting form:', error);

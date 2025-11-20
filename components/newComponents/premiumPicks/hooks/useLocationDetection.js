@@ -12,12 +12,10 @@ export function useLocationDetection() {
     try {
       setLocationStatus('detecting');
       
-      console.log('🌍 Starting location detection...');
       
       // Try IP-based detection first (faster and doesn't require permission)
       const city = await detectCityByIP();
       if (city) {
-        console.log('✅ IP location detected:', city);
         setDetectedCity(city);
         setLocationStatus('found');
         return;
@@ -25,31 +23,26 @@ export function useLocationDetection() {
 
       // Fallback to browser geolocation API if available
       if ('geolocation' in navigator) {
-        console.log('📍 Trying browser geolocation...');
         const position = await getCurrentPosition();
         const locationCity = await getCityFromCoordinates(
           position.coords.latitude, 
           position.coords.longitude
         );
         if (locationCity) {
-          console.log('✅ GPS location detected:', locationCity);
           setDetectedCity(locationCity);
           setLocationStatus('found');
           return;
         }
       }
 
-      console.log('❌ Location detection failed');
       setLocationStatus('failed');
     } catch (error) {
-      console.log('❌ Location detection error:', error);
       setLocationStatus('failed');
     }
   }
 
   async function detectCityByIP() {
     try {
-      console.log('🔍 Detecting city by IP...');
       
       // Try multiple IP geolocation services
       const services = [
@@ -68,21 +61,17 @@ export function useLocationDetection() {
           
           if (response.ok) {
             const data = await response.json();
-            console.log('🌐 IP service response:', data);
             
             const city = normalizeCity(data.city || data.cityName || '');
             if (city) {
-              console.log('✅ Normalized city from IP:', city);
               return city;
             }
           }
         } catch (serviceError) {
-          console.log(`❌ Service ${serviceUrl} failed:`, serviceError);
           continue; // Try next service
         }
       }
     } catch (error) {
-      console.log('❌ IP location detection failed:', error);
     }
     return null;
   }
@@ -101,7 +90,6 @@ export function useLocationDetection() {
 
   async function getCityFromCoordinates(lat, lng) {
     try {
-      console.log(`🗺️ Reverse geocoding: ${lat}, ${lng}`);
       
       const response = await fetch(
         `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&addressdetails=1`,
@@ -115,7 +103,6 @@ export function useLocationDetection() {
       
       if (response.ok) {
         const data = await response.json();
-        console.log('🗺️ Geocoding response:', data);
         
         const city = normalizeCity(
           data.address?.city || 
@@ -124,12 +111,10 @@ export function useLocationDetection() {
         );
         
         if (city) {
-          console.log('✅ City from coordinates:', city);
           return city;
         }
       }
     } catch (error) {
-      console.log('❌ Reverse geocoding failed:', error);
     }
     return null;
   }

@@ -25,7 +25,7 @@ export async function getStaticPaths() {
     }))
     return { paths, fallback: 'blocking' }
   }catch(err){
-    console.log("Error fetching page paths", err)
+    // console.log("Error fetching page paths", err)
     return {
       redirect: {
         destination: "/404",

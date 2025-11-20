@@ -1,10 +1,8 @@
-import  { useState, useEffect } from 'react';
+import  { useState, useEffect, Suspense } from 'react';
 import { FaStar, FaTag } from 'react-icons/fa';
-import axios from 'axios';
 import { useRouter } from 'next/router';
 import styles from './propertyListingCard.module.css';
-import PremiumProperty from './premiumProperty';
-
+import { Loader } from '../../UI/customeLoader';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -94,7 +92,18 @@ const handleViewMorePropertyClick = (id) => {
     newTab.focus();
   }
 };
+
+
   return (
+      <Suspense
+          fallback={
+            <div style={{ padding: '2rem', textAlign: 'center' }}>
+              <div className="loader-container">
+                <div className="spinner" />
+              </div>
+            </div>
+          }
+        >
     <div className={styles.propertyListingCardWrapper}>
       <div className={styles.propertyListPageSectionFlex}>
         <div className={styles.propertyListPageLeftSection}>
@@ -147,8 +156,8 @@ const handleViewMorePropertyClick = (id) => {
                     </div>
                     <p className={styles.propertyListingCardRightSectionLocation}>
                     <svg
-     xmlns="http://www.w3.org/2000/svg"
-  width="12"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="12"
   height="12"
   fill="rgba(0, 0, 0, 0.4)"
   viewBox="0 0 24 24"
@@ -265,6 +274,7 @@ const handleViewMorePropertyClick = (id) => {
         </div>
       </div>
     </div>
+    </Suspense>
   );
 }
 

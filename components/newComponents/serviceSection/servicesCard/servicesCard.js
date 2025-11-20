@@ -26,7 +26,7 @@ const serviceCardStyles = {
 function ServicesCard({ title, Icon, description, key, id, alt, index }) {
   const router = useRouter();
   const [isDesktop, setIsDesktop] = useState(true);
-  console.log("##########",key,index)
+  // console.log("##########",key,index)
 
   useEffect(() => {
     const checkScreenWidth = () => {

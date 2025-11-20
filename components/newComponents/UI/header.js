@@ -78,7 +78,7 @@ function NavigationBar({ pageBgd }) {
   };
 
   const handlePropertiesClick = () => {
-    router.push('/property-listing/city/Gurgaon');
+    router.push('/property-listing/search/property-in-india');
   };
 
   const propertyTabStyle = router.pathname.includes('property') ? { color: '#e7b554' } : {};

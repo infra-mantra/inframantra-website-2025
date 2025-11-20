@@ -70,7 +70,7 @@ function AboutSection({
 
   const previewText = fullText.slice(0, 180);
 
-  console.log('$$$$$$$$$$4',currentPage)
+  // console.log('$$$$$$$$$$4'/,currentPage)
 
   return (
     <>

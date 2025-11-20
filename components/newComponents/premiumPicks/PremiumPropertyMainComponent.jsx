@@ -20,7 +20,6 @@ export default function PremiumPropertyMainComponent() {
   const { detectedCity, locationStatus } = useLocationDetection()
 
   const handleCityUpdate = (city) => {
-    console.log("🎯 City updated from child component:", city);
     setSelectedCity(city);
     setHasAutoSelected(true); // Mark as manually selected
   };
@@ -28,7 +27,6 @@ export default function PremiumPropertyMainComponent() {
   // Auto-select detected city ONLY ONCE when available
   useEffect(() => {
     if (detectedCity && !hasAutoSelected && detectedCity !== selectedCity) {
-      console.log("📍 Auto-selecting detected city:", detectedCity);
       setSelectedCity(detectedCity);
       setHasAutoSelected(true);
     }
@@ -41,7 +39,6 @@ export default function PremiumPropertyMainComponent() {
         setLoading(true);
         setError(null);
         
-        console.log("🔄 Fetching data for city:", city);
         const response = await axios.get(`https://apitest.inframantra.com/api/v1/property/citywise/${city}?localityLimit=4`);
 
         const data = response.data;
@@ -49,7 +46,6 @@ export default function PremiumPropertyMainComponent() {
           setCityPremiumProperties(data?.mainCity?.properties || []);
           setLocalitiesPremiumProperties(data?.localities || []);
           setOtherCityPremiumProperties(data?.otherCityProperties || []);
-          console.log("✅ Data fetched successfully for:", city, data);
         }
       } catch (err) {
         console.error("❌ Error fetching premium properties:", err);

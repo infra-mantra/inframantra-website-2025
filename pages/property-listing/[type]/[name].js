@@ -114,74 +114,103 @@ const PropertyListingPage = () => {
   };
 
   // ✅ Apply filters on original data
-const handleFilterChange = (filterType, value) => {
+const handleFilterChange = (filterType, value, isMobile) => {
   setLoading(true);
 
-  const filtered = (allPropertyData || []).filter((property) => {
-    // ✅ City Filter
+
+  let filtered = [...allPropertyData];
+
+  // If filterType is not array (single change), convert into array
+  if (!Array.isArray(filterType)) {
+    filterType = [filterType];
+    value = [value];
+  }
+
+  for (let i = 0; i < filterType.length; i++) {
+    const ft = filterType[i];
+    const val = value[i];
+
+    if (!val || val.length === 0) continue;
+
+    // apply filter
+    filtered = filtered.filter((property) =>
+      applySingleFilter(property, ft, val)
+    );
+  }
+
+  setPropertyData(filtered);
+  setTotalProperties(filtered.length);
+  setLoading(false);
+};
+
+
+
+
+function applySingleFilter(property, filterType, value) {
+  
     if (filterType === "city" && value.length > 0) {
       return value.includes(property.city?.name);
     }
 
-    // ✅ Unit Type Filter
+    
     if (filterType === "unitType" && value.length > 0) {
       return property.propertyType?.subType?.some((sub) =>
         value.includes(sub)
       );
     }
 
-    // ✅ Configuration Filter
-    if (filterType === "configuration" && value.length > 0) {
-      return property.configurationForSearch?.some((config) =>
-        value.includes(config.toString())
-      );
-    }
+     if (filterType === "configuration" && value.length > 0) {
+         return property.configurationForSearch?.some((config) => {
+        if (typeof config === "number") {
+        return value.includes(Math.floor(config).toString());
+       }
 
-    // ✅ Project Status Filter
+    // string configs → compare lowercase
+        return value.includes(config);
+      }); 
+       }
+
+  
     if (filterType === "projectStatus" && value.length > 0) {
       return value.includes(property.status);
     }
 
-    // ✅ Price Range Filter (Cr to Rupees)
+    
     if (filterType === "priceRange") {
       const [minValue, maxValue] = value;
 
-      // Convert Cr to Rupees (1 Cr = 1e7)
+    
       const minPrice = minValue ? minValue * 1e7 : null;
       const maxPrice = maxValue ? maxValue * 1e7 : null;
 
-      // Both min and max
+      
       if (minPrice && maxPrice) {
         if (minPrice > maxPrice) return false;
         return property.priceInFigure >= minPrice && property.priceInFigure <= maxPrice;
       }
 
-      // Only min
+    
       if (minPrice) {
         return property.priceInFigure >= minPrice;
       }
 
-      // Only max
+    
       if (maxPrice) {
         return property.priceInFigure <= maxPrice;
       }
 
-      // No price filter applied (reset case)
+   
       return true;
     }
 
     return true;
-  });
+  }
 
-  setPropertyData(filtered);
-  setTotalProperties(filtered?.length || 0);
 
-  setLoading(false);
-};
 
 
   const handleSortChange = (sortType) => {
-    console.log('Sorting by:', sortType);
+    // console.log('Sorting by:', sortType);
     setLoading(true);
     setPropertyData((prevData) => {
       const sortedData = [...prevData];
@@ -267,25 +296,28 @@ const handleFilterChange = (filterType, value) => {
             const price = property.priceInFigure || 0;
             const priceInStr = property.startingPrice || '';
 
-          
-            if(property.status =="Ready to move"){
+            if (String(property.status || '').trim().toLowerCase() === 'ready to move') {
               readyToMove++;
             }
-            if(property.propertyType.subType.includes("High Rise Apartment")){
-                highRise++;
+
+            const subTypes = property.propertyType?.subType;
+            if (Array.isArray(subTypes) && subTypes.includes('High Rise Apartment')) {
+              highRise++;
             }
 
-            if (price < min) {
-              min = price;
-              minStr = priceInStr;
+            
+              if (price < min) {
+                min = price;
+                minStr = priceInStr;
+              }
+              if (price > max) {
+                max = price;
+                maxStr = priceInStr;
+              }
             }
-            if (price > max) {
-              max = price;
-              maxStr = priceInStr;
-            }
-          }
+          
 
-          setReadyToMove(readyToMove)
+          setReadyToMove(readyToMove);
           setHighRise(highRise);
 
           setMinPrice(minStr);
@@ -407,11 +439,9 @@ useEffect(() => {
                 name={name}
                 state={state}
                 city={city}
-                locality={locality}
-                subLocality={subLocality}
-              />
+                />
               <PropertyListingCard
-                name={decodeURIComponent(name)}
+                name={name ? decodeURIComponent(name) : ''}
                 type={type}
                 onOpenBackdrop={handleOpen}
                 propertyData={propertyData}
@@ -420,6 +450,9 @@ useEffect(() => {
                 projectStatusFilter={projectStatusFilter}
                 loading={loading}
                 currentPageNumber={setCurrentPage}
+            
+             
+              
               />
                 <h2>Featured Properties</h2>
               <PremiumProperty premiumProperties={premiumProperties} />

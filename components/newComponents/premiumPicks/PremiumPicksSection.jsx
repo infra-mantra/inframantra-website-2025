@@ -29,7 +29,6 @@ export default function PremiumPicksSection({
   }, [selectedCity]);
 
   const handleCityChange = (city) => {
-    console.log(`🎯 Manual city selection: ${localSelectedCity} → ${city}`);
     setLocalSelectedCity(city);
     onUpdate(city); // This updates parent state
   };
