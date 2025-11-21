@@ -21,24 +21,28 @@ function CustomizedHook({ onSearch }) {
   const router = useRouter();
   const recognitionRef = useRef(null);
 
-  // --------------------- SPEECH RECOGNITION SETUP ---------------------
+  // --------------------- FIXED SPEECH RECOGNITION FOR IOS ---------------------
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const SpeechRecognition = 
+    const SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition;
 
     if (!SpeechRecognition) {
-      console.warn("Speech Recognition not supported");
+      console.warn("Speech Recognition not supported on this device.");
       return;
     }
 
     const recognition = new SpeechRecognition();
     recognition.lang = "en-IN";
     recognition.continuous = false;
-    recognition.interimResults = true;
 
-    recognition.onstart = () => setListening(true);
+    // iPhone Safari breaks with interimResults = true
+    recognition.interimResults = false;
+
+    recognition.onstart = () => {
+      setListening(true);
+    };
 
     recognition.onresult = (event) => {
       const transcript = event.results[0][0].transcript;
@@ -52,19 +56,24 @@ function CustomizedHook({ onSearch }) {
 
     recognition.onend = () => {
       setListening(false);
-      if (inputValue.trim()) handleSearchClick();
+      // ❗ DO NOT redirect automatically (Safari blocks this)
+      // User must click Search manually
     };
 
     recognitionRef.current = recognition;
-  }, [inputValue]);
+  }, []); // IMPORTANT: runs only once
 
   const toggleMic = () => {
     if (!recognitionRef.current) return;
 
-    if (listening) {
-      recognitionRef.current.stop();
-    } else {
-      recognitionRef.current.start();
+    try {
+      if (listening) {
+        recognitionRef.current.stop();
+      } else {
+        recognitionRef.current.start(); // must be inside user click for iOS
+      }
+    } catch (e) {
+      console.log("Mic start error:", e);
     }
   };
 
@@ -139,14 +148,14 @@ function CustomizedHook({ onSearch }) {
         />
 
         {/* ---- SPEECH MIC BUTTON ---- */}
-        <div className={styles.micWrapper} >
-        <span onClick={toggleMic}>
-          {listening ? (
-            <IoMicOff size={22} color="red" />
-          ) : (
-            <IoMic size={22} />
-          )}
-        </span>
+        <div className={styles.micWrapper}>
+          <span onClick={toggleMic}>
+            {listening ? (
+              <IoMicOff size={22} color="red" />
+            ) : (
+              <IoMic size={22} />
+            )}
+          </span>
         </div>
 
         {!isDesktop && (
