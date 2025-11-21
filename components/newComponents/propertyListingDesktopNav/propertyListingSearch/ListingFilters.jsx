@@ -191,41 +191,50 @@ const toggleSection = (key) => {
 
 
 const handlePriceInputChange = (e, type) => {
-  const raw = e.target.value.trim();
+  let raw = e.target.value.trim();
 
-  // Allow empty input
+  // Allow empty
   if (raw === "") {
     if (type === "min") setMinInput("");
     else setMaxInput("");
+    return;
+  }
 
+  // Allow leading dot → convert to "0.x"
+  if (raw.startsWith(".")) {
+    raw = "0" + raw;
+  }
+
+  // Reject input that contains invalid characters
+  // Allowed: digits + max one dot
+  if (!/^\d*\.?\d*$/.test(raw)) {
     return; 
   }
 
-  // ❌ If not a valid number → IGNORE the update (prevents NaN)
-  if (!/^\d+$/g.test(raw)) {
-    return; 
+  // Reject only "." → not a valid number
+  if (raw === ".") {
+    return;
   }
 
   const value = Number(raw);
-
-  let updatedRange = [...priceRange]; // [min, max]
+  let updatedRange = [...priceRange];
 
   if (type === "min") {
-    setMinInput(value);
+    setMinInput(raw);
     updatedRange[0] = value;
 
     if (updatedRange[1] !== null && value > updatedRange[1]) {
       updatedRange[1] = value;
-      setMaxInput(value);
+      setMaxInput(raw);
     }
 
   } else {
-    setMaxInput(value);
+    setMaxInput(raw);
     updatedRange[1] = value;
 
     if (updatedRange[0] !== null && value < updatedRange[0]) {
       updatedRange[0] = value;
-      setMinInput(value);
+      setMinInput(raw);
     }
   }
 
@@ -235,6 +244,7 @@ const handlePriceInputChange = (e, type) => {
     notifyAllFilters({ priceRange: updatedRange });
   }
 };
+
 
 
 
