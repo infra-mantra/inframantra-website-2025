@@ -271,7 +271,7 @@ function applySingleFilter(property, filterType, value) {
         setTotalProperties(hits.length);
 
         if (hits.length > 0) {
-          console.log('Fetched properties:', hits);
+          // console.log('Fetched properties:', hits);
           setCurrentPage(1);
 
           const firstProperty = hits[0];
@@ -336,50 +336,81 @@ function applySingleFilter(property, filterType, value) {
     fetchData();
   }, [type, name]);
 
- 
 useEffect(() => {
+  if (!type || !name) return;
 
-  let area = '';
-  let parentArea = '';
-  let newTitle = '';
-  let newDescription = '';
-  let newKeyword = '';
+  let area = "";
+  let parentArea = "";
+  let newTitle = "";
+  let newDescription = "";
+  let newKeyword = "";
 
-  if (type === 'city' && city) {
+  // ---------- STATE ----------
+  if (type === "state" && state) {
+    area = state;
+
+    newTitle = `Properties in ${area} | Real Estate in ${area}`;
+
+    newDescription = `Explore the best properties in ${area}. In total, there are more than ${totalProperties} properties for sale in ${area}. Property prices range between ${minPrice} and ${maxPrice}. These listings include 2-5 BHK apartments, villas, duplexes, and penthouses with modern amenities, great connectivity, and top-tier living standards. ${area} is a rapidly developing region that offers comfort, convenience, and premium lifestyle options for homebuyers.`;
+
+    newKeyword = `properties in ${area.toLowerCase()}, real estate in ${area.toLowerCase()}, buy property in ${area.toLowerCase()}, apartments in ${area.toLowerCase()}, flats in ${area.toLowerCase()}, ${area.toLowerCase()} property prices, residential property in ${area.toLowerCase()}, real estate market ${area.toLowerCase()}`;
+  }
+
+  // ---------- CITY ----------
+  else if (type === "city" && city) {
     area = city;
     parentArea = state;
-    newTitle = `Properties in ${area} | Real Estate in ${area}`;
-    newDescription = `Find “${totalProperties}+” properties for sale in “${area}”, only on Inframantra. Explore a wide range of property options including 2BHK to 5BHK apartments and penthouses.`;
-    newKeyword = `InfraMantra, Residential Properties, Commercial Properties, Apartments, Flats, Buy flat in ${area.toLowerCase()}, buy property in ${area.toLowerCase()}, ${area.toLowerCase()} property prices, Apartments for sale in ${area.toLowerCase()}, buy apartment in ${area.toLowerCase()}, buy Properties in ${area.toLowerCase()}, real estate in ${area.toLowerCase()}, best property to buy in ${area.toLowerCase()}, ${area.toLowerCase()} apartment for sale, ${area.toLowerCase()} property prices, buy property in ${area.toLowerCase()}, buy residential property in ${area.toLowerCase()}, Property for purchase in ${area.toLowerCase()}`;
+
+    newTitle = `Properties in ${area}, ${parentArea} | Real Estate in ${area}`;
+
+    newDescription = `Explore the best properties in ${area}, ${parentArea}. In total, there are more than ${totalProperties} properties for sale in ${area}. The price of these properties ranges from ${minPrice} to ${maxPrice}. These ${area} properties include 2-5 BHK apartments, villas, duplexes, and penthouses loaded with world-class amenities. ${area} is one of the fastest-growing urban hubs offering unmatched connectivity and modern living, ideal for families and professionals seeking high-quality living spaces.`;
+
+    newKeyword = `properties in ${area.toLowerCase()}, real estate in ${area.toLowerCase()}, buy property in ${area.toLowerCase()}, apartments in ${area.toLowerCase()}, flats in ${area.toLowerCase()}, ${parentArea.toLowerCase()} real estate, buy flat in ${area.toLowerCase()}, ${area.toLowerCase()} property prices, luxury property in ${area.toLowerCase()}`;
   }
 
-  else if (type === 'locality' && locality && city) {
+  // ---------- LOCALITY ----------
+  else if (type === "locality" && locality && city) {
     area = locality;
     parentArea = city;
+
     newTitle = `Properties in ${area}, ${parentArea} | Real Estate in ${area}`;
-    newDescription = `Find “${totalProperties}+” properties for sale in “${area}, ${parentArea}”, only on Inframantra. Explore a wide range of property options including 2BHK to 5BHK apartments and penthouses.`;
-    newKeyword = `InfraMantra, Residential Properties, Commercial Properties, Apartments, Flats, Buy flat in ${area.toLowerCase()}, buy property in ${area.toLowerCase()}, ${parentArea.toLowerCase()} property prices, Apartments for sale in ${area.toLowerCase()}, buy apartment in ${area.toLowerCase()}, buy Properties in ${area.toLowerCase()}, real estate in ${parentArea.toLowerCase()}, best property to buy in ${parentArea.toLowerCase()}, ${parentArea.toLowerCase()} apartment for sale, ${area.toLowerCase()} property prices, buy property in ${area.toLowerCase()}, buy residential property in ${area.toLowerCase()}, Property for purchase in ${area.toLowerCase()}`;
+
+    newDescription = `Explore the best properties in ${area}, ${parentArea}. There are more than ${totalProperties} properties for sale in ${area}. Prices start from ${minPrice} and go up to ${maxPrice}. These include 2-5 BHK apartments, duplexes, villas, and penthouses designed with premium amenities and superior connectivity. ${area}, ${parentArea} is a rapidly evolving residential hub offering excellent lifestyle advantages, making it ideal for homebuyers seeking luxury and comfort.`;
+
+    newKeyword = `properties in ${area.toLowerCase()}, real estate in ${area.toLowerCase()}, buy property in ${area.toLowerCase()}, flats in ${area.toLowerCase()}, buy apartment in ${area.toLowerCase()}, ${parentArea.toLowerCase()} real estate, ${area.toLowerCase()} property prices`;
   }
 
-  else if (type === 'subLocality' && subLocality && locality && city) {
+  // ---------- SUB LOCALITY ----------
+  else if (type === "subLocality" && subLocality && locality && city) {
     area = subLocality;
     parentArea = `${locality}, ${city}`;
+
     newTitle = `Properties in ${area}, ${parentArea} | Real Estate in ${area}`;
-    newDescription = `Find “${totalProperties}+” properties for sale in “${area}, ${parentArea}”, only on Inframantra. Explore a wide range of property options including 2BHK to 5BHK apartments and penthouses.`;
-    newKeyword = `InfraMantra, Residential Properties, Commercial Properties, Apartments, Flats, Buy flat in ${city.toLowerCase()}, buy property in ${area.toLowerCase()}, ${city.toLowerCase()} property prices, Apartments for sale in ${area.toLowerCase()}, buy apartment in ${area.toLowerCase()}, buy Properties in ${area.toLowerCase()}, real estate in ${city.toLowerCase()}, best property to buy in ${city.toLowerCase()}, ${city.toLowerCase()} apartment for sale, ${city.toLowerCase()} property prices, buy property in ${area.toLowerCase()}, buy residential property in ${area.toLowerCase()}, Property for purchase in ${area.toLowerCase()}`;
+
+    newDescription = `Explore premium properties in ${area}, ${parentArea}. There are more than ${totalProperties} properties available in this area. Property prices range between ${minPrice} and ${maxPrice}. These listings include 2-5 BHK luxury apartments, duplex homes, villas, and penthouses with top-class amenities. ${area}, ${parentArea} is one of the most sought-after residential pockets offering superior connectivity, modern infrastructure, and high-quality living options.`;
+
+    newKeyword = `properties in ${area.toLowerCase()}, real estate in ${area.toLowerCase()}, buy property in ${area.toLowerCase()}, luxury homes in ${area.toLowerCase()}, residential projects in ${area.toLowerCase()}, ${city.toLowerCase()} real estate, ${area.toLowerCase()} property prices`;
   }
 
   else if (type === "search") {
-    newTitle = 'Search Results | Inframantra';
-    newDescription = `Explore all properties listed under your search results. Find “${totalProperties}+” verified properties on Inframantra including apartments, villas, plots, and more.`;
-    newKeyword = `InfraMantra, Real Estate Search, Property Search, Buy properties, Buy apartments, Search results, Properties near me, Search real estate options`;
+    newTitle = `Search Results | Inframantra`;
+    newDescription = `Discover the finest properties with Inframantra — your gateway to premium living. Explore an exclusive collection of 2–5 BHK apartments, duplexes, villas, and penthouses, each crafted with world-class design and top-tier amenities. Located in one of the fastest-growing residential destinations, Inframantra offers best properties boasting unmatched connectivity, superior convenience, and a lifestyle perfectly suited for families and professionals seeking luxury, comfort, and long-term value.`;
+    newKeyword = `property search, real estate search, buy property, inframantra search results`;
   }
 
   setTitle(newTitle);
   setDescription(newDescription);
   setKeyword(newKeyword);
 
-}, [ type , name ]);
+}, [
+  type,
+  name,
+  city,
+  locality,
+  subLocality,
+  state,
+  totalProperties,  
+]);
 
 
   const handleCloseFilterToggle = () => setOpenCloseFilter((prev) => !prev);
@@ -399,136 +430,191 @@ useEffect(() => {
   description={description}
   keyword={keyword}
       {...(type === "search" ? { seo: "noindex, follow" } : {})}
+      type={type}
+      name={name}
 >
-        {isDesktop ? (
-          <div
-            className="Wrapper"
-            style={{
-              display: 'flex',
-              gap: '1rem',
-              overflow: 'hidden',
-            }}
-          >
-            
-            <div className="listingFilters" ref={filterRef} style={{ padding: '1rem' }}>
-            <ListingFilters onFilterChange={handleFilterChange}  type={type} ref={divRef} name={name} />
-            </div>
+  {isDesktop ? (
+  <div
+    className="Wrapper"
+    style={{
+      display: "flex",
+      gap: "1rem",
+      overflow: "hidden",
+    }}
+  >
+    {/* LEFT FILTERS */}
+    <div
+      className="listingFilters"
+      ref={filterRef}
+      style={{ padding: "1rem" }}
+    >
+      <ListingFilters
+        onFilterChange={handleFilterChange}
+        type={type}
+        ref={divRef}
+        name={name}
+      />
+    </div>
 
-            <div
-              className="listingScrollbar"
-              ref={contentRef}
-              style={{
-                flex: 1,
-                overflowY: 'auto',
-                marginTop: '1rem',
-                scrollBehavior: 'smooth',
-                willChange: 'transform',
-                WebkitOverflowScrolling: 'touch',
-                scrollbarWidth: 'none',
-              }}
-            >
-              <SearchBar
-                onSearch={setPropertyData}
-                onSortChange={handleSortChange}
-                isDesktop={isDesktop}
-                isMobile={isMobile}
-                name={name}
-                type={name}
-              />
-              <Content
-                totalProperties={totalProperties}
-                currentPage={currentPage}
-                maxPrice={maxPrice}
-                minPrice={minPrice}
-                type={type}
-                name={name}
-                state={state}
-                city={city}
-                />
-              <PropertyListingCard
-                name={name ? decodeURIComponent(name) : ''}
-                type={type}
-                onOpenBackdrop={handleOpen}
-                propertyData={propertyData}
-                propertyTypeFilter={propertyTypeFilter}
-                priceRangeFilter={priceRangeFilter}
-                projectStatusFilter={projectStatusFilter}
-                loading={loading}
-                currentPageNumber={setCurrentPage}
-            
-             
-              
-              />
-                <h2>Featured Properties</h2>
-              <PremiumProperty premiumProperties={premiumProperties} />
-              <FaqSection
-                totalProperties={totalProperties}
+    {/* DESKTOP LOADING OR CONTENT */}
+    {loading ? (
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "300px",
+          fontWeight: "bold",
+          fontSize: "1.2rem",
+        }}
+      >
+        Loading...
+      </div>
+    ) : (
+      <div
+        className="listingScrollbar"
+        ref={contentRef}
+        style={{
+          flex: 1,
+          overflowY: "auto",
+          marginTop: "1rem",
+          scrollBehavior: "smooth",
+          willChange: "transform",
+          WebkitOverflowScrolling: "touch",
+          scrollbarWidth: "none",
+        }}
+      >
+        <SearchBar
+          onSearch={setPropertyData}
+          onSortChange={handleSortChange}
+          isDesktop={isDesktop}
+          isMobile={isMobile}
+          name={name}
+          type={type}
+        />
 
-                type={type}
-                name={name}
-                state={state}
-                city={city}
-                locality={locality}
-                subLocality={subLocality}
-                highRise={highRise}
-                readyToMove={readyToMove}
-              />
-            </div>
-          </div>
-        ) : (
-          <>
-            <SearchBar
-              onSearch={setPropertyData}
-              onSortChange={handleSortChange}
-              isDesktop={isDesktop}
-              isMobile={isMobile}
-              handleCloseFilterToggle={handleCloseFilterToggle}
-              name={name}
-              type={name}
-              
-            />
-            <ListingFilters
-              onFilterChange={handleFilterChange}
-              openClosefilter={openClosefilter}
-              handleCloseFilterToggle={handleCloseFilterToggle}
-              name={name}
-              type={name}
-            />
-            <Content
-               totalProperties={totalProperties}
-                currentPage={currentPage}
-                maxPrice={maxPrice}
-                minPrice={minPrice}
-                type={type}
-                name={name}
-                state={state}
-                city={city}
-                locality={locality}
-                subLocality={subLocality}
-                 />
-            <PropertyListingCardMobile
-              propertyData={propertyData}
-              onOpenBackdrop={handleOpen}
-              currentPageNumber={setCurrentPage}
-            />
-            <h2>Featured Properties</h2>
-            <PremiumProperty premiumProperties={premiumProperties} />
-            <FaqSection
-                totalProperties={totalProperties}
-                type={type}
-                name={name}
-                state={state}
-                city={city}
-                locality={locality}
-                subLocality={subLocality}
-                 highRise={highRise}
-                readyToMove={readyToMove}
-            />
-          </>
-        )}
-         <CustomBackdrop open={backdropOpen} onClose={handleClose}>
-          <PropertyPageFloatingContact name={selectedPropertyName} />
-        </CustomBackdrop>
+        <Content
+          totalProperties={totalProperties}
+          currentPage={currentPage}
+          maxPrice={maxPrice}
+          minPrice={minPrice}
+          type={type}
+          name={name}
+          state={state}
+          city={city}
+        />
+
+        <PropertyListingCard
+          name={name ? decodeURIComponent(name) : ""}
+          type={type}
+          onOpenBackdrop={handleOpen}
+          propertyData={propertyData}
+          propertyTypeFilter={propertyTypeFilter}
+          priceRangeFilter={priceRangeFilter}
+          projectStatusFilter={projectStatusFilter}
+          loading={loading}
+          currentPageNumber={setCurrentPage}
+        />
+
+        <h2>Featured Properties</h2>
+        <PremiumProperty premiumProperties={premiumProperties} />
+
+        <FaqSection
+          totalProperties={totalProperties}
+          type={type}
+          name={name}
+          state={state}
+          city={city}
+          locality={locality}
+          subLocality={subLocality}
+          highRise={highRise}
+          readyToMove={readyToMove}
+        />
+      </div>
+    )}
+  </div>
+) : (
+  /* ---------------- MOBILE VIEW ---------------- */
+  <>
+    <SearchBar
+      onSearch={setPropertyData}
+      onSortChange={handleSortChange}
+      isDesktop={isDesktop}
+      isMobile={isMobile}
+      handleCloseFilterToggle={handleCloseFilterToggle}
+      name={name}
+      type={name}
+    />
+
+    <ListingFilters
+      onFilterChange={handleFilterChange}
+      openClosefilter={openClosefilter}
+      handleCloseFilterToggle={handleCloseFilterToggle}
+      name={name}
+      type={name}
+    />
+
+    {loading ? (
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "300px",
+          fontWeight: "bold",
+          fontSize: "1.2rem",
+        }}
+      >
+        Loading...
+      </div>
+    ) : (
+      <>
+        <Content
+          totalProperties={totalProperties}
+          currentPage={currentPage}
+          maxPrice={maxPrice}
+          minPrice={minPrice}
+          type={type}
+          name={name}
+          state={state}
+          city={city}
+          locality={locality}
+          subLocality={subLocality}
+        />
+
+        <PropertyListingCardMobile
+          propertyData={propertyData}
+          onOpenBackdrop={handleOpen}
+          currentPageNumber={setCurrentPage}
+        />
+
+        <h2>Featured Properties</h2>
+        <PremiumProperty premiumProperties={premiumProperties} />
+
+        <FaqSection
+          totalProperties={totalProperties}
+          type={type}
+          name={name}
+          state={state}
+          city={city}
+          locality={locality}
+          subLocality={subLocality}
+          highRise={highRise}
+          readyToMove={readyToMove}
+        />
+      </>
+    )}
+  </>
+)}
+
+
+{/* BACKDROP ALWAYS OUTSIDE */}
+<CustomBackdrop open={backdropOpen} onClose={handleClose}>
+  <PropertyPageFloatingContact name={selectedPropertyName} />
+</CustomBackdrop>
+
       </Wrapper>
     </Suspense>
   );

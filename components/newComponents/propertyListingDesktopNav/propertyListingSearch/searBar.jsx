@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import styles from './searchBar.module.css';
 import { debounce } from 'lodash';
 import Ajax1 from '../../../helper/Ajax1';
@@ -13,6 +13,8 @@ import { colors } from '@mui/material';
 
 function SearchBar({ onSearch, onSortChange , isDesktop , isMobile,handleCloseFilterToggle,type,name}) {
   const router = useRouter();
+  const boxRef = useRef(null);
+
 
   const [searchValue, setSearchValue] = useState('');
   const [sortValue, setSortValue] = useState('relevance');
@@ -44,6 +46,20 @@ function SearchBar({ onSearch, onSortChange , isDesktop , isMobile,handleCloseFi
   useEffect(()=>{
     setSearchValue('')
   },[name,type])
+
+  useEffect(() => {
+  function handleClickOutside(e) {
+    if (boxRef.current && !boxRef.current.contains(e.target)) {
+          setSuggestions([]);      // hide suggestions
+    }
+  }
+
+  document.addEventListener("mousedown", handleClickOutside);
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+  };
+}, []);
+
 
 
   const handleSubmit = (e) => {
@@ -122,7 +138,7 @@ function SearchBar({ onSearch, onSortChange , isDesktop , isMobile,handleCloseFi
        {isMobile && ( <div class="ftr" onClick={handleCloseFilterToggle}><span style={{color:"rgb(11, 110, 33)"}}>Filters</span><img src="/icons/fiterIconGreen.svg"  class="ftrIcon" / ></div>)} 
 
       {suggested.length > 0 && searchValue && (
-       <ul className={`${styles.listbox} mts`}>
+       <ul className={`${styles.listbox} mts`} ref={boxRef}>
           {suggested.map((option, index) => (
             <li key={index} onClick={() => handleSelect(option)}>
               <span>

@@ -15,9 +15,12 @@ const Wrapper = ({
   image = 'https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/Inframantra-Web-OG-Image.jpg',
   location: metaLoc = 'Infra Mantra',
   seo = 'index, follow',
+  type="",
+  name="",
   ...props
 }) => {
   const router = useRouter();
+  // console.log("props",keyword,description,title)
 
   /** 🟢 ALWAYS generate fresh meta values on route change */
   const meta = useMemo(() => {
@@ -28,6 +31,17 @@ const Wrapper = ({
       seo,
     };
   }, [title, description, keyword, seo, router.asPath]);
+const [metaTitle, setMetaTitle] = useState(title);
+const [metaDescription, setMetaDescription] = useState(description);
+const [metaKeyword, setMetaKeyword] = useState(keyword);
+const [metaSeo, setMetaseo] = useState(seo)
+
+useEffect(() => {
+  setMetaTitle(title);
+  setMetaDescription(description);
+  setMetaKeyword(keyword);
+  setMetaseo(seo)
+}, [title, description, keyword, type, name]);
 
   /** Canonical URL (KEEPS IT CLEAN) */
   const canonicalUrl = useMemo(() => {
@@ -124,11 +138,11 @@ const Wrapper = ({
   return (
     <div className="body-wrapper">
       <Head>
-        <title key="title">{meta.title}</title>
+        <title key="title">{metaTitle}</title>
 
-        <meta key="robots" name="robots" content={meta.seo} />
-        <meta key="description" name="description" content={meta.description} />
-        <meta key="keywords" name="keywords" content={meta.keyword} />
+        <meta key="robots" name="robots" content={metaSeo} />
+        <meta key="description" name="description" content={metaDescription} />
+        <meta key="keywords" name="keywords" content={metaKeyword} />
         <meta key="location" name="location" content={metaLoc} />
 
         <link key="canonical" rel="canonical" href={canonicalUrl} />
@@ -156,17 +170,17 @@ const Wrapper = ({
 
         {/* OG Meta */}
         <meta key="ogsite" property="og:site_name" content="INFRAMANTRA" />
-        <meta key="ogtitle" property="og:title" content={meta.title} />
+        <meta key="ogtitle" property="og:title" content={metaTitle} />
         <meta key="ogurl" property="og:url" content={canonicalUrl} />
-        <meta key="ogdesc" property="og:description" content={meta.description} />
+        <meta key="ogdesc" property="og:description" content={metaDescription} />
         <meta key="ogtype" property="og:type" content="website" />
         <meta key="ogimg" property="og:image" content={image} />
 
         {/* Twitter */}
         <meta key="twcard" name="twitter:card" content="summary_large_image" />
         <meta key="twsite" name="twitter:site" content="@INFRAMANTRA_" />
-        <meta key="twtitle" name="twitter:title" content={meta.title} />
-        <meta key="twdesc" name="twitter:description" content={meta.description} />
+        <meta key="twtitle" name="twitter:title" content={metaTitle} />
+        <meta key="twdesc" name="twitter:description" content={metaDescription} />
         <meta key="twimg" name="twitter:image" content={image} />
       </Head>
 

@@ -29,7 +29,7 @@ export default function ListingFilters({
   const [isMobile, setIsMobile] = useState(false);
  const router = useRouter();
   let { type, name } = router.query;
-  console.log(type,name)
+  // console.log(type,name)
 useEffect(() => {
   if (type === "city") {
       resetFilters()
@@ -98,7 +98,7 @@ const toggleSection = (key) => {
 
   // ----------------------------------------------------
   // 🔥 CHECKBOX & TAG CLICK HANDLER
-  // ----------------------------------------------------
+  // ----------------------------------------------------s
   const handleCheckboxChange = (value, state, setter, type) => {
     const updated = state.includes(value)
       ? state.filter((item) => item !== value)
