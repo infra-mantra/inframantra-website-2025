@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Ajax1 from '../../helper/Ajax1';
 import { debounce } from 'lodash';
 import { useRouter } from 'next/router';
-import { IoSearchSharp, IoMic, IoMicOff } from 'react-icons/io5';
+import { IoSearchSharp } from 'react-icons/io5';
 import { RoofingOutlined as RoofingOutlinedIcon } from '@mui/icons-material';
 import { MapOutlined as MapOutlinedIcon } from '@mui/icons-material';
 import { RoomOutlined as RoomOutlinedIcon } from '@mui/icons-material';
@@ -16,73 +16,13 @@ function CustomizedHook({ onSearch }) {
   const [suggestions, setSuggestions] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [isDesktop, setIsDesktop] = useState(false);
-  const [listening, setListening] = useState(false);
-
   const router = useRouter();
-  const recognitionRef = useRef(null);
-
-  // --------------------- FIXED SPEECH RECOGNITION FOR IOS ---------------------
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const SpeechRecognition =
-      window.SpeechRecognition || window.webkitSpeechRecognition;
-
-    if (!SpeechRecognition) {
-      console.warn("Speech Recognition not supported on this device.");
-      return;
-    }
-
-    const recognition = new SpeechRecognition();
-    recognition.lang = "en-IN";
-    recognition.continuous = false;
-
-    // iPhone Safari breaks with interimResults = true
-    recognition.interimResults = false;
-
-    recognition.onstart = () => {
-      setListening(true);
-    };
-
-    recognition.onresult = (event) => {
-      const transcript = event.results[0][0].transcript;
-      setInputValue(transcript);
-    };
-
-    recognition.onerror = (err) => {
-      console.log("Speech error:", err);
-      setListening(false);
-    };
-
-    recognition.onend = () => {
-      setListening(false);
-      // ❗ DO NOT redirect automatically (Safari blocks this)
-      // User must click Search manually
-    };
-
-    recognitionRef.current = recognition;
-  }, []); // IMPORTANT: runs only once
-
-  const toggleMic = () => {
-    if (!recognitionRef.current) return;
-
-    try {
-      if (listening) {
-        recognitionRef.current.stop();
-      } else {
-        recognitionRef.current.start(); // must be inside user click for iOS
-      }
-    } catch (e) {
-      console.log("Mic start error:", e);
-    }
-  };
-
-  // --------------------------------------------------------------------
 
   useEffect(() => {
     const handleResize = () => {
       setIsDesktop(window.innerWidth >= 769);
     };
+
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -138,43 +78,33 @@ function CustomizedHook({ onSearch }) {
 
   return (
     <div className={styles.root}>
-      <div className={styles.inputWrapper}>
-        <input
-          type="text"
-          placeholder="Search By Property Name or Location"
-          value={inputValue}
-          onChange={handleInputChange}
-          onKeyDown={(e) => e.key === 'Enter' && handleSearchClick()}
-        />
+<div className={styles.inputWrapper}>
+  <input
+    type="text"
+    placeholder="Search By Property Name or Location"
+    value={inputValue}
+    onChange={handleInputChange}
+    onKeyDown={(e) => e.key === 'Enter' && handleSearchClick()}
+  />
 
-        {/* ---- SPEECH MIC BUTTON ---- */}
-        <div className={styles.micWrapper}>
-          <span onClick={toggleMic}>
-            {listening ? (
-              <IoMicOff size={22} color="red" />
-            ) : (
-              <IoMic size={22} />
-            )}
-          </span>
-        </div>
+  {!isDesktop && (
+    <IoSearchSharp
+      className={styles.searchIcon}
+      onClick={handleSearchClick}
+      size={22}
+    />
+  )}
 
-        {!isDesktop && (
-          <IoSearchSharp
-            className={styles.searchIcon}
-            onClick={handleSearchClick}
-            size={22}
-          />
-        )}
+  {isDesktop && (
+    <Button
+      width="14%"
+      otherStyles={{ height: '50px', fontSize: '22px', borderRadius: '5px' }}
+      btnText="Search"
+      onClick={handleSearchClick}
+    />
+  )}
+</div>
 
-        {isDesktop && (
-          <Button
-            width="14%"
-            otherStyles={{ height: '50px', fontSize: '22px', borderRadius: '5px' }}
-            btnText="Search"
-            onClick={handleSearchClick}
-          />
-        )}
-      </div>
 
       {suggestions.length > 0 && inputValue && (
         <ul className={styles.listbox}>
@@ -198,7 +128,8 @@ function CustomizedHook({ onSearch }) {
 }
 
 CustomizedHook.propTypes = {
-  onSearch: PropTypes.func.isRequired
+  onSearch: PropTypes.func.isRequired,
+  handleSearch: PropTypes.func.isRequired,
 };
 
 export default CustomizedHook;
