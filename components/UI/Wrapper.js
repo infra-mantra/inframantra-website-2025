@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Script from 'next/script';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import NavigationBar from '../newComponents/UI/header';
 import FooterNavigation from '../newComponents/UI/footer';
@@ -15,35 +15,13 @@ const Wrapper = ({
   image = 'https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/Inframantra-Web-OG-Image.jpg',
   location: metaLoc = 'Infra Mantra',
   seo = 'index, follow',
-  type="",
-  name="",
+  type = "",
+  name = "",
   ...props
 }) => {
   const router = useRouter();
-  // console.log("props",keyword,description,title)
 
-  /** 🟢 ALWAYS generate fresh meta values on route change */
-  const meta = useMemo(() => {
-    return {
-      title,
-      description,
-      keyword,
-      seo,
-    };
-  }, [title, description, keyword, seo, router.asPath]);
-const [metaTitle, setMetaTitle] = useState(title);
-const [metaDescription, setMetaDescription] = useState(description);
-const [metaKeyword, setMetaKeyword] = useState(keyword);
-const [metaSeo, setMetaseo] = useState(seo)
-
-useEffect(() => {
-  setMetaTitle(title);
-  setMetaDescription(description);
-  setMetaKeyword(keyword);
-  setMetaseo(seo)
-}, [title, description, keyword, type, name]);
-
-  /** Canonical URL (KEEPS IT CLEAN) */
+  /** Canonical URL */
   const canonicalUrl = useMemo(() => {
     return (
       'https://inframantra.com' +
@@ -55,6 +33,18 @@ useEffect(() => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [router.asPath]);
+
+  /** Update meta description, OG & Twitter dynamically (CLIENT-SIDE) */
+  useEffect(() => {
+    const updateMeta = (selector, content) => {
+      const tag = document.querySelector(selector);
+      if (tag) tag.setAttribute("content", content);
+    };
+
+    updateMeta('meta[name="description"]', description);
+    updateMeta('meta[property="og:description"]', description);
+    updateMeta('meta[name="twitter:description"]', description);
+  }, [description, router.asPath, type, name]);
 
   /** Schema.org JSON-LD */
   const structuredData = useMemo(() => {
@@ -138,29 +128,27 @@ useEffect(() => {
   return (
     <div className="body-wrapper">
       <Head>
-        <title key="title">{metaTitle}</title>
+        <title key="title">{title}</title>
 
-        <meta key="robots" name="robots" content={metaSeo} />
-        <meta key="description" name="description" content={metaDescription} />
-        <meta key="keywords" name="keywords" content={metaKeyword} />
+        <meta key="robots" name="robots" content={seo} />
+        <meta key="description" name="description" content={description} />
+        <meta key="keywords" name="keywords" content={keyword} />
         <meta key="location" name="location" content={metaLoc} />
 
         <link key="canonical" rel="canonical" href={canonicalUrl} />
-        
-        {/* Avoid duplicates using keys */}
+
         <meta key="author" name="author" content="INFRAMANTRA" />
         <meta key="copyright" name="copyright" content="inframantra.com" />
         <meta key="lang" httpEquiv="Content-Language" content="en" />
         <meta key="viewport" name="viewport" content="width=device-width, user-scalable=no" />
 
-        {/* Structured Data */}
+  {/* Structured Data */}
           <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
           href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Inter:wght@400;500;600;700&family=Lexend+Deca:wght@100..900&display=swap"
           rel="stylesheet"
-        />
-        {structuredData.map((entry, i) => (
+        />        {structuredData.map((entry, i) => (
           <script
             key={`schema-${i}`}
             type="application/ld+json"
@@ -168,23 +156,23 @@ useEffect(() => {
           />
         ))}
 
-        {/* OG Meta */}
+        {/* OG META */}
         <meta key="ogsite" property="og:site_name" content="INFRAMANTRA" />
-        <meta key="ogtitle" property="og:title" content={metaTitle} />
+        <meta key="ogtitle" property="og:title" content={title} />
         <meta key="ogurl" property="og:url" content={canonicalUrl} />
-        <meta key="ogdesc" property="og:description" content={metaDescription} />
+        <meta key="ogdesc" property="og:description" content={description} />
         <meta key="ogtype" property="og:type" content="website" />
         <meta key="ogimg" property="og:image" content={image} />
 
         {/* Twitter */}
         <meta key="twcard" name="twitter:card" content="summary_large_image" />
         <meta key="twsite" name="twitter:site" content="@INFRAMANTRA_" />
-        <meta key="twtitle" name="twitter:title" content={metaTitle} />
-        <meta key="twdesc" name="twitter:description" content={metaDescription} />
+        <meta key="twtitle" name="twitter:title" content={title} />
+        <meta key="twdesc" name="twitter:description" content={description} />
         <meta key="twimg" name="twitter:image" content={image} />
       </Head>
 
-      {/* Google Tag Manager */}
+      {/* GTM */}
       <Script
         id="gtm-script"
         strategy="afterInteractive"
@@ -214,7 +202,6 @@ useEffect(() => {
       </main>
 
       <FooterNavigation />
-
       <ToastContainer position="top-right" autoClose={2000} pauseOnHover theme="light" />
     </div>
   );

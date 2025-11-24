@@ -59,7 +59,7 @@ const PropertyListingPage = () => {
   const [openClosefilter, setOpenCloseFilter] = useState(false);
   const [city, setCity] = useState('');
   const [locality, setLocality] = useState('');
-  const [subLocality, setSubLocality] = useState('');
+  const [sublocality, setSubLocality] = useState('');
   const [state, setState] = useState('');
   const[readyToMove, setReadyToMove] = useState(0);
   const [highRise,setHighRise] = useState(0);
@@ -69,7 +69,7 @@ const PropertyListingPage = () => {
 
 
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [metadescription, setMetaDescription] = useState("");
   const [keyword, setKeyword] = useState("");
 
   const contentRef = useRef(null);
@@ -349,57 +349,47 @@ useEffect(() => {
   if (type === "state" && state) {
     area = state;
 
-    newTitle = `Properties in ${area} | Real Estate in ${area}`;
-
-    newDescription = `Explore the best properties in ${area}. In total, there are more than ${totalProperties} properties for sale in ${area}. Property prices range between ${minPrice} and ${maxPrice}. These listings include 2-5 BHK apartments, villas, duplexes, and penthouses with modern amenities, great connectivity, and top-tier living standards. ${area} is a rapidly developing region that offers comfort, convenience, and premium lifestyle options for homebuyers.`;
-
-    newKeyword = `properties in ${area.toLowerCase()}, real estate in ${area.toLowerCase()}, buy property in ${area.toLowerCase()}, apartments in ${area.toLowerCase()}, flats in ${area.toLowerCase()}, ${area.toLowerCase()} property prices, residential property in ${area.toLowerCase()}, real estate market ${area.toLowerCase()}`;
+    newTitle = ` Properties in ${area} | Real Estate in ${area}`;
+    newDescription =` Find ${totalProperties}+ properties for sale on ${area}, ${state}, only on Inframantra. Explore a wide range of ${area} Property options including 2BHK to 5BHK apartments and penthouses.`
+    newKeyword = `Properties in ${city}, ${state}, Properties,  Property for sale in ${city}, ${state}`;
   }
 
   // ---------- CITY ----------
   else if (type === "city" && city) {
     area = city;
     parentArea = state;
-
     newTitle = `Properties in ${area}, ${parentArea} | Real Estate in ${area}`;
-
-    newDescription = `Explore the best properties in ${area}, ${parentArea}. In total, there are more than ${totalProperties} properties for sale in ${area}. The price of these properties ranges from ${minPrice} to ${maxPrice}. These ${area} properties include 2-5 BHK apartments, villas, duplexes, and penthouses loaded with world-class amenities. ${area} is one of the fastest-growing urban hubs offering unmatched connectivity and modern living, ideal for families and professionals seeking high-quality living spaces.`;
-
-    newKeyword = `properties in ${area.toLowerCase()}, real estate in ${area.toLowerCase()}, buy property in ${area.toLowerCase()}, apartments in ${area.toLowerCase()}, flats in ${area.toLowerCase()}, ${parentArea.toLowerCase()} real estate, buy flat in ${area.toLowerCase()}, ${area.toLowerCase()} property prices, luxury property in ${area.toLowerCase()}`;
+    newDescription =` Find ${totalProperties}+ properties for sale on ${area}, ${state}, only on Inframantra. Explore a wide range of ${area} Property options including 2BHK to 5BHK apartments and penthouses.`
+    newKeyword = `Properties in ${city}, ${state}, Properties,  Property for sale in ${city}, ${state}`;
+  
   }
 
   // ---------- LOCALITY ----------
   else if (type === "locality" && locality && city) {
     area = locality;
     parentArea = city;
-
     newTitle = `Properties in ${area}, ${parentArea} | Real Estate in ${area}`;
-
-    newDescription = `Explore the best properties in ${area}, ${parentArea}. There are more than ${totalProperties} properties for sale in ${area}. Prices start from ${minPrice} and go up to ${maxPrice}. These include 2-5 BHK apartments, duplexes, villas, and penthouses designed with premium amenities and superior connectivity. ${area}, ${parentArea} is a rapidly evolving residential hub offering excellent lifestyle advantages, making it ideal for homebuyers seeking luxury and comfort.`;
-
-    newKeyword = `properties in ${area.toLowerCase()}, real estate in ${area.toLowerCase()}, buy property in ${area.toLowerCase()}, flats in ${area.toLowerCase()}, buy apartment in ${area.toLowerCase()}, ${parentArea.toLowerCase()} real estate, ${area.toLowerCase()} property prices`;
+    newDescription =` Find ${totalProperties}+ properties for sale on ${area}, ${parentArea}, only on Inframantra. Explore a wide range of ${area} Property options including 2BHK to 5BHK apartments and penthouses.`
+    newKeyword = `Properties in ${area}, ${parentArea}, Properties,  Property for sale in ${area}, ${parentArea}`;
   }
 
   // ---------- SUB LOCALITY ----------
-  else if (type === "subLocality" && subLocality && locality && city) {
-    area = subLocality;
+  else if (type === "subLocality" && sublocality && locality && city) {
+    area = sublocality;
     parentArea = `${locality}, ${city}`;
-
     newTitle = `Properties in ${area}, ${parentArea} | Real Estate in ${area}`;
-
-    newDescription = `Explore premium properties in ${area}, ${parentArea}. There are more than ${totalProperties} properties available in this area. Property prices range between ${minPrice} and ${maxPrice}. These listings include 2-5 BHK luxury apartments, duplex homes, villas, and penthouses with top-class amenities. ${area}, ${parentArea} is one of the most sought-after residential pockets offering superior connectivity, modern infrastructure, and high-quality living options.`;
-
-    newKeyword = `properties in ${area.toLowerCase()}, real estate in ${area.toLowerCase()}, buy property in ${area.toLowerCase()}, luxury homes in ${area.toLowerCase()}, residential projects in ${area.toLowerCase()}, ${city.toLowerCase()} real estate, ${area.toLowerCase()} property prices`;
+    newDescription =` Find ${totalProperties}+ properties for sale on ${area}, ${parentArea}, only on Inframantra. Explore a wide range of ${area} Property options including 2BHK to 5BHK apartments and penthouses.`
+    newKeyword = `Properties in ${area}, ${parentArea}, Properties,  Property for sale in ${area}, ${parentArea}`;
   }
 
   else if (type === "search") {
     newTitle = `Search Results | Inframantra`;
-    newDescription = `Discover the finest properties with Inframantra — your gateway to premium living. Explore an exclusive collection of 2–5 BHK apartments, duplexes, villas, and penthouses, each crafted with world-class design and top-tier amenities. Located in one of the fastest-growing residential destinations, Inframantra offers best properties boasting unmatched connectivity, superior convenience, and a lifestyle perfectly suited for families and professionals seeking luxury, comfort, and long-term value.`;
+    newDescription = `Explore premium 2–5 BHK apartments, villas, and penthouses with Inframantra. Enjoy world-class amenities, great connectivity, and luxury living for modern families.`;
     newKeyword = `property search, real estate search, buy property, inframantra search results`;
   }
 
   setTitle(newTitle);
-  setDescription(newDescription);
+  setMetaDescription(newDescription);
   setKeyword(newKeyword);
 
 }, [
@@ -407,7 +397,7 @@ useEffect(() => {
   name,
   city,
   locality,
-  subLocality,
+  sublocality,
   state,
   totalProperties,  
 ]);
@@ -427,7 +417,7 @@ useEffect(() => {
     >
          <Wrapper
   title={title}
-  description={description}
+  description={metadescription}
   keyword={keyword}
       {...(type === "search" ? { seo: "noindex, follow" } : {})}
       type={type}
@@ -456,7 +446,6 @@ useEffect(() => {
       />
     </div>
 
-    {/* DESKTOP LOADING OR CONTENT */}
     {loading ? (
       <div
         style={{
@@ -503,6 +492,8 @@ useEffect(() => {
           name={name}
           state={state}
           city={city}
+          sublocality={sublocality}
+          locality={locality}
         />
 
         <PropertyListingCard
@@ -527,7 +518,7 @@ useEffect(() => {
           state={state}
           city={city}
           locality={locality}
-          subLocality={subLocality}
+          subLocality={sublocality}
           highRise={highRise}
           readyToMove={readyToMove}
         />
@@ -581,7 +572,7 @@ useEffect(() => {
           state={state}
           city={city}
           locality={locality}
-          subLocality={subLocality}
+          sublocality={sublocality}
         />
 
         <PropertyListingCardMobile
@@ -600,7 +591,7 @@ useEffect(() => {
           state={state}
           city={city}
           locality={locality}
-          subLocality={subLocality}
+          subLocality={sublocality}
           highRise={highRise}
           readyToMove={readyToMove}
         />

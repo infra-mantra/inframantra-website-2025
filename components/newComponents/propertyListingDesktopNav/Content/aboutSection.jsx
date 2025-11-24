@@ -11,7 +11,7 @@ function AboutSection({
   state,
   city,
   locality,
-  subLocality,
+  sublocality,
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [displayArea, setDisplayArea] = useState('');
@@ -49,7 +49,7 @@ function AboutSection({
 
       case 'sublocality':
         newDisplayArea =
-          subLocality ? `${subLocality}, ${locality || ''}` : locality;
+        sublocality ? `${sublocality}, ${locality || ''}` : locality;
         newParentArea = city || '';
         break;
 
@@ -61,7 +61,7 @@ function AboutSection({
 
     setDisplayArea(newDisplayArea);
     setParentArea(newParentArea);
-  }, [normalizedType, state, city, locality, subLocality]);
+  }, [normalizedType, state, city, locality, sublocality]);
 
   const fullText =
     type === 'search'

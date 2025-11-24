@@ -26,11 +26,11 @@ function AdsBanner() {
     'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/revampHomePage/AdDesktop.webp';
 
   const mobileBanner =
-    'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/revampHomePage/AdMobile.webp';
+    'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/revampHomePage/mobilead.webp';
 
   return (
     <div className={styles.imgContainer}>
-      <Link href="/property/godrej-sora-sector-53-gurgaon">
+      <Link href="/property/satya-levante-residences-sector-104-gurgaon">
         <img
           className={styles.adBannerStyle}
           src={isMobile ? mobileBanner : desktopBanner}

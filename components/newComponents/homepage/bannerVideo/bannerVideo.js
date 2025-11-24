@@ -23,8 +23,8 @@ const BannerVideo = () => {
   // Desktop images
   const desktopImages = [
     {
-      src: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/revampHomePage/sora.jpg',
-      alt: 'Godrej Sora',
+      src: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/revampHomePage/satya-banner-web.webp',
+      alt: 'Satya Levante',
       className: styles.slideImage1,
     },
     {
@@ -42,8 +42,8 @@ const BannerVideo = () => {
   // Mobile images
   const mobileImages = [
     {
-      src: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/mobilebanner/godrej%20sora.jpg',
-      alt: 'Godrej Sora Mobile',
+      src: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/revampHomePage/mobile-banner.webp',
+      alt: 'Satya Levante Mobile',
       className: styles.slideImage1,
     },
     {
