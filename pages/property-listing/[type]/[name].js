@@ -48,7 +48,7 @@ const PropertyListingPage = () => {
 
   const [allPropertyData, setAllPropertyData] = useState([]);
   const [propertyData, setPropertyData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const [backdropOpen, setBackdropOpen] = useState(false);
   const [selectedPropertyName, setSelectedPropertyName] = useState('');
@@ -325,6 +325,7 @@ function applySingleFilter(property, filterType, value) {
 
           setMinPrice(minStr);
           setMaxPrice(maxStr);
+          setLoading(false);
         }
       } catch (err) {
         console.error('Failed to fetch property data:', err);

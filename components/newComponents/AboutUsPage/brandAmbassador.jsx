@@ -3,7 +3,8 @@ import styles from './brandAmbassador.module.css';
 function BrandAmbassador() {
   return (
     <div className={styles.brandAmbassadorWrapper}>
-      <h4>MEET OUR BRAND AMBASSADOR</h4>
+      <h4>OUR BRAND AMBASSADOR</h4>
+     
       <div className={styles.brandAmbassadorContentWrapper}>
         <div className={styles.brandAmbassadorImageWrapper}>
           <img
@@ -15,11 +16,10 @@ function BrandAmbassador() {
         </div>
         <div className={styles.brandAmbassadorDescriptionWrapper}>
           <p>
-            InfraMantra is proud to announce that we have signed the musical
-            sensation, Mr. Guru Randhawa as our new face. We welcome Mr.
-            Randhawa in the family with trust and loyalty in its core. Guru’s
-            excellence and forward thinking aligns with InfraMantra visions and goals, which is to make
-            home buying simple and transparent.
+            Inframantra is honoured to have global music icon Guru Randhawa as our Brand Ambassador, 
+            strengthening our brand’s presence and credibility.
+
+
           </p>
         </div>
       </div>
@@ -28,3 +28,6 @@ function BrandAmbassador() {
 }
 
 export default BrandAmbassador;
+
+
+

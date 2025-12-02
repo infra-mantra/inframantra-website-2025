@@ -55,36 +55,35 @@ const AboutUsPageHeader = () => {
                 />
             </div>
             <p className={styles.aboutUsPageHeaderDescription}>
-                INFRAMANTRA stands as a premier PropTech advisory firm with a mission to
-                guide clients seamlessly through the journey of searching, discovering,
-                purchasing, and managing residential and commercial properties built by
-                India’s top real estate developers.
+              INFRAMANTRA stands as a premier proptech advisory firm with a mission to guide clients 
+              seamlessly through the journey of searching, discovering, purchasing, and managing 
+              residential and commercial properties by India’s top real estate builders as well 
+              as developing a rewarding investment portfolio.
+
             </p>
             <p className={styles.aboutUsPageHeaderDescription}>
-                Rooted in a process-oriented approach, we ensure every home buying
-                experience remains deeply customer-centric, embodying our core value of
-                respect for all individuals. Discover a new standard in property
-                advisory with INFRAMANTRA, where expertise meets excellence, and your
-                aspirations find their perfect match.
+            Rooted in a process-oriented approach, we ensure that every home-buying experience remains 
+            deeply customer-centric, embodying our core value of respect for all individuals. 
+            Discover a new standard in property advisory with INFRAMANTRA- where expertise meets excellence 
+            and your aspirations find their perfect match.
             </p>
             <div className={styles.aboutUsPageVisionContainer}>
                 <div className={styles.aboutUsPageVisionFlex}>
                     <FaRegEye className={styles.targetIcon} sx={{ fontSize: '2.5rem', color: '#0B8C27' }} />
                     <p className={styles.aboutUsPageVisionHeader}>Our Vision</p>
                     <p className={styles.aboutUsPageVisionContent}>
-                        To be the most preferred partner for all real estate stakeholders
-                        through transparency, simplicity, and choice.
+                      To be the most preferred partner for all real estate stakeholders 
+                      through transparency, simplicity, and choice.
                     </p>
                 </div>
                 <div className={styles.aboutUsPageVisionFlex}>
                     <TbTargetArrow className={styles.targetIcon} sx={{ fontSize: '2.5rem', color: '#0B8C27' }} />
                     <p className={styles.aboutUsPageVisionHeader}>Our Mission</p>
                     <p className={styles.aboutUsPageVisionContent}>
-                        We aim to build a dynamic market landscape through innovative
-                        strategies and new-age marketing tools, creating a seamless value
-                        chain that includes end-users, industry stakeholders, and investors.
-                        Our commitment to {' " '}Making Realty a Reality for You{' " '} ensures that we
-                        turn dreams into reality, one property at a time.
+                      We aim to build a dynamic market landscape through innovative strategies and new-age
+                       marketing tools, creating a seamless value chain that connects end-users, industry 
+                       stakeholders, and investors. Our commitment to {' " '}Making Realty a Reality for You{' " '} ensures
+                        that we turn dreams into reality- one property at a time.
                     </p>
                 </div>
             </div>

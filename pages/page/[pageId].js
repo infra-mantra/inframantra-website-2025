@@ -25,13 +25,7 @@ export async function getStaticPaths() {
     }))
     return { paths, fallback: 'blocking' }
   }catch(err){
-    // console.log("Error fetching page paths", err)
-    return {
-      redirect: {
-        destination: "/404",
-        permanent: false,
-      },
-    };
+   return { paths: [], fallback: 'blocking' }; 
   }
  
 }
@@ -57,12 +51,7 @@ export async function getStaticProps({ params }) {
       revalidate: 10,
     }
   }catch(err){
-    return {
-      redirect: {
-        destination: "/500",
-        permanent: false,
-      },
-    };
+    return { paths: [], fallback: 'blocking' }; 
   }
 }
 

@@ -105,7 +105,7 @@ export default function MeetTheTeam() {
             </p>
             <div className={styles.teamPhotoAboutUsWrapper}>
               <img
-                src="https://inframantra.blr1.cdn.digitaloceanspaces.com/teamPhotos/3.avif"
+                src="https://inframantra.blr1.cdn.digitaloceanspaces.com/team/Sales.webp"
                 alt="team-photo"
                 className={styles.teamPhotoAboutUs}
               />
@@ -122,7 +122,7 @@ export default function MeetTheTeam() {
             </p>
             <div className={styles.teamPhotoAboutUsWrapper}>
               <img
-                src="https://inframantra.blr1.cdn.digitaloceanspaces.com/teamPhotos/marketing%20team.avif"
+                src="https://inframantra.blr1.cdn.digitaloceanspaces.com/team/Marketing.webp"
                 alt="team-photo"
                 className={styles.teamPhotoAboutUs}
               />
@@ -138,7 +138,7 @@ export default function MeetTheTeam() {
             </p>
             <div className={styles.teamPhotoAboutUsWrapper}>
               <img
-                src="https://inframantra.blr1.cdn.digitaloceanspaces.com/teamPhotos/operations%20team.avif"
+                src="https://inframantra.blr1.cdn.digitaloceanspaces.com/team/Operations.webp"
                 alt="team-photo"
                 className={styles.teamPhotoAboutUs}
               />
@@ -154,7 +154,7 @@ export default function MeetTheTeam() {
             </p>
             <div className={styles.teamPhotoAboutUsWrapper}>
               <img
-                src="https://inframantra.blr1.cdn.digitaloceanspaces.com/teamPhotos/finance%20team.avif"
+                src="https://inframantra.blr1.cdn.digitaloceanspaces.com/team/Finance.webp"
                 alt="team-photo"
                 className={styles.teamPhotoAboutUs}
               />
@@ -169,7 +169,7 @@ export default function MeetTheTeam() {
             </p>
             <div className={styles.teamPhotoAboutUsWrapper}>
               <img
-                src="https://inframantra.blr1.cdn.digitaloceanspaces.com/teamPhotos/4.avif"
+                src="https://inframantra.blr1.cdn.digitaloceanspaces.com/team/Hr.webp"
                 alt="team-photo"
                 className={styles.teamPhotoAboutUs}
               />
@@ -185,7 +185,7 @@ export default function MeetTheTeam() {
             </p>
             <div className={styles.teamPhotoAboutUsWrapper}>
               <img
-                src="https://inframantra.blr1.cdn.digitaloceanspaces.com/teamPhotos/marketing%20team2.avif"
+                src="https://inframantra.blr1.cdn.digitaloceanspaces.com/team/Marketing.webp"
                 alt="team-photo"
                 className={styles.teamPhotoAboutUs}
               />
@@ -202,7 +202,7 @@ export default function MeetTheTeam() {
             </p>
             <div className={styles.teamPhotoAboutUsWrapper}>
               <img
-                src="https://inframantra.blr1.cdn.digitaloceanspaces.com/teamPhotos/mrc%20team.avif"
+                src="https://inframantra.blr1.cdn.digitaloceanspaces.com/team/Mrc.webp"
                 alt="team-photo"
                 className={styles.teamPhotoAboutUs}
               />

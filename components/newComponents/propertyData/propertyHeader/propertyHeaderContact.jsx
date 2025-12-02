@@ -34,7 +34,7 @@ function PropertyHeaderContact({ name }) {
     name: '',
     phoneNumber: '',
     email: '',
-    projectName: name,
+    projectName: name === "display"?router.asPath:name
   });
   const [captchaToken, setCaptchaToken] = useState(null);
 //   const dispatch = useDispatch();

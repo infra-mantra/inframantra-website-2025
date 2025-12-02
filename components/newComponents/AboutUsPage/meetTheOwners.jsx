@@ -25,15 +25,13 @@ function MeetOwners() {
             >
               Shiwang Suraj
             </span>
-            , with a career of over 10 years across industries, Shiwang Suraj
-            has served many reputed Companies by applying his constructive
-            approach in sales, operations and marketing field. He started his
-            entrepreneurial journey as the Co-founder of Zapplon in the year
-            2015, with the aim of bringing a new dimension to the transport
-            industry, thereby providing value to companies through this
-            function. His entrepreneurial spirit shone brightly once more in
-            2017 when he founded yet another successful venture, InfraMantra
-            India Pvt Ltd, specializing in the real estate market.
+            , With a career spanning over 10 years across multiple industries, Shiwang Suraj 
+            has contributed to several reputed companies through his constructive approach in 
+            sales, operations, and marketing. He began his entrepreneurial journey in 2015 as 
+            the Co-founder of Zapplon, with the goal of bringing a new dimension to the transport 
+            industry and delivering added value to companies through this initiative. 
+            His entrepreneurial spirit shone once again in 2017 when he founded another 
+            successful venture, InfraMantra India Pvt. Ltd., specializing in the real estate market.
           </p>
         </div>
       </div>
@@ -49,15 +47,13 @@ function MeetOwners() {
             >
               Garvit Tiwari
             </span>
-            , With over 14 years of experience across banking & finance
-            industries and a Gold medal in IT, Garvit has significantly
-            contributed to several renowned companies through his expertise in
-            finance, marketing, and IT. He has worked with major banks,
-            including HDFC Bank, IndusInd Bank, Yes Bank, and Kotak Bank,
-            enhancing their corporate banking, wealth, and division management.
-            In 2017, Garvit embarked on an entrepreneurial journey, co-founding
-            InfraMantra India Pvt Ltd, a successful company specializing in the
-            real estate market.
+            , with over 14 years of experience in the banking and finance industries and 
+            a Gold Medal in IT, has made significant contributions to several renowned companies 
+            through his expertise in finance, marketing, and information technology. He has worked 
+            with major banks, including HDFC Bank, IndusInd Bank, Yes Bank, and Kotak Bank,
+             strengthening their corporate banking, wealth management, and division management
+              functions. In 2017, Garvit embarked on his entrepreneurial journey by co-founding 
+              InfraMantra India Pvt. Ltd., a successful company specializing in the real estate market.
           </p>
         </div>
         <div className={styles.meetOwnersContentImgWrapper}>
