@@ -3,6 +3,7 @@
 
 const path         = require('path');
 const loaderUtils  = require('loader-utils');
+const { redirects }  = require('./utils/redirectUrl')
 
 //
 // ──────────────────────────────────────────────────────────────────
@@ -73,14 +74,8 @@ images: {
   },
 
   /* ------  Redirects  ------ */
-  async redirects () {
-    return [
-      {
-        source      : '/property/bptp-terra-sector-37d-gurgaon',
-        destination : '/',
-        permanent   : true,
-      },
-    ];
+ async redirects() {
+    return redirects;
   },
 
   /* ------  ESLint  ------ */
