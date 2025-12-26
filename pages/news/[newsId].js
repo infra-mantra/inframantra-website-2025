@@ -175,7 +175,14 @@ export async function getStaticProps({ params }) {
     console.warn("WP recent blogs fetch failed:", err.message);
   }
 
-  if (!detail) return { notFound: true };
+  if (!detail) {
+     return {
+    props: {
+      allData: null, // <-- no poisoning with notFound:true
+    },
+    revalidate: 30,
+  };
+  }
 
   return {
     props: {

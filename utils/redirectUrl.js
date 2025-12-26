@@ -147,7 +147,10 @@ export const redirects = [
   { source: "/property-listing/Ace Group", destination: "/property-listing/search/property-in-india", permanent: true },
   { source: "/property-listing/Pyramid Infratech Private Limited", destination: "/property-listing/search/property-in-india", permanent: true },
   { source: "/property-listing/M3M India", destination: "/property-listing/search/property-in-india", permanent: true },
+
   { source: "/property-listing/Lodha Group", destination: "/property-listing/search/property-in-india", permanent: true },
+
+  { source: "/buy/real-estate-in-pune", destination: "/property-listing/city/pune", permanent: true },
   { source: "/buy/flats-in-pune", destination: "/property-listing/city/pune", permanent: true },
   { source: "/blog/category/infra-times", destination: "/blog/", permanent: true },
   { source: "/buy/new-projects-in-delhi", destination: "/", permanent: true },
