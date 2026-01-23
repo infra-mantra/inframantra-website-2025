@@ -4,18 +4,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
 import ModalSlider from "./modal";
 import Propertycard from "./propertyCard";
-
+import PopUpForm from '../../detailSections/CTA_NEW'
 
 function PropertyHeaderHigh({ propertyData }) {
   const [isHighlightModalOpen, setIsHighlightModalOpen] = useState(false);
   const [showAll, setShowAll] = useState(false);
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
+  const [popForm, setPopForm] = useState(false);
+       const onClickOff = (val) =>setPopForm(val)
+       const handleform = () => setPopForm(true);
 
   const highlightRef = useRef(null);
   const leftRef = useRef(null);
 
-
-  const highlights = propertyData.keyHighlights
+  const highlights = propertyData.keyHighlights;
 
   const maxVisible = 5;
   const visibleHighlights = highlights.slice(0, maxVisible);
@@ -38,7 +40,6 @@ function PropertyHeaderHigh({ propertyData }) {
     window.open(url, "_blank");
   };
 
-
   return (
     <>
       <header className="property-header-high">
@@ -54,7 +55,11 @@ function PropertyHeaderHigh({ propertyData }) {
             src="https://propertyindividual.inframantra.com/assests/arrowlogo.png"
             alt="Arrow Logo"
             onClick={() =>
-              handleRedirect(propertyData.coordinates.lat, propertyData.coordinates.lng)}
+              handleRedirect(
+                propertyData.coordinates.lat,
+                propertyData.coordinates.lng,
+              )
+            }
           />
           <img
             className="property-image"
@@ -77,7 +82,8 @@ function PropertyHeaderHigh({ propertyData }) {
                   className="price-tag-icon"
                 />
                 <div className="price-text">
-                  Starting at ₹ <span className="font-clr">{propertyData.startingPrice}</span>
+                  Starting at ₹{" "}
+                  <span className="font-clr">{propertyData.startingPrice}</span>
                 </div>
                 <div className="yellow-line"></div>
               </div>
@@ -109,7 +115,8 @@ function PropertyHeaderHigh({ propertyData }) {
                       <div>
                         <div className="status-label">Location</div>
                         <div className="status-value">
-                          {propertyData?.subLocality?.name} , {propertyData.locality.name}
+                          {propertyData?.subLocality?.name} ,{" "}
+                          {propertyData.locality.name}
                         </div>
                       </div>
                     </div>
@@ -143,11 +150,23 @@ function PropertyHeaderHigh({ propertyData }) {
                   {
                     Key: "Configuration",
                     value: `${propertyData.configuration}`,
-                    image: '/propertyIndividualPage/icons/configration.png ',
+                    image: "/propertyIndividualPage/icons/configration.png ",
                   },
-                  { Key: "Area", value: `${propertyData.area}`, image: "/propertyIndividualPage/icons/area.png" },
-                  { Key: "Price/Sq.ft", value: `₹ ${propertyData.squarePrice}`, image: "/propertyIndividualPage/icons/pricePerSqt.png" },
-                  { Key: "Possession", value: `${propertyData.possesion}`, image: "/propertyIndividualPage/icons/posseion.png" },
+                  {
+                    Key: "Area",
+                    value: `${propertyData.area}`,
+                    image: "/propertyIndividualPage/icons/area.png",
+                  },
+                  {
+                    Key: "Price/Sq.ft",
+                    value: `₹ ${propertyData.squarePrice}`,
+                    image: "/propertyIndividualPage/icons/pricePerSqt.png",
+                  },
+                  {
+                    Key: "Possession",
+                    value: `${propertyData.possesion}`,
+                    image: "/propertyIndividualPage/icons/posseion.png",
+                  },
                 ].map((config, i) => (
                   <React.Fragment key={i}>
                     {i > 0 && <span className="unit-separator">|</span>}
@@ -197,12 +216,12 @@ function PropertyHeaderHigh({ propertyData }) {
                 <ul
                   className={`ul-highlight ${showAll ? "expanded" : "clamped"}`}
                 >
-             {visibleHighlights.map((item, index) => (
-  <li key={index} className="p-text d-flex align-items-start">
-    <span className="projectHighlightListBullet">{" "}</span>
-    <span className="highlight-text">{item}</span>
-  </li>
-))}
+                  {visibleHighlights.map((item, index) => (
+                    <li key={index} className="p-text d-flex align-items-start">
+                      <span className="projectHighlightListBullet"> </span>
+                      <span className="highlight-text">{item}</span>
+                    </li>
+                  ))}
                 </ul>
 
                 {!showAll && hiddenCount > 0 && (
@@ -220,6 +239,7 @@ function PropertyHeaderHigh({ propertyData }) {
               <button
                 style={{ background: "#e7b554" }}
                 className="card-bg card card-ct-wt animation"
+                onClick={handleform}
               >
                 Request More Information or a Callback
               </button>
@@ -234,10 +254,10 @@ function PropertyHeaderHigh({ propertyData }) {
         >
           <ul className="ul-highlight full-list">
             {highlights.map((item, index) => (
-             <li key={index} className="p-text d-flex align-items-start">
-    <span className="projectHighlightListBullet">{" "}</span>
-    <span className="highlight-text">{item}</span>
-  </li>
+              <li key={index} className="p-text d-flex align-items-start">
+                <span className="projectHighlightListBullet"> </span>
+                <span className="highlight-text">{item}</span>
+              </li>
             ))}
           </ul>
         </ModalSlider>
@@ -247,10 +267,17 @@ function PropertyHeaderHigh({ propertyData }) {
           onClose={() => setIsAboutModalOpen(false)}
         >
           <div className="about-full-text">
-            <p className="about-project p-text">{aboutText}</p>
+            <p className="about-project p-text">{}</p>
           </div>
         </ModalSlider>
       </div>
+      <PopUpForm
+        popUpenable={popForm}
+        onClickOff={onClickOff}
+        text="To download brochure"
+  
+        name={name}
+        />
     </>
   );
 }

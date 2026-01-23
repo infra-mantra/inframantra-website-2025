@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import styles from './faq.module.css';
+import PopUpForm from '../../detailSections/CTA_NEW'
 
 function FaqSection({ propertyData }) {
   const [activeIndex, setActiveIndex] = useState(null);
+  const [popForm,setPopForm] = useState(false)
 
   const faqData = propertyData.faqs || [];
 
@@ -10,6 +12,8 @@ function FaqSection({ propertyData }) {
   const toggleFAQ = (index) => {
     setActiveIndex(activeIndex === index ? null : index);
   };
+    const onClickOff = (val) =>setPopForm(val)
+   const handleform= () => setPopForm(true);
 
   return (
     <section className={styles.faqSection}>
@@ -48,10 +52,17 @@ function FaqSection({ propertyData }) {
           </div>
         </div>
 
-        <button className={styles.faqCtaButton}>
+        <button className={styles.faqCtaButton} type='button' onClick={handleform} >
           📞 Contact Us
-        </button>
+        </button >
       </div> }
+       <PopUpForm
+        popUpenable={popForm}
+        onClickOff={onClickOff}
+        text="To download brochure"
+  
+        name={name}
+      />
     </section>
   );
 }

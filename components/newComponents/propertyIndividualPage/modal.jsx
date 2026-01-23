@@ -1,8 +1,11 @@
-import React from "react";
-
+import React ,{useState}from "react";
+import PopUpForm from '../../detailSections/CTA_NEW'
 
 const RightSlideModal = ({ isOpen, onClose, title, children }) => {
   if (!isOpen) return null;
+    const [popForm, setPopForm] = useState(false);
+     const onClickOff = (val) =>setPopForm(val)
+     const handleform = () => setPopForm(true);
 
   return (
     <>
@@ -29,11 +32,20 @@ const RightSlideModal = ({ isOpen, onClose, title, children }) => {
               <button
                 style={{ background: '#e7b554' }}
                 className="card-bg card card-ct-wt"
+                type="button"
+                onClick={handleform}
               >
                 Request Callback
               </button>
             </div>
       </div>
+       <PopUpForm
+        popUpenable={popForm}
+        onClickOff={onClickOff}
+        text="To download brochure"
+  
+        name={name}
+        />
     </>
   );
 };

@@ -1,13 +1,8 @@
 import {  useState, useRef , useEffect } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { toast } from 'react-toastify';
-// import Ajax1 from '../helper/Ajax1';
-// import { useRouter } from 'next/router';
 import ctaStyle from "./cta.module.css";
 import style from "./ctaForHome.module.css"
-import { MdLocationOn } from "react-icons/md";
-import { IoMdCall } from "react-icons/io";
-import { MdMail } from "react-icons/md";
 function App({name}) {
   
   const [isDesktop, setIsDesktop] = useState(true);
@@ -24,7 +19,7 @@ function App({name}) {
     return () => window.removeEventListener('resize', checkScreenWidth);
   }, []);
 
-  // const router = useRouter();
+
 
 
   const [formData, setFormData] = useState({
@@ -91,11 +86,10 @@ function App({name}) {
 
   return (
     <div className={style.homeApp}>
-     
         <div className={style.homeCtaMainWrapper}>
-
           <div className={style.homeCtaInnerWrapper} style={{width:"100%"}}>
             <form onSubmit={handleSubmit}>
+              
                      <div className={ctaStyle.headingForm}>
               <p style ={{marginTop:'0px!important'}} className={style.homePopUpHead}>Please share your contact details</p>
               <p className={style.homePopUpHead2}> TO UNLOCK EXCLUSIVE DEALS</p>

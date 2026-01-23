@@ -16,6 +16,7 @@ import Sitevisit from "../../components/newComponents/propertyIndividualPage/sit
 import Developer from "../../components/newComponents/propertyIndividualPage/developer";
 import FaqSection from "../../components/newComponents/propertyIndividualPage/faq";
 import CtaForHome from "../../components/detailSections/singlePropertyCta";
+import Cta from '../../components/detailSections/CTA_NEW'
 
 const PropertyDetail = ({ allData }) => {
   const router = useRouter();
@@ -38,7 +39,7 @@ const PropertyDetail = ({ allData }) => {
     name: propertyData.name,
   });
 
-  console.log("%%%%%%%%%%",propertyData)
+ 
 
 
 
@@ -97,6 +98,7 @@ const PropertyDetail = ({ allData }) => {
           <div className="property-right" ref={rightRef}>
             <CtaForHome />
           </div>
+          {/* <Cta  popUpenable={true}/> */}
         </div>
       </div>
     </Wrapper>

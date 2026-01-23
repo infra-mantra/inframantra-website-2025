@@ -46,8 +46,8 @@ const TopAmenities = ({ propertyData }) => {
           <div key={amenity._id} className="amenity-item">
             <img
               src={amenity.iconUrl
-      ?.replace("amenities", "tempamenities")
-      .replace(/\.svg$/i, ".png")}
+           ?.replace("amenities", "tempamenities")
+                 .replace(/\.svg$/i, ".png")}
               alt={amenity.title}
               className="amenity-icon"
             />
