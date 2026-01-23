@@ -1,183 +1,103 @@
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import dynamic from 'next/dynamic'; 
-const Wrapper = dynamic(() => import('../../components/UI/Wrapper'));
-const PropertyHeader = dynamic(() => import('../../components/newComponents/propertyData/propertyHeader'));
-const PropertyPageNavigation = dynamic(() => import('../../components/newComponents/propertyData/propertyPageNavigation/propertyPageNavigation'));
-const PropertyPageLeftDesktop = dynamic(() => import('../../components/newComponents/propertyData/propertyLeftSection/properPageLeftSection'));
-const PropertyPageRightDesktop = dynamic(() => import('../../components/newComponents/propertyData/propertyRightSection/propertyPageRightSection'));
-const PropertyMobileHeaderImg = dynamic(() => import('../../components/newComponents/propertyData/propertyPageMobile/propertyPageMobileImageGallery'));
-const PropertyPageMobileHeaderDetails = dynamic(() => import('../../components/newComponents/propertyData/propertyPageMobile/propertyPageHeaderDetails'));
-const PropertyPageMobile = dynamic(() => import('../../components/newComponents/propertyData/propertyPageMobile/propertyPageMobile'));
-const CTAForm = dynamic(() => import('../../components/detailSections/CTA_NEW'));
+import React, { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
 
+const Wrapper = dynamic(() => import("../../components/UI/Wrapper"), { ssr: false });
+
+import PropertyHeaderImageGallery from "../../components/newComponents/propertyIndividualPage/PropertyHeaderImageGallery";
+import PropertyHeader from "../../components/newComponents/propertyIndividualPage/propertyHeaderContent";
+import PropertyVideoYoutube from "../../components/newComponents/propertyData/propertyRightSection/propertyVideo";
+import PropertySectionNavbar from "../../components/newComponents/propertyIndividualPage/navBar";
+import Amenities from "../../components/newComponents/propertyIndividualPage/amenities";
+import LandMark from "../../components/newComponents/propertyIndividualPage/landmark";
+import Config from "../../components/newComponents/propertyIndividualPage/config";
+import PremiumProperty from "../../components/newComponents/propertyIndividualPage/premiumPropertyList";
+import Sitevisit from "../../components/newComponents/propertyIndividualPage/siteVisitBanner";
+import Developer from "../../components/newComponents/propertyIndividualPage/developer";
+import FaqSection from "../../components/newComponents/propertyIndividualPage/faq";
+import CtaForHome from "../../components/detailSections/singlePropertyCta";
 
 const PropertyDetail = ({ allData }) => {
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
-  const [propertyData, setPropertyData] = useState(allData.propertyData.data);
-  const [isLeftSectionBottom, setIsLeftSectionBottom] = useState(false);
-  const [ogImageUrl, setOgImageUrl] = useState(
-    allData.propertyData.data.imageGallery?.[0]?.url || null
-  );
-  const [PropertyVideo, setPropertyVideo] = useState(
-    allData?.propertyData?.data?.videoUrl?.[0] || null
-  );
-  const [schemaInfo, setSchemaInfo] = useState({
-    lat: allData.propertyData.data?.coordinates?.lat,
-    lon: allData.propertyData.data.coordinates?.lng,
-    loc: allData.propertyData.data.locality?.name,
-    sub: allData.propertyData.data.subLocality?.name,
-    url: router?.asPath || null,
-    price: allData.propertyData.data.priceInFigure,
-    city: allData.propertyData.data.city?.name,
-    image: allData?.propertyData?.data?.imageGallery?.[0]?.url || null,
-    name: allData.propertyData.data.name,
+  const rightRef = useRef(null);
+  const containerRef = useRef(null);
+  const [locoScroll, setLocoScroll] = useState(null);
+
+  const propertyData = allData.propertyData.data;
+
+  const [schemaInfo] = useState({
+    lat: propertyData?.coordinates?.lat,
+    lon: propertyData?.coordinates?.lng,
+    loc: propertyData.locality?.name,
+    sub: propertyData.subLocality?.name,
+    url: router.asPath || null,
+    price: propertyData.priceInFigure,
+    city: propertyData.city?.name,
+    image: propertyData.imageGallery?.[0]?.url || null,
+    Galleryimages: propertyData.imageGallery,
+    name: propertyData.name,
   });
 
-  const [isDesktop, setIsDesktop] = useState(true);
-  const [isMobile, setIsMobile] = useState(true);
+  console.log("%%%%%%%%%%",propertyData)
 
-  const checkScreenWidth = () => {
-    setIsDesktop(window.innerWidth >= 769);
-    setIsMobile(window.innerWidth <= 768);
-  };
 
-  useEffect(() => {
-    const handleLoad = async () => {
-      checkScreenWidth();
 
-      if (router.query.propertyId) {
-        const res = await fetch(`${process.env.apiUrl1}/property/slug/${router.query.propertyId}`);
-        const data = await res.json();
-        setPropertyData(data.data);
-      }
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
-    
-    };
-
-    handleLoad();
-    window.addEventListener('resize', checkScreenWidth);
-
-    return () => {
-      window.removeEventListener('resize', checkScreenWidth);
-    };
-  }, [router.query.propertyId]);
-
-  if (loading) {
-    return (
-      <div className="loader-container">
-        <div className="spinner"></div>
-      </div>
-    );
-  }
 
   return (
     <Wrapper
       title={`${propertyData.metaTitle} | Infra Mantra`}
       description={propertyData.metaDescription}
       keyword={propertyData.metaKeywords}
-      image={ogImageUrl}
+      image={schemaInfo.image}
       schema={schemaInfo}
     >
-      <div className="propertyPageWrapper">
-        {isDesktop && (
-          <>
-            <PropertyHeader
-              imageGallery={propertyData.imageGallery}
-              rera={propertyData.rera}
-              name={propertyData.name}
-              locality={propertyData.locality}
-              subLocality={propertyData.subLocality}
-              displayLocality={propertyData.displayLocality}
-              city={propertyData.city}
-              startingPrice={propertyData.startingPrice}
-              priceInFigure={propertyData.priceInFigure}
-              configuration={propertyData.configuration}
-              area={propertyData.area}
-              squarePrice={propertyData.squarePrice}
-              status={propertyData.status}
-              posession={propertyData.possesion}
-              exclusive={propertyData.exclusive}
-              featured={propertyData.featured}
-              propertyType={propertyData.propertyType}
-            />
-            <PropertyPageNavigation />
-            <div className="propertyPageSectionContainer">
-              <PropertyPageLeftDesktop
-                description={propertyData.description}
-                propertyLogo={propertyData.propertyLogo}
-                keyHighlights={propertyData.keyHighlights}
-                exclusiveAmenities={propertyData.exclusiveAmenities}
-                amenities={propertyData.amenities}
-                floorPlan={propertyData.floorPlan}
-                localityGuide={propertyData.localityGuide}
-                brochure={propertyData.brochure}
-                imageGallery={propertyData.imageGallery}
-                developer={propertyData.developer}
-                leftSection={setIsLeftSectionBottom}
-                name={propertyData.name}
-              />
-              <PropertyPageRightDesktop
-                videoUrl={PropertyVideo}
-                name={propertyData.name}
-                priceInFigure={propertyData.priceInFigure}
-                leftSection={isLeftSectionBottom}
-                propertyType={propertyData.propertyType}
-                city={propertyData.city}
-                locality={propertyData.locality}
-              />
-            </div>
-          </>
-        )}
-        {!isDesktop && (
-          <>
-            <div className="propertyPageHeaderMobile">
-              <PropertyMobileHeaderImg imageGallery={propertyData.imageGallery}  name={propertyData.name}/>
-              <PropertyPageMobileHeaderDetails
-                rera={propertyData.rera}
-                name={propertyData.name}
-                locality={propertyData.locality}
-                subLocality={propertyData.subLocality}
-                displayLocality={propertyData.displayLocality}
-                city={propertyData.city}
-                startingPrice={propertyData.startingPrice}
-                priceInFigure={propertyData.priceInFigure}
-                configuration={propertyData.configuration}
-                area={propertyData.area}
-                squarePrice={propertyData.squarePrice}
-                status={propertyData.status}
-                posession={propertyData.possesion}
-                exclusive={propertyData.exclusive}
-                featured={propertyData.featured}
-                tagLine={propertyData.tagLine}
-                propertyType={propertyData.propertyType}
-              />
-            </div>
-            <CTAForm name={propertyData.name} />
-            <PropertyPageNavigation />
-            <PropertyPageMobile
-              videoUrl={PropertyVideo}
-              description={propertyData.description}
-              propertyLogo={propertyData.propertyLogo}
-              keyHighlights={propertyData.keyHighlights}
-              exclusiveAmenities={propertyData.exclusiveAmenities}
-              amenities={propertyData.amenities}
-              floorPlan={propertyData.floorPlan}
-              priceInFigure={propertyData.priceInFigure}
-              localityGuide={propertyData.localityGuide}
-              imageGallery={propertyData.imageGallery}
-              developer={propertyData.developer}
-              name={propertyData.name}
-              brochure={propertyData.brochure}
-              leftSection={setIsLeftSectionBottom}
-              city={propertyData.city}
-              locality={propertyData.locality}
-            />
-          </>
-        )}
+      <div className="propertyPageWrapper" >
+        <PropertyHeaderImageGallery imageGallery={schemaInfo.Galleryimages} propertyData={propertyData}/>
+        <PropertyHeader  id="Highlights" propertyData={propertyData} />
+
+        <PropertySectionNavbar locoScroll={locoScroll}  />
+
+        <div className="property-page">
+          <div className="property-left">
+            <section >
+              <PropertyVideoYoutube videoUrl={propertyData.videoUrl[0]}/>
+            </section>
+
+            <section  id= "Amenities" >
+              <Amenities propertyData={propertyData}/>
+            </section>
+
+            <section id= "Locality" >
+              <LandMark propertyInfo={schemaInfo} propertyData={propertyData}/>
+            </section>
+
+            <section id="Plan & Pricing" >
+              <Config  floorPlan={propertyData.floorPlan}/>
+            </section>
+              <section >
+              <PremiumProperty city={schemaInfo.city}/>
+            </section>
+            
+            <section >
+              <Sitevisit />
+            </section>
+
+            <section id="About Developer" >
+              <Developer propertyData={propertyData} />
+            </section>
+
+            <section id= "FAQ's" >
+              <FaqSection propertyData={propertyData}/>
+            </section>
+
+          
+
+          </div>
+
+          <div className="property-right" ref={rightRef}>
+            <CtaForHome />
+          </div>
+        </div>
       </div>
     </Wrapper>
   );
@@ -186,23 +106,21 @@ const PropertyDetail = ({ allData }) => {
 export async function getStaticPaths() {
   const res = await fetch(`${process.env.apiUrl1}/property/slugList?active=true`);
   const data = await res.json();
+
   const paths = data.result.map((post) => ({
     params: { propertyId: post.slug },
   }));
-  return { paths, fallback: 'blocking' };
+
+  return { paths, fallback: "blocking" };
 }
 
 export async function getStaticProps({ params }) {
   const res = await fetch(`${process.env.apiUrl1}/property/slug/${params.propertyId}`);
   const data = await res.json();
 
-  const allData = {
-    propertyData: data,
-  };
-
   return {
     props: {
-      allData,
+      allData: { propertyData: data },
     },
     revalidate: 10,
   };

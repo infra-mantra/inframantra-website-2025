@@ -1,14 +1,14 @@
 import {  useState, useRef , useEffect } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { toast } from 'react-toastify';
-import Ajax1 from '../helper/Ajax1';
-import { useRouter } from 'next/router';
+// import Ajax1 from '../helper/Ajax1';
+// import { useRouter } from 'next/router';
 import ctaStyle from "./cta.module.css";
 import style from "./ctaForHome.module.css"
 import { MdLocationOn } from "react-icons/md";
 import { IoMdCall } from "react-icons/io";
 import { MdMail } from "react-icons/md";
-function App({name ,displayMap = true}) {
+function App({name}) {
   
   const [isDesktop, setIsDesktop] = useState(true);
   const [isMobile, setIsMobile] = useState(true);
@@ -24,7 +24,7 @@ function App({name ,displayMap = true}) {
     return () => window.removeEventListener('resize', checkScreenWidth);
   }, []);
 
-  const router = useRouter();
+  // const router = useRouter();
 
 
   const [formData, setFormData] = useState({
@@ -62,16 +62,16 @@ function App({name ,displayMap = true}) {
           token: false,
         };
 
-        const response = await Ajax1(action);
+        const response = null;
 
-        if (response.data.status === 'success') {
+        if (response?.data?.status === 'success') {
           toast.success('Form submitted successfully');
           setFormData({ name: '', phoneNumber: '', email: '' });
 
           
 
           setTimeout(() => {
-            router.push('/thank-you');
+            // router.push('/thank-you');
           }, 5000);
         } else {
           toast.error('Form submission failed');
@@ -93,53 +93,10 @@ function App({name ,displayMap = true}) {
     <div className={style.homeApp}>
      
         <div className={style.homeCtaMainWrapper}>
-            
-          <div
-            className={style.homePageContactUsLeftDetailSection}
-               style={{ display: displayMap === false ? "none" : "block" }}
->
-          {isDesktop && (
-            <div className={style.homePageContactUsLeftMapPhotoContainer}>
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14032.085916196966!2d77.0413113!3d28.4487689!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d193e2433c0cf%3A0xef40ba926f65e0ec!2sINFRAMANTRA!5e0!3m2!1sen!2sin!4v1731478063313!5m2!1sen!2sin"
-                width="500"
-                height="300"
-                style={{ border: "0px" }}
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              ></iframe>
-              <div className={style.homePageMapPhotoBgdTopLeft}></div>
-              <div className={style.homePageMapPhotoBgdBottomRight}></div>
-            </div>
-          )}
-         
-            <img
-              className={style.homePageContactUsLeftDetailSectionImg}
-              src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/inframantraLogoBlack.png"
-              alt="Inframantra-Logo"
-            />
-            
-   
-          <div className={style.homePageContactUsLeftDetailsContainer}>
-            <div className={style.homePageContactUsLeftDetailFlex}>
-              <div  style={{ color: '#E7B554', fontSize: '25px', marginRight: '10px' }}><MdLocationOn /></div>
-              <p>95, Institutional Area, Sector 32, Gurugram</p>
-            </div>
-            <div className={style.homePageContactUsLeftDetailFlex}>
-              <div style={{ color: '#E7B554', fontSize: '25px', marginRight: '10px' }}><IoMdCall /></div>
-              <p>+91 86 9800 9900</p>
-            </div>
-            <div className={style.homePageContactUsLeftDetailFlex}>
-              <div style={{ color: '#E7B554', fontSize: '25px', marginRight: '10px' }}><MdMail /></div>
-              <p>marketing@inframantra.com</p>
-            </div>
-          </div>
-        </div>
-     
-          <div className={style.homeCtaInnerWrapper}  style={{ width: displayMap === false ? "100%" : "" }}>
+
+          <div className={style.homeCtaInnerWrapper} style={{width:"100%"}}>
             <form onSubmit={handleSubmit}>
-                <div className={ctaStyle.headingForm}>
+                     <div className={ctaStyle.headingForm}>
               <p style ={{marginTop:'0px!important'}} className={style.homePopUpHead}>Please share your contact details</p>
               <p className={style.homePopUpHead2}> TO UNLOCK EXCLUSIVE DEALS</p>
             </div>
@@ -204,6 +161,8 @@ function App({name ,displayMap = true}) {
                     border: "none",
                     borderRadius: "4px",
                     cursor: "pointer",
+                    justifyContent:'center',
+                    display:'flex'
                   }}
                 >
                   Submit
@@ -225,7 +184,7 @@ function App({name ,displayMap = true}) {
                 <div className={style.homeCtaText}>
                   <p className={style.hometextForm}>Give us a call and book your visit now!</p>
                 </div>
-                <img src="/guruCollection/guru_call.png" alt="Call Icon" />
+                <img src="https://inframantra.com/guruCollection/guru_call.png" alt="Call Icon" />
               </div>
             </div>
           </div>

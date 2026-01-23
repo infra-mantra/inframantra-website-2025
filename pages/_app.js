@@ -8,11 +8,24 @@ import "swiper/css";
 import "../styles/newHome.css";
 import "../styles/filter.css";
 import "../styles/dropDownMenu.css"
+import '../styles/PropertyHeaderImageGallery.css'
+import '../styles/properyHeader.css'
+import '../styles/propertyCard.css'
+import '../styles/RightSlideModal.css'
+import '../styles/config.css'
+import '../styles/fullview.css'
+import '../styles/brochureDownload.css'
+import '../styles/site-visite.css'
+import '../styles/developer.css'
 
 import styles from '../styles/_app.module.css'
+import '../styles/navbarsticky.css'
+import '../styles/amenities.css'
+import '../styles/landmark.css'
 
 
 import "../styles/pageHeader.module.css";
+import '../styles/map.css'
 
 
 import ErrorStack from "./_error.js"; // 👈 Import your error animation
@@ -58,7 +71,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <ErrorBoundary>
-      {isMobile && (<div style={{ marginTop: isHomePage ? "auto" : "8vh" ,marginBottom:"4vh"}}>
+      {isMobile && (<div style={{ marginTop: isHomePage ? "auto" : "8vh" ,marginBottom:"4vh",overflow:"visible"}}>
         <Component {...pageProps} />
       </div>)}
       {!isMobile && <Component {...pageProps} />}

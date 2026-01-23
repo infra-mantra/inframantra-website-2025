@@ -1,0 +1,31 @@
+.Config-wrapper{
+padding: 20px;
+padding-bottom: 0px;
+}
+.property-card{
+background: #FFF;
+    border-radius: 6.922px 13.843px 13.843px 13.843px;
+    background: #FFF;
+    box-shadow: 0 1.384px 5.537px 0 rgba(0, 0, 0, 0.15);
+    width: 343px;
+  
+}
+.property-card img{
+width: 100%;
+}
+.card-content{
+    padding: 1rem;
+    padding-top: 0px;
+
+}
+.row{
+      display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 300;
+    
+}
+.card-content h3{
+  margin: 0px;
+  font-weight: bolder;
+}

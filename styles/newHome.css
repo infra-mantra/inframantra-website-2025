@@ -359,11 +359,7 @@
   overflow: hidden;
 }
 
-.propertyPageHeaderImgSection {
-  width: 65%;
-  height: 75%;
-  margin-left: 5%;
-}
+
 
 .propertyPageFirstSection {
   display: flex;
@@ -1307,10 +1303,10 @@ Property Image Gallery CSS
 
 */
 
-.propertyGalleryContainer {
+/* .propertyGalleryContainer {
   max-width: 1000px;
   margin-bottom: 40px;
-}
+} */
 
 .image-gallery-thumbnail.active {
   border-color: #e7b554 !important;
@@ -1397,12 +1393,40 @@ Suggested Property Location CSS
 Property Video CSS
 
 */
+.aboutProjectWrapper {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 
-.propertyVideoWrapper {
+}
+.pd{
+    padding: 20px;
+    padding-bottom: 0px;
+}
+.aboutProjectHeader {
+  font-size: 20px;
+  color: #e7b554;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+  /* .propertyVideoWrapper {
   height: 40vh;
   width: 33vw;
-  margin-top: 32px;
-}
+
+} */
+ /* @media screen and (max-width: 768px){
+  .propertyVideoWrapper {
+    height: 31vh;
+    width: 100%;
+    padding: 0px;
+  }  
+ } */
+
+
 
 
 
@@ -1515,15 +1539,15 @@ Similar Property CSS
     overflow: visible;
     /* max-width: 60%; */
   }
-  .propertyGalleryContainer {
+  /* .propertyGalleryContainer {
     margin-top: 20px;
     margin-bottom: 20px;
-  }
+  } */
 
-  .propertyGalleryContainer {
-    max-width: 88vw;
+  /* .propertyGalleryContainer { */
+    /* max-width: 88vw;
     margin-left: -10px;
-  }
+  } */
 
   .image-gallery-slide img {
     height: 50vh !important;
@@ -1573,12 +1597,12 @@ Similar Property CSS
     margin-bottom: 0;
   }
 
-  .propertyVideoWrapper {
+  /* .propertyVideoWrapper {
     height: 40vh;
     width: 82vw;
     margin-left: -2%;
     margin-bottom: 25px;
-  }
+  } */
 
   .fullscreen-gallery-content {
     top: 20% !important;

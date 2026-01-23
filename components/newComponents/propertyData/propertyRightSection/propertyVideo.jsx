@@ -1,41 +1,40 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
-import PropertyWrapper from "../propertyPageMobile/propertyPageSections/propertyWrapper";
-import useMediaQuery from "../../../../utils/useMediaQuery";
 
 function PropertyVideo({ videoUrl }) {
-  const isDesktop = useMediaQuery(768);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const checkScreen = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+
+    checkScreen(); // initial
+    window.addEventListener("resize", checkScreen);
+
+    return () => window.removeEventListener("resize", checkScreen);
+  }, []);
 
   return (
-    <>
-      {isDesktop && (
-        <div className='propertyVideoWrapper'>
-          <ReactPlayer
-            url={videoUrl ||`https://www.youtube.com/watch?v=zEBrU6GEZdk&ab_channel=INFRAMANTRA`}
-            width='100%'
-            height='100%'
-            controls={true}
-          />
-        </div>
-      )}
-      {!isDesktop && (
-        <PropertyWrapper
-          children={
-            <div className='aboutProjectWrapper'>
-              <h2 className='aboutProjectHeader'>Property Video</h2>
-              <div className='propertyVideoWrapper'>
-                <ReactPlayer
-                  url={videoUrl ||`https://www.youtube.com/watch?v=zEBrU6GEZdk&ab_channel=INFRAMANTRA`}
-                  width='100%'
-                  height='100%'
-                  controls={true}
-                />
-              </div>
-            </div>
+    <div className="pd">
+      <h2 className="Header">Property Walk Through</h2>
+
+      <div className="propertyVideoWrapper">
+        <ReactPlayer
+          url={
+            videoUrl ||
+            "https://www.youtube.com/watch?v=zEBrU6GEZdk&ab_channel=INFRAMANTRA"
           }
+          width="100%"
+          height="100%"
+          controls
         />
-      )}
-    </>
+      </div>
+    </div>
   );
 }
 

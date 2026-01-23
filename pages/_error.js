@@ -36,7 +36,7 @@ const ErrorStack = () => {
     const stackErrorContainer = stackErrorContainerRef.current;
     const cardNodes = stackErrorContainer.querySelectorAll(`.${styles.cardErrorContainer}`);
     const perspecNodes = stackErrorContainer.querySelectorAll(`.${styles.perspec}`);
-    const card = stackErrorContainer.querySelector(`.${styles.card}`);
+    const card = stackErrorContainer.querySelector(`.${styles.card1}`);
 
     const handleCardAnimationEnd = () => {
       perspecNodes.forEach((elem) => elem.classList.add(styles.explode));
@@ -133,7 +133,7 @@ const ErrorStack = () => {
                 '--vertdist': `${-25 + index * 5}px`
               }}
             >
-              <div className={styles.card}>
+              <div className={styles.card1}>
                 <div className={styles.writing}>
                   <div className={styles.topbar}>
                     <div className={styles.red}></div>

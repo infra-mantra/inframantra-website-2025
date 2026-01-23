@@ -123,7 +123,7 @@ function SearchBar({ onSearch, onSortChange , isDesktop , isMobile,handleCloseFi
       {/* 🔎 Search Input */}
       <form className={styles.searchBar} onSubmit={handleSubmit}>
       <input
-  type="text"
+     type="text"
   value={searchValue}
   onChange={handleInputChange}
   onKeyDown={(e) => e.key === 'Enter' && handleSubmit(e)} // ✅ Correct implementation

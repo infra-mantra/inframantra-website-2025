@@ -49,7 +49,7 @@
   perspective: 1000px;
 }
 
-.card {
+.card1 {
   animation: tiltcard 0.5s ease-in-out 1s forwards;
   position: absolute;
 }

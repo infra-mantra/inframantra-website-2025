@@ -19,10 +19,7 @@ export const propertyPageNavigtionValues = [
     label: "Floor Plan",
     section: "floorPlan",
   },
-  // {
-  //   label: "Price List",
-  //   section: "floorPlan",
-  // },
+ 
   {
     label: "EMI Calculator",
     section: "emiCalculator",
@@ -43,8 +40,5 @@ export const propertyPageNavigtionValues = [
     label: "About Developer",
     section: "aboutDeveloper",
   },
-  // {
-  //   label: "Featured Properties",
-  //   section: "featuredProperties",
-  // },
+  
 ];
