@@ -441,7 +441,7 @@ ul {
   gap: .4rem;
 }
 .card-ct-wt{
-  height: .5rem;
+  height: auto;
   margin-bottom: 0px;
 }
 .property-header-images{

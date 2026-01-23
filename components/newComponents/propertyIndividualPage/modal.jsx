@@ -6,13 +6,13 @@ const RightSlideModal = ({ isOpen, onClose, title, children }) => {
 
   return (
     <>
-      {/* Overlay – clicking this closes modal */}
+      
       <div
         className="slide-modal-overlay open"
         onClick={onClose}
       />
 
-      {/* Modal – stop click propagation */}
+ 
       <div
         className="slide-modal open"
         onClick={(e) => e.stopPropagation()}

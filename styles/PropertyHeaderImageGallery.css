@@ -442,6 +442,9 @@
     height: auto;
     object-fit: contain;
   }
+  .propertyPageHeaderImgSection{
+height: auto;
+  }
   .icon-btn {
       width: 40px;
       height: 40px;
