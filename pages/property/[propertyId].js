@@ -16,14 +16,17 @@ import Sitevisit from "../../components/newComponents/propertyIndividualPage/sit
 import Developer from "../../components/newComponents/propertyIndividualPage/developer";
 import FaqSection from "../../components/newComponents/propertyIndividualPage/faq";
 import CtaForHome from "../../components/detailSections/singlePropertyCta";
-import Cta from '../../components/detailSections/CTA_NEW'
 
 const PropertyDetail = ({ allData }) => {
   const router = useRouter();
   const rightRef = useRef(null);
   const containerRef = useRef(null);
   const [locoScroll, setLocoScroll] = useState(null);
-  const [propertyData,setPropertyData] = useState(allData.propertyData.data)
+ const [propertyData, setPropertyData] = useState(allData.propertyData.data);
+
+useEffect(() => {
+  setPropertyData(allData.propertyData.data);
+}, [allData.propertyData.data]);
 
   const [schemaInfo] = useState({
     lat: propertyData?.coordinates?.lat,
@@ -54,7 +57,7 @@ const PropertyDetail = ({ allData }) => {
       schema={schemaInfo}
     >
       <div className="propertyPageWrapper" >
-        <PropertyHeaderImageGallery imageGallery={schemaInfo.Galleryimages} propertyData={propertyData}/>
+        <PropertyHeaderImageGallery imageGallery={propertyData.imageGallery} propertyData={propertyData}/>
        <section id="Highlights">
       <PropertyHeader propertyData={propertyData}  name={schemaInfo.name}/>
           </section>

@@ -64,7 +64,7 @@ function PropertyHeaderHigh({ propertyData ,name}) {
           <img
             className="property-image"
             src={propertyData.developer.developerImg}
-            alt="Signature Global Daxin Vistas"
+            alt={propertyData.developer.name+"   logo"}
           />
         </div>
       </header>

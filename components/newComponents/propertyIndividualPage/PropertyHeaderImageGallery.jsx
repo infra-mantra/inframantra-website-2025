@@ -13,15 +13,23 @@ function PropertyHeaderImageGallery({
   projectName = "DAXIN VISTA",
   propertyData
 }) {
+
   const router = useRouter();
   const boxRef = useRef(null);
-  
-  const[galleryImages , setgalleryImages] = useState(imageGallery.map((img) => ({
+   const[galleryImages , setgalleryImages] = useState([]) 
+
+  useEffect(()=>{
+  setgalleryImages( imageGallery.map((img) => ({
     original: img.url,
     thumbnail: img.thumbnail || img.url,
     originalAlt: projectName,
     thumbnailAlt: projectName,
-  })))
+  })))  
+  },[imageGallery])
+  
+
+
+  
 
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -109,7 +117,7 @@ function PropertyHeaderImageGallery({
     setIsSearchExpanded(false);
   };
 
-  if (!imageGallery || imageGallery.length === 0) {
+  if (!galleryImages || galleryImages.length === 0) {
     return <div className="propertyPageHeaderImgSection">No images available</div>;
   }
 
@@ -195,6 +203,7 @@ function PropertyHeaderImageGallery({
       </div>
 
       <ImageGallery
+       key={galleryImages?.[0]?.original} 
         items={galleryImages}
         thumbnailPosition={isDesktop ? "right" : "bottom"}
         showPlayButton
