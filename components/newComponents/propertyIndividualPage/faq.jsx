@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from './faq.module.css';
 import PopUpForm from '../../detailSections/CTA_NEW'
 
-function FaqSection({ propertyData }) {
+function FaqSection({ propertyData ,name}) {
   const [activeIndex, setActiveIndex] = useState(null);
   const [popForm,setPopForm] = useState(false)
 

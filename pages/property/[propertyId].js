@@ -38,7 +38,7 @@ const PropertyDetail = ({ allData }) => {
     name: propertyData.name,
   });
 
-  console.log("&&&&&&&&&&&&&&&&7",propertyData)
+ 
 
  
 
@@ -76,7 +76,7 @@ const PropertyDetail = ({ allData }) => {
             </section>
 
             <section id="Plan & Pricing" >
-              <Config  floorPlan={propertyData.floorPlan} pdf={propertyData.brochure[0]}/>
+              <Config  floorPlan={propertyData.floorPlan} pdf={propertyData.brochure[0]} name={schemaInfo.name}/>
             </section>
               <section >
               <PremiumProperty city={schemaInfo.city}/>
@@ -91,7 +91,7 @@ const PropertyDetail = ({ allData }) => {
             </section>
   
             <section id= "FAQ's" >
-              <FaqSection propertyData={propertyData}   />
+              <FaqSection propertyData={propertyData} name={schemaInfo.name}  />
             </section>
 
           
