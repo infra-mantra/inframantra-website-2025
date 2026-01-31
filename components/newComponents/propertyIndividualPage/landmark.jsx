@@ -39,52 +39,6 @@ const ICON_MAP = {
   
 };
 
-async function findClosestGuide(property, guideList) {
-    let closestGuide = null;
-    let minDistance = Infinity;
-
-    for (let i = 0; i < guideList.length; i++) {
-        const guide = guideList[i];
-
-        if (guide.lat && guide.lon) {
-            const url = `https://router.project-osrm.org/route/v1/driving/${property.lat},${property.lng};${guide.lon},${guide.lat}?overview=full&geometries=geojson`;
-
-            try {
-                const res = await fetch(url);
-                const data = await res.json();
-
-                const distance = (data.routes[0].distance / 1000).toFixed(2); // km
-                const duration = (data.routes[0].duration / 60).toFixed(1); // minutes
-
-                // Store distance and duration in guide object
-                guide.distance = distance;
-                guide.duration = duration;
-
-                console.log(`Guide ${i} - Distance: ${distance} km, Duration: ${duration} min`);
-
-                // Check if this guide is the closest
-                if (distance < minDistance) {
-                    minDistance = distance;
-                    closestGuide = guide;
-                }
-
-            } catch (error) {
-                console.error(`Error fetching route for guide ${i}:`, error);
-            }
-        }
-    }
-
-    if (closestGuide) {
-        console.log("Closest Guide:", closestGuide);
-        return closestGuide;
-    } else {
-        console.log("No valid guides found.");
-        return null;
-    }
-}
-
-// Example usage
-
 
 
 
@@ -107,19 +61,22 @@ const LandMark = ({ propertyData ,propertyInfo }) => {
   
 
 
-  const currentData = rawData
-    ? {
-        title: rawData.title,
-        items: rawData.guideList.map(({ name, distance, lat, lon }) => ({
-          name,
-          distance,
-          lat,
-          lng: lon,
-          icon: ICON_MAP[rawData.title] || <FaMapMarkerAlt />,
-          type: rawData.title, 
-        })),
-      }
-    : { title: '', items: [] };
+ const currentData = rawData
+  ? {
+      title: rawData.title,
+      items: rawData.guideList.map(({ name, distance, lat, lon }) => ({
+        name,
+        distance,
+        lat,
+        lng: lon,
+        hasLocation: lat != null && lon != null, 
+        icon: ICON_MAP[rawData.title] || <FaMapMarkerAlt />,
+        type: rawData.title,
+      })),
+    }
+  : { title: "", items: [] };
+
+  
 
  
 

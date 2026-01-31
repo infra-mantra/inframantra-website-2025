@@ -15,6 +15,13 @@ function PropertyHeaderImageGallery({
 }) {
   const router = useRouter();
   const boxRef = useRef(null);
+  
+  const[galleryImages , setgalleryImages] = useState(imageGallery.map((img) => ({
+    original: img.url,
+    thumbnail: img.thumbnail || img.url,
+    originalAlt: projectName,
+    thumbnailAlt: projectName,
+  })))
 
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -106,12 +113,7 @@ function PropertyHeaderImageGallery({
     return <div className="propertyPageHeaderImgSection">No images available</div>;
   }
 
-  const galleryImages = imageGallery.map((img) => ({
-    original: img.url,
-    thumbnail: img.thumbnail || img.url,
-    originalAlt: projectName,
-    thumbnailAlt: projectName,
-  }));
+
 
   return (
     <div className="propertyPageHeaderImgSection">
