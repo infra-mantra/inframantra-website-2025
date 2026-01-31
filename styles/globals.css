@@ -205,9 +205,11 @@ ul.wp-block-list li {
 }
 
 .property-right {
-  width: 30%;
+  width: 40%;
   position: sticky;  /* Needed for bottom stop */
   top: 4%;
+  justify-content: center;
+  display: flex;
 
 }
 

@@ -69,9 +69,10 @@ function PropertyHeaderHigh({ propertyData }) {
         </div>
       </header>
       <div className="property-container">
-        {/* Header Section */}
+     
 
         <div className="card-container">
+          <section id="Overview" >
           <div className="card-60" ref={leftRef}>
             <div className="card card-width">
               {/* Price Section */}
@@ -144,7 +145,7 @@ function PropertyHeaderHigh({ propertyData }) {
 
               <div className="boldline1"></div>
 
-              {/* Units */}
+              
               <div className="units-section">
                 {[
                   {
@@ -188,7 +189,7 @@ function PropertyHeaderHigh({ propertyData }) {
             <div className="dis-none-desktop">
               <Propertycard />
             </div>
-
+             <section id="About Project">
             <div className="about-container">
               <div className="about-wrapper">
                 <h2 className="Header">About Project</h2>
@@ -207,8 +208,10 @@ function PropertyHeaderHigh({ propertyData }) {
                 </div>
               </div>
             </div>
+            </section>
           </div>
-
+          </section>
+          <section id="Highlights">
           <div className="container-card">
             <div className="card card-width-high">
               <div className="higlight-list ">
@@ -218,7 +221,9 @@ function PropertyHeaderHigh({ propertyData }) {
                 >
                   {visibleHighlights.map((item, index) => (
                     <li key={index} className="p-text d-flex align-items-start">
+                      <div>
                       <span className="projectHighlightListBullet"> </span>
+                      </div>
                       <span className="highlight-text">{item}</span>
                     </li>
                   ))}
@@ -245,6 +250,8 @@ function PropertyHeaderHigh({ propertyData }) {
               </button>
             </div>
           </div>
+          </section>
+
         </div>
 
         <ModalSlider
@@ -255,26 +262,32 @@ function PropertyHeaderHigh({ propertyData }) {
           <ul className="ul-highlight full-list">
             {highlights.map((item, index) => (
               <li key={index} className="p-text d-flex align-items-start">
+                <div>
                 <span className="projectHighlightListBullet"> </span>
+                </div>
                 <span className="highlight-text">{item}</span>
               </li>
             ))}
           </ul>
         </ModalSlider>
-        <ModalSlider
-          title="About Project"
-          isOpen={isAboutModalOpen}
-          onClose={() => setIsAboutModalOpen(false)}
-        >
-          <div className="about-full-text">
-            <p className="about-project p-text">{}</p>
-          </div>
-        </ModalSlider>
+      <ModalSlider
+  title="About Project"
+  isOpen={isAboutModalOpen}
+  onClose={() => setIsAboutModalOpen(false)}
+>
+  <div className="about-full-text">
+    {propertyData?.description?.map((item, index) => (
+      <p key={index} className="about-project p-text">
+        {item}
+      </p>
+    ))}
+  </div>
+</ModalSlider>
       </div>
       <PopUpForm
         popUpenable={popForm}
         onClickOff={onClickOff}
-        text="To download brochure"
+        text="to connect with Our Expert Team "
   
         name={name}
         />

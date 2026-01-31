@@ -8,30 +8,85 @@ const LeafletMap = dynamic(() => import("./map"), {
 import {
   FaSchool,
   FaBus,
-  FaHospital,
   FaClinicMedical,
   FaDumbbell,
-  FaUtensils,
   FaPrayingHands,
   FaTshirt,
   FaUniversity,
   FaIceCream,
   FaMapMarkerAlt,
 } from 'react-icons/fa';
+import { MdSchool } from "react-icons/md";
+import { FaCartShopping } from "react-icons/fa6";
+import { ImRoad } from "react-icons/im";
+import { BiSolidBusiness } from "react-icons/bi";
 
-// 🔁 Icon map based on DB title
+
 const ICON_MAP = {
   Schools: <FaSchool />,
+  'Schools/Colleges':<MdSchool />,
   'Bus Stop': <FaBus />,
-  Hospitals: <FaHospital />,
+  'Hospitals': <FaClinicMedical />,
   Clinic: <FaClinicMedical />,
   'Gym Fitnes': <FaDumbbell />,
-  Restaurant: <FaUtensils />,
+  "Shopping Centers/Malls": <FaCartShopping />,
   Temple: <FaPrayingHands />,
   Clothing: <FaTshirt />,
   'College and Universitie': <FaUniversity />,
   'Food Other': <FaIceCream />,
+  'Business Hubs':<BiSolidBusiness/>,
+  'Connectivity':<ImRoad/>
+  
 };
+
+async function findClosestGuide(property, guideList) {
+    let closestGuide = null;
+    let minDistance = Infinity;
+
+    for (let i = 0; i < guideList.length; i++) {
+        const guide = guideList[i];
+
+        if (guide.lat && guide.lon) {
+            const url = `https://router.project-osrm.org/route/v1/driving/${property.lat},${property.lng};${guide.lon},${guide.lat}?overview=full&geometries=geojson`;
+
+            try {
+                const res = await fetch(url);
+                const data = await res.json();
+
+                const distance = (data.routes[0].distance / 1000).toFixed(2); // km
+                const duration = (data.routes[0].duration / 60).toFixed(1); // minutes
+
+                // Store distance and duration in guide object
+                guide.distance = distance;
+                guide.duration = duration;
+
+                console.log(`Guide ${i} - Distance: ${distance} km, Duration: ${duration} min`);
+
+                // Check if this guide is the closest
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestGuide = guide;
+                }
+
+            } catch (error) {
+                console.error(`Error fetching route for guide ${i}:`, error);
+            }
+        }
+    }
+
+    if (closestGuide) {
+        console.log("Closest Guide:", closestGuide);
+        return closestGuide;
+    } else {
+        console.log("No valid guides found.");
+        return null;
+    }
+}
+
+// Example usage
+
+
+
 
 const LandMark = ({ propertyData ,propertyInfo }) => {
   const [activeTab, setActiveTab] = useState(
@@ -40,9 +95,17 @@ const LandMark = ({ propertyData ,propertyInfo }) => {
   const [activeLandmark, setActiveLandmark] = useState(null);
 
   const tabs = propertyData?.localityGuide || [];
+ const PROPERTY_LOCATION = {
+    name: propertyInfo.name,
+    lat: propertyInfo.lat,
+    lng: propertyInfo.lon,
+  };
 
-  // ✅ Convert DB format → UI format + inject icon
+
+ 
   const rawData = tabs.find(({ title }) => title === activeTab);
+  
+
 
   const currentData = rawData
     ? {
@@ -53,16 +116,12 @@ const LandMark = ({ propertyData ,propertyInfo }) => {
           lat,
           lng: lon,
           icon: ICON_MAP[rawData.title] || <FaMapMarkerAlt />,
-          type: rawData.title, // optional: useful for map
+          type: rawData.title, 
         })),
       }
     : { title: '', items: [] };
 
-  const PROPERTY_LOCATION = {
-    name: propertyInfo.name,
-    lat: propertyInfo.lat,
-    lng: propertyInfo.lon,
-  };
+ 
 
   return (
     <div className="pd">

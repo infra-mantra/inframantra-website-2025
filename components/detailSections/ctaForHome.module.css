@@ -138,5 +138,8 @@ background-color: none!important;
     padding-top: 43px;
    
 }
+.homeCtaMainWrapper,.pt{
+  padding-top: 0px !important;
+}
     
 }

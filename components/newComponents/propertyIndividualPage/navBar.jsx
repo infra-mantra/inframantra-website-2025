@@ -5,6 +5,8 @@ const PropertySectionNavbar = () => {
   const [activeTab, setActiveTab] = useState('Highlights');
 
   const tabs = [
+    'Overview',
+    'About Project',
     'Highlights',
     'Amenities',
     'Locality',
@@ -13,21 +15,24 @@ const PropertySectionNavbar = () => {
     "FAQ's",
   ];
 
- const handleClick = (tab) => {
+const handleClick = (tab) => {
   setActiveTab(tab);
 
   const section = document.getElementById(tab);
-  if (section) {
-    const yOffset = -80; 
+  const navbar = document.querySelector(".section-navbar");
+
+  if (section && navbar) {
+    const yOffset = -navbar.offsetHeight;
     const y =
       section.getBoundingClientRect().top + window.pageYOffset + yOffset;
 
     window.scrollTo({
       top: y,
-      behavior: 'smooth',
+      behavior: "smooth",
     });
   }
 };
+
 
   // 🔥 Scroll spy logic
   useEffect(() => {

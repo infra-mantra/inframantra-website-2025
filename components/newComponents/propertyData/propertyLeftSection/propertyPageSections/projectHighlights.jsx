@@ -13,7 +13,9 @@ function ProjectHighlights({ keyHighlights = [] }) {
             {keyHighlights.map((highlights, index) => {
               return (
                 <p className='aboutProjectHighlightPoints' key={index}>
+                  <div>
                   <span className='projectHighlightListBullet'>&gt; </span>{" "}
+                  </div>
                   {highlights}
                 </p>
               );

@@ -39,6 +39,8 @@ const PropertyDetail = ({ allData }) => {
     name: propertyData.name,
   });
 
+  console.log("&&&&&&&&&&&&&&&&7",propertyData)
+
  
 
 
@@ -54,7 +56,9 @@ const PropertyDetail = ({ allData }) => {
     >
       <div className="propertyPageWrapper" >
         <PropertyHeaderImageGallery imageGallery={schemaInfo.Galleryimages} propertyData={propertyData}/>
-        <PropertyHeader  id="Highlights" propertyData={propertyData} />
+       <section id="Highlights">
+  <PropertyHeader propertyData={propertyData} />
+</section>
 
         <PropertySectionNavbar locoScroll={locoScroll}  />
 
@@ -73,22 +77,22 @@ const PropertyDetail = ({ allData }) => {
             </section>
 
             <section id="Plan & Pricing" >
-              <Config  floorPlan={propertyData.floorPlan}/>
+              <Config  floorPlan={propertyData.floorPlan} pdf={propertyData.brochure[0]}/>
             </section>
               <section >
               <PremiumProperty city={schemaInfo.city}/>
             </section>
             
             <section >
-              <Sitevisit />
+              <Sitevisit  name={schemaInfo.name}/>
             </section>
 
             <section id="About Developer" >
               <Developer propertyData={propertyData} />
             </section>
-
+  
             <section id= "FAQ's" >
-              <FaqSection propertyData={propertyData}/>
+              <FaqSection propertyData={propertyData}   />
             </section>
 
           
@@ -96,9 +100,9 @@ const PropertyDetail = ({ allData }) => {
           </div>
 
           <div className="property-right" ref={rightRef}>
-            <CtaForHome />
+            <CtaForHome name={schemaInfo.name}/>
           </div>
-          {/* <Cta  popUpenable={true}/> */}
+     
         </div>
       </div>
     </Wrapper>

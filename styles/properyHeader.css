@@ -10,8 +10,9 @@
   display: none;
 }
 .d-flex{
-display: flex;
-
+  display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .bell-pendulum {
@@ -118,7 +119,7 @@ display: flex;
   border-radius: 12px;
   padding: 16px 20px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  width: 280px;
+
   z-index: 999;
 
   font-size: 14px;

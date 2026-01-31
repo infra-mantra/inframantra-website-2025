@@ -59,7 +59,7 @@ function FaqSection({ propertyData }) {
        <PopUpForm
         popUpenable={popForm}
         onClickOff={onClickOff}
-        text="To download brochure"
+        text="Our Expert Team is here to help you with your additional question"
   
         name={name}
       />

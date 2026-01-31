@@ -11,6 +11,7 @@
 }
 .cta-w button{
   margin-bottom: 0px;
+  padding: 1rem;
 }
 .cta-btn-w{
 width: fit-content;;
@@ -45,6 +46,8 @@ width: fit-content;;
 .site-visit-left h2{
  color: #DCAA4C;
  font-size:1.8rem;
+ margin: 0px 0px;
+ padding: 7px 0px;
 }
 @media (max-width: 768px) {
   .site-visit-wrapper {

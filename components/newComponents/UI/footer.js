@@ -355,7 +355,7 @@ function Footer() {
               <p><Link  legacyBehavior={true} href='/page/disclaimer'>Disclaimer</Link></p>
             </div>
             <div className={styles.footerSecondSectionCopyRightFlex}>
-              <p>Copyright @ 2025 Inframantra</p>
+              <p>Copyright @ {new Date().getFullYear()} Inframantra</p>
               <p>All Rights Reserved</p>
             </div>
           </>
@@ -369,7 +369,7 @@ function Footer() {
               <p><Link  legacyBehavior={true} href='/page/disclaimer'>Disclaimer</Link></p>
             </div>
             <div className={styles.footerSecondSectionCopyRightFlex}>
-              <p>Copyright @ 2025 Inframantra</p>
+              <p>Copyright @ {new Date().getFullYear()} Inframantra</p>
               <p>All Rights Reserved</p>
             </div>
           </>

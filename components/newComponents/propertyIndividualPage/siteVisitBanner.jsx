@@ -1,7 +1,7 @@
 import React ,{useState}from 'react';
 import PopUpForm from '../../detailSections/CTA_NEW';
 
-function Sitevisit() {
+function Sitevisit({name}) {
      const [popForm, setPopForm] = useState(false);
        const onClickOff = (val) =>setPopForm(val)
        const handleform = () => setPopForm(true);
@@ -34,7 +34,7 @@ function Sitevisit() {
        <PopUpForm
         popUpenable={popForm}
         onClickOff={onClickOff}
-        text="To download brochure"
+        text="to book a site visit with Experts Now!"
         name={name}
         />
     </div>

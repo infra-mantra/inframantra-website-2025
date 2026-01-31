@@ -12,6 +12,7 @@ function App({ name, popUpenable = false, onClickOff, text, pdf }) {
 
   const [isAnimating, setIsAnimating] = useState(false);
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false); // NEW
 
   const router = useRouter();
 
@@ -24,7 +25,6 @@ function App({ name, popUpenable = false, onClickOff, text, pdf }) {
 
   const recaptchaRef = useRef(null);
 
-  // 🔁 Sync with parent
   useEffect(() => {
     if (popUpenable) {
       setIsAnimating(true);
@@ -44,35 +44,55 @@ function App({ name, popUpenable = false, onClickOff, text, pdf }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (loading) return; // PREVENT DOUBLE CLICK
     if (!recaptchaRef.current) return alert('reCAPTCHA not loaded properly.');
 
     try {
+      setLoading(true);
+      const toastId = toast.loading("Submitting form...");
+
       const token = await recaptchaRef.current.executeAsync();
 
       const action = {
         method: 'POST',
         url: '/enquiry/project',
-        data: { ...formData, captchaToken: token, message },
+        data: { ...formData,  message },
         token: false,
       };
 
       const response = await Ajax1(action);
 
       if (response.data.status === 'success') {
-        toast.success('Form submitted successfully');
-        setFormData({ name: '', phoneNumber: '', email: '' });
+
+        toast.update(toastId, {
+          render: "Form submitted successfully",
+          type: "success",
+          isLoading: false,
+          autoClose: 2000,
+        });
+
+        setFormData({ name: '', phoneNumber: '', email: '', projectName: name });
 
         if (popUpenable && pdf) downloadBrochure(pdf, name);
 
         setTimeout(() => {
           router.push('/thank-you');
-        }, 5000);
+        }, 3000);
+
       } else {
-        toast.error('Form submission failed');
+        toast.update(toastId, {
+          render: "Form submission failed",
+          type: "error",
+          isLoading: false,
+          autoClose: 2000,
+        });
       }
+
     } catch (error) {
       toast.error('Error submitting form');
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -86,6 +106,7 @@ function App({ name, popUpenable = false, onClickOff, text, pdf }) {
       {popUpenable && (
         <div className={`${ctaStyle.popupOverlay} ${isAnimating ? ctaStyle.popupAnimating : "popup-closing"}`}>
           <div className={`${ctaStyle.popupForm} ${isAnimating ? ctaStyle.popupAnimatingForm : ""}`}>
+            
             <div className={ctaStyle.imageContainer}>
               <img src="/logos/pop-up-logo.png" alt="Inframantra-logo" />
               <div className={ctaStyle.crossBtn} onClick={handleClose}>
@@ -99,14 +120,15 @@ function App({ name, popUpenable = false, onClickOff, text, pdf }) {
             </div>
 
             <form onSubmit={handleSubmit}>
+              
               <div className={ctaStyle.formGroup}>
                 <input
                   type="text"
                   placeholder="Name"
                   value={formData.name}
                   onChange={(e) => {
-                    const v = e.target.value.replace(/[^a-zA-Z\s]/g, '');
-                    setFormData({ ...formData, name: v });
+                    const alphabeticValue = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+                    setFormData({ ...formData, name: alphabeticValue });
                   }}
                   required
                 />
@@ -118,9 +140,11 @@ function App({ name, popUpenable = false, onClickOff, text, pdf }) {
                   placeholder="Phone Number"
                   value={formData.phoneNumber}
                   onChange={(e) => {
-                    const v = e.target.value.replace(/[^0-9]/g, '');
-                    setFormData({ ...formData, phoneNumber: v });
+                    const onlyNumbers = e.target.value.replace(/[^0-9]/g, '');
+                    setFormData({ ...formData, phoneNumber: onlyNumbers });
                   }}
+                  inputMode="numeric"
+                  pattern="[0-9]*"
                   minLength="10"
                   required
                 />
@@ -129,6 +153,7 @@ function App({ name, popUpenable = false, onClickOff, text, pdf }) {
               <div className={ctaStyle.formGroup}>
                 <input
                   type="email"
+                  name="email"
                   placeholder="Email"
                   value={formData.email}
                   onChange={handleChange}
@@ -145,17 +170,18 @@ function App({ name, popUpenable = false, onClickOff, text, pdf }) {
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <button
                   type="submit"
+                  disabled={loading}
                   style={{
                     width: "100%",
                     padding: "10px",
-                    backgroundColor: "#E7B554",
+                    backgroundColor: loading ? "#ccc" : "#E7B554",
                     color: "#fff",
                     border: "none",
                     borderRadius: "4px",
-                    cursor: "pointer",
+                    cursor: loading ? "not-allowed" : "pointer",
                   }}
                 >
-                  Submit
+                  {loading ? "Submitting..." : "Submit"}
                 </button>
               </div>
 
@@ -168,6 +194,7 @@ function App({ name, popUpenable = false, onClickOff, text, pdf }) {
                   Privacy Policy.
                 </a>
               </p>
+
             </form>
 
             <div className={ctaStyle.propertyPageHeaderContactIconContainer2}>

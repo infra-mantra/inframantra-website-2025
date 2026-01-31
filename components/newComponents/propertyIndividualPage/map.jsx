@@ -1,12 +1,18 @@
-import React, { useEffect, useState ,useRef} from "react";
-import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from "react-leaflet";
+import React, { useEffect, useState, useRef, useMemo } from "react";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  Polyline,
+  useMap,
+} from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
 import {
   FaSchool,
   FaBus,
-  FaHospital,
   FaClinicMedical,
   FaDumbbell,
   FaUtensils,
@@ -16,6 +22,10 @@ import {
   FaIceCream,
   FaMapMarkerAlt,
 } from "react-icons/fa";
+import { MdSchool } from "react-icons/md";
+import { FaCartShopping } from "react-icons/fa6";
+import { ImRoad } from "react-icons/im";
+import { BiSolidBusiness } from "react-icons/bi";
 import { renderToStaticMarkup } from "react-dom/server";
 
 /* ---------- FIT BOUNDS ---------- */
@@ -28,90 +38,57 @@ const FitBounds = ({ coordinates }) => {
   return null;
 };
 
-/* ---------- ICON MAPPING (FIXED) ---------- */
-const iconMap = {
-  "Schools": FaSchool,
+/* ---------- ICON MAP ---------- */
+const ICON_MAP = {
+  Schools: FaSchool,
+  "Schools/Colleges": MdSchool,
   "Bus Stop": FaBus,
-  "Hospital": FaHospital,
-  "Clinic": FaClinicMedical,
-  "Gym": FaDumbbell,
-  "Restaurant": FaUtensils,
-  "Temple": FaPrayingHands,
-  "Clothing": FaTshirt,
-  "College": FaUniversity,
-  "Food": FaIceCream,
-  "Property": FaMapMarkerAlt,
-  "Search": FaMapMarkerAlt,
+  Hospitals: FaClinicMedical,
+  Clinic: FaClinicMedical,
+  "Gym Fitnes": FaDumbbell,
+  "Shopping Centers/Malls": FaCartShopping,
+  Temple: FaPrayingHands,
+  Clothing: FaTshirt,
+  "College and Universitie": FaUniversity,
+  "Food Other": FaIceCream,
+  "Business Hubs": BiSolidBusiness,
+  Connectivity: ImRoad,
 };
 
 /* ---------- CREATE CUSTOM MARKER ICON ---------- */
 export const createMarkerIcon = ({ selected = false, type }) => {
-  const IconComponent = iconMap[type] || FaMapMarkerAlt; 
+  const IconComponent = ICON_MAP[type] || FaMapMarkerAlt;
   const iconHTML = renderToStaticMarkup(<IconComponent />);
 
   return L.divIcon({
     className: "",
     html: `
-      <div style="
-        position:relative;
-        width:36px;
-        height:36px;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-      ">
-
-        ${selected ? `
-          <span class="ripple"></span>
-          <span class="ripple delay"></span>
-        ` : ""}
-
+      <div style="position:relative;width:36px;height:36px;display:flex;align-items:center;justify-content:center;">
+        ${
+          selected
+            ? `<span class="ripple"></span><span class="ripple delay"></span>`
+            : ""
+        }
         <div style="
-          width:26px;
-          height:26px;
-          background:#e7b554;
-          border-radius:50%;
-          display:flex;
-          justify-content:center;
-          align-items:center;
-          color:#000;
-          font-size:17px;
-          z-index:3;
+          width:26px;height:26px;background:#e7b554;border-radius:50%;
+          display:flex;justify-content:center;align-items:center;
+          color:#000;font-size:17px;z-index:3;
           box-shadow: 0 0 0 3px #fff, 0 6px 14px rgba(0,0,0,0.35);
         ">
           ${iconHTML}
         </div>
       </div>
-
       <style>
         .ripple {
-          position: absolute;
-          width: 26px;
-          height: 26px;
-          border-radius: 50%;
-          border: 2px solid rgba(231, 181, 84, 0.8);
-          box-shadow: 0 0 12px rgba(231, 181, 84, 0.6);
-          animation: ripple 3s ease-out infinite;
-          z-index: 1;
+          position:absolute;width:26px;height:26px;border-radius:50%;
+          border:2px solid rgba(231,181,84,0.8);
+          animation:ripple 3s ease-out infinite;
         }
-
-        .ripple.delay {
-          animation-delay: 1.5s;
-        }
-
+        .delay { animation-delay:1.5s; }
         @keyframes ripple {
-          0% {
-            transform: scale(1);
-            opacity: 0.9;
-          }
-          60% {
-            transform: scale(2.4);
-            opacity: 0.35;
-          }
-          100% {
-            transform: scale(3.2);
-            opacity: 0;
-          }
+          0% { transform:scale(1); opacity:0.9; }
+          60% { transform:scale(2.4); opacity:0.35; }
+          100% { transform:scale(3.2); opacity:0; }
         }
       </style>
     `,
@@ -122,29 +99,58 @@ export const createMarkerIcon = ({ selected = false, type }) => {
 };
 
 /* ---------- MAIN COMPONENT ---------- */
-const LandmarkMap = ({ property, landmarks, selected, onSelect ,type}) => {
+const LandmarkMap = ({ property, landmarks, selected, onSelect, type }) => {
   const [route, setRoute] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
   const [searchMarker, setSearchMarker] = useState(null);
   const [distance, setDistance] = useState(null);
   const [duration, setDuration] = useState(null);
   const selectedMarkerRef = useRef(null);
 
-  useEffect(() => {
-    if (route.length > 0 && selectedMarkerRef.current) {
-      selectedMarkerRef.current.openPopup();
-    }
-  }, [route]);
+  console.log("distnace",selected)
 
-  const routeTarget = selected || searchMarker;
+  /* ---------- SAFE PROPERTY ---------- */
+  const safeProperty = useMemo(() => {
+    if (!property) return null;
+    const lat = Number(property.lat);
+    const lng = Number(property.lng);
+    return isNaN(lat) || isNaN(lng) ? null : { ...property, lat, lng };
+  }, [property]);
+
+  /* ---------- SAFE LANDMARKS ---------- */
+  const safeLandmarks = useMemo(() => {
+    return (landmarks || []).filter(
+      (l) =>
+        typeof l?.lat === "number" &&
+        typeof l?.lng === "number" &&
+        !isNaN(l.lat) &&
+        !isNaN(l.lng)
+    );
+  }, [landmarks]);
+
+  /* ---------- SAFE SELECTED ---------- */
+  const safeSelected = useMemo(() => {
+    if (!selected) return null;
+    const lat = Number(selected.lat);
+    const lng = Number(selected.lng);
+    return isNaN(lat) || isNaN(lng) ? null : { ...selected, lat, lng };
+  }, [selected]);
+
+  /* ---------- ROUTE TARGET ---------- */
+  const routeTarget = useMemo(() => {
+    const t = safeSelected || searchMarker;
+    if (!t) return null;
+    const lat = Number(t.lat);
+    const lng = Number(t.lng);
+    return isNaN(lat) || isNaN(lng) ? null : { ...t, lat, lng };
+  }, [safeSelected, searchMarker]);
 
   /* ---------- FETCH ROUTE ---------- */
   useEffect(() => {
-    if (!routeTarget) return setRoute([]);
+    if (!safeProperty || !routeTarget) return setRoute([]);
+
     const fetchRoute = async () => {
       try {
-        const url = `https://router.project-osrm.org/route/v1/driving/${property.lng},${property.lat};${routeTarget.lng},${routeTarget.lat}?overview=full&geometries=geojson`;
+        const url = `https://router.project-osrm.org/route/v1/driving/${safeProperty.lng},${safeProperty.lat};${routeTarget.lng},${routeTarget.lat}?overview=full&geometries=geojson`;
         const res = await fetch(url);
         const data = await res.json();
 
@@ -159,53 +165,51 @@ const LandmarkMap = ({ property, landmarks, selected, onSelect ,type}) => {
         console.error("Route error", e);
       }
     };
+
     fetchRoute();
-  }, [property, routeTarget]);
+  }, [safeProperty, routeTarget]);
 
-  /* ---------- SEARCH ---------- */
-  const handleSearch = async (e) => {
-    const val = e.target.value;
-    setSearchQuery(val);
-    if (val.length < 3) return setSearchResults([]);
+  if (!safeProperty) return null;
 
-    const res = await fetch(
-      `https://nominatim.openstreetmap.org/search?format=json&countrycodes=in&addressdetails=1&q=${encodeURIComponent(val)}`
-    );
-    const data = await res.json();
-    setSearchResults(data.slice(0, 5));
-  };
+  const showAllLandmarks = !safeSelected && !searchMarker;
+  const showOnlySelectedLandmark = safeSelected && !searchMarker;
 
-  const selectSearch = (res) => {
-    setSearchMarker({ lat: +res.lat, lng: +res.lon, name: res.display_name });
-    onSelect(null);
-    setSearchResults([]);
-    setSearchQuery(res.display_name);
-  };
-
-  const showAllLandmarks = !selected && !searchMarker;
-  const showOnlySelectedLandmark = selected && !searchMarker;
-
-  const bounds = [
-    [property.lat, property.lng],
-    ...(routeTarget ? [[routeTarget.lat, routeTarget.lng]] : []),
-    ...(showAllLandmarks ? landmarks.map(l => [l.lat, l.lng]) : []),
-    ...route,
-  ];
+  const bounds = useMemo(() => {
+    const arr = [[safeProperty.lat, safeProperty.lng]];
+    if (routeTarget) arr.push([routeTarget.lat, routeTarget.lng]);
+    if (showAllLandmarks)
+      safeLandmarks.forEach((l) => arr.push([l.lat, l.lng]));
+    route.forEach((r) => arr.push(r));
+    return arr;
+  }, [safeProperty, routeTarget, safeLandmarks, route, showAllLandmarks]);
 
   return (
     <div style={{ position: "relative" }}>
-      <MapContainer center={[property.lat, property.lng]} zoom={14} style={{ height: 400 }}>
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      <MapContainer
+        center={[safeProperty.lat, safeProperty.lng]}
+        zoom={14}
+        style={{ height: 400 }}
+      >
+         <TileLayer
+    url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+  />
 
+  {/* Labels (roads, places, locality names) */}
+  <TileLayer
+    url="https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}"
+  />
+
+        {/* PROPERTY */}
         <Marker
-          position={[property.lat, property.lng]}
+          position={[safeProperty.lat, safeProperty.lng]}
           icon={createMarkerIcon({ selected: true, type: "Property" })}
         >
-          <Popup>{property?.name}</Popup>
+          <Popup>{safeProperty.name}</Popup>
         </Marker>
 
+        {/* LANDMARKS */}
         {showAllLandmarks &&
-          landmarks.map((l, i) => (
+          safeLandmarks.map((l, i) => (
             <Marker
               key={i}
               position={[l.lat, l.lng]}
@@ -214,33 +218,25 @@ const LandmarkMap = ({ property, landmarks, selected, onSelect ,type}) => {
                 click: () => {
                   onSelect(l);
                   setSearchMarker(null);
-                  setSearchQuery("");
                 },
               }}
             >
-              <Popup>{l?.name}</Popup>
+              <Popup>{l.name}</Popup>
             </Marker>
           ))}
 
+        {/* SELECTED */}
         {showOnlySelectedLandmark && (
           <Marker
             ref={selectedMarkerRef}
-            position={[selected.lat, selected.lng]}
+            position={[safeSelected.lat, safeSelected.lng]}
             icon={createMarkerIcon({ selected: true, type })}
           >
-            <Popup>{selected?.name}</Popup>
+            <Popup>{safeSelected.name}</Popup>
           </Marker>
         )}
 
-        {searchMarker && (
-          <Marker
-            position={[searchMarker.lat, searchMarker.lng]}
-            icon={createMarkerIcon({ selected: true, type: "Search" })}
-          >
-            <Popup>{searchMarker?.name}</Popup>
-          </Marker>
-        )}
-
+        {/* ROUTE */}
         {route.length > 0 && (
           <>
             <Polyline positions={route} color="#000" weight={4} opacity={0.25} />
@@ -251,10 +247,10 @@ const LandmarkMap = ({ property, landmarks, selected, onSelect ,type}) => {
         <FitBounds coordinates={bounds} />
       </MapContainer>
 
-      {distance && duration && (
+      {distance && duration && safeSelected && (
         <div className="popUpMark">
-          <strong>{selected?.name}</strong>
-          <div>Distance: {distance} km</div>
+          <strong>{safeSelected.name}</strong>
+          <div>Distance: {selected?.distance} km</div>
           <div>Time: ~{duration} min</div>
         </div>
       )}
