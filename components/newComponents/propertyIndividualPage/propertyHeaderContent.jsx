@@ -64,7 +64,7 @@ function PropertyHeaderHigh({ propertyData ,name}) {
           <img
             className="property-image"
             src={propertyData.developer.developerImg}
-            alt={propertyData.developer.name+"   logo"}
+            alt={propertyData.developer.name+"logo"}
           />
         </div>
       </header>
@@ -275,6 +275,7 @@ function PropertyHeaderHigh({ propertyData ,name}) {
   title="About Project"
   isOpen={isAboutModalOpen}
   onClose={() => setIsAboutModalOpen(false)}
+  name={name}
 >
   <div className="about-full-text">
     {propertyData?.description?.map((item, index) => (

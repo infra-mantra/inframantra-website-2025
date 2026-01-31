@@ -111,7 +111,7 @@ function PropertyHeaderImageGallery({
         break;
     }
 
-    setSearchValue(option.title);
+    setSearchValue();
     setSuggestions([]);
     fetchSuggestions.cancel();
     setIsSearchExpanded(false);
