@@ -1,7 +1,7 @@
 import React ,{useState}from "react";
 import PopUpForm from '../../detailSections/CTA_NEW'
 
-const RightSlideModal = ({ isOpen, onClose, title, children }) => {
+const RightSlideModal = ({ isOpen, onClose, title, children ,name}) => {
   if (!isOpen) return null;
     const [popForm, setPopForm] = useState(false);
      const onClickOff = (val) =>setPopForm(val)
@@ -42,8 +42,7 @@ const RightSlideModal = ({ isOpen, onClose, title, children }) => {
        <PopUpForm
         popUpenable={popForm}
         onClickOff={onClickOff}
-        text="To download brochure"
-  
+        text="to connect with our expert team!"
         name={name}
         />
     </>

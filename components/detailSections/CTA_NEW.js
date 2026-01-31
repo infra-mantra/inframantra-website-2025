@@ -44,14 +44,13 @@ function App({ name, popUpenable = false, onClickOff, text, pdf }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (loading) return; // PREVENT DOUBLE CLICK
-    if (!recaptchaRef.current) return alert('reCAPTCHA not loaded properly.');
+    if (loading) return; 
+   
 
     try {
       setLoading(true);
       const toastId = toast.loading("Submitting form...");
 
-      const token = await recaptchaRef.current.executeAsync();
 
       const action = {
         method: 'POST',
@@ -161,11 +160,7 @@ function App({ name, popUpenable = false, onClickOff, text, pdf }) {
                 />
               </div>
 
-              <ReCAPTCHA
-                sitekey="6LfrSTUqAAAAAOy2-j9cNvTIujOI5GKjtMVsn2Uk"
-                size="invisible"
-                ref={recaptchaRef}
-              />
+             
 
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <button

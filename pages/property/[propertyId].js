@@ -57,8 +57,8 @@ const PropertyDetail = ({ allData }) => {
       <div className="propertyPageWrapper" >
         <PropertyHeaderImageGallery imageGallery={schemaInfo.Galleryimages} propertyData={propertyData}/>
        <section id="Highlights">
-  <PropertyHeader propertyData={propertyData} />
-</section>
+      <PropertyHeader propertyData={propertyData}  name={schemaInfo.name}/>
+          </section>
 
         <PropertySectionNavbar locoScroll={locoScroll}  />
 

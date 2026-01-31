@@ -46,63 +46,57 @@ function App({ name }) {
     setCaptchaToken(token);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    if (loading) return; // PREVENT MULTIPLE CLICKS
+  if (loading) return;
 
-    if (recaptchaRef.current) {
-      try {
-        setLoading(true);
+  try {
+    setLoading(true);
+    const toastId = toast.loading("Submitting form...");
 
-        const toastId = toast.loading("Submitting form...");
+    const action = {
+      method: 'POST',
+      url: '/enquiry/project',
+      data: { ...formData },
+      token: false,
+    };
 
-        const token = await recaptchaRef.current.executeAsync();
-        setCaptchaToken(token);
+    const response = await Ajax1(action);
 
-        const action = {
-          method: 'POST',
-          url: '/enquiry/project',
-          data: { ...formData },
-          token: false,
-        };
+    if (response?.data?.status === 'success') {
+      toast.update(toastId, {
+        render: "Form submitted successfully",
+        type: "success",
+        isLoading: false,
+        autoClose: 2000,
+      });
 
-        const response = await Ajax1(action);
+      setFormData({
+        name: '',
+        phoneNumber: '',
+        email: '',
+        projectName: name,
+      });
 
-        if (response?.data?.status === 'success') {
-
-          toast.update(toastId, {
-            render: "Form submitted successfully",
-            type: "success",
-            isLoading: false,
-            autoClose: 2000,
-          });
-
-          setFormData({ name: '', phoneNumber: '', email: '', projectName: name });
-
-          setTimeout(() => {
-            router.push('/thank-you');
-          }, 3000);
-
-        } else {
-          toast.update(toastId, {
-            render: "Form submission failed",
-            type: "error",
-            isLoading: false,
-            autoClose: 2000,
-          });
-        }
-
-      } catch (error) {
-        toast.error('Error submitting form');
-        console.error('Error submitting form:', error);
-      } finally {
-        setLoading(false);
-      }
+      setTimeout(() => {
+        router.push('/thank-you');
+      }, 3000);
     } else {
-      alert('reCAPTCHA not loaded properly.');
+      toast.update(toastId, {
+        render: "Form submission failed",
+        type: "error",
+        isLoading: false,
+        autoClose: 2000,
+      });
     }
-  };
+  } catch (error) {
+    toast.error('Error submitting form');
+    console.error('Error submitting form:', error);
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className={style.homeApp}>
@@ -162,14 +156,7 @@ function App({ name }) {
               />
             </div>
 
-            <div className="recaptcha-container">
-              <ReCAPTCHA
-                sitekey="6LfrSTUqAAAAAOy2-j9cNvTIujOI5GKjtMVsn2Uk"
-                size="invisible"
-                ref={recaptchaRef}
-                onChange={handleCaptchaChange}
-              />
-            </div>
+           
 
             <div style={{ display: "flex", justifyContent: "center" }}>
               <button

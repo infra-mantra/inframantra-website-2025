@@ -6,7 +6,7 @@ import ModalSlider from "./modal";
 import Propertycard from "./propertyCard";
 import PopUpForm from '../../detailSections/CTA_NEW'
 
-function PropertyHeaderHigh({ propertyData }) {
+function PropertyHeaderHigh({ propertyData ,name}) {
   const [isHighlightModalOpen, setIsHighlightModalOpen] = useState(false);
   const [showAll, setShowAll] = useState(false);
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
@@ -258,6 +258,7 @@ function PropertyHeaderHigh({ propertyData }) {
           title="Project Highlights"
           isOpen={isHighlightModalOpen}
           onClose={() => setIsHighlightModalOpen(false)}
+          name={name}
         >
           <ul className="ul-highlight full-list">
             {highlights.map((item, index) => (
@@ -288,7 +289,6 @@ function PropertyHeaderHigh({ propertyData }) {
         popUpenable={popForm}
         onClickOff={onClickOff}
         text="to connect with Our Expert Team "
-  
         name={name}
         />
     </>
