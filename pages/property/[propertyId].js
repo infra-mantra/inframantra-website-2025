@@ -23,8 +23,7 @@ const PropertyDetail = ({ allData }) => {
   const rightRef = useRef(null);
   const containerRef = useRef(null);
   const [locoScroll, setLocoScroll] = useState(null);
-
-  const propertyData = allData.propertyData.data;
+  const [propertyData,setPropertyData] = useState(allData.propertyData.data)
 
   const [schemaInfo] = useState({
     lat: propertyData?.coordinates?.lat,
