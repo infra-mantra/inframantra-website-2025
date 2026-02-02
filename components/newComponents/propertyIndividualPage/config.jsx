@@ -51,7 +51,7 @@ function Config({ floorPlan = [], pdf, name }) {
 
   return (
     <div className="Config-wrapper">
-      <h2 className="Header">Signature Daxin Floor Plans & Pricing</h2>
+      <h2 className="Header">{name} Floor Plans & Pricing</h2>
 
       {/* ---------------- TABS ---------------- */}
       <ul className="near-location scrollbar-hide">
