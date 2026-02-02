@@ -1,11 +1,11 @@
-// PropertyPriceCard.jsx
+
 import React from "react";
 
 
-export default function PropertyPriceCard() {
+export default function PropertyPriceCard({propertyData}) {
   return (
     <div className="property-card-h">
-      <div className="price"> <span className="font-clr">₹ 3.15 Cr.</span></div>
+      <div className="price"> <span className="font-clr">{propertyData.startingPrice}</span></div>
 
       <ul className="details">
         <li>
@@ -14,7 +14,7 @@ export default function PropertyPriceCard() {
                       alt="Under Construction"
                       className="status-icon"
                     /></span>
-          <span>Under Construction</span>
+          <span>{propertyData.status}</span>
         </li>
         <li>
           <span className="icon"> <img
@@ -22,18 +22,21 @@ export default function PropertyPriceCard() {
                          alt="Under Construction"
                          className="status-icon"
                     /></span>
-          <span>Sector - 89A, Dwarka Expressway</span>
+          <span> {propertyData?.subLocality?.name} ,{" "}
+                          {propertyData.locality.name}</span>
         </li>
+
+       
     
   {[
     {
       Key: 'Configuration',
-      value: '1/2/3 BHK',
+      value: `${propertyData.configuration}`,
       image: '/propertyIndividualPage/icons/configration.png ',
     },
-    { Key: 'Area', value: '2180-3463 Sq.Ft', image: "/propertyIndividualPage/icons/area.png" },
-    { Key: 'Price', value: '₹13,500 Per Sq.Ft', image: "/propertyIndividualPage/icons/pricePerSqt.png"  },
-    { Key: 'Possession', value: 'Dec-2030',  image: "/propertyIndividualPage/icons/posseion.png"},
+    { Key: 'Area', value:  `${propertyData.area}`, image: "/propertyIndividualPage/icons/area.png" },
+    { Key: 'Price', value: `₹ ${propertyData.squarePrice}`, image: "/propertyIndividualPage/icons/pricePerSqt.png"  },
+    { Key: 'Possession', value: `${propertyData.possesion}`,  image: "/propertyIndividualPage/icons/posseion.png"},
   ].map(({ Key, value, image }, index) => (
    
         <li key={index}>

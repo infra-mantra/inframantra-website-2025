@@ -187,7 +187,7 @@ function PropertyHeaderHigh({ propertyData ,name}) {
               </div>
             </div>
             <div className="dis-none-desktop">
-              <Propertycard />
+              <Propertycard  propertyData={propertyData}/>
             </div>
              <section id="About Project">
             <div className="about-container">

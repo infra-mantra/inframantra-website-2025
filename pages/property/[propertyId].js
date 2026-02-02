@@ -41,10 +41,6 @@ useEffect(() => {
     name: propertyData.name,
   });
 
- 
-
- 
-
 
 
 
