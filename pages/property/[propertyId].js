@@ -75,7 +75,7 @@ useEffect(() => {
             </section>
 
             <section id="Plan & Pricing" >
-              <Config  floorPlan={propertyData.floorPlan} pdf={propertyData.brochure[0]} name={schemaInfo.name}/>
+              <Config  floorPlan={propertyData.floorPlan} pdf={propertyData.brochure[0]} name={propertyData.name}/>
             </section>
               <section >
               <PremiumProperty city={schemaInfo.city}/>

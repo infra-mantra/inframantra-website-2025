@@ -459,7 +459,8 @@ height: auto;
       width: 28%;
     }
     .expanded-search-bar {
-      min-width: 95%
+      min-width: 95%;
+      gap:0px
     }
     .search-input-inline{
       width: auto;

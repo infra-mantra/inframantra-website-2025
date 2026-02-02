@@ -5,7 +5,7 @@ import React from "react";
 export default function PropertyPriceCard({propertyData}) {
   return (
     <div className="property-card-h">
-      <div className="price"> <span className="font-clr">{propertyData.startingPrice}</span></div>
+      <div className="price"> <span className="font-clr">₹{" "}{propertyData.startingPrice}</span></div>
 
       <ul className="details">
         <li>

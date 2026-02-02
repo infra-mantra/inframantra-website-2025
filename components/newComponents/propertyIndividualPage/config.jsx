@@ -5,7 +5,7 @@ import PopUpForm from "../../detailSections/CTA_NEW";
 
 /* ---------------- PROPERTY CARD ---------------- */
 
-function PropertyCard({ item, onImageClick }) {
+function PropertyCard({ item, onImageClick , name }) {
   return (
     <div className="property-card">
       <img
@@ -36,7 +36,6 @@ function Config({ floorPlan = [], pdf, name }) {
 
   const pdfUrl = pdf;
 
-  // ✅ FIX: ensure default tab always works after refresh
   useEffect(() => {
     if (floorPlan.length) {
       setActiveTab(floorPlan[0].configuration);
@@ -72,6 +71,7 @@ function Config({ floorPlan = [], pdf, name }) {
           <PropertyCard
             key={index}
             item={item}
+            name={name}
             onImageClick={(img) => {
               setSelectedImage(img);
               setShowModal(true);
