@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import dynamic from "next/dynamic";
 
 const LeafletMap = dynamic(() => import("./map"), {
@@ -42,43 +42,41 @@ const ICON_MAP = {
 
 
 
-const LandMark = ({ propertyData ,propertyInfo }) => {
-  const [activeTab, setActiveTab] = useState(
-    propertyData?.localityGuide?.[0]?.title || ''
-  );
+const LandMark = ({ propertyData, propertyInfo, name }) => {
+  const [activeTab, setActiveTab] = useState('');
   const [activeLandmark, setActiveLandmark] = useState(null);
 
   const tabs = propertyData?.localityGuide || [];
- const PROPERTY_LOCATION = {
-    name: propertyInfo.name,
-    lat: propertyInfo.lat,
-    lng: propertyInfo.lon,
+
+  useEffect(() => {
+    if (tabs.length) {
+      setActiveTab(tabs[0].title);
+    }
+  }, [name]);
+
+  const rawData = tabs.find(({ title }) => title === activeTab);
+
+  const currentData = rawData
+    ? {
+        title: rawData.title,
+        items: rawData.guideList.map(({ name, distance, lat, lon }) => ({
+          name,
+          distance,
+          lat,
+          lng: lon,
+          hasLocation: lat != null && lon != null,
+          icon: ICON_MAP[rawData.title] || <FaMapMarkerAlt />,
+          type: rawData.title,
+        })),
+      }
+    : { title: "", items: [] };
+
+  const PROPERTY_LOCATION = {
+    name: propertyInfo?.name,
+    lat: propertyInfo?.lat,
+    lng: propertyInfo?.lon,
   };
 
-
- 
-  const rawData = tabs.find(({ title }) => title === activeTab);
-  
-
-
- const currentData = rawData
-  ? {
-      title: rawData.title,
-      items: rawData.guideList.map(({ name, distance, lat, lon }) => ({
-        name,
-        distance,
-        lat,
-        lng: lon,
-        hasLocation: lat != null && lon != null, 
-        icon: ICON_MAP[rawData.title] || <FaMapMarkerAlt />,
-        type: rawData.title,
-      })),
-    }
-  : { title: "", items: [] };
-
-  
-
- 
 
   return (
     <div className="pd">
@@ -121,7 +119,7 @@ const LandMark = ({ propertyData ,propertyInfo }) => {
               <thead>
                 <tr>
                   <th colSpan="2">
-                    <strong>{currentData.title} Near By {propertyInfo.name}</strong>
+                    <strong>{currentData.title} Nearby {propertyInfo.name}</strong>
                   </th>
                 </tr>
               </thead>

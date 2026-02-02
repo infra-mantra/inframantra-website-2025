@@ -2,7 +2,8 @@
 import React from "react";
 
 
-export default function PropertyPriceCard({propertyData}) {
+export default function PropertyPriceCard({propertyData,area}) {
+
   return (
     <div className="property-card-h">
       <div className="price"> <span className="font-clr">₹{" "}{propertyData.startingPrice}</span></div>
@@ -34,7 +35,7 @@ export default function PropertyPriceCard({propertyData}) {
       value: `${propertyData.configuration}`,
       image: '/propertyIndividualPage/icons/configration.png ',
     },
-    { Key: 'Area', value:  `${propertyData.area}`, image: "/propertyIndividualPage/icons/area.png" },
+    { Key: 'Area', value:  `${area}`, image: "/propertyIndividualPage/icons/area.png" },
     { Key: 'Price', value: `₹ ${propertyData.squarePrice}`, image: "/propertyIndividualPage/icons/pricePerSqt.png"  },
     { Key: 'Possession', value: `${propertyData.possesion}`,  image: "/propertyIndividualPage/icons/posseion.png"},
   ].map(({ Key, value, image }, index) => (
@@ -48,6 +49,7 @@ export default function PropertyPriceCard({propertyData}) {
         />
       </span>
       <span>{value}</span>
+      {/* <span>({Key})</span> */}
        </li>
     
   ))}     

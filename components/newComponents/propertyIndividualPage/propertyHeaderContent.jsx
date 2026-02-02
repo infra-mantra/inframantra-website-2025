@@ -17,6 +17,11 @@ function PropertyHeaderHigh({ propertyData ,name}) {
   const highlightRef = useRef(null);
   const leftRef = useRef(null);
 
+    let areaText = propertyData.area || "";
+      if (areaText && !/sq\.?\s*ft/i.test(areaText)) {
+        areaText = `${areaText} Sq.Ft.`;
+      }
+
   const highlights = propertyData.keyHighlights;
 
   const maxVisible = 5;
@@ -155,7 +160,7 @@ function PropertyHeaderHigh({ propertyData ,name}) {
                   },
                   {
                     Key: "Area",
-                    value: `${propertyData.area}`,
+                    value: `${areaText}`,
                     image: "/propertyIndividualPage/icons/area.png",
                   },
                   {
@@ -187,7 +192,7 @@ function PropertyHeaderHigh({ propertyData ,name}) {
               </div>
             </div>
             <div className="dis-none-desktop">
-              <Propertycard  propertyData={propertyData}/>
+              <Propertycard  propertyData={propertyData}  area={areaText}/>
             </div>
              <section id="About Project">
             <div className="about-container">

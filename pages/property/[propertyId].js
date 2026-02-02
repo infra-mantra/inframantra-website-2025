@@ -26,20 +26,21 @@ const PropertyDetail = ({ allData }) => {
 
 useEffect(() => {
   setPropertyData(allData.propertyData.data);
-}, [allData.propertyData.data]);
+}, [allData]);
 
-  const [schemaInfo] = useState({
-    lat: propertyData?.coordinates?.lat,
-    lon: propertyData?.coordinates?.lng,
-    loc: propertyData.locality?.name,
-    sub: propertyData.subLocality?.name,
-    url: router.asPath || null,
-    price: propertyData.priceInFigure,
-    city: propertyData.city?.name,
-    image: propertyData.imageGallery?.[0]?.url || null,
-    Galleryimages: propertyData.imageGallery,
-    name: propertyData.name,
-  });
+const schemaInfo = {
+  lat: propertyData?.coordinates?.lat,
+  lon: propertyData?.coordinates?.lng,
+  loc: propertyData?.locality?.name,
+  sub: propertyData?.subLocality?.name,
+  url: router.asPath || null,
+  price: propertyData?.priceInFigure,
+  city: propertyData?.city?.name,
+  image: propertyData?.imageGallery?.[0]?.url || null,
+  Galleryimages: propertyData?.imageGallery,
+  name: propertyData?.name,
+};
+
 
 
 
@@ -71,7 +72,7 @@ useEffect(() => {
             </section>
 
             <section id= "Locality" >
-              <LandMark propertyInfo={schemaInfo} propertyData={propertyData}/>
+              <LandMark propertyInfo={schemaInfo} propertyData={propertyData} name={propertyData.name} />
             </section>
 
             <section id="Plan & Pricing" >
