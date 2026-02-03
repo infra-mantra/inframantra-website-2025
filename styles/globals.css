@@ -204,6 +204,7 @@ ul.wp-block-list li {
   overflow: visible !important;
 }
 
+
 .property-right {
   width: 40%;
   position: sticky;  /* Needed for bottom stop */
@@ -652,6 +653,20 @@ text-transform: uppercase;
 
 .fullscreen-gallery .carousel .slider-wrapper {
   height: 100%;
+}
+
+@media (max-width:768px) {
+.image-gallery-thumbnail {
+  transition: 
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.image-gallery-thumbnail.active {
+  transform: scale(1);
+  border: 0px solid #c89b3c;
+}
 }
 
 /* Responsive - Stack on Mobile */
