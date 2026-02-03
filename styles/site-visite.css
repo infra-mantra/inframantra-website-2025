@@ -68,7 +68,7 @@ width: fit-content;;
 
   .site-visit-right{
            width: 286px;
-        height: 227px;
+        height: auto;
         right: -1%;
   }
    .site-visit-left{
@@ -96,6 +96,6 @@ text-align: left;
 }
 .site-visit-right img {
  
-  height: 212px;
+  height: auto;
 }
 }

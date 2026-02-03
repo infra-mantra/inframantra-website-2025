@@ -10,8 +10,8 @@ function Sitevisit({name}) {
       <div className="site-visit-inner">
         
         <div className="site-visit-left">
-          <h3>Want to Explore the locality more closely</h3>
-          <h2>Schedule a site visit with Experts Now!</h2>
+          <h3>Want to Explore the Locality More Closely ? </h3>
+          <h2>Schedule a Site Visit with Experts Now!</h2>
           <div className='cta-btn-w'>
         <div className="highlight-wrappers cta-w">
               <button

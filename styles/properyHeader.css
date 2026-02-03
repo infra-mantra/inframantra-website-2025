@@ -12,7 +12,8 @@
 .d-flex{
   display: flex;
     justify-content: flex-start;
-    align-items: center;
+    align-items: baseline;
+
 }
 
 .bell-pendulum {
