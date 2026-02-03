@@ -57,7 +57,7 @@ function PropertyHeaderHigh({ propertyData ,name}) {
         <div className="property-header-images">
           <img
             className="arrow-logo"
-            src="https://propertyindividual.inframantra.com/assests/arrowlogo.png"
+            src="/propertyIndividualPage/icons/arrowlogo.png"
             alt="Arrow Logo"
             onClick={() =>
               handleRedirect(
@@ -83,7 +83,7 @@ function PropertyHeaderHigh({ propertyData ,name}) {
               {/* Price Section */}
               <div className="price-section">
                 <img
-                  src="https://propertyindividual.inframantra.com/assests/tag.png"
+                  src="/propertyIndividualPage/icons/tag.png"
                   alt="Price Tag"
                   className="price-tag-icon"
                 />
@@ -101,7 +101,7 @@ function PropertyHeaderHigh({ propertyData ,name}) {
                 <div className="status-group">
                   <div className="status-item">
                     <img
-                      src="https://propertyindividual.inframantra.com/assests/construction.png"
+                      src="/propertyIndividualPage/icons/construction.png"
                       alt="Under Construction"
                       className="status-icon"
                     />

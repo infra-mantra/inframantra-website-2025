@@ -6,8 +6,7 @@ html, body {
   max-width: 100vw;
 }
 html.has-scroll-smooth {
-  /* overflow: hidden;  */
-  /* overflow-x: clip; */
+
 }
 
 

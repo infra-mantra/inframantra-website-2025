@@ -11,7 +11,7 @@ export default function PropertyPriceCard({propertyData,area}) {
       <ul className="details">
         <li>
           <span className="icon"> <img
-                      src="https://propertyindividual.inframantra.com/assests/construction.png"
+                      src="/propertyIndividualPage/icons/construction.png"
                       alt="Under Construction"
                       className="status-icon"
                     /></span>
@@ -35,9 +35,9 @@ export default function PropertyPriceCard({propertyData,area}) {
       value: `${propertyData.configuration}`,
       image: '/propertyIndividualPage/icons/configration.png ',
     },
-    { Key: 'Area', value:  `${area}`, image: "/propertyIndividualPage/icons/area.png" },
-    { Key: 'Price', value: `₹ ${propertyData.squarePrice}`, image: "/propertyIndividualPage/icons/pricePerSqt.png"  },
-    { Key: 'Possession', value: `${propertyData.possesion}`,  image: "/propertyIndividualPage/icons/posseion.png"},
+    { Key: '', value:  `${area}`, image: "/propertyIndividualPage/icons/area.png" },
+    { Key: '', value: `₹ ${propertyData.squarePrice}/Sq.Ft`, image: "/propertyIndividualPage/icons/pricePerSqt.png"  },
+    { Key: '', value: `Possession: ${propertyData.possesion}`,  image: "/propertyIndividualPage/icons/posseion.png"},
   ].map(({ Key, value, image }, index) => (
    
         <li key={index}>
@@ -49,7 +49,6 @@ export default function PropertyPriceCard({propertyData,area}) {
         />
       </span>
       <span>{value}</span>
-      {/* <span>({Key})</span> */}
        </li>
     
   ))}     

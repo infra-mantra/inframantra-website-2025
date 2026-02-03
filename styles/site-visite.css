@@ -98,4 +98,7 @@ text-align: left;
  
   height: auto;
 }
+.cta-w button{
+  padding: .5rem;
+}
 }
