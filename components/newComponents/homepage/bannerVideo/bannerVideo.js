@@ -1,76 +1,53 @@
-import React, { useState, useEffect } from 'react';
+
+import React, { useEffect, useState } from 'react';
+import ReactPlayer from 'react-player/youtube';
 import styles from './banner.module.css';
 
 const BannerVideo = () => {
-  const [width, setWidth] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    // set initial width on client
-    setWidth(window.innerWidth);
-
-    function handleWindowSizeChange() {
-      setWidth(window.innerWidth);
-    }
-
-    window.addEventListener('resize', handleWindowSizeChange);
-    return () => {
-      window.removeEventListener('resize', handleWindowSizeChange);
+    const checkScreen = () => {
+      setIsMobile(window.innerWidth <= 768);
     };
+
+    checkScreen();
+    window.addEventListener('resize', checkScreen);
+    return () => window.removeEventListener('resize', checkScreen);
   }, []);
 
-  const isMobile = width <= 768;
+  // 👇 Change videos here
+  const mobileVideo = 'https://www.youtube.com/shorts/PWqb2xN_a8g';
+  const desktopVideo = 'https://www.youtube.com/watch?v=X76cmns2pjc';
 
-  // Desktop images
-  const desktopImages = [
-    {
-      src: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/revampHomePage/satya-banner-web.webp',
-      alt: 'Satya Levante',
-      className: styles.slideImage1,
-    },
-    {
-      src: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/revampHomePage/tulip%20monsella.jpg',
-      alt: 'Tulip Monsella',
-      className: styles.slideImage2,
-    },
-    {
-      src: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/revampHomePage/vatika%20seven%20elements.jpg',
-      alt: 'Vatika Seven Elements',
-      className: styles.slideImage3,
-    },
-  ];
-
-  // Mobile images
-  const mobileImages = [
-    {
-      src: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/revampHomePage/mobile-banner.webp',
-      alt: 'Satya Levante Mobile',
-      className: styles.slideImage1,
-    },
-    {
-      src: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/mobilebanner/monsella.jpg',
-      alt: 'Tulip Monsella Mobile',
-      className: styles.slideImage2,
-    },
-    {
-      src: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/mobilebanner/seven%20elements.jpg',
-      alt: 'Vatika Seven Elements Mobile',
-      className: styles.slideImage3,
-    },
-  ];
-
-  const imagesToRender = isMobile ? mobileImages : desktopImages;
+  const videoUrl = isMobile ? mobileVideo : desktopVideo;
 
   return (
     <div className={styles.demoBanner}>
       <div className={styles.slideshow}>
-        {imagesToRender.map((img, index) => (
-          <img
-            key={index}
-            src={img.src}
-            alt={img.alt}
-            className={`${styles.slideImage} ${img.className}`}
-          />
-        ))}
+        <ReactPlayer
+          url={videoUrl}
+          playing
+          loop
+          controls={false}
+          width="100%"
+          height="100%"
+          playsinline
+          className={styles.bannerVideo}
+          config={{
+            youtube: {
+              playerVars: {
+                autoplay: 1,
+                controls: 0,
+                modestbranding: 1,
+                rel: 0,
+                iv_load_policy: 3,
+                disablekb: 1,
+                fs: 0,
+              },
+            },
+          }}
+        />
       </div>
     </div>
   );
