@@ -17,7 +17,7 @@ const BannerVideo = () => {
   }, []);
 
   // 👇 Change videos here
-  const mobileVideo = 'https://www.youtube.com/shorts/PWqb2xN_a8g';
+  const mobileVideo = 'https://youtube.com/shorts/PWqb2xN_a8g';
   const desktopVideo = 'https://www.youtube.com/watch?v=X76cmns2pjc';
 
   const videoUrl = isMobile ? mobileVideo : desktopVideo;
@@ -29,6 +29,7 @@ const BannerVideo = () => {
           url={videoUrl}
           playing
           loop
+          
           controls={false}
           width="100%"
           height="100%"
@@ -38,6 +39,7 @@ const BannerVideo = () => {
             youtube: {
               playerVars: {
                 autoplay: 1,
+                mute: 1,
                 controls: 0,
                 modestbranding: 1,
                 rel: 0,
