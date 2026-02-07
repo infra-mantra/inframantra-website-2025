@@ -1,21 +1,28 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /** @type {import('next').NextConfig} */
 
-const path         = require('path');
-const loaderUtils  = require('loader-utils');
-const { redirects }  = require('./utils/redirectUrl')
+const path = require('path');
+const loaderUtils = require('loader-utils');
+const { redirects } = require('./utils/redirectUrl');
+const runtimeCaching = require('./pwa/runtimeCaching');
 
-//
-// ──────────────────────────────────────────────────────────────────
-// 1.  CUSTOM CLASS-NAME GENERATOR (no hashes, or short hashes)
-// ──────────────────────────────────────────────────────────────────
-//   If you want *zero* hashes everywhere, set WANT_HASH = false.        ↓
-const WANT_HASH = false;      // ← tweak here
+const withPWA = require('next-pwa')({
+  dest: 'public',
+  runtimeCaching,
+  register: true,
+  skipWaiting: true,
+  disable: process.env.NODE_ENV === 'development',
+});
+
+/* ───────────────────────────────────────────────────────────── */
+/*  CUSTOM CLASS NAME GENERATOR                                   */
+/* ───────────────────────────────────────────────────────────── */
+
+const WANT_HASH = false;
 
 const customGetLocalIdent = (context, _, exportName) => {
-  if (!WANT_HASH) return exportName;           // → .btn, .header etc.
+  if (!WANT_HASH) return exportName;
 
-  // Otherwise keep a *tiny* hash for uniqueness:
   return (
     exportName +
     '__' +
@@ -37,89 +44,72 @@ const customGetLocalIdent = (context, _, exportName) => {
   );
 };
 
-//
-// ──────────────────────────────────────────────────────────────────
-// 2.  NEXT-JS CONFIG
-// ──────────────────────────────────────────────────────────────────
+/* ───────────────────────────────────────────────────────────── */
+/*  NEXT CONFIG                                                   */
+/* ───────────────────────────────────────────────────────────── */
+
 const nextConfig = {
-  reactStrictMode : true,
-  swcMinify       : true,
+  reactStrictMode: true,
+  swcMinify: true,
 
-  /* ------  Images  ------ */
-images: {
-  deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-  minimumCacheTTL: 63072000, // 2 years in seconds
-  domains: [
-    'infra-mantra.s3.ap-south-1.amazonaws.com',
-    'i.ytimg.com',
-    'infra-mantra.s3.amazonaws.com',
-    'infra-mantra-new.s3.ap-south-1.amazonaws.com',
-    'infra-mantra-new.s3.amazonaws.com',
-    'inframantra.blr1.cdn.digitaloceanspaces.com',
-    'cms.inframantra.com'
-  ],
-},
-
-  /* ------  Env  ------ */
-  env : {
-    apiUrl                          : 'https://api.inframantra.com/api',
-    apiUrl1                         : 'https://apitest.inframantra.com/api/v1',
-    NEXT_PUBLIC_GOOGLE_MAPS_API_KEY : 'AIzaSyDh6uhpwkkniyiztlDDWEHO7Ph_sBxuJFw',
+  images: {
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    minimumCacheTTL: 63072000,
+    domains: [
+      'infra-mantra.s3.ap-south-1.amazonaws.com',
+      'i.ytimg.com',
+      'infra-mantra.s3.amazonaws.com',
+      'infra-mantra-new.s3.ap-south-1.amazonaws.com',
+      'infra-mantra-new.s3.amazonaws.com',
+      'inframantra.blr1.cdn.digitaloceanspaces.com',
+      'cms.inframantra.com',
+    ],
   },
 
-  /* ------  i18n  ------ */
-  i18n : {
-    locales       : ['en'],
-    defaultLocale : 'en',
+  env: {
+    apiUrl: 'https://api.inframantra.com/api',
+    apiUrl1: 'https://apitest.inframantra.com/api/v1',
+    NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: 'AIzaSyDh6uhpwkkniyiztlDDWEHO7Ph_sBxuJFw',
   },
 
-  /* ------  Redirects  ------ */
- async redirects() {
+  i18n: {
+    locales: ['en'],
+    defaultLocale: 'en',
+  },
+
+  async redirects() {
     return redirects;
   },
 
-  /* ------  ESLint  ------ */
-  eslint : { ignoreDuringBuilds : true },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 
-  /* ------  Headers / Rewrites  ------ */
-  async headers () {
+  async headers() {
     return [
       {
-        source  : '/api/:path*',
-        headers : [{ key : 'x-edge-runtime', value : 'true' }],
+        source: '/api/:path*',
+        headers: [{ key: 'x-edge-runtime', value: 'true' }],
       },
     ];
   },
-  async rewrites () {
-    return [
-      { source : '/sitemap.xml', destination : '/sitemap.xml' },
-    ];
+
+  async rewrites() {
+    return [{ source: '/sitemap.xml', destination: '/sitemap.xml' }];
   },
 
-  //
-  // ──────────────────────────────────────────────────────────────
-  // 3.  WEBPACK OVERRIDE – patch css-loader
-  // ──────────────────────────────────────────────────────────────
-  webpack (config) {
-    const cssModuleRules =
-      config.module.rules
-        .find((rule) => Array.isArray(rule.oneOf))
-        .oneOf
-        .filter((rule) => Array.isArray(rule.use));
+  webpack(config) {
+    const cssModuleRules = config.module.rules
+      .find((rule) => Array.isArray(rule.oneOf))
+      .oneOf.filter((rule) => Array.isArray(rule.use));
 
     cssModuleRules.forEach((rule) => {
       rule.use.forEach((loader) => {
-        if (
-          loader.loader?.includes('css-loader') &&
-          loader.options?.modules
-        ) {
-          // ⚠️ Important: Next already sets modules.* – we extend it.
+        if (loader.loader?.includes('css-loader') && loader.options?.modules) {
           loader.options.modules = {
             ...loader.options.modules,
-            getLocalIdent : customGetLocalIdent,
-            // localIdentName is ignored when getLocalIdent is supplied,
-            // but leaving it doesn’t hurt:
-            localIdentName : '[local]',
+            getLocalIdent: customGetLocalIdent,
+            localIdentName: '[local]',
           };
         }
       });
@@ -129,4 +119,4 @@ images: {
   },
 };
 
-module.exports = nextConfig;
+module.exports = withPWA(nextConfig);

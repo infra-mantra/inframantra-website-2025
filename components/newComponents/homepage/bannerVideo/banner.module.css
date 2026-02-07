@@ -3,7 +3,7 @@
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100%;
+  height: 100vh;
   overflow: hidden;
   z-index: -1;
 }
@@ -15,6 +15,19 @@
   overflow: hidden;
   position: relative;
 }
+.demoBannerWrapper video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.demoBannerWrapper {
+  width: 100% !important;
+  height: auto !important; /* let height adjust automatically */
+
+  overflow: hidden;
+}
+
 
 /* Common styles for images */
 .slideImage {
@@ -49,4 +62,12 @@
   30%  { opacity: 1; }
   40%  { opacity: 0; }
   100% { opacity: 0; }
+}
+
+@media screen and (max-width:760px) {
+  .demoBannerWrapper + div {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 }
