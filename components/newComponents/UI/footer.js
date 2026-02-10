@@ -113,14 +113,10 @@ function Footer() {
               {loading  && openDropDown ==1 &&  <div className={styles.spinner}></div>}
                 {openDropDown === 1 && (
                   <div className={styles.footerThirdSectionDropdownLinkWrapper}>
-                    <p><Link  legacyBehavior={true} href='/property/vatika-sovereign-park-sector-99-gurgaon'>Vatika Sovereign Park</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/vatika-seven-elements-sector-89a-gurgaon'>Vatika Seven Elements</Link></p>
-                     <p><Link  legacyBehavior={true} href='/property/tulip-crimson-sector-70-gurgaon'>Tulip Crimson</Link></p>
-                    <p><Link  legacyBehavior={true} href="/property/tulip-monsella-sector-53-gurgaon">Tulip Monsella</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/4s-the-aurrum-sector-59-gurgaon'>4S The Aurrum</Link></p>  
-                    <p><Link  legacyBehavior={true} href='/property/whiteland-the-aspen-sector-76-gurgaon'>Whiteland The Aspen</Link></p>  
-                    <p><Link  legacyBehavior={true} href='/property/dlf-privana-south-sector-77-gurgaon'>Dlf Privana South</Link></p>
-                    <p><Link  legacyBehavior={true} href='/tarc-ishva-sector-63a-gurgaon'>Tarc Ishva</Link></p>
+                     <p><Link  legacyBehavior={true} href='/property/satya-levante-residences-sector-104-gurgaon'>Satya Levante Residences</Link></p>
+                      <p><Link  legacyBehavior={true} href='/property/tulip-melrose-sector-70-gurgaon'>Tulip Melrose</Link></p>
+                    <p><Link  legacyBehavior={true} href='/property/m3m-forestia-west-sector-9-manesar-gurgaon'>M3M Forestia West</Link></p>
+
                   </div>
                 )}
               </div>
@@ -172,12 +168,13 @@ function Footer() {
                 {loading  && openDropDown ==4 &&  <div className={styles.spinner}></div>}
                 {openDropDown === 4 && (
                   <div className={styles.footerThirdSectionDropdownLinkWrapper}>
-                    <p><Link  legacyBehavior={true} href='/property/signature-global-cloverdale-sector-71-gurgaon'>Signature Global Cloverdale</Link></p>
-                     <p><Link  legacyBehavior={true} href='/property/dlf-privana-north-sector-76-gurgaon'>Dlf Privana North</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/experion-the-trillion-sector-48-gurgaon'>Experion The Trillion</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/shapoorji-pallonji-the-daulis-sector-46-gurgaon'>Shapoorji Pallonji The Dualis</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/bptp-amstoria-verti-greens-sector-102-gurgaon'>BPTP Amstoria Verti Greens</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/whiteland-the-aspen-sector-76-gurgaon'>Whiteland The Aspen</Link></p>
+                   <p><Link  legacyBehavior={true} href='/property/satya-levante-residences-sector-104-gurgaon'>Satya Levante Residences</Link></p>
+                     <p><Link  legacyBehavior={true} href="/property/ambience-creacions-sector-22-gurugram">Ambience Creacions</Link></p>
+                  <p><Link  legacyBehavior={true} href='/property/tulip-melrose-sector-70-gurgaon'>Tulip Melrose</Link></p>
+                      <p><Link  legacyBehavior={true} href='/property/saan-verdante-sector-95-gurgaon'>Saan Verdante</Link></p>
+                    <p><Link  legacyBehavior={true} href='/property/whiteland-the-westin-residences-sector-103-gurugram'>Whiteland The Westin Residences</Link></p> 
+                   <p><Link  legacyBehavior={true} href='/property/whiteland-the-aspen-sector-76-gurgaon'>Whiteland The Aspen</Link></p>
+                  
                   </div>
                 )}
               </div>
@@ -191,10 +188,12 @@ function Footer() {
                 {loading  && openDropDown ==5 &&  <div className={styles.spinner}></div>}
                 {openDropDown === 5 && (
                   <div className={styles.footerThirdSectionDropdownLinkWrapper}>
-                    <p><Link  legacyBehavior={true} href='/property/vatika-seven-elements-sector-89a-gurgaon'>Vatika Seven Elements</Link></p>
-                     <p><Link  legacyBehavior={true} href='/property/4s-the-aurrum-sector-59-gurgaon'>4S The Aurrum</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/tulip-crimson-sector-70-gurgaon'>Tulip Crimson</Link></p>
+                     <p><Link  legacyBehavior={true} href='/property/satya-levante-residences-sector-104-gurgaon'>Satya Levante Residences</Link></p>
                      <p><Link  legacyBehavior={true} href='/property/tulip-monsella-sector-53-gurgaon'>Tulip Monsella</Link></p>
+                       <p><Link  legacyBehavior={true} href='/property/tulip-melrose-sector-70-gurgaon'>Tulip Melrose</Link></p>
+                    <p><Link  legacyBehavior={true} href='/property/tulip-crimson-sector-70-gurgaon'>Tulip Crimson</Link></p>
+                    <p><Link  legacyBehavior={true} href='/property/vatika-seven-elements-sector-89a-gurgaon'>Vatika Seven Elements</Link></p>
+
 
                   </div>  
                 )}
@@ -227,14 +226,10 @@ function Footer() {
                 {loading  && openDropDown ==1 &&  <div className={styles.spinner}></div>}
                 {openDropDown === 1 && (
                   <div className={styles.footerThirdSectionDropdownLinkWrapper}>
-                       <p><Link  legacyBehavior={true} href='/property/vatika-sovereign-park-sector-99-gurgaon'>Vatika Sovereign Park</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/vatika-seven-elements-sector-89a-gurgaon'>Vatika Seven Elements</Link></p>
-                     <p><Link  legacyBehavior={true} href='/property/tulip-crimson-sector-70-gurgaon'>Tulip Crimson</Link></p>
-                    <p><Link  legacyBehavior={true} href="/property/tulip-monsella-sector-53-gurgaon">Tulip Monsella</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/4s-the-aurrum-sector-59-gurgaon'>4S The Aurrum</Link></p>  
-                    <p><Link  legacyBehavior={true} href='/property/whiteland-the-aspen-sector-76-gurgaon'>Whiteland The Aspen</Link></p>  
-                    <p><Link  legacyBehavior={true} href='/property/dlf-privana-south-sector-77-gurgaon'>Dlf Privana South</Link></p>
-                    <p><Link  legacyBehavior={true} href='/tarc-ishva-sector-63a-gurgaon'>Tarc Ishva</Link></p>
+                 <p><Link  legacyBehavior={true} href='/property/satya-levante-residences-sector-104-gurgaon'>Satya Levante Residences</Link></p>
+                      <p><Link  legacyBehavior={true} href='/property/tulip-melrose-sector-70-gurgaon'>Tulip Melrose</Link></p>
+                    <p><Link  legacyBehavior={true} href='/property/m3m-forestia-west-sector-9-manesar-gurgaon'>M3M Forestia West</Link></p>
+
                   </div>
                 )}
               </div>
@@ -287,12 +282,12 @@ function Footer() {
                 {loading  && openDropDown ==4 &&  <div className={styles.spinner}></div>}
                 {openDropDown === 4 && (
                   <div className={styles.footerThirdSectionDropdownLinkWrapper}>
-                     <p><Link  legacyBehavior={true} href='/property/signature-global-cloverdale-sector-71-gurgaon'>Signature Global Cloverdale</Link></p>
-                     <p><Link  legacyBehavior={true} href='/property/dlf-privana-north-sector-76-gurgaon'>Dlf Privana North</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/experion-the-trillion-sector-48-gurgaon'>Experion The Trillion</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/shapoorji-pallonji-the-daulis-sector-46-gurgaon'>Shapoorji Pallonji The Dualis</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/bptp-amstoria-verti-greens-sector-102-gurgaon'>BPTP Amstoria Verti Greens</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/whiteland-the-aspen-sector-76-gurgaon'>Whiteland The Aspen</Link></p>
+                      <p><Link  legacyBehavior={true} href='/property/satya-levante-residences-sector-104-gurgaon'>Satya Levante Residences</Link></p>
+                     <p><Link  legacyBehavior={true} href="/property/ambience-creacions-sector-22-gurugram">Ambience Creacions</Link></p>
+                      <p><Link  legacyBehavior={true} href='/property/saan-verdante-sector-95-gurgaon'>Saan Verdante</Link></p>
+                   <p><Link  legacyBehavior={true} href='/property/whiteland-the-aspen-sector-76-gurgaon'>Whiteland The Aspen</Link></p>
+                  <p><Link  legacyBehavior={true} href='/property/tulip-melrose-sector-70-gurgaon'>Tulip Melrose</Link></p>
+
                   </div>
                 )}
               </div>
@@ -306,10 +301,11 @@ function Footer() {
                 {loading  && openDropDown ==5 &&  <div className={styles.spinner}></div>}
                 {openDropDown === 5 && (
                   <div className={styles.footerThirdSectionDropdownLinkWrapper}>
-                    <p><Link  legacyBehavior={true} href='/property/vatika-seven-elements-sector-89a-gurgaon'>Vatika Seven Elements</Link></p>
-                     <p><Link  legacyBehavior={true} href='/property/4s-the-aurrum-sector-59-gurgaon'>4S The Aurrum</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/tulip-crimson-sector-70-gurgaon'>Tulip Crimson</Link></p>
+                    <p><Link  legacyBehavior={true} href='/property/satya-levante-residences-sector-104-gurgaon'>Satya Levante Residences</Link></p>
                      <p><Link  legacyBehavior={true} href='/property/tulip-monsella-sector-53-gurgaon'>Tulip Monsella</Link></p>
+                       <p><Link  legacyBehavior={true} href='/property/tulip-melrose-sector-70-gurgaon'>Tulip Melrose</Link></p>
+                    <p><Link  legacyBehavior={true} href='/property/tulip-crimson-sector-70-gurgaon'>Tulip Crimson</Link></p>
+                    <p><Link  legacyBehavior={true} href='/property/vatika-seven-elements-sector-89a-gurgaon'>Vatika Seven Elements</Link></p>
 
                   </div>
                 )}
@@ -323,24 +319,24 @@ function Footer() {
             <>
               <div className={styles.footerForthSectionIconWrapper}>
                 <SocialIcon url="https://www.facebook.com/inframantraofficial" style={{ height: '40px', width: '40px' }} />
-                <SocialIcon url="https://x.com/INFRAMANTRA_" style={{ height: '40px', width: '40px' }} />
+                {/* <SocialIcon url="https://x.com/INFRAMANTRA_" style={{ height: '40px', width: '40px' }} /> */}
                 <SocialIcon url="https://www.instagram.com/inframantraofficial/" style={{ height: '40px', width: '40px' }} />
               </div>
               <div className={styles.footerForthSectionIconWrapper}>
                 <SocialIcon url="https://www.youtube.com/@inframantraofficial" style={{ height: '40px', width: '40px' }} />
                 <SocialIcon url="https://in.linkedin.com/company/inframantra" style={{ height: '40px', width: '40px' }} />
-                <SocialIcon url="https://in.pinterest.com/inframantraofficial/" style={{ height: '40px', width: '40px' }} />
+                {/* <SocialIcon url="https://in.pinterest.com/inframantraofficial/" style={{ height: '40px', width: '40px' }} /> */}
               </div>
             </>
           )}
           {!isDesktop && (
             <div className={styles.footerForthSectionIconWrapper}>
               <SocialIcon url="https://www.facebook.com/inframantraofficial" style={{ height: '40px', width: '40px' }} />
-              <SocialIcon url="https://x.com/INFRAMANTRA_" style={{ height: '40px', width: '40px' , backdropFilter: "#FFF"}} />
+              {/* <SocialIcon url="https://x.com/INFRAMANTRA_" style={{ height: '40px', width: '40px' , backdropFilter: "#FFF"}} /> */}
               <SocialIcon url="https://www.instagram.com/inframantraofficial/" style={{ height: '40px', width: '40px' }} />
               <SocialIcon url="https://www.youtube.com/@inframantraofficial" style={{ height: '40px', width: '40px' }} />
               <SocialIcon url="https://in.linkedin.com/company/inframantra" style={{ height: '40px', width: '40px' }} />
-              <SocialIcon url="https://in.pinterest.com/inframantraofficial/" style={{ height: '40px', width: '40px' }} />
+              {/* <SocialIcon url="https://in.pinterest.com/inframantraofficial/" style={{ height: '40px', width: '40px' }} /> */}
             </div>
           )}
         </div>

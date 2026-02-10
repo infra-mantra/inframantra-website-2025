@@ -1,18 +1,72 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
+import { useRouter } from "next/router";
 import Wrapper from "../../components/UI/Wrapper";
 import PageHeader from '../../components/UI/PageHeaderNews';
 import BlogContentNews from "../../components/blogsSections/BlogContentNews";
 import moment from 'moment';
+
+
 import style from './news.module.css';
+
 
 const BlogDetail = ({ allData }) => {
   const data = {
-    title: allData.detail.title,
+    title: allData?.detail?.title,
     ...(allData.detail.image && { image: allData.detail.image }),
     date: allData.detail.date
   };
+  
+    const router = useRouter();
+     const{detail} = allData || {};
+const { id, blogType, slug } = detail || {};
+
+
+const [redirecting, setRedirecting] = useState(false);
+
+
+useEffect(() => {
+  if (!detail) return;
+  let destination = null;
+  if (blogType) {
+    if (blogType === "Blogs") {
+      destination = `/blog/${slug}`;
+    } else if (blogType === "Infra Times") {
+      destination = `/pr/${slug}`;
+    } else if (blogType === "article") {
+      destination = `/blog/${slug}`; 
+    }
+  }
+  if (!destination && id) {
+    const categoryId = Number(id);
+
+    if (categoryId === 5) {
+      destination = null;
+    } else if (categoryId === 12) {
+      destination = `/pr/${slug}`;
+    } else if (categoryId === 3 || categoryId === 4) {
+      destination = `/blog/${slug}`; 
+    } 
+  
+  }
+  if (destination) {
+    setRedirecting(true);
+    setTimeout(() => {
+      router.replace(destination);
+    }, 100);
+  }
+
+}, [id, blogType, slug, detail, router]);
+
+if(redirecting){
+  return ( <div style={{ padding: '2rem', textAlign: 'center' }}>
+          <div className="loader-container">
+            <div className="spinner" />
+          </div>
+        </div>)
+}
 
   return (
+    !redirecting && (
     <Wrapper
       title={allData.detail.metaTitle}
       description={allData.detail.metaDescription}
@@ -28,6 +82,7 @@ const BlogDetail = ({ allData }) => {
         date={data.date}
       />
     </Wrapper>
+    )
   );
 };
 
@@ -53,6 +108,7 @@ export async function getStaticProps({ params }) {
     const res = await fetch(`${process.env.apiUrl}/blog/pageDetail?slug=${slug}`);
     const data = await res.json();
     const d = data?.result?.detail?.[0];
+  
 
     if (d) {
       detail = {
@@ -63,7 +119,10 @@ export async function getStaticProps({ params }) {
         metaKeyword: d.metaKeyword,
         ...(d.file && { image: d.file.path }),
         date: moment(d.createdAt).format("DD/MM/YYYY"),
-        name: d.writer_name
+        name: d.writer_name,
+        blogType: d.blogType?.name,
+        slug: d?.slug
+
       };
 
       relatedDataArray = (data.result.reletedBlogs || []).map((e) => ({
@@ -85,6 +144,13 @@ export async function getStaticProps({ params }) {
       ).then((r) => r.json());
 
       const post = wp?.[0];
+
+     
+
+
+
+
+
       if (post) {
         const media = post._embedded?.["wp:featuredmedia"]?.[0] || {};
         const yoast = post.yoast_head_json || {};
@@ -99,7 +165,9 @@ export async function getStaticProps({ params }) {
           metaKeyword: post.meta?._yoast_wpseo_focuskw || "",
           image,
           date: moment(post.date).format("DD/MM/YYYY"),
-          name: post._embedded?.author?.[0]?.name || ""
+          name: post._embedded?.author?.[0]?.name || "",
+          id:wp[0].categories[0],
+          slug: post.slug,
         };
       }
     } catch (err) {
@@ -178,7 +246,7 @@ export async function getStaticProps({ params }) {
   if (!detail) {
      return {
     props: {
-      allData: null, // <-- no poisoning with notFound:true
+      allData: null, 
     },
     revalidate: 30,
   };

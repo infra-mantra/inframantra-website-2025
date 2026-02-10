@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React,{useEffect,useState} from 'react';
+import { useRouter } from "next/router";
 import Wrapper from '../../components/UI/Wrapper';
 import Share from '../share';
 import moment from 'moment';
@@ -9,10 +10,57 @@ import styles from './media.module.css';
 function News({ allData }) {
   const [searchTerm, setSearchTerm] = useState('');
   const isDesktop = useMediaQuery(768);
+  
+  const {detail} = allData || {};
+
+
+    const router = useRouter();
+const { blogType= null } = detail || {};
+
+
+
+const [redirecting, setRedirecting] = useState(false);
+
+
+useEffect(() => {
+ 
+  let destination = null;
+  if (!blogType){
+    if (blogType !="PressRelease") {
+      destination = `/blog`;
+   
+  }else{
+    destination = null;
+  }
+}
+ 
+  
+  
+  if (destination) {
+    setRedirecting(true);
+    setTimeout(() => {
+      router.replace(destination);
+    }, 100);
+  }
+
+}, [blogType, detail, router]);
+
+if(redirecting){
+  return ( <div style={{ padding: '2rem', textAlign: 'center' }}>
+          <div className="loader-container">
+            <div className="spinner" />
+          </div>
+        </div>)
+}
+
+
 
   const filteredPosts = allData?.recent?.filter((post) =>
     post.title.toLowerCase().includes(searchTerm.toLowerCase())
   ) || [];
+
+
+
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -179,6 +227,8 @@ export async function getStaticProps({ params }) {
   const cmsData = await cmsRes.json();
   const cmsPost = cmsData?.result?.detail?.[0];
 
+  console.log("CMS news detail fetch:", { slug, cmsPost });
+
   if (cmsPost) {
     const detail = {
       title: cmsPost.name || '',
@@ -189,6 +239,7 @@ export async function getStaticProps({ params }) {
       image: cmsPost.file?.path || '',
       date: moment(cmsPost.createdAt).format('DD/MM/YYYY'),
       name: cmsPost.writer_name || '',
+      blogType: cmsPost.blogType?.name || '',
     };
 
     const related = (cmsData?.result?.reletedBlogs || []).map((e) => ({
@@ -215,9 +266,10 @@ export async function getStaticProps({ params }) {
   // Fallback to WordPress
   try {
     const wpSingleRes = await fetch(`https://cms.inframantra.com/wp-json/wp/v2/posts?slug=${slug}&_embed`);
-    const wpPost = (await wpSingleRes.json())?.[0];
+    const wpPost = (await wpSingleRes.json())?.[0]  
+    console.log("WP news detail fetch:", { slug, wpPost });
     if (!wpPost) return { notFound: true };
-const focusKeyword = wpPost.meta?._yoast_wpseo_focuskw || "";
+           const focusKeyword = wpPost.meta?._yoast_wpseo_focuskw || "";
     const detail = {
       title: wpPost.title.rendered,
       description: wpPost.content.rendered,
@@ -227,6 +279,7 @@ const focusKeyword = wpPost.meta?._yoast_wpseo_focuskw || "";
       image: '',
       date: moment(wpPost.date).format('DD/MM/YYYY'),
       name: wpPost._embedded?.author?.[0]?.name || '',
+      id : wpPost.categories[0]
     };
 
     return {

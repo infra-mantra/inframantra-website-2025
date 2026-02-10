@@ -16,8 +16,19 @@ function BlogsMedia(props) {
   const { data } = useSWR(
     "https://cms.inframantra.com/wp-json/wp/v2/posts?_embed&per_page=10",
     fetcher,
-    { refreshInterval: 60000 } // re-fetch every 60s
+    { refreshInterval: 60000 }
   );
+const getPostUrl = (post) => {
+  const categories = post?.categories || [];
+  const categoryId = Number(categories[0]); // WP gives array of IDs
+
+  if (categoryId === 5) return `/news/${post.slug}`;
+  if (categoryId === 12) return `/pr/${post.slug}`;
+  if (categoryId === 3 || categoryId === 4) return `/blog/${post.slug}`;
+
+  return `/blog/${post.slug}`;
+};
+
 
   return (
     <div className={style.blogsMediaSectionWrapper}>
@@ -37,7 +48,7 @@ function BlogsMedia(props) {
         >
           {data.map((post) => (
             <SwiperSlide key={post.id}>
-              <a href={`/blog/${post.slug}`}>
+              <a href={getPostUrl(post)}>
                 <div className={style.blogPostCard}>
                   <Image
                     src={

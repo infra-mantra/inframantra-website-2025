@@ -1,5 +1,8 @@
-import React from "react";
+import React ,{useState,useEffect}from "react";
 import moment from "moment";
+
+import { useRouter } from "next/router";
+
 
 import Wrapper from "../../components/UI/Wrapper";
 import PageHeader from "../../components/UI/blogPageHeader";
@@ -7,8 +10,60 @@ import BlogContent from "../../components/blogsSections/BlogContent";
 import BlogsGrid from "../../components/UI/BlogGridIndividual";
 
 const BlogDetail = ({ allData }) => {
-  const { detail, recent, related, source } = allData;
-  if (!detail) return <p>Something went wrong loading this post.</p>;
+  const { detail, recent, related, source   } = allData;
+  const router = useRouter();
+
+ const { id, blogType, slug } = detail || {};
+
+
+const [redirecting, setRedirecting] = useState(false);
+
+useEffect(() => {
+  if (!detail) return;
+
+  let destination = null;
+
+ 
+  if (blogType) {
+    if (blogType === "News") {
+      destination = `/news/${slug}`;
+    } else if (blogType === "Infra Times") {
+      destination = `/pr/${slug}`;
+    } else if (blogType === "Blogs") {
+      destination = null; 
+    }
+  }
+
+  if (!destination && id) {
+    const categoryId = Number(id);
+
+    if (categoryId === 5) {
+      destination = `/news/${slug}`;
+    } else if (categoryId === 12) {
+      destination = `/pr/${slug}`;
+    } else if (categoryId === 3 || categoryId === 4) {
+      destination = null; 
+    } 
+  }
+
+
+  if (destination) {
+    setRedirecting(true);
+    setTimeout(() => {
+      router.replace(destination);
+    }, 100);
+  }
+
+}, [id, blogType, slug, detail, router]);
+
+if(redirecting){
+  return ( <div style={{ padding: '2rem', textAlign: 'center' }}>
+          <div className="loader-container">
+            <div className="spinner" />
+          </div>
+        </div>)
+}
+
 
   const headerData = {
     title: detail.title,
@@ -18,8 +73,8 @@ const BlogDetail = ({ allData }) => {
     imageAlt: detail.imageAlt || "Blog Image",
   };
 
-  return (
-    <Wrapper
+  return (!redirecting &&(
+        <Wrapper
       title={detail.metaTitle || headerData.title}
       description={detail.metaDescription || ""}
       image={headerData.image}
@@ -35,6 +90,7 @@ const BlogDetail = ({ allData }) => {
       />
       <BlogsGrid blogs={recent} section_title="Latest Blogs" button="hide" />
     </Wrapper>
+  )
   );
 };
 
@@ -68,8 +124,10 @@ export async function getStaticProps({ params }) {
   // ---------------- CMS Fetch ----------------
   try {
     const res = await fetch(`${process.env.apiUrl}/blog/pageDetail?slug=${slug}`);
+
     const cms = await res.json();
     const d = cms?.result?.detail?.[0];
+    
     if (d) {
       const detail = {
         title: d.name,
@@ -82,6 +140,8 @@ export async function getStaticProps({ params }) {
         imageAlt: d.imageAlt || "Blog Image",
         date: moment(d.createdAt).format("DD MMM YYYY"),
         name: d.writer_name,
+        blogType: d.blogType?.name,
+        slug: d.slug
       };
 
       const related = cms.result.reletedBlogs?.map(b => ({
@@ -98,6 +158,9 @@ export async function getStaticProps({ params }) {
 
       const cmsRecentArr = (await cmsListRes.json()).result?.latestBlogList || [];
       const wpRecentArr = await wpListRes.json();
+
+
+ 
 
       const cmsRecents = cmsRecentArr.map(e => ({
         id: e._id,
@@ -143,9 +206,32 @@ export async function getStaticProps({ params }) {
   try {
     const wpArr = await fetch(`https://cms.inframantra.com/wp-json/wp/v2/posts?slug=${slug}&_embed`).then(r => r.json());
     const post = Array.isArray(wpArr) && wpArr[0];
+
+    const id = wpArr[0].categories[0]
+
+
+//     [
+//   { id: 4, name: "Article", slug: "article" },
+//   { id: 3, name: "Blog", slug: "blogs" },
+//   { id: 5, name: "News", slug: "news" },
+//   { id: 12, name: "PR Media", slug: "pr-media" },
+//   { id: 1, name: "Uncategorized", slug: "uncategorized" }
+// ]
+// if (id && ( id!=3 || id!=4)) {
+//  return {
+//   redirect: {
+//     destination: "/blog",
+//     permanent: false,
+//   },
+// };
+// }
+
+    
     if (post) {
       const media = post._embedded?.["wp:featuredmedia"]?.[0] || {};
       const yoast = post.yoast_head_json || {};
+
+     
 
       const detail = {
         title: post.title?.rendered?.replace(/<[^>]*>/g, ""),
@@ -160,6 +246,8 @@ export async function getStaticProps({ params }) {
         imageAlt: media.alt_text || "",
         date: moment(post.date).format("DD MMM YYYY"),
         name: post._embedded?.author?.[0]?.name || "",
+        id:wpArr[0].categories[0],
+        slug: post.slug,
       };
 
       const [cmsListRes, wpListRes] = await Promise.all([
