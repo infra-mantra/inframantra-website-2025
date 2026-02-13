@@ -8,12 +8,20 @@ import Wrapper from "../../components/UI/Wrapper";
 import PageHeader from "../../components/UI/blogPageHeader";
 import BlogContent from "../../components/blogsSections/BlogContent";
 import BlogsGrid from "../../components/UI/BlogGridIndividual";
+import HomePageCta from "../../components/detailSections/singlePropertyCta";
 
 const BlogDetail = ({ allData }) => {
   const { detail, recent, related, source   } = allData;
   const router = useRouter();
 
  const { id, blogType, slug } = detail || {};
+
+  const [popForm,setPopForm] = useState(false)
+   const toggleFAQ = (index) => {
+     setActiveIndex(activeIndex === index ? null : index);
+   };
+     const onClickOff = (val) =>setPopForm(val)
+    const handleform= () => setPopForm(true);
 
 
 const [redirecting, setRedirecting] = useState(false);
@@ -87,6 +95,7 @@ if(redirecting){
         recent={recent}
         popular={[]}
         data={headerData}
+        slug={slug}
       />
       <BlogsGrid blogs={recent} section_title="Latest Blogs" button="hide" />
     </Wrapper>

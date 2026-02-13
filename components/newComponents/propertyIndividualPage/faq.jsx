@@ -4,11 +4,11 @@ import PopUpForm from '../../detailSections/CTA_NEW'
 
 function FaqSection({ propertyData ,name}) {
   const [activeIndex, setActiveIndex] = useState(null);
-  const [popForm,setPopForm] = useState(false)
+ 
 
   const faqData = propertyData.faqs || [];
 
-
+ const [popForm,setPopForm] = useState(false)
   const toggleFAQ = (index) => {
     setActiveIndex(activeIndex === index ? null : index);
   };
@@ -59,7 +59,7 @@ function FaqSection({ propertyData ,name}) {
        <PopUpForm
         popUpenable={popForm}
         onClickOff={onClickOff}
-        text="Our Expert Team is here to help you with your additional question"
+        text="OUR EXPERT TEAM IS HERE TO HELP YOU WITH YOUR QUERY."
   
         name={name}
       />

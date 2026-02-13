@@ -80,6 +80,7 @@ if(redirecting){
         recent={allData.recent}
         data="news"
         date={data.date}
+        slug={allData.detail.slug}
       />
     </Wrapper>
     )

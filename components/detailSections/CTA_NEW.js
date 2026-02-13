@@ -8,11 +8,11 @@ import { useRouter } from 'next/router';
 import { downloadBrochure } from '../helper/downloadBrochurePdf';
 import ctaStyle from "./cta.module.css";
 
-function App({ name, popUpenable = false, onClickOff, text, pdf }) {
+function App({ name, popUpenable = false, onClickOff, text, pdf  }) {
 
   const [isAnimating, setIsAnimating] = useState(false);
   const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false); // NEW
+  const [loading, setLoading] = useState(false); 
 
   const router = useRouter();
 
@@ -26,7 +26,11 @@ function App({ name, popUpenable = false, onClickOff, text, pdf }) {
   const recaptchaRef = useRef(null);
 
   useEffect(() => {
-    if (popUpenable) {
+     if(popUpenable){
+      setIsAnimating(true);
+      setMessage("");
+     }
+    else if (popUpenable && pdf) {
       setIsAnimating(true);
       setMessage("Contact us by downloading Brochures.");
     } else {
@@ -50,8 +54,6 @@ function App({ name, popUpenable = false, onClickOff, text, pdf }) {
     try {
       setLoading(true);
       const toastId = toast.loading("Submitting form...");
-
-
       const action = {
         method: 'POST',
         url: '/enquiry/project',
@@ -62,7 +64,6 @@ function App({ name, popUpenable = false, onClickOff, text, pdf }) {
       const response = await Ajax1(action);
 
       if (response.data.status === 'success') {
-
         toast.update(toastId, {
           render: "Form submitted successfully",
           type: "success",

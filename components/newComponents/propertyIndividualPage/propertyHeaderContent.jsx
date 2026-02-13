@@ -294,7 +294,7 @@ function PropertyHeaderHigh({ propertyData ,name}) {
       <PopUpForm
         popUpenable={popForm}
         onClickOff={onClickOff}
-        text="to connect with Our Expert Team "
+        text="TO CONNECT WITH OUR PROPERTY ADVISOR "
         name={name}
         />
     </>
