@@ -83,6 +83,15 @@
   padding: 0;
   overflow: visible;
 }
+.premiumCitySelectorContainer {
+  position: relative;
+  z-index: 1000;
+}
+
+.premiumCarouselContainer {
+  position: relative;
+  z-index: 1;
+}
 
 /* Property Card - Matching Design Exactly */
 .propertyCard {

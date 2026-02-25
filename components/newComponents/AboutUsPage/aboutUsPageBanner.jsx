@@ -1,125 +1,112 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
-
-import { FaRegEye } from "react-icons/fa";
-import { TbTargetArrow } from "react-icons/tb";
-
-import CustomizedSteppers from './aboutUsTimeline/aboutUsTimeline';
-import AboutUsTimelineContent from './aboutUsTimeline/aboutUsTimelineContent';
-import CoreValues from "./coreValues";
-import MeetOwners from "./meetTheOwners";
-import BrandAmbassador from "./brandAmbassador";
-import AwardsSlider from "./awardSlider";
-import MeetTheTeam from "./meettheTeam";
-import DeveloperSlider from "./developerSlider";
-import styles from './aboutUs.module.css'; // Assuming you have a CSS module for styles
+import styles from "../AboutUsPage/aboutUs.module.css";
+import RightSlideModal from "../propertyIndividualPage/modal";
 
 const AboutUsPageHeader = () => {
-    const [isDesktop, setIsDesktop] = useState(true);
-    const [isMobile, setIsMobile] = useState(true);
-    const [currentStep, setCurrentStep] = useState(0);
+  const [isDesktop, setIsDesktop] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const handleStepChange = (step) => {
-        setCurrentStep(step);
-    };
+  useEffect(() => {
     const checkScreenWidth = () => {
-        setIsDesktop(window.innerWidth >= 768); // You can adjust the threshold for desktop here
-        setIsMobile(window.innerWidth <= 768);
+      setIsDesktop(window.innerWidth >= 768);
     };
-    useEffect(() => {
-        checkScreenWidth();
-        window.addEventListener('resize', checkScreenWidth);
 
-        return () => {
-            window.removeEventListener('resize', checkScreenWidth);
-        };
-    }, []);
+    checkScreenWidth();
+    window.addEventListener("resize", checkScreenWidth);
+    return () => window.removeEventListener("resize", checkScreenWidth);
+  }, []);
 
-    const BannerImage = 'https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/about%20us%20banner%20final.avif';
-    const MobileBannerImage = 'https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/About%20us%20banner%20Phone.avif';
-    return (
-        <>
-            <div className={styles.aboutUsPageHeader}>
-                <h2>Hi There</h2>
-                <h2>
-                    We`re{' '}
-                    <span style={{ color: '#DCAA4C', fontWeight: '700' }}>
-                        INFRAMANTRA
-                    </span>
-                </h2>
-            </div>
-            <div className={styles.aboutUsPageHeaderImgContainer}>
-                <img
-                    src={isDesktop ? BannerImage : MobileBannerImage}
-                    alt="aboutUsPageHeaderImg"
-                    className={styles.aboutUsPageHeaderImg}
-                />
-            </div>
-            <p className={styles.aboutUsPageHeaderDescription}>
-              INFRAMANTRA stands as a premier proptech advisory firm with a mission to guide clients 
-              seamlessly through the journey of searching, discovering, purchasing, and managing 
-              residential and commercial properties by India’s top real estate builders as well 
-              as developing a rewarding investment portfolio.
+  const BannerImage =
+    "https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/about%20us%20banner%20final.avif";
 
-            </p>
-            <p className={styles.aboutUsPageHeaderDescription}>
-            Rooted in a process-oriented approach, we ensure that every home-buying experience remains 
-            deeply customer-centric, embodying our core value of respect for all individuals. 
-            Discover a new standard in property advisory with INFRAMANTRA- where expertise meets excellence 
-            and your aspirations find their perfect match.
-            </p>
-            <div className={styles.aboutUsPageVisionContainer}>
-                <div className={styles.aboutUsPageVisionFlex}>
-                    <FaRegEye className={styles.targetIcon} sx={{ fontSize: '2.5rem', color: '#0B8C27' }} />
-                    <p className={styles.aboutUsPageVisionHeader}>Our Vision</p>
-                    <p className={styles.aboutUsPageVisionContent}>
-                      To be the most preferred partner for all real estate stakeholders 
-                      through transparency, simplicity, and choice.
-                    </p>
-                </div>
-                <div className={styles.aboutUsPageVisionFlex}>
-                    <TbTargetArrow className={styles.targetIcon} sx={{ fontSize: '2.5rem', color: '#0B8C27' }} />
-                    <p className={styles.aboutUsPageVisionHeader}>Our Mission</p>
-                    <p className={styles.aboutUsPageVisionContent}>
-                      We aim to build a dynamic market landscape through innovative strategies and new-age
-                       marketing tools, creating a seamless value chain that connects end-users, industry 
-                       stakeholders, and investors. Our commitment to {' " '}Making Realty a Reality for You{' " '} ensures
-                        that we turn dreams into reality- one property at a time.
-                    </p>
-                </div>
+  const MobileBannerImage =
+    "https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/About%20us%20banner%20Phone.avif";
+
+  // Full text content to show inside modal
+  const fullText = (
+    <>
+      <span className={styles.highlightName}>Shiwang Suraj</span>{" "}
+      and{" "}
+      <span className={styles.highlightName}>Garvit Tiwari</span>{" "}
+      bring together a powerful blend of entrepreneurial vision and financial expertise as the driving forces behind InfraMantra India Pvt. Ltd.
+      <br /><br />
+
+      With over a decade of cross-industry experience, Shiwang began his entrepreneurial journey in 2015 as Co-founder of Zapplon, transforming corporate transport solutions with innovation and operational excellence. His strengths in sales, marketing, and operations laid the foundation for building scalable, value-driven ventures.
+      <br /><br />
+
+      Complementing this vision, Garvit brings more than 14 years of experience in banking and finance, having worked with leading institutions such as HDFC Bank, IndusInd Bank, Yes Bank, and Kotak Bank. A Gold Medalist in IT, he has driven growth across corporate banking and wealth management verticals.
+      <br /><br />
+
+      Together, their combined expertise in strategy, finance, and market development positions InfraMantra as a dynamic and trusted name in the real estate industry.
+    </>
+  );
+
+  return (
+    <>
+      <div className={styles.aboutUsPageWrapper}>
+        {/* Banner */}
+        <div className={styles.aboutUsPageHeaderImgContainer}>
+          <img
+            src={isDesktop ? BannerImage : MobileBannerImage}
+            alt="about banner"
+            className={styles.aboutUsPageHeaderImg}
+          />
+        </div>
+
+        {/* STORY SECTION */}
+        <div className={styles.storyContainer}>
+          <h2 className={styles.headingTitlemobile}>Our Story</h2>
+
+          <div className={styles.storyImage}>
+            <img src="/aboutUs/ourStory.jpeg" alt="Our Story" />
+          </div>
+
+          <div className={styles.storyContent}>
+            <h2 className={styles.headingTitleStory}>Our Story</h2>
+
+            <div
+              className={styles.storyText}
+              style={{ maxHeight: "300px", overflow: "hidden" }}
+            >
+              <span className={styles.highlightName}>Shiwang Suraj</span>{" "}
+              and{" "}
+              <span className={styles.highlightName}>Garvit Tiwari</span>{" "}
+              bring together a powerful blend of entrepreneurial vision and financial expertise as the driving forces behind InfraMantra India Pvt. Ltd.
+              <br /><br />
+
+              With over a decade of cross-industry experience, Shiwang began his entrepreneurial journey in 2015 as Co-founder of Zapplon, transforming corporate transport solutions with innovation and operational excellence. His strengths in sales, marketing, and operations laid the foundation for building scalable, value-driven ventures.
+              <br /><br />
+
+              Complementing this vision, Garvit brings more than 14 years of experience in banking and finance, having worked with leading institutions such as HDFC Bank, IndusInd Bank, Yes Bank, and Kotak Bank. A Gold Medalist in IT, he has driven growth across corporate banking and wealth management verticals.
+              <br /><br />
+
+              Together, their combined expertise in strategy, finance, and market development positions InfraMantra as a dynamic and trusted name in the real estate industry.
             </div>
-            <div className={styles.aboutUsPageTimelineWrapper}>
-                <AboutUsTimelineContent currentStep={currentStep} />
-                <CustomizedSteppers currentStep={handleStepChange} />
-            </div>
-            <CoreValues />
-            <MeetOwners />
-            <div className={styles.aboutUsPageStatisticalDataWrapper}>
-                <div className={`${styles.aboutUsPageStatisticalDataItemContainer}  ${styles.aboutUsPageStatisticalDataItemContainer1}`}>
-                    <div className={styles.aboutUsPageStatisticalDataItem}>
-                        <h4>2017</h4>
-                        <p>Founded In</p>
-                    </div>
-                </div>
-                <div className={`${styles.aboutUsPageStatisticalDataItemContainer} ${styles.aboutUsPageStatisticalDataItemContainer2} ${styles.bottomStyledStats}`}>
-                    <div className={`${styles.aboutUsPageStatisticalDataItem} ${styles.bottomStyledStatsItem}`}>
-                        <h4>50+</h4>
-                        <p>Awards & Recognition</p>
-                    </div>
-                </div>
-                <div className={`${styles.aboutUsPageStatisticalDataItemContainer} ${styles.aboutUsPageStatisticalDataItemContainer3}`}>
-                    <div className={styles.aboutUsPageStatisticalDataItem}>
-                        <h4>45000</h4>
-                        <p>Customers Reached</p>
-                    </div>
-                </div>
-            </div>
-            <BrandAmbassador />
-            {/* <AwardsSlider/> */}
-            <DeveloperSlider />
-            <MeetTheTeam/>
-        </>
-    )
+
+            {/* Read More Button */}
+            <span
+              onClick={() => setIsModalOpen(true)}
+              className={styles.inlineReadMore}
+            >
+              Read More
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Modal showing full text */}
+      <RightSlideModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Our Story"
+        name="about us page"
+      >
+        <p className={styles.storyText}>{fullText}</p>
+      </RightSlideModal>
+    </>
+  );
 };
-
 
 export default AboutUsPageHeader;

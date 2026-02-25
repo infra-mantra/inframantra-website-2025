@@ -1,13 +1,14 @@
 
 /* Brand Ambassador */
 .brandAmbassadorWrapper {
-  height: 50vh;
+
   width: 100vw;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   margin-top: 2rem;
+ 
 }
 
 .brandAmbassadorWrapper > h4 {
@@ -29,8 +30,8 @@ color: #c78911;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  height: 80%;
-  width: 80%;
+  height: 100%;
+padding: 1rem 0rem;
 }
 
 .brandAmbassadorImageWrapper {
@@ -44,7 +45,7 @@ color: #c78911;
 
 .brandAmbassadorImageWrapper > img {
   height: 60%;
-  width: 60%;
+  width: 50%;
   object-fit: contain;
 }
 
@@ -65,6 +66,8 @@ color: #c78911;
 .brandAmbassadorName {
   font-size: 20px;
   font-weight: 600;
+    color: #c78911;
+ 
   margin-bottom: 0;
   text-transform: uppercase;
 }
@@ -86,8 +89,17 @@ color: #c78911;
     height: max-content;
     flex-direction: column;
   }
+  .brandAmbassadorImageWrapper > img {
+  height: 60%;
+  width: 100%;
+  object-fit: contain;
+}
+.brandAmbassadorImageWrapper{
+    width: 95%;
+}
+
   .brandAmbassadorName {
-    color: #0B6E21;
+    color: #c78911;
   }
   .brandAmbassadorDescriptionWrapper > p {
     font-size: 15px;

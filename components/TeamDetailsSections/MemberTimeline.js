@@ -1,65 +1,65 @@
 import { useRef, useEffect } from 'react';
-import { gsap } from "gsap";
+// import { gsap } from "gsap";
 import Section from '../UI/Section';
 import Image from 'next/image';
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+// import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import NoImage from '../UI/NoImage';
 import style from './memberTimeline.module.css';
-gsap.registerPlugin(ScrollTrigger);
+// gsap.registerPlugin(ScrollTrigger);
 
 const MemberTimeline = ({journey, content}) => {
 
-const revealRefs = useRef([]);
-revealRefs.current = [];
+// const revealRefs = useRef([]);
+// revealRefs.current = [];
 
-useEffect(() => {
+// useEffect(() => {
 
-    revealRefs.current.forEach((el, index) => {
-        gsap.to(el, {
-        ease: 'none',
-        scrollTrigger: {
-            // id: `tml-dot-${index+1}`,
-            trigger: el,
-            start: 'top center',
-            end: '+=100',
-            // markers: true,
-            toggleActions: 'play none none reverse',
-            onEnter() {
-                el.classList.add('active');
-            },
-            onLeaveBack() {
-                el.classList.remove('active');
-            },
-        }
-        });
-    });
+//     revealRefs.current.forEach((el, index) => {
+//         gsap.to(el, {
+//         ease: 'none',
+//         scrollTrigger: {
+//             // id: `tml-dot-${index+1}`,
+//             trigger: el,
+//             start: 'top center',
+//             end: '+=100',
+//             // markers: true,
+//             toggleActions: 'play none none reverse',
+//             onEnter() {
+//                 el.classList.add('active');
+//             },
+//             onLeaveBack() {
+//                 el.classList.remove('active');
+//             },
+//         }
+//         });
+//     });
 
 
-    revealRefs.current.forEach((el, index) => {
-        gsap.to(`#mem-tml-${index+1}` , {
-        scrollTrigger: {
-            id: `mem-tml-${index+1}`,
-            trigger: el,
-            start: 'top center',
-            end:'+=100',
-            // markers: true,
-            scrub: 1,
-        },
-            webkitClipPath: 'inset(0% 0% 0%)',
-            clipPath: 'inset(0% 0% 0%)'
-        });
-    });
+//     revealRefs.current.forEach((el, index) => {
+//         gsap.to(`#mem-tml-${index+1}` , {
+//         scrollTrigger: {
+//             id: `mem-tml-${index+1}`,
+//             trigger: el,
+//             start: 'top center',
+//             end:'+=100',
+//             // markers: true,
+//             scrub: 1,
+//         },
+//             webkitClipPath: 'inset(0% 0% 0%)',
+//             clipPath: 'inset(0% 0% 0%)'
+//         });
+//     });
 
-});
+// });
 
-const addToRefs = el => {
-if (el && !revealRefs.current.includes(el)) {
-    revealRefs.current.push(el);
-}
-};
+// const addToRefs = el => {
+// if (el && !revealRefs.current.includes(el)) {
+//     revealRefs.current.push(el);
+// }
+// };
     return journey.length > 0 ? (
         <Section classes={`${style.secP} ${style.memberTimeline}`} pageWidth="fluid">
-            <div className={style.tmlContainer}>
+            {/* <div className={style.tmlContainer}>
                 <div className={`${style.sectionHead} ${style.textCenter}`}>
                     <h2>{content.name} Journey</h2>
                     <p>{content.description}</p>
@@ -96,7 +96,7 @@ if (el && !revealRefs.current.includes(el)) {
                         ))}
                     </div>
                 </div> 
-            </div>
+            </div> */}
         </Section>
     ) : ''
 }

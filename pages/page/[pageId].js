@@ -7,7 +7,7 @@ const DetailPage = ({allData}) => {
     <Wrapper title={allData.detail.metaTitle} description={allData.detail.metaDescription} >
         <Section classes="content-page-header" pageWidth="container">
             <h1>{allData.detail.title}</h1>
-        </Section>
+        </Section>  
         <Section classes="content-page-body" pageWidth="container">
             <div className="content" dangerouslySetInnerHTML={{ __html: allData.detail.description}} >
             </div>

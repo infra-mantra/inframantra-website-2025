@@ -106,7 +106,6 @@ const LandmarkMap = ({ property, landmarks, selected, onSelect, type }) => {
   const [duration, setDuration] = useState(null);
   const selectedMarkerRef = useRef(null);
 
-  console.log("distnace",selected)
 
   /* ---------- SAFE PROPERTY ---------- */
   const safeProperty = useMemo(() => {

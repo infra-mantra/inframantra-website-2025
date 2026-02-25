@@ -1,39 +1,98 @@
-import React, { useEffect, useState } from "react";
-import Ajax1 from "../../helper/Ajax1";
-import styles from "./developerSlide.module.css";
+"use client";
 
-const DeveloperSlider = () => {
-  const [developer, setDeveloper] = useState([]);
+import React, { useEffect, useState } from "react";
+import styles from "./developerSlide.module.css";
+import Ajax1 from "../../helper/Ajax1";
+
+export default function TopDevelopers() {
+  const [developers, setDevelopers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+
+  const limit = 12;
+
+  const fetchDevelopers = async (pageNumber) => {
+    try {
+      setLoading(true);
+
+      const res = await Ajax1({
+        url: `/developer?page=${pageNumber}&limit=${limit}`,
+      });
+
+      const newDevelopers = res?.data?.data?.developers || [];
+    
+
+      if (pageNumber === 1) {
+        setDevelopers(newDevelopers);
+      } else {
+        setDevelopers((prev) => [...prev, ...newDevelopers]);
+      }
+
+      if (newDevelopers.length < limit) {
+        setHasMore(false);
+      }
+
+    } catch (error) {
+      console.error("Error fetching developers:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    (async () => {
-      try {
-        const getData = await Ajax1({ url: `/developer` });
-        setDeveloper(getData?.data?.data?.developers || []);
-      } catch (err) {
-        console.error("Developer fetch error:", err);
-      }
-    })();
-  }, []);
+    fetchDevelopers(page);
+  }, [page]);
+
+  const handleLoadMore = () => {
+    if (hasMore && !loading) {
+      setPage((prev) => prev + 1);
+    }
+  };
 
   return (
-    <div className={styles.sliderWrapper}>
-      <h4 className={styles.heading}>TOP REAL ESTATE DEVELOPERS</h4>
-      <div className={styles.sliderContainer}>
-        <div className={styles.sliderTrack}>
-          {developer.concat(developer).map((item, index) => (
-            <div key={index} className={styles.slide}>
-              <img
-                src={item.developerImg}
-                alt="Developer"
-                className={styles.logo}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
+    <section className={styles.developerSlideSection}>
+      <div className={styles.developerSlideContainer}>
+        <h2 className={styles.developerSlideHeading}>
+          Top Real Estate Developers
+        </h2>
 
-export default DeveloperSlider;
+        <p className={styles.developerSlideSubtext}>
+         We collaborate with the most reputed developers and builders across Gurgaon and the Delhi NCR region.
+        </p>
+
+        {loading && page === 1 ? (
+          <p className={styles.developerSlideLoading}>
+            Loading developers...
+          </p>
+        ) : (
+          <>
+            <div className={styles.developerSlideGrid}>
+              {developers.map((dev) => (
+                <div key={dev._id} className={styles.developerSlideCard}>
+                  <img
+                    src={dev?.developerImg}
+                    alt={dev?.name}
+                    loading="lazy"
+                  />
+                </div>
+              ))}
+            </div>
+
+            {hasMore && (
+              <div className={styles.loadMoreContainer}>
+                <button
+                  onClick={handleLoadMore}
+                  className={styles.loadMoreBtn}
+                  disabled={loading}
+                >
+                  {loading ? "Loading..." : "Load More"}
+                </button>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </section>
+  );
+}

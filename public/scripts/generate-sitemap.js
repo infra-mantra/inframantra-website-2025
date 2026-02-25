@@ -150,11 +150,7 @@ const generateSitemap = async () => {
       ),
     ]);
 
-    console.log("📊 API Data:");
-    console.log("Properties:", properties.length);
-    console.log("Cities:", cities.length);
-    console.log("Developers:", developers.length);
-
+   
     const propertyRoutes = properties
       .filter((p) => p?.slug)
       .map((p) => `/property/${p.slug}`);

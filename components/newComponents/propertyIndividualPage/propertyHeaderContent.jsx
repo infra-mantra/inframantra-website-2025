@@ -202,12 +202,12 @@ function PropertyHeaderHigh({ propertyData ,name}) {
                   <p className="about-preview p-text">
                     {aboutPreview}
                     {
-                      <button
-                        className="read-more-btn"
-                        onClick={() => setIsAboutModalOpen(true)}
-                      >
-                        Read more...
-                      </button>
+                        <button
+                          className="read-more-btn"
+                          onClick={() => setIsAboutModalOpen(true)}
+                        >
+                          Read more...
+                        </button>
                     }
                   </p>
                 </div>

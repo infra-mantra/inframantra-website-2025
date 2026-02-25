@@ -1,0 +1,127 @@
+.coreSection {
+  text-align: center;
+  background: hsla(40,76%,77%,.29);
+  padding: 6px 0px  ;
+}
+
+.heading {
+  font-size: 42px;
+  font-weight: 600;
+  color: #d4a64a;
+  margin-bottom: 60px;
+}
+.navButtons {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+  top: 1rem;
+  z-index: 10;
+  gap:5rem;
+}
+
+.prevBtn,
+.nextBtn {
+  background: rgba(0, 0, 0, 0.1);
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  border-radius: 5px;
+  color: #333;
+}
+.coreValuesContaier{
+padding: 0px 1rem;
+}
+
+
+.prevBtn:hover,
+.nextBtn:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* GRID */
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
+/* CARD */
+.cardCoreValue {
+  background-color: #e9f0f5;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  transition: transform 0.4s ease, box-shadow 0.4s ease, background-color 0.4s ease;
+  cursor: pointer;
+  height: 320px;
+}
+
+.cardCoreValue:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+  background-color: #fdf6e3; /* optional subtle highlight */
+}
+
+/* Smooth transition for swiper active slide too */
+.swiper-slide-active .cardCoreValue {
+  transform: scale(1.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+.cardTitle {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+  color: #3d3d3d;
+}
+
+.cardText {
+  font-size: 16px;
+  line-height: 1.8;
+
+}
+.swiper-slide-active .cardCoreValue {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+/* Odd slides heading */
+.swiper-slide:nth-child(odd) .cardCoreValue h3 {
+   color: #f1f1f1; /* or keep black */
+}
+
+/* Optional: even slides heading color (default black or another color) */
+.swiper-slide:nth-child(even) .cardCoreValue h3 {
+
+   color: #dcaa4c;
+}
+
+/* TABLET */
+@media (max-width: 1024px) {
+  .cardGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .coreSection {
+    padding: 5px 10px;
+  }
+
+  .cardGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .heading {
+    font-size: 32px;
+    margin:1rem 0rem;
+  }
+  .cardCoreValue{
+    height: 333px;
+  }
+}

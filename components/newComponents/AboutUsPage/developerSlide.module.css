@@ -1,64 +1,101 @@
-.sliderWrapper {
-  overflow: hidden;
-  padding: 2rem 0;
-  background: #fff;
+.developerSlideSection {
   text-align: center;
+  margin-bottom: 1rem;
 }
 
-.heading {
-  font-size: 2rem;
+.developerSlideContainer {
+  padding: 10px;
+  margin: 0 auto;
+}
+
+.developerSlideHeading {
+  font-size: 42px;
+  font-weight: 700;
   color: #c78911;
-  font-weight: 600;
-  margin-bottom: 2rem;
+  margin-bottom: 15px;
 }
 
-.sliderContainer {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
+.developerSlideSubtext {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 60px;
 }
 
-.sliderTrack {
+.developerSlideLoading {
+  font-size: 18px;
+  color: #888;
+}
+
+/* GRID */
+.developerSlideGrid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 30px;
+}
+
+/* CARD */
+.developerSlideCard {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 40px 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  transition: 0.3s ease;
   display: flex;
-  width: calc(200px * 20); /* Adjust 20 based on number of slides × 2 */
-  animation: scroll 25s linear infinite;
-}
-
-.slide {
-  flex: 0 0 auto;
-  width: 200px;
-  height: 100px;
-  margin: 0 1rem;
-  display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 
-.logo {
-  max-width: 100%;
-  max-height: 100%;
+.developerSlideCard:hover {
+  transform: translateY(-6px);
+}
+
+.developerSlideCard img {
+  max-width: 120px;
+  max-height: 60px;
   object-fit: contain;
 }
+.loadMoreBtn{
+      color: #d4a64a;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 6px;
+    display: inline;
+    font-size: 1.2rem;
+    margin-top: 1rem;
+}
+.loadMoreBtn:hover{
+  text-decoration: underline;
+  
+}
 
-/* Animation */
-@keyframes scroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
+/* RESPONSIVE */
+
+@media (max-width: 1200px) {
+  .developerSlideGrid {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
-/* Responsive */
 @media (max-width: 768px) {
-  .heading {
-    font-size: 1.2rem;
+  .developerSlideGrid {
+    grid-template-columns: repeat(2, 1fr);
+    margin: 2rem 0rem;
   }
 
-  .slide {
-    width: 120px;
-    height: 80px;
-    margin: 0 0.5rem;
+  .developerSlideHeading {
+    font-size: 24px;
   }
+
+  .developerSlideSubtext {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .developerSlideGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .loadMoreBtn{
+    margin-top: 1rem;
+  } 
 }

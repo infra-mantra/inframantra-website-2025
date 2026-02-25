@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 // import 'swiper/swiper-bundle.min.css';
 // import 'swiper/swiper.min.css';
 import { awardsData } from './aboutUsData';
-// import './awardSlider.css';
+import './awardSlider.css';
 
 function AwardsSlider() {
   const settings = {

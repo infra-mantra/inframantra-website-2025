@@ -1,0 +1,64 @@
+.aboutVisionWrapper {
+  background: #f5f5f5;
+  padding:1px 20px;
+}
+
+.aboutVisionContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.aboutVisionHeading {
+  font-size: 64px;
+  font-weight: 700;
+  color: #cfa24a;
+  margin-bottom: 50px;
+}
+
+.aboutVisionContent {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+}
+
+.aboutVisionIconBox {
+  flex-shrink: 0;
+}
+
+.aboutVisionIcon {
+  width: 140px;
+  height: auto;
+}
+
+.aboutVisionText {
+  font-size: 28px;
+  line-height: 1.4;
+  color: #000;
+  max-width: 720px;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 768px) {
+  .aboutVisionHeading {
+    font-size: 40px;
+    text-align: center;
+  }
+  .aboutVisionWrapper {
+padding: 20px 20px;
+  }
+
+  .aboutVisionContent {
+    flex-direction: column;
+    text-align: center;
+    gap: 30px;
+  }
+
+  .aboutVisionText {
+    font-size: 20px;
+  }
+
+  .aboutVisionIcon {
+    width: 100px;
+  }
+}

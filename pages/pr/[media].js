@@ -227,7 +227,7 @@ export async function getStaticProps({ params }) {
   const cmsData = await cmsRes.json();
   const cmsPost = cmsData?.result?.detail?.[0];
 
-  console.log("CMS news detail fetch:", { slug, cmsPost });
+ 
 
   if (cmsPost) {
     const detail = {
@@ -267,7 +267,7 @@ export async function getStaticProps({ params }) {
   try {
     const wpSingleRes = await fetch(`https://cms.inframantra.com/wp-json/wp/v2/posts?slug=${slug}&_embed`);
     const wpPost = (await wpSingleRes.json())?.[0]  
-    console.log("WP news detail fetch:", { slug, wpPost });
+    
     if (!wpPost) return { notFound: true };
            const focusKeyword = wpPost.meta?._yoast_wpseo_focuskw || "";
     const detail = {
