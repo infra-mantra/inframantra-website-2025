@@ -15,7 +15,7 @@ const AboutVisionSection = () => {
           {/* LEFT ICON */}
           <div className={styles.aboutVisionIconBox}>
             <img
-              src="/aboutUs/vision.svg"
+              src="/aboutUs/visionPng.png"
               alt="vision icon"
               className={styles.aboutVisionIcon}
             />

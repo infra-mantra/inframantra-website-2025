@@ -1,8 +1,14 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef } from "react";
+import SwiperCore, {
+  Navigation,
+  Pagination,
+  Autoplay,
+  EffectCoverflow,
+} from "swiper";
+
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay, EffectCoverflow } from "swiper";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -11,25 +17,26 @@ import "swiper/css/effect-coverflow";
 
 import styles from "./AwardsSlider.module.css";
 
-const Award = () => {
-  const awardImages = [
-    { src: "https://inframantra.blr1.cdn.digitaloceanspaces.com/aboutus-page-awards/a1.jpg", alt: "Award 1" },
-    { src: "https://inframantra.blr1.cdn.digitaloceanspaces.com/aboutus-page-awards/a2.jpg", alt: "Award 2" },
-    { src: "https://inframantra.blr1.cdn.digitaloceanspaces.com/aboutus-page-awards/a3.jpg", alt: "Award 3" },
-  ];
+SwiperCore.use([Navigation, Pagination, Autoplay, EffectCoverflow]);
 
-  // Refs for navigation buttons
+const Award = () => {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
 
-  // State to store the actual navigation elements after they mount
-  const [navElements, setNavElements] = useState({ prevEl: null, nextEl: null });
-
-  useEffect(() => {
-    if (prevRef.current && nextRef.current) {
-      setNavElements({ prevEl: prevRef.current, nextEl: nextRef.current });
-    }
-  }, [prevRef.current, nextRef.current]); // Run after refs are set
+  const awardImages = [
+    {
+      src:
+        "https://inframantra.blr1.cdn.digitaloceanspaces.com/aboutus-page-awards/a1.jpg",
+    },
+    {
+      src:
+        "https://inframantra.blr1.cdn.digitaloceanspaces.com/aboutus-page-awards/a2.jpg",
+    },
+    {
+      src:
+        "https://inframantra.blr1.cdn.digitaloceanspaces.com/aboutus-page-awards/a3.jpg",
+    },
+  ];
 
   return (
     <div className={styles.awardContainer}>
@@ -45,18 +52,21 @@ const Award = () => {
 
       <div className={styles.swiperContainer}>
         <Swiper
-          modules={[Navigation, Pagination, Autoplay, EffectCoverflow]}
-          effect="coverflow"
-          centeredSlides
-          grabCursor
-          loop
-          speed={800}
-          pagination={{ clickable: true }}
-          autoplay={{
-            delay: 3000,
-            disableOnInteraction: false,
+          // Attach navigation refs before init!
+          onBeforeInit={(swiper) => {
+            swiper.params.navigation.prevEl = prevRef.current;
+            swiper.params.navigation.nextEl = nextRef.current;
           }}
-          navigation={navElements} // Use the state instead of refs directly
+          navigation={{
+            prevEl: prevRef.current,
+            nextEl: nextRef.current,
+          }}
+          effect="coverflow"
+          centeredSlides={true}
+          loop={true}
+          speed={800}
+          autoplay={{ delay: 3000, disableOnInteraction: false }}
+          pagination={{ clickable: true }}
           coverflowEffect={{
             rotate: 25,
             stretch: 0,
@@ -73,7 +83,11 @@ const Award = () => {
           {awardImages.map((item, index) => (
             <SwiperSlide key={index}>
               <div className={styles.slideCard}>
-                <img src={item.src} alt={item.alt} className={styles.slideImage} />
+                <img
+                  src={item.src}
+                  alt={`award-${index}`}
+                  className={styles.slideImages}
+                />
               </div>
             </SwiperSlide>
           ))}

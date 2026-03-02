@@ -249,7 +249,7 @@ const LandmarkMap = ({ property, landmarks, selected, onSelect, type }) => {
       {distance && duration && safeSelected && (
         <div className="popUpMark">
           <strong>{safeSelected.name}</strong>
-          <div>Distance: {selected?.distance} km</div>
+          <div>Distance: {selected?.distance}</div>
           <div>Time: ~{duration} min</div>
         </div>
       )}

@@ -83,6 +83,7 @@ padding: 0px 1rem;
 .cardText {
   font-size: 16px;
   line-height: 1.8;
+  text-align: justify;
 
 }
 .swiper-slide-active .cardCoreValue {

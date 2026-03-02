@@ -4,10 +4,10 @@ import CountUp from "react-countup";
 import styles from "./HeroSection.module.css";
 
 const stats = [
-  { end: 515, suffix: "+", label: "Properties Operated" },
-  { end: 2493, suffix: "+", label: "Happy Customers" },
-  { end: 138, suffix: "+", label: "Amazing Team Members" },
-  { end: 18.15, suffix: "M+", label: "Total Sq. Ft." },
+  { end: 50, suffix: "+", label: "Developer partners" },
+  { end: 3500, suffix: "+", label: "Happy Customers" },
+  { end: 170, suffix: "+", label: "Amazing Team Members" },
+  
   { end: 50, suffix: "+", label: "Awards & Recognition" },
 ];
 
@@ -36,13 +36,12 @@ export default function HeroSection() {
   return (
     <section ref={sectionRef} className={styles.hero}>
       <div className={styles.content}>
-        <h1 className={styles.mainTitle}>Trusted Real Estate Experts</h1>
+        <h1 className={styles.mainTitle}>Trusted Real Estate Consultancy</h1>
 
         <div className={styles.since}>Since 2017</div>
 
         <p className={styles.description}>
-          Since 2017, we've been helping people find their dream homes, offices,
-          and the right investments in property across Gurgaon and Delhi NCR.
+   Powered by a customer-first approach, Inframantra connects you to prime real estate opportunities across India.      
         </p>
 
         <div className={styles.stats}>

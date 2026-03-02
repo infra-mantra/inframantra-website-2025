@@ -78,7 +78,7 @@ const AboutUsPageHeader = () => {
       <RightSlideModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title="Our Story"
+        title="Our Brand Ambassador"
         name="about us page"
       >
         <p className={styles.storyText}>{fullText}</p>

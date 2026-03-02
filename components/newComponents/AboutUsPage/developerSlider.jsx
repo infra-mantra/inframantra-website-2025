@@ -58,7 +58,7 @@ export default function TopDevelopers() {
         </h2>
 
         <p className={styles.developerSlideSubtext}>
-         We collaborate with the most reputed developers and builders across Gurgaon and the Delhi NCR region.
+         We collaborate with the most reputed real-estate developers across Gurgaon, Delhi-NCR, and other major cities in India. 
         </p>
 
         {loading && page === 1 ? (

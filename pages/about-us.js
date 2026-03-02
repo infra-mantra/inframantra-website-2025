@@ -3,11 +3,16 @@ import styles from "../components/newComponents/AboutUsPage/aboutUs.module.css";
 import AboutSection from "../components/newComponents/AboutUsPage/aboutUsPageBanner";
 import Wrapper from "../components/UI/Wrapper";
 import CoreValues from "../components/newComponents/AboutUsPage/coreValues";
- import AwardsSlider from "../components/newComponents/AboutUsPage/aboutUsTimeline/Award";
 import Achivement from "../components/newComponents/AboutUsPage/Achievement";
 import Developer from "../components/newComponents/AboutUsPage/developerSlider";
 import BrandAmbassador from "../components/newComponents/AboutUsPage/brandAmbassador";
 import Vision from "../components/newComponents/AboutUsPage/vision"
+
+import dynamic from "next/dynamic";
+const AwardsSlider = dynamic(
+  () => import("../components/newComponents/AboutUsPage/aboutUsTimeline/Award"),
+  { ssr: false }
+);
 
 const AboutUsPageHeader = ({ allData }) => {
 
