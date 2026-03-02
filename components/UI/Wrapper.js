@@ -21,13 +21,14 @@ const Wrapper = ({
 }) => {
   const router = useRouter();
 
-  /** Canonical URL */
-  const canonicalUrl = useMemo(() => {
-    return (
+const canonicalUrl = useMemo(() => {
+  return (
+    (
       'https://inframantra.com' +
       (router.asPath === '/' ? '' : router.asPath.split('?')[0])
-    );
-  }, [router.asPath]);
+    ).toLowerCase()
+  );
+}, [router.asPath]);
 
   /** Scroll to top */
   useEffect(() => {

@@ -28,7 +28,7 @@ export default function PremiumPicksSection({
   };
 
   const handleViewMore = () => {
-    router.push(`/property-listing/city/${selectedCity}`);
+    router.push(`/property-listing/city/${selectedCity.toLowerCase()}`);
   };
 
   if (loading) {
