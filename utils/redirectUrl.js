@@ -163,7 +163,7 @@ export const redirects = [
   { source: "/villa-properties", destination: "/", permanent: true },
   { source: "/property-in-pune", destination: "/property-listing/city/pune", permanent: true },
   { source: "/property", destination: "/property-listing/search/property-in-india", permanent: true },
-
+    
   { source: "/property/dlf-alameda-sector-73-gurugram", destination: "/property-listing/search/property-in-india", permanent: true },
     { source: "/property/dlf-arbour-sector-63-gurgaon", destination: "/property-listing/search/property-in-india", permanent: true },
       { source: "/property/dlf-regal-gardens-sector-90-gurgaon", destination: "/property-listing/search/property-in-india", permanent: true },
