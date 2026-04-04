@@ -1,0 +1,552 @@
+.page {
+  --career-bg: #f8f4ed;
+  --career-surface: #fffdf8;
+  --career-card: rgba(255, 255, 255, 0.86);
+  --career-text: #17202a;
+  --career-muted: #5f6773;
+  --career-border: rgba(23, 32, 42, 0.1);
+  --career-accent: #cf9a43;
+  --career-accent-dark: #9d6f22;
+  --career-navy: #12344d;
+  background:
+    radial-gradient(circle at top left, rgba(207, 154, 67, 0.16), transparent 28%),
+    linear-gradient(180deg, #f9f4ea 0%, #fffdfa 52%, #f4f7fb 100%);
+  color: var(--career-text);
+  padding: 138px 0 96px;
+}
+
+.heroSection,
+.storySection,
+.benefitsSection,
+.gallerySection,
+.learningSection,
+.openingsSection,
+.faqSection,
+.ctaSection {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.heroSection {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
+  gap: 42px;
+  align-items: center;
+  margin-bottom: 88px;
+}
+
+.heroContent h1,
+.sectionIntro h2,
+.storyContent h2,
+.ctaCard h2 {
+  font-family: "Inter", sans-serif;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin: 0;
+}
+
+.heroContent h1 {
+  font-size: clamp(2.8rem, 5vw, 5rem);
+  max-width: 11ch;
+}
+
+.eyebrow,
+.sectionTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(18, 52, 77, 0.08);
+  color: var(--career-navy);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0 0 18px;
+}
+
+.heroDescription,
+.sectionIntro p,
+.storyContent p,
+.benefitCard p,
+.learningCard p,
+.jobCard p,
+.faqItem p,
+.ctaText {
+  color: var(--career-muted);
+  font-size: 1rem;
+  line-height: 1.8;
+  margin: 0;
+}
+
+.heroDescription {
+  max-width: 620px;
+  margin-top: 18px;
+}
+
+.heroStats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin: 28px 0 34px;
+  max-width: 640px;
+}
+
+.heroStat {
+  background: rgba(255, 255, 255, 0.74);
+  border: 1px solid rgba(18, 52, 77, 0.08);
+  border-radius: 24px;
+  padding: 18px 20px;
+  box-shadow: 0 18px 40px rgba(18, 52, 77, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+.heroStat strong {
+  display: block;
+  font-size: 1.1rem;
+  color: var(--career-navy);
+  margin-bottom: 6px;
+}
+
+.heroStat span {
+  color: var(--career-muted);
+  font-size: 0.92rem;
+}
+
+.heroActions,
+.ctaActions,
+.jobActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.primaryButton,
+.secondaryButton,
+.applyButton,
+.linkButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 22px;
+  border-radius: 999px;
+  font-weight: 700;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.primaryButton,
+.applyButton {
+  background: linear-gradient(135deg, var(--career-accent) 0%, #e7ba67 100%);
+  color: #18212a;
+  box-shadow: 0 16px 35px rgba(207, 154, 67, 0.28);
+}
+
+.secondaryButton,
+.linkButton {
+  border: 1px solid rgba(18, 52, 77, 0.14);
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--career-navy);
+}
+
+.primaryButton:hover,
+.secondaryButton:hover,
+.applyButton:hover,
+.linkButton:hover {
+  transform: translateY(-2px);
+}
+
+.heroVisual {
+  position: relative;
+}
+
+.heroCard {
+  position: relative;
+  min-height: 580px;
+  padding: 20px;
+  border-radius: 36px;
+  background:
+    linear-gradient(160deg, rgba(18, 52, 77, 0.95), rgba(18, 52, 77, 0.7)),
+    #12344d;
+  box-shadow: 0 28px 60px rgba(8, 26, 41, 0.26);
+  overflow: hidden;
+}
+
+.heroCard img {
+  width: 100%;
+  height: 100%;
+  min-height: 540px;
+  object-fit: cover;
+  border-radius: 26px;
+  opacity: 0.82;
+}
+
+.heroBadge {
+  position: absolute;
+  right: 36px;
+  bottom: 36px;
+  background: rgba(255, 253, 248, 0.92);
+  color: var(--career-text);
+  border-radius: 24px;
+  padding: 18px 22px;
+  min-width: 220px;
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.15);
+}
+
+.heroBadge span {
+  display: block;
+  color: var(--career-accent-dark);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.heroBadge strong {
+  font-size: 1.2rem;
+  line-height: 1.4;
+}
+
+.storySection {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.1fr);
+  gap: 36px;
+  align-items: center;
+  margin-bottom: 88px;
+}
+
+.storyVisual img {
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  object-fit: cover;
+  border-radius: 32px;
+  box-shadow: 0 22px 50px rgba(18, 52, 77, 0.14);
+}
+
+.storyContent {
+  padding: 20px 0;
+}
+
+.storyContent h2,
+.sectionIntro h2,
+.ctaCard h2 {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  margin-bottom: 16px;
+}
+
+.valueList {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 26px;
+}
+
+.valueList div {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid var(--career-border);
+  border-radius: 22px;
+}
+
+.valueList svg {
+  font-size: 1.35rem;
+  color: var(--career-accent-dark);
+}
+
+.sectionIntro {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 30px;
+}
+
+.benefitsSection,
+.gallerySection,
+.learningSection,
+.openingsSection,
+.faqSection,
+.ctaSection {
+  margin-bottom: 88px;
+}
+
+.benefitGrid,
+.learningGrid,
+.jobList {
+  display: grid;
+  gap: 22px;
+}
+
+.benefitGrid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.benefitCard,
+.learningCard,
+.jobCard,
+.faqItem,
+.ctaCard {
+  border: 1px solid var(--career-border);
+  background: var(--career-card);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 18px 40px rgba(18, 52, 77, 0.08);
+}
+
+.benefitCard {
+  border-radius: 28px;
+  padding: 28px;
+}
+
+.benefitIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  background: rgba(207, 154, 67, 0.12);
+  color: var(--career-accent-dark);
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.benefitCard h3,
+.learningCard h3,
+.jobCard h3,
+.faqItem summary span {
+  font-family: "Inter", sans-serif;
+  margin: 0 0 12px;
+}
+
+.galleryGrid {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr 1fr;
+  gap: 20px;
+}
+
+.galleryItem {
+  overflow: hidden;
+  border-radius: 30px;
+  min-height: 270px;
+  box-shadow: 0 20px 45px rgba(18, 52, 77, 0.12);
+}
+
+.galleryLarge {
+  grid-row: span 2;
+  min-height: 560px;
+}
+
+.galleryItem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.galleryItem:hover img {
+  transform: scale(1.04);
+}
+
+.learningGrid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.learningCard {
+  border-radius: 28px;
+  padding: 28px;
+}
+
+.learningStep {
+  display: inline-flex;
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--career-accent-dark);
+  margin-bottom: 16px;
+}
+
+.jobList {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.jobCard {
+  border-radius: 30px;
+  padding: 28px;
+}
+
+.jobTopRow,
+.jobMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.jobTopRow {
+  margin-bottom: 18px;
+}
+
+.jobType {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(18, 52, 77, 0.08);
+  color: var(--career-navy);
+  font-size: 0.88rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.jobMeta {
+  justify-content: flex-start;
+  margin-bottom: 16px;
+}
+
+.jobMeta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--career-muted);
+  font-size: 0.95rem;
+}
+
+.faqList {
+  display: grid;
+  gap: 18px;
+}
+
+.faqItem {
+  border-radius: 24px;
+  padding: 0 24px;
+  overflow: hidden;
+}
+
+.faqItem summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  cursor: pointer;
+  padding: 22px 0;
+}
+
+.faqItem summary::-webkit-details-marker {
+  display: none;
+}
+
+.faqItem summary svg {
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+.faqItem[open] summary svg {
+  transform: rotate(180deg);
+}
+
+.faqItem p {
+  padding: 0 0 22px;
+}
+
+.ctaCard {
+  border-radius: 34px;
+  padding: 38px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 24px;
+  align-items: center;
+  background:
+    linear-gradient(135deg, rgba(255, 248, 235, 0.96), rgba(243, 248, 253, 0.96));
+}
+
+.ctaActions {
+  justify-content: flex-end;
+}
+
+@media (max-width: 1080px) {
+  .heroSection,
+  .storySection,
+  .ctaCard,
+  .jobList,
+  .benefitGrid,
+  .learningGrid,
+  .galleryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .galleryLarge {
+    grid-row: auto;
+    min-height: 320px;
+  }
+
+  .ctaActions {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding-top: 112px;
+  }
+
+  .heroSection,
+  .storySection,
+  .benefitsSection,
+  .gallerySection,
+  .learningSection,
+  .openingsSection,
+  .faqSection,
+  .ctaSection {
+    width: min(100% - 28px, 1180px);
+    margin-bottom: 64px;
+  }
+
+  .heroStats,
+  .valueList {
+    grid-template-columns: 1fr;
+  }
+
+  .heroCard {
+    min-height: 430px;
+    padding: 14px;
+  }
+
+  .heroCard img,
+  .storyVisual img {
+    min-height: 320px;
+  }
+
+  .heroBadge {
+    right: 20px;
+    bottom: 20px;
+    left: 20px;
+    min-width: 0;
+  }
+
+  .benefitCard,
+  .learningCard,
+  .jobCard,
+  .faqItem,
+  .ctaCard {
+    border-radius: 24px;
+  }
+
+  .benefitCard,
+  .learningCard,
+  .jobCard,
+  .ctaCard {
+    padding: 22px;
+  }
+
+  .jobTopRow {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

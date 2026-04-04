@@ -1,65 +1,202 @@
-section.jobOpenings {
-    background-color: #f5f5f5;
+.container1 {
+  margin: 0 auto;
+  padding: 20px 20px;
 }
-.sectionHead p {
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 24px;
-    color: #020202;
-}
-.sectionHead h2 {
-    font-size: 2rem;
+
+.heading {
+    text-align: center;
+    font-size: 28px;
     font-weight: 700;
-    text-align: center;
-    color: #333;
+    margin-bottom: 30px;
+    margin: 0px 0rem;
+    letter-spacing: 1px;
     margin-bottom: 2rem;
-    line-height: 38.73px;
-        padding: 0;
 }
-.sectionHead {
-    margin-bottom: 10px;
-    color: #313131;
+
+.icon {
+  color: #E4A951;
+  font-size: 16px;
 }
-.sectionHead {
-    text-align: center;
-    margin-bottom: 20px;
+.descriptionBox {
+  background: #F6F6F6;
+  padding: 20px 24px;
+  font-size: 12px;
+  line-height: 1.6;
+
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+
+  box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+
+  border-top: 1px solid #ddd;
 }
-.sectionHead p {
-    font-size: 1rem;
-    color: #666;
+/* remove bottom radius when open */
+.cardOpen {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
-.secP {
-    padding: 60px 0;
+/* Apply Button at the bottom */
+.applyBtn {
+     background-color: #e7b554;
+    border: none;
+    padding: 10px 20px;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
 }
-@media screen and (max-width: 767px) {
-    .secP {
-        padding: 0;
-    }
-        .sectionHead h2 {
-        font-size: 1.8rem;
-    }
+
+.applyBtn:hover {
+  background: #e8b245;
 }
-@media only screen and (max-width: 900px) {
-        .sectionHead p {
-        font-size: 14px;
-        margin-top: 0;
-        line-height: 20px;
-    }
-        .sectionHead h2 {
-        margin-bottom: 0;
-    }
-        .sectionHead h2 {
-        font-size: 22px;
-    }
-    .careerBenefits.secP, .jobOpenings.secP {
-        padding-top: 0;
-    }
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
 }
-@media screen and (max-width: 990px) {
-    .sectionHead {
-        text-align: center;
-    }
-        .sectionHead h2 {
-        font-size: 24px;
-    }
+.cardContainer{
+ width: 80%;
+}
+
+.jobSpan{
+display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+/* CARD */
+.card3 {
+
+border-bottom: none;
+  border-radius: 10px;
+  padding: 20px 24px;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+  border-radius: 10px;
+background: #F6F6F6;
+box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.25);
+}
+/* When expanded */
+.cardOpen {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.card3:hover {
+  border: 1px solid #2d6cdf;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* LEFT SIDE */
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.jobSpantitle {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.department {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
+
+.infoRow {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.infoItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #555;
+}
+
+.infoItem svg {
+  font-size: 16px;
+  color: #666;
+}
+.meta {
+  display: flex;
+  gap: 20px;
+  font-size: 14px;
+  justify-content: space-around;
+  color: #444;
+  margin-top: 8px;
+}
+
+/* RIGHT SIDE */
+.right {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.button {
+  background: #2d6cdf;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
+
+.button:hover {
+  background: #1f4fbf;
+}
+
+@media (max-width: 768px) {
+  .cardContainer {
+    width: 100%;   /* more width for small screens */
+    margin: 0 auto; /* center it */
+  }
+  .container1 {
+    padding: 20px 20px ;
+  }
+  .heading{
+   font-size: 1.2rem;
+  }
+  .jobSpantitle{
+   font-size: 14px;
+  }
+  .jobSpan  img {
+    height: 1rem;
+   
+  }
+
+  .jobSpan{
+        display: flex;
+    gap: 1rem;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+    text-align: -webkit-right;
+}
+  
+
+  .right {
+    margin-top: 1rem;
+  }
+  .applyBtn{
+        padding: 5px 18px;
+            font-size: 14px;
+  }
+  .card3{
+        padding: 17px 10px;
+  }
+
+
 }

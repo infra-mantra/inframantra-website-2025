@@ -97,4 +97,7 @@
         margin: 0 10px;
     }
 
+.pageWidth{
+    padding-left: 1rem !important;
+}
    }

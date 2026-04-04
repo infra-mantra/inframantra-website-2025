@@ -23,6 +23,7 @@
     "@vercel/edge": "^1.1.1",
     "@vis.gl/react-google-maps": "^1.2.0",
     "axios": "^1.2.2",
+    "country-state-city": "^3.2.1",
     "dynamic": "^4.2.2",
     "formik": "^2.2.9",
     "he": "^1.2.0",

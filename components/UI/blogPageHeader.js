@@ -53,11 +53,11 @@ const PageHeader = (props) => {
                         <img
                             src={isDesktop?image:thumbnail}
                             alt={imageAlt || title || "Blog Image"}
-                        className={styles.blogHeaderImage}
+                            className={styles.blogHeaderImage}
                         />
                     
                     </picture>
-                    <p style={{"display":"flex","alignItems":"center","justifyContent":"center",    "margin": "1rem 21px"}}>{title}</p>
+                    <p className={styles.blogTitlep} style={{"display":"flex","alignItems":"center","justifyContent":"center",    "margin": "1rem 21px"}}>{title}</p>
                     </div>
                     </>
                  

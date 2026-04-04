@@ -1,140 +1,98 @@
-.secP {
-    padding: 60px 0;
-}
-.sectionHead {
-    text-align: center;
-    margin-bottom: 20px;
-}
-.sectionHead {
-    margin-bottom: 10px;
-    color: #313131;
-}
-.sectionHead h2 {
-    font-size: 2rem;
-    font-weight: 700;
-    text-align: center;
-    color: #333;
-    margin-bottom: 2rem;
-    line-height: 38.73px;
-    padding: 0;
-}
-.careerBenefits .sectionHead p {
-    width:70%;
-    font-weight: 400;
-    text-align: center;
-    margin: 0 auto;
-}
-.row.benefitsWrapper {
-    -moz-column-gap: 20px;
-    column-gap: 20px;
-}
-.benefitsWrapper {
-    DISPLAY: FLEX;
-    FLEX-WRAP: WRAP;
-    justify-content: space-between;
-    padding: 20px 0px;
+/* SECTION */
+.perkSection {
+  padding:0rem 2rem;
+  display:flex;
+  justify-content:center;
+  align-items:center ;
+  flex-direction: column;
 }
 
-.bnfItem .icon {
-    position: relative;
-    height: 65px;
-    text-align: center;
-}
-.icon {
-    color: #707070;
+.perkYl{
+  color: #E4A951;
 }
 
-.info {
-    padding: 1px;
-    width: 100%;
-    text-align: center;
+/* GRID */
+.perkWrapper {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 2rem;
 }
-.row {
-    display: flex;
+.perkHeading{
+color: #000;
+font-family: "Lexend Deca";
+font-size: 44px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+text-transform: capitalize;
 }
-.info h4 {
+
+
+/* CARD */
+.perkCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* IMAGE */
+.perkImageBox {
+flex-shrink: 0;
+background-color: #F0F0F0;
+border-radius:50%;
+width: 80px;
+height: 80px;
+display: flex;
+justify-content: center;
+align-items: center;
+fill: #F0F0F0;
+filter: drop-shadow(0 3.818px 3.818px rgba(0, 0, 0, 0.25));
+}
+
+/* TEXT */
+.perkTextBox {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* TITLE */
+.perkTitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* CONTENT */
+.perkContent {
+  font-size: 14px;
+  color: #555;
+  font-weight: 350;
+  margin: 0;
+}
+
+/* 📱 MOBILE */
+@media (max-width: 768px) {
+  .perkWrapper {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .perkTitle{
+    font-size: 14px;
+  }
+  .perkContent {
+   font-size: 12px;
+  }
+  .perkImageBox {
+   height: 69px;
+   width: 69px;
+  }
+  .perkSection {
+      padding:0rem 1rem;
+  }
+  .perkHeading{
+    white-space: nowrap;
     font-size: 1.2rem;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: .5rem;
-}
-.bnfItem {
-    text-align: left;
-    width: calc(20% - 16px);
-}
-.careerBenefits .bnfItem .info h4 {
-    color: #313131;
-    line-height: 1.4;
-}
-.bnfItem .info h4 {
-    font-size: 18px;
-    font-weight: 500;
-    margin: 0;
-}
-@media screen and (max-width: 767px) {
-    .info {
-        flex: 1 1;
-        padding-left: 1rem;
-        text-align: left;
-    }
-    .info h4 {
-        font-size: 1rem;
-        color: #333;
-        font-weight: 600;
-        margin-bottom: .5rem;
-    }
-    .info h4 {
-        font-size: 1rem;
-    }
-    .secP {
-        padding: 0;
-    }
-    .sectionHead h2 {
-        font-size: 1.8rem;
-    }
-}
-
-@media only screen and (max-width: 900px) {
-        .careerBenefits .bnfItem .info h4 {
-        font-size: 16px;
-        padding: 0 10px;
-    }
-        .bnfItem .icon {
-        width: 65px;
-        margin: 0 auto;
-    }
-        .bnfItem {
-        width: 50%;
-        text-align: center;
-    }
-        .row.benefitsWrapper {
-        flex-wrap: wrap;
-        -moz-column-gap: 0;
-        column-gap: 0;
-        justify-content: center;
-        row-gap: 20px;
-    }
-    .careerBenefits.secP, .jobOpenings.secP {
-        padding-top: 0;
-    }
-        .sectionHead p {
-        font-size: 14px;
-        margin-top: 0;
-        line-height: 20px;
-    }
-        .careerBenefits .sectionHead p {
-        width: 100%;
-    }
-        .sectionHead h2 {
-        margin-bottom: 0;
-        font-size: 22px;
-    }
-}
-@media screen and (max-width: 990px) {
-    .sectionHead {
-        text-align: center;
-    }
-    .sectionHead h2 {
-        font-size: 24px;
-    }
+  }
 }

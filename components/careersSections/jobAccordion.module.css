@@ -12,12 +12,13 @@
 }
 .modalBody {
   max-width: 800px;
-  background: #fff;
-  padding: 30px;
-  padding-top: 20px;
-  box-shadow: 0px 5px 20px -10px rgb(0 0 0 / 70%);
-  border-radius: 15px;
   width: 100%;
+  max-height: 90vh;     /* ✅ prevents overflow */
+  overflow-y: auto;     /* ✅ scroll inside */
+  scrollbar-width: none;
+  background: #fff;
+  padding: 30px 20px;
+  border-radius: 15px;
   position: relative;
 }
 .modalBody .close {
@@ -34,7 +35,7 @@
   justify-content: center;
   border-radius: 50%;
   border: 0px;
-  background: #C3972F;
+  background: #e7b554;
   color: #fff;
   opacity: 0.6;
   z-index: 99;
@@ -143,6 +144,58 @@
 .jobsWrapper .textWrap p {
     color: #6e6e6e;
 }
+.formGroup input,
+.formGroup textarea {
+  width: 100%;
+  border: 1px solid #cccccc;
+  padding: 8px;
+  border-radius: 7px;
+  font-size: 15px;
+}
+.formGroup {
+    margin-bottom: 15px;
+    border-radius: 3px;
+    display: flex
+;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.formGroup {
+    position: relative;
+    margin: 22px 0;
+}
+.formGroup select {
+  width: 100%;
+  border: 1px solid #cccccc;
+  padding: 8px 12px; /* padding like inputs, left/right slightly larger */
+  border-radius: 7px;
+  font-size: 15px;
+  background-color: #fff; /* white background */
+  -webkit-appearance: none;  /* remove default arrow on WebKit */
+  -moz-appearance: none;     /* remove default arrow on Firefox */
+  appearance: none;          /* standard */
+  cursor: pointer;
+  /* Optional: add some right padding to make space for custom arrow */
+  padding-right: 30px;
+  box-sizing: border-box;
+  color: #313131;
+  font-family: inherit;
+  line-height: 1.5;
+  /* For IE fallback */
+  background-image: url("data:image/svg+xml;utf8,<svg fill='none' height='12' stroke='%23313131' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' viewBox='0 0 24 24' width='12' xmlns='http://www.w3.org/2000/svg'><polyline points='6 9 12 15 18 9'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px 12px;
+}
+
+/* Optional: Remove focus outline and add subtle border color */
+.formGroup select:focus {
+  outline: none;
+  border-color: #c3972f;
+  box-shadow: 0 0 3px #c3972f;
+}
 .themeBtn {
     position: relative;
     background-color: #313131;
@@ -180,6 +233,22 @@
     display: inline-flex;
     align-items: center;
 }
+
+.loader {
+  width: 18px;
+  height: 18px;
+  border: 3px solid #fff;
+  border-top: 3px solid transparent;
+  border-radius: 50%;
+  display: inline-block;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 @media (max-width: 768px) {
         .themeBtn {
         font-size: .875rem;
@@ -197,6 +266,7 @@
         margin-top: 1rem;
     }
 }
+
 
 @media only screen and (max-width: 900px) {
         .text-wrap p {

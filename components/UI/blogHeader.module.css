@@ -55,6 +55,7 @@
     .blogHeaderImage {
     width: 55rem;
 }
+
 .blogHeaderImage {
     -o-object-fit: fill;
     object-fit: fill;
@@ -73,9 +74,9 @@
     }
     .blogHeaderImageContainer {
         overflow: hidden;
-        height: 20.688rem;
+        height: auto;
         width: 100%;
-        border-radius: 1.25rem;
+        border-radius:0px;
         margin-left: auto;
         margin-right: 3.81rem;
         display: flex;
@@ -84,9 +85,18 @@
         margin: auto;
     }
         .blogHeaderImage {
-        -o-object-fit: fill;
+        -o-object-fit: contain;
         width: 99%;
-            object-fit: fill;
-    height: 28.688rem;
+            object-fit: contain;
+    height: auto !important;
     }
+    .blogBannerContent .pageWidth h1{
+    font-size: 1.2rem;
+}
+.blogPageHeader{
+ padding: 0px 0px ;
+}
+.blogTitlep{
+ display: none !important;
+}
     }

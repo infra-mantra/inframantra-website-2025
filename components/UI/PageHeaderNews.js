@@ -62,6 +62,7 @@ const PageHeader = ({ data }) => {
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
+                className={styles.blogTitle}
               >
                 {title}
               </p>

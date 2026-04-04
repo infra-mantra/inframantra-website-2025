@@ -6,6 +6,7 @@
     gap: 20px;
     padding: 20px 0;
 }
+
 .blogBannerContent {
     flex: 0 0 40%;
     width: 70%;
@@ -71,3 +72,10 @@ p.date {
     font-weight: 500;
     line-height: normal;
 }
+
+    @media (max-width: 768px) {
+.blogBannerContent .pageWidth h1 {
+  
+    font-size: 1.2rem;
+}
+    }

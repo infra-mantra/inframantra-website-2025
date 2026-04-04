@@ -230,7 +230,7 @@ p.date {
     top: -43px;
 }
     .sdLatestBlogs {
-        width: 90%;
+        width: 100%;
         padding: 15px;
         border-radius: 7.539px;
         background: rgba(217, 217, 217, 0.15);
@@ -264,6 +264,12 @@ p.date {
     }
     .toc{
       display: none;
+    }
+    .sdCard{
+      display: none;
+    }
+    .secP{
+      padding: 0px 0px;
     }
 }
 
