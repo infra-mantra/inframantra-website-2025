@@ -4,15 +4,6 @@
 const path = require('path');
 const loaderUtils = require('loader-utils');
 const { redirects } = require('./utils/redirectUrl');
-const runtimeCaching = require('./pwa/runtimeCaching');
-
-const withPWA = require('next-pwa')({
-  dest: 'public',
-  runtimeCaching,
-  register: true,
-  skipWaiting: true,
-  disable: process.env.NODE_ENV === 'development',
-});
 
 /* ───────────────────────────────────────────────────────────── */
 /*  CUSTOM CLASS NAME GENERATOR                                   */
@@ -119,4 +110,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withPWA(nextConfig);
+module.exports = nextConfig;
