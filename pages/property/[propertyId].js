@@ -52,6 +52,7 @@ const schemaInfo = {
       keyword={propertyData.metaKeywords}
       image={schemaInfo.image}
       schema={schemaInfo}
+      faq={propertyData.faqs}
     >
       <div className="propertyPageWrapper" >
         <PropertyHeaderImageGallery imageGallery={propertyData.imageGallery} propertyData={propertyData}/>
