@@ -80,9 +80,9 @@ function Home({allData}) {
 
   return (
     
-    <Wrapper
-      title={'INFRAMANTRA -Top Real Estate Company in Gurgaon, Noida and Pune'}
-      description={'INFRAMANTRA is the best real estate company in Gurugram, Noida, and Pune, offering residential, commercial properties, and apartments/flats with expert consulting.'}
+     <Wrapper
+      title={'INFRAMANTRA - Making Realty A Reality For You'}
+      description={'INFRAMANTRA is a Real Estate Firm that helps to Build Value on Residential and Commercial properties. We work with the top Builders in Gurgaon, Pune, and Noida.'}
       keyword={'InfraMantra, Residential Properties, Commercial Properties,  Apartments, Flats, Buy flat in gurgaon, buy property in gurgaon,gurgaon property prices, Apartments for sale in gurugram, buy apartment in gurgaon, buy Properties in gurgaon, real estate in gurgaon, best property to buy in gurgaon, noida   apartment for sale, Pune property prices, buy property noida, buy residential property in pune, Property for purchase in gurugram'}
       selectedItem={selectedItems}
     >
