@@ -44,7 +44,7 @@ const addHeadingIDs = (html = "") =>
   );
 
 /* ==============================
-   🔥 MANUAL CMS FORM INSERTION
+   FORM MARKER SPLIT
 ============================== */
 
 const insertFormByMarker = (html) => {
@@ -106,9 +106,7 @@ export default function BlogContent({
     detailContent.content ||
     "";
 
-  let html = addHeadingIDs(
-    decodeEntities(raw)
-  );
+  let html = addHeadingIDs(decodeEntities(raw));
 
   const {
     before: contentBeforeCTA,
@@ -124,9 +122,7 @@ export default function BlogContent({
       /<h([2-4])[^>]*>([\s\S]*?)<\/h\1>/gi
     ),
   ].map(([_, __, inner], i) => {
-    const txt = decodeEntities(
-      stripTags(inner)
-    );
+    const txt = decodeEntities(stripTags(inner));
     const id = txt
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
@@ -140,10 +136,7 @@ export default function BlogContent({
   });
 
   return (
-    <Section
-      classes={styles.secP}
-      pageWidth="container"
-    >
+    <Section classes={styles.secP} pageWidth="container">
       <div className={styles.blogContentWrap}>
         <div className={styles.flexLayout}>
 
@@ -155,8 +148,6 @@ export default function BlogContent({
 
           {/* ================= BLOG ================= */}
           <article className={styles.textWrap}>
-
-            {/* Content Before Marker */}
             <div
               className="content prose lg:prose-lg max-w-none"
               dangerouslySetInnerHTML={{
@@ -164,18 +155,15 @@ export default function BlogContent({
               }}
             />
 
-            {/* If Marker Exists → Show Form */}
+            {/* FORM INJECTION */}
             {contentAfterCTA !== null && (
               <>
-                <div
-                  style={{
-                    margin: "40px 0",
-                  }}
-                >
-                {!isDesktop &&(  <SubmitEnquiry slug={slug} />)}
+                <div style={{ margin: "40px 0" }}>
+                  {!isDesktop && (
+                    <SubmitEnquiry slug={slug} />
+                  )}
                 </div>
 
-                {/* Remaining Content */}
                 <div
                   className="content prose lg:prose-lg max-w-none"
                   dangerouslySetInnerHTML={{
@@ -195,8 +183,7 @@ export default function BlogContent({
           <aside
             className={styles.sidebar}
             style={
-              data.type === "news" &&
-              isDesktop
+              data.type === "news" && isDesktop
                 ? { marginTop: "-215px" }
                 : {}
             }
@@ -206,25 +193,16 @@ export default function BlogContent({
                 <h3>Recent Blogs</h3>
               </div>
 
-              <div
-                className={
-                  styles.sdLatestBlogs
-                }
-              >
+              <div className={styles.sdLatestBlogs}>
                 {recent.map((b) => {
-                  const title =
-                    decodeEntities(b.title);
+                  const title = decodeEntities(b.title);
 
                   return (
                     <Link
                       href={`/blog/${b.slug}`}
                       key={b.slug}
                     >
-                      <a
-                        className={
-                          styles.sdBlgItem
-                        }
-                      >
+                      <a className={styles.sdBlgItem}>
                         <div className="icon">
                           {b.image ? (
                             <img
@@ -235,35 +213,20 @@ export default function BlogContent({
                             <div
                               style={{
                                 width: "60px",
-                                height:
-                                  "60px",
-                                background:
-                                  "#ccc",
+                                height: "60px",
+                                background: "#ccc",
                               }}
                             />
                           )}
                         </div>
 
-                        <div
-                          className={
-                            styles.info
-                          }
-                        >
-                          <p
-                            className={
-                              styles.date
-                            }
-                          >
+                        <div className={styles.info}>
+                          <p className={styles.date}>
                             {b.date}
                           </p>
                           <h3>
-                            {title.length >
-                            40
-                              ? title.slice(
-                                  0,
-                                  37
-                                ) +
-                                "…"
+                            {title.length > 40
+                              ? title.slice(0, 37) + "…"
                               : title}
                           </h3>
                         </div>
@@ -271,22 +234,19 @@ export default function BlogContent({
                     </Link>
                   );
                 })}
-
-                <div className="stickyBlog">
-                  <HomePageCta
-                    popUpenable={
-                      popForm
-                    }
-                    onClickOff={
-                      onClickOff
-                    }
-                    text="OUR EXPERT TEAM IS HERE TO HELP YOU WITH YOUR QUERY."
-                    name={slug}
-                  />
-                </div>
               </div>
             </div>
           </aside>
+
+          {/* ================= ✅ FIXED CTA ================= */}
+          <div className="stickyBlog">
+            <HomePageCta
+              popUpenable={popForm}
+              onClickOff={onClickOff}
+              text="OUR EXPERT TEAM IS HERE TO HELP YOU WITH YOUR QUERY."
+              name={slug}
+            />
+          </div>
 
         </div>
       </div>
