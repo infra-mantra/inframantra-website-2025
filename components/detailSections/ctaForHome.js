@@ -8,6 +8,7 @@ import style from "./ctaForHome.module.css"
 import { MdLocationOn } from "react-icons/md";
 import { IoMdCall } from "react-icons/io";
 import { MdMail } from "react-icons/md";
+import { FcApproval } from "react-icons/fc";
 function App({name ,displayMap = true}) {
   
   const [isDesktop, setIsDesktop] = useState(true);
@@ -133,6 +134,10 @@ function App({name ,displayMap = true}) {
             <div className={style.homePageContactUsLeftDetailFlex}>
               <div style={{ color: '#E7B554', fontSize: '25px', marginRight: '10px' }}><MdMail /></div>
               <p>marketing@inframantra.com</p>
+            </div>
+              <div className={style.homePageContactUsLeftDetailFlex}>
+              <div style={{ color: '#E7B554', fontSize: '25px', marginRight: '10px' }}><FcApproval /></div>
+              <p> HARERA/GGM/1813/1408/2022/181</p>
             </div>
           </div>
         </div>

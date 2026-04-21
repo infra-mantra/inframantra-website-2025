@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import CountUp from "react-countup";
 import styles from "./HeroSection.module.css";
+import { FcApproval } from "react-icons/fc";
 
 const stats = [
   { end: 50, suffix: "+", label: "Developer partners" },
@@ -39,6 +40,27 @@ export default function HeroSection() {
         <h1 className={styles.mainTitle}>Trusted Real Estate Consultancy</h1>
 
         <div className={styles.since}>Since 2017</div>
+         <div ></div>
+                     <p
+  style={{
+    color: "#fff",
+    display: "flex",
+    justifyContent: "center",
+    fontSize: "1.2rem",
+    alignItems: "center",
+  }}
+>
+  <span
+    style={{
+      color: "#E7B554",
+      fontSize: "25px",
+      marginRight: "10px",
+    }}
+  >
+    <FcApproval />
+  </span>
+  HARERA/GGM/1813/1408/2022/181
+</p>
 
         <p className={styles.description}>
    Powered by a customer-first approach, Inframantra connects you to prime real estate opportunities across India.      

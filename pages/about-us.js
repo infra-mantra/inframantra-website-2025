@@ -8,6 +8,7 @@ import Developer from "../components/newComponents/AboutUsPage/developerSlider";
 import BrandAmbassador from "../components/newComponents/AboutUsPage/brandAmbassador";
 import Vision from "../components/newComponents/AboutUsPage/vision"
 
+
 import dynamic from "next/dynamic";
 const AwardsSlider = dynamic(
   () => import("../components/newComponents/AboutUsPage/aboutUsTimeline/Award"),
