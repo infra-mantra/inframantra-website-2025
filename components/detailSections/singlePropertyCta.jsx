@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 
 function App({ name }) {
 
+
   const [isDesktop, setIsDesktop] = useState(true);
   const [isMobile, setIsMobile] = useState(true);
   const [loading, setLoading] = useState(false); // NEW
@@ -24,6 +25,18 @@ function App({ name }) {
     window.addEventListener('resize', checkScreenWidth);
     return () => window.removeEventListener('resize', checkScreenWidth);
   }, []);
+
+    useEffect(() => {
+  const alreadyClosed = localStorage.getItem("ctaClosed");
+
+  if (!alreadyClosed) {
+    const timer = setTimeout(() => {
+    ;
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }
+}, []);
 
   const [formData, setFormData] = useState({
     name: '',

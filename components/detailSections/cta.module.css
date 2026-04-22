@@ -61,7 +61,7 @@
   background: #F1E2C2;
   padding: 3px 20px;
   border-radius: 10px;
-  width: 25% !important;
+  width:26% !important;
   max-width: 100%;
   transform: translateY(-30px);
   transition: transform 1000ms ease-out;

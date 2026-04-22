@@ -16,6 +16,8 @@ import Sitevisit from "../../components/newComponents/propertyIndividualPage/sit
 import Developer from "../../components/newComponents/propertyIndividualPage/developer";
 import FaqSection from "../../components/newComponents/propertyIndividualPage/faq";
 import CtaForHome from "../../components/detailSections/singlePropertyCta";
+import PopUpForm from '../../components/detailSections/CTA_NEW'
+
 
 const PropertyDetail = ({ allData }) => {
   const router = useRouter();
@@ -23,6 +25,20 @@ const PropertyDetail = ({ allData }) => {
   const containerRef = useRef(null);
   const [locoScroll, setLocoScroll] = useState(null);
  const [propertyData, setPropertyData] = useState(allData.propertyData.data);
+  const [popForm, setPopForm] = useState(false);
+        const onClickOff = (val) =>setPopForm(val)
+        const handleform = () => setPopForm(true);
+        useEffect(() => {
+  const alreadyClosed = localStorage.getItem("popFormClosed");
+
+  if (!alreadyClosed) {
+    const timer = setTimeout(() => {
+      setPopForm(true);
+    }, 5000); // 5 seconds
+
+    return () => clearTimeout(timer);
+  }
+}, []);
 
 useEffect(() => {
   setPropertyData(allData.propertyData.data);
@@ -104,6 +120,12 @@ const schemaInfo = {
           </div>
      
         </div>
+          <PopUpForm
+        popUpenable={popForm}
+        onClickOff={onClickOff}
+        text="TO CONNECT WITH OUR PROPERTY ADVISOR "
+        name={schemaInfo.name}
+        />
       </div>
     </Wrapper>
   );
