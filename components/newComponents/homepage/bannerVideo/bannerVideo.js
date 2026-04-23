@@ -1,30 +1,29 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from './banner.module.css';
 
 const BannerVideo = () => {
   const slides = [
     {
-      className: styles.slideImage1,
       link: 'https://inframantra.com/property/whiteland-the-westin-residences-sector-103-gurugram',
-      
+      className: styles.slideImage1,
     },
     {
-      className: styles.slideImage2,
       link: 'https://inframantra.com/property/tulip-monsella-sector-53-gurgaon',
+      className: styles.slideImage2,
     },
     {
-      className: styles.slideImage3,
       link: 'https://inframantra.com/property/tulip-melrose-sector-70-gurgaon',
+      className: styles.slideImage3,
     },
     {
-      className: styles.slideImage4,
       link: 'https://inframantra.com/property/bptp-downtown-66-sector-66-gurgaon',
+      className: styles.slideImage4,
     },
     {
-      className: styles.slideImage5,
       link: 'https://inframantra.com/property/vatika-seven-elements-sector-89a-gurgaon',
+      className: styles.slideImage5,
     },
   ];
 
@@ -56,23 +55,28 @@ const BannerVideo = () => {
     },
   ];
 
-  // ✅ Detect active slide and redirect
+  // ✅ BEST detection logic (no mismatch)
   const handleClick = () => {
-    for (let i = 0; i < slides.length; i++) {
-      const el = document.querySelector(`.${slides[i].className}`);
-      if (el) {
-        const opacity = window.getComputedStyle(el).opacity;
-        if (opacity > 0.5) {
-          window.location.href = slides[i].link;
-          break;
-        }
+    let maxOpacity = 0;
+    let activeIndex = 0;
+
+    const allSlides = document.querySelectorAll(`.${styles.slideImage}`);
+
+    allSlides.forEach((el, index) => {
+      const opacity = parseFloat(window.getComputedStyle(el).opacity);
+
+      if (opacity > maxOpacity) {
+        maxOpacity = opacity;
+        activeIndex = index;
       }
-    }
+    });
+
+    window.location.href = slides[activeIndex].link;
   };
 
   return (
     <>
-      {/* 🔴 BACKGROUND (unchanged) */}
+      {/* 🔴 BACKGROUND */}
       <div className={styles.demoBanner}>
         <div className={styles.slideshow}>
           {images.map((img, index) => (
@@ -82,22 +86,23 @@ const BannerVideo = () => {
                 src={img.desktop}
                 alt={img.alt}
                 className={`${styles.slideImage} ${slides[index].className}`}
+                draggable="false"
               />
             </picture>
           ))}
         </div>
       </div>
 
-      {/* 🟢 CLICK OVERLAY (THIS FIXES EVERYTHING) */}
+      {/* 🟢 CLICK OVERLAY */}
       <div
         onClick={handleClick}
         style={{
           position: 'absolute',
-          top: "10vh",
+          top: '10vh',
+          bottom: '8vh',
           left: 0,
-          bottom:"8vh",
-          width: '100vw',
-          zIndex: 1, // above everything
+          right: 0,
+          zIndex: 2,
           cursor: 'pointer',
           background: 'transparent',
         }}
