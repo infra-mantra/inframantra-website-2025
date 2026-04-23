@@ -1,78 +1,108 @@
-import React, { useState, useEffect } from 'react';
+'use client';
+
+import React, { useEffect } from 'react';
 import styles from './banner.module.css';
 
 const BannerVideo = () => {
-  const [width, setWidth] = useState(0);
-
-  useEffect(() => {
-    // set initial width on client
-    setWidth(window.innerWidth);
-
-    function handleWindowSizeChange() {
-      setWidth(window.innerWidth);
-    }
-
-    window.addEventListener('resize', handleWindowSizeChange);
-    return () => {
-      window.removeEventListener('resize', handleWindowSizeChange);
-    };
-  }, []);
-
-  const isMobile = width <= 768;
-
-  // Desktop images
-  const desktopImages = [
+  const slides = [
     {
-      src: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/revampHomePage/satya-banner-web.webp',
-      alt: 'Satya Levante',
       className: styles.slideImage1,
+      link: 'https://inframantra.com/property/whiteland-the-westin-residences-sector-103-gurugram',
+      
     },
     {
-      src: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/revampHomePage/tulip%20monsella.jpg',
+      className: styles.slideImage2,
+      link: 'https://inframantra.com/property/tulip-monsella-sector-53-gurgaon',
+    },
+    {
+      className: styles.slideImage3,
+      link: 'https://inframantra.com/property/tulip-melrose-sector-70-gurgaon',
+    },
+    {
+      className: styles.slideImage4,
+      link: 'https://inframantra.com/property/bptp-downtown-66-sector-66-gurgaon',
+    },
+    {
+      className: styles.slideImage5,
+      link: 'https://inframantra.com/property/vatika-seven-elements-sector-89a-gurgaon',
+    },
+  ];
+
+  const images = [
+    {
+      desktop: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/WESTIN%20final%20d%20L.webp',
+      mobile: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/WESTIN%20final%20m%20L.webp',
+      alt: 'Westin',
+    },
+    {
+      desktop: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/tulip%20monsella%20final%20d%20L.webp',
+      mobile: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/monsela%20final.webp',
       alt: 'Tulip Monsella',
-      className: styles.slideImage2,
     },
     {
-      src: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/revampHomePage/vatika%20seven%20elements.jpg',
-      alt: 'Vatika Seven Elements',
-      className: styles.slideImage3,
+      desktop: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/tulip%20melrose%20final%20L.webp',
+      mobile: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/melrose%20mobile%20final%20L.webp',
+      alt: 'Tulip Melrose',
+    },
+    {
+      desktop: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/bptp%2066%20final%20d%20L.webp',
+      mobile: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/bptp%20mobile%20final%20LL.png',
+      alt: 'BPTP 66',
+    },
+    {
+      desktop: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/vatika%20d%20final%20L.webp',
+      mobile: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/seven%20elements%20final%20mobile%20L.webp',
+      alt: 'Vatika',
     },
   ];
 
-  // Mobile images
-  const mobileImages = [
-    {
-      src: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/revampHomePage/mobile-banner.webp',
-      alt: 'Satya Levante Mobile',
-      className: styles.slideImage1,
-    },
-    {
-      src: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/mobilebanner/monsella.jpg',
-      alt: 'Tulip Monsella Mobile',
-      className: styles.slideImage2,
-    },
-    {
-      src: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/mobilebanner/seven%20elements.jpg',
-      alt: 'Vatika Seven Elements Mobile',
-      className: styles.slideImage3,
-    },
-  ];
-
-  const imagesToRender = isMobile ? mobileImages : desktopImages;
+  // ✅ Detect active slide and redirect
+  const handleClick = () => {
+    for (let i = 0; i < slides.length; i++) {
+      const el = document.querySelector(`.${slides[i].className}`);
+      if (el) {
+        const opacity = window.getComputedStyle(el).opacity;
+        if (opacity > 0.5) {
+          window.location.href = slides[i].link;
+          break;
+        }
+      }
+    }
+  };
 
   return (
-    <div className={styles.demoBanner}>
-      <div className={styles.slideshow}>
-        {imagesToRender.map((img, index) => (
-          <img
-            key={index}
-            src={img.src}
-            alt={img.alt}
-            className={`${styles.slideImage} ${img.className}`}
-          />
-        ))}
+    <>
+      {/* 🔴 BACKGROUND (unchanged) */}
+      <div className={styles.demoBanner}>
+        <div className={styles.slideshow}>
+          {images.map((img, index) => (
+            <picture key={index}>
+              <source media="(max-width: 768px)" srcSet={img.mobile} />
+              <img
+                src={img.desktop}
+                alt={img.alt}
+                className={`${styles.slideImage} ${slides[index].className}`}
+              />
+            </picture>
+          ))}
+        </div>
       </div>
-    </div>
+
+      {/* 🟢 CLICK OVERLAY (THIS FIXES EVERYTHING) */}
+      <div
+        onClick={handleClick}
+        style={{
+          position: 'absolute',
+          top: "10vh",
+          left: 0,
+          bottom:"8vh",
+          width: '100vw',
+          zIndex: 1, // above everything
+          cursor: 'pointer',
+          background: 'transparent',
+        }}
+      />
+    </>
   );
 };
 

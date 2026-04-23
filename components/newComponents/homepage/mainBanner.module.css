@@ -3,13 +3,20 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    height: 67vh;
+    height: 75vh;
 }
 
+
 .homePageheaderContainer {
-    height: 64vh;
+    height: 71vh;
     width: 100vw;
     position: relative;
     overflow: visible;
 }
+@media (min-width: 1400px) {
+  .homePageheader {
+    height: 71vh !important;
+  }
+}
+
 

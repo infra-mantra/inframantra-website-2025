@@ -3,6 +3,8 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper';
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+
 import PropertyCard from '../shared/PropertyCard';
 import CitySelector from './CitySelector';
 import styles from './premiumPicksSection.module.css';
@@ -23,7 +25,7 @@ export default function PremiumPicksSection({
   const router = useRouter();
 
   const handleCityChange = (city) => {
-    console.log('Selected City:', city); // ✅ Will now log on mobile
+    console.log('Selected City:', city);
     onUpdate(city);
   };
 
@@ -45,6 +47,7 @@ export default function PremiumPicksSection({
   return (
     <div className={styles.premiumPicksContainer}>
       <div className={styles.premiumContentWrapper}>
+
         {/* Header */}
         <div className={styles.premiumSectionHeader}>
           <h1 className={styles.premiumMainTitle}>Premium Picks</h1>
@@ -80,25 +83,34 @@ export default function PremiumPicksSection({
         {/* Swiper Carousel */}
         {data.length > 0 && (
           <div className={styles.premiumCarouselContainer}>
+
+            {/* Custom Arrows */}
+            <div className={`${styles.arrow} ${styles.prev}`}>
+              <FiChevronLeft />
+            </div>
+            <div className={`${styles.arrow} ${styles.next}`}>
+              <FiChevronRight />
+            </div>
+
             <Swiper
-              key={selectedCity} // ✅ Forces re-render when city changes
+              key={selectedCity}
               modules={[Navigation, Pagination, Autoplay]}
+              navigation={{
+                prevEl: `.${styles.prev}`,
+                nextEl: `.${styles.next}`,
+              }}
               spaceBetween={20}
               autoplay={{
                 delay: 5000,
                 disableOnInteraction: false,
                 pauseOnMouseEnter: true,
               }}
-              touchStartPreventDefault={false} // ✅ Fix mobile touch issues
+              touchStartPreventDefault={false}
               breakpoints={{
                 320: { slidesPerView: 1.5, spaceBetween: 16 },
                 480: { slidesPerView: 1.8, spaceBetween: 16 },
                 768: { slidesPerView: 2.5, spaceBetween: 20 },
                 1024: {
-                  slidesPerView: Math.min(4, data.length),
-                  spaceBetween: 24,
-                },
-                1200: {
                   slidesPerView: Math.min(4, data.length),
                   spaceBetween: 24,
                 },
@@ -124,6 +136,7 @@ export default function PremiumPicksSection({
             View All
           </button>
         </div>
+
       </div>
     </div>
   );
