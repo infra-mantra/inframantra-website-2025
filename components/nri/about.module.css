@@ -1,0 +1,228 @@
+/* AboutSection.module.css - Exact Match to Emaar Sales Centre */
+
+.aboutSection {
+  padding: 2rem 1rem;
+  /* background-color: #f1f1f1; */
+   /* background-color: #F6F6F6; */
+  width: 100%;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+
+}
+
+.aboutContent {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 80px;
+
+  align-items: flex-start;
+}
+
+/* ===================== LEFT SIDE - Text Content ===================== */
+.aboutLeft {
+  flex: 1;
+  min-width: 340px;
+}
+
+.sectionHead > div {
+  display: inline-block;
+
+  color: #222222;
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  padding: 7px 0px;
+  border-radius: 50px;
+  margin-bottom: 18px;
+  text-transform: uppercase;
+}
+
+.sectionHead h2 {
+  font-size: 1.8rem;
+  line-height: 1.08;
+  font-weight: 700;
+  color: #d4a64a;
+  margin: 0 0 32px 0;
+}
+
+.aboutDetails p {
+  font-size: 1rem;
+  line-height: 1.78;
+  color: #444444;
+  font-weight: 300;
+  margin-bottom: 26px;
+}
+
+.aboutDetails p:last-child {
+  margin-bottom: 38px;
+}
+
+/* Button Styles */
+.ctaBtns {
+  display: flex;
+}
+
+.registerBtn {
+  background-color: #000000;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 17px 36px;
+  border-radius: 6px;
+  text-decoration: none;
+  border: 2px solid #000000;
+  transition: all 0.35s ease;
+  min-width: 260px;
+  text-align: center;
+}
+
+.registerBtn:hover {
+  background-color: #ffffff;
+  color: #000000;
+  transform: translateY(-2px);
+}
+
+/* ===================== RIGHT SIDE - Statistics ===================== */
+.aboutRight {
+  flex: 1;
+  min-width: 340px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 26px;
+}
+
+.aboutItem {
+ 
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+ 
+  text-align: center;
+  transition: all 0.4s ease;
+}
+
+.aboutItem:hover {
+  background-color: #ffffff;
+  border-color: #e8e8e8;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+  transform: translateY(-5px);
+}
+
+.aboutItem img {
+  width: 54px;
+  height: 54px;
+  margin-bottom: 24px;
+}
+
+.aboutItem h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #d4a64a;
+  margin: 0 0 10px 0;
+  line-height: 1.1;
+}
+
+.aboutItem p {
+  font-size: 13px;
+  color: #555555;
+  margin: 0;
+  line-height: 1.45;
+}
+
+/* ===================== MOBILE BUTTON ===================== */
+.aboutBelowBtns {
+  display: none;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+/* ===================== RESPONSIVE DESIGN ===================== */
+
+@media (max-width: 1100px) {
+  .aboutContent {
+    gap: 60px;
+  }
+
+  .sectionHead h2 {
+    font-size: 42px;
+  }
+}
+
+@media (max-width: 992px) {
+
+}
+
+@media (max-width: 768px) {
+  .aboutContent {
+    flex-direction: column;
+    gap: 0px;
+  }
+  .aboutDetails p{
+    font-size: 12px;
+  }
+  .sectionHead > div{
+    display: flex;
+    justify-content: center;
+    background-color: #fff;
+  }
+  .aboutItem img{
+    margin-bottom: 0px;
+    padding: 6px;
+  }
+
+
+  .aboutRight {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+  }
+  .aboutSection {
+    padding: 12px 0px;
+  }
+
+
+
+  .aboutItem h3 {
+    font-size: 1rem;
+  }
+
+  /* Hide desktop button, show mobile button */
+  .aboutAboveBtns {
+    display: none;
+  }
+
+  .aboutBelowBtns {
+    display: flex;
+  }
+}
+
+@media (max-width: 576px) {
+ 
+
+  .sectionHead h2 {
+    font-size: 20px;
+  }
+
+  .aboutRight {
+    grid-template-columns: 1fr 1fr;   /* Single column on very small screens */
+    gap: 20px;
+  }
+
+  .registerBtn {
+    min-width: 100%;
+    padding: 16px 24px;
+    font-size: 15.5px;
+  }
+
+}
+
+@media (max-width: 991px) {
+    .aboutContent {
+        flex-direction: column;
+        margin: 11px 0px;
+    }
+    .aboutDetails p {
+      font-size: 13px;
+    }
+}

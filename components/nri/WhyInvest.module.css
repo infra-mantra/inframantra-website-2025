@@ -1,0 +1,102 @@
+.sectionWhy {
+  background-color: #000;
+  padding: 2rem 1rem;
+    
+    margin: 0 auto;
+}
+.bgColor{
+  
+}
+
+.label {
+  font-size: 1rem;
+  color: #fff;
+  letter-spacing: 0.04em;
+  margin-bottom: 12px;
+  font-weight: 400;
+}
+
+.heading {
+ font-size: 1.8rem;
+    line-height: 1.08;
+    font-weight: 700;
+    color: #111111;
+    margin: 0 0 32px 0;
+}
+
+.headingDot {
+  position: absolute;
+  top: 18px;
+  right: 280px;
+  width: 7px;
+  height: 7px;
+  background-color: #c0392b;
+  border-radius: 50%;
+}
+
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.card {
+  background-color: #F1E2C2;
+  border-radius: 4px;
+  padding: 28px 28px 32px;
+  border: 1px solid #e8e8e8;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.iconWrapper {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.iconWrapper svg {
+  width: 28px;
+  height: 28px;
+  stroke: #888;
+  fill: none;
+  stroke-width: 1.2;
+}
+
+.cardTitle {
+  font-size: 18px;
+  font-weight: 500;
+  color: #d4a64a;
+  margin: 0;
+}
+
+.cardDescription {
+  font-size: 14px;
+  line-height: 1.65;
+  color: #555;
+  font-weight: 400;
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .section {
+    padding: 48px 24px 56px;
+  }
+  .cardsGrid {
+    grid-template-columns: 1fr;
+  }
+  .heading {
+    font-size: 20px;
+  }
+  .cardDescription{
+    font-size:13px ;
+  }
+}

@@ -7,8 +7,10 @@ import Ajax1 from '../helper/Ajax1';
 import { useRouter } from 'next/router';
 import { downloadBrochure } from '../helper/downloadBrochurePdf';
 import ctaStyle from "./cta.module.css";
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
-function App({ name, popUpenable = false, onClickOff, text, pdf  }) {
+function App({ name, popUpenable = false, onClickOff, text, pdf  , phone="+91 86 9800 9900" }) {
 
   const [isAnimating, setIsAnimating] = useState(false);
   const [message, setMessage] = useState("");
@@ -134,21 +136,20 @@ function App({ name, popUpenable = false, onClickOff, text, pdf  }) {
                 />
               </div>
 
-              <div className={ctaStyle.formGroup}>
-                <input
-                  type="tel"
-                  placeholder="Phone Number"
-                  value={formData.phoneNumber}
-                  onChange={(e) => {
-                    const onlyNumbers = e.target.value.replace(/[^0-9]/g, '');
-                    setFormData({ ...formData, phoneNumber: onlyNumbers });
-                  }}
-                  inputMode="numeric"
-                  pattern="[0-9]*"
-                  minLength="10"
-                  required
-                />
-              </div>
+             <div className={ctaStyle.formGroup}>
+  <PhoneInput
+    country={'us'} // default India
+    enableSearch={true}
+    value={formData.phoneNumber}
+    onChange={(phone) =>
+      setFormData({ ...formData, phoneNumber: phone })
+    }
+    inputClass={ctaStyle.input}
+    containerClass={ctaStyle.phoneContainer}
+    buttonClass={ctaStyle.flagDropdown}
+    placeholder="Enter phone number"
+  />
+</div>
 
               <div className={ctaStyle.formGroup}>
                 <input
@@ -199,7 +200,7 @@ function App({ name, popUpenable = false, onClickOff, text, pdf  }) {
                 <div className={ctaStyle.ctaText}>
                   <p className={ctaStyle.numberFor}>
                     <FaPhoneAlt style={{ color: "green", marginRight: "1rem" }} />
-                    +91 86 9800 9900
+                    {phone}
                   </p>
                   <p className={ctaStyle.textForm}>Give us a call and book your visit now!</p>
                 </div>

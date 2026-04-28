@@ -1,0 +1,121 @@
+/* ProjectMap.module.css */
+
+/* ── Wrapper ──────────────────────────────────────────────────────────────── */
+.wrapper {
+     display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 500px;
+    /* border-radius: 12px; */
+    padding: 4px 1rem;
+    overflow: hidden;
+    box-shadow: -14 8px 40px rgba(0, 0, 0, 0.14);
+    background: #fff;
+}
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+/* ── Map ──────────────────────────────────────────────────────────────────── */
+.mapWrap {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.map {
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Tab bar ──────────────────────────────────────────────────────────────── */
+.tabBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0px;
+  background: #ffffff;
+  border-top: 1px solid #ebebeb;
+  overflow-x: auto;
+  flex-shrink: 0;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tabBar::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Tab button ───────────────────────────────────────────────────────────── */
+.tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1.5px solid #e0e0e0;
+  background: #fff;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+  letter-spacing: -0.01em;
+  transition: border-color 0.15s, background 0.15s, color 0.15s, box-shadow 0.15s;
+  line-height: 1;
+}
+
+.tab:hover {
+  border-color: #000;
+  color: #d4a64a;
+  background: #fdf8f0;
+}
+
+.tabActive {
+  background: #d4a64a;
+  color: #fff;
+  box-shadow: 0 2px 10px #d4a64a;
+}
+
+.tabActive:hover {
+  background: #d4a64a;
+  border-color: #b8964e;
+  color: #fff;
+}
+
+/* ── Mobile ───────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .wrapper {
+    height: 100%;
+    min-height: 380px;
+    border-radius: 8px;
+  }
+
+  .tabBar {
+    padding: 8px 10px;
+    gap: 6px;
+  }
+  .mapWrap{
+    flex:none 
+  }
+
+  .tab {
+    font-size: 12px;
+    padding: 7px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .wrapper {
+    min-height: 380px;
+    border-radius: 0;
+  }
+
+  .tab {
+    font-size: 11.5px;
+    padding: 6px 10px;
+  }
+}

@@ -1,3 +1,13 @@
+:root {
+  --gold: #dcaa4c;
+  --gold-light: #dcaa4c;
+  --dark: #111;
+  --text: #222;
+  --text-body: #333;
+  --border: #d6cfc0;
+  --nav-h: 90px;
+}
+
 html, body {
 
   overflow-x: clip;
@@ -10,6 +20,33 @@ html.has-scroll-smooth {
 }
 
 
+
+/* ── NRI page Swiper overrides ── */
+.nri-swiper .swiper-button-next,
+.nri-swiper .swiper-button-prev {
+  color: #fff;
+  background: rgba(8, 6, 3, 0.55);
+  width: 44px;
+  height: 44px;
+  transition: background 0.22s;
+}
+.nri-swiper .swiper-button-next:hover,
+.nri-swiper .swiper-button-prev:hover {
+  background: #dcaa4c;
+}
+.nri-swiper .swiper-button-next::after,
+.nri-swiper .swiper-button-prev::after {
+  font-size: 15px;
+  font-weight: 700;
+}
+.nri-swiper .swiper-pagination-bullet {
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 1;
+}
+.nri-swiper .swiper-pagination-bullet-active {
+  background: #dcaa4c;
+  transform: scale(1.2);
+}
 
 .pdf-container {
   display: flex

@@ -1,0 +1,107 @@
+/* ✅ FIXED: was .sidebarsticky */
+.sidebarst {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid #e4e4e4;
+  border-right: none;
+  border-radius: 8px 0 0 8px;
+  overflow: hidden;
+
+  box-shadow: -4px 4px 20px rgba(0, 0, 0, 0.10);
+  width: 78px;
+}
+
+/* rest is same as yours */
+.itemst {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  padding: 18px 10px 16px;
+  text-decoration: none;
+  color: #2a2a2a;
+  cursor: pointer;
+
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.itemst:hover,
+.itemHoveredst {
+  background: #f7f3ed;
+  color: #9a6f1a;
+}
+
+.iconWrapst {
+  width: 26px;
+  height: 26px;
+}
+
+.iconWrapstsvg {
+  width: 100%;
+  height: 100%;
+}
+
+.labelst {
+  font-size: 9px;
+  font-weight: 600;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.labelLinest {
+  display: block;
+}
+
+.dividerst {
+  position: absolute;
+  bottom: 0;
+  left: 12px;
+  right: 12px;
+  height: 1px;
+  background: #e8e8e8;
+}
+
+/* mobile */
+@media (max-width: 768px) {
+  .sidebarst {
+    top: unset;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: none;
+
+    flex-direction: row;
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .itemst {
+    flex: 1;
+    border-right: 1px solid #e8e8e8;
+  }
+
+  .itemst:last-child {
+    border-right: none;
+  }
+
+  .dividerst {
+    display: none;
+  }
+  .sidebarst{
+   display: flex;
+  }
+}
+@media (max-width: 768px) {
+   .sidebarst{
+   display: flex !important;
+  }
+}

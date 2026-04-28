@@ -64,6 +64,7 @@
   .navBarWishlistIcon {
     color: #ffff;
     cursor: pointer;
+    display: none;
   }
   
   .pageBgd {
