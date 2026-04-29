@@ -113,7 +113,7 @@ const FAQ = () => {
         popUpenable={popForm}
         onClickOff={onClickOff}
         text="TO UNLOCK EXCLUSIVE DEALS"
-        name="USA EXPO Faq"
+        name="USA EXPO"
         phone="+1 (213) 6575060"
         id="nriFaq"
         />

@@ -48,10 +48,11 @@ const LEAFLET_OVERRIDES = `
 const PROJECTS = [
   { id: 1, name: "Godrej Sora",       address: "Sector 53, DLF Phase 5, Gurugram",         lat: 28.436814234729656, lng: 77.09768719770094, brand: "godrej", isNew: false },
   { id: 2, name: "Godrej Miraya",     address: "Sector 43, Sushant Lok Phase I, Gurugram", lat: 28.451171319492865, lng: 77.09014162947909, brand: "godrej", isNew: false },
-  { id: 4, name: "Westin Residences", address: "Sector 103, Dwarka Expressway, Gurugram",  lat:  28.484542817912462, lng: 76.98487014246996, brand: "westin", isNew: false },
+ 
   { id: 5, name: "Tulip Monsella",    address: "Golf Course Road, Sector 53, Gurugram",    lat: 28.43466940880153, lng: 77.1034432670051, brand: "tulip",  isNew: false },
   { id: 6, name: "Tulip Melrose",     address: "Sector 70, Gurugram",                      lat:  28.394800850492956, lng: 77.01585311454005, brand: "tulip",  isNew: false },
   { id: 7, name: "Tulip Crimson",     address: "Sector 70, SPR Road, Gurugram",            lat: 28.3975290526242, lng: 77.01590097186407, brand: "tulip",  isNew: false },
+   { id: 4, name: "BPTP Downtown 66", address: "Sector 66 , Golf Course Extn Road, Gurugram",  lat:  28.393008421438967, lng: 77.05976718503354, brand: "BPTP Downtown 66", isNew: false },
 ];
 
 const GOLD      = "#dcaa4c";

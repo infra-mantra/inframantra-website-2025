@@ -39,21 +39,7 @@ const PROJECTS = [
       "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-page%20/Godrej%20Miraya/godrej%20Miraya.webp",
     ],
   },
-  {
-    id: "westin residences",
-    name: "westin residences",
-    categories: ["Apartments"],
-    logo: "https://inframantra.blr1.cdn.digitaloceanspaces.com/propertyLogo/tulipmelrose/images%20(2).jpeg",
-    size: "2537 sq.ft. Onwards",
-    beds: "3 & 4 BHK",
-    price: "Starting at ₹6.5 Cr. / $686K",
-    link: "https://inframantra.com/property/whiteland-the-westin-residences-sector-103-gurugram",
-    images: [
-      "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-page%20/wenstin/westin%20residences.webp",
-      "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-page%20/wenstin/westin%20residences%202.webp",
-      "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-page%20/wenstin/westin%20residences%203.webp",
-    ],
-  },
+ 
   {
     id: "Tulip Monsella",
     name: "Tulip Monsella",
@@ -97,6 +83,21 @@ const PROJECTS = [
       "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-page%20/Tulip%20Crimson/crimson%20(1).webp",
       "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-page%20/Tulip%20Crimson/crimson%20(2).webp",
       "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-page%20/Tulip%20Crimson/crimson%20(3).webp",
+    ],
+  },
+   {
+    id: "BPTP Downtown 66",
+    name: "BPTP Downtown 66",
+    categories: ["Apartments"],
+    logo: "https://inframantra.blr1.cdn.digitaloceanspaces.com/developer/bptplimited/bptplimited.avif",
+    size: "2600 sq.ft. Onwards",
+    beds: "3.5BHK",
+    price: "Starting at ₹6.5 Cr. / $686K",
+    link: "https://inframantra.com/property/bptp-downtown-66-sector-66-gurgaon",
+    images: [
+      "https://inframantra.blr1.digitaloceanspaces.com/properties/bptpdowntown66/BPTP%20Downtown%2066%20Gurgaon%202.jpg",
+      "https://inframantra.blr1.digitaloceanspaces.com/properties/bptpdowntown66/BPTP%20Downtown%2066%20Gurgaon%203.jpg",
+      "https://inframantra.blr1.digitaloceanspaces.com/properties/bptpdowntown66/BPTP%20Downtown%2066%20Gurgaon%201.jpg",
     ],
   },
 ];
@@ -226,7 +227,7 @@ export default function ProjectsSection() {
   popUpenable={popForm}
   onClickOff={onClickOff}
    text="TO UNLOCK EXCLUSIVE DEALS"
-  name={`USA EXPO ${selectedProject?.name || ""}`}
+  name={`USA EXPO`}
   phone="+1 (213) 6575060"
   id="nriProject"
 

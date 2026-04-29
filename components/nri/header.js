@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import Ajax1 from '../helper/Ajax1';
 import { useRouter } from 'next/router';
 
-const Header = ({ name = "General Enquiry", popUpenable, pdf, onClickOff }) => {
+const Header = ({ name = "USA EXPO", popUpenable, pdf, onClickOff }) => {
 
   const [isAnimating, setIsAnimating] = useState(false);
   const [message, setMessage] = useState("");
