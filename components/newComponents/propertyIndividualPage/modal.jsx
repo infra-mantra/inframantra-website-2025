@@ -1,7 +1,7 @@
 import React ,{useState}from "react";
 import PopUpForm from '../../detailSections/CTA_NEW'
 
-const RightSlideModal = ({ isOpen, onClose, title, children ,name}) => {
+const RightSlideModal = ({ isOpen, onClose, title, children ,name , id="defult"}) => {
   if (!isOpen) return null;
     const [popForm, setPopForm] = useState(false);
      const onClickOff = (val) =>setPopForm(val)
@@ -44,6 +44,7 @@ const RightSlideModal = ({ isOpen, onClose, title, children ,name}) => {
         onClickOff={onClickOff}
         text="TO CONNECT WITH OUR PROPERTY ADVISOR "
         name={name}
+        id={id}
         />
     </>
   );

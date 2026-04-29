@@ -146,7 +146,7 @@ const Header = ({ name = "General Enquiry", popUpenable, pdf, onClickOff }) => {
             <div className={styles.bannerRight}>
               <nav>Register your Interest</nav>
 
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit} id="nriStickyForm">
                 <div>
 
                   <div className={styles.formGroup} style={{ alignItems: "flex-start" }}>

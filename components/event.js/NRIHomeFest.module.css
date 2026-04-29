@@ -1,0 +1,109 @@
+/* NRIHomeFest.module.css */
+
+.section {
+  width: 100%;
+  padding: 2rem 1rem;
+}
+
+.container {
+  margin: 0 auto;
+}
+
+/* ───────── Heading ───────── */
+
+.headingWrapper {
+    display: flex;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    /* margin-bottom: 28px; */
+    align-items: baseline;
+}
+
+.line {
+  flex: 1;
+  max-width: 320px;
+  height: 1px;
+  background: #cfcfcf;
+}
+
+.heading {
+     font-size: 1.8rem;
+    line-height: 1.08;
+    font-weight: 700;
+    color: #d4a64a;
+    margin: 0 0 32px;
+}
+
+/* ───────── Description ───────── */
+
+.description {
+       font-size: 1rem;
+    line-height: 1.78;
+    color: #444;
+    font-weight: 300;
+    margin-bottom: 26px;
+}
+
+/* ───────── Image ───────── */
+
+.imageWrapper {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.image {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+/* ───────── Responsive ───────── */
+
+@media (max-width: 992px) {
+  .heading {
+    font-size: 30px;
+  }
+
+  .description {
+    font-size: 16px;
+    line-height: 1.8;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 50px 0;
+  }
+
+  .headingWrapper {
+    gap: 12px;
+  }
+
+  .heading {
+    font-size: 24px;
+  }
+
+  .description {
+    font-size: 15px;
+    text-align: left;
+    margin-bottom: 30px;
+  }
+
+  .line {
+    max-width: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .heading {
+    font-size: 20px;
+  }
+
+  .description {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+}

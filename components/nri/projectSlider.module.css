@@ -270,6 +270,15 @@
   background: #dcaa4c!important;
   color: #fff;
 }
+.badgeContainerLogo{
+   position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  z-index: 2
+}
 @media (max-width: 768px) {
   .cardBody {
     padding: 7px 0px 20px;

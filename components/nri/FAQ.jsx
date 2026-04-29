@@ -115,6 +115,7 @@ const FAQ = () => {
         text="TO UNLOCK EXCLUSIVE DEALS"
         name="USA EXPO Faq"
         phone="+1 (213) 6575060"
+        id="nriFaq"
         />
     </section>
   );

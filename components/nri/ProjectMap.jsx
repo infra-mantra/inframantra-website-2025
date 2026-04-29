@@ -46,12 +46,12 @@ const LEAFLET_OVERRIDES = `
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 const PROJECTS = [
-  { id: 1, name: "Godrej Sora",       address: "Sector 53, DLF Phase 5, Gurugram",         lat: 28.4368, lng: 77.0977, brand: "godrej", isNew: false },
-  { id: 2, name: "Godrej Miraya",     address: "Sector 43, Sushant Lok Phase I, Gurugram", lat: 28.4499, lng: 77.0882, brand: "godrej", isNew: false },
-  { id: 4, name: "Westin Residences", address: "Sector 103, Dwarka Expressway, Gurugram",  lat: 28.4821, lng: 76.9868, brand: "westin", isNew: false },
-  { id: 5, name: "Tulip Monsella",    address: "Golf Course Road, Sector 53, Gurugram",    lat: 28.4351, lng: 77.1036, brand: "tulip",  isNew: false },
-  { id: 6, name: "Tulip Melrose",     address: "Sector 70, Gurugram",                      lat: 28.3948, lng: 77.0158, brand: "tulip",  isNew: false },
-  { id: 7, name: "Tulip Crimson",     address: "Sector 70, SPR Road, Gurugram",            lat: 28.3975, lng: 77.0159, brand: "tulip",  isNew: false },
+  { id: 1, name: "Godrej Sora",       address: "Sector 53, DLF Phase 5, Gurugram",         lat: 28.436814234729656, lng: 77.09768719770094, brand: "godrej", isNew: false },
+  { id: 2, name: "Godrej Miraya",     address: "Sector 43, Sushant Lok Phase I, Gurugram", lat: 28.451171319492865, lng: 77.09014162947909, brand: "godrej", isNew: false },
+  { id: 4, name: "Westin Residences", address: "Sector 103, Dwarka Expressway, Gurugram",  lat:  28.484542817912462, lng: 76.98487014246996, brand: "westin", isNew: false },
+  { id: 5, name: "Tulip Monsella",    address: "Golf Course Road, Sector 53, Gurugram",    lat: 28.43466940880153, lng: 77.1034432670051, brand: "tulip",  isNew: false },
+  { id: 6, name: "Tulip Melrose",     address: "Sector 70, Gurugram",                      lat:  28.394800850492956, lng: 77.01585311454005, brand: "tulip",  isNew: false },
+  { id: 7, name: "Tulip Crimson",     address: "Sector 70, SPR Road, Gurugram",            lat: 28.3975290526242, lng: 77.01590097186407, brand: "tulip",  isNew: false },
 ];
 
 const GOLD      = "#dcaa4c";
@@ -60,7 +60,6 @@ const GOLD_DARK = "#dcaa4c";
 // ── Icon factory — label pin (name on a pill, tail below) ─────────────────────
 function makeLabelIcon(L, p, active) {
   const name   = p.name;
-  // Estimate pill width from name length
   const chars  = name.length;
   const pw     = Math.max(chars * 7.8 + 24, 90);  // pill width
   const ph     = active ? 36 : 30;                  // pill height
@@ -129,14 +128,7 @@ function popupHTML(p) {
               background:#d4a64a;color:#fff;">
             Google Maps
           </a>
-          <a href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${p.lat},${p.lng}"
-            target="_blank" rel="noopener"
-            style="flex:1;display:flex;align-items:center;justify-content:center;
-              padding:9px 4px;font-size:11px;font-weight:700;letter-spacing:0.04em;
-              text-transform:uppercase;text-decoration:none;border-radius:6px;
-              background:#f1f3f4;color:#555;border:1px solid #ddd;">
-            Street View
-          </a>
+         
         </div>
       </div>
     </div>`;

@@ -6,7 +6,7 @@ import style from "./ctaForHome.module.css";
 import Ajax1 from '../helper/Ajax1';
 import { useRouter } from 'next/router';
 
-function App({ name }) {
+function App({ name , id="defaultId"}) {
 
 
   const [isDesktop, setIsDesktop] = useState(true);
@@ -115,7 +115,7 @@ const handleSubmit = async (e) => {
     <div className={style.homeApp}>
       <div className={`${style.homeCtaMainWrapper} ${style.pt}`}>
         <div className={style.homeCtaInnerWrapper} style={{ width: "100%" }}>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} id={id}>
 
             <div className={ctaStyle.headingForm}>
               <p style={{ marginTop: '0px' }} className={style.homePopUpHead}>

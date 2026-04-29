@@ -23,12 +23,13 @@ import '../styles/navbarsticky.css'
 import '../styles/amenities.css'
 import '../styles/landmark.css'
 
-
 import "../styles/pageHeader.module.css";
 import '../styles/map.css'
 
+import ErrorStack from "./_error.js";
 
-import ErrorStack from "./_error.js"; // 👈 Import your error animation
+// UTM parameters we want to track and persist
+const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"];
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -48,34 +49,86 @@ class ErrorBoundary extends React.Component {
     if (this.state.hasError) {
       return <ErrorStack statusCode={500} />;
     }
-
     return this.props.children;
   }
 }
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
-  // Check if the current route is not the home page
   const isHomePage = router.pathname === "/";
   const [isMobile, setIsMobile] = React.useState(false);
+
   const checkScreenWidth = () => {
     const width = window.innerWidth;
     setIsMobile(width <= 768);
   };
+
   useEffect(() => {
     checkScreenWidth();
     window.addEventListener("resize", checkScreenWidth);
     return () => window.removeEventListener("resize", checkScreenWidth);
-  }
-  , []);
+  }, []);
+
+  // ============================
+  // UTM PERSISTENCE LOGIC
+  // ============================
+  useEffect(() => {
+    // Step 1: On first load, check URL for UTMs and save them to sessionStorage
+    const params = new URLSearchParams(window.location.search);
+    const utmsFromUrl = {};
+    UTM_KEYS.forEach((key) => {
+      const value = params.get(key);
+      if (value) utmsFromUrl[key] = value;
+    });
+
+    if (Object.keys(utmsFromUrl).length > 0) {
+      sessionStorage.setItem("utm_params", JSON.stringify(utmsFromUrl));
+    }
+  }, []);
+
+  useEffect(() => {
+    // Step 2: On every route change, append stored UTMs to the URL if missing
+    const handleRouteChange = (url) => {
+      const stored = sessionStorage.getItem("utm_params");
+      if (!stored) return;
+
+      const storedUtms = JSON.parse(stored);
+      const [path, queryString = ""] = url.split("?");
+      const currentParams = new URLSearchParams(queryString);
+
+      let needsUpdate = false;
+      Object.entries(storedUtms).forEach(([key, value]) => {
+        if (!currentParams.has(key)) {
+          currentParams.set(key, value);
+          needsUpdate = true;
+        }
+      });
+
+      if (needsUpdate) {
+        const newUrl = `${path}?${currentParams.toString()}`;
+        // Replace URL without triggering another navigation
+        window.history.replaceState(null, "", newUrl);
+      }
+    };
+
+    // Run on initial mount + every route change
+    handleRouteChange(router.asPath);
+    router.events.on("routeChangeComplete", handleRouteChange);
+
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router]);
+  // ============================
 
   return (
     <ErrorBoundary>
-      {isMobile && (<div style={{ marginTop: isHomePage ? "auto" : "8vh" ,marginBottom:"4vh",overflow:"visible"}}>
-        <Component {...pageProps} />
-      </div>)}
+      {isMobile && (
+        <div style={{ marginTop: isHomePage ? "auto" : "8vh", marginBottom: "4vh", overflow: "visible" }}>
+          <Component {...pageProps} />
+        </div>
+      )}
       {!isMobile && <Component {...pageProps} />}
-      
 
       <div className={styles.cta_visible}>
         <a href="tel:8698009900">

@@ -1,92 +1,98 @@
 import { useState, useCallback } from "react";
 import styles from "./projectSlider.module.css";
 import PopUpForm from '../detailSections/CTA_NEW';
+// https://inframantra.blr1.cdn.digitaloceanspaces.com/propertyLogo/tulipmonsella/Tulip-Monsella-logo.avif  tulip monsella
+// https://inframantra.blr1.cdn.digitaloceanspaces.com/propertyLogo/tulipcrimson/logo.avif   Tulip crimson
+// https://inframantra.blr1.digitaloceanspaces.com/propertyLogo/tulipmelrose/images (2).jpeg    Tulip Melrose
+// https://inframantra.blr1.cdn.digitaloceanspaces.com/propertyLogo/godrejsora/images%20(8).jpg   Godrej Sora
+// https://inframantra.blr1.cdn.digitaloceanspaces.com/propertyLogo/godrejmiraya/Godrej Miraya logo.avif Miraya Godrej
 
 
 const PROJECTS = [
   {
     id: "Godrej Sora",
     name: "Godrej Sora",
-    categories: ["Apartments"],
+    logo: "https://inframantra.blr1.cdn.digitaloceanspaces.com/propertyLogo/godrejsora/images%20(8).jpg",
     size: "2771 sq.ft. Onwards",
+    categories: ["Apartments"],
     beds: "3.5 & 4.5 BHK",
-    price: "Starting at ₹7.99 Cr. / $844K",
-    link :"https://inframantra.com/property/godrej-sora-sector-53-gurgaon",
+    price: "Starting at ₹9.5 Cr. / $1M",
+    link: "https://inframantra.com/property/godrej-sora-sector-53-gurgaon",
     images: [
       "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-page%20/Godrej%20Sora/godrej%20sora%201.webp",
       "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-page%20/Godrej%20Sora/godrej%20sora%203.webp",
       "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-page%20/Godrej%20Sora/godrej%20sora.webp",
     ],
   },
-
   {
     id: "Godrej Miraya",
     name: "Godrej Miraya",
     categories: ["Apartments"],
+    logo: "https://inframantra.blr1.cdn.digitaloceanspaces.com/propertyLogo/godrejmiraya/Godrej Miraya logo.avif",
     size: "2711 sq.ft. Onwards",
     beds: "3 & 4 BHK",
-    price: "Starting at ₹9.9 Cr. / $1.04M",
-    link:"https://inframantra.com/property/godrej-miraya-sector-43-gurgaon",
+    price: "Starting at ₹15 Cr. / $1.58M",
+    link: "https://inframantra.com/property/godrej-miraya-sector-43-gurgaon",
     images: [
       "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-page%20/Godrej%20Miraya/godrej%20Miraya%202.webp",
       "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-page%20/Godrej%20Miraya/godrej%20Miraya%203.webp",
       "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-page%20/Godrej%20Miraya/godrej%20Miraya.webp",
     ],
   },
-
   {
     id: "westin residences",
     name: "westin residences",
     categories: ["Apartments"],
+    logo: "https://inframantra.blr1.cdn.digitaloceanspaces.com/propertyLogo/tulipmelrose/images%20(2).jpeg",
     size: "2537 sq.ft. Onwards",
     beds: "3 & 4 BHK",
     price: "Starting at ₹6.5 Cr. / $686K",
-    link:"https://inframantra.com/property/whiteland-the-westin-residences-sector-103-gurugram",
+    link: "https://inframantra.com/property/whiteland-the-westin-residences-sector-103-gurugram",
     images: [
       "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-page%20/wenstin/westin%20residences.webp",
       "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-page%20/wenstin/westin%20residences%202.webp",
       "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-page%20/wenstin/westin%20residences%203.webp",
     ],
   },
-
   {
     id: "Tulip Monsella",
     name: "Tulip Monsella",
     categories: ["Apartments"],
+    logo: "https://inframantra.blr1.cdn.digitaloceanspaces.com/propertyLogo/tulipmonsella/Tulip-Monsella-logo.avif",
     size: "2,299 sq. ft. Onwards",
     beds: "3.5, 4.5 & 5.5 BHK",
     price: "Starting at ₹7.99 Cr. / $844K",
-    link:"https://inframantra.com/property/tulip-monsella-sector-53-gurgaon",
+    link: "https://inframantra.com/property/tulip-monsella-sector-53-gurgaon",
     images: [
       "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-page%20/Tulip%20Monsella/monsella%20(1).webp",
       "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-page%20/Tulip%20Monsella/monsella%20(2).webp",
       "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-page%20/Tulip%20Monsella/monsella%20(3).webp",
     ],
   },
-
   {
     id: "Tulip Melrose",
     name: "Tulip Melrose",
     categories: ["Apartments"],
+    logo: "https://inframantra.blr1.digitaloceanspaces.com/propertyLogo/tulipmelrose/images%20(2).jpeg",
     size: "3216 sq.ft.",
     beds: "5 BHK",
     price: "Starting at ₹4.66 Cr. / $492K",
-    link:"https://inframantra.com/property/tulip-melrose-sector-70-gurgaon",
+    link: "https://inframantra.com/property/tulip-melrose-sector-70-gurgaon",
     images: [
       "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-page%20/Tulip%20Melrose/melrose%202.webp",
       "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-page%20/Tulip%20Melrose/melrose.webp",
       "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-page%20/Tulip%20Melrose/melrose%203.webp",
     ],
   },
-
   {
     id: "Tulip Crimson",
     name: "Tulip Crimson",
     categories: ["Apartments"],
+    logo: "https://inframantra.blr1.cdn.digitaloceanspaces.com/propertyLogo/tulipcrimson/logo.avif",
     size: "3090 sq.ft.",
     beds: "4 BHK",
     price: "Starting at ₹4.40 Cr. / $464K",
-    link:"https://inframantra.com/property/tulip-crimson-sector-70-gurgaon",
+    link: "https://inframantra.com/property/tulip-crimson-sector-70-gurgaon",
     images: [
       "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-page%20/Tulip%20Crimson/crimson%20(1).webp",
       "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-page%20/Tulip%20Crimson/crimson%20(2).webp",
@@ -134,6 +140,20 @@ function ProjectCard({ project, onDownload }) {
             <span key={cat} className={styles.badge}>{cat}</span>
           ))}
         </div>
+        <div className={styles.badgeContainerLogo}>
+         <img
+    src={project.logo}
+    alt={project.name}
+    style={{
+      height: "40px",
+      objectFit: "contain",
+      background: "#fff",
+      padding: "4px",
+      borderRadius: "6px"
+    }}
+  />
+        </div>
+
 
         <button className={`${styles.arrowC} ${styles.arrowLeft}`} onClick={prev}>‹</button>
         <button className={`${styles.arrowC} ${styles.arrowRight}`} onClick={next}>›</button>
@@ -208,6 +228,8 @@ export default function ProjectsSection() {
    text="TO UNLOCK EXCLUSIVE DEALS"
   name={`USA EXPO ${selectedProject?.name || ""}`}
   phone="+1 (213) 6575060"
+  id="nriProject"
+
 />
 
       {hasMore && (

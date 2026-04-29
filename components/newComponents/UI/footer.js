@@ -75,7 +75,7 @@ function Footer() {
                 fontSize: '20px',
                 marginRight: '10px',
               }}/>
-            <p>+91 86 9800 9900 </p>
+            <p>+91 86 9800 9900 <br/>+1 (213) 6575060 </p>
           </div>
           <div className={styles.footerFirstSectionCompanyDetailsFlex}>
             <MdEmail

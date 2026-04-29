@@ -97,6 +97,8 @@ function Config({ floorPlan = [], pdf, name }) {
         text="To download brochure"
         pdf={pdfUrl}
         name={name}
+        id="propertyIndividualDownloadBroc"
+       
       />
     </div>
   );

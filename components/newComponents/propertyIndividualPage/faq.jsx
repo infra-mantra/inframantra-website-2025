@@ -60,7 +60,7 @@ function FaqSection({ propertyData ,name}) {
         popUpenable={popForm}
         onClickOff={onClickOff}
         text="OUR EXPERT TEAM IS HERE TO HELP YOU WITH YOUR QUERY."
-  
+        id="propertyIndividualFaq"
         name={name}
       />
     </section>

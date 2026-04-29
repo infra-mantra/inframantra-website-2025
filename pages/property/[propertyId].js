@@ -116,7 +116,7 @@ const schemaInfo = {
           </div>
 
           <div className="property-right" ref={rightRef}>
-            <CtaForHome name={schemaInfo.name}/>
+            <CtaForHome name={schemaInfo.name} id="propertyIndividualRightForm"/>
           </div>
      
         </div>
@@ -125,6 +125,7 @@ const schemaInfo = {
         onClickOff={onClickOff}
         text="TO CONNECT WITH OUR PROPERTY ADVISOR "
         name={schemaInfo.name}
+        id="propertyIndividualPopUp"
         />
       </div>
     </Wrapper>

@@ -129,7 +129,7 @@ function App({name ,displayMap = true}) {
             </div>
             <div className={style.homePageContactUsLeftDetailFlex}>
               <div style={{ color: '#E7B554', fontSize: '25px', marginRight: '10px' }}><IoMdCall /></div>
-              <p>+91 86 9800 9900</p>
+              <p>+91 86 9800 9900, +1 (213) 6575060</p>
             </div>
             <div className={style.homePageContactUsLeftDetailFlex}>
               <div style={{ color: '#E7B554', fontSize: '25px', marginRight: '10px' }}><MdMail /></div>

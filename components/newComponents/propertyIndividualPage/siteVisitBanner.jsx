@@ -36,6 +36,7 @@ function Sitevisit({name}) {
         onClickOff={onClickOff}
         text="to book a site visit with Experts Now!"
         name={name}
+        id="propertyIndividualSiteRes"
         />
     </div>
   );

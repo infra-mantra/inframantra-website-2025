@@ -281,6 +281,8 @@ function PropertyHeaderHigh({ propertyData ,name}) {
   isOpen={isAboutModalOpen}
   onClose={() => setIsAboutModalOpen(false)}
   name={name}
+  id="propertyIndividualHigh"
+
 >
   <div className="about-full-text">
     {propertyData?.description?.map((item, index) => (
@@ -296,6 +298,7 @@ function PropertyHeaderHigh({ propertyData ,name}) {
         onClickOff={onClickOff}
         text="TO CONNECT WITH OUR PROPERTY ADVISOR "
         name={name}
+        id="propertyIndividualHighlight"
         />
     </>
   );

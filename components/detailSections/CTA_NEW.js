@@ -10,7 +10,7 @@ import ctaStyle from "./cta.module.css";
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 
-function App({ name, popUpenable = false, onClickOff, text, pdf  , phone="+91 86 9800 9900" }) {
+function App({ name, popUpenable = false, onClickOff, text, pdf  , phone="",id="defaultId" }) {
 
   const [isAnimating, setIsAnimating] = useState(false);
   const [message, setMessage] = useState("");
@@ -121,7 +121,7 @@ function App({ name, popUpenable = false, onClickOff, text, pdf  , phone="+91 86
               <p className={ctaStyle.popUpHead2}>{text ? text : "TO UNLOCK EXCLUSIVE DEALS"}</p>
             </div>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} id={id}>
               
               <div className={ctaStyle.formGroup}>
                 <input
@@ -200,7 +200,16 @@ function App({ name, popUpenable = false, onClickOff, text, pdf  , phone="+91 86
                 <div className={ctaStyle.ctaText}>
                   <p className={ctaStyle.numberFor}>
                     <FaPhoneAlt style={{ color: "green", marginRight: "1rem" }} />
-                    {phone}
+               <p>
+  {phone ? (
+    phone
+  ) : (
+    <>
+      +91 86 9800 9900 <br />
+      +1 (213) 6575060
+    </>
+  )}
+</p>
                   </p>
                   <p className={ctaStyle.textForm}>Give us a call and book your visit now!</p>
                 </div>
