@@ -5,7 +5,7 @@ import styles from "./NRIHomeFest.module.css";
 /* ── inline styles for the expo banner ── */
 const bannerStyles = `
   .expo-banner {
-    background-color: #0E0C09;
+    background-color: #000;
     background-image:
       radial-gradient(ellipse 80% 60% at 50% 0%,   rgba(201,168,76,.07) 0%, transparent 60%),
       radial-gradient(ellipse 60% 40% at 10% 100%, rgba(201,168,76,.05) 0%, transparent 55%),
@@ -76,7 +76,7 @@ const bannerStyles = `
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 1.4rem .8rem 1rem;
+    padding: .2rem .2rem .2rem;
     border: 1px solid transparent;
     border-radius: 2px;
     transition: border-color .3s, background .3s;
@@ -328,7 +328,7 @@ const ExpoBanner = () => (
 const NRIHomeFest = () => {
   return (
     <section className={styles.section}>
-      <div className={styles.container}>
+      
 
         {/* Heading */}
         <div className={styles.headingWrapper}>
@@ -351,7 +351,6 @@ const NRIHomeFest = () => {
           <ExpoBanner />
         </div>
 
-      </div>
     </section>
   );
 };

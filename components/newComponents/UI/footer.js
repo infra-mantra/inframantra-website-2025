@@ -181,10 +181,12 @@ function Footer() {
               <div className={styles.footerThirdSectionDropdownFlex}>
                 <div className={styles.footerThirdSectionDropdownHeaderFlex}>
                   <p   onClick={() => handleFooterDropdownClick(5)}>Exclusive Properties</p>
+                 
                   <MdArrowDropDown
                     onClick={() => handleFooterDropdownClick(5)}
                   />
                 </div>
+                
                 {loading  && openDropDown ==5 &&  <div className={styles.spinner}></div>}
                 {openDropDown === 5 && (
                   <div className={styles.footerThirdSectionDropdownLinkWrapper}>
@@ -197,6 +199,16 @@ function Footer() {
 
                   </div>  
                 )}
+              </div>
+                 <div className={styles.footerThirdSectionDropdownFlex}>
+                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
+                  <p  ><Link  legacyBehavior={true} href='/usa-nri'>USA Properties</Link></p>
+                 
+                 
+                </div>
+                
+               
+                
               </div>
             </div>
           </>
@@ -294,6 +306,7 @@ function Footer() {
               <div className={styles.footerThirdSectionDropdownFlex}>
                 <div className={styles.footerThirdSectionDropdownHeaderFlex}>
                   <p  onClick={() => handleFooterDropdownClick(5)}>Exclusive Properties</p>
+                  
                   <MdArrowDropDown
                     onClick={() => handleFooterDropdownClick(5)}
                   />
@@ -309,6 +322,15 @@ function Footer() {
 
                   </div>
                 )}
+              </div>
+
+                  <div className={styles.footerThirdSectionDropdownFlex}>
+                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
+                  <p  ><Link  legacyBehavior={true} href='/usa-nri'>USA Properties</Link></p>
+                  
+                
+                </div>
+               
               </div>
             </div>
           </div>

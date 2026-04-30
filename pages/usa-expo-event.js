@@ -3,8 +3,10 @@ import EventInfo from '../components/event.js/eventInfo'
 import ProjecMap from '../components/nri/ProjectMap';
 import Sticky from '../components/nri/StickySidebar';
 import Wrapper from '../components/UI/Wrapper';
+import EventGallery from '../components/event.js/formGallery';
+import Faq from '../components/nri/FAQ';
 
-function UsaExpoEvent() {
+function UsaExpoEvent() {   
      useEffect(() => {
     
       const sidebar = document.querySelector('.sidebarst');
@@ -24,11 +26,12 @@ function UsaExpoEvent() {
   return (
     <>
     <Wrapper>
+    <EventGallery/>
     <EventInfo/>
     <ProjecMap/>
-      
-            <Sticky />
-            </Wrapper>
+         <Faq />
+    <Sticky />
+    </Wrapper>
     </>
   )
 }
