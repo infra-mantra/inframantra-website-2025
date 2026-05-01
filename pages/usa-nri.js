@@ -56,7 +56,6 @@ function Nri() {
       <WhyInvest />
       <Faq />
 
-      {/* STICKY SIDEBAR */}
       
         <Sticky />
       

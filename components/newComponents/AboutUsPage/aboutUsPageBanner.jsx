@@ -85,7 +85,7 @@ const AboutUsPageHeader = () => {
               Together, their combined expertise in strategy, finance, and market development positions InfraMantra as a dynamic and trusted name in the real estate industry.
             </div>
 
-            {/* Read More Button */}
+           
             <span
               onClick={() => setIsModalOpen(true)}
               className={styles.inlineReadMore}

@@ -1,0 +1,66 @@
+.cardWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.cardevent {
+  background-color: #f1f1f1d6;
+  padding: 20px 28px;
+  border-radius: .8rem;
+  text-align: center;
+  border: 1.5px solid #e8e0cc;
+}
+
+.city {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  color: #ab8b26;
+  text-transform: uppercase;
+  margin: 0 0 8px 0;
+}
+
+.date {
+  font-size: 14px;
+  font-weight: 700;
+  color: #222222;
+  margin: 0 0 4px 0;
+}
+
+.venue {
+  font-size: 13px;
+  font-weight: 400;
+  color: #000;
+  margin: 0;
+}
+
+/* Mobile */
+@media screen and (max-width: 768px) {
+  .cardWrapper {
+    max-width: 100%;
+    padding: 0 16px;
+    gap: 12px;
+  }
+
+  .card {
+    padding: 16px 20px;
+    border-radius: 14px;
+  }
+
+  .city {
+    font-size: 17px;
+    letter-spacing: 2px;
+  }
+
+  .date {
+    font-size: 13px;
+  }
+
+  .venue {
+    font-size: 12px;
+  }
+}

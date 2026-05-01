@@ -53,7 +53,7 @@ const FAQ = () => {
          const handleform = () => setPopForm(true);
 
   return (
-    <section className={styles.section} >
+    <section className={styles.sectionfaq} >
       {/* Top Row */}
       <div className={styles.topRow}>
         {/* Heading */}

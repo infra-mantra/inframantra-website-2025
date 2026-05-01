@@ -1,16 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import styles from "./EventGallery.module.css";
 
-/**
- * EventGallery — Auto-sliding carousel with built-in lightbox
- *
- * Props:
- *   images: Array<{ src: string, alt?: string, caption?: string }>
- *   autoplay?: boolean (default: true)
- *   autoplayInterval?: number in ms (default: 4500)
- *   stats?: Array<{ number: string, label: string }>
- *   showStats?: boolean (default: true)
- */
+
 const EventGallery = ({
   images = [],
   autoplay = true,
@@ -119,7 +110,7 @@ const EventGallery = ({
           </div>
 
           {/* Expand to lightbox button */}
-          <button
+          {/* <button
             type="button"
             className={styles.expandBtn}
             onClick={() => setIsLightboxOpen(true)}
@@ -132,7 +123,7 @@ const EventGallery = ({
                 strokeLinejoin="round"
               />
             </svg>
-          </button>
+          </button> */}
 
           {/* Image counter */}
           <div className={styles.counter}>

@@ -1,4 +1,4 @@
-.section {
+.sectionfaq {
   background: #fff;
   padding: 2rem 1rem;
 }
@@ -179,7 +179,7 @@
 }
 
 @media (max-width: 900px) {
-  .section {
+  .sectionfaq {
     padding: 48px 24px 56px;
   }
   .topRow {

@@ -5,6 +5,7 @@ import Sticky from '../components/nri/StickySidebar';
 import Wrapper from '../components/UI/Wrapper';
 import EventGallery from '../components/event.js/formGallery';
 import Faq from '../components/nri/FAQ';
+import Header from '../components/event.js/headerSec';
 
 function UsaExpoEvent() {   
      useEffect(() => {
@@ -26,10 +27,13 @@ function UsaExpoEvent() {
   return (
     <>
     <Wrapper>
+    <Header/>
     <EventGallery/>
     <EventInfo/>
     <ProjecMap/>
-         <Faq />
+    <section  className='faq-wrapper'>
+    <Faq />
+    </section>
     <Sticky />
     </Wrapper>
     </>

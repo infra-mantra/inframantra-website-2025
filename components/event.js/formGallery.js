@@ -11,21 +11,22 @@
      */
 
     const eventImages = [
+         {
+        src: "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-event-expo/gallery/event-3-f.webp",
+        alt: "NRI Event Expo 3",
+        caption: "Successful property showcase",
+    },
     {
-        src: "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-event-expo/1.jpg",
+        src: "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-event-expo/gallery/event-1-f.webp",
         alt: "NRI Event Expo 1",
         caption: "Highlights from the NRI Event Expo",
     },
     {
-        src: "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-event-expo/2.jpg",
+        src: "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-event-expo/gallery/event-2-f.webp",
         alt: "NRI Event Expo 2",
         caption: "Attendees engaging with projects",
     },
-    {
-        src: "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-event-expo/3.jpg",
-        alt: "NRI Event Expo 3",
-        caption: "Successful property showcase",
-    },
+   
     ];
 
     export default function NRIPropertyExpoRegistration() {
@@ -44,12 +45,14 @@
         <section className="reg-section">
         <div className="reg-header">
         
-            <h2 className="reg-title">
+          
+        </div>
+        
+   <h2 className="reg-title">
             Reserve Your Exclusive Access
             </h2>
-        </div>
-
         <div className="reg-container">
+           
             <div className="reg-gallery-col">
             <EventGallery images={eventImages} autoplay autoplayInterval={4500} />
             </div>
@@ -62,8 +65,9 @@
             .reg-section {
             position: relative;
             background: #fff;
-            padding: 11px 12px;
-            overflow: hidden;
+            padding: 11px 2rem;
+            max-width:1403px;
+            margin:0px auto;
             }
             .reg-section::before {
             content: '';
@@ -99,17 +103,15 @@
             height: 1px;
             background: #c9a961;
             }
-
             .reg-title {
                 font-size: 1.8rem;
         line-height: 1.08;
         font-weight: 700;
         color: #d4a64a;
         display:flex;
-        margin: 0 0 32px;
+           padding: 11px 2rem;
+       
             }
-        
-
             .reg-container {
             position: relative;
             z-index: 2;
@@ -136,7 +138,11 @@
             }
             @media (max-width: 600px) {
             .reg-section {
-                padding: 50px 16px;
+                padding: 2px 16px;
+            }
+            .reg-title{
+            font-size:20px;
+              padding: 0px 0px;
             }
             .reg-header {
                 margin-bottom: 32px;

@@ -1,18 +1,7 @@
 import React, { useState } from "react";
 import styles from "./RegistrationForm.module.css";
 
-/**
- * RegistrationForm — 4-field form with validation, white theme + gold accent
- *
- * Props:
- *   onSubmit?: (formData) => Promise<void>
- *   cities?: Array<{ value: string, label: string }>
- *   eyebrow?: string
- *   title?: string
- *   titleAccent?: string
- *   subtitle?: string
- *   submitLabel?: string
- */
+
 const RegistrationForm = ({
   onSubmit,
   cities = [

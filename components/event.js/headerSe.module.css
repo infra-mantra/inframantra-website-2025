@@ -1,0 +1,58 @@
+.bgImg {
+  background-image: url("https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-event-expo/nri-expo-desktop.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 90vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlayContent {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 20px;
+  right: 29%;
+}
+
+.desktopImg,
+.mobileImg {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.desktopImg {
+  max-width: 900px;
+  display: block;
+}
+
+.mobileImg {
+  display: none;
+}
+
+/* Mobile */
+@media screen and (max-width: 768px) {
+  .bgImg {
+    background-image: url("https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-event-expo/nri-expo-mobile.webp");
+    height: 90vh;
+    padding: 20px;
+  }
+
+  .desktopImg {
+    display: none;
+  }
+  .overlayContent{
+    bottom: 5%;
+    right: 0px;
+  }
+
+  .mobileImg {
+    display: block;
+    max-width: 90%;
+    margin: 0 auto;
+  }
+}
