@@ -5,7 +5,7 @@ import Sticky from '../components/nri/StickySidebar';
 import Wrapper from '../components/UI/Wrapper';
 import EventGallery from '../components/event.js/formGallery';
 import Faq from '../components/nri/FAQ';
-import Header from '../components/event.js/headerSec';
+import Header from '../components/event.js/headerSec.js';
 
 function UsaExpoEvent() {   
      useEffect(() => {
