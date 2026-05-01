@@ -32,7 +32,7 @@ function UsaExpoEvent() {
     <EventInfo/>
     <ProjecMap/>
     <section  className='faq-wrapper'>
-    <Faq />
+    {/* <Faq /> */}
     </section>
     <Sticky />
     </Wrapper>

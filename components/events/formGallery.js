@@ -14,17 +14,17 @@
          {
         src: "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-event-expo/gallery/event-3-f.webp",
         alt: "NRI Event Expo 3",
-        caption: "Successful property showcase",
+        caption: "Highlights from Our Dream Home Fest ",
     },
     {
         src: "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-event-expo/gallery/event-1-f.webp",
         alt: "NRI Event Expo 1",
-        caption: "Highlights from the NRI Event Expo",
+        caption: "Successful property showcase",
     },
     {
         src: "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-event-expo/gallery/event-2-f.webp",
         alt: "NRI Event Expo 2",
-        caption: "Attendees engaging with projects",
+        caption: "Happy Clients",
     },
    
     ];
