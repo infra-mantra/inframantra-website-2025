@@ -1,11 +1,11 @@
 import React,{useEffect}from 'react'
-import EventInfo from '../components/event.js/eventInfo'
+import EventInfo from '../components/events/eventInfo'
 import ProjecMap from '../components/nri/ProjectMap';
 import Sticky from '../components/nri/StickySidebar';
 import Wrapper from '../components/UI/Wrapper';
-import EventGallery from '../components/event.js/formGallery';
+import EventGallery from '../components/events/formGallery';
 import Faq from '../components/nri/FAQ';
-import Header from '../components/event.js/headerSec.js';
+import Header from '../components/events/HeaderSec';
 
 function UsaExpoEvent() {   
      useEffect(() => {
