@@ -27,7 +27,10 @@ function UsaExpoEvent() {
 
   return (
     <>
-    <Wrapper>
+    <Wrapper
+    title="USA Expo for NRIs | Luxury Residences in India | INFRAMANTRA"
+    description="Explore luxury residences in India at the Inframantra USA Expo for NRIs. Discover premium investment opportunities with expert guidance—limited seats available."
+    >
     <Header/>
     <AboutEvent/>
     <EventGallery/>
