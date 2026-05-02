@@ -1,25 +1,15 @@
-/* NRIHomeFest.module.css */
 
-.section1 {
-  width: 100%;
-  padding: 30px 70px;
-  background: #fff;
-  max-width: 1403px;
-  margin: 0px auto;
+.eventContainer{
+    padding: 0px 70px;
+    background: #fff;
+    padding-top: 30px;
+    max-width: 1403px;
 }
-
-.yt-icon-shape .ytSpecIconShapeHost{
-  width: 50% !important;
-}
-/* Heading */
-
-
-
 .heading {
   font-size: 2rem;
   font-weight: 700;
   color: #d4a64a;
-  margin: 0;
+
 }
 
 /* Desktop Layout */
@@ -116,6 +106,10 @@
   .videoBox iframe {
     height: 350px;
   }
+  .eventContainer{
+        /* padding: 11px 2rem; */
+        padding: 2px 1rem;
+}
 
   .storyText {
     font-size: 14px;
@@ -134,8 +128,11 @@
 /* Small Mobile */
 
 @media screen and (max-width: 480px) {
-  .heading {
+
+ .heading {
+    padding: 20px 0px; 
     font-size: 22px;
+    margin: 0px;
   }
 
   .videoBox iframe {

@@ -313,6 +313,19 @@
   opacity: 0.5;
   margin: 0 0 14px;
 }
+  .react-tel-input .form-control{
+       border: none;
+       width: 100%;
+      border-bottom: 1;
+      border-bottom: 1px solid #e8e4dc
+  };
+ /* On focus (important) */
+.react-tel-input .form-control:focus {
+  border: none;
+  border-bottom: 1px solid #c9a961; /* active color */
+  box-shadow: none;
+  outline: none;
+}
 
 .successSubtext {
   font-size: 12px;
@@ -341,5 +354,8 @@
     padding: 14px 24px;
     font-size: 11px;
     letter-spacing: 2.5px;
+  }
+  .title{
+    font-size: 18px;
   }
 }

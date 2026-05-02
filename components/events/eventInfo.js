@@ -37,7 +37,6 @@ const NRIHomeFest = () => {
           ></iframe>
         </div>
 
-        {/* Content */}
         <div className={styles.storyText}>
 
           <span className={styles.highlightName}>

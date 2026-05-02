@@ -49,6 +49,7 @@
   transform: scale(0.9);
   pointer-events: none;
   transition: opacity 1000ms ease-out, transform 1000ms ease-out;
+  overflow: auto;
 }
 
 .popupAnimating {

@@ -9,13 +9,13 @@ function HeaderSec() {
         <div className={styles.overlayContent}>
 
           <img
-            src="https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-event-expo/text-over-img-desktop.png"
+            src="https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-event-expo/text-over-img-desktop-icon.png"
             alt="NRI Expo"
             className={styles.desktopImg}
           />
 
           <img
-            src="https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-event-expo/text-over-img.png"
+            src="https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-event-expo/text-over-img-icon.png"
             alt="NRI Expo"
             className={styles.mobileImg}
           />

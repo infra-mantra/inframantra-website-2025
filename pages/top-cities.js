@@ -8,7 +8,6 @@ function City({ allData }) {
 
   const cities = ['Gurgaon', 'Noida', 'Pune', 'Ghaziabad'];
   const data = allData?.data?.data || {};
-  // ✅ Extracting Localities and Properties Dynamically for All Cities
   const cityData = cities.map(city => {
     const cityLocalities = data[city]?.map(locality => ({
       name: locality.name,

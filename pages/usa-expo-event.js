@@ -6,6 +6,7 @@ import Wrapper from '../components/UI/Wrapper';
 import EventGallery from '../components/events/formGallery';
 import Faq from '../components/nri/FAQ';
 import Header from '../components/events/HeaderSec';
+import AboutEvent from '../components/events/aboutEvent';
 
 function UsaExpoEvent() {   
      useEffect(() => {
@@ -28,13 +29,10 @@ function UsaExpoEvent() {
     <>
     <Wrapper>
     <Header/>
+    <AboutEvent/>
     <EventGallery/>
     <EventInfo/>
-    <ProjecMap/>
-    <section  className='faq-wrapper'>
-    {/* <Faq /> */}
-    </section>
-    <Sticky />
+    <Sticky url="/usa-nri" />
     </Wrapper>
     </>
   )

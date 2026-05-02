@@ -2,19 +2,13 @@
     import EventGallery from "./EventGallery";
     import RegistrationForm from "./RegistrationForm";
 
-    /**
-     * Drop this into your Next.js page.
-     *
-     * The two components are completely self-contained.
-     * The page-level layout (2-column grid, centered title, white bg)
-     * is handled here with styled-jsx so you don't need a third component.
-     */
+
 
     const eventImages = [
          {
         src: "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-event-expo/gallery/event-3-f.webp",
         alt: "NRI Event Expo 3",
-        caption: "Highlights from Our Dream Home Fest ",
+        caption: "Happy Clients at our Dream Home Fest ",
     },
     {
         src: "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-event-expo/gallery/event-1-f.webp",
@@ -24,7 +18,52 @@
     {
         src: "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-event-expo/gallery/event-2-f.webp",
         alt: "NRI Event Expo 2",
+        caption: "Happy Clients at our Dream Home Fest",
+    },
+      {
+        src: "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-event-expo/gallery/01.webp",
+        alt: "NRI Event Expo 2",
+        caption: "Clients engaging in detailed property discussions",
+    },
+       {
+        src: "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-event-expo/gallery/01.webp",
+        alt: "NRI Event Expo 2",
         caption: "Happy Clients",
+    },
+       {
+        src: "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-event-expo/gallery/02.webp",
+        alt: "NRI Event Expo 2",
+        caption: "Happy Clients at our Dream Home Fest",
+    },
+        {
+        src: "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-event-expo/gallery/03.webp",
+        alt: "NRI Event Expo 2",
+        caption: "Happy Clients at our Tulip Monsella Skyhub Showcase",
+    },
+         {
+        src: "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-event-expo/gallery/04.webp",
+        alt: "NRI Event Expo 2",
+        caption: "Happy Clients at our Tulip Monsella Skyhub Showcase",
+    },
+          {
+        src: "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-event-expo/gallery/05.webp",
+        alt: "NRI Event Expo 2",
+        caption: "Happy Clients at our Tulip Monsella Skyhub Showcases",
+    },
+              {
+        src: "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-event-expo/gallery/06.webp",
+        alt: "NRI Event Expo 2",
+        caption: "Happy Clients at our Tulip Monsella Skyhub Showcase",
+    },
+                 {
+        src: "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-event-expo/gallery/07.webp",
+        alt: "NRI Event Expo 2",
+        caption: "Happy Clients at our Dream Home Fest",
+    },
+                  {
+        src: "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-event-expo/gallery/08.webp",
+        alt: "NRI Event Expo 2",
+        caption: "Clients engaging in detailed property discussions",
     },
    
     ];
@@ -57,17 +96,17 @@
             <EventGallery images={eventImages} autoplay autoplayInterval={4500} />
             </div>
             <div className="reg-form-col">
-            <RegistrationForm onSubmit={handleSubmit} />
+            <RegistrationForm  />
             </div>
         </div>
 
         <style jsx>{`
             .reg-section {
-            position: relative;
-            background: #fff;
-            padding: 11px 2rem;
-            max-width:1403px;
-            margin:0px auto;
+                width: 100%;
+    padding: 0px 70px;
+    background: #fff;
+    max-width: 1403px;
+    margin: 0px auto;
             }
             .reg-section::before {
             content: '';
@@ -109,7 +148,7 @@
         font-weight: 700;
         color: #d4a64a;
         display:flex;
-           padding: 11px 2rem;
+          
        
             }
             .reg-container {
@@ -136,10 +175,13 @@
                 max-width: 600px;
             }
             }
+
             @media (max-width: 600px) {
             .reg-section {
-                padding: 2px 16px;
+                padding: 2px 1rem;
             }
+                  .reg-gallery-col{
+                  order:1}
             .reg-title{
             font-size:20px;
               padding: 0px 0px;

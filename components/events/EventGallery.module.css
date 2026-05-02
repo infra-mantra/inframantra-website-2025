@@ -1,13 +1,11 @@
 /* ============================================
    EVENT GALLERY — Auto-sliding carousel
-   White theme with gold accent
    ============================================ */
 
 .gallery {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  
 }
 
 .sliderWrap {
@@ -42,39 +40,8 @@
   display: block;
 }
 
-/* Subtle vignette for caption legibility */
-.slide::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 60%, rgba(0, 0, 0, 0.45));
-  pointer-events: none;
-}
-
-.slideCaption {
-  position: absolute;
-  bottom: 22px;
-  left: 22px;
-  right: 22px;
-  z-index: 2;
-  color: white;
-
-  font-style: italic;
-  font-size: 16px;
-  letter-spacing: 0.3px;
-  opacity: 0.95;
-}
-
-.slideCaption::before {
-  content: '';
-  display: block;
-  width: 24px;
-  height: 1px;
-  background: #e4cf94;
-  margin-bottom: 10px;
-}
-
 /* Navigation arrows */
+
 .navBtn {
   position: absolute;
   top: 50%;
@@ -104,10 +71,16 @@
   height: 18px;
 }
 
-.navPrev { left: 16px; }
-.navNext { right: 16px; }
+.navPrev {
+  left: 16px;
+}
+
+.navNext {
+  right: 16px;
+}
 
 /* Dot indicators */
+
 .dots {
   position: absolute;
   bottom: 16px;
@@ -119,7 +92,7 @@
 }
 
 .dot {
-  width: 24px;
+  width: 18px;
   height: 3px;
   background: rgba(255, 255, 255, 0.4);
   border: none;
@@ -133,7 +106,8 @@
   width: 36px;
 }
 
-/* Image counter (top right) */
+/* Counter */
+
 .counter {
   position: absolute;
   top: 16px;
@@ -158,74 +132,33 @@
   margin: 0 4px;
 }
 
-/* Expand to fullscreen button */
-.expandBtn {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  width: 36px;
-  height: 36px;
-  background: rgba(255, 255, 255, 0.95);
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 3;
-  transition: all 0.3s ease;
+/* Caption BELOW image */
+
+.bottomCaptionWrap {
+  background: #ffffff;
+  padding: 18px 22px;
+  border-left: 3px solid #e4cf94;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.bottomCaption {
+  margin: 0;
   color: #1a1a1a;
-  padding: 0;
-}
-
-.expandBtn:hover {
-  background: #c9a961;
-  color: white;
-}
-
-.expandBtn svg {
-  width: 16px;
-  height: 16px;
-}
-
-/* Meta row below slider */
-.galleryMeta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 4px 2px;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.metaLabel {
-  font-size: 10px;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  color: #d4a64a;
-  font-weight: 600;
-}
-
-.metaStats {
-  display: flex;
-  gap: 18px;
-  font-size: 11px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: #8a8a8a;
-  font-weight: 500;
-}
-
-.statItem {
-  display: flex;
-  align-items: baseline;
-  gap: 5px;
-}
-
-.statItem strong {
-  color: #d4a64a;
-  font-style: italic;
   font-size: 16px;
-  font-weight: 500;
+  line-height: 1.7;
+  font-style: italic;
+  letter-spacing: 0.2px;
+}
+
+.bottomCaption::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 2px;
+  background: #e4cf94;
+  margin-bottom: 12px;
 }
 
 /* ============================================
@@ -247,8 +180,13 @@
 }
 
 @keyframes lbFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .lightboxClose {
@@ -308,8 +246,13 @@
   height: 22px;
 }
 
-.lightboxPrev { left: 24px; }
-.lightboxNext { right: 24px; }
+.lightboxPrev {
+  left: 24px;
+}
+
+.lightboxNext {
+  right: 24px;
+}
 
 .lightboxImageWrap {
   display: flex;
@@ -322,8 +265,15 @@
 }
 
 @keyframes lbZoomIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .lightboxImage {
@@ -340,7 +290,8 @@
   color: rgba(255, 255, 255, 0.85);
   margin: 0;
   text-align: center;
-  max-width: 600px;
+  max-width: 700px;
+  line-height: 1.6;
   letter-spacing: 0.3px;
 }
 
@@ -366,44 +317,66 @@
   margin: 0 8px;
   opacity: 0.5;
 }
+.fontClr{
+color: #d4a64a 
+}
+  .fontWt{
+    font-weight: 500;
 
-/* Mobile */
+  }
+
+/* ============================================
+   MOBILE
+   ============================================ */
+
 @media (max-width: 600px) {
   .navBtn {
     width: 36px;
     height: 36px;
   }
-  .navPrev { left: 10px; }
-  .navNext { right: 10px; }
-  .slideCaption {
+
+  .navPrev {
+    left: 10px;
+  }
+
+  .navNext {
+    right: 10px;
+  }
+
+  .bottomCaptionWrap {
+    padding: 14px 16px;
+  }
+
+  .bottomCaption {
     font-size: 14px;
-    bottom: 18px;
-    left: 16px;
-    right: 16px;
-  }
-  .galleryMeta {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-  .metaStats {
-    gap: 14px;
-    font-size: 10px;
+    line-height: 1.6;
   }
 
   .lightbox {
     padding: 60px 12px;
   }
+
   .lightboxClose {
     top: 12px;
     right: 12px;
     width: 38px;
     height: 38px;
   }
+
   .lightboxNav {
     width: 40px;
     height: 40px;
   }
-  .lightboxPrev { left: 8px; }
-  .lightboxNext { right: 8px; }
+
+  .lightboxPrev {
+    left: 8px;
+  }
+
+  .lightboxNext {
+    right: 8px;
+  }
+  .order{
+    order: 2;
+  }
+
 }
