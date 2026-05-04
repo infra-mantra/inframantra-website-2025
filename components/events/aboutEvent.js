@@ -19,7 +19,7 @@ function aboutEvent() {
               <span className={styles.highlightName}>
                 Garvit Tiwari
               </span>{" "} */}
-             At the Expo, you’ll get the opportunity to meet our experts, Shiwang Suraj and Garvit Tiwari, along with senior executives from some of India’s most reputed developers like Godrej Properties, Tulip Infratech, Whiteland Corporation, and more. We’re bringing a curated selection of premium luxury residences, giving you direct access to high-potential opportunities in India’s dynamic real estate market.
+             At the Expo, you’ll get the opportunity to meet our Founder & Director, Mr. Shiwang Suraj and Co-Founder & Director,s Mr.Garvit Tiwari, along with senior executives from some of India’s most reputed developers like Godrej Properties, Tulip Infratech, Whiteland Corporation, and more. We’re bringing a curated selection of premium luxury residences, giving you direct access to high-potential opportunities in India’s dynamic real estate market.
     
               <br /><br />
     

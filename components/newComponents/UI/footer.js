@@ -105,6 +105,24 @@ function Footer() {
               <h4>Quick Search</h4>
               <div className={styles.footerThirdSectionDropdownFlex}>
                 <div className={styles.footerThirdSectionDropdownHeaderFlex}>
+                  <p  ><a  className={styles.fontWt} legacyBehavior={true} href='/usa-nri'>USA Properties</a></p>
+                 
+                 
+                </div>
+                
+               
+                
+              </div>
+              <div className={styles.footerThirdSectionDropdownFlex}>
+                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
+                  <p   ><a className={styles.fontWt} legacyBehavior={true} href='/usa-nri-event'>NRI EXPO</a></p>
+                  
+                
+                </div>
+               
+              </div>
+              <div className={styles.footerThirdSectionDropdownFlex}>
+                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
                   <p   onClick={() => handleFooterDropdownClick(1)}>Top Properties In Gurgaon</p>
                   <MdArrowDropDown
                     onClick={() => handleFooterDropdownClick(1)}
@@ -120,45 +138,7 @@ function Footer() {
                   </div>
                 )}
               </div>
-
-              <div className={styles.footerThirdSectionDropdownFlex}>
-                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
-                  <p   onClick={() => handleFooterDropdownClick(2)}>Top Properties In Pune</p>
-                  <MdArrowDropDown
-                    onClick={() => handleFooterDropdownClick(2)}
-                  />
-                </div>
-                {loading  && openDropDown ==2 &&  <div className={styles.spinner}></div>}
-                {openDropDown === 2 && (
-                  <div className={styles.footerThirdSectionDropdownLinkWrapper}>
-                      <p><Link  legacyBehavior={true} href='/property/pristine-o2-world-kharadi-pune'>Pristine O2 World</Link></p>
-                      <p><Link  legacyBehavior={true} href='/property/lodha-estilo-kharadi-pune'>Lodha Estilo</Link></p>
-                      <p><Link  legacyBehavior={true} href='/property/majestique-towers-kharadi-pune-east'>Majestique Towers</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/gera-winds-of-joy-hinjewadi-pune'>Gera Winds of Joy</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/gera-island-of-joy-kharadi-pune'>Gera Island of Joy</Link></p>
-                  </div>
-                )}
-              </div>
-              <div className={styles.footerThirdSectionDropdownFlex}>
-                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
-                  <p  onClick={() => handleFooterDropdownClick(3)}>Top Properties In Noida</p>
-                  <MdArrowDropDown
-                    onClick={() => handleFooterDropdownClick(3)}
-                  />
-                </div>
-                {loading  && openDropDown ==3 &&  <div className={styles.spinner}></div>}
-                {openDropDown === 3 && (
-                  <div className={styles.footerThirdSectionDropdownLinkWrapper}>
-                    <p><Link  legacyBehavior={true} href='/property/experion-elements-sector-45-noida'>Experion Elements</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/ace-hanei-sector-12-noida'>ACE HAN'EI                    </Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/godrej-woods-sector-43-noida'>Godrej Woods
-                    </Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/m3m-the-cullinan-sector-94-noida'>M3M The Cullinan
-                    </Link></p>
-                  </div>
-                )}
-              </div>
-              <div className={styles.footerThirdSectionDropdownFlex}>
+                <div className={styles.footerThirdSectionDropdownFlex}>
                 <div className={styles.footerThirdSectionDropdownHeaderFlex}>
                   <p  onClick={() => handleFooterDropdownClick(4)}>Premium Properties</p>
                   <MdArrowDropDown
@@ -200,16 +180,46 @@ function Footer() {
                   </div>  
                 )}
               </div>
-                 <div className={styles.footerThirdSectionDropdownFlex}>
+
+              <div className={styles.footerThirdSectionDropdownFlex}>
                 <div className={styles.footerThirdSectionDropdownHeaderFlex}>
-                  <p  className={styles.fontWt}><Link   legacyBehavior={true} href='/usa-nri'>USA Properties</Link></p>
-                 
-                 
+                  <p   onClick={() => handleFooterDropdownClick(2)}>Top Properties In Pune</p>
+                  <MdArrowDropDown
+                    onClick={() => handleFooterDropdownClick(2)}
+                  />
                 </div>
-                
-               
-                
+                {loading  && openDropDown ==2 &&  <div className={styles.spinner}></div>}
+                {openDropDown === 2 && (
+                  <div className={styles.footerThirdSectionDropdownLinkWrapper}>
+                      <p><Link  legacyBehavior={true} href='/property/pristine-o2-world-kharadi-pune'>Pristine O2 World</Link></p>
+                      <p><Link  legacyBehavior={true} href='/property/lodha-estilo-kharadi-pune'>Lodha Estilo</Link></p>
+                      <p><Link  legacyBehavior={true} href='/property/majestique-towers-kharadi-pune-east'>Majestique Towers</Link></p>
+                    <p><Link  legacyBehavior={true} href='/property/gera-winds-of-joy-hinjewadi-pune'>Gera Winds of Joy</Link></p>
+                    <p><Link  legacyBehavior={true} href='/property/gera-island-of-joy-kharadi-pune'>Gera Island of Joy</Link></p>
+                  </div>
+                )}
               </div>
+              <div className={styles.footerThirdSectionDropdownFlex}>
+                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
+                  <p  onClick={() => handleFooterDropdownClick(3)}>Top Properties In Noida</p>
+                  <MdArrowDropDown
+                    onClick={() => handleFooterDropdownClick(3)}
+                  />
+                </div>
+                {loading  && openDropDown ==3 &&  <div className={styles.spinner}></div>}
+                {openDropDown === 3 && (
+                  <div className={styles.footerThirdSectionDropdownLinkWrapper}>
+                    <p><Link  legacyBehavior={true} href='/property/experion-elements-sector-45-noida'>Experion Elements</Link></p>
+                    <p><Link  legacyBehavior={true} href='/property/ace-hanei-sector-12-noida'>ACE HAN'EI                    </Link></p>
+                    <p><Link  legacyBehavior={true} href='/property/godrej-woods-sector-43-noida'>Godrej Woods
+                    </Link></p>
+                    <p><Link  legacyBehavior={true} href='/property/m3m-the-cullinan-sector-94-noida'>M3M The Cullinan
+                    </Link></p>
+                  </div>
+                )}
+              </div>
+            
+              
             </div>
           </>
         )}
@@ -228,7 +238,24 @@ function Footer() {
             </div>
             <div className={styles.footerThirdSectionCompanyDetailsWrapper}>
               <h4>Quick Search</h4>
-              <div className={styles.footerThirdSectionDropdownFlex}>
+           
+                   <div className={styles.footerThirdSectionDropdownFlex}>
+                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
+                  <p   ><a className={styles.fontWt} legacyBehavior={true} href='/usa-nri'>USA Properties</a></p>
+                  
+                
+                </div>
+               
+              </div>
+                    <div className={styles.footerThirdSectionDropdownFlex}>
+                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
+                  <p   ><a className={styles.fontWt} legacyBehavior={true} href='/usa-nri-event'>NRI EXPO</a></p>
+                  
+                
+                </div>
+               
+              </div>
+                 <div className={styles.footerThirdSectionDropdownFlex}>
                 <div className={styles.footerThirdSectionDropdownHeaderFlex}>
                   <p  onClick={() => handleFooterDropdownClick(1)}>Top Properties In Gurgaon</p>
                   <MdArrowDropDown
@@ -245,46 +272,7 @@ function Footer() {
                   </div>
                 )}
               </div>
-
-              <div className={styles.footerThirdSectionDropdownFlex}>
-                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
-                  <p  onClick={() => handleFooterDropdownClick(2)}>Top Properties In Pune</p>
-                  <MdArrowDropDown
-                    onClick={() => handleFooterDropdownClick(2)}
-                  />
-                </div>
-                {loading  && openDropDown ==2 &&  <div className={styles.spinner}></div>}
-                {openDropDown === 2 && (
-                  <div className={styles.footerThirdSectionDropdownLinkWrapper}>
-                     <p><Link  legacyBehavior={true} href='/property/pristine-o2-world-kharadi-pune'>Pristine O2 World</Link></p>
-                      <p><Link  legacyBehavior={true} href='/property/lodha-estilo-kharadi-pune'>Lodha Estilo</Link></p>
-                      <p><Link  legacyBehavior={true} href='/property/majestique-towers-kharadi-pune-east'>Majestique Towers</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/gera-winds-of-joy-hinjewadi-pune'>Gera Winds of Joy</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/gera-island-of-joy-kharadi-pune'>Gera Island of Joy</Link></p>
-                  </div>
-                )}
-              </div>
-              <div className={styles.footerThirdSectionDropdownFlex}>
-                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
-                  <p  onClick={() => handleFooterDropdownClick(3)}>Top Properties In Noida</p>
-                  <MdArrowDropDown
-                    onClick={() => handleFooterDropdownClick(3)}
-                  />
-                </div>
-                {loading  && openDropDown ==3 &&  <div className={styles.spinner}></div>}
-                {openDropDown === 3 && (
-                  <div className={styles.footerThirdSectionDropdownLinkWrapper}>
-                     <p><Link  legacyBehavior={true} href='/property/experion-elements-sector-45-noida'>Experion Elements</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/ace-hanei-sector-12-noida'>ACE HAN'EI                    </Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/godrej-woods-sector-43-noida'>Godrej Woods
-                    </Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/m3m-the-cullinan-sector-94-noida'>M3M The Cullinan
-                    </Link></p>
-                    {/* <p>4S The Aurrum</p> */}
-                  </div>
-                )}
-              </div>
-              <div className={styles.footerThirdSectionDropdownFlex}>
+               <div className={styles.footerThirdSectionDropdownFlex}>
                 <div className={styles.footerThirdSectionDropdownHeaderFlex}>
                   <p  onClick={() => handleFooterDropdownClick(4)}>Premium Properties</p>
                   <MdArrowDropDown
@@ -324,14 +312,47 @@ function Footer() {
                 )}
               </div>
 
-                  <div className={styles.footerThirdSectionDropdownFlex}>
+
+              <div className={styles.footerThirdSectionDropdownFlex}>
                 <div className={styles.footerThirdSectionDropdownHeaderFlex}>
-                  <p   ><Link className={styles.fontWt} legacyBehavior={true} href='/usa-nri'>USA Properties</Link></p>
-                  
-                
+                  <p  onClick={() => handleFooterDropdownClick(2)}>Top Properties In Pune</p>
+                  <MdArrowDropDown
+                    onClick={() => handleFooterDropdownClick(2)}
+                  />
                 </div>
-               
+                {loading  && openDropDown ==2 &&  <div className={styles.spinner}></div>}
+                {openDropDown === 2 && (
+                  <div className={styles.footerThirdSectionDropdownLinkWrapper}>
+                     <p><Link  legacyBehavior={true} href='/property/pristine-o2-world-kharadi-pune'>Pristine O2 World</Link></p>
+                      <p><Link  legacyBehavior={true} href='/property/lodha-estilo-kharadi-pune'>Lodha Estilo</Link></p>
+                      <p><Link  legacyBehavior={true} href='/property/majestique-towers-kharadi-pune-east'>Majestique Towers</Link></p>
+                    <p><Link  legacyBehavior={true} href='/property/gera-winds-of-joy-hinjewadi-pune'>Gera Winds of Joy</Link></p>
+                    <p><Link  legacyBehavior={true} href='/property/gera-island-of-joy-kharadi-pune'>Gera Island of Joy</Link></p>
+                  </div>
+                )}
               </div>
+              <div className={styles.footerThirdSectionDropdownFlex}>
+                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
+                  <p  onClick={() => handleFooterDropdownClick(3)}>Top Properties In Noida</p>
+                  <MdArrowDropDown
+                    onClick={() => handleFooterDropdownClick(3)}
+                  />
+                </div>
+                {loading  && openDropDown ==3 &&  <div className={styles.spinner}></div>}
+                {openDropDown === 3 && (
+                  <div className={styles.footerThirdSectionDropdownLinkWrapper}>
+                     <p><Link  legacyBehavior={true} href='/property/experion-elements-sector-45-noida'>Experion Elements</Link></p>
+                    <p><Link  legacyBehavior={true} href='/property/ace-hanei-sector-12-noida'>ACE HAN'EI                    </Link></p>
+                    <p><Link  legacyBehavior={true} href='/property/godrej-woods-sector-43-noida'>Godrej Woods
+                    </Link></p>
+                    <p><Link  legacyBehavior={true} href='/property/m3m-the-cullinan-sector-94-noida'>M3M The Cullinan
+                    </Link></p>
+                    {/* <p>4S The Aurrum</p> */}
+                  </div>
+                )}
+              </div>
+             
+             
             </div>
           </div>
         )}
