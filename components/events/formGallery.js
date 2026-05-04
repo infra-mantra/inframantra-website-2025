@@ -25,11 +25,7 @@
         alt: "NRI Event Expo 2",
         caption: "Clients engaging in detailed property discussions",
     },
-       {
-        src: "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-event-expo/gallery/01.webp",
-        alt: "NRI Event Expo 2",
-        caption: "Happy Clients",
-    },
+     
        {
         src: "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-event-expo/gallery/02.webp",
         alt: "NRI Event Expo 2",

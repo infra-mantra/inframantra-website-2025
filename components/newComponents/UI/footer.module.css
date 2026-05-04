@@ -11,6 +11,9 @@
   overflow: hidden;
   /* z-index: 1000; */
 }
+.fontWt{
+font-weight: 400 !important;
+}
 
 .footerFirstSectionContainer {
   display: flex;

@@ -202,7 +202,7 @@ function Footer() {
               </div>
                  <div className={styles.footerThirdSectionDropdownFlex}>
                 <div className={styles.footerThirdSectionDropdownHeaderFlex}>
-                  <p  ><Link  legacyBehavior={true} href='/usa-nri'>USA Properties</Link></p>
+                  <p  className={styles.fontWt}><Link   legacyBehavior={true} href='/usa-nri'>USA Properties</Link></p>
                  
                  
                 </div>
@@ -326,7 +326,7 @@ function Footer() {
 
                   <div className={styles.footerThirdSectionDropdownFlex}>
                 <div className={styles.footerThirdSectionDropdownHeaderFlex}>
-                  <p  ><Link  legacyBehavior={true} href='/usa-nri'>USA Properties</Link></p>
+                  <p   ><Link className={styles.fontWt} legacyBehavior={true} href='/usa-nri'>USA Properties</Link></p>
                   
                 
                 </div>
