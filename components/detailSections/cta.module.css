@@ -156,8 +156,8 @@
 .formGroup {
     margin-bottom: 15px;
     border-radius: 3px;
-    display: flex
-;
+    /* display: flex */
+/* ; */
     flex-direction: column;
     justify-content: center;
     align-items: center;

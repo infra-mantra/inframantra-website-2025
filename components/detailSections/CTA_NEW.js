@@ -10,7 +10,7 @@ import ctaStyle from "./cta.module.css";
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 
-function App({ name, popUpenable = false, onClickOff, text, pdf  , phone="",id="defaultId" }) {
+function App({ name, popUpenable = false, onClickOff, text, pdf  , phone="",id="defaultId" , countryCode="in" }) {
 
   const [isAnimating, setIsAnimating] = useState(false);
   const [message, setMessage] = useState("");
@@ -138,7 +138,7 @@ function App({ name, popUpenable = false, onClickOff, text, pdf  , phone="",id="
 
              <div className={ctaStyle.formGroup}>
   <PhoneInput
-    country={'us'} // default India
+    country={countryCode} // default India
     enableSearch={true}
     value={formData.phoneNumber}
     onChange={(phone) =>

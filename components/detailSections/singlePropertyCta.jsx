@@ -1,17 +1,19 @@
 import { useState, useRef, useEffect } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
+
 import { toast } from 'react-toastify';
 import ctaStyle from "./cta.module.css";
 import style from "./ctaForHome.module.css";
 import Ajax1 from '../helper/Ajax1';
 import { useRouter } from 'next/router';
 
-function App({ name , id="defaultId"}) {
-
+function App({ name, id = "defaultId" , countryCode="in"  }) {
 
   const [isDesktop, setIsDesktop] = useState(true);
   const [isMobile, setIsMobile] = useState(true);
-  const [loading, setLoading] = useState(false); // NEW
+  const [loading, setLoading] = useState(false);
 
   const checkScreenWidth = () => {
     setIsDesktop(window.innerWidth >= 768);
@@ -22,21 +24,25 @@ function App({ name , id="defaultId"}) {
 
   useEffect(() => {
     checkScreenWidth();
+
     window.addEventListener('resize', checkScreenWidth);
-    return () => window.removeEventListener('resize', checkScreenWidth);
+
+    return () =>
+      window.removeEventListener('resize', checkScreenWidth);
+
   }, []);
 
-    useEffect(() => {
-  const alreadyClosed = localStorage.getItem("ctaClosed");
+  useEffect(() => {
+    const alreadyClosed = localStorage.getItem("ctaClosed");
 
-  if (!alreadyClosed) {
-    const timer = setTimeout(() => {
-    ;
-    }, 3000);
+    if (!alreadyClosed) {
+      const timer = setTimeout(() => {
 
-    return () => clearTimeout(timer);
-  }
-}, []);
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, []);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -46,6 +52,7 @@ function App({ name , id="defaultId"}) {
   });
 
   const [captchaToken, setCaptchaToken] = useState(null);
+
   const recaptchaRef = useRef(null);
 
   const handleChange = (e) => {
@@ -59,71 +66,97 @@ function App({ name , id="defaultId"}) {
     setCaptchaToken(token);
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  if (loading) return;
+    if (loading) return;
 
-  try {
-    setLoading(true);
-    const toastId = toast.loading("Submitting form...");
+    try {
 
-    const action = {
-      method: 'POST',
-      url: '/enquiry/project',
-      data: { ...formData },
-      token: false,
-    };
+      setLoading(true);
 
-    const response = await Ajax1(action);
+      const toastId = toast.loading("Submitting form...");
 
-    if (response?.data?.status === 'success') {
-      toast.update(toastId, {
-        render: "Form submitted successfully",
-        type: "success",
-        isLoading: false,
-        autoClose: 2000,
-      });
+      const action = {
+        method: 'POST',
+        url: '/enquiry/project',
+        data: {
+          ...formData
+        },
+        token: false,
+      };
 
-      setFormData({
-        name: '',
-        phoneNumber: '',
-        email: '',
-        projectName: name,
-      });
+      const response = await Ajax1(action);
 
-      setTimeout(() => {
-        router.push('/thank-you');
-      }, 3000);
-    } else {
-      toast.update(toastId, {
-        render: "Form submission failed",
-        type: "error",
-        isLoading: false,
-        autoClose: 2000,
-      });
+      if (response?.data?.status === 'success') {
+
+        toast.update(toastId, {
+          render: "Form submitted successfully",
+          type: "success",
+          isLoading: false,
+          autoClose: 2000,
+        });
+
+        setFormData({
+          name: '',
+          phoneNumber: '',
+          email: '',
+          projectName: name,
+        });
+
+        setTimeout(() => {
+          router.push('/thank-you');
+        }, 3000);
+
+      } else {
+
+        toast.update(toastId, {
+          render: "Form submission failed",
+          type: "error",
+          isLoading: false,
+          autoClose: 2000,
+        });
+
+      }
+
+    } catch (error) {
+
+      toast.error('Error submitting form');
+
+      console.error('Error submitting form:', error);
+
+    } finally {
+
+      setLoading(false);
+
     }
-  } catch (error) {
-    toast.error('Error submitting form');
-    console.error('Error submitting form:', error);
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   return (
     <div className={style.homeApp}>
       <div className={`${style.homeCtaMainWrapper} ${style.pt}`}>
-        <div className={style.homeCtaInnerWrapper} style={{ width: "100%" }}>
+
+        <div
+          className={style.homeCtaInnerWrapper}
+          style={{ width: "100%" }}
+        >
+
           <form onSubmit={handleSubmit} id={id}>
 
             <div className={ctaStyle.headingForm}>
-              <p style={{ marginTop: '0px' }} className={style.homePopUpHead}>
+              <p
+                style={{ marginTop: '0px' }}
+                className={style.homePopUpHead}
+              >
                 Please share your contact details
               </p>
-              <p className={style.homePopUpHead2}>TO UNLOCK EXCLUSIVE DEALS</p>
+
+              <p className={style.homePopUpHead2}>
+                TO UNLOCK EXCLUSIVE DEALS
+              </p>
             </div>
 
+            {/* NAME */}
             <div className={ctaStyle.formGroup}>
               <input
                 type="text"
@@ -132,31 +165,40 @@ const handleSubmit = async (e) => {
                 placeholder="Name"
                 value={formData.name}
                 onChange={(e) => {
-                  const alphabeticValue = e.target.value.replace(/[^a-zA-Z\s]/g, '');
-                  setFormData({ ...formData, name: alphabeticValue });
+                  const alphabeticValue = e.target.value.replace(
+                    /[^a-zA-Z\s]/g,
+                    ''
+                  );
+
+                  setFormData({
+                    ...formData,
+                    name: alphabeticValue
+                  });
                 }}
                 required
               />
             </div>
 
+            {/* PHONE INPUT */}
             <div className={ctaStyle.formGroup}>
-              <input
-                type="tel"
-                id="mobile"
-                name="phoneNumber"
-                placeholder="Phone Number"
+              <PhoneInput
+                country={countryCode}
+                enableSearch={true}
                 value={formData.phoneNumber}
-                onChange={(e) => {
-                  const onlyNumbers = e.target.value.replace(/[^0-9]/g, '');
-                  setFormData({ ...formData, phoneNumber: onlyNumbers });
-                }}
-                inputMode="numeric"
-                pattern="[0-9]*"
-                minLength="10"
-                required
+                onChange={(phone) =>
+                  setFormData({
+                    ...formData,
+                    phoneNumber: phone
+                  })
+                }
+                inputClass={ctaStyle.input}
+                containerClass={ctaStyle.phoneContainer}
+                buttonClass={ctaStyle.flagDropdown}
+                placeholder="Enter phone number"
               />
             </div>
 
+            {/* EMAIL */}
             <div className={ctaStyle.formGroup}>
               <input
                 type="email"
@@ -169,9 +211,23 @@ const handleSubmit = async (e) => {
               />
             </div>
 
-           
+            {/* RECAPTCHA */}
+            <div className="recaptcha-container">
+              <ReCAPTCHA
+                sitekey="6LfrSTUqAAAAAOy2-j9cNvTIujOI5GKjtMVsn2Uk"
+                size="invisible"
+                ref={recaptchaRef}
+                onChange={handleCaptchaChange}
+              />
+            </div>
 
-            <div style={{ display: "flex", justifyContent: "center" }}>
+            {/* BUTTON */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center"
+              }}
+            >
               <button
                 type="submit"
                 disabled={loading}
@@ -182,7 +238,9 @@ const handleSubmit = async (e) => {
                   color: "#fff",
                   border: "none",
                   borderRadius: "4px",
-                  cursor: loading ? "not-allowed" : "pointer",
+                  cursor: loading
+                    ? "not-allowed"
+                    : "pointer",
                   justifyContent: 'center',
                   display: 'flex'
                 }}
@@ -191,25 +249,56 @@ const handleSubmit = async (e) => {
               </button>
             </div>
 
-            <p className={style.homePropertyPageHeaderContactUsDisclaimer} style={{ padding: "10px" }}>
+            {/* DISCLAIMER */}
+            <p
+              className={style.homePropertyPageHeaderContactUsDisclaimer}
+              style={{ padding: "10px" }}
+            >
               *By submitting, I accept Inframantra{' '}
-              <a href="https://inframantra.com/page/terms-conditions" target="_blank" rel="noopener noreferrer" style={{ color: "blue" }}>
+
+              <a
+                href="https://inframantra.com/page/terms-conditions"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "blue" }}
+              >
                 Terms & Conditions
-              </a>{' '}and{' '}
-              <a href="https://inframantra.com/page/privacy-policy" target="_blank" rel="noopener noreferrer" style={{ color: "blue" }}>
+              </a>
+
+              {' '}and{' '}
+
+              <a
+                href="https://inframantra.com/page/privacy-policy"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "blue" }}
+              >
                 Privacy Policy.
               </a>
             </p>
 
           </form>
 
-          <div className={style.homePagePropertyPageHeaderContactIconContainer2}>
-            <hr width="100%" color="#DCAA4C" size="1" />
+          <div
+            className={style.homePagePropertyPageHeaderContactIconContainer2}
+          >
+            <hr
+              width="100%"
+              color="#DCAA4C"
+              size="1"
+            />
+
             <div style={{ display: "flex" }}>
               <div className={style.homeCtaText}>
-                <p className={style.hometextForm}>Give us a call and book your visit now!</p>
+                <p className={style.hometextForm}>
+                  Give us a call and book your visit now!
+                </p>
               </div>
-              <img src="https://inframantra.com/guruCollection/guru_call.png" alt="Call Icon" />
+
+              <img
+                src="https://inframantra.com/guruCollection/guru_call.png"
+                alt="Call Icon"
+              />
             </div>
           </div>
 

@@ -116,6 +116,7 @@ const FAQ = () => {
         name="USA EXPO"
         phone="+1 (213) 6575060"
         id="nriFaq"
+        countryCode='us'
         />
     </section>
   );

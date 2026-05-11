@@ -179,7 +179,9 @@ export default function StickySidebar({ url = "" }) {
           name="USA EXPO"
           phone="+1 (213) 6575060"
           id="nriGetInTouch"
+          countryCode='us'
         />
+
       )}
     </>
   );

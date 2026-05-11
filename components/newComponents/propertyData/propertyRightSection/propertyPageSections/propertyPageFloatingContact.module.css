@@ -15,6 +15,10 @@
   width: 90%;
   margin-left: 5%;
 }
+.react-tel-input .form-control{
+  background:none !important;
+  border: none !important;
+}
 
 .propertyPageFloatingContactHeaderWrapper {
   display: flex;

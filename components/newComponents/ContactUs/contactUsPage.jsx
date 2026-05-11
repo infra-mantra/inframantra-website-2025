@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { SocialIcon } from 'react-social-icons';
-
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -8,10 +9,11 @@ import { useRouter } from 'next/router';
 import { MdLocationOn } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
 import { MdMail } from "react-icons/md";
+
 import Ajax1 from '../../helper/Ajax1';
 import { toast } from 'react-toastify';
-import styles from './contactUsPage.module.css'
 
+import styles from './contactUsPage.module.css';
 
 const formPaperStyles = {
   width: '40vw',
@@ -24,7 +26,6 @@ const formPaperStyles = {
   padding: '20px',
   boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
 };
-
 
 const formPaperMobileStyles = {
   width: '95vw',
@@ -62,70 +63,93 @@ const mobileIconPaper = {
   boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
 };
 
-
-
 export default function ContactUsPage() {
+
   const router = useRouter();
+
   const [isDesktop, setIsDesktop] = useState(true);
   const [isMobile, setIsMobile] = useState(true);
+
   const checkScreenWidth = () => {
-    setIsDesktop(window.innerWidth >= 769); // You can adjust the threshold for desktop here
+    setIsDesktop(window.innerWidth >= 769);
     setIsMobile(window.innerWidth <= 768);
   };
+
   useEffect(() => {
+
     checkScreenWidth();
+
     window.addEventListener('resize', checkScreenWidth);
 
     return () => {
       window.removeEventListener('resize', checkScreenWidth);
     };
+
   }, []);
-  // State management for form fields
+
   const [formData, setFormData] = useState({
     name: '',
     phoneNumber: '',
     email: '',
   });
-  // Handler for input changes
+
   const handleInputChange = (e) => {
+
     const { name, value } = e.target;
+
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
+
   };
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
+
     const action = {
       method: 'POST',
-      url: '/enquiry/contact', // Adjust this URL to your API endpoint
+      url: '/enquiry/contact',
       data: formData,
-      token: false, // Set to true if token is required
+      token: false,
     };
 
     try {
+
       const response = await Ajax1(action);
+
       if (response.data.status === 'success') {
-        toast.success('Form submitted successfully:', response.data);
-        // Reset form after successful submission
+
+        toast.success('Form submitted successfully');
+
         setFormData({
           name: '',
           phoneNumber: '',
           email: '',
         });
+
         router.push('/thank-you');
+
       } else {
-        toast.error('Form submission failed:', response);
+
+        toast.error('Form submission failed');
+
       }
+
     } catch (error) {
-      toast.error('Error submitting form:', error);
+
+      toast.error('Error submitting form');
+
       console.error('Error submitting form:', error);
+
     }
   };
 
   return (
     <div className={styles.contactUsPageWrapper}>
+
+      {/* DESKTOP */}
       {isDesktop && (
         <>
           <div className={styles.contactUsPageBannerContainer}>
@@ -136,6 +160,7 @@ export default function ContactUsPage() {
           </div>
 
           <div className={styles.contactUsPageFormSectionContainer}>
+
             <div className={styles.contactUsPageFormSectionGuruImgContainer}>
               <img
                 className={styles.contactPageGuruImg}
@@ -143,39 +168,74 @@ export default function ContactUsPage() {
                 alt="Guru Randhawa Inframantra"
               />
             </div>
+
             <div style={formPaperStyles}>
+
               <h3 className={styles.contactUsPageSecondSectionHeader}>
                 Let`s Find Your{' '}
-                <span style={{ color: '#E7B554' }}>Dream Home </span>Together!
+                <span style={{ color: '#E7B554' }}>
+                  Dream Home
+                </span>{' '}
+                Together!
               </h3>
+
               <form
                 className={styles.contactUsPageSecondSectionFormWrapper}
                 onSubmit={handleSubmit}
               >
+
+                {/* NAME */}
                 <input
                   name="name"
                   placeholder="Full Name"
                   value={formData.name}
                   onChange={(e) => {
-                    const alphabeticValue = e.target.value.replace(/[^a-zA-Z\s]/g, ''); 
-                    setFormData({ ...formData, name: alphabeticValue });
+                    const alphabeticValue =
+                      e.target.value.replace(
+                        /[^a-zA-Z\s]/g,
+                        ''
+                      );
+
+                    setFormData({
+                      ...formData,
+                      name: alphabeticValue
+                    });
                   }}
                   required
                 />
-                <input
-                  name="phoneNumber"
-                  placeholder="Phone Number"
+
+                {/* PHONE INPUT */}
+                <PhoneInput
+                  country={'in'}
+                  enableSearch={true}
                   value={formData.phoneNumber}
-                  onChange={(e) => {
-                    const onlyNumbers = e.target.value.replace(/[^0-9]/g, ''); 
-                    setFormData({ ...formData, phoneNumber: onlyNumbers });
+                  onChange={(phone) =>
+                    setFormData({
+                      ...formData,
+                      phoneNumber: phone
+                    })
+                  }
+                  placeholder="Phone Number"
+                  containerStyle={{
+                    width: '100%',
+                    marginBottom: '10px'
                   }}
-                  inputMode="numeric" 
-                  pattern="[0-9]*" 
-                  maxLength="10"
-                  minLength={10}
-                  required
+                  inputStyle={{
+                    width: '100%',
+                    height: '48px',
+                    borderRadius: '8px',
+                 
+                    paddingLeft: '48px',
+                    fontSize: '16px'
+                  }}
+                  buttonStyle={{
+                    border: '1px solid #ccc',
+                    borderRadius: '8px 0 0 8px',
+                    backgroundColor: '#fff'
+                  }}
                 />
+
+                {/* EMAIL */}
                 <input
                   name="email"
                   placeholder="E-mail"
@@ -183,234 +243,226 @@ export default function ContactUsPage() {
                   onChange={handleInputChange}
                   required
                 />
+
+                {/* BUTTON */}
                 <button
                   className={styles.searchButton}
-                  style={{ borderRadius: '8px', width: '20vw', fontSize: '20px', padding: '10px' }}
+                  style={{
+                    borderRadius: '8px',
+                    width: '20vw',
+                    fontSize: '20px',
+                    padding: '10px'
+                  }}
                   type="submit"
                 >
                   Contact Now
                 </button>
+
               </form>
-              <p className={styles.contactUsPageConditions}>By submitting, I accept Inframantra <Link href="/page/disclaimer">Terms &amp; Conditions</Link> and <Link href="/page/privacy-policy">Privacy Policy</Link></p>
+
+              <p className={styles.contactUsPageConditions}>
+                By submitting, I accept Inframantra{' '}
+                <Link href="/page/disclaimer">
+                  Terms &amp; Conditions
+                </Link>{' '}
+                and{' '}
+                <Link href="/page/privacy-policy">
+                  Privacy Policy
+                </Link>
+              </p>
+
             </div>
           </div>
+
+          {/* LOCATION SECTION */}
           <div className={styles.contactUsPageLocationSectionContainer}>
+
             <div className={styles.contactUsPageLocationSectionMapContainer}>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14032.085916196966!2d77.0413113!3d28.4487689!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d193e2433c0cf%3A0xef40ba926f65e0ec!2sINFRAMANTRA!5e0!3m2!1sen!2sin!4v1731478063313!5m2!1sen!2sin" width="500" height="300"  allowfullscreen="" loading="lazy"style={{border:"0px"}}referrerpolicy="no-referrer-when-downgrade"></iframe>
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14032.085916196966!2d77.0413113!3d28.4487689!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d193e2433c0cf%3A0xef40ba926f65e0ec!2sINFRAMANTRA!5e0!3m2!1sen!2sin!4v1731478063313!5m2!1sen!2sin"
+                width="500"
+                height="300"
+                allowFullScreen=""
+                loading="lazy"
+                style={{ border: "0px" }}
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
             </div>
-              
-          <div className={styles.contactUsPageLocationSectionAddressContainer}>
+
+            <div className={styles.contactUsPageLocationSectionAddressContainer}>
+
               <div className={styles.contactUsPageLocationSectionAddressFlex}>
                 <span
                   style={{
                     color: '#E4A951',
-                    height: '100%',
                     fontSize: '2rem',
                   }}
                 >
                   <MdLocationOn />
                 </span>
+
                 <div className={styles.contactUsPageLocationSectionAddressDataFlex}>
                   <p className={styles.contactUsPageThirdSectionLocationCity}>
                     Gurgaon
                   </p>
+
                   <p className={styles.contactUsPageThirdSectionLocationAddress}>
-                    95, Institutional Area, Sector 32, Gurugram, Haryana 122002
+                    95, Institutional Area, Sector 32,
+                    Gurugram, Haryana 122002
                   </p>
                 </div>
               </div>
-              <div className={styles.contactUsPageLocationSectionAddressFlex}>
-                <span
-                  style={{
-                    color: '#E4A951',
-                    height: '100%',
-                    fontSize: '2rem',
-                  }}
-                >
-                  <MdLocationOn />
-                </span>
-                <div className={styles.contactUsPageLocationSectionAddressDataFlex}>
-                  <p className={styles.contactUsPageThirdSectionLocationCity}>Noida</p>
-                  <p className={styles.contactUsPageThirdSectionLocationAddress}>
-                    Assotech Business Cresterra, Unit No: 416, Tower 1,
-                    Sector-135, Noida, U.P., 201301
-                  </p>
-                </div>
-              </div>
-              <div className={styles.contactUsPageLocationSectionAddressFlex}>
-                <span
-                  style={{
-                    color: '#E4A951',
-                    height: '100%',
-                    fontSize: '2rem',
-                  }}
-                >
-                  <MdLocationOn />
-                </span>
-                <div className={styles.contactUsPageLocationSectionAddressDataFlex}>
-                  <p className={styles.contactUsPageThirdSectionLocationCity}>Pune</p>
-                  <p className={styles.contactUsPageThirdSectionLocationAddress}>
-                    Pune - 2nd Floor, Mantri Court, near RTO Office, Narveer Tanaji Wadi, Shivajinagar, Pune, Maharashtra 411001
-                  </p>
-                </div>
-              </div>
+
             </div>
           </div>
-          <hr className={styles.contactUsPageLastSectionDivider}/>
+
+          <hr className={styles.contactUsPageLastSectionDivider} />
+
+          {/* CONTACT DETAILS */}
           <div className={styles.contactUsPageLastSectionContainer}>
+
             <p className={styles.contactUsPageLastSectionContainerHeader}>
               Contact Us Now!
             </p>
+
             <p className={styles.contactUsPageLastSectionContainerSubHeader}>
-              <span style={{ color: '#E4A951', marginRight: '15px', fontSize: '1.5rem' }}><FaPhoneAlt /></span>
+              <span
+                style={{
+                  color: '#E4A951',
+                  marginRight: '15px',
+                  fontSize: '1.5rem'
+                }}
+              >
+                <FaPhoneAlt />
+              </span>
+
               + 91 86 9800 9900
             </p>
+
             <p className={styles.contactUsPageLastSectionContainerSubHeader}>
-              <span style={{ color: '#E4A951', marginRight: '15px', fontSize: '1.5rem' }}><MdMail /></span>
+              <span
+                style={{
+                  color: '#E4A951',
+                  marginRight: '15px',
+                  fontSize: '1.5rem'
+                }}
+              >
+                <MdMail />
+              </span>
+
               info@inframantra.com
             </p>
-            <p className={styles.contactUsPageLastSectionContainerSubHeader}>
-              <span style={{ color: '#E4A951', marginRight: '15px', fontSize: '1.5rem' }}><MdMail /></span>
-              marketing@inframantra.com
-            </p>
+
           </div>
         </>
       )}
+
+      {/* MOBILE */}
       {!isDesktop && (
         <>
           <h3 className={styles.contactUsPageSecondSectionHeader}>
             Let`s Find Your{' '}
-            <span style={{ color: '#E7B554' }}>Dream Home </span>Together!
+            <span style={{ color: '#E7B554' }}>
+              Dream Home
+            </span>{' '}
+            Together!
           </h3>
+
           <div style={formPaperMobileStyles}>
-          <form
-      className={styles.contactUsPageSecondSectionFormWrapper}
-      onSubmit={handleSubmit}
-    >
-      <input
-        name="name"
-        placeholder="Full Name"
-        value={formData.name}
-        onChange={handleInputChange}
-        className={styles.inputField}
-        required
-      />
-      <input
-        name="phoneNumber"
-        placeholder="Phone Number"
-        value={formData.phoneNumber}
-        onChange={handleInputChange}
-        className={styles.inputField}
-        required
-        maxLength={10}
-        minLength={10}
-      />
-      <input
-        name="email"
-        placeholder="E-mail"
-        value={formData.email}
-        onChange={handleInputChange}
-        className={styles.inputField}
-        required
-      />
-      <button
-        className={styles.searchButton}
-        type="submit"
-      >
-        Contact Now
-      </button>
-    </form>
-            <p className={styles.contactUsPageConditions}>By submitting, I accept Inframantra <Link href="/page/disclaimer">Terms &amp; Conditions</Link> and <Link href="/page/privacy-policy">Privacy Policy</Link></p>
-            <img className={styles.contactPageGuruImg} src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/guruContactPage.png" alt="Guru Randhawa Brand Ambassador Inframantra"></img>
-          </div>
-          <div className={styles.contactUsPageThirdSectionContainer}>
-            <div className={styles.contactUsPageThirdSectionLocationUpper}>
-              <div className={styles.contactUsPageLocationSectionAddressFlex}>
-                <div className='contactUsPageThirdSectionLocationCity'>
-                  <span
-                    style={{
-                      color: '#E4A951',
-                      height: '100%',
-                      fontSize: '2rem',
-                    }}
-                  >
-                    <MdLocationOn />
-                  </span>
-                  Gurgaon
-                </div>
-                <p className={styles.contactUsPageThirdSectionLocationAddress}>
-                  95, Institutional Area, Sector 32, Gurugram, Haryana 122002
-                </p>
-              </div>
-              <div className={styles.contactUsPageLocationSectionAddressFlex}>
-                <div className={styles.contactUsPageThirdSectionLocationCity}>
-                  <span
-                    style={{
-                      color: '#E4A951',
-                      height: '100%',
-                      fontSize: '2rem',
-                    }}
-                  >
-                    <MdLocationOn />
-                  </span>
-                  Noida
-                </div>
-                <p className={styles.contactUsPageThirdSectionLocationAddress}>
-                  Assotech Business Cresterra, Unit No: 416, Tower 1, Sector-135,
-                  Noida, U.P., 201301
-                </p>
-              </div>
-            </div>
-            <div className={styles.contactUsPageThirdSectionLocationUpper}>
-              <div className={styles.contactUsPageLocationSectionAddressFlex}>
-                <div className={styles.contactUsPageThirdSectionLocationCity}>
-                  <span
-                    style={{
-                      color: '#E4A951',
-                      height: '100%',
-                      fontSize: '2rem',
-                    }}
-                  >
-                    <MdLocationOn />
-                  </span>
-                  Pune
-                </div>
-                <p className={styles.contactUsPageThirdSectionLocationAddress}>
-                  Pune - 2nd Floor, Mantri Court, near RTO Office, Narveer Tanaji Wadi, Shivajinagar, Pune, Maharashtra 411001
-                </p>
-              </div>
-              <div className={styles.contactUsPageLocationSectionAddressFlex}>
-                <div class={styles.contactUsPageThirdSectionIconFlex}>
-                  <span style={{
-                    color: '#E4A951',
-                    height: '100%',
-                    fontSize: '2rem',
-                  }}><FaPhoneAlt /></span>
-                  <p>+ 91 86 9800 9900</p>
-                </div>
-                <hr class={styles.contactUsPageThirdSectionIconDivider}></hr>
-                <div class={styles.contactUsPageThirdSectionIconFlex}>
-                  <span style={{
-                    color: '#E4A951',
-                    height: '100%',
-                    fontSize: '2rem',
-                  }}><MdMail /></span>
-                  <p>info@inframantra.com</p>
-                </div>
-              </div>
-            </div>
-            <div style={mobileIconPaper}>
-              <h4 style={{ fontSize: '14px', color: '#e4a951' }}>Follow Us For Latest Updates</h4>
-              <div className={styles.contactUsPageThirdSectionSocialMediaFlex}>
-              <SocialIcon url="https://www.facebook.com/inframantraofficial" style={{ height: '40px', width: '40px' }} />
-                <SocialIcon url="https://x.com/INFRAMANTRA_" style={{ height: '40px', width: '40px' , backdropFilter: "#FFF"}} />
-                <SocialIcon url="https://www.instagram.com/inframantraofficial/" style={{ height: '40px', width: '40px' }} />
-                <SocialIcon url="https://www.youtube.com/@inframantraofficial" style={{ height: '40px', width: '40px' }} />
-                <SocialIcon url="https://in.linkedin.com/company/inframantra" style={{ height: '40px', width: '40px' }} />
-                <SocialIcon url="https://in.pinterest.com/inframantraofficial/" style={{ height: '40px', width: '40px' }} />
-                </div>
-            </div>
-          
+
+            <form
+              className={styles.contactUsPageSecondSectionFormWrapper}
+              onSubmit={handleSubmit}
+            >
+
+              {/* NAME */}
+              <input
+                name="name"
+                placeholder="Full Name"
+                value={formData.name}
+                onChange={(e) => {
+                  const alphabeticValue =
+                    e.target.value.replace(
+                      /[^a-zA-Z\s]/g,
+                      ''
+                    );
+
+                  setFormData({
+                    ...formData,
+                    name: alphabeticValue
+                  });
+                }}
+                className={styles.inputField}
+                required
+              />
+
+              {/* PHONE INPUT */}
+              <PhoneInput
+                country={'in'}
+                enableSearch={true}
+                value={formData.phoneNumber}
+                onChange={(phone) =>
+                  setFormData({
+                    ...formData,
+                    phoneNumber: phone
+                  })
+                }
+                placeholder="Phone Number"
+                containerStyle={{
+                  width: '100%',
+                  marginBottom: '10px'
+                }}
+                inputStyle={{
+                  width: '100%',
+                  height: '48px',
+                  borderRadius: '8px',
+                  // border: '1px solid #ccc',
+                  paddingLeft: '48px',
+                  fontSize: '16px'
+                }}
+                buttonStyle={{
+                  border: '1px solid #ccc',
+                  borderRadius: '8px 0 0 8px',
+                  backgroundColor: '#fff'
+                }}
+              />
+
+              {/* EMAIL */}
+              <input
+                name="email"
+                placeholder="E-mail"
+                value={formData.email}
+                onChange={handleInputChange}
+                className={styles.inputField}
+                required
+              />
+
+              {/* BUTTON */}
+              <button
+                className={styles.searchButton}
+                type="submit"
+              >
+                Contact Now
+              </button>
+
+            </form>
+
+            <p className={styles.contactUsPageConditions}>
+              By submitting, I accept Inframantra{' '}
+              <Link href="/page/disclaimer">
+                Terms &amp; Conditions
+              </Link>{' '}
+              and{' '}
+              <Link href="/page/privacy-policy">
+                Privacy Policy
+              </Link>
+            </p>
+
+            <img
+              className={styles.contactPageGuruImg}
+              src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/guruContactPage.png"
+              alt="Guru Randhawa Brand Ambassador Inframantra"
+            />
           </div>
         </>
       )}

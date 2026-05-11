@@ -692,6 +692,11 @@ text-transform: uppercase;
   height: 100%;
 }
 
+.react-tel-input .form-control {
+      position: relative;
+    width: 100% !important;
+}
+
 @media (max-width:768px) {
 .image-gallery-thumbnail {
   transition: 
@@ -763,6 +768,7 @@ text-transform: uppercase;
  max-width: 1403px;
  margin: 0px auto;
 }
+
 
 
 

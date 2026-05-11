@@ -1,16 +1,20 @@
-import {  useState, useRef , useEffect } from 'react';
-import ReCAPTCHA from 'react-google-recaptcha';
-import { toast } from 'react-toastify';
-import Ajax1 from '../helper/Ajax1';
-import { useRouter } from 'next/router';
+import { useState, useRef, useEffect } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
+import { toast } from "react-toastify";
+import Ajax1 from "../helper/Ajax1";
+import { useRouter } from "next/router";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+
 import ctaStyle from "./cta.module.css";
-import style from "./ctaForHome.module.css"
+import style from "./ctaForHome.module.css";
+
 import { MdLocationOn } from "react-icons/md";
 import { IoMdCall } from "react-icons/io";
 import { MdMail } from "react-icons/md";
 import { FcApproval } from "react-icons/fc";
-function App({name ,displayMap = true}) {
-  
+
+function App({ name, displayMap = true , countryCode="in" }) {
   const [isDesktop, setIsDesktop] = useState(true);
   const [isMobile, setIsMobile] = useState(true);
 
@@ -21,21 +25,22 @@ function App({name ,displayMap = true}) {
 
   useEffect(() => {
     checkScreenWidth();
-    window.addEventListener('resize', checkScreenWidth);
-    return () => window.removeEventListener('resize', checkScreenWidth);
+    window.addEventListener("resize", checkScreenWidth);
+
+    return () => window.removeEventListener("resize", checkScreenWidth);
   }, []);
 
   const router = useRouter();
 
-
   const [formData, setFormData] = useState({
-    name: '',
-    phoneNumber: '',
-    email: '',
+    name: "",
+    phoneNumber: "",
+    email: "",
     projectName: name,
   });
 
   const [captchaToken, setCaptchaToken] = useState(null);
+
   const recaptchaRef = useRef(null);
 
   const handleChange = (e) => {
@@ -55,50 +60,51 @@ function App({name ,displayMap = true}) {
     if (recaptchaRef.current) {
       try {
         const token = await recaptchaRef.current.executeAsync();
+
         setCaptchaToken(token);
+
         const action = {
-          method: 'POST',
-          url: '/enquiry/project',
+          method: "POST",
+          url: "/enquiry/project",
           data: { ...formData, captchaToken: token },
           token: false,
         };
 
         const response = await Ajax1(action);
 
-        if (response.data.status === 'success') {
-          toast.success('Form submitted successfully');
-          setFormData({ name: '', phoneNumber: '', email: '' });
+        if (response.data.status === "success") {
+          toast.success("Form submitted successfully");
 
-          
+          setFormData({
+            name: "",
+            phoneNumber: "",
+            email: "",
+          });
 
           setTimeout(() => {
-            router.push('/thank-you');
+            router.push("/thank-you");
           }, 5000);
         } else {
-          toast.error('Form submission failed');
+          toast.error("Form submission failed");
         }
       } catch (error) {
-        toast.error('Error submitting form');
-        console.error('Error submitting form:', error);
+        toast.error("Error submitting form");
+        console.error("Error submitting form:", error);
       }
     } else {
-      alert('reCAPTCHA not loaded properly.');
+      alert("reCAPTCHA not loaded properly.");
     }
   };
 
-
-
-
-
   return (
     <div className={style.homeApp}>
-     
-        <div className={style.homeCtaMainWrapper}>
-            
-          <div
-            className={style.homePageContactUsLeftDetailSection}
-               style={{ display: displayMap === false ? "none" : "block" }}
->
+      <div className={style.homeCtaMainWrapper}>
+        <div
+          className={style.homePageContactUsLeftDetailSection}
+          style={{
+            display: displayMap === false ? "none" : "block",
+          }}
+        >
           {isDesktop && (
             <div className={style.homePageContactUsLeftMapPhotoContainer}>
               <iframe
@@ -110,132 +116,232 @@ function App({name ,displayMap = true}) {
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
               ></iframe>
+
               <div className={style.homePageMapPhotoBgdTopLeft}></div>
+
               <div className={style.homePageMapPhotoBgdBottomRight}></div>
             </div>
           )}
-         
-            <img
-              className={style.homePageContactUsLeftDetailSectionImg}
-              src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/inframantraLogoBlack.png"
-              alt="Inframantra-Logo"
-            />
-            
-   
+
+          <img
+            className={style.homePageContactUsLeftDetailSectionImg}
+            src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/inframantraLogoBlack.png"
+            alt="Inframantra-Logo"
+          />
+
           <div className={style.homePageContactUsLeftDetailsContainer}>
             <div className={style.homePageContactUsLeftDetailFlex}>
-              <div  style={{ color: '#E7B554', fontSize: '25px', marginRight: '10px' }}><MdLocationOn /></div>
+              <div
+                style={{
+                  color: "#E7B554",
+                  fontSize: "25px",
+                  marginRight: "10px",
+                }}
+              >
+                <MdLocationOn />
+              </div>
+
               <p>95, Institutional Area, Sector 32, Gurugram</p>
             </div>
+
             <div className={style.homePageContactUsLeftDetailFlex}>
-              <div style={{ color: '#E7B554', fontSize: '25px', marginRight: '10px' }}><IoMdCall /></div>
+              <div
+                style={{
+                  color: "#E7B554",
+                  fontSize: "25px",
+                  marginRight: "10px",
+                }}
+              >
+                <IoMdCall />
+              </div>
+
               <p>+91 86 9800 9900, +1 (213) 6575060</p>
             </div>
+
             <div className={style.homePageContactUsLeftDetailFlex}>
-              <div style={{ color: '#E7B554', fontSize: '25px', marginRight: '10px' }}><MdMail /></div>
+              <div
+                style={{
+                  color: "#E7B554",
+                  fontSize: "25px",
+                  marginRight: "10px",
+                }}
+              >
+                <MdMail />
+              </div>
+
               <p>marketing@inframantra.com</p>
             </div>
-              <div className={style.homePageContactUsLeftDetailFlex}>
-              <div style={{ color: '#E7B554', fontSize: '25px', marginRight: '10px' }}><FcApproval /></div>
-              <p> HARERA/GGM/1813/1408/2022/181</p>
+
+            <div className={style.homePageContactUsLeftDetailFlex}>
+              <div
+                style={{
+                  color: "#E7B554",
+                  fontSize: "25px",
+                  marginRight: "10px",
+                }}
+              >
+                <FcApproval />
+              </div>
+
+              <p>HARERA/GGM/1813/1408/2022/181</p>
             </div>
           </div>
         </div>
-     
-          <div className={style.homeCtaInnerWrapper}  style={{ width: displayMap === false ? "100%" : "" }}>
-            <form onSubmit={handleSubmit}>
-                <div className={ctaStyle.headingForm}>
-              <p style ={{marginTop:'0px!important'}} className={style.homePopUpHead}>Please share your contact details</p>
-              <p className={style.homePopUpHead2}> TO UNLOCK EXCLUSIVE DEALS</p>
+
+        <div
+          className={style.homeCtaInnerWrapper}
+          style={{
+            width: displayMap === false ? "100%" : "",
+          }}
+        >
+          <form onSubmit={handleSubmit}>
+            <div className={ctaStyle.headingForm}>
+              <p
+                style={{ marginTop: "0px" }}
+                className={style.homePopUpHead}
+              >
+                Please share your contact details
+              </p>
+
+              <p className={style.homePopUpHead2}>
+                TO UNLOCK EXCLUSIVE DEALS
+              </p>
             </div>
 
-              <div className={ctaStyle.formGroup}>
-                <input
-                  type="text"
-                  id="username"
-                  name="username"
-                  placeholder="Name"
-                  value={formData.name}
-                  onChange={(e) => {
-                    const alphabeticValue = e.target.value.replace(/[^a-zA-Z\s]/g, '');
-                    setFormData({ ...formData, name: alphabeticValue });
-                  }}
-                  required
-                />
+            {/* NAME */}
+            <div className={ctaStyle.formGroup}>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Name"
+                value={formData.name}
+                onChange={(e) => {
+                  const alphabeticValue = e.target.value.replace(
+                    /[^a-zA-Z\s]/g,
+                    ""
+                  );
+
+                  setFormData({
+                    ...formData,
+                    name: alphabeticValue,
+                  });
+                }}
+                required
+              />
+            </div>
+
+            {/* PHONE INPUT */}
+            <div className={ctaStyle.formGroup}>
+              <PhoneInput
+                country={countryCode}
+                enableSearch={true}
+                value={formData.phoneNumber}
+                onChange={(phone) =>
+                  setFormData({
+                    ...formData,
+                    phoneNumber: phone,
+                  })
+                }
+                inputClass={ctaStyle.input}
+                containerClass={ctaStyle.phoneContainer}
+                buttonClass={ctaStyle.flagDropdown}
+                placeholder="Enter phone number"
+              />
+            </div>
+
+            {/* EMAIL */}
+            <div className={ctaStyle.formGroup}>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            {/* RECAPTCHA */}
+            <div className="recaptcha-container">
+              <ReCAPTCHA
+                sitekey="6LfrSTUqAAAAAOy2-j9cNvTIujOI5GKjtMVsn2Uk"
+                size="invisible"
+                ref={recaptchaRef}
+                onChange={handleCaptchaChange}
+              />
+            </div>
+
+            {/* BUTTON */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <button
+                type="submit"
+                style={{
+                  width: "100%",
+                  padding: "10px",
+                  backgroundColor: "#E7B554",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: "4px",
+                  cursor: "pointer",
+                }}
+              >
+                Submit
+              </button>
+            </div>
+
+            {/* DISCLAIMER */}
+            <p
+              className={style.homePropertyPageHeaderContactUsDisclaimer}
+              style={{ padding: "10px" }}
+            >
+              *By submitting, I accept Inframantra{" "}
+              <a
+                href="https://inframantra.com/page/terms-conditions"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "blue" }}
+              >
+                Terms & Conditions
+              </a>{" "}
+              and{" "}
+              <a
+                href="https://inframantra.com/page/privacy-policy"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "blue" }}
+              >
+                Privacy Policy.
+              </a>
+            </p>
+          </form>
+
+          <div
+            className={style.homePagePropertyPageHeaderContactIconContainer2}
+          >
+            <hr width="100%" color="#DCAA4C" size="1" />
+
+            <div style={{ display: "flex" }}>
+              <div className={style.homeCtaText}>
+                <p className={style.hometextForm}>
+                  Give us a call and book your visit now!
+                </p>
               </div>
-              <div className={ctaStyle.formGroup}>
-                <input
-                  type="tel"
-                  id="mobile"
-                  name="phoneNumber"
-                  placeholder="Phone Number"
-                  value={formData.phoneNumber}
-                  onChange={(e) => {
-                    const onlyNumbers = e.target.value.replace(/[^0-9]/g, '');
-                    setFormData({ ...formData, phoneNumber: onlyNumbers });
-                  }}
-                  inputMode="numeric"
-                  pattern="[0-9]*"
-                  minLength="10"
-                  required
-                />
-              </div>
-              <div className={ctaStyle.formGroup}>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="Email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="recaptcha-container">
-                <ReCAPTCHA
-                  sitekey="6LfrSTUqAAAAAOy2-j9cNvTIujOI5GKjtMVsn2Uk"
-                  size="invisible"
-                  ref={recaptchaRef}
-                />
-              </div>
-              <div style={{ display: "flex", justifyContent: "center" }}>
-                <button
-                  type="submit"
-                  style={{
-                    width: "100%",
-                    padding: "10px",
-                    backgroundColor: "#E7B554",
-                    color: "#fff",
-                    border: "none",
-                    borderRadius: "4px",
-                    cursor: "pointer",
-                  }}
-                >
-                  Submit
-                </button>
-              </div>
-              <p className={style.homePropertyPageHeaderContactUsDisclaimer} style={{ padding: "10px" }}>
-                *By submitting, I accept Inframantra{' '}
-                <a href="https://inframantra.com/page/terms-conditions" target="_blank" rel="noopener noreferrer" style={{ color: "blue" }}>
-                  Terms & Conditions
-                </a>{' '}and{' '}
-                <a href="https://inframantra.com/page/privacy-policy" target="_blank" rel="noopener noreferrer" style={{ color: "blue" }}>
-                  Privacy Policy.
-                </a>
-              </p>
-            </form>
-            <div className={style.homePagePropertyPageHeaderContactIconContainer2}>
-              <hr width="100%" color="#DCAA4C" size="1" />
-              <div style={{ display: "flex" }}>
-                <div className={style.homeCtaText}>
-                  <p className={style.hometextForm}>Give us a call and book your visit now!</p>
-                </div>
-                <img src="/guruCollection/guru_call.png" alt="Call Icon" />
-              </div>
+
+              <img
+                src="/guruCollection/guru_call.png"
+                alt="Call Icon"
+              />
             </div>
           </div>
         </div>
-      
+      </div>
     </div>
   );
 }
