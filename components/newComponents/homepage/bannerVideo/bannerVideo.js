@@ -1,5 +1,4 @@
 'use client';
-
 import React from 'react';
 import styles from './banner.module.css';
 
@@ -87,13 +86,13 @@ const BannerVideo = () => {
                 alt={img.alt}
                 className={`${styles.slideImage} ${slides[index].className}`}
                 draggable="false"
+                loading="lazy"
               />
             </picture>
           ))}
         </div>
       </div>
 
-      {/* 🟢 CLICK OVERLAY */}
       <div
         onClick={handleClick}
         style={{
