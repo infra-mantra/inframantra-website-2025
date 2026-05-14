@@ -245,7 +245,7 @@ export default function ProjectMap() {
 
   return (
     <div>
-  <div className={`${styles.wrapper} ${styles.container}`}>
+  <div className={`${styles.wrapperMap} ${styles.containerMap}`}>
       {/* Map */}
       <div className={styles.mapWrap}>
         <div ref={mapRef} className={styles.map} />

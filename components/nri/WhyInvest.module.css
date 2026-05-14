@@ -16,13 +16,7 @@
   font-weight: 400;
 }
 
-.heading {
- font-size: 1.8rem;
-    line-height: 1.08;
-    font-weight: 700;
-    color: #111111;
-    margin: 0 0 32px 0;
-}
+
 
 .headingDot {
   position: absolute;

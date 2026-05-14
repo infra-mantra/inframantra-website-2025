@@ -38,7 +38,7 @@
 }
 
 /* Header */
-.header {
+.headerR {
   text-align: center;
   margin-bottom: 28px;
 }
@@ -53,7 +53,7 @@
   margin-bottom: 12px;
 }
 
-.title {
+.titleR {
   font-size: clamp(24px, 3vw, 30px);
   font-weight: 500;
   color: #1a1a1a;
@@ -68,7 +68,7 @@
   font-weight: 400;
 }
 
-.subtitle {
+.subtitleR {
   font-size: 13px;
   color: #8a8a8a;
   font-weight: 400;

@@ -311,12 +311,12 @@ const RegistrationForm = ({
 
       {/* Header */}
 
-      <div className={styles.header}>
+      <div className={styles.headerR}>
         <span className={styles.eyebrowR}>
           {eyebrow}
         </span>
 
-        <h3 className={styles.title}>
+        <h3 className={styles.titleR}>
           {title}{" "}
           <em
             className={
