@@ -40,7 +40,7 @@
 
   opacity: 0;
 
-  animation: fade 55s infinite linear;
+  animation: fade 50s infinite linear;
 
   z-index: 0;
 }
@@ -52,24 +52,25 @@
   opacity: 1;
 }
 
+
 .slideImage2 {
   animation-delay: 15s;
 }
 
 .slideImage3 {
-  animation-delay: 25s;
+  animation-delay: 22s;
 }
 
 .slideImage4 {
-  animation-delay: 35s;
+  animation-delay: 29s;
 }
 
 .slideImage5 {
-  animation-delay: 45s;
+  animation-delay: 36s;
 }
 
 .slideImage6 {
-  animation-delay: 55s;
+  animation-delay: 43s;
 }
 
 /* Clickable overlay */
