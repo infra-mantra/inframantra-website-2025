@@ -7,14 +7,14 @@ import Ajax1 from "../helper/Ajax1";
 
 const RegistrationForm = ({
   cities = [
-    { value: "Seattle", label: "Seattle" },
-    { value: "San Jose", label: "San Jose" },
+    { value: "Seattle", labelR: "Seattle" },
+    { value: "San Jose", labelR: "San Jose" },
   ],
 
   eyebrow = "By Invitation",
   title = "Register for",
   titleAccent = "Exclusive Access",
-  submitLabel = "Reserve My Seat",
+  submitlabelR = "Reserve My Seat",
 
   // project name prop
   name = "USA EXPO",
@@ -28,22 +28,22 @@ const RegistrationForm = ({
     Seattle: [
       {
         value: "May 30, 2026",
-        label: "30th May 2026",
+        labelR: "30th May 2026",
       },
       {
         value: "May 31, 2026",
-        label: "31st May 2026",
+        labelR: "31st May 2026",
       },
     ],
 
     "San Jose": [
       {
         value: "June 6, 2026",
-        label: "6th June 2026",
+        labelR: "6th June 2026",
       },
       {
         value: "June 7, 2026",
-        label: "7th June 2026",
+        labelR: "7th June 2026",
       },
     ],
   };
@@ -312,7 +312,7 @@ const RegistrationForm = ({
       {/* Header */}
 
       <div className={styles.header}>
-        <span className={styles.eyebrow}>
+        <span className={styles.eyebrowR}>
           {eyebrow}
         </span>
 
@@ -346,15 +346,15 @@ const RegistrationForm = ({
           }`}
         >
 
-          <label
-            className={styles.label}
+          <labelR
+            className={styles.labelR}
             htmlFor="fullName"
           >
             Full Name{" "}
             <span className={styles.req}>
               *
             </span>
-          </label>
+          </labelR>
 
           <input
             id="fullName"
@@ -389,15 +389,15 @@ const RegistrationForm = ({
           }`}
         >
 
-          <label
-            className={styles.label}
+          <labelR
+            className={styles.labelR}
             htmlFor="email"
           >
             Email Address{" "}
             <span className={styles.req}>
               *
             </span>
-          </label>
+          </labelR>
 
           <input
             id="email"
@@ -432,15 +432,15 @@ const RegistrationForm = ({
           }`}
         >
 
-          <label
-            className={styles.label}
+          <labelR
+            className={styles.labelR}
             htmlFor="mobile"
           >
             Mobile Number{" "}
             <span className={styles.req}>
               *
             </span>
-          </label>
+          </labelR>
 
           <PhoneInput
             country={"us"}
@@ -487,15 +487,15 @@ const RegistrationForm = ({
           }`}
         >
 
-          <label
-            className={styles.label}
+          <labelR
+            className={styles.labelR}
             htmlFor="city"
           >
             Select City{" "}
             <span className={styles.req}>
               *
             </span>
-          </label>
+          </labelR>
 
           <select
             id="city"
@@ -513,7 +513,7 @@ const RegistrationForm = ({
                 key={city.value}
                 value={city.value}
               >
-                {city.label}
+                {city.labelR}
               </option>
             ))}
           </select>
@@ -540,15 +540,15 @@ const RegistrationForm = ({
           }`}
         >
 
-          <label
-            className={styles.label}
+          <labelR
+            className={styles.labelR}
             htmlFor="date"
           >
             Select Date{" "}
             <span className={styles.req}>
               *
             </span>
-          </label>
+          </labelR>
 
           <select
             id="date"
@@ -569,7 +569,7 @@ const RegistrationForm = ({
                 key={date.value}
                 value={date.value}
               >
-                {date.label}
+                {date.labelR}
               </option>
             ))}
           </select>
@@ -605,7 +605,7 @@ const RegistrationForm = ({
           <span>
             {isSubmitting
               ? "Securing your spot..."
-              : submitLabel}
+              : submitlabelR}
           </span>
 
           {!isSubmitting && (

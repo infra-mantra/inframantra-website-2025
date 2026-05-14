@@ -1,0 +1,223 @@
+/* =========================
+   PROPERTY GRID
+========================= */
+
+.r_sectionSlider {
+  background: #fff;
+  padding: 40px 20px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.r_grid {
+  max-width: 1100px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+
+
+/* =========================
+   CARD
+========================= */
+
+.r_card_pro {
+
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.3s ease;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.r_card_pro:hover {
+  transform: translateY(-4px);
+}
+
+/* =========================
+   IMAGE SLIDER
+========================= */
+
+.r_imageSlider {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+  background: #e0ddd8;
+}
+
+.r_slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.r_active {
+  opacity: 1;
+}
+
+.r_slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* =========================
+   BADGES
+========================= */
+
+.r_badgeContainer {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  gap: 8px;
+  z-index: 2;
+}
+
+.r_badge {
+  background: rgba(255, 255, 255, 0.95);
+  color: #111;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 20px;
+}
+
+.r_badgeContainerLogo {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+}
+
+.r_badgeContainerLogo img {
+  height: 34px;
+  object-fit: contain;
+  background: #fff;
+  padding: 4px;
+  border-radius: 6px;
+}
+
+/* =========================
+   ARROWS
+========================= */
+
+.r_arrowC {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+
+  width: 30px;
+  height: 30px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(255,255,255,0.9);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  font-size: 16px;
+}
+
+.r_arrowLeft {
+  left: 10px;
+}
+
+.r_arrowRight {
+  right: 10px;
+}
+
+/* =========================
+   CARD BODY
+========================= */
+
+
+
+.r_projectName {
+  font-size: 15px;
+  font-weight: 700;
+  color: #d4a64a;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.r_projectName a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* =========================
+   META
+========================= */
+
+.r_meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+
+  color: #fff;
+  font-size: 12px;
+
+  margin-bottom: 16px;
+}
+
+.r_metaDivider {
+  width: 1px;
+  height: 12px;
+  background: rgba(255,255,255,0.3);
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.r_downloadBtn {
+  width: 100%;
+  border: none;
+
+  background: #dcaa4c;
+  color: #fff;
+
+  padding: 12px;
+
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.r_downloadBtn:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .r_grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .r_sectionSlider{
+    padding: 10px 10px;
+  }
+  .r_projectName {
+    font-size: 12px;
+  }
+  .r_badgeContainerLogo img{
+    height: 18px;
+  }
+  .r_badge{
+    font-size: 5px;
+  }
+}

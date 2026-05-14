@@ -5,6 +5,7 @@ import 'react-phone-input-2/lib/style.css';
 import { toast } from 'react-toastify';
 import Ajax1 from '../helper/Ajax1';
 import { useRouter } from 'next/router';
+import RegistrationForm from '../events/RegistrationForm';
 
 const Header = ({ name = "USA EXPO", popUpenable, pdf, onClickOff }) => {
 
@@ -143,72 +144,11 @@ const Header = ({ name = "USA EXPO", popUpenable, pdf, onClickOff }) => {
             </div>
 
             {/* RIGHT SIDE FORM */}
-            <div className={styles.bannerRight}>
-              <nav>Register your Interest</nav>
-
-              <form onSubmit={handleSubmit} id="nriStickyForm">
-                <div>
-
-                  <div className={styles.formGroup} style={{ alignItems: "flex-start" }}>
-                    <label>Name*</label>
-                    <input
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      className={styles.input}
-                      type="text"
-                      placeholder="Ex: Michael Collins"
-                      required
-                    />
-                  </div>
-
-                  <div className={styles.formGroup} style={{ alignItems: "flex-start" }}>
-                    <label>Email*</label>
-                    <input
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      className={styles.input}
-                      type="email"
-                      placeholder="Ex: michael.collins@gmail.com"
-                      required
-                    />
-                  </div>
-
-                  <div className={styles.formGroup} style={{ alignItems: "flex-start" }}>
-                    <label>Phone Number*</label>
-
-                    <PhoneInput
-                      country={'us'}
-                      enableSearch={true}
-                      value={formData.phoneNumber}
-                      onChange={handlePhoneChange}
-                      inputClass={styles.input}
-                      containerClass={styles.phoneContainer}
-                      buttonClass={styles.flagDropdown}
-                      placeholder="Enter phone number"
-                    />
-                  </div>
-
-                  <div className={styles.formGroup} style={{ alignItems: "flex-start" }}>
-                    <label>Message</label>
-                    <textarea
-                      value={message}
-                      onChange={(e) => setMessage(e.target.value)}
-                      className={styles.input}
-                      placeholder="Share any information here"
-                    />
-                  </div>
-
-                  <div className={styles.submitBtn}>
-                    <button type="submit" disabled={loading}>
-                      {loading ? "Submitting..." : "Submit"}
-                    </button>
-                  </div>
-
-                </div>
-              </form>
+            {/* <div className={styles.bannerRight}> */}
+            <div className={styles.displayNone}>
+            <RegistrationForm/>
             </div>
+            {/* </div> */}
 
           </div>
         </div>

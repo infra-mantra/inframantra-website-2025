@@ -27,13 +27,14 @@
   transition: transform 0.7s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-.slide {
+.slideG {
   flex: 0 0 100%;
   height: 100%;
   position: relative;
+  opacity: 1;
 }
 
-.slide img {
+.slideG img {
   width: 100%;
   height: 100%;
   object-fit: cover;

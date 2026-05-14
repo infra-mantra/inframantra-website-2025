@@ -140,6 +140,9 @@
 
 /* ===================== RESPONSIVE DESIGN ===================== */
 
+.displayMobile{
+  display: none;
+}
 @media (max-width: 1100px) {
   .aboutContent {
     gap: 60px;
@@ -170,6 +173,9 @@
   .aboutItem img{
     margin-bottom: 0px;
     padding: 6px;
+  }
+  .displayMobile{
+     display: block;
   }
 
 

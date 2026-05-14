@@ -132,7 +132,7 @@ const EventGallery = ({
             }}
           >
             {images.map((img, i) => (
-              <div className={styles.slide} key={i}>
+              <div className={styles.slideG} key={i}>
                 <img
                   src={img.src}
                   alt={img.alt || `Event image ${i + 1}`}

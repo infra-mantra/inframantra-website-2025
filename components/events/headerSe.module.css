@@ -3,24 +3,41 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 90vh;
+  min-height: 100vh;
   position: relative;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
+  padding: 40px;
 }
 
 .overlayContent {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  padding: 20px;
-  right: 29%;
+  width: 100%;
+  max-width: 1400px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+/* LEFT SIDE */
+.leftSection {
+  flex: 1;
+}
+
+/* RIGHT SIDE */
+.rightSection {
+  width: 420px;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .desktopImg,
 .mobileImg {
-  width: 100%;
+  width: 80%;
   height: auto;
   object-fit: contain;
 }
@@ -34,20 +51,32 @@
   display: none;
 }
 
-/* Mobile */
+.displayNone {
+  display: block;
+}
+
+/* MOBILE */
 @media screen and (max-width: 768px) {
+
   .bgImg {
     background-image: url("https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-event-expo/nri-expo-mobile%20(1).jpg");
-    height: 80vh;
+    min-height: 80vh;
     padding: 20px;
+  }
+
+  .overlayContent {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .displayNone {
+    display: none;
   }
 
   .desktopImg {
     display: none;
-  }
-  .overlayContent{
-    bottom: 5%;
-    right: 0px;
   }
 
   .mobileImg {
@@ -55,14 +84,15 @@
     max-width: 90%;
     margin: 0 auto;
   }
-}
-@media screen and (max-width: 400px) {
-  .bgImg {
-    background-image: url("https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-event-expo/nri-expo-mobile%20(1).jpg");
-    height: 90vh;
-    padding: 20px;
+
+  .rightSection {
+    width: 100%;
+    justify-content: center;
   }
 }
 
-
-
+@media screen and (max-width: 400px) {
+  .bgImg {
+    min-height: 90vh;
+  }
+}

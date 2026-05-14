@@ -1,14 +1,9 @@
 import { useState, useCallback } from "react";
 import styles from "./projectSlider.module.css";
 import PopUpForm from '../detailSections/CTA_NEW';
-// https://inframantra.blr1.cdn.digitaloceanspaces.com/propertyLogo/tulipmonsella/Tulip-Monsella-logo.avif  tulip monsella
-// https://inframantra.blr1.cdn.digitaloceanspaces.com/propertyLogo/tulipcrimson/logo.avif   Tulip crimson
-// https://inframantra.blr1.digitaloceanspaces.com/propertyLogo/tulipmelrose/images (2).jpeg    Tulip Melrose
-// https://inframantra.blr1.cdn.digitaloceanspaces.com/propertyLogo/godrejsora/images%20(8).jpg   Godrej Sora
-// https://inframantra.blr1.cdn.digitaloceanspaces.com/propertyLogo/godrejmiraya/Godrej Miraya logo.avif Miraya Godrej
 
 
-const PROJECTS = [
+export const PROJECTS = [
   {
     id: "Godrej Sora",
     name: "Godrej Sora",
@@ -114,7 +109,7 @@ const GetQuotesIcon = () => (
 );
 
 // ── Card ─────────────────────────────────
-function ProjectCard({ project, onDownload }) {
+export function ProjectCard({ project, onDownload }) {
   const [current, setCurrent] = useState(0);
 
   const prev = useCallback((e) => {

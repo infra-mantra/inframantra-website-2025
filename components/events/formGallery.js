@@ -1,6 +1,7 @@
     import React from "react";
     import EventGallery from "./EventGallery";
-    import RegistrationForm from "./RegistrationForm";
+    import PropertyCard from './propertyCard'
+
 
 
 
@@ -92,7 +93,7 @@
             <EventGallery images={eventImages} autoplay autoplayInterval={4500} />
             </div>
             <div className="reg-form-col">
-            <RegistrationForm  />
+         <PropertyCard/>
             </div>
         </div>
 

@@ -198,6 +198,10 @@
     width: 20px;
     animation: arrowFlow 2.5s ease-in-out infinite;
 }
+.displayNone{
+    display: block;
+}
+
 
 @keyframes arrowFlow {
     0% { transform: translateY(-10px); opacity: 0; }
@@ -222,6 +226,9 @@
     font-size: 3rem;
   
     max-width: 100%;
+}
+.displayNone{
+    display: none;
 }
 }
 @media (max-width: 767px) {

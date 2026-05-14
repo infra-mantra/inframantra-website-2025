@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './about.module.css';
+import RegistrationForm from '../events/RegistrationForm';
 
 function AboutSection() {
   return (
@@ -8,7 +9,11 @@ function AboutSection() {
 
         {/* LEFT */}
         <div className={styles.aboutLeft}>
+          <div className={styles.displayMobile}>
+            <RegistrationForm/>
+            </div>
           <div className={styles.sectionHead}>
+         
             <div>
               <span>Trusted by Investors</span>
             </div>

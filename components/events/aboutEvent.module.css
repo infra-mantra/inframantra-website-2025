@@ -4,6 +4,7 @@
     background: #fff;
     padding-top: 30px;
     max-width: 1403px;
+    margin: 0 auto;
 }
 .heading {
   font-size: 2rem;
@@ -72,6 +73,9 @@
   }
 
 /* Tablet */
+.displayMobile{
+  display: none;
+}
 
 @media screen and (max-width: 992px) {
   .section1 {
@@ -93,6 +97,9 @@
   .section1 {
     padding: 24px 18px 50px;
   }
+  .displayMobile{
+  display: block;
+}
 
   .heading {
     font-size: 26px;
