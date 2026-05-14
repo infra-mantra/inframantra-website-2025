@@ -146,7 +146,7 @@ const Header = ({ name = "USA EXPO", popUpenable, pdf, onClickOff }) => {
             {/* RIGHT SIDE FORM */}
             {/* <div className={styles.bannerRight}> */}
             <div className={styles.displayNone}>
-            <RegistrationForm/>
+            <RegistrationForm name="USA EXPO" />
             </div>
             {/* </div> */}
 

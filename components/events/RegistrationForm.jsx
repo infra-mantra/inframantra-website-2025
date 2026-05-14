@@ -17,7 +17,7 @@ const RegistrationForm = ({
   submitlabelR = "Reserve My Seat",
 
   // project name prop
-  name = "USA EXPO",
+  name = "USA-EXPO (Event Specific)",
 }) => {
 
   /* ============================================
@@ -208,7 +208,7 @@ const RegistrationForm = ({
         name: formData.fullName,
         phoneNumber: `+${formData.mobile}`,
         email: formData.email,
-        projectName: name,
+        projectName: "USA-EXPO (Event Specific)",
         message: message,
       };
 

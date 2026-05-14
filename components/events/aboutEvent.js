@@ -7,7 +7,7 @@ function aboutEvent() {
    <section className={styles.eventContainer}> 
      {/* Heading */}
      <div className={styles.displayMobile}>
-            <RegistrationForm/>
+           <RegistrationForm name="USA EXPO" />
             </div>
           <div className={styles.headingWrapper}>
             <h2 className={styles.heading}>

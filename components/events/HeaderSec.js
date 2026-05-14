@@ -29,7 +29,7 @@ function HeaderSec() {
           {/* RIGHT FORM */}
           <div className={styles.rightSection}>
             <div className={styles.displayNone}>
-              <RegistrationForm />
+           <RegistrationForm name="USA EXPO" />
             </div>
           </div>
 

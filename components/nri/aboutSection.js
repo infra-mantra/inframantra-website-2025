@@ -10,7 +10,7 @@ function AboutSection() {
         {/* LEFT */}
         <div className={styles.aboutLeft}>
           <div className={styles.displayMobile}>
-            <RegistrationForm/>
+          <RegistrationForm name="USA EXPO" />
             </div>
           <div className={styles.sectionHead}>
          
