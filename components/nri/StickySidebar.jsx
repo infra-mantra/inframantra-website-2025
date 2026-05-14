@@ -176,7 +176,7 @@ export default function StickySidebar({ url = "" }) {
         <PopUpForm
           popUpenable={popForm}
           onClickOff={setPopForm}
-          name="USA EXPO"
+          name="USA-EXPO (Event Specific)"
           phone="+1 (213) 6575060"
           id="nriGetInTouch"
           countryCode='us'
