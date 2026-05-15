@@ -2,12 +2,12 @@ import React from 'react'
 import styles from './aboutEvent.module.css'
 import RegistrationForm from './RegistrationForm'
 
-function aboutEvent() {
+function aboutEvent({name}) {
   return (
    <section className={styles.eventContainer}> 
      {/* Heading */}
      <div className={styles.displayMobile}>
-           <RegistrationForm name="USA EXPO" />
+           <RegistrationForm name={name} />
             </div>
           <div className={styles.headingWrapper}>
             <h2 className={styles.heading}>

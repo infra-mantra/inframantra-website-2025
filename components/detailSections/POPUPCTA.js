@@ -1,0 +1,452 @@
+import { RxCross2 } from "react-icons/rx";
+import React, { useEffect, useState, useRef } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
+import { toast } from 'react-toastify';
+import Ajax1 from '../helper/Ajax1';
+import { useRouter } from 'next/router';
+import { downloadBrochure } from '../helper/downloadBrochurePdf';
+import ctaStyle from "./cta.module.css";
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
+
+const locations = [
+  {
+    city: 'SEATTLE',
+    dates: ['30th May, 2026', '31st May, 2026'],
+    venue: 'InterContinental Seattle Bellevue by IHG',
+  },
+  {
+    city: 'SAN JOSE',
+    dates: ['6th June, 2026', '7th June, 2026'],
+    venue: 'The Domain Hotel Sunnyvale',
+  },
+];
+
+function App({
+  name,
+  popUpenable = false,
+  onClickOff,
+  text,
+  pdf,
+  phone = "",
+  id = "defaultId",
+  countryCode = "in"
+}) {
+
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
+
+  const [availableDates, setAvailableDates] = useState([]);
+
+  const [formData, setFormData] = useState({
+    name: '',
+    phoneNumber: '',
+    email: '',
+    city: '',
+    eventDate: '',
+    venue: '',
+    projectName: name,
+  });
+
+  const recaptchaRef = useRef(null);
+
+  useEffect(() => {
+    if (popUpenable) {
+      setIsAnimating(true);
+    } else {
+      setIsAnimating(false);
+    }
+  }, [popUpenable]);
+
+  // INPUT CHANGE
+  const handleChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  // CITY CHANGE
+  const handleCityChange = (e) => {
+
+    const city = e.target.value;
+
+    const selectedLocation = locations.find(
+      (loc) => loc.city === city
+    );
+
+    if (selectedLocation) {
+
+      setAvailableDates(selectedLocation.dates);
+
+      setFormData((prev) => ({
+        ...prev,
+        city: selectedLocation.city,
+        venue: selectedLocation.venue,
+        eventDate: '',
+      }));
+
+    } else {
+
+      setAvailableDates([]);
+
+      setFormData((prev) => ({
+        ...prev,
+        city: '',
+        venue: '',
+        eventDate: '',
+      }));
+    }
+  };
+
+  // DATE CHANGE
+  const handleDateChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      eventDate: e.target.value,
+    }));
+  };
+
+  // SUBMIT
+  const handleSubmit = async (e) => {
+
+    e.preventDefault();
+
+    if (loading) return;
+
+    try {
+
+      setLoading(true);
+
+      const toastId = toast.loading("Submitting form...");
+
+      const action = {
+        method: 'POST',
+        url: '/enquiry/project',
+        data: {
+          ...formData,
+
+          message: `
+City: ${formData.city}
+Event Date: ${formData.eventDate}
+Venue: ${formData.venue}
+          `,
+        },
+        token: false,
+      };
+
+      const response = await Ajax1(action);
+
+      if (response?.data?.status === 'success') {
+
+        toast.update(toastId, {
+          render: "Form submitted successfully",
+          type: "success",
+          isLoading: false,
+          autoClose: 2000,
+        });
+
+        // RESET FORM
+        setFormData({
+          name: '',
+          phoneNumber: '',
+          email: '',
+          city: '',
+          eventDate: '',
+          venue: '',
+          projectName: name,
+        });
+
+        setAvailableDates([]);
+
+        if (popUpenable && pdf) {
+          downloadBrochure(pdf, name);
+        }
+
+        setTimeout(() => {
+          router.push('/thank-you');
+        }, 2000);
+
+      } else {
+
+        toast.update(toastId, {
+          render: "Form submission failed",
+          type: "error",
+          isLoading: false,
+          autoClose: 2000,
+        });
+      }
+
+    } catch (error) {
+
+      toast.error('Error submitting form');
+
+      console.error(error);
+
+    } finally {
+
+      setLoading(false);
+    }
+  };
+
+  // CLOSE POPUP
+  const handleClose = () => {
+    setIsAnimating(false);
+
+    if (onClickOff) {
+      onClickOff(false);
+    }
+  };
+
+  return (
+    <div className={ctaStyle.app}>
+
+      {popUpenable && (
+
+        <div
+          className={`${ctaStyle.popupOverlay} ${isAnimating
+              ? ctaStyle.popupAnimating
+              : "popup-closing"
+            }`}
+        >
+
+          <div
+            className={`${ctaStyle.popupForm} ${isAnimating
+                ? ctaStyle.popupAnimatingForm
+                : ""
+              }`}
+          >
+
+            {/* TOP */}
+            <div className={ctaStyle.imageContainer}>
+
+              <img
+                src="/logos/pop-up-logo.png"
+                alt="Inframantra-logo"
+              />
+
+              <div
+                className={ctaStyle.crossBtn}
+                onClick={handleClose}
+              >
+                <RxCross2 />
+              </div>
+
+            </div>
+
+            {/* HEADING */}
+            <div className={ctaStyle.headingForm}>
+
+              <p className={ctaStyle.popUpHead}>
+                Please share your contact details
+              </p>
+
+              <p className={ctaStyle.popUpHead2}>
+                {text || "TO UNLOCK EXCLUSIVE DEALS"}
+              </p>
+
+            </div>
+
+            {/* FORM */}
+            <form onSubmit={handleSubmit} id={id}>
+
+              {/* NAME */}
+              <div className={ctaStyle.formGroup}>
+
+                <input
+                  type="text"
+                  placeholder="Name"
+                  value={formData.name}
+                  onChange={(e) => {
+
+                    const value = e.target.value.replace(
+                      /[^a-zA-Z\s]/g,
+                      ''
+                    );
+
+                    setFormData((prev) => ({
+                      ...prev,
+                      name: value,
+                    }));
+                  }}
+                  required
+                />
+
+              </div>
+
+              {/* PHONE */}
+              <div className={ctaStyle.formGroup}>
+
+                <PhoneInput
+                  country={countryCode}
+                  enableSearch={true}
+                  value={formData.phoneNumber}
+                  onChange={(phone) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      phoneNumber: phone,
+                    }))
+                  }
+                  inputClass={ctaStyle.input}
+                  containerClass={ctaStyle.phoneContainer}
+                  buttonClass={ctaStyle.flagDropdown}
+                  placeholder="Enter phone number"
+                />
+
+              </div>
+
+              {/* EMAIL */}
+              <div className={ctaStyle.formGroup}>
+
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+
+              </div>
+
+              {/* CITY */}
+              <div className={ctaStyle.formGroup}>
+
+                <select
+                  name="city"
+                  value={formData.city}
+                  onChange={handleCityChange}
+                  required
+                  className={ctaStyle.selectField}
+                >
+
+                  <option value="">
+                    Select City
+                  </option>
+
+                  {locations.map((location, index) => (
+
+                    <option
+                      key={index}
+                      value={location.city}
+                    >
+                      {location.city}
+                    </option>
+
+                  ))}
+
+                </select>
+
+              </div>
+
+              {/* EVENT DATE */}
+              <div className={ctaStyle.formGroup}>
+
+                <select
+                  name="eventDate"
+                  value={formData.eventDate}
+                  onChange={handleDateChange}
+                  required
+                  disabled={!formData.city}
+                  className={ctaStyle.selectField}
+                >
+
+                  <option value="">
+                    Select Event Date
+                  </option>
+
+                  {availableDates.map((date, index) => (
+
+                    <option
+                      key={index}
+                      value={date}
+                    >
+                      {date}
+                    </option>
+
+                  ))}
+
+                </select>
+
+              </div>
+
+              {/* BUTTON */}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  style={{
+                    width: "100%",
+                    padding: "12px",
+                    backgroundColor: loading
+                      ? "#ccc"
+                      : "#E7B554",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: "4px",
+                    cursor: loading
+                      ? "not-allowed"
+                      : "pointer",
+                    fontWeight: "600",
+                  }}
+                >
+
+                  {loading
+                    ? "Submitting..."
+                    : "Submit"}
+
+                </button>
+
+              </div>
+
+              {/* DISCLAIMER */}
+              <p
+                className={ctaStyle.propertyPageHeaderContactUsDisclaimer}
+                style={{ padding: "10px" }}
+              >
+
+                *By submitting, I accept Inframantra{" "}
+
+                <a
+                  href="https://inframantra.com/page/terms-conditions"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "blue" }}
+                >
+                  Terms & Conditions
+                </a>
+
+                {" "}and{" "}
+
+                <a
+                  href="https://inframantra.com/page/privacy-policy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "blue" }}
+                >
+                  Privacy Policy
+                </a>
+
+              </p>
+
+            </form>
+
+          </div>
+
+        </div>
+
+      )}
+
+    </div>
+  );
+}
+
+export default App;

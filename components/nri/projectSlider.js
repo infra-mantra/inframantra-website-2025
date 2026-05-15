@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import styles from "./projectSlider.module.css";
-import PopUpForm from '../detailSections/CTA_NEW';
+import PopUpForm from '../detailSections/POPUPCTA';
 
 
 export const PROJECTS = [
@@ -179,7 +179,7 @@ export function ProjectCard({ project, onDownload }) {
 }
 
 // ── Main Section ─────────────────────────
-export default function ProjectsSection() {
+export default function ProjectsSection({name}) {
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
 
@@ -222,7 +222,7 @@ export default function ProjectsSection() {
   popUpenable={popForm}
   onClickOff={onClickOff}
    text="TO UNLOCK EXCLUSIVE DEALS"
-  name={`USA-EXPO (Event Specific)`}
+  name={name}
   phone="+1 (213) 6575060"
   id="nriProject"
   countryCode ="us"

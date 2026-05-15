@@ -95,11 +95,7 @@ function PropertyCard({ project }) {
           >
             {project.name}
           </a>
-        </h3>
-
-      
-
-       
+        </h3>    
 
       </div>
 

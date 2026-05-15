@@ -1,7 +1,7 @@
 'use client';
 import { useState } from "react";
 import styles from "./StickySidebar.module.css";
-import PopUpForm from '../detailSections/CTA_NEW';
+import PopUpForm from '../detailSections/POPUPCTA';
 
 /* ── Icons ───────────────────────── */
 const WhatsAppIcon = () => (
@@ -73,7 +73,7 @@ const InfoIcon = () => (
 );
 
 /* ── Main Component ───────────────── */
-export default function StickySidebar({ url = "" }) {
+export default function StickySidebar({name,  url = "" }) {
 
   const [hovered, setHovered] = useState(null);
   const [popForm, setPopForm] = useState(false);
@@ -176,7 +176,7 @@ export default function StickySidebar({ url = "" }) {
         <PopUpForm
           popUpenable={popForm}
           onClickOff={setPopForm}
-          name="USA-EXPO (Event Specific)"
+          name={name}
           phone="+1 (213) 6575060"
           id="nriGetInTouch"
           countryCode='us'

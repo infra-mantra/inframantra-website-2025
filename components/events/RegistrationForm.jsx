@@ -208,7 +208,7 @@ const RegistrationForm = ({
         name: formData.fullName,
         phoneNumber: `+${formData.mobile}`,
         email: formData.email,
-        projectName: "USA-EXPO (Event Specific)",
+        projectName: name,
         message: message,
       };
 

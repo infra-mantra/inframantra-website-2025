@@ -43,21 +43,21 @@ function Nri() {
 
       {/* HEADER */}
       <section id="nriHeader">
-        <Header />
+        <Header  name = "USA-EXPO (Event Specific)"/>
       </section>
 
       {/* OTHER SECTIONS */}
       <section id="NriAbout">
-        <AboutSection />
+        <AboutSection  name = "USA-EXPO (Event Specific)" />
       </section>
 
-      <UpcomingProjectsSection />
+      <UpcomingProjectsSection name = "USA-EXPO (Event Specific)"/>
       <ProjecMap />
       <WhyInvest />
-      <Faq />
+      <Faq name = "USA-EXPO (Event Specific)"/>
 
       
-        <Sticky />
+        <Sticky name = "USA-EXPO (Event Specific)" />
       
 
     </Wrapper>

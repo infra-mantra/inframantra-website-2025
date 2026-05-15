@@ -3,7 +3,7 @@ import styles from './headerSe.module.css'
 import LocationCard from './LocationCard'
 import RegistrationForm from './RegistrationForm'
 
-function HeaderSec() {
+function HeaderSec({name}) {
   return (
     <section>
       <div className={styles.bgImg}>
@@ -29,7 +29,7 @@ function HeaderSec() {
           {/* RIGHT FORM */}
           <div className={styles.rightSection}>
             <div className={styles.displayNone}>
-           <RegistrationForm name="USA EXPO" />
+           <RegistrationForm name={name} />
             </div>
           </div>
 

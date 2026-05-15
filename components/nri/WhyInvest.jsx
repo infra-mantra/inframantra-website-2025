@@ -51,7 +51,7 @@ const cards = [
   },
 ];
 
-const WhyInvest = () => {
+const WhyInvest = ({name}) => {
   return (
     <div className={styles.bgColor}>
     <section className={styles.sectionWhy}>

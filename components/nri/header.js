@@ -7,102 +7,20 @@ import Ajax1 from '../helper/Ajax1';
 import { useRouter } from 'next/router';
 import RegistrationForm from '../events/RegistrationForm';
 
-const Header = ({ name = "USA EXPO", popUpenable, pdf, onClickOff }) => {
+const Header = ({ name }) => {
 
   const [isAnimating, setIsAnimating] = useState(false);
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
+ 
+
 
   const router = useRouter();
   const recaptchaRef = useRef(null);
 
-  const [formData, setFormData] = useState({
-    name: '',
-    phoneNumber: '',
-    email: '',
-    projectName: name,
-  });
+ 
+ 
+  
 
-  useEffect(() => {
-    if (popUpenable) {
-      setIsAnimating(true);
-      setMessage("");
-    } else {
-      setIsAnimating(false);
-    }
-  }, [popUpenable]);
 
-  // ✅ handle input change
-  const handleChange = (e) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  // ✅ phone input handler
-  const handlePhoneChange = (value) => {
-    setFormData(prev => ({
-      ...prev,
-      phoneNumber: value,
-    }));
-  };
-
-  // ✅ submit
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (loading) return;
-
-    try {
-      setLoading(true);
-      const toastId = toast.loading("Submitting form...");
-
-      const action = {
-        method: 'POST',
-        url: '/enquiry/project',
-        data: { ...formData, message },
-        token: false,
-      };
-
-      const response = await Ajax1(action);
-
-      if (response.data.status === 'success') {
-        toast.update(toastId, {
-          render: "Form submitted successfully",
-          type: "success",
-          isLoading: false,
-          autoClose: 2000,
-        });
-
-        setFormData({
-          name: '',
-          phoneNumber: '',
-          email: '',
-          projectName: name,
-        });
-
-        setMessage("");
-
-        setTimeout(() => {
-          router.push('/thank-you');
-        }, 2000);
-
-      } else {
-        toast.update(toastId, {
-          render: "Form submission failed",
-          type: "error",
-          isLoading: false,
-          autoClose: 2000,
-        });
-      }
-
-    } catch (error) {
-      toast.error('Error submitting form');
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleScroll = () => {
     const section = document.getElementById('NriAbout');
@@ -146,7 +64,7 @@ const Header = ({ name = "USA EXPO", popUpenable, pdf, onClickOff }) => {
             {/* RIGHT SIDE FORM */}
             {/* <div className={styles.bannerRight}> */}
             <div className={styles.displayNone}>
-            <RegistrationForm name="USA EXPO" />
+            <RegistrationForm name={name} />
             </div>
             {/* </div> */}
 

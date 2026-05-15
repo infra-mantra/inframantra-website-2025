@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from './FAQ.module.css';
-import PopUpForm from '../detailSections/CTA_NEW'
+import PopUpForm from '../detailSections/POPUPCTA'
 
 const faqs = [
   {
@@ -42,7 +42,7 @@ const CheckIcon = () => (
     <polyline points="2,6 5,9 10,3" />
   </svg>
 );
-const FAQ = () => {
+const FAQ = ({name}) => {
   const [openIndex, setOpenIndex] = useState(null);
 
   const toggle = (index) => {
@@ -113,7 +113,7 @@ const FAQ = () => {
         popUpenable={popForm}
         onClickOff={onClickOff}
         text="TO UNLOCK EXCLUSIVE DEALS"
-        name="USA EXPO"
+        name={name}
         phone="+1 (213) 6575060"
         id="nriFaq"
         countryCode='us'
