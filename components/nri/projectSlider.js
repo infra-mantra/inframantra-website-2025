@@ -213,7 +213,7 @@ export const PROJECTS = [
     categories: ["Apartments"],
     logo: "https://inframantra.blr1.cdn.digitaloceanspaces.com/propertyLogo/dlfthearbour/dlfthearbour.avif",
     size: "4200 sq.ft.",
-    beds: "4BHK + S",
+    beds: "4BHK + STUDY",
     priceInrCr: 12,
     link: "",
     images: [
