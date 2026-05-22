@@ -4,6 +4,8 @@
   padding: 3rem 0;
   background: hsla(40,76%,77%,.29);
   text-align: center;
+  max-width: 1280px;
+  margin: 0px auto;
 }
 .swiperContainer {
   width: 100%;

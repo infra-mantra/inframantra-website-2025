@@ -1,23 +1,93 @@
-import axios from "axios"
-// import GetCookie from "./GetCookie";
+import axios from "axios";
+
 const Ajax1 = async (action) => {
-    // if(action.loader === true) { document.querySelector(".cs-loader").classList.remove("show") }
-    // console.log("Api Set Up Checck", process.env.apiUrl1 + action.url);
+
     try {
+
+        console.log(process.env.apiUrl1 + action.url);
+        console.log("REQUEST:", action);
+
+        // ============================================
+        // GET SOURCE FROM LOCALSTORAGE
+        // ============================================
+        let source = "SEM";
+
+        if (typeof window !== "undefined") {
+            source = localStorage.getItem("source");
+        }
+
+        console.log("SOURCE:", source);
+
+        // ============================================
+        // ENQUIRY PROJECT CONDITION
+        // ============================================
+        if (action.url === "/enquiry/project" && source) {
+
+            let updatedData = {
+                ...action.data
+            };
+
+            // ADS FLOW
+            if (source === "ADS") {
+                updatedData = {
+                    ...updatedData,
+                    Campaign: "SEM",
+                    Source: "ADS",
+                    projectName: "USA-EXPO (Event Specific)"
+                };
+            }
+
+            // YUPP TV FLOW
+            else if (source === "YUPP") {
+                updatedData = {
+                    ...updatedData,
+                    Campaign: "SEM",
+                    Source: "YUPP TV",
+                    projectName: "USA-EXPO (Event Specific)"
+                };
+            }else if(source =="ADS(Email)"){
+                  updatedData = {
+                    ...updatedData,
+                    Campaign: "SEM",
+                    Source: "ADS(Email)",
+                    projectName: "USA-EXPO (Event Specific)"
+                };
+            }else if(source == "google"){
+                  updatedData = {
+                    ...updatedData,
+                    Campaign: "SEM",
+                    Source: "Google",
+                    projectName: "USA-EXPO (Event Specific)"
+                };
+            }
+
+            action.data = updatedData;
+
+            // remove AFTER usage (safe testing behavior)
+            localStorage.removeItem("source");
+           localStorage.removeItem("utm_params"); 
+        }
+
+        console.log("FINAL DATA:", action.data);
+
         const resp = await axios({
             headers: {
-                ...(action.token === true)
+                ...(action.token === true && {
+                    Authorization: action.token
+                })
             },
-            method: action.method ? action.method : 'GET',
+            method: action.method || "GET",
             url: process.env.apiUrl1 + action.url,
             ...(action.params && { params: action.params }),
-            ...(action.data && { data: action.data})
+            ...(action.data && { data: action.data })
         });
-        // if(action.loader === true) {document.querySelector(".cs-loader").classList.remove("show") }
-        return resp
+
+        return resp;
+
     } catch (err) {
-        // if(action.loader === true) { document.querySelector(".cs-loader").classList.remove("show") }
-        return err.response
+        console.log("API ERROR:", err);
+        return err.response;
     }
-}
-export default Ajax1
+};
+
+export default Ajax1;

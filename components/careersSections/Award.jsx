@@ -27,7 +27,7 @@ const Award = () => {
         Life at <span className={styles.brand}>INFRAMANTRA</span>
       </h2>
 
-      <div className={styles.awardContainer}>
+      <div className={styles.awardContainercarrer}>
         <div className={styles.swiperContainer}>
           <Swiper
             modules={[Pagination, Autoplay, EffectCoverflow, Lazy]}

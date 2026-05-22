@@ -29,6 +29,17 @@
   padding: 0 2rem;
   margin: 2rem 0;
   gap: 40px;
+  max-width: 1280px;
+  margin: 2rem auto;
+}
+.aboutUsContainer{
+  display: flex;
+  align-items: stretch; /* equal height automatically */
+  flex-direction: column;
+  width: 100%;
+  padding: 0 2rem;
+  max-width: 1280px;
+  margin: 0px auto;
 }
 
 .storyImage
@@ -50,6 +61,14 @@ height: 400px;
 .highlightName {
   color: #d4a64a;
   font-weight: 700;
+  position: relative;
+  display: inline-block;
+}
+.headingTitleAbout{
+color: #d4a64a;
+  font-weight: 700;
+      font-size: 42px;
+      margin: 1rem 0rem;
   position: relative;
   display: inline-block;
 }
@@ -101,6 +120,15 @@ height: 400px;
 }
 
 .storyText {
+  display: -webkit-box;
+  -webkit-line-clamp: 20; /* adjust lines */
+  -webkit-box-orient: vertical;
+
+  line-height: 1.6;
+  position: relative;
+  text-align: justify;
+}
+.storyText_about {
   display: -webkit-box;
   -webkit-line-clamp: 20; /* adjust lines */
   -webkit-box-orient: vertical;
@@ -211,5 +239,12 @@ padding: 10px 20px;
   .inlineReadMore{
 display: flex;
 margin-top: 1rem;
+  }
+  .headingTitleAbout{
+    font-size: 2rem;
+    font-size: 600;
+  }
+  .headingTitlemobile{
+    font-size: 2rem;
   }
 }

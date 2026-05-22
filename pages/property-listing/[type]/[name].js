@@ -261,9 +261,11 @@ function applySingleFilter(property, filterType, value) {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         });
+      
 
         const data = await res.json();
         const hits = data.hits || [];
+          console.log(data)
 
         // ✅ Store property data
         setAllPropertyData(hits);

@@ -8,6 +8,7 @@ import { downloadBrochure } from '../helper/downloadBrochurePdf';
 import ctaStyle from "./cta.module.css";
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
+import { FaWhatsapp } from "react-icons/fa";
 
 const locations = [
   {
@@ -36,9 +37,13 @@ function App({
   const [isAnimating, setIsAnimating] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const [whatsappConsent, setWhatsappConsent] =
+    useState(true);
+
   const router = useRouter();
 
-  const [availableDates, setAvailableDates] = useState([]);
+  const [availableDates, setAvailableDates] =
+    useState([]);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -53,19 +58,23 @@ function App({
   const recaptchaRef = useRef(null);
 
   useEffect(() => {
+
     if (popUpenable) {
       setIsAnimating(true);
     } else {
       setIsAnimating(false);
     }
+
   }, [popUpenable]);
 
   // INPUT CHANGE
   const handleChange = (e) => {
+
     setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
+
   };
 
   // CITY CHANGE
@@ -73,13 +82,16 @@ function App({
 
     const city = e.target.value;
 
-    const selectedLocation = locations.find(
-      (loc) => loc.city === city
-    );
+    const selectedLocation =
+      locations.find(
+        (loc) => loc.city === city
+      );
 
     if (selectedLocation) {
 
-      setAvailableDates(selectedLocation.dates);
+      setAvailableDates(
+        selectedLocation.dates
+      );
 
       setFormData((prev) => ({
         ...prev,
@@ -98,15 +110,19 @@ function App({
         venue: '',
         eventDate: '',
       }));
+
     }
+
   };
 
   // DATE CHANGE
   const handleDateChange = (e) => {
+
     setFormData((prev) => ({
       ...prev,
       eventDate: e.target.value,
     }));
+
   };
 
   // SUBMIT
@@ -120,18 +136,19 @@ function App({
 
       setLoading(true);
 
-      const toastId = toast.loading("Submitting form...");
+      const toastId =
+        toast.loading("Submitting form...");
 
       const action = {
         method: 'POST',
         url: '/enquiry/project',
         data: {
           ...formData,
-
           message: `
 City: ${formData.city}
 Event Date: ${formData.eventDate}
 Venue: ${formData.venue}
+whats app consent :${whatsappConsent}
           `,
         },
         token: false,
@@ -139,10 +156,13 @@ Venue: ${formData.venue}
 
       const response = await Ajax1(action);
 
-      if (response?.data?.status === 'success') {
+      if (
+        response?.data?.status === 'success'
+      ) {
 
         toast.update(toastId, {
-          render: "Form submitted successfully",
+          render:
+            "Form submitted successfully",
           type: "success",
           isLoading: false,
           autoClose: 2000,
@@ -162,65 +182,84 @@ Venue: ${formData.venue}
         setAvailableDates([]);
 
         if (popUpenable && pdf) {
+
           downloadBrochure(pdf, name);
+
         }
 
         setTimeout(() => {
+
           router.push('/thank-you');
+
         }, 2000);
 
       } else {
 
         toast.update(toastId, {
-          render: "Form submission failed",
+          render:
+            "Form submission failed",
           type: "error",
           isLoading: false,
           autoClose: 2000,
         });
+
       }
 
     } catch (error) {
 
-      toast.error('Error submitting form');
+      toast.error(
+        'Error submitting form'
+      );
 
       console.error(error);
 
     } finally {
 
       setLoading(false);
+
     }
+
   };
 
   // CLOSE POPUP
   const handleClose = () => {
+
     setIsAnimating(false);
 
     if (onClickOff) {
       onClickOff(false);
     }
+
   };
 
   return (
+
     <div className={ctaStyle.app}>
 
       {popUpenable && (
 
         <div
-          className={`${ctaStyle.popupOverlay} ${isAnimating
+          className={`${ctaStyle.popupOverlay} ${
+            isAnimating
               ? ctaStyle.popupAnimating
               : "popup-closing"
-            }`}
+          }`}
         >
 
           <div
-            className={`${ctaStyle.popupForm} ${isAnimating
+            className={`${ctaStyle.popupForm} ${
+              isAnimating
                 ? ctaStyle.popupAnimatingForm
                 : ""
-              }`}
+            }`}
           >
 
             {/* TOP */}
-            <div className={ctaStyle.imageContainer}>
+            <div
+              className={
+                ctaStyle.imageContainer
+              }
+            >
 
               <img
                 src="/logos/pop-up-logo.png"
@@ -228,7 +267,9 @@ Venue: ${formData.venue}
               />
 
               <div
-                className={ctaStyle.crossBtn}
+                className={
+                  ctaStyle.crossBtn
+                }
                 onClick={handleClose}
               >
                 <RxCross2 />
@@ -237,23 +278,42 @@ Venue: ${formData.venue}
             </div>
 
             {/* HEADING */}
-            <div className={ctaStyle.headingForm}>
+            <div
+              className={ctaStyle.headingForm}
+            >
 
-              <p className={ctaStyle.popUpHead}>
-                Please share your contact details
+              <p
+                className={
+                  ctaStyle.popUpHead
+                }
+              >
+                Please share your contact
+                details
               </p>
 
-              <p className={ctaStyle.popUpHead2}>
-                {text || "TO UNLOCK EXCLUSIVE DEALS"}
+              <p
+                className={
+                  ctaStyle.popUpHead2
+                }
+              >
+                {text ||
+                  "TO UNLOCK EXCLUSIVE DEALS"}
               </p>
 
             </div>
 
             {/* FORM */}
-            <form onSubmit={handleSubmit} id={id}>
+            <form
+              onSubmit={handleSubmit}
+              id={id}
+            >
 
               {/* NAME */}
-              <div className={ctaStyle.formGroup}>
+              <div
+                className={
+                  ctaStyle.formGroup
+                }
+              >
 
                 <input
                   type="text"
@@ -261,15 +321,17 @@ Venue: ${formData.venue}
                   value={formData.name}
                   onChange={(e) => {
 
-                    const value = e.target.value.replace(
-                      /[^a-zA-Z\s]/g,
-                      ''
-                    );
+                    const value =
+                      e.target.value.replace(
+                        /[^a-zA-Z\s]/g,
+                        ''
+                      );
 
                     setFormData((prev) => ({
                       ...prev,
                       name: value,
                     }));
+
                   }}
                   required
                 />
@@ -277,28 +339,44 @@ Venue: ${formData.venue}
               </div>
 
               {/* PHONE */}
-              <div className={ctaStyle.formGroup}>
+              <div
+                className={
+                  ctaStyle.formGroup
+                }
+              >
 
                 <PhoneInput
                   country={countryCode}
                   enableSearch={true}
-                  value={formData.phoneNumber}
+                  value={
+                    formData.phoneNumber
+                  }
                   onChange={(phone) =>
                     setFormData((prev) => ({
                       ...prev,
                       phoneNumber: phone,
                     }))
                   }
-                  inputClass={ctaStyle.input}
-                  containerClass={ctaStyle.phoneContainer}
-                  buttonClass={ctaStyle.flagDropdown}
+                  inputClass={
+                    ctaStyle.input
+                  }
+                  containerClass={
+                    ctaStyle.phoneContainer
+                  }
+                  buttonClass={
+                    ctaStyle.flagDropdown
+                  }
                   placeholder="Enter phone number"
                 />
 
               </div>
 
               {/* EMAIL */}
-              <div className={ctaStyle.formGroup}>
+              <div
+                className={
+                  ctaStyle.formGroup
+                }
+              >
 
                 <input
                   type="email"
@@ -312,63 +390,160 @@ Venue: ${formData.venue}
               </div>
 
               {/* CITY */}
-              <div className={ctaStyle.formGroup}>
+              <div
+                className={
+                  ctaStyle.formGroup
+                }
+              >
 
                 <select
                   name="city"
                   value={formData.city}
-                  onChange={handleCityChange}
+                  onChange={
+                    handleCityChange
+                  }
                   required
-                  className={ctaStyle.selectField}
+                  className={
+                    ctaStyle.selectField
+                  }
                 >
 
                   <option value="">
                     Select City
                   </option>
 
-                  {locations.map((location, index) => (
+                  {locations.map(
+                    (
+                      location,
+                      index
+                    ) => (
 
-                    <option
-                      key={index}
-                      value={location.city}
-                    >
-                      {location.city}
-                    </option>
+                      <option
+                        key={index}
+                        value={
+                          location.city
+                        }
+                      >
+                        {location.city}
+                      </option>
 
-                  ))}
+                    )
+                  )}
 
                 </select>
 
               </div>
 
               {/* EVENT DATE */}
-              <div className={ctaStyle.formGroup}>
+              <div
+                className={
+                  ctaStyle.formGroup
+                }
+              >
 
                 <select
                   name="eventDate"
-                  value={formData.eventDate}
-                  onChange={handleDateChange}
+                  value={
+                    formData.eventDate
+                  }
+                  onChange={
+                    handleDateChange
+                  }
                   required
-                  disabled={!formData.city}
-                  className={ctaStyle.selectField}
+                  disabled={
+                    !formData.city
+                  }
+                  className={
+                    ctaStyle.selectField
+                  }
                 >
 
                   <option value="">
                     Select Event Date
                   </option>
 
-                  {availableDates.map((date, index) => (
+                  {availableDates.map(
+                    (
+                      date,
+                      index
+                    ) => (
 
-                    <option
-                      key={index}
-                      value={date}
-                    >
-                      {date}
-                    </option>
+                      <option
+                        key={index}
+                        value={date}
+                      >
+                        {date}
+                      </option>
 
-                  ))}
+                    )
+                  )}
 
                 </select>
+
+              </div>
+
+              {/* WHATSAPP CONSENT */}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems:
+                    "flex-start",
+                  gap: "10px",
+                  marginBottom:
+                    "15px",
+                  marginTop: "10px",
+                }}
+              >
+
+                <input
+                  type="checkbox"
+                  id="whatsappConsent"
+                  checked={
+                    whatsappConsent
+                  }
+                  onChange={(e) =>
+                    setWhatsappConsent(
+                      e.target.checked
+                    )
+                  }
+                  style={{
+                    marginTop: "4px",
+                    cursor: "pointer",
+                    accentColor:
+                      "green",
+                    minWidth: "16px",
+                    height: "16px",
+                  }}
+                />
+
+                <label
+                  htmlFor="whatsappConsent"
+                  style={{
+                    fontSize: "13px",
+                    lineHeight: "1.5",
+                    color: "#444",
+                    cursor: "pointer",
+                  }}
+                >
+
+                  <FaWhatsapp
+                    style={{
+                      color: "green",
+                      marginRight:
+                        "6px",
+                      fontSize:
+                        "16px",
+                      verticalAlign:
+                        "middle",
+                    }}
+                  />
+
+                  I consent/authorize
+                  Inframantra to send me
+                  updates and promotional
+                  messages on WhatsApp.
+
+                </label>
 
               </div>
 
@@ -376,7 +551,8 @@ Venue: ${formData.venue}
               <div
                 style={{
                   display: "flex",
-                  justifyContent: "center",
+                  justifyContent:
+                    "center",
                 }}
               >
 
@@ -386,12 +562,14 @@ Venue: ${formData.venue}
                   style={{
                     width: "100%",
                     padding: "12px",
-                    backgroundColor: loading
-                      ? "#ccc"
-                      : "#E7B554",
+                    backgroundColor:
+                      loading
+                        ? "#ccc"
+                        : "#E7B554",
                     color: "#fff",
                     border: "none",
-                    borderRadius: "4px",
+                    borderRadius:
+                      "4px",
                     cursor: loading
                       ? "not-allowed"
                       : "pointer",
@@ -409,17 +587,24 @@ Venue: ${formData.venue}
 
               {/* DISCLAIMER */}
               <p
-                className={ctaStyle.propertyPageHeaderContactUsDisclaimer}
-                style={{ padding: "10px" }}
+                className={
+                  ctaStyle.propertyPageHeaderContactUsDisclaimer
+                }
+                style={{
+                  padding: "10px"
+                }}
               >
 
-                *By submitting, I accept Inframantra{" "}
+                *By submitting, I accept
+                Inframantra{" "}
 
                 <a
                   href="https://inframantra.com/page/terms-conditions"
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ color: "blue" }}
+                  style={{
+                    color: "blue"
+                  }}
                 >
                   Terms & Conditions
                 </a>
@@ -430,7 +615,9 @@ Venue: ${formData.venue}
                   href="https://inframantra.com/page/privacy-policy"
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ color: "blue" }}
+                  style={{
+                    color: "blue"
+                  }}
                 >
                   Privacy Policy
                 </a>
@@ -446,6 +633,7 @@ Venue: ${formData.venue}
       )}
 
     </div>
+
   );
 }
 

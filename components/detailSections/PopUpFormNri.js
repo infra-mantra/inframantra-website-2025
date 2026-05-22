@@ -74,7 +74,7 @@ function App({
         url: '/enquiry/project',
         data: {
           ...formData,
-          message:{message,whatsappConsent},
+          message:{message,whatsAppConsent:whatsappConsent},
           
         },
         token: false,

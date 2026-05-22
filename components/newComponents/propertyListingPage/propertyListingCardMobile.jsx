@@ -30,7 +30,10 @@ function PropertyListingCardMobile({ propertyData = [], onOpenBackdrop, currentP
     currentPageNumber?.(pageNumber);
     setCurrentPage(pageNumber);
     window.scrollTo({ top: 0, behavior: "smooth" });
+
   };
+
+  console.log("$$$$$$$$",propertyData)
 
   // Ensure safe slicing even if data is invalid
   const safeProperties = Array.isArray(fetchedProperties) ? fetchedProperties : [];
@@ -77,6 +80,10 @@ function PropertyListingCardMobile({ propertyData = [], onOpenBackdrop, currentP
                       <span className={styles.propertyListPageMobileImageChip}>Featured</span>
                     </div>
                   )}
+
+                <div className={styles.propertyImageChipLogo}>
+                      <img  class={styles.propertyLogo} src={property.developer.developerImg}/>
+                    </div>
                 </div>
 
                 {/* Property Details Section */}

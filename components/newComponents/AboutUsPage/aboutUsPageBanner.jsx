@@ -45,6 +45,8 @@ const AboutUsPageHeader = () => {
 
   return (
     <>
+
+     
       <div className={styles.aboutUsPageWrapper}>
         {/* Banner */}
         <div className={styles.aboutUsPageHeaderImgContainer}>
@@ -54,6 +56,21 @@ const AboutUsPageHeader = () => {
             className={styles.aboutUsPageHeaderImg}
           />
         </div>
+
+          <div className={styles.aboutUsContainer}>
+            <div>
+          <h2 className={styles.headingTitleAbout}>About us</h2>
+          </div>
+            <div
+              className={styles.storyText_about}
+             
+            >
+            
+            
+            Inframantra is one of India’s leading proptech advisory firms, dedicated to guiding clients seamlessly through the process of searching, discovering, purchasing, and managing properties from top real estate developers, while also helping build a rewarding investment portfolio. <br/><br/>Anchored in a process-driven approach, we ensure every home-buying experience is deeply customer-centric, and transparent. Experience a new benchmark in property advisory with Inframantra-where expertise meets excellence, and your aspirations find their perfect home.
+            </div>
+
+          </div>
 
         {/* STORY SECTION */}
         <div className={styles.storyContainer}>

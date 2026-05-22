@@ -4,9 +4,6 @@ import React, {useState, useEffect, lazy } from "react";
 
 import Wrapper from "../components/UI/Wrapper";
 import moment from "moment/moment";
-
-
-
 import MainBanner1 from '../components/newComponents/homepage/MainBanner.js';
 import FeaturedProperties from '../components/newComponents/featuredProperties/featuredProperties'
 import StatisticalInsightsSection from "../components/newComponents/statisticalInsights/staticalInsight";

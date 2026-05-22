@@ -41,15 +41,23 @@
   left: 0;
   right: 0;
   bottom: 0;
+
   display: flex;
   justify-content: center;
-  align-items: center;
+
+  align-items: flex-start;   /* ✅ IMPORTANT CHANGE */
+
+  padding: 20px 0;
+
   z-index: 9999;
+
   opacity: 0;
   transform: scale(0.9);
   pointer-events: none;
+
   transition: opacity 1000ms ease-out, transform 1000ms ease-out;
-  overflow: auto;
+
+  overflow-y: auto;   /* ✅ ENABLE SCROLL */
 }
 
 .popupAnimating {
@@ -62,7 +70,7 @@
   background: #F1E2C2;
   padding: 3px 20px;
   border-radius: 10px;
-  width:26% !important;
+  width:auto ;
   max-width: 100%;
   transform: translateY(-30px);
   transition: transform 1000ms ease-out;
@@ -203,5 +211,10 @@
 @media only screen and (max-width: 768px) {
   .popupForm {
     width: 90% !important;
+  }
+}
+@media only screen and (min-width: 1280px) {
+  .popupForm {
+    width: 26% !important;
   }
 }

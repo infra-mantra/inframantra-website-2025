@@ -13,10 +13,14 @@ import { MdLocationOn } from "react-icons/md";
 import { IoMdCall } from "react-icons/io";
 import { MdMail } from "react-icons/md";
 import { FcApproval } from "react-icons/fc";
+import { FaWhatsapp } from "react-icons/fa";
 
-function App({ name, displayMap = true , countryCode="in" }) {
+function App({ name, displayMap = true, countryCode = "in" }) {
+
   const [isDesktop, setIsDesktop] = useState(true);
   const [isMobile, setIsMobile] = useState(true);
+
+  const [whatsappConsent, setWhatsappConsent] = useState(true);
 
   const checkScreenWidth = () => {
     setIsDesktop(window.innerWidth >= 768);
@@ -24,10 +28,14 @@ function App({ name, displayMap = true , countryCode="in" }) {
   };
 
   useEffect(() => {
+
     checkScreenWidth();
+
     window.addEventListener("resize", checkScreenWidth);
 
-    return () => window.removeEventListener("resize", checkScreenWidth);
+    return () =>
+      window.removeEventListener("resize", checkScreenWidth);
+
   }, []);
 
   const router = useRouter();
@@ -44,10 +52,12 @@ function App({ name, displayMap = true , countryCode="in" }) {
   const recaptchaRef = useRef(null);
 
   const handleChange = (e) => {
+
     setFormData((prevFormData) => ({
       ...prevFormData,
       [e.target.name]: e.target.value,
     }));
+
   };
 
   const handleCaptchaChange = (token) => {
@@ -55,24 +65,33 @@ function App({ name, displayMap = true , countryCode="in" }) {
   };
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
 
     if (recaptchaRef.current) {
+
       try {
-        const token = await recaptchaRef.current.executeAsync();
+
+        const token =
+          await recaptchaRef.current.executeAsync();
 
         setCaptchaToken(token);
 
         const action = {
           method: "POST",
           url: "/enquiry/project",
-          data: { ...formData, captchaToken: token },
+          data: {
+            ...formData,
+            captchaToken: token,
+            whatsappConsent,
+          },
           token: false,
         };
 
         const response = await Ajax1(action);
 
         if (response.data.status === "success") {
+
           toast.success("Form submitted successfully");
 
           setFormData({
@@ -84,29 +103,59 @@ function App({ name, displayMap = true , countryCode="in" }) {
           setTimeout(() => {
             router.push("/thank-you");
           }, 5000);
+
         } else {
+
           toast.error("Form submission failed");
+
         }
+
       } catch (error) {
+
         toast.error("Error submitting form");
-        console.error("Error submitting form:", error);
+
+        console.error(
+          "Error submitting form:",
+          error
+        );
+
       }
+
     } else {
+
       alert("reCAPTCHA not loaded properly.");
+
     }
+
   };
 
   return (
+
     <div className={style.homeApp}>
+
       <div className={style.homeCtaMainWrapper}>
+
+        {/* LEFT SECTION */}
         <div
-          className={style.homePageContactUsLeftDetailSection}
+          className={
+            style.homePageContactUsLeftDetailSection
+          }
           style={{
-            display: displayMap === false ? "none" : "block",
+            display:
+              displayMap === false
+                ? "none"
+                : "block",
           }}
         >
+
           {isDesktop && (
-            <div className={style.homePageContactUsLeftMapPhotoContainer}>
+
+            <div
+              className={
+                style.homePageContactUsLeftMapPhotoContainer
+              }
+            >
+
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14032.085916196966!2d77.0413113!3d28.4487689!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d193e2433c0cf%3A0xef40ba926f65e0ec!2sINFRAMANTRA!5e0!3m2!1sen!2sin!4v1731478063313!5m2!1sen!2sin"
                 width="500"
@@ -117,20 +166,43 @@ function App({ name, displayMap = true , countryCode="in" }) {
                 referrerPolicy="no-referrer-when-downgrade"
               ></iframe>
 
-              <div className={style.homePageMapPhotoBgdTopLeft}></div>
+              <div
+                className={
+                  style.homePageMapPhotoBgdTopLeft
+                }
+              ></div>
 
-              <div className={style.homePageMapPhotoBgdBottomRight}></div>
+              <div
+                className={
+                  style.homePageMapPhotoBgdBottomRight
+                }
+              ></div>
+
             </div>
+
           )}
 
           <img
-            className={style.homePageContactUsLeftDetailSectionImg}
+            className={
+              style.homePageContactUsLeftDetailSectionImg
+            }
             src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/inframantraLogoBlack.png"
             alt="Inframantra-Logo"
           />
 
-          <div className={style.homePageContactUsLeftDetailsContainer}>
-            <div className={style.homePageContactUsLeftDetailFlex}>
+          <div
+            className={
+              style.homePageContactUsLeftDetailsContainer
+            }
+          >
+
+            {/* LOCATION */}
+            <div
+              className={
+                style.homePageContactUsLeftDetailFlex
+              }
+            >
+
               <div
                 style={{
                   color: "#E7B554",
@@ -141,10 +213,20 @@ function App({ name, displayMap = true , countryCode="in" }) {
                 <MdLocationOn />
               </div>
 
-              <p>95, Institutional Area, Sector 32, Gurugram</p>
+              <p>
+                95, Institutional Area, Sector 32,
+                Gurugram
+              </p>
+
             </div>
 
-            <div className={style.homePageContactUsLeftDetailFlex}>
+            {/* PHONE */}
+            <div
+              className={
+                style.homePageContactUsLeftDetailFlex
+              }
+            >
+
               <div
                 style={{
                   color: "#E7B554",
@@ -155,10 +237,20 @@ function App({ name, displayMap = true , countryCode="in" }) {
                 <IoMdCall />
               </div>
 
-              <p>+91 86 9800 9900, +1 (213) 6575060</p>
+              <p>
+                +91 86 9800 9900,
+                +1 (213) 6575060
+              </p>
+
             </div>
 
-            <div className={style.homePageContactUsLeftDetailFlex}>
+            {/* EMAIL */}
+            <div
+              className={
+                style.homePageContactUsLeftDetailFlex
+              }
+            >
+
               <div
                 style={{
                   color: "#E7B554",
@@ -169,10 +261,19 @@ function App({ name, displayMap = true , countryCode="in" }) {
                 <MdMail />
               </div>
 
-              <p>marketing@inframantra.com</p>
+              <p>
+                marketing@inframantra.com
+              </p>
+
             </div>
 
-            <div className={style.homePageContactUsLeftDetailFlex}>
+            {/* RERA */}
+            <div
+              className={
+                style.homePageContactUsLeftDetailFlex
+              }
+            >
+
               <div
                 style={{
                   color: "#E7B554",
@@ -183,19 +284,32 @@ function App({ name, displayMap = true , countryCode="in" }) {
                 <FcApproval />
               </div>
 
-              <p>HARERA/GGM/1813/1408/2022/181</p>
+              <p>
+                HARERA/GGM/1813/1408/2022/181
+              </p>
+
             </div>
+
           </div>
+
         </div>
 
+        {/* RIGHT SECTION */}
         <div
           className={style.homeCtaInnerWrapper}
           style={{
-            width: displayMap === false ? "100%" : "",
+            width:
+              displayMap === false
+                ? "100%"
+                : "",
           }}
         >
+
           <form onSubmit={handleSubmit}>
+
+            {/* HEADING */}
             <div className={ctaStyle.headingForm}>
+
               <p
                 style={{ marginTop: "0px" }}
                 className={style.homePopUpHead}
@@ -206,10 +320,12 @@ function App({ name, displayMap = true , countryCode="in" }) {
               <p className={style.homePopUpHead2}>
                 TO UNLOCK EXCLUSIVE DEALS
               </p>
+
             </div>
 
             {/* NAME */}
             <div className={ctaStyle.formGroup}>
+
               <input
                 type="text"
                 id="username"
@@ -217,22 +333,27 @@ function App({ name, displayMap = true , countryCode="in" }) {
                 placeholder="Name"
                 value={formData.name}
                 onChange={(e) => {
-                  const alphabeticValue = e.target.value.replace(
-                    /[^a-zA-Z\s]/g,
-                    ""
-                  );
+
+                  const alphabeticValue =
+                    e.target.value.replace(
+                      /[^a-zA-Z\s]/g,
+                      ""
+                    );
 
                   setFormData({
                     ...formData,
                     name: alphabeticValue,
                   });
+
                 }}
                 required
               />
+
             </div>
 
-            {/* PHONE INPUT */}
+            {/* PHONE */}
             <div className={ctaStyle.formGroup}>
+
               <PhoneInput
                 country={countryCode}
                 enableSearch={true}
@@ -248,10 +369,12 @@ function App({ name, displayMap = true , countryCode="in" }) {
                 buttonClass={ctaStyle.flagDropdown}
                 placeholder="Enter phone number"
               />
+
             </div>
 
             {/* EMAIL */}
             <div className={ctaStyle.formGroup}>
+
               <input
                 type="email"
                 id="email"
@@ -261,16 +384,75 @@ function App({ name, displayMap = true , countryCode="in" }) {
                 onChange={handleChange}
                 required
               />
+
+            </div>
+
+            {/* WHATSAPP CONSENT */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "flex-start",
+                gap: "10px",
+                marginBottom: "15px",
+                marginTop: "10px",
+              }}
+            >
+
+              <input
+                type="checkbox"
+                id="whatsappConsent"
+                checked={whatsappConsent}
+                onChange={(e) =>
+                  setWhatsappConsent(
+                    e.target.checked
+                  )
+                }
+                style={{
+                  marginTop: "4px",
+                  cursor: "pointer",
+                  accentColor: "green",
+                  minWidth: "16px",
+                  height: "16px",
+                }}
+              />
+
+              <label
+                htmlFor="whatsappConsent"
+                style={{
+                  fontSize: "13px",
+                  lineHeight: "1.5",
+                  color: "#444",
+                  cursor: "pointer",
+                }}
+              >
+
+                <FaWhatsapp
+                  style={{
+                    color: "green",
+                    marginRight: "6px",
+                    fontSize: "16px",
+                    verticalAlign: "middle",
+                  }}
+                />
+
+                I consent/authorize Inframantra to
+                send me updates and promotional
+                messages on WhatsApp.
+
+              </label>
+
             </div>
 
             {/* RECAPTCHA */}
             <div className="recaptcha-container">
+
               <ReCAPTCHA
                 sitekey="6LfrSTUqAAAAAOy2-j9cNvTIujOI5GKjtMVsn2Uk"
                 size="invisible"
                 ref={recaptchaRef}
                 onChange={handleCaptchaChange}
               />
+
             </div>
 
             {/* BUTTON */}
@@ -280,6 +462,7 @@ function App({ name, displayMap = true , countryCode="in" }) {
                 justifyContent: "center",
               }}
             >
+
               <button
                 type="submit"
                 style={{
@@ -294,14 +477,20 @@ function App({ name, displayMap = true , countryCode="in" }) {
               >
                 Submit
               </button>
+
             </div>
 
             {/* DISCLAIMER */}
             <p
-              className={style.homePropertyPageHeaderContactUsDisclaimer}
+              className={
+                style.homePropertyPageHeaderContactUsDisclaimer
+              }
               style={{ padding: "10px" }}
             >
-              *By submitting, I accept Inframantra{" "}
+
+              *By submitting, I accept
+              Inframantra{" "}
+
               <a
                 href="https://inframantra.com/page/terms-conditions"
                 target="_blank"
@@ -309,8 +498,10 @@ function App({ name, displayMap = true , countryCode="in" }) {
                 style={{ color: "blue" }}
               >
                 Terms & Conditions
-              </a>{" "}
-              and{" "}
+              </a>
+
+              {" "}and{" "}
+
               <a
                 href="https://inframantra.com/page/privacy-policy"
                 target="_blank"
@@ -319,30 +510,50 @@ function App({ name, displayMap = true , countryCode="in" }) {
               >
                 Privacy Policy.
               </a>
+
             </p>
+
           </form>
 
+          {/* FOOTER */}
           <div
-            className={style.homePagePropertyPageHeaderContactIconContainer2}
+            className={
+              style.homePagePropertyPageHeaderContactIconContainer2
+            }
           >
-            <hr width="100%" color="#DCAA4C" size="1" />
+
+            <hr
+              width="100%"
+              color="#DCAA4C"
+              size="1"
+            />
 
             <div style={{ display: "flex" }}>
+
               <div className={style.homeCtaText}>
+
                 <p className={style.hometextForm}>
-                  Give us a call and book your visit now!
+                  Give us a call and book your
+                  visit now!
                 </p>
+
               </div>
 
               <img
                 src="/guruCollection/guru_call.png"
                 alt="Call Icon"
               />
+
             </div>
+
           </div>
+
         </div>
+
       </div>
+
     </div>
+
   );
 }
 

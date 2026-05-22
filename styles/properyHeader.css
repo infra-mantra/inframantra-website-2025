@@ -447,10 +447,11 @@ ul {
   margin-bottom: 0px;
 }
 .property-header-images{
- display: none;
+  flex-direction: row-reverse;
 }
 .property-header-high{
   padding: 0px 2px ;
+  justify-content: space-around;
 }
 .card-width{
  display: none;

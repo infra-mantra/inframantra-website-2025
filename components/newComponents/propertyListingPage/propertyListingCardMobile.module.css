@@ -48,6 +48,29 @@
 background: #0CA92E;
 box-shadow: 0 0 3.71px 0 rgba(0, 0, 0, 0.25);
 }
+.propertyImageChipLogo{
+      max-width: 100%;
+  
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    height: 32px;
+    cursor: unset;
+    vertical-align: middle;
+    box-sizing: border-box;
+    position: absolute;
+    width: 30%;
+    right: 2%;
+    top: 5%;
+    border-radius: 2.783px;
+
+}
+.propertyLogo{
+width: 5rem;
+object-fit: scale-down;
+}
 .paginationContainer {
   display: flex;
   justify-content: center;
@@ -74,6 +97,25 @@ box-shadow: 0 0 3.71px 0 rgba(0, 0, 0, 0.25);
 .paginationCircle:hover {
   background: #f7f3e9;
 }
+ /* .chipImage {
+    position: "absolute";
+    width: "30%";
+    height: "auto";
+    borderRadius: "5px";
+    right: "-5px";
+    top: "1px";
+    color: "#fff";
+    fontSize: "15px";
+    fontWeight: "700";
+    padding: "5px";
+    display: "flex";
+    alignItems: "center";
+    justifyContent: "center";
+  }
+  .dimension{
+    width: "5rem";
+    objectFit: "scale-down";
+  } */
 
 .activePage {
   background: #f7f3e9;
