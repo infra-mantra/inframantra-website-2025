@@ -125,7 +125,7 @@ function StickyProperty({
 
       const action = {
         method: 'POST',
-        url: '/enquiry/project/dfghj',
+        url: '/enquiry/project',
         data: {
           ...formData,
           message: `
