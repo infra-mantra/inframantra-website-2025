@@ -83,7 +83,7 @@ function App({ name, displayMap = true, countryCode = "in" }) {
           data: {
             ...formData,
             captchaToken: token,
-            whatsappConsent,
+            message:whatsappConsent,
           },
           token: false,
         };

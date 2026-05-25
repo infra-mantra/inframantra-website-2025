@@ -67,6 +67,7 @@ const Ajax1 = async (action) => {
             localStorage.removeItem("source");
            localStorage.removeItem("utm_params"); 
         }
+        
 
         console.log("FINAL DATA:", action.data);
 

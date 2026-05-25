@@ -750,7 +750,7 @@ text-align: center;
 
   .propertyPageHeaderMobilePropertyTitle {
     margin: 0;
-    font-size: 25px;
+    font-size: 18px;
     font-weight: 700;
     text-transform: uppercase;
     text-align: center;
@@ -2103,8 +2103,8 @@ Similar Property CSS
   
   .image-gallery-slide img {
     max-height: 90vh !important; /* Prevents overflow */
-    max-width: 90vw !important; /* Limits width */
-    object-fit: contain !important; /* Ensures proper image scaling */
+    /* max-width: 90vw !important; Limits width */
+    /* object-fit: contain !important; Ensures proper image scaling */
   }
  }
 

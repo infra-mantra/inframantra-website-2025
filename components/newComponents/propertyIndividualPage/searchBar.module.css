@@ -33,3 +33,86 @@
   .listbox li span svg:hover{
     color: goldenrod;
   }
+
+
+
+/* ---------- Desktop: photo fills left, form sits where thumbnails were ---------- */
+.gallery-with-form {
+  display: flex;
+  align-items: stretch;     
+  justify-content: space-evenly;
+  width: 100%;
+  box-sizing: border-box;
+
+  max-height: 80vh;
+       
+}
+
+/* photo column = everything except the form (320px) + the gap (16px) */
+.gallery-with-form .gallery-wrapper {
+  width: calc(100% - 400px);
+  min-width: 0;             /* lets it shrink instead of overflowing */
+}
+
+.gallery-with-form .property-side-form {
+
+  flex: 0 0 320px;          /* fixed column, never grows/shrinks */
+  box-sizing: border-box;
+  padding: 4px 20px;
+    background-color: #f1e2c2; 
+    
+}
+
+/* force react-image-gallery to fill the photo column completely */
+.gallery-with-form .property-image-gallery,
+.gallery-with-form .property-image-gallery .image-gallery-content,
+.gallery-with-form .property-image-gallery .image-gallery-slide-wrapper {
+  width: 100%;
+}
+.gallery-with-form .property-image-gallery .image-gallery-image {
+  width: 100%;
+  object-fit: cover;        /* same full-bleed look as the thumbnail layout */
+}
+
+/* sample form styling — drop if you bring your own */
+.psf-title { margin: 0 0 12px; font-size: 18px; font-weight: 600; }
+.psf-form { display: flex; flex-direction: column; gap: 10px; }
+.psf-input,
+.psf-textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+.psf-textarea { resize: vertical; }
+.psf-submit {
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #e87f1e;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+
+/* search icon: push it back over the photo's top-right corner (not over the form) */
+@media (min-width: 769px) {
+  .propertyPageHeaderImgSection .top-right-actions {
+    right: 400px;           /* 320 form + 16 gap + 20 inset */
+  }
+}
+
+@media (min-width: 1366px) {
+  /* Your styles for screens 1200px and wider go here */
+    .image-gallery-content .image-gallery-slide .image-gallery-image{
+    height: 75vh;
+  }
+}
+
+
+
+/* ---------- Mobile: unchanged, full-width photo with bottom thumbnails ---------- */
+.gallery-only .gallery-wrapper { width: 100%; }

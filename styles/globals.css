@@ -19,6 +19,12 @@ html.has-scroll-smooth {
 
 }
 
+.image-gallery-slides{
+  width: 75vw;
+  width: 100%;
+  
+}
+
 
 
 /* ── NRI page Swiper overrides ── */
@@ -195,15 +201,15 @@ ul.wp-block-list li {
   display: flex !important;
 }
 
-.property-image-gallery .image-gallery-slide-wrapper {
+/* .property-image-gallery .image-gallery-slide-wrapper {
   width: 75% !important;
   flex: 0 0 75%;
-}
+} */
 
-.property-image-gallery .image-gallery-thumbnails-wrapper {
+/* .property-image-gallery .image-gallery-thumbnails-wrapper {
   width: 25% !important;
   flex: 0 0 25%;
-}
+} */
 
 .property-image-gallery .image-gallery-thumbnail img {
   border-radius: 0 !important;

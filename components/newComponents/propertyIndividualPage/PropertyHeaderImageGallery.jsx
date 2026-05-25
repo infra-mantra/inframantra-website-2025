@@ -7,29 +7,27 @@ import { slugify } from "../../../utils/slugify";
 import { useRouter } from "next/router";
 import { RoofingOutlined, MapOutlined, RoomOutlined } from "@mui/icons-material";
 import styles from "./searchBar.module.css"; // make sure path is correct
+import Form from '../../detailSections/StickyProperty'
 
 function PropertyHeaderImageGallery({
   imageGallery = [],
   projectName = "DAXIN VISTA",
-  propertyData
+  propertyData,
 }) {
-
   const router = useRouter();
   const boxRef = useRef(null);
-   const[galleryImages , setgalleryImages] = useState([]) 
+  const [galleryImages, setgalleryImages] = useState([]);
 
-  useEffect(()=>{
-  setgalleryImages( imageGallery.map((img) => ({
-    original: img.url,
-    thumbnail: img.thumbnail || img.url,
-    originalAlt: projectName,
-    thumbnailAlt: projectName,
-  })))  
-  },[imageGallery])
-  
-
-
-  
+  useEffect(() => {
+    setgalleryImages(
+      imageGallery.map((img) => ({
+        original: img.url,
+        thumbnail: img.thumbnail || img.url,
+        originalAlt: projectName,
+        thumbnailAlt: projectName,
+      }))
+    );
+  }, [imageGallery]);
 
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -37,6 +35,21 @@ function PropertyHeaderImageGallery({
 
   const [isMobile, setIsMobile] = useState(false);
   const [isDesktop, setIsDesktop] = useState(true);
+
+  // ---- enquiry form state (replace with your own form/component if you have one) ----
+  const [form, setForm] = useState({ name: "", phone: "", email: "", message: "" });
+
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    // TODO: wire this to your API / Ajax1 call
+    console.log("Enquiry submitted:", form);
+  };
+  // ----------------------------------------------------------------------------------
 
   const fetchSuggestions = useCallback(
     debounce(async (value) => {
@@ -121,8 +134,6 @@ function PropertyHeaderImageGallery({
     return <div className="propertyPageHeaderImgSection">No images available</div>;
   }
 
-
-
   return (
     <div className="propertyPageHeaderImgSection">
       <div className="left-gradient-overlay"></div>
@@ -202,20 +213,32 @@ function PropertyHeaderImageGallery({
         )}
       </div>
 
-      <ImageGallery
-       key={galleryImages?.[0]?.original} 
-        items={galleryImages}
-        thumbnailPosition={isDesktop ? "right" : "bottom"}
-        showPlayButton
-        showFullscreenButton
-        showNav
-        lazyLoad
-        additionalClass="property-image-gallery"
-        autoPlay
-        slideInterval={3000}
-        slideDuration={450}
-        infinite
-      />
+      {/* Desktop: gallery + form side by side. Mobile: gallery only (with bottom thumbnails) */}
+      <div className={isDesktop ? "gallery-with-form" : "gallery-only"}>
+        <div className="gallery-wrapper">
+          <ImageGallery
+            key={galleryImages?.[0]?.original}
+            items={galleryImages}
+            thumbnailPosition="bottom"
+            showThumbnails={!isDesktop}  
+            showPlayButton
+            showFullscreenButton
+            showNav
+            lazyLoad
+            additionalClass="property-image-gallery"
+            autoPlay
+            slideInterval={3000}
+            slideDuration={450}
+            infinite
+          />
+        </div>
+
+        {isDesktop && (
+          <aside className="property-side-form">
+           <Form name={propertyData.name}/>
+          </aside>
+        )}
+      </div>
     </div>
   );
 }
