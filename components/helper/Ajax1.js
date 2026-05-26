@@ -59,12 +59,20 @@ const Ajax1 = async (action) => {
                     Source: "Google",
                     projectName: "USA-EXPO (Event Specific)"
                 };
+            } else if(source == "KC_Searchad_26May"){
+                  updatedData = {
+                    ...updatedData,
+                    Campaign: "SEM",
+                    Source: "Google",
+                   
+                };
             }
+
 
             action.data = updatedData;
 
             // remove AFTER usage (safe testing behavior)
-            localStorage.removeItem("source");
+           localStorage.removeItem("source");
            localStorage.removeItem("utm_params"); 
         }
         

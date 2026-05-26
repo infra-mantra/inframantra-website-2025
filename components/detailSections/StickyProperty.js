@@ -128,8 +128,7 @@ function StickyProperty({
         url: '/enquiry/project',
         data: {
           ...formData,
-          message: `
-          `,
+          message: ``,
         },
         token: false,
       };

@@ -20,7 +20,10 @@ import PopUpForm from '../../components/detailSections/CTA_NEW'
 
 
 const PropertyDetail = ({ allData }) => {
-  const router = useRouter();
+ const router = useRouter();
+const { utm_campaign } = router.query;
+
+
   const rightRef = useRef(null);
   const containerRef = useRef(null);
   const [locoScroll, setLocoScroll] = useState(null);
@@ -43,6 +46,19 @@ const PropertyDetail = ({ allData }) => {
 useEffect(() => {
   setPropertyData(allData.propertyData.data);
 }, [allData]);
+
+
+  // ============================================
+  // STORE SOURCE FROM UTM
+  // ============================================
+  useEffect(() => {
+
+    if (!router.isReady) return;
+    if (typeof window === "undefined") return;
+    if (utm_campaign === "KC_Searchad_26May") {
+      localStorage.setItem("source", utm_campaign);
+    } 
+  }, [router.isReady,utm_campaign ]);
 
 const schemaInfo = {
   lat: propertyData?.coordinates?.lat,
