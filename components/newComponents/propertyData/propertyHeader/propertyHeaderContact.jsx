@@ -85,7 +85,7 @@ function PropertyHeaderContact({ name }) {
   };
 
   return (
-    <div className="propertyPageHeaderContactUs" style={name === "display" ? { width: "120%",height:"100%" } : {}}>
+    <div className="propertyPageHeaderContactUs" style={name === "display" ? { width: "100%",height:"100%" } : {}}>
       <h4 className=''>Please share your contact details<br/>
         TO UNLOCK EXCLUSIVE DEALS</h4>
  

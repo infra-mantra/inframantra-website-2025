@@ -36,79 +36,44 @@ const PageHeader = ({ data }) => {
   return (
     <Section classes="" id="" pageWidth="fluid">
       <div className={styles.blogBannerContent}>
-        {isDesktop ? (
-          // Desktop Layout
-          <div style={{ display: 'flex', gap: '67px', marginLeft: '2rem' }}>
-            <div>
-            <picture className={styles.blogHeaderImageContainerNews}>
-              <img
-                src={image}
-                alt="Banner"
-                width={800}
-                height={450}
-                style={{
-                  objectFit: 'cover',
-                  width: '100%',
-                  height: 'auto',
-                }}
-                  className={styles.blogHeaderImageNews}
+       {isDesktop ? (
+  <div className={styles.blogBannerRow}>
+    <div className={styles.blogImageWrapper}>
+      <picture className={styles.blogHeaderImageContainerNews}>
+        <img
+          src={image}
+          alt="Banner"
+          className={styles.blogHeaderImageNews}
+        />
+      </picture>
 
-                priority
-              />
-              </picture>
-              <p
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-                className={styles.blogTitle}
-              >
-                {title}
-              </p>
-            </div>
-            <div style={{width:'100%'}}>
-              <PropertyContact name="display" />
-            </div>
-          </div>
-        ) : (
-          // Mobile Layout
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '20px',
-              marginLeft: '1rem',
-              marginRight: '1rem',
-            }}
-            className={styles.responsiveBannerContainerNews}
-          >
-            <div>
-              <Image
-                src={image}
-                alt="Banner"
-                width={800}
-                height={450}
-                style={{
-                  objectFit: 'cover',
-                  width: '100%',
-                  height: 'auto',
-                }}
-                priority
-              />
-              <p
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  textAlign: 'center',
-                }}
-              >
-                {title}
-              </p>
-            </div>
-          </div>
-        )}
+      <p className={styles.blogTitle}>
+        {title}
+      </p>
+    </div>
+
+    <div className={styles.blogFormWrapper}>
+      <PropertyContact name="display" />
+    </div>
+  </div>
+) : (
+  <div className={styles.responsiveBannerContainerNews}>
+    <div>
+      <Image
+        src={image}
+        alt="Banner"
+        width={800}
+        height={450}
+        className={styles.blogHeaderImageNews}
+        priority
+      />
+
+      <p className={styles.blogTitle}>
+        {title}
+      </p>
+    </div>
+  </div>
+)}
 
         <div className={styles.pageWidth}>
           <p className={styles.date}>{formatDate(date)}</p>

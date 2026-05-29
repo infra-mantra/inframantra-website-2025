@@ -24,7 +24,7 @@
     display: flex
 ;
     width: 96%;
-    height: 12rem;
+    height: auto;
     flex-direction: row;
     background: rgba(217, 217, 217, 0.45);
     padding: 1rem;
@@ -273,7 +273,7 @@
         justify-content: space-between;
         width: 100%;
         background: #f9f9f9;
-        height: 171px;
+        height: auto;
         padding: 1rem;
         border-radius: 8px;
         border: 1px solid #e0e0e0;
@@ -293,5 +293,10 @@
     /* flex: 1; */
     width: 100%;
    
+}
+.fblogitem .info {
+    font-size: 12px;
+    text-align: left;
+    color: #555;
 }
 } 

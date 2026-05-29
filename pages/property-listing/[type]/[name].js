@@ -2,7 +2,6 @@ import React, { useState, useEffect, lazy, Suspense, useRef } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 // import { cityNames } from '../../../components/newComponents/propertyListingPage/propertyListingPriceFilter/dropDownMenuConstants.jsx';
-
 // Lazy load components
 const PropertyListingCard = lazy(() =>
   import('../../../components/newComponents/propertyListingDesktopNav/propertyListing/propertyListingCard.jsx')
@@ -29,9 +28,6 @@ const Content = lazy(() =>
 const PropertyPageFloatingContact = lazy(() =>
   import('../../../components/newComponents/propertyData/propertyRightSection/propertyPageSections/propertyPageFloatingContact.jsx')
 );
-
-
-
 const PremiumProperty = lazy(() =>
   import('../../../components/newComponents/propertyListingDesktopNav/propertyListing/premiumProperty.jsx')
 );

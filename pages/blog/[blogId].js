@@ -217,24 +217,6 @@ export async function getStaticProps({ params }) {
     const post = Array.isArray(wpArr) && wpArr[0];
 
     const id = wpArr[0].categories[0]
-
-
-//     [
-//   { id: 4, name: "Article", slug: "article" },
-//   { id: 3, name: "Blog", slug: "blogs" },
-//   { id: 5, name: "News", slug: "news" },
-//   { id: 12, name: "PR Media", slug: "pr-media" },
-//   { id: 1, name: "Uncategorized", slug: "uncategorized" }
-// ]
-// if (id && ( id!=3 || id!=4)) {
-//  return {
-//   redirect: {
-//     destination: "/blog",
-//     permanent: false,
-//   },
-// };
-// }
-
     
     if (post) {
       const media = post._embedded?.["wp:featuredmedia"]?.[0] || {};
