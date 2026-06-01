@@ -2,9 +2,18 @@
 .property-header-high {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   padding: 0px 20px;
   width: 100vw;
+}
+.property-header-title{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.logo_individual_page{
+  max-height: 60px;
+  object-fit: contain;
 }
 .dis-none-desktop{
   display: none;
@@ -15,6 +24,7 @@
     align-items: baseline;
 
 }
+
 
 .bell-pendulum {
   display: inline-block;
@@ -452,6 +462,9 @@ ul {
 .property-header-high{
   padding: 0px 2px ;
   justify-content: space-around;
+}
+.logo_individual_page{
+  display: none;
 }
 .card-width{
  display: none;

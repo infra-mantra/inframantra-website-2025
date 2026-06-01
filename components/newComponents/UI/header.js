@@ -16,13 +16,11 @@ const rightSideTabs = [
   { title: 'Contact Us', link: '/contact-us' },
 ];
 
-function NavigationBar({ pageBgd }) {
+function NavigationBar({ pageBgd, onlyLogo = false }) {
   const [selectedTab, setSelectedTab] = useState(null);
-  const [drawerOpen, setDrawerOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const [scrolledPast90vh, setScrolledPast90vh] = useState(false);
-  const [scrollPosition, setScrollPosition] = useState(0);
 
   const router = useRouter();
 
@@ -35,13 +33,20 @@ function NavigationBar({ pageBgd }) {
   useEffect(() => {
     checkScreenWidth();
     window.addEventListener('resize', checkScreenWidth);
-    return () => window.removeEventListener('resize', checkScreenWidth);
+
+    return () => {
+      window.removeEventListener('resize', checkScreenWidth);
+    };
   }, []);
 
   useEffect(() => {
     const currentPath = router.pathname;
     const allTabs = [...leftSideTabs, ...rightSideTabs];
-    const tabIndex = allTabs.findIndex((tab) => currentPath.includes(tab.link));
+
+    const tabIndex = allTabs.findIndex((tab) =>
+      currentPath.includes(tab.link)
+    );
+
     setSelectedTab(tabIndex !== -1 ? tabIndex : null);
   }, [router.pathname]);
 
@@ -55,13 +60,14 @@ function NavigationBar({ pageBgd }) {
 
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      const triggerPoint = 1;
-      setScrolledPast90vh(scrollY > triggerPoint);
-      setScrollPosition(scrollY);
+      setScrolledPast90vh(scrollY > 1);
     };
 
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, [router.pathname, isMobile]);
 
   const handleTabClick = (link, index) => {
@@ -74,24 +80,21 @@ function NavigationBar({ pageBgd }) {
     router.push('/');
   };
 
-  const toggleDrawer = (open) => (event) => {
-    if (event?.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) return;
-    setDrawerOpen(open);
-  };
-
   const handlePropertiesClick = () => {
     router.push('/property-listing/search/property-in-india');
   };
 
-  const propertyTabStyle = router.pathname.includes('property') ? { color: '#e7b554' } : {};
+  const propertyTabStyle = router.pathname.includes('property')
+    ? { color: '#e7b554' }
+    : {};
 
   const textColor = isMobile
     ? scrolledPast90vh
       ? 'black'
       : 'white'
     : pageBgd
-      ? 'black'
-      : 'white';
+    ? 'black'
+    : 'white';
 
   const navBarStyles = {
     position: isMobile ? 'fixed' : 'relative',
@@ -105,32 +108,97 @@ function NavigationBar({ pageBgd }) {
       : 'transparent',
   };
 
+  console.log(onlyLogo,"%%%%%%%%%%")
+
+  // ONLY LOGO MODE
+  if (onlyLogo) {
+    return (  
+      <div
+        className="navBarWrapper"
+        style={
+          isMobile
+            ? navBarStyles
+            : {
+                height: pageBgd ? '' : '10vh',
+                position: !pageBgd ? 'absolute' : 'relative',
+              }
+        }
+      >
+        <img
+          className="navBarLogo"
+          src={
+            (isMobile && (scrolledPast90vh || pageBgd)) ||
+            (!isMobile && pageBgd)
+              ? 'https://inframantra.blr1.cdn.digitaloceanspaces.com/developer/godrejproperties/godrejproperties.avif'
+              : 'https://inframantra.blr1.cdn.digitaloceanspaces.com/developer/godrejproperties/godrejproperties.avif'
+          }
+          style={{
+            marginBottom: !pageBgd ? '12px' : '',
+            cursor: 'pointer',
+            display: 'block',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            marginTop:"0",
+            height:"9vh"
+          }}
+          alt="Inframantra-logo"
+        
+          loading="lazy"
+          fetchpriority="high"
+        />
+      </div>
+    );
+  }
+
+  // FULL NAVBAR
+
+  else{
+    
   return (
     <div
       className="navBarWrapper"
-      style={isMobile ? navBarStyles : { height: pageBgd ? '' : '10vh', position: !pageBgd ? 'absolute' : 'relative' }}
+      style={
+        isMobile
+          ? navBarStyles
+          : {
+              height: pageBgd ? '' : '10vh',
+              position: !pageBgd ? 'absolute' : 'relative',
+            }
+      }
     >
-
-      <div className="navBarTabsWrapper" style={isDesktop ? { color: textColor } : {}}>
+      {/* Left Side */}
+      <div
+        className="navBarTabsWrapper"
+        style={isDesktop ? { color: textColor } : {}}
+      >
         {isDesktop && (
           <p
             className="navBarTabs"
             onClick={handlePropertiesClick}
             id="property-listing-tab"
-            style={{ ...propertyTabStyle, color: textColor }}
+            style={{
+              ...propertyTabStyle,
+              color: propertyTabStyle.color || textColor,
+            }}
           >
             Properties
           </p>
         )}
+
         {isDesktop ? (
           leftSideTabs.map((tab, index) => (
             <Link
               key={index}
               href={tab.link}
-              className={`navBarLink ${selectedTab === index ? 'selected' : ''}`}
+              className={`navBarLink ${
+                selectedTab === index ? 'selected' : ''
+              }`}
               onClick={() => handleTabClick(tab.link, index)}
             >
-              <p className="navBarTabs" style={{ color: textColor }}>
+              <p
+                className="navBarTabs"
+                style={{ color: textColor }}
+              >
                 {tab.title}
               </p>
             </Link>
@@ -140,50 +208,69 @@ function NavigationBar({ pageBgd }) {
         )}
       </div>
 
-        {/* Logo */}
+      {/* Center Logo */}
       <img
         className="navBarLogo"
         src={
-          (isMobile && (scrolledPast90vh || pageBgd)) || (!isMobile && pageBgd)
+          (isMobile && (scrolledPast90vh || pageBgd)) ||
+          (!isMobile && pageBgd)
             ? 'https://inframantra.blr1.cdn.digitaloceanspaces.com/logos/inframantraLogoBlack(2).webp'
             : 'https://inframantra.blr1.cdn.digitaloceanspaces.com/logos/inframantraLogo(1).webp'
         }
-        style={{ marginBottom: !pageBgd ? '12px' : '', cursor: 'pointer' }}
+        style={{
+          marginBottom: !pageBgd ? '12px' : '',
+          cursor: 'pointer',
+        }}
         alt="Inframantra-logo"
         onClick={logoClickHandler}
         loading="lazy"
         fetchpriority="high"
-        
       />
 
-      <div className="navBarTabsWrapper" style={{ color: textColor }}>
+      {/* Right Side */}
+      <div
+        className="navBarTabsWrapper"
+        style={{ color: textColor }}
+      >
         {isDesktop &&
           rightSideTabs.map((tab, index) => {
             const tabIndex = index + leftSideTabs.length;
+
             return (
               <Link
                 key={tabIndex}
                 href={tab.link}
-                className={`navBarLink ${selectedTab === tabIndex ? 'selected' : ''}`}
+                className={`navBarLink ${
+                  selectedTab === tabIndex ? 'selected' : ''
+                }`}
                 onClick={() => handleTabClick(tab.link, tabIndex)}
               >
-                <p className="navBarTabs" style={{ color: textColor }}>
+                <p
+                  className="navBarTabs"
+                  style={{ color: textColor }}
+                >
                   {tab.title}
                 </p>
               </Link>
             );
           })}
-        <div
-          onClick={() => setDrawerOpen(false)}
-          className="navBarWishlistIcon"
-        >
-          <div style={{ position: 'relative', display: 'inline-block' }}>
-            <MdFavoriteBorder style={{ color: '#DA0707' }} />
+
+        <div className="navBarWishlistIcon">
+          <div
+            style={{
+              position: 'relative',
+              display: 'inline-block',
+            }}
+          >
+            <MdFavoriteBorder
+              style={{ color: '#DA0707' }}
+            />
           </div>
         </div>
       </div>
     </div>
   );
+}
 }
 
 export default NavigationBar;

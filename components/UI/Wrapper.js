@@ -22,6 +22,7 @@ const Wrapper = ({
   type        = '',
   name        = '',
   faq=[],
+  onlyLogo ,
   ...props
 }) => {
   const router = useRouter();
@@ -216,26 +217,27 @@ const Wrapper = ({
       />
 
       <main className="main">
-        {/*
-          NavigationBar is in the critical path (visible above the fold),
-          so it gets a lightweight skeleton fallback instead of null.
-        */}
-        <Suspense fallback={<div style={{ height: '64px' }} aria-hidden="true" />}>
+      
+       <Suspense fallback={<div style={{ height: '64px' }} aria-hidden="true" />}>
           <NavigationBar
             selectedItems={props.selectedItem}
             toggleSelection={props.toggleSelection}
             pageBgd={router.pathname !== '/'}
+           onlyLogo={onlyLogo}
           />
         </Suspense>
+    
 
         {/* Page content renders immediately — no Suspense wrapper needed here */}
         {props.children}
       </main>
 
       {/* Footer and Toast are below the fold — safe to defer with null fallback */}
-      <Suspense fallback={null}>
+      {!onlyLogo && (   <Suspense fallback={null}>
         <FooterNavigation />
-      </Suspense>
+      </Suspense>)
+      }
+   
 
       <Suspense fallback={null}>
         <ToastContainer

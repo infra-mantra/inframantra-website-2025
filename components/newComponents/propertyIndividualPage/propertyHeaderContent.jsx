@@ -47,32 +47,40 @@ function PropertyHeaderHigh({ propertyData ,name}) {
 
   return (
     <>
-      <header className="property-header-high">
-        <div className="property-header-title ">
-          <h1 className="propertyPageHeaderMobilePropertyTitle">
-            {propertyData.name}
-          </h1>
-        </div>
+         <header className="property-header-high">
+  <div className="property-header-title">
+    <h1 className="propertyPageHeaderMobilePropertyTitle">
+      {propertyData.name}
+    </h1>
 
-        <div className="property-header-images">
-          <img
-            className="arrow-logo"
-            src="/propertyIndividualPage/icons/arrowlogo.png"
-            alt="Arrow Logo"
-            onClick={() =>
-              handleRedirect(
-                propertyData.coordinates.lat,
-                propertyData.coordinates.lng,
-              )
-            }
-          />
-          <img
-            className="property-image"
-            src={propertyData.developer.developerImg}
-            alt={propertyData.developer.name+"logo"}
-          />
-        </div>
-      </header>
+ 
+  </div>
+
+  <div className="property-header-images">
+       <img
+      src={propertyData.propertyLogo[0]}
+      alt={`${propertyData.name} logo`}
+      className="logo_individual_page"
+    />
+    <img
+      className="arrow-logo"
+      src="/propertyIndividualPage/icons/arrowlogo.png"
+      alt="Arrow Logo"
+      onClick={() =>
+        handleRedirect(
+          propertyData.coordinates.lat,
+          propertyData.coordinates.lng
+        )
+      }
+    />
+
+    <img
+      className="property-image"
+      src={propertyData.developer.developerImg}
+      alt={`${propertyData.developer.name} logo`}
+    />
+  </div>
+</header>
       <div className="property-container">
      
 

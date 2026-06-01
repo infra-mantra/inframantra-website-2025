@@ -59,7 +59,7 @@ const nextConfig = {
 
   env: {
     apiUrl: 'https://api.inframantra.com/api',
-    apiUrl1: 'https"://apitest.inframantra.com/api/v1',
+    apiUrl1: 'https://apitest.inframantra.com/api/v1',
     NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: 'AIzaSyDh6uhpwkkniyiztlDDWEHO7Ph_sBxuJFw',
   },
 

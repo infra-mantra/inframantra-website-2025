@@ -57,7 +57,7 @@ const Ajax1 = async (action) => {
                     ...updatedData,
                     Campaign: "SEM",
                     Source: "Google",
-                    projectName: "USA-EXPO (Event Specific)"
+                
                 };
             } else if(source == "KC_Searchad_26May"){
                   updatedData = {

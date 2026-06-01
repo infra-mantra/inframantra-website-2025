@@ -13,6 +13,7 @@ function PropertyHeaderImageGallery({
   imageGallery = [],
   projectName = "DAXIN VISTA",
   propertyData,
+   search = true
 }) {
   const router = useRouter();
   const boxRef = useRef(null);
@@ -145,73 +146,73 @@ function PropertyHeaderImageGallery({
           className="developer-logo-floating"
         />
       </div>
-
-      {isSearchExpanded && (
-        <div
-          className="search-overlay"
-          onClick={() => setIsSearchExpanded(false)}
-        />
-      )}
-
-      <div className="top-right-actions">
-        {!isSearchExpanded && (
-          <div className="collapsed-icons">
-            <button
-              className="icon-btn search-trigger-btn"
-              onClick={() => setIsSearchExpanded(true)}
-              aria-label="Open Search"
-            >
-              <img src="/propertyIndividualPage/search.png" alt="Search" />
-            </button>
-          </div>
-        )}
-
-        {isSearchExpanded && (
-          <div className="expanded-search-bar" ref={boxRef}>
-            <div className="search-input-container-inline">
-              <img src="/propertyIndividualPage/search.png" alt="" className="search-icon-inline" />
-              <input
-                type="text"
-                placeholder="Search by project name, location, builder..."
-                className="search-input-inline"
-                value={searchValue}
-                onChange={handleInputChange}
-                onKeyDown={(e) => e.key === "Enter" && handleSubmit(e)}
-                autoFocus
-              />
-            </div>
-
-            <button className="search-button-inline" onClick={handleSubmit}>
-              Search
-            </button>
-
-            <button
-              className="close-search-btn"
-              onClick={() => setIsSearchExpanded(false)}
-            >
-              ×
-            </button>
-          </div>
-        )}
-
-        {suggested.length > 0 && searchValue && (
-          <ul className={`${styles.listbox} mts`} ref={boxRef}>
-            {suggested.map((option, index) => (
-              <li key={index} onClick={() => handleSelect(option)}>
-                <span>
-                  {option.type === "property" && <RoofingOutlined />}
-                  {option.type === "locality" && <MapOutlined />}
-                  {option.type === "subLocality" && <RoomOutlined />}
-                  {option.title}
-                </span>
-                <span className={styles.optionType}>
-                  {option.type === "subLocality" ? "sub-locality" : option.type}
-                </span>
-              </li>
-            ))}
-          </ul>
-        )}
+ {search && (
+  <div className="top-right-actions">
+    {!isSearchExpanded && (
+      <div className="collapsed-icons">
+        <button
+          className="icon-btn search-trigger-btn"
+          onClick={() => setIsSearchExpanded(true)}
+          aria-label="Open Search"
+        >
+          <img src="/propertyIndividualPage/search.png" alt="Search" />
+        </button>
       </div>
+    )}
+
+    {isSearchExpanded && (
+      <div className="expanded-search-bar" ref={boxRef}>
+        <div className="search-input-container-inline">
+          <img
+            src="/propertyIndividualPage/search.png"
+            alt=""
+            className="search-icon-inline"
+          />
+          <input
+            type="text"
+            placeholder="Search by project name, location, builder..."
+            className="search-input-inline"
+            value={searchValue}
+            onChange={handleInputChange}
+            onKeyDown={(e) => e.key === "Enter" && handleSubmit(e)}
+            autoFocus
+          />
+        </div>
+
+        <button className="search-button-inline" onClick={handleSubmit}>
+          Search
+        </button>
+
+        <button
+          className="close-search-btn"
+          onClick={() => setIsSearchExpanded(false)}
+        >
+          ×
+        </button>
+      </div>
+    )}
+
+    {suggested.length > 0 && searchValue && (
+      <ul className={`${styles.listbox} mts`} ref={boxRef}>
+        {suggested.map((option, index) => (
+          <li key={index} onClick={() => handleSelect(option)}>
+            <span>
+              {option.type === "property" && <RoofingOutlined />}
+              {option.type === "locality" && <MapOutlined />}
+              {option.type === "subLocality" && <RoomOutlined />}
+              {option.title}
+            </span>
+            <span className={styles.optionType}>
+              {option.type === "subLocality"
+                ? "sub-locality"
+                : option.type}
+            </span>
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+)}
 
       {/* Desktop: gallery + form side by side. Mobile: gallery only (with bottom thumbnails) */}
       <div className={isDesktop ? "gallery-with-form" : "gallery-only"}>
