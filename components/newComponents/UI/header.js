@@ -16,7 +16,8 @@ const rightSideTabs = [
   { title: 'Contact Us', link: '/contact-us' },
 ];
 
-function NavigationBar({ pageBgd, onlyLogo = false }) {
+  
+function NavigationBar({ pageBgd, onlyLogo = false, logoUrl }) {
   const [selectedTab, setSelectedTab] = useState(null);
   const [isDesktop, setIsDesktop] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
@@ -129,8 +130,8 @@ function NavigationBar({ pageBgd, onlyLogo = false }) {
           src={
             (isMobile && (scrolledPast90vh || pageBgd)) ||
             (!isMobile && pageBgd)
-              ? 'https://inframantra.blr1.cdn.digitaloceanspaces.com/developer/godrejproperties/godrejproperties.avif'
-              : 'https://inframantra.blr1.cdn.digitaloceanspaces.com/developer/godrejproperties/godrejproperties.avif'
+              ? logoUrl
+              : logoUrl
           }
           style={{
             marginBottom: !pageBgd ? '12px' : '',
@@ -139,7 +140,7 @@ function NavigationBar({ pageBgd, onlyLogo = false }) {
             marginLeft: 'auto',
             marginRight: 'auto',
             marginTop:"0",
-            height:"9vh"
+            height:"8vh"
           }}
           alt="Inframantra-logo"
         

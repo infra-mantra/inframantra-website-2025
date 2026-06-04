@@ -23,6 +23,7 @@ const Wrapper = ({
   name        = '',
   faq=[],
   onlyLogo ,
+  logoUrl,
   ...props
 }) => {
   const router = useRouter();
@@ -224,6 +225,8 @@ const Wrapper = ({
             toggleSelection={props.toggleSelection}
             pageBgd={router.pathname !== '/'}
            onlyLogo={onlyLogo}
+          logoUrl={logoUrl}
+
           />
         </Suspense>
     

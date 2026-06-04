@@ -113,9 +113,7 @@ const schemaInfo = {
             <section id="Plan & Pricing" >
               <Config  floorPlan={propertyData.floorPlan} pdf={propertyData.brochure[0]} name={propertyData.name}/>
             </section>
-              {/* <section >
-              <PremiumProperty city={schemaInfo.city}/>
-            </section> */}
+          
             
             <section >
               <Sitevisit  name={schemaInfo.name}/>
@@ -147,7 +145,7 @@ const schemaInfo = {
 
 
 export async function getStaticProps({ params }) {
-  const res = await fetch(`${process.env.apiUrl1}/property/slug/godrej-samaris-sector-53-gurgaon`);
+  const res = await fetch(`${process.env.apiUrl1}/property/slug/max-estates-the-terraces-sector-36a-gurgaon`);
   const data = await res.json();
 
   return {
