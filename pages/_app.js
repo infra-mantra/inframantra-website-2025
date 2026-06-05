@@ -27,6 +27,7 @@ import "../styles/pageHeader.module.css";
 import "../styles/map.css";
 
 import ErrorStack from "./_error.js";
+import PropertyChatbot from "../components/UI/PropertyChatbot.jsx";
 
 // =====================================================
 // UTM UTILITIES
@@ -238,10 +239,12 @@ function MyApp({ Component, pageProps }) {
            <img src="/logos/phone.svg" alt="Contact Us" />
             <span>Contact Us</span>
     
-           
-          
+ 
+
         </div>
       </div>
+
+      <PropertyChatbot />
     </ErrorBoundary>
   );
 }
