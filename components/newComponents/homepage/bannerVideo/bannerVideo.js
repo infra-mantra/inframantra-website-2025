@@ -5,40 +5,30 @@ import styles from './banner.module.css';
 
 const BannerVideo = () => {
   const slides = [
-        {
-      link: 'https://inframantra.com/usa-nri-event',
-      className: styles.slideImage1,
-    },
     {
       link: 'https://inframantra.com/property/whiteland-the-westin-residences-sector-103-gurugram',
-      className: styles.slideImage2,
+      className: styles.slideImage1,
     },
-  
+
     {
       link: 'https://inframantra.com/property/tulip-monsella-sector-53-gurgaon',
-      className: styles.slideImage3,
+      className: styles.slideImage2,
     },
     {
       link: 'https://inframantra.com/property/tulip-melrose-sector-70-gurgaon',
-      className: styles.slideImage4,
+      className: styles.slideImage3,
     },
     {
       link: 'https://inframantra.com/property/bptp-downtown-66-sector-66-gurgaon',
-      className: styles.slideImage5,
+      className: styles.slideImage4,
     },
     {
       link: 'https://inframantra.com/property/vatika-seven-elements-sector-89a-gurgaon',
-      className: styles.slideImage6,
+      className: styles.slideImage5,
     },
   ];
 
   const images = [
-    {
-      desktop: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/expo.webp',
-      mobile: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/expo-mobile.webp',
-      alt: 'expo',
-    },
-
      {
       desktop: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/WESTIN%20final%20d%20L.webp',
       mobile: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/WESTIN%20final%20m%20L.webp',

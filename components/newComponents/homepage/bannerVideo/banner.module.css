@@ -35,11 +35,11 @@
   object-fit: cover;
   object-position: bottom center;
   opacity: 0;
-  animation: fade 50s infinite linear;
+  animation: fade 40s infinite linear;
   z-index: 0;
 }
 
-/* Animation delays */
+/* Animation delays — 5 images evenly spaced (1/5 of 40s cycle each) */
 
 .slideImage1 {
   animation-delay: 0s;
@@ -48,23 +48,19 @@
 
 
 .slideImage2 {
-  animation-delay: 15s;
+  animation-delay: 8s;
 }
 
 .slideImage3 {
-  animation-delay: 22s;
+  animation-delay: 16s;
 }
 
 .slideImage4 {
-  animation-delay: 29s;
+  animation-delay: 24s;
 }
 
 .slideImage5 {
-  animation-delay: 36s;
-}
-
-.slideImage6 {
-  animation-delay: 43s;
+  animation-delay: 32s;
 }
 
 /* Clickable overlay */
