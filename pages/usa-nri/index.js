@@ -160,6 +160,7 @@ function Nri() {
     <Wrapper
       title="Gurgaon Premium Luxury Residences for NRIs | INFRAMANTRA"
       description="Explore Gurgaon premium luxury residences for NRIs with INFRAMANTRA. Discover top projects, exclusive pricing, and secure high-return real estate investments."
+      seo="noindex"
     >
 
       {/* HEADER */}

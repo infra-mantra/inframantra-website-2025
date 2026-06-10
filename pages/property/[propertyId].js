@@ -16,66 +16,105 @@ import Sitevisit from "../../components/newComponents/propertyIndividualPage/sit
 import Developer from "../../components/newComponents/propertyIndividualPage/developer";
 import FaqSection from "../../components/newComponents/propertyIndividualPage/faq";
 import CtaForHome from "../../components/detailSections/singlePropertyCta";
-import PopUpForm from '../../components/detailSections/CTA_NEW'
-
+import PopUpForm from "../../components/detailSections/CTA_NEW";
 
 const PropertyDetail = ({ allData }) => {
- const router = useRouter();
-const { utm_campaign } = router.query;
-
+  const router = useRouter();
+  const { utm_campaign } = router.query;
 
   const rightRef = useRef(null);
-  const containerRef = useRef(null);
+
   const [locoScroll, setLocoScroll] = useState(null);
- const [propertyData, setPropertyData] = useState(allData.propertyData.data);
+  const [propertyData, setPropertyData] = useState(allData.propertyData.data);
   const [popForm, setPopForm] = useState(false);
-        const onClickOff = (val) =>setPopForm(val)
-        const handleform = () => setPopForm(true);
-        useEffect(() => {
-  const alreadyClosed = localStorage.getItem("popFormClosed");
 
-  if (!alreadyClosed) {
-    const timer = setTimeout(() => {
-      setPopForm(true);
-    }, 5000); // 5 seconds
+  // =========================
+  // CLOSE HANDLER
+  // =========================
+  const onClickOff = (val) => {
+    setPopForm(val);
 
-    return () => clearTimeout(timer);
-  }
-}, []);
+  };
 
-useEffect(() => {
-  setPropertyData(allData.propertyData.data);
-}, [allData]);
-
-
-  // ============================================
-  // STORE SOURCE FROM UTM
-  // ============================================
+  // =========================
+  // 60% SCROLL POPUP (REFRESH SAFE FINAL FIX)
+  // =========================
   useEffect(() => {
+    if (typeof window === "undefined") return;
 
+    const alreadyClosed = localStorage.getItem("popFormClosed");
+    if (alreadyClosed) return;
+
+    let triggered = false;
+
+    const checkScroll = () => {
+      const scrollTop = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight;
+
+      const scrollPercentage =
+        (scrollTop / (docHeight - windowHeight)) * 100;
+
+      if (scrollPercentage >= 50 && !triggered) {
+        triggered = true;
+        setPopForm(true);
+      }
+    };
+
+    const init = () => {
+      // wait for full layout + images
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          checkScroll(); // 👈 handles refresh case
+        }, 500);
+
+        window.addEventListener("scroll", checkScroll);
+      });
+    };
+
+    if (document.readyState === "complete") {
+      init();
+    } else {
+      window.addEventListener("load", init);
+    }
+
+    return () => {
+      window.removeEventListener("scroll", checkScroll);
+      window.removeEventListener("load", init);
+    };
+  }, []);
+
+  // =========================
+  // PROPERTY DATA
+  // =========================
+  useEffect(() => {
+    setPropertyData(allData.propertyData.data);
+  }, [allData]);
+
+  // =========================
+  // UTM TRACKING
+  // =========================
+  useEffect(() => {
     if (!router.isReady) return;
     if (typeof window === "undefined") return;
+
     if (utm_campaign === "KC_Searchad_26May") {
       localStorage.setItem("source", utm_campaign);
-    } 
-  }, [router.isReady,utm_campaign ]);
+    }
+  }, [router.isReady, utm_campaign]);
 
-const schemaInfo = {
-  lat: propertyData?.coordinates?.lat,
-  lon: propertyData?.coordinates?.lng,
-  loc: propertyData?.locality?.name,
-  sub: propertyData?.subLocality?.name,
-  url: router.asPath || null,
-  price: propertyData?.priceInFigure,
-  city: propertyData?.city?.name,
-  image: propertyData?.imageGallery?.[0]?.url || null,
-  Galleryimages: propertyData?.imageGallery,
-  name: propertyData?.name,
-};
-
-
-
-
+  const schemaInfo = {
+    lat: propertyData?.coordinates?.lat,
+    lon: propertyData?.coordinates?.lng,
+    loc: propertyData?.locality?.name,
+    sub: propertyData?.subLocality?.name,
+    url: router.asPath || null,
+    price: propertyData?.priceInFigure,
+    city: propertyData?.city?.name,
+    image: propertyData?.imageGallery?.[0]?.url || null,
+    Galleryimages: propertyData?.imageGallery,
+    name: propertyData?.name,
+  };
 
   return (
     <Wrapper
@@ -86,62 +125,78 @@ const schemaInfo = {
       schema={schemaInfo}
       faq={propertyData.faqs}
     >
-      <div className="propertyPageWrapper" >
-        <PropertyHeaderImageGallery imageGallery={propertyData.imageGallery} propertyData={propertyData}/>
-       <section id="Highlights">
-      <PropertyHeader propertyData={propertyData}  name={schemaInfo.name}/>
-          </section>
+      <div className="propertyPageWrapper">
+        <PropertyHeaderImageGallery
+          imageGallery={propertyData.imageGallery}
+          propertyData={propertyData}
+        />
 
-        <PropertySectionNavbar locoScroll={locoScroll}  />
+        <section id="Highlights">
+          <PropertyHeader propertyData={propertyData} name={schemaInfo.name} />
+        </section>
+
+        <PropertySectionNavbar locoScroll={locoScroll} />
 
         <div className="property-page">
           <div className="property-left">
-            <section >
-              <PropertyVideoYoutube videoUrl={propertyData.videoUrl[0]}/>
+            <section>
+              <PropertyVideoYoutube videoUrl={propertyData?.videoUrl?.[0]} />
             </section>
 
-            <section  id= "Amenities" >
-              <Amenities propertyData={propertyData}/>
+            <section id="Amenities">
+              <Amenities propertyData={propertyData} />
             </section>
 
-            <section id= "Locality" >
-              <LandMark propertyInfo={schemaInfo} propertyData={propertyData} name={propertyData.name} />
+            <section id="Locality">
+              <LandMark
+                propertyInfo={schemaInfo}
+                propertyData={propertyData}
+                name={propertyData.name}
+              />
             </section>
 
-            <section id="Plan & Pricing" >
-              <Config  floorPlan={propertyData.floorPlan} pdf={propertyData.brochure[0]} name={propertyData.name}/>
-            </section>
-              <section >
-              <PremiumProperty city={schemaInfo.city}/>
-            </section>
-            
-            <section >
-              <Sitevisit  name={schemaInfo.name}/>
+            <section id="Plan & Pricing">
+              <Config
+                floorPlan={propertyData.floorPlan}
+                pdf={propertyData?.brochure?.[0]}
+                name={propertyData.name}
+              />
             </section>
 
-            <section id="About Developer" >
+            <section>
+              <PremiumProperty city={schemaInfo.city} />
+            </section>
+
+            <section>
+              <Sitevisit name={schemaInfo.name} />
+            </section>
+
+            <section id="About Developer">
               <Developer propertyData={propertyData} />
             </section>
-  
-            <section id= "FAQ's" >
-              <FaqSection propertyData={propertyData} name={schemaInfo.name}  />
+
+            <section id="FAQ's">
+              <FaqSection
+                propertyData={propertyData}
+                name={schemaInfo.name}
+              />
             </section>
-
-          
-
           </div>
 
           <div className="property-right" ref={rightRef}>
-            <CtaForHome name={schemaInfo.name} id="propertyIndividualRightForm"/>
+            <CtaForHome
+              name={schemaInfo.name}
+              id="propertyIndividualRightForm"
+            />
           </div>
-     
         </div>
-          <PopUpForm
-        popUpenable={popForm}
-        onClickOff={onClickOff}
-        text="TO CONNECT WITH OUR PROPERTY ADVISOR "
-        name={schemaInfo.name}
-        id="propertyIndividualPopUp"
+
+        <PopUpForm
+          popUpenable={popForm}
+          onClickOff={onClickOff}
+          text="TO CONNECT WITH OUR PROPERTY ADVISOR"
+          name={schemaInfo.name}
+          id="propertyIndividualPopUp"
         />
       </div>
     </Wrapper>
@@ -149,7 +204,9 @@ const schemaInfo = {
 };
 
 export async function getStaticPaths() {
-  const res = await fetch(`${process.env.apiUrl1}/property/slugList?active=true`);
+  const res = await fetch(
+    `${process.env.apiUrl1}/property/slugList?active=true`
+  );
   const data = await res.json();
 
   const paths = data.result.map((post) => ({
@@ -160,7 +217,9 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const res = await fetch(`${process.env.apiUrl1}/property/slug/${params.propertyId}`);
+  const res = await fetch(
+    `${process.env.apiUrl1}/property/slug/${params.propertyId}`
+  );
   const data = await res.json();
 
   return {

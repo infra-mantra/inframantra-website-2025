@@ -875,21 +875,53 @@ export default function PropertyChatbot() {
              (right:8px, bottom:25px & 85px) on desktop. */
           right: 13px;
           bottom: 155px;
-          width: 56px;
-          height: 56px;
+          width: 58px;
+          height: 58px;
           border-radius: 50%;
-          border: none;
-          background: linear-gradient(135deg, #d69d2e, #b8821f);
-          box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28);
+          border: 2px solid rgba(255, 255, 255, 0.55);
+          background: radial-gradient(circle at 32% 28%, #ffd97a 0%, #e6ac38 42%, #c98c1f 78%, #a9760f 100%);
+          box-shadow: 0 10px 26px rgba(184, 130, 31, 0.5),
+            0 4px 10px rgba(0, 0, 0, 0.28),
+            inset 0 2px 4px rgba(255, 255, 255, 0.45);
           cursor: pointer;
           display: flex;
           align-items: center;
           justify-content: center;
           z-index: 99998;
-          animation: imbot-pop 0.3s ease;
+          /* gentle up/down float */
+          animation: imbot-float 2.8s ease-in-out infinite;
+        }
+        /* pulsing ring */
+        .imbot-launcher::after {
+          content: "";
+          position: absolute;
+          inset: -2px;
+          border-radius: 50%;
+          border: 2px solid rgba(214, 157, 46, 0.65);
+          animation: imbot-ring 2.2s ease-out infinite;
+          pointer-events: none;
+        }
+        /* soft outer glow */
+        .imbot-launcher::before {
+          content: "";
+          position: absolute;
+          inset: -6px;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(214, 157, 46, 0.45) 0%, rgba(214, 157, 46, 0) 70%);
+          animation: imbot-glow 2.8s ease-in-out infinite;
+          pointer-events: none;
+          z-index: -1;
         }
         .imbot-launcher:hover {
-          transform: scale(1.06);
+          filter: brightness(1.07);
+          box-shadow: 0 14px 32px rgba(184, 130, 31, 0.6),
+            0 6px 14px rgba(0, 0, 0, 0.3),
+            inset 0 2px 4px rgba(255, 255, 255, 0.5);
+        }
+        .imbot-launcher svg {
+          position: relative;
+          z-index: 1;
+          filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.18));
         }
         .imbot-dot {
           position: absolute;
@@ -1171,6 +1203,36 @@ export default function PropertyChatbot() {
           to {
             transform: scale(1);
             opacity: 1;
+          }
+        }
+        @keyframes imbot-float {
+          0%,
+          100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-8px);
+          }
+        }
+        @keyframes imbot-ring {
+          0% {
+            transform: scale(1);
+            opacity: 0.7;
+          }
+          100% {
+            transform: scale(1.7);
+            opacity: 0;
+          }
+        }
+        @keyframes imbot-glow {
+          0%,
+          100% {
+            opacity: 0.5;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 0.9;
+            transform: scale(1.12);
           }
         }
         @keyframes imbot-blink {
