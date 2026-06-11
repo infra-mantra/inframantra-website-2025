@@ -229,18 +229,17 @@ function MyApp({ Component, pageProps }) {
             target="_blank"
             rel="noopener noreferrer"
             className={styles.whatsapp}
-          />
+          >
             <img src="/logos/whatsapp.svg" alt="WhatsApp" />
             <span>WhatsApp</span>
+            </a>
           
         </div>
         <div className={styles.right}>
-          <a href="tel:8698009900" className={styles.contact} />
+          <a href="tel:8698009900" className={styles.contact} >
            <img src="/logos/phone.svg" alt="Contact Us" />
             <span>Contact Us</span>
-    
- 
-
+         </a>
         </div>
       </div>
 
