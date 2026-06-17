@@ -5,13 +5,14 @@ const iconStyle = {
   quoteIcon: {
     transform: 'rotate(0deg)',
     transition: 'transform 0.3s',
-    color: '#000',
+    color: 'rgba(0, 0, 0, 0.12)',
     marginRight: '10px',
-    fontSize: '75px',
-    fontFamily: 'Arial, sans-serif',
+    fontSize: '90px',
+    lineHeight: '1',
+    fontFamily: 'Georgia, serif',
     position: 'absolute',
-    top: '-25px',
-    left: '-25px',
+    top: '-30px',
+    left: '-12px',
 
   },
   stars: {

@@ -7,11 +7,11 @@ import MobileMenu from './mobileNavigationComponents';
 const leftSideTabs = [
   { title: 'Services', link: '/our-services' },
   { title: 'Testimonials', link: '/testimonials' },
-  { title: 'NRI Properties', link: '/usa-nri' },
+  // { title: 'NRI Properties', link: '/usa-nri' },
 ];
 
 const rightSideTabs = [
-  { title: 'USA EXPO', link: '/usa-nri-event' },
+  // { title: 'USA EXPO', link: '/usa-nri-event' },
   { title: 'About Us', link: '/about-us' },
   { title: 'Contact Us', link: '/contact-us' },
 ];

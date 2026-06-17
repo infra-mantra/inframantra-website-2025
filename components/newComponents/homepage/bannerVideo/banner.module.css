@@ -2,16 +2,16 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
   z-index: -1;
 }
 
 /* Slideshow container */
 .slideshow {
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   overflow: hidden;
   position: relative;
   cursor: pointer;
@@ -32,8 +32,9 @@
   top: 0;
   left: 0;
   width: 100%;
+  height: 100%;
   object-fit: cover;
-  object-position: bottom center;
+  object-position: center center;
   opacity: 0;
   animation: fade 40s infinite linear;
   z-index: 0;

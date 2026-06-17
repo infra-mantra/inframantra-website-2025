@@ -14,6 +14,18 @@
     overflow: visible;
 }
 
+/* Desktop: match the banner box to the wide (~3:1) banner image so the
+   full image is visible — no cropping and no empty bars. */
+@media (min-width: 769px) {
+    .homePageheaderContainer {
+        height: auto;
+        aspect-ratio: 3 / 1;
+    }
+    .homePageheader {
+        height: 100%;
+    }
+}
+
 
 
 

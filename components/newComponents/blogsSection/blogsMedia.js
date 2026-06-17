@@ -46,30 +46,27 @@ const getPostUrl = (post) => {
           }}
           className={style.blogPostSwiper}
         >
-          {data.map((post) => (
-            <SwiperSlide key={post.id}>
-              <a href={getPostUrl(post)}>
-                <div className={style.blogPostCard}>
-                  <Image
-                    src={
-                      post._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
-                      "/placeholder.jpg"
-                    }
-                    alt={post.title.rendered}
-                    width={500}
-                    height={300}
-                    style={{ width: "100%", height: "auto" }}
-                  />
-                  <h3>{post.title.rendered}</h3>
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: post.excerpt.rendered.substring(0, 100),
-                    }}
-                  />
-                </div>
-              </a>
-            </SwiperSlide>
-          ))}
+          {data.map((post) => {
+            const media = post._embedded?.["wp:featuredmedia"]?.[0];
+            return (
+              <SwiperSlide key={post.id}>
+                <a href={getPostUrl(post)}>
+                  <div className={style.blogPostCard}>
+                    <Image
+                      src={media?.source_url || "/placeholder.jpg"}
+                      alt={post.title.rendered}
+                      width={media?.media_details?.width || 500}
+                      height={media?.media_details?.height || 300}
+                      quality={90}
+                      sizes="(max-width: 768px) 60vw, 33vw"
+                      style={{ width: "100%", height: "auto" }}
+                    />
+                    <h3>{post.title.rendered}</h3>
+                  </div>
+                </a>
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
       )}
 

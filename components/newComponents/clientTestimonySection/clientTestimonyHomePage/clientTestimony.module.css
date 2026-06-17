@@ -20,15 +20,40 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  background: #E7B554;
-  border-radius: 12px;
-  padding: 0px 20px 0px 40px;
+  background: linear-gradient(160deg, #F2C76C 0%, #E7B554 55%, #D89F38 100%);
+  border-radius: 18px;
+  padding: 0px 26px 30px 26px;
+  box-shadow: 0px 10px 28px rgba(0, 0, 0, 0.12);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: testimonyCardIn 0.6s ease both;
+}
+
+.clientTestimonyCardWrapper:hover {
+  transform: translateY(-6px);
+  box-shadow: 0px 18px 42px rgba(0, 0, 0, 0.22);
+}
+
+.clientTestimonyCardWrapper:hover .clientTestimonyCardFace {
+  transform: scale(1.06);
+}
+
+@keyframes testimonyCardIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes testimonyStarPop {
+  0%   { opacity: 0; transform: scale(0.4); }
+  70%  { transform: scale(1.25); }
+  100% { opacity: 1; transform: scale(1); }
 }
 
 .clientTestimonyName {
-  font-weight: 500;
+  font-weight: 600;
   font-size: 20px;
-  margin: 0;
+  color: #1a1a1a;
+  margin: 10px 0 0 0;
+  letter-spacing: 0.2px;
 }
 
 .clientTestimonyCardHeader {
@@ -50,12 +75,28 @@
 }
 
 .clientTestimonyCardText {
-  color: #000000;
+  color: #2a2a2a;
   font-weight: 500;
   text-align: left;
   width: 100%;
-  font-size: 16px;
+  font-size: 15px;
+  line-height: 2;
+  letter-spacing: 0.2px;
+  padding-top: 8px;
 }
+
+.star {
+  display: inline-block;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.18);
+  animation: testimonyStarPop 0.4s ease both;
+}
+.star:nth-child(1) { animation-delay: 0.15s; }
+.star:nth-child(2) { animation-delay: 0.25s; }
+.star:nth-child(3) { animation-delay: 0.35s; }
+.star:nth-child(4) { animation-delay: 0.45s; }
+.star:nth-child(5) { animation-delay: 0.55s; }
 
 .clientTestimonyCardTextPseudoFlex {
   width: 30%;
@@ -70,12 +111,14 @@
 }
 
 .clientTestimonyCardFace {
-
   border-radius: 50%;
-  width: 40%;
+  width: 112px;
+  height: 112px;
   object-fit: cover;
-  margin-top: -65px;
-  box-shadow: 0px 6.52px 6.52px 0px rgba(0, 0, 0, 0.25);
+  margin-top: -56px;
+  border: 4px solid #ffffff;
+  box-shadow: 0px 6.52px 12px 0px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease;
 }
 .swiper-button-next{
   right: -7% !important;

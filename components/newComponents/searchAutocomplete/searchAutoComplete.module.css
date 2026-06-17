@@ -92,6 +92,35 @@
     height: 1.4rem;
 }
 
+  .micButton {
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: transparent;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    color: rgb(218, 158, 39);
+    padding: 4px;
+    margin-right: 4px;
+    border-radius: 50%;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  .micButton:hover {
+    background-color: rgba(218, 158, 39, 0.15);
+  }
+  .micButton.listening {
+    color: #e53935;
+    animation: micPulse 1.2s infinite;
+  }
+  @keyframes micPulse {
+    0% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0.5); }
+    70% { box-shadow: 0 0 0 8px rgba(229, 57, 53, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0); }
+  }
+
   @media  (max-width: 768px) {
     .root {
       width: 90vw;
@@ -99,6 +128,10 @@
     .inputWrapper{
       width: 100%;
       position: relative;
+    }
+    /* clear the absolute search icon pinned at right:5px on mobile */
+    .micButton{
+      margin-right: 28px;
     }
     .listbox{
       width: 335px!important;

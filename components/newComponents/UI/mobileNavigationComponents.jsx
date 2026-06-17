@@ -57,8 +57,8 @@ const MobileMenu = () => {
       {/* Navigation Items */}
       <div style={{ marginTop: '30px' }}>
         <MenuItem icon={<FaHome />} text="Home" path="" onClick={handleNavigation} activeColor={isActive('')} />
-         <MenuItem icon={<FaBuilding />} text="USA Properties " path="usa-nri" onClick={handleNavigation} activeColor={isActive('nri')} />
-         <MenuItem icon={<IoIosPeople />} text="NRI EXPO" path="usa-nri-event" onClick={handleNavigation} activeColor={isActive('usa-nri-event')} />
+         {/* <MenuItem icon={<FaBuilding />} text="USA Properties " path="usa-nri" onClick={handleNavigation} activeColor={isActive('nri')} /> */}
+         {/* <MenuItem icon={<IoIosPeople />} text="NRI EXPO" path="usa-nri-event" onClick={handleNavigation} activeColor={isActive('usa-nri-event')} /> */}
         <MenuItem icon={<FaBuilding />} text="Properties" path="property-listing/search/property-in-india" onClick={handleNavigation} activeColor={isActive('property-listing/search/property-in-india')} />
         <MenuItem icon={<GrServices />} text="Services" path="our-services" onClick={handleNavigation} activeColor={isActive('our-services')} />
         <MenuItem icon={<MdContactMail />} text="Contact Us" path="contact-us" onClick={handleNavigation} activeColor={isActive('contact-us')} />

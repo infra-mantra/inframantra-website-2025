@@ -19,39 +19,39 @@ const BannerVideo = () => {
       className: styles.slideImage3,
     },
     {
-      link: 'https://inframantra.com/property/bptp-downtown-66-sector-66-gurgaon',
+      link: 'https://inframantra.com/property/tulip-crimson-sector-70-gurgaon',
       className: styles.slideImage4,
     },
     {
-      link: 'https://inframantra.com/property/vatika-seven-elements-sector-89a-gurgaon',
+      link: 'https://inframantra.com/property/godrej-samaris-sector-53-gurgaon',
       className: styles.slideImage5,
     },
   ];
 
   const images = [
      {
-      desktop: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/WESTIN%20final%20d%20L.webp',
-      mobile: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/WESTIN%20final%20m%20L.webp',
+      desktop: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/whiteland-b.webp',
+      mobile: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/WESTIN-mobile.webp',
       alt: 'Westin',
     },
     {
-      desktop: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/tulip%20monsella%20final%20d%20L.webp',
-      mobile: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/monsela%20final.webp',
+      desktop: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/monsella-b.webp',
+      mobile: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/monsella-mobile.webp',
       alt: 'Tulip Monsella',
     },
     {
-      desktop: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/tulip%20melrose%20final%20L.webp',
-      mobile: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/melrose%20mobile%20final%20L.webp',
+      desktop: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/melrose-b.webp',
+      mobile: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/melrose-mobile.webp',
       alt: 'Tulip Melrose',
     },
     {
-      desktop: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/bptp%2066%20final%20d%20L.webp',
-      mobile: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/bptp%20mobile%20final%20LL.png',
+      desktop: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/crimson-b.webp',
+      mobile: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/crimson-mobile.webp',
       alt: 'BPTP 66',
     },
     {
-      desktop: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/vatika%20d%20final%20L.webp',
-      mobile: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/seven%20elements%20final%20mobile%20L.webp',
+      desktop: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/godrej-samaris-desktop.webp',
+      mobile: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/godrej-samaris-mobile.webp',
       alt: 'Vatika',
     },
   ];

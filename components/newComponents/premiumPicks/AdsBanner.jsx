@@ -23,10 +23,10 @@ function AdsBanner() {
 
   // Desktop & Mobile image URLs
   const desktopBanner =
-    'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/revampHomePage/AdDesktop.webp';
+    'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/revampHomePage/whitelandAdBanner.webp';
 
   const mobileBanner =
-    'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/revampHomePage/mobilead.webp';
+    'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/revampHomePage/AdBannermobilewestin.webp';
 
   return (
     <div className={styles.imgContainer}>

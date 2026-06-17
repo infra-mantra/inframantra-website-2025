@@ -27,11 +27,11 @@ const [showAll, setShowAll] = useState(false);
                                 <div className={styles.inFBlogItem}>
                                     <div className={styles.imgWrap}>
                                         {item.image ? (
-                                            <Image
+                                            <img
                                                 src={item.image}
-                                                alt={item.image}
-                                                layout="fill"
-                                                objectFit="cover"
+                                                alt={item.title || item.name || "Blog Image"}
+                                                loading="lazy"
+                                                className={styles.blogImg}
                                             />
                                         ) : (
                                             <NoImage />

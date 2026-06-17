@@ -105,9 +105,9 @@ function Footer() {
               <h4>Quick Search</h4>
               <div className={styles.footerThirdSectionDropdownFlex}>
                 <div className={styles.footerThirdSectionDropdownHeaderFlex}>
-                  <p  ><a  className={styles.fontWt} legacyBehavior={true} href='/usa-nri'>USA Properties</a></p>
-                 
-                 
+                  {/* <p  ><a  className={styles.fontWt} legacyBehavior={true} href='/usa-nri'>USA Properties</a></p> */}
+
+
                 </div>
                 
                
@@ -115,11 +115,11 @@ function Footer() {
               </div>
               <div className={styles.footerThirdSectionDropdownFlex}>
                 <div className={styles.footerThirdSectionDropdownHeaderFlex}>
-                  <p   ><a className={styles.fontWt} legacyBehavior={true} href='/usa-nri-event'>NRI EXPO</a></p>
-                  
-                
+                  {/* <p   ><a className={styles.fontWt} legacyBehavior={true} href='/usa-nri-event'>NRI EXPO</a></p> */}
+
+
                 </div>
-               
+
               </div>
               <div className={styles.footerThirdSectionDropdownFlex}>
                 <div className={styles.footerThirdSectionDropdownHeaderFlex}>
@@ -241,7 +241,7 @@ function Footer() {
            
                    <div className={styles.footerThirdSectionDropdownFlex}>
                 <div className={styles.footerThirdSectionDropdownHeaderFlex}>
-                  <p   ><a className={styles.fontWt} legacyBehavior={true} href='/usa-nri'>USA Properties</a></p>
+                  {/* <p   ><a className={styles.fontWt} legacyBehavior={true} href='/usa-nri'>USA Properties</a></p> */}
                   
                 
                 </div>
@@ -249,7 +249,7 @@ function Footer() {
               </div>
                     <div className={styles.footerThirdSectionDropdownFlex}>
                 <div className={styles.footerThirdSectionDropdownHeaderFlex}>
-                  <p   ><a className={styles.fontWt} legacyBehavior={true} href='/usa-nri-event'>NRI EXPO</a></p>
+                  {/* <p   ><a className={styles.fontWt} legacyBehavior={true} href='/usa-nri-event'>NRI EXPO</a></p> */}
                   
                 
                 </div>

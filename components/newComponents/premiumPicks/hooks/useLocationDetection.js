@@ -11,28 +11,33 @@ export function useLocationDetection() {
   async function detectUserLocation() {
     try {
       setLocationStatus('detecting');
-      
-      
-      // Try IP-based detection first (faster and doesn't require permission)
+
+      // Try browser geolocation (GPS) first — most accurate, reflects the
+      // user's real position rather than their ISP's registered city.
+      if ('geolocation' in navigator) {
+        try {
+          const position = await getCurrentPosition();
+          const locationCity = await getCityFromCoordinates(
+            position.coords.latitude,
+            position.coords.longitude
+          );
+          if (locationCity) {
+            setDetectedCity(locationCity);
+            setLocationStatus('found');
+            return;
+          }
+        } catch (geoError) {
+          // Permission denied / timeout / unavailable — fall through to IP.
+        }
+      }
+
+      // Fallback to IP-based detection (no permission required, but only
+      // accurate to the ISP/network location).
       const city = await detectCityByIP();
       if (city) {
         setDetectedCity(city);
         setLocationStatus('found');
         return;
-      }
-
-      // Fallback to browser geolocation API if available
-      if ('geolocation' in navigator) {
-        const position = await getCurrentPosition();
-        const locationCity = await getCityFromCoordinates(
-          position.coords.latitude, 
-          position.coords.longitude
-        );
-        if (locationCity) {
-          setDetectedCity(locationCity);
-          setLocationStatus('found');
-          return;
-        }
       }
 
       setLocationStatus('failed');

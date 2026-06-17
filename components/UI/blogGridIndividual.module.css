@@ -41,11 +41,17 @@
 .imgWrap {
     position: relative;
     width: 100%;
-    height: 200px;
+    height: auto;
     overflow: hidden;
 }
 .imgWrap {
-  
+
+    border-radius: 8px;
+}
+.blogImg {
+    width: 100%;
+    height: auto;
+    display: block;
     border-radius: 8px;
 }
 .inFBlogsWrap .inFBlogItem .info {
