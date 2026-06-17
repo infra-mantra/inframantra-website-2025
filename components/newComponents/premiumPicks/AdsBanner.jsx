@@ -30,7 +30,7 @@ function AdsBanner() {
 
   return (
     <div className={styles.imgContainer}>
-      <Link href="/property/satya-levante-residences-sector-104-gurgaon">
+      <Link href="/property/whiteland-the-westin-residences-sector-103-gurugram">
         <img
           className={styles.adBannerStyle}
           src={isMobile ? mobileBanner : desktopBanner}
