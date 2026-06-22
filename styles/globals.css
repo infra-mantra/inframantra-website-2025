@@ -25,6 +25,9 @@ html.has-scroll-smooth {
   
 }
 
+.callImage{
+  object-fit: contain;
+}
 
 
 /* ── NRI page Swiper overrides ── */

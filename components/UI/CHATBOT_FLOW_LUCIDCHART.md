@@ -47,58 +47,58 @@ and it draws the chart for you — no manual boxes/arrows.
 
 ## Diagram 1 — Full bot flow (overview)
 
-```mermaid
-flowchart TD
-    Start([Visitor clicks robot button]) --> Greeting{{"Greeting:<br/>How can I help?"}}
+    ```mermaid
+    flowchart TD
+        Start([Visitor clicks robot button]) --> Greeting{{"Greeting:<br/>How can I help?"}}
 
-    Greeting -->|Buy a property| Buy
-    Greeting -->|Search properties| Search
-    Greeting -->|Talk to an agent| Agent
+        Greeting -->|Buy a property| Buy
+        Greeting -->|Search properties| Search
+        Greeting -->|Talk to an agent| Agent
 
-    %% ---------- BUY ----------
-    subgraph BUY[" 🏠 Buy path "]
-        Buy[Ask budget] --> BuyCity[Ask city]
-        BuyCity --> BuyResults[/Show live matches - 3 at a time/]
-    end
+        %% ---------- BUY ----------
+        subgraph BUY[" 🏠 Buy path "]
+            Buy[Ask budget] --> BuyCity[Ask city]
+            BuyCity --> BuyResults[/Show live matches - 3 at a time/]
+        end
 
-    %% ---------- SEARCH ----------
-    subgraph SEARCH[" 🔎 Search path "]
-        Search{Pick city<br/>or type a name?}
-        Search -->|Pick city| Loc[Choose locality]
-        Search -->|Type a name| Suggest[Show suggestions]
-        Loc --> SearchResults[/Show matching properties/]
-        Suggest --> SearchResults
-    end
+        %% ---------- SEARCH ----------
+        subgraph SEARCH[" 🔎 Search path "]
+            Search{Pick city<br/>or type a name?}
+            Search -->|Pick city| Loc[Choose locality]
+            Search -->|Type a name| Suggest[Show suggestions]
+            Loc --> SearchResults[/Show matching properties/]
+            Suggest --> SearchResults
+        end
 
-    %% ---------- AGENT ----------
-    subgraph AGENT[" 🤝 Talk to agent "]
-        Agent[/Show expert phone number/] --> AgentChoice{Call now or<br/>request callback?}
-        AgentChoice -->|I'll call now| Done
-        AgentChoice -->|Request callback| Lead
-    end
+        %% ---------- AGENT ----------
+        subgraph AGENT[" 🤝 Talk to agent "]
+            Agent[/Show expert phone number/] --> AgentChoice{Call now or<br/>request callback?}
+            AgentChoice -->|I'll call now| Done
+            AgentChoice -->|Request callback| Lead
+        end
 
-    %% ---------- RESULTS -> NEXT STEP ----------
-    BuyResults --> NextStep{Next step?}
-    SearchResults --> NextStep
-    NextStep -->|Book a site visit| Lead
-    NextStep -->|Get more details| Lead
-    NextStep -->|See more options| MorePage[Show next page of results]
-    MorePage --> NextStep
-    NextStep -->|No results found| NoRes{Get in touch?}
-    NoRes -->|Yes, contact me| Lead
-    NoRes -->|Talk to an agent| Agent
+        %% ---------- RESULTS -> NEXT STEP ----------
+        BuyResults --> NextStep{Next step?}
+        SearchResults --> NextStep
+        NextStep -->|Book a site visit| Lead
+        NextStep -->|Get more details| Lead
+        NextStep -->|See more options| MorePage[Show next page of results]
+        MorePage --> NextStep
+        NextStep -->|No results found| NoRes{Get in touch?}
+        NoRes -->|Yes, contact me| Lead
+        NoRes -->|Talk to an agent| Agent
 
-    %% ---------- LEAD CAPTURE ----------
-    subgraph CAPTURE[" 📋 Collect details "]
-        Lead[Ask name] --> Phone[Ask phone]
-        Phone --> Email[Ask email]
-        Email --> Time[Ask best time to call]
-    end
+        %% ---------- LEAD CAPTURE ----------
+        subgraph CAPTURE[" 📋 Collect details "]
+            Lead[Ask name] --> Phone[Ask phone]
+            Phone --> Email[Ask email]
+            Email --> Time[Ask best time to call]
+        end
 
-    Time --> Submit[(Send lead to sales CRM<br/>POST /enquiry/project)]
-    Submit --> Done([Thank you! We'll call you])
-    Done -->|Start over| Greeting
-```
+        Time --> Submit[(Send lead to sales CRM<br/>POST /enquiry/project)]
+        Submit --> Done([Thank you! We'll call you])
+        Done -->|Start over| Greeting
+    ```
 
 ---
 

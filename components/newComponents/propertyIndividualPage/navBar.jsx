@@ -11,6 +11,7 @@ const PropertySectionNavbar = () => {
     'Amenities',
     'Locality',
     'Plan & Pricing',
+    'EMI Calculator',
     'About Developer',
     "FAQ's",
   ];

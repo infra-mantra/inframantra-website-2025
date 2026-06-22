@@ -536,6 +536,7 @@ function App({
               <img
                 src="https://inframantra.com/guruCollection/guru_call.png"
                 alt="Call Icon"
+                     className="callImage"
               />
 
             </div>

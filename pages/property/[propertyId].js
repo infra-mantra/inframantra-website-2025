@@ -11,6 +11,7 @@ import PropertySectionNavbar from "../../components/newComponents/propertyIndivi
 import Amenities from "../../components/newComponents/propertyIndividualPage/amenities";
 import LandMark from "../../components/newComponents/propertyIndividualPage/landmark";
 import Config from "../../components/newComponents/propertyIndividualPage/config";
+import EmiCalculator from "../../components/newComponents/propertyIndividualPage/emiCalculator";
 import PremiumProperty from "../../components/newComponents/propertyIndividualPage/premiumPropertyList";
 import Sitevisit from "../../components/newComponents/propertyIndividualPage/siteVisitBanner";
 import Developer from "../../components/newComponents/propertyIndividualPage/developer";
@@ -159,6 +160,13 @@ const PropertyDetail = ({ allData }) => {
               <Config
                 floorPlan={propertyData.floorPlan}
                 pdf={propertyData?.brochure?.[0]}
+                name={propertyData.name}
+              />
+            </section>
+
+            <section id="EMI Calculator">
+              <EmiCalculator
+                price={propertyData?.priceInFigure}
                 name={propertyData.name}
               />
             </section>

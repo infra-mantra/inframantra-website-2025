@@ -542,6 +542,7 @@ function App({ name, displayMap = true, countryCode = "in" }) {
               <img
                 src="/guruCollection/guru_call.png"
                 alt="Call Icon"
+                className="callImage"
               />
 
             </div>
