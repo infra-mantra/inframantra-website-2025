@@ -369,6 +369,7 @@ function App({
                 <img
                   src="/guruCollection/guru_call.png"
                   alt="Call Icon"
+                       className="callImage"
                 />
 
               </div>
