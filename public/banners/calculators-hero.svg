@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="640" viewBox="0 0 1920 640" fill="none" role="img" aria-label="Inframantra property and home loan calculators banner">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1920" y2="640" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#120e08"/>
+      <stop offset="0.5" stop-color="#191309"/>
+      <stop offset="1" stop-color="#241a0e"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f0c977"/>
+      <stop offset="1" stop-color="#d9a23c"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#e7b554" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#e7b554" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="leftfade" x1="0" y1="0" x2="1920" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0f0b06" stop-opacity="0.92"/>
+      <stop offset="0.42" stop-color="#0f0b06" stop-opacity="0.55"/>
+      <stop offset="0.7" stop-color="#0f0b06" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="14" cy="14" r="1.1" fill="#e7b554" fill-opacity="0.12"/>
+    </pattern>
+    <linearGradient id="bar" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#d9a23c"/>
+      <stop offset="1" stop-color="#f0c977"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Base -->
+  <rect width="1920" height="640" fill="url(#bg)"/>
+  <rect x="900" y="0" width="1020" height="640" fill="url(#dots)"/>
+  <ellipse cx="1480" cy="320" rx="620" ry="520" fill="url(#glow)"/>
+
+  <!-- Faint concentric framing arcs -->
+  <circle cx="1500" cy="320" r="380" stroke="#e7b554" stroke-opacity="0.07" stroke-width="1.5"/>
+  <circle cx="1500" cy="320" r="300" stroke="#e7b554" stroke-opacity="0.05" stroke-width="1.5"/>
+
+  <!-- ===================== MOTIFS ===================== -->
+  <!-- House / building line icon -->
+  <g stroke="#e7b554" stroke-opacity="0.5" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" fill="none">
+    <path d="M1185 318 L1278 240 L1371 318"/>
+    <path d="M1205 305 L1205 430 L1351 430 L1351 305"/>
+    <rect x="1248" y="362" width="60" height="68" rx="2"/>
+    <path d="M1351 318 L1351 295"/>
+  </g>
+
+  <!-- Calculator -->
+  <g>
+    <rect x="1430" y="150" width="290" height="360" rx="30" fill="#e7b554" fill-opacity="0.04" stroke="#e7b554" stroke-opacity="0.55" stroke-width="3"/>
+    <!-- screen -->
+    <rect x="1465" y="186" width="220" height="74" rx="12" fill="#e7b554" fill-opacity="0.06" stroke="#e7b554" stroke-opacity="0.45" stroke-width="2.5"/>
+    <polyline points="1482,238 1520,214 1556,228 1598,200 1640,216 1670,202" fill="none" stroke="#f0c977" stroke-opacity="0.7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- buttons grid 3x4 -->
+    <g stroke="#e7b554" stroke-opacity="0.4" stroke-width="2.5" fill="none">
+      <rect x="1465" y="288" width="62" height="44" rx="9"/>
+      <rect x="1543" y="288" width="62" height="44" rx="9"/>
+      <rect x="1621" y="288" width="62" height="44" rx="9"/>
+      <rect x="1465" y="346" width="62" height="44" rx="9"/>
+      <rect x="1543" y="346" width="62" height="44" rx="9"/>
+      <rect x="1621" y="346" width="62" height="44" rx="9"/>
+      <rect x="1465" y="404" width="62" height="44" rx="9"/>
+      <rect x="1543" y="404" width="62" height="44" rx="9"/>
+      <rect x="1621" y="404" width="62" height="44" rx="9"/>
+      <rect x="1465" y="462" width="140" height="44" rx="9"/>
+    </g>
+    <!-- equals button highlighted -->
+    <rect x="1621" y="462" width="62" height="44" rx="9" fill="url(#gold)" fill-opacity="0.85"/>
+  </g>
+
+  <!-- Donut chart ring -->
+  <g transform="translate(1760 232)">
+    <circle r="64" fill="none" stroke="#e7b554" stroke-opacity="0.22" stroke-width="20"/>
+    <circle r="64" fill="none" stroke="url(#gold)" stroke-width="20" stroke-linecap="round"
+            stroke-dasharray="402" stroke-dashoffset="150" transform="rotate(-90)"/>
+    <circle r="30" fill="#e7b554" fill-opacity="0.08"/>
+  </g>
+
+  <!-- EMI bars -->
+  <g>
+    <rect x="1690" y="408" width="26" height="64" rx="5" fill="url(#bar)" fill-opacity="0.55"/>
+    <rect x="1726" y="372" width="26" height="100" rx="5" fill="url(#bar)" fill-opacity="0.7"/>
+    <rect x="1762" y="338" width="26" height="134" rx="5" fill="url(#bar)" fill-opacity="0.82"/>
+    <rect x="1798" y="300" width="26" height="172" rx="5" fill="url(#bar)"/>
+    <line x1="1680" y1="472" x2="1834" y2="472" stroke="#e7b554" stroke-opacity="0.3" stroke-width="2"/>
+  </g>
+
+  <!-- Coins: rupee + percent -->
+  <g>
+    <circle cx="1180" cy="470" r="48" fill="#e7b554" fill-opacity="0.05" stroke="#e7b554" stroke-opacity="0.5" stroke-width="2.5"/>
+    <text x="1180" y="488" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="48" font-weight="700" fill="#f0c977" fill-opacity="0.85">&#8377;</text>
+    <circle cx="1560" cy="120" r="36" fill="#e7b554" fill-opacity="0.05" stroke="#e7b554" stroke-opacity="0.45" stroke-width="2.5"/>
+    <text x="1560" y="134" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="36" font-weight="700" fill="#f0c977" fill-opacity="0.8">%</text>
+  </g>
+
+  <!-- Left fade to keep overlay text crisp -->
+  <rect width="1920" height="640" fill="url(#leftfade)"/>
+
+  <!-- Bottom gold accent line -->
+  <rect x="0" y="636" width="1920" height="4" fill="url(#gold)"/>
+</svg>

@@ -95,6 +95,7 @@ function Footer() {
               <p><Link  legacyBehavior={true} href='/'>Home</Link></p>
               <p><Link  legacyBehavior={true} href='/about-us'>About Us</Link></p>
               <p><Link  legacyBehavior={true} href='/our-services'>Services</Link></p>
+              <p><Link  legacyBehavior={true} href='/calculators'>Calculators</Link></p>
               <p><Link  legacyBehavior={true} href="/testimonials">Testimonials</Link></p>
               <p><Link  legacyBehavior={true} href='/careers'>Careers</Link></p>
               <p><Link  legacyBehavior={true} href='/blog'>Media And Blogs</Link></p>
@@ -230,6 +231,7 @@ function Footer() {
               <p><Link  legacyBehavior={true} href='/'>Home</Link></p>
               <p><Link  legacyBehavior={true} href='/about-us'>About Us</Link></p>
               <p><Link  legacyBehavior={true} href='/our-services'>Services</Link></p>
+              <p><Link  legacyBehavior={true} href='/calculators'>Calculators</Link></p>
               <p><Link  legacyBehavior={true} href="/testimonials">Testimonials</Link></p>
               <p><Link  legacyBehavior={true} href='/careers'>Careers</Link></p>
               <p><Link  legacyBehavior={true} href='/blog'>Media And Blogs</Link></p>

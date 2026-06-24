@@ -3,7 +3,7 @@ import { IoMdMenu, IoMdCall, IoMdMail, IoMdPin } from "react-icons/io";
 import { IoClose } from 'react-icons/io5';
 import { FaHome, FaBuilding } from "react-icons/fa";
 import { GrServices } from "react-icons/gr";
-import { MdContactMail, MdOutlineSpeakerNotes, MdOutlinePermMedia, MdOutlineGavel, MdOutlinePolicy, MdOutlineReportProblem } from "react-icons/md";
+import { MdContactMail, MdOutlineSpeakerNotes, MdOutlinePermMedia, MdOutlineGavel, MdOutlinePolicy, MdOutlineReportProblem, MdOutlineCalculate } from "react-icons/md";
 import { IoIosPeople } from "react-icons/io";
 import { PiHandshakeThin } from "react-icons/pi";
 import { SocialIcon } from 'react-social-icons';
@@ -61,6 +61,7 @@ const MobileMenu = () => {
          {/* <MenuItem icon={<IoIosPeople />} text="NRI EXPO" path="usa-nri-event" onClick={handleNavigation} activeColor={isActive('usa-nri-event')} /> */}
         <MenuItem icon={<FaBuilding />} text="Properties" path="property-listing/search/property-in-india" onClick={handleNavigation} activeColor={isActive('property-listing/search/property-in-india')} />
         <MenuItem icon={<GrServices />} text="Services" path="our-services" onClick={handleNavigation} activeColor={isActive('our-services')} />
+        <MenuItem icon={<MdOutlineCalculate />} text="Calculators" path="calculators" onClick={handleNavigation} activeColor={isActive('calculators')} />
         <MenuItem icon={<MdContactMail />} text="Contact Us" path="contact-us" onClick={handleNavigation} activeColor={isActive('contact-us')} />
       </div>
 

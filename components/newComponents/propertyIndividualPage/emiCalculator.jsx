@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { FiCalendar, FiPlus, FiMinus } from "react-icons/fi";
 import styles from "./emiCalculator.module.css";
+import AnimatedNumber from "../../calculators/AnimatedNumber";
 
 /* ----------------------------------------------------------------
    Helpers
@@ -18,6 +19,14 @@ function formatShort(value) {
   if (value >= 10000000) return `₹${(value / 10000000).toFixed(2)} Cr`;
   if (value >= 100000) return `₹${(value / 100000).toFixed(2)} Lakh`;
   return formatINR(value);
+}
+
+// Gold-filled slider track that follows the thumb position.
+function sliderFill(value, min, max) {
+  const pct = Math.max(0, Math.min(100, ((Number(value) - min) / (max - min)) * 100));
+  return {
+    background: `linear-gradient(to right, var(--emi-accent) 0%, var(--emi-accent) ${pct}%, #ece4cf ${pct}%, #ece4cf 100%)`,
+  };
 }
 
 /* ----------------------------------------------------------------
@@ -210,6 +219,7 @@ function EmiCalculator({ price, name }) {
               value={loanAmount}
               onChange={(e) => setLoanAmount(Number(e.target.value))}
               className={styles.slider}
+              style={sliderFill(loanAmount, MIN_LOAN, MAX_LOAN)}
               aria-label="Loan amount"
             />
             <div className={styles.rangeHints}>
@@ -243,6 +253,7 @@ function EmiCalculator({ price, name }) {
               value={rate}
               onChange={(e) => setRate(Number(e.target.value))}
               className={styles.slider}
+              style={sliderFill(rate, MIN_RATE, MAX_RATE)}
               aria-label="Interest rate"
             />
             <div className={styles.rangeHints}>
@@ -276,6 +287,7 @@ function EmiCalculator({ price, name }) {
               value={tenure}
               onChange={(e) => setTenure(Number(e.target.value))}
               className={styles.slider}
+              style={sliderFill(tenure, MIN_TENURE, MAX_TENURE)}
               aria-label="Loan tenure in years"
             />
             <div className={styles.rangeHints}>
@@ -312,7 +324,7 @@ function EmiCalculator({ price, name }) {
                   {period === "year" ? "Yearly EMI" : "Monthly EMI"}
                 </span>
                 <strong className={styles.donutValue}>
-                  {formatINR(displayEmi)}
+                  <AnimatedNumber value={displayEmi} format={formatINR} />
                 </strong>
                 <span className={styles.donutPer}>
                   {period === "year" ? "per year" : "per month"}
@@ -325,16 +337,16 @@ function EmiCalculator({ price, name }) {
             <li>
               <span className={`${styles.dot} ${styles.dotPrincipal}`} />
               <span className={styles.bLabel}>Principal Amount</span>
-              <span className={styles.bValue}>{formatINR(loanAmount)}</span>
+              <span className={styles.bValue}><AnimatedNumber value={loanAmount} format={formatINR} /></span>
             </li>
             <li>
               <span className={`${styles.dot} ${styles.dotInterest}`} />
               <span className={styles.bLabel}>Total Interest</span>
-              <span className={styles.bValue}>{formatINR(totalInterest)}</span>
+              <span className={styles.bValue}><AnimatedNumber value={totalInterest} format={formatINR} /></span>
             </li>
             <li className={styles.totalRow}>
               <span className={styles.bLabel}>Total Amount Payable</span>
-              <span className={styles.bValue}>{formatINR(totalPayable)}</span>
+              <span className={styles.bValue}><AnimatedNumber value={totalPayable} format={formatINR} /></span>
             </li>
           </ul>
         </div>
