@@ -8,7 +8,7 @@ import MainBanner1 from '../components/newComponents/homepage/MainBanner.js';
 import FeaturedProperties from '../components/newComponents/featuredProperties/featuredProperties'
 import StatisticalInsightsSection from "../components/newComponents/statisticalInsights/staticalInsight";
 import ImageGallerySection from "../components/newComponents/imageGallery/imageGallerySection";
-import ClientTestimonySection from "../components/newComponents/clientTestimonySection/clientTestimonySection.jsx";
+import ReviewsWall from "../components/newComponents/reviewsWall/ReviewsWall.jsx";
 import BlogsMedia from "../components/newComponents/blogsSection/blogsMedia.js";
 import CtaForHome from '../components/detailSections/ctaForHome.js'
 import PremiumPropertyMainComponent from "../components/newComponents/premiumPicks/PremiumPropertyMainComponent.jsx";
@@ -88,9 +88,9 @@ function Home({allData}) {
       <BlogsMedia />
       <StatisticalInsightsSection />
       <ImageGallerySection />
-      <ClientTestimonySection />
-      
-   
+      <ReviewsWall current={allData.testimonial} />
+
+
       <CtaForHome name={'Form Submitted from Home page'} />
     </Wrapper>
   );

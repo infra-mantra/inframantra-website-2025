@@ -1,58 +1,126 @@
-import React, { useState, useEffect } from "react";
-import ImageGallery from "./imageGallery.js";
-import Masonry from "./masonryGallery.jsx";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./imageGallerySection.module.css";
 
+const CDN = "https://inframantra.blr1.cdn.digitaloceanspaces.com";
+
+const AUTOPLAY_MS = 3600;
+
+/* Real moments at Inframantra, shown as an interactive expanding-panel gallery
+   with a scroll-triggered staggered entrance and a story-style progress bar. */
+const itemData = [
+  { img: `${CDN}/homePageImageGallery/IMG_2514-min.webp`, caption: "Celebrating our milestones" },
+  { img: `${CDN}/aboutus-page-awards/a1.jpg`, caption: "Award-winning service" },
+  { img: `${CDN}/homePageImageGallery/IMG_4972-min.webp`, caption: "Felicitated by leadership" },
+  { img: `${CDN}/homePageImageGallery/inframantra%202.4.avif`, caption: "One team, one vision" },
+  { img: `${CDN}/homePageImageGallery/IMG_5639-min.webp`, caption: "Festivities at the office" },
+  { img: `${CDN}/aboutus-page-awards/a2.jpg`, caption: "Honoured for performance" },
+];
+
 const ImageGallerySection = () => {
-  const [isDesktop, setIsDesktop] = useState(true);
-  const [isMobile, setIsMobile] = useState(true);
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [inView, setInView] = useState(false);
+  const ref = useRef(null);
 
-  const checkScreenWidth = () => {
-    setIsDesktop(window.innerWidth >= 769);
-    setIsMobile(window.innerWidth <= 768);
-  };
-
+  // Gentle auto-play so the gallery is alive on load and on touch devices.
   useEffect(() => {
-    checkScreenWidth();
-    window.addEventListener("resize", checkScreenWidth);
+    if (paused) return undefined;
+    const id = setInterval(
+      () => setActive((a) => (a + 1) % itemData.length),
+      AUTOPLAY_MS
+    );
+    return () => clearInterval(id);
+  }, [paused]);
 
-    return () => {
-      window.removeEventListener("resize", checkScreenWidth);
-    };
+  // Reveal panels with a staggered entrance once the section scrolls into view.
+  useEffect(() => {
+    if (typeof window === "undefined" || !("IntersectionObserver" in window)) {
+      setInView(true);
+      return undefined;
+    }
+    const el = ref.current;
+    if (!el) return undefined;
+    const ob = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setInView(true);
+          ob.disconnect();
+        }
+      },
+      { threshold: 0.15 }
+    );
+    ob.observe(el);
+    return () => ob.disconnect();
   }, []);
 
   return (
-    <section className={styles.imageGallerySectionContainer}>
-      <div className={styles.imageGalleryHeaderFlex}>
-        <h2 className={styles.imageGalleryContainerHeader}>
-          Frames of Excellence{" "}
-        </h2>
-         <p style={{ color: "#000000ff" }}>Where vision meets reality at Inframantra</p>
-      </div>
-      <div className={styles.imageWrapperFlex}>
-      <Masonry images={itemData} columns={isDesktop ? 2 : 2} gap={8} />
+    <section
+      ref={ref}
+      className={`${styles.gallery} ${inView ? styles.in : ""}`}
+    >
+      <span className={styles.glowA} aria-hidden="true" />
+      <span className={styles.glowB} aria-hidden="true" />
+
+      <div className={styles.inner}>
+        <div className={styles.header}>
+          <span className={styles.eyebrow}>
+            <span className={styles.eyebrowDot} />
+            Life at Inframantra
+          </span>
+          <h2 className={styles.title}>
+            Frames of <span>Excellence</span>
+          </h2>
+          <p className={styles.subtitle}>
+            Where vision meets reality — the moments, milestones and people
+            behind every home we deliver.
+          </p>
+        </div>
+
+        <div
+          className={`${styles.accordion} ${paused ? styles.paused : ""}`}
+          onMouseLeave={() => setPaused(false)}
+        >
+          {itemData.map((it, i) => (
+            <figure
+              key={i}
+              className={`${styles.panel} ${i === active ? styles.active : ""}`}
+              style={{ animationDelay: `${0.12 + i * 0.09}s` }}
+              onMouseEnter={() => {
+                setActive(i);
+                setPaused(true);
+              }}
+              onClick={() => setActive(i)}
+            >
+              <img
+                src={it.img}
+                alt={it.caption}
+                loading="lazy"
+                className={styles.panelImg}
+              />
+              <span className={styles.scrim} aria-hidden="true" />
+              <span className={styles.shine} aria-hidden="true" />
+              <span className={styles.ring} aria-hidden="true" />
+
+              <span className={styles.vLabel} aria-hidden="true">
+                <span>{it.caption}</span>
+              </span>
+
+              <figcaption className={styles.label}>
+                <span className={styles.index}>
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className={styles.labelText}>{it.caption}</span>
+              </figcaption>
+
+              {i === active && (
+                <span key={active} className={styles.progress} aria-hidden="true" />
+              )}
+            </figure>
+          ))}
+        </div>
       </div>
     </section>
   );
 };
 
 export default ImageGallerySection;
-
-const itemData = [
-  {
-    img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/IMG_2514-min.webp",
-    alt: "Shweta's Birthday Celebration, 2019"
-  },
-  {
-    img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/IMG_4972-min.webp",
-    alt: "Award recognition by leadership"
-  },
-  {
-    img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/IMG_5639-min.webp",
-    alt: "Festive decoration at office"
-  },
-  {
-    img: "https://inframantra.blr1.cdn.digitaloceanspaces.com/homePageImageGallery/2.avif",
-    alt: "Office team group photo with certificates"
-  }
-];
