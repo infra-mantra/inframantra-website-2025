@@ -15,25 +15,25 @@ function StatisticalInsightsSection() {
       title: "Properties Operated",
       icon: <FaBuilding />,
       end: "515",
-      duration: "10",
+      duration: 2.2,
     },
     {
       title: "Amazing Team Members",
       icon: <GrGroup />,
       end: "138",
-      duration: "10",
+      duration: 2.2,
     },
     {
       title: "Happy Customers",
       icon: <FaRegLaugh />,
       end: "2493",
-      duration: "10",
+      duration: 2.2,
     },
     {
       title: "Total Sq. Ft.",
       icon: <MdSquareFoot />,
       end: "18153396",
-      duration: "10",
+      duration: 2.2,
     },
    
   ]);
@@ -60,7 +60,7 @@ function StatisticalInsightsSection() {
       {
         root: null,
         rootMargin: "0px",
-        threshold: 0.5,
+        threshold: 0.35,
       }
     );
 
@@ -81,19 +81,22 @@ function StatisticalInsightsSection() {
         {homePageInsightsSection.map((val, index) => (
           <div
             ref={(el) => (refEntries.current[index] = el)}
-            className={styles.statisticalInsightsContainer}
+            className={`${styles.statisticalInsightsContainer} ${
+              isVisible[index] ? styles.in : ""
+            }`}
+            style={{ animationDelay: `${index * 0.12}s` }}
             key={index}
           >
-            <div style={{ fontSize: "40px", color: "#E7B554" }}>
-              {val.icon}
+            <div className={styles.statIcon}>{val.icon}</div>
+            <div className={styles.statText}>
+              <StatisticalInsight
+                suffix={val.suffix}
+                end={val.end}
+                duration={val.duration}
+                isVisible={isVisible[index]}
+              />
+              <div className={styles.statisticalInsightTitle}>{val.title}</div>
             </div>
-            <StatisticalInsight
-              suffix={val.suffix}
-              end={val.end}
-              duration={val.duration}
-              isVisible={isVisible[index]}
-            />
-            <div className={styles.statisticalInsightTitle}>{val.title}</div>
           </div>
         ))}
       </div>

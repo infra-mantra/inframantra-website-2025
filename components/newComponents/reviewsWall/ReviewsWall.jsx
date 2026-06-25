@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { FaStar } from "react-icons/fa";
+import { FaStar,FaStarHalfAlt } from "react-icons/fa";
 import styles from "./reviewsWall.module.css";
 import { currentReviews } from "./currentReviews";
 import { staticGoogleReviews } from "./googleReviews";
@@ -35,7 +35,9 @@ function Stars({ n = 5 }) {
 /* Fractional stars — e.g. 4.8 renders 4 full + ~0.8 of the 5th star. */
 function RatingStars({ value = 4.4 }) {
   const pct = Math.max(0, Math.min(100, (value / 5) * 100));
-  const row = Array.from({ length: 5 }).map((_, i) => <FaStar key={i} />);
+const row = Array.from({ length: 5 }).map((_, i) =>
+  i === 4 ? <FaStarHalfAlt key={i} /> : <FaStar key={i} />
+); 
   return (
     <span
       className={styles.ratingStars}

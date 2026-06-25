@@ -5,7 +5,7 @@
 .gallery {
   position: relative;
   width: 100%;
-  padding: 70px 6% 84px;
+  padding: 70px 4% 84px;
   box-sizing: border-box;
   background: linear-gradient(180deg, #ffffff 0%, #fbf7ee 55%, #ffffff 100%);
   overflow: hidden;
@@ -38,7 +38,7 @@
 .inner {
   position: relative;
   z-index: 1;
-  max-width: 1280px;
+  max-width: 1560px;
   margin: 0 auto;
 }
 
@@ -143,22 +143,38 @@
   box-shadow: 0 22px 50px rgba(40, 32, 12, 0.22);
 }
 
-.panelImg {
+/* Blurred fill so the slim panels look full while the sharp image is never
+   cropped. Sits behind the contained foreground image. */
+.panelBg {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 5s linear, filter 0.6s ease;
-  filter: saturate(1) brightness(0.82) grayscale(0.12);
-  transform: scale(1.02);
+  filter: blur(24px) brightness(0.5) saturate(1.15);
+  transform: scale(1.25);
+  transition: transform 6s linear;
+}
+
+.panel.active .panelBg {
+  transform: scale(1.4);
+}
+
+/* Foreground = the full photo, contained so it is NEVER trimmed left/right */
+.panelImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  transition: filter 0.6s ease;
+  filter: saturate(1) brightness(0.88);
 }
 
 .panel.active .panelImg {
-  /* Slow Ken-Burns drift while a panel is open */
-  transform: scale(1.1);
-  filter: saturate(1.06) brightness(1.02) grayscale(0);
+  filter: saturate(1.06) brightness(1.03);
 }
 
 /* Legibility scrim */
@@ -353,35 +369,41 @@
     margin-bottom: 30px;
   }
   .title {
-    font-size: 28px;
+    font-size: 30px;
   }
   .subtitle {
     font-size: 14.5px;
   }
+  /* Keep the SAME expanding-accordion design as desktop, just shorter */
   .accordion {
-    flex-direction: column;
-    height: auto;
-    gap: 12px;
+    height: 360px;
+    gap: 8px;
   }
-  .panel,
-  .panel.active {
-    flex-grow: 0;
-    height: 210px;
-  }
-  .panel.active .panelImg {
-    transform: scale(1.04);
-  }
-  .vLabel {
-    display: none;
+  .vLabel span {
+    font-size: 11px;
+    letter-spacing: 0.4px;
   }
   .label {
-    opacity: 1;
-    transform: none;
+    padding: 16px 14px 14px;
   }
-  .panel.active .ring {
-    box-shadow: inset 0 0 0 2px rgba(231, 181, 84, 0.85);
+  .index {
+    font-size: 11px;
+    padding: 4px 7px;
   }
   .labelText {
-    font-size: 14.5px;
+    font-size: 13.5px;
+  }
+}
+
+@media (max-width: 420px) {
+  .title {
+    font-size: 26px;
+  }
+  .accordion {
+    height: 320px;
+    gap: 6px;
+  }
+  .labelText {
+    font-size: 12.5px;
   }
 }

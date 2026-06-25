@@ -8,12 +8,12 @@ const AUTOPLAY_MS = 3600;
 /* Real moments at Inframantra, shown as an interactive expanding-panel gallery
    with a scroll-triggered staggered entrance and a story-style progress bar. */
 const itemData = [
-  { img: `${CDN}/homePageImageGallery/IMG_2514-min.webp`, caption: "Celebrating our milestones" },
-  { img: `${CDN}/aboutus-page-awards/a1.jpg`, caption: "Award-winning service" },
-  { img: `${CDN}/homePageImageGallery/IMG_4972-min.webp`, caption: "Felicitated by leadership" },
-  { img: `${CDN}/homePageImageGallery/inframantra%202.4.avif`, caption: "One team, one vision" },
-  { img: `${CDN}/homePageImageGallery/IMG_5639-min.webp`, caption: "Festivities at the office" },
-  { img: `${CDN}/aboutus-page-awards/a2.jpg`, caption: "Honoured for performance" },
+  { img: `${CDN}/homePageImageGallery/IMG_2514-min.webp`, caption: "Celebrating our milestones" }, // was 01
+  { img: `${CDN}/homePageImageGallery/IMG_5639-min.webp`, caption: "Festivities at the office" }, // was 05
+  { img: `${CDN}/aboutus-page-awards/a1.jpg`, caption: "Award-winning service" }, // was 02
+  { img: `${CDN}/aboutus-page-awards/a2.jpg`, caption: "Honoured for performance" }, // was 06
+  { img: `${CDN}/aboutus-page-awards/a3.jpg`, caption: "Recognised as The Champions" }, // was 03 (award image)
+  { img: `${CDN}/aboutus-page-awards/a1.jpg`, caption: "Celebrating our achievements" }, // was 04 (award image)
 ];
 
 const ImageGallerySection = () => {
@@ -65,7 +65,7 @@ const ImageGallerySection = () => {
         <div className={styles.header}>
           <span className={styles.eyebrow}>
             <span className={styles.eyebrowDot} />
-            Life at Inframantra
+            Moments &amp; Milestones
           </span>
           <h2 className={styles.title}>
             Frames of <span>Excellence</span>
@@ -91,6 +91,13 @@ const ImageGallerySection = () => {
               }}
               onClick={() => setActive(i)}
             >
+              <img
+                src={it.img}
+                alt=""
+                aria-hidden="true"
+                loading="lazy"
+                className={styles.panelBg}
+              />
               <img
                 src={it.img}
                 alt={it.caption}

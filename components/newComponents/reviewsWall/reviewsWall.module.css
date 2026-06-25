@@ -86,7 +86,7 @@
 
 .ratingStarsBase,
 .ratingStarsFill {
-  display: inline-flex;
+
   gap: 3px;
   font-size: 18px;
   line-height: 1;
