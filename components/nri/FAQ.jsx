@@ -114,7 +114,7 @@ const FAQ = ({name}) => {
         onClickOff={onClickOff}
         text="TO UNLOCK EXCLUSIVE DEALS"
         name={name}
-        phone="+1 (213) 6575060"
+        phone="+91 86 9800 9900"
         id="nriFaq"
         countryCode='us'
         />

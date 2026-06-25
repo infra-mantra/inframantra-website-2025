@@ -443,7 +443,7 @@ const RegistrationForm = ({
           </labelR>
 
           <PhoneInput
-            country={"us"}
+            country={"in"}
             value={formData.mobile}
             onChange={handlePhoneChange}
             inputProps={{

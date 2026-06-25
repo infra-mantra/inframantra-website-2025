@@ -238,8 +238,7 @@ function App({ name, displayMap = true, countryCode = "in" }) {
               </div>
 
               <p>
-                +91 86 9800 9900,
-                +1 (213) 6575060
+                +91 86 9800 9900
               </p>
 
             </div>

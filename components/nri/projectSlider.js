@@ -362,9 +362,9 @@ export default function ProjectsSection({ name }) {
         onClickOff={onClickOff}
         text="TO UNLOCK EXCLUSIVE DEALS"
         name={name}
-        phone="+1 (213) 6575060"
+        phone="+91 86 9800 9900"
         id="nriProject"
-        countryCode="us"
+        countryCode="in"
       />
 
       {hasMore && (
