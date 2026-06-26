@@ -102,8 +102,8 @@ function LoanEligibilityPage() {
 
         <LeadForm
           projectName="Calculators - Loan Eligibility"
-          heading="Want a higher loan eligibility?"
-          sub="Our advisors help structure your application — co-applicants, the right lender and tenure — to maximise the loan you qualify for. Free, no obligation."
+          heading="Found your number? Let's find the home."
+          sub="Our advisors help you find a RERA-approved property that fits your budget, and offer home loan assistance with options from top lenders and the documentation. Free, no obligation."
         />
 
         <RelatedCalculators exclude="loan-eligibility" />

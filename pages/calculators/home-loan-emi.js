@@ -102,8 +102,8 @@ function HomeLoanEmiPage() {
 
         <LeadForm
           projectName="Calculators - Home Loan EMI"
-          heading="Get the lowest home loan rate"
-          sub="Our advisors compare lenders to get you the best interest rate and handle the paperwork — at no cost to you."
+          heading="Need help with your home loan?"
+          sub="Alongside finding you the right property, our advisors offer home loan assistance — connecting you with options from top lenders and helping with the documentation, at no cost to you."
         />
 
         <RelatedCalculators exclude="home-loan-emi" />
