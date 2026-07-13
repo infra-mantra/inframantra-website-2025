@@ -6,12 +6,12 @@ export const CITY_MAP = {
   'delhi': 'Delhi',
   'new delhi': 'Delhi',
   'noida': 'Noida',
-  'bengaluru': 'Bangalore',
-  'bangalore': 'Bangalore'
+  'mohali': 'Mohali',
+ 
 };
 
 // Removed Delhi and Bangalore
-export const AVAILABLE_CITIES = ['Gurgaon', 'Pune', 'Jaipur', 'Noida'];
+export const AVAILABLE_CITIES = ['Gurgaon','Mohali', 'Pune', 'Jaipur', 'Noida', ];
 
 export function normalizeCity(inputCity) {
   if (!inputCity) return null;
@@ -26,8 +26,10 @@ export function getApiCityName(city) {
   const apiCityMap = {
     'Gurgaon': 'Gurgaon',
     'Pune': 'Pune',
+    'Mohali': 'Mohali',
     'Jaipur': 'Jaipur',
-    'Noida': 'Noida'
+    'Noida': 'Noida',
+  
   };
   
   return apiCityMap[city] || city;

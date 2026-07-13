@@ -6,6 +6,10 @@
 
 export const staticGoogleReviews = [
   {
+    name: "Ashish Dhandhania",
+    text: "A note for Suchita, the CRM who I felt is very genuine in her approach — I have been very happy with your honest services. You have been the sole reason I stuck with Vatika Seven Elements, rather than withdrawing my money. It was a challenge initially due to a collaborative unit and a potential title issue, but your honest suggestions gave me a lot of comfort and helped me find a way to proceed. Your constant connect and updates really helped. A true customer support — I really appreciate the work.",
+  },
+  {
     name: "Yuvraj Singh Rana",
     text: "Inframantra is a highly reliable and client-focused real estate consultancy that truly stands out for its commitment to trust and transparency. What makes the company exceptional is its genuine approach toward helping clients make the right decision.",
   },

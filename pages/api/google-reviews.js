@@ -68,9 +68,17 @@ export default async function handler(req, res) {
       return res.status(200).json(empty(`api-${dj?.status || "unknown"}`));
     }
 
+    // The home-page wall is a curated testimonials showcase, so it displays
+    // only strongly-positive reviews (4★+). NOTE: the headline `rating` and
+    // `total` below are left as Google's real, un-curated numbers so the
+    // aggregate stays truthful — we curate which review CARDS are featured,
+    // we do not misrepresent the overall score.
+    const MIN_RATING = 4;
+
     const result = dj.result || {};
     const reviews = (result.reviews || [])
       .filter((r) => r && r.text && r.text.trim().length > 0)
+      .filter((r) => Math.round(r.rating || 5) >= MIN_RATING)
       .map((r, i) => ({
         id: `g-${r.time || i}`,
         name: r.author_name || "Google User",

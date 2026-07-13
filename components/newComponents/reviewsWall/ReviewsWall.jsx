@@ -136,6 +136,10 @@ function ReviewsWall({ current = [] }) {
     const merged = [];
     [...currentReviews, ...googleData, ...fromProp].forEach((r) => {
       if (!r || !r.text) return;
+      // Safety net: the testimonials wall only features strongly-positive
+      // reviews (4★+). The honest aggregate rating/count still comes from
+      // Google (gMeta) and is shown as-is.
+      if ((r.rating ?? 5) < 4) return;
       const k = (r.source + "|" + String(r.name) + "|" + String(r.text).slice(0, 60)).toLowerCase();
       if (seen.has(k)) return;
       seen.add(k);
@@ -162,7 +166,7 @@ function ReviewsWall({ current = [] }) {
         <div className={styles.left}>
           <span className={styles.eyebrow}>Testimonials</span>
           <h2 className={styles.heading}>
-            {totalText} Homebuyers Rely on <span>Inframantra</span>
+            2093+ Homebuyers Rely on <span>Inframantra</span>
           </h2>
           <div className={styles.ratingRow}>
             <RatingStars value={ratingValue} />

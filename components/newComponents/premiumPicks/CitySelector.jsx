@@ -5,9 +5,12 @@ export default function CitySelector({ selectedCity, onCityChange }) {
 
   const cityDisplayNames = {
     Gurgaon: 'Gurugram',
+    Mohali: 'Mohali',
     Pune: 'Pune',
     Jaipur: 'Jaipur',
     Noida: 'Noida',
+
+
   };
 
   return (
