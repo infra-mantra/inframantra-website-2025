@@ -18,6 +18,9 @@ html, body {
 html.has-scroll-smooth {
 
 }
+.wp-block-list {
+  list-style-type:var(--dark);
+}
 
 .image-gallery-slides{
   width: 75vw;
