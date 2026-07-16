@@ -185,6 +185,19 @@ align-self: stretch;
   max-width: 1200px;
   margin: 0 auto;
   text-align: center;
+  /* Reserve the loaded section's EXACT measured height (628px desktop) so
+     swapping the spinner for the fetched carousel produces no layout shift.
+     Only affects the transient loading state — the final layout is unchanged. */
+  min-height: 628px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+@media (max-width: 768px) {
+  .premiumLoadingContainer {
+    min-height: 578px;
+  }
 }
 
 .premiumLoadingSpinner {

@@ -80,6 +80,19 @@ const BannerVideo = () => {
       {/* 🔴 BACKGROUND */}
       <div className={styles.demoBanner}>
         <div className={styles.slideshow}>
+          {/* Static base = first slide, always painted (stable LCP anchor).
+              Decorative; the rotating slides below carry the alt text + clicks. */}
+          <picture aria-hidden="true">
+            <source media="(max-width: 768px)" srcSet={images[0].mobile} />
+            <img
+              src={images[0].desktop}
+              alt=""
+              className={styles.slideBase}
+              draggable="false"
+              loading="eager"
+              fetchpriority="high"
+            />
+          </picture>
           {images.map((img, index) => (
             <picture key={index}>
               <source media="(max-width: 768px)" srcSet={img.mobile} />
@@ -88,7 +101,8 @@ const BannerVideo = () => {
                 alt={img.alt}
                 className={`${styles.slideImage} ${slides[index].className}`}
                 draggable="false"
-                loading='lazy'
+                loading={index === 0 ? 'eager' : 'lazy'}
+                fetchpriority={index === 0 ? 'high' : 'low'}
               />
             </picture>
           ))}

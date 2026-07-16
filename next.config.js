@@ -43,6 +43,18 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
 
+  // Skip per-page file-tracing (.nft.json). It's only needed for standalone/
+  // serverless output — not for a normal `next start` deploy — and on Windows
+  // it opens thousands of @mui/icons-material files at once, causing EMFILE.
+  outputFileTracing: false,
+
+  // Inline above-the-fold critical CSS and defer the rest (via critters). This
+  // removes the render-blocking CSS chain that was gating FCP/LCP and causing
+  // the hero banner's late layout shift — same rendered result, applied sooner.
+  experimental: {
+    optimizeCss: true,
+  },
+
   images: {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     minimumCacheTTL: 63072000,

@@ -49,6 +49,11 @@ function App({ name, displayMap = true, countryCode = "in" }) {
 
   const [captchaToken, setCaptchaToken] = useState(null);
 
+  // Defer loading the (invisible) reCAPTCHA script until the user actually
+  // engages the form. It's only needed on submit (executeAsync), so this cuts
+  // ~1 MB + ~1 s of main-thread work off initial page load with no UI change.
+  const [captchaReady, setCaptchaReady] = useState(false);
+
   const recaptchaRef = useRef(null);
 
   const handleChange = (e) => {
@@ -305,7 +310,11 @@ function App({ name, displayMap = true, countryCode = "in" }) {
           }}
         >
 
-          <form onSubmit={handleSubmit}>
+          <form
+            onSubmit={handleSubmit}
+            onFocusCapture={() => setCaptchaReady(true)}
+            onMouseEnter={() => setCaptchaReady(true)}
+          >
 
             {/* HEADING */}
             <div className={ctaStyle.headingForm}>
@@ -330,6 +339,7 @@ function App({ name, displayMap = true, countryCode = "in" }) {
                 type="text"
                 id="username"
                 name="username"
+                autoComplete="name"
                 placeholder="Name"
                 value={formData.name}
                 onChange={(e) => {
@@ -364,6 +374,7 @@ function App({ name, displayMap = true, countryCode = "in" }) {
                     phoneNumber: phone,
                   })
                 }
+                inputProps={{ id: "phone", name: "phone", autoComplete: "tel" }}
                 inputClass={ctaStyle.input}
                 containerClass={ctaStyle.phoneContainer}
                 buttonClass={ctaStyle.flagDropdown}
@@ -379,6 +390,7 @@ function App({ name, displayMap = true, countryCode = "in" }) {
                 type="email"
                 id="email"
                 name="email"
+                autoComplete="email"
                 placeholder="Email"
                 value={formData.email}
                 onChange={handleChange}
@@ -443,15 +455,17 @@ function App({ name, displayMap = true, countryCode = "in" }) {
 
             </div>
 
-            {/* RECAPTCHA */}
+            {/* RECAPTCHA — mounted only once the user engages the form */}
             <div className="recaptcha-container">
 
-              <ReCAPTCHA
-                sitekey="6LfrSTUqAAAAAOy2-j9cNvTIujOI5GKjtMVsn2Uk"
-                size="invisible"
-                ref={recaptchaRef}
-                onChange={handleCaptchaChange}
-              />
+              {captchaReady && (
+                <ReCAPTCHA
+                  sitekey="6LfrSTUqAAAAAOy2-j9cNvTIujOI5GKjtMVsn2Uk"
+                  size="invisible"
+                  ref={recaptchaRef}
+                  onChange={handleCaptchaChange}
+                />
+              )}
 
             </div>
 

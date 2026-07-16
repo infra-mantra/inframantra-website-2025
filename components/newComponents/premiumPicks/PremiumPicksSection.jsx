@@ -25,7 +25,7 @@ export default function PremiumPicksSection({
   const router = useRouter();
 
   const handleCityChange = (city) => {
-    console.log('Selected City:', city);
+  
     onUpdate(city);
   };
 

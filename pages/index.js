@@ -3,15 +3,20 @@ import React, {useState, useEffect, lazy } from "react";
 
 
 import Wrapper from "../components/UI/Wrapper";
+import Head from "next/head";
+import dynamic from "next/dynamic";
 import moment from "moment/moment";
 import MainBanner1 from '../components/newComponents/homepage/MainBanner.js';
-import FeaturedProperties from '../components/newComponents/featuredProperties/featuredProperties'
-import StatisticalInsightsSection from "../components/newComponents/statisticalInsights/staticalInsight";
-import ImageGallerySection from "../components/newComponents/imageGallery/imageGallerySection";
-import ReviewsWall from "../components/newComponents/reviewsWall/ReviewsWall.jsx";
-import BlogsMedia from "../components/newComponents/blogsSection/blogsMedia.js";
-import CtaForHome from '../components/detailSections/ctaForHome.js'
 import PremiumPropertyMainComponent from "../components/newComponents/premiumPicks/PremiumPropertyMainComponent.jsx";
+
+// Below-the-fold sections: code-split into their own chunks. SSR stays on
+// (default for next/dynamic), so the server HTML, layout and SEO are identical
+// — this only shrinks the initial JS the browser must parse/execute up front.
+const StatisticalInsightsSection = dynamic(() => import("../components/newComponents/statisticalInsights/staticalInsight"));
+const ImageGallerySection = dynamic(() => import("../components/newComponents/imageGallery/imageGallerySection"));
+const ReviewsWall = dynamic(() => import("../components/newComponents/reviewsWall/ReviewsWall.jsx"));
+const BlogsMedia = dynamic(() => import("../components/newComponents/blogsSection/blogsMedia.js"));
+const CtaForHome = dynamic(() => import("../components/detailSections/ctaForHome.js"));
 
 
 function Home({allData}) {
@@ -83,6 +88,24 @@ function Home({allData}) {
       keyword={'InfraMantra, Residential Properties, Commercial Properties,  Apartments, Flats, Buy flat in gurgaon, buy property in gurgaon,gurgaon property prices, Apartments for sale in gurugram, buy apartment in gurgaon, buy Properties in gurgaon, real estate in gurgaon, best property to buy in gurgaon, noida   apartment for sale, Pune property prices, buy property noida, buy residential property in pune, Property for purchase in gurugram'}
       selectedItem={selectedItems}
     >
+      <Head>
+        {/* Preload the LCP hero image so it downloads immediately (matches the
+            <picture> in the banner: desktop vs mobile source). */}
+        <link
+          rel="preload"
+          as="image"
+          href="https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/whiteland-b.webp"
+          media="(min-width: 769px)"
+          fetchpriority="high"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/WESTIN-mobile.webp"
+          media="(max-width: 768px)"
+          fetchpriority="high"
+        />
+      </Head>
       <MainBanner1 />
       <PremiumPropertyMainComponent/>
       <BlogsMedia />

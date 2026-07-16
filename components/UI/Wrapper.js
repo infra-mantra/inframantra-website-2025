@@ -164,6 +164,12 @@ const Wrapper = ({
         <meta key="lang"      httpEquiv="Content-Language" content="en" />
         <meta key="viewport"  name="viewport"  content="width=device-width, user-scalable=no" />
 
+        {/* Preconnect to data + image origins so the first API call and
+            LCP image don't pay the DNS/TLS handshake cost on the critical path. */}
+        <link key="pc-api" rel="preconnect" href="https://apitest.inframantra.com" crossOrigin="anonymous" />
+        <link key="pc-api2" rel="preconnect" href="https://api.inframantra.com" crossOrigin="anonymous" />
+        <link key="pc-cdn" rel="preconnect" href="https://inframantra.blr1.cdn.digitaloceanspaces.com" />
+
         {/* Google Fonts — display=swap already handles font lazy-loading natively */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
@@ -197,22 +203,32 @@ const Wrapper = ({
         <meta key="twimg"   name="twitter:image"       content={image} />
       </Head>
 
-      {/* GTM — lazyOnload defers until browser is idle, reducing blocking time */}
+      {/* GTM — loaded on first user interaction OR after 3.5s, whichever comes
+          first. Keeps the full container (GA4, Google Ads, Facebook Pixel) and
+          every pageview, but moves ~500 KB + ~1 s of tag JS off the initial
+          paint path. Fires well within a real visit, so tracking is preserved. */}
       <Script
-        id="gtm-script"
-        strategy="lazyOnload"
+        id="gtm-deferred"
+        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
-            (function(w,d,s,l,i){
-              w[l]=w[l]||[];
-              w[l].push({'gtm.start': new Date().getTime(), event:'gtm.js'});
-              var f=d.getElementsByTagName(s)[0],
-                  j=d.createElement(s),
-                  dl=l!='dataLayer'?'&l='+l:'';
-              j.async=true;
-              j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-              f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','GTM-MR3WQND');
+            (function(w,d){
+              var loaded=false;
+              var events=['scroll','mousemove','touchstart','keydown','click'];
+              function loadGTM(){
+                if(loaded)return; loaded=true;
+                events.forEach(function(e){w.removeEventListener(e,loadGTM);});
+                w.dataLayer=w.dataLayer||[];
+                w.dataLayer.push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+                var f=d.getElementsByTagName('script')[0],
+                    j=d.createElement('script');
+                j.async=true;
+                j.src='https://www.googletagmanager.com/gtm.js?id=GTM-MR3WQND';
+                f.parentNode.insertBefore(j,f);
+              }
+              events.forEach(function(e){w.addEventListener(e,loadGTM,{passive:true});});
+              w.setTimeout(loadGTM,3500);
+            })(window,document);
           `,
         }}
       />

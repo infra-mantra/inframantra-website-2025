@@ -32,7 +32,6 @@ function FeaturedBlogs({ blogs, PRS }) {
       window.removeEventListener("resize", handleResize);
     };
   }, [blogs]);
-  console.log("PRS->>>>>>>>",PRS)
 
   // Update background image, title, and link when clicking on a story card
   const handleStoryClick = (image, title, slug, index = null) => {
