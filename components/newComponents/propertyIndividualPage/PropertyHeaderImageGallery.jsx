@@ -48,7 +48,6 @@ function PropertyHeaderImageGallery({
   const handleFormSubmit = (e) => {
     e.preventDefault();
     // TODO: wire this to your API / Ajax1 call
-    console.log("Enquiry submitted:", form);
   };
   // ----------------------------------------------------------------------------------
 

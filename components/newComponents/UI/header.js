@@ -109,7 +109,6 @@ function NavigationBar({ pageBgd, onlyLogo = false, logoUrl }) {
       : 'transparent',
   };
 
-  console.log(onlyLogo,"%%%%%%%%%%")
 
   // ONLY LOGO MODE
   if (onlyLogo) {

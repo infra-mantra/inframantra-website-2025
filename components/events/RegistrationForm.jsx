@@ -222,11 +222,7 @@ const RegistrationForm = ({
         data: payload,
       });
 
-      console.log(
-        "API Response:",
-        response
-      );
-
+  
       /* ============================================
          RESET FORM
          ============================================ */

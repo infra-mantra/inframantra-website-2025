@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
-import dynamic from "next/dynamic";
-
-const Wrapper = dynamic(() => import("../../components/UI/Wrapper"), { ssr: false });
+// Wrapper renders the <Head> (title/meta). It MUST be a static import so it
+// server-renders — a dynamic({ ssr:false }) import kept the title out of the
+// page source / away from crawlers.
+import Wrapper from "../../components/UI/Wrapper";
 
 import PropertyHeaderImageGallery from "../../components/newComponents/propertyIndividualPage/PropertyHeaderImageGallery";
 import PropertyHeader from "../../components/newComponents/propertyIndividualPage/propertyHeaderContent";

@@ -4,8 +4,7 @@ const Ajax1 = async (action) => {
 
     try {
 
-        console.log(process.env.apiUrl1 + action.url);
-        console.log("REQUEST:", action);
+      
 
         // ============================================
         // GET SOURCE FROM LOCALSTORAGE

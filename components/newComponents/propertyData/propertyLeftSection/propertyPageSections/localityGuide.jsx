@@ -34,7 +34,6 @@ export const getIcon = (title, selected) => {
     return <FaBuildingUser color={color} size={size} />;
   }
    else {
-    console.warn(`No matching icon for title: ${title}`);
     return <span style={{ color: '#C5C5C5', fontSize: '1.5em' }}>?</span>;
   }
 };

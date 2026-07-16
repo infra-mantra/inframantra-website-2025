@@ -133,7 +133,6 @@ function StickyProperty({
         token: false,
       };
 
-      console.log('form-data',formData)
 
       const response =
         await Ajax1(action);

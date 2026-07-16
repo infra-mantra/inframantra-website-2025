@@ -33,7 +33,6 @@ function PropertyListingCardMobile({ propertyData = [], onOpenBackdrop, currentP
 
   };
 
-  console.log("$$$$$$$$",propertyData)
 
   // Ensure safe slicing even if data is invalid
   const safeProperties = Array.isArray(fetchedProperties) ? fetchedProperties : [];
