@@ -7,7 +7,20 @@ import Head from "next/head";
 import dynamic from "next/dynamic";
 import moment from "moment/moment";
 import MainBanner1 from '../components/newComponents/homepage/MainBanner.js';
-import PremiumPropertyMainComponent from "../components/newComponents/premiumPicks/PremiumPropertyMainComponent.jsx";
+
+// Premium Picks is the ONLY eager Swiper consumer on the homepage, and it renders
+// nothing but a loading spinner on the server anyway (its data is fetched
+// client-side via axios). Deferring it with ssr:false pulls Swiper + its whole
+// subtree out of the initial JS/hydration path — the biggest single TBT win here.
+// The placeholder reserves the section's exact height (628/578px) so there is no
+// layout shift when the chunk mounts.
+const PremiumPropertyMainComponent = dynamic(
+  () => import("../components/newComponents/premiumPicks/PremiumPropertyMainComponent.jsx"),
+  {
+    ssr: false,
+    loading: () => <div className="homePremiumPlaceholder" aria-hidden="true" />,
+  }
+);
 
 // Below-the-fold sections: code-split into their own chunks. SSR stays on
 // (default for next/dynamic), so the server HTML, layout and SEO are identical

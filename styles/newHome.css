@@ -4,6 +4,18 @@ a:link{text-decoration:none}
   display: none;
 }
 
+/* Reserves the exact height of the (client-rendered) Premium Picks section
+   while its code-split chunk loads, so deferring it introduces no layout shift.
+   Matches .premiumLoadingContainer's min-height (628px desktop / 578px mobile). */
+.homePremiumPlaceholder {
+  min-height: 628px;
+}
+@media (max-width: 768px) {
+  .homePremiumPlaceholder {
+    min-height: 578px;
+  }
+}
+
 
 .highlight_image,.text_container{
   flex: 1;
