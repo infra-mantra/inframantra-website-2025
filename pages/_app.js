@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
 import "../styles/globals.css";
 import "../styles/responsive.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -27,7 +28,15 @@ import "../styles/pageHeader.module.css";
 import "../styles/map.css";
 
 import ErrorStack from "./_error.js";
-import PropertyChatbot from "../components/UI/PropertyChatbot.jsx";
+
+// Chatbot is pure post-load interaction — no SEO value, no above-the-fold
+// content. Code-split it (ssr:false) so its ~40 KB of JS + inline styles stay
+// out of the server HTML and the initial hydration bundle. It's mounted only
+// after the page goes idle or the user interacts (see `showChat` below), so it
+// never competes with first paint / LCP on the homepage.
+const PropertyChatbot = dynamic(() => import("../components/UI/PropertyChatbot.jsx"), {
+  ssr: false,
+});
 
 // =====================================================
 // UTM UTILITIES
@@ -110,6 +119,7 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const isHomePage = router.pathname === "/";
   const [isMobile, setIsMobile] = useState(false);
+  const [showChat, setShowChat] = useState(false);
 
   const checkScreenWidth = () => {
     const width = window.innerWidth;
@@ -120,6 +130,19 @@ function MyApp({ Component, pageProps }) {
     checkScreenWidth();
     window.addEventListener("resize", checkScreenWidth);
     return () => window.removeEventListener("resize", checkScreenWidth);
+  }, []);
+
+  // Defer mounting the chatbot until the page is idle or the user interacts,
+  // so its chunk downloads/executes off the critical load path.
+  useEffect(() => {
+    const reveal = () => setShowChat(true);
+    const events = ["scroll", "mousemove", "touchstart", "keydown", "click"];
+    events.forEach((e) => window.addEventListener(e, reveal, { passive: true, once: true }));
+    const t = window.setTimeout(reveal, 2500);
+    return () => {
+      window.clearTimeout(t);
+      events.forEach((e) => window.removeEventListener(e, reveal));
+    };
   }, []);
 
   // STEP 1: Capture UTMs on first load
@@ -144,7 +167,6 @@ function MyApp({ Component, pageProps }) {
     if (Object.keys(utmsFromUrl).length > 0) {
       const merged = Object.assign({}, stored, utmsFromUrl);
       safeSetStored(merged);
-      console.log("[UTM] Captured:", merged);
     }
   }, []);
 
@@ -190,13 +212,14 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <ErrorBoundary>
-      {isMobile ? (
-        <div style={mobileWrapperStyle}>
-          <Component {...pageProps} />
-        </div>
-      ) : (
+      {/* Always keep the same element here (a plain <div>) so toggling the mobile
+          margin never changes the tree shape. Previously this switched between a
+          wrapped and unwrapped <Component>, which made React unmount + remount the
+          entire page after hydration on mobile — throwing away the server-rendered
+          DOM and causing a layout shift. The style is applied conditionally instead. */}
+      <div style={isMobile ? mobileWrapperStyle : undefined}>
         <Component {...pageProps} />
-      )}
+      </div>
 
       <div className={styles.cta_visible}>
         <a href="tel:8698009900">
@@ -243,7 +266,7 @@ function MyApp({ Component, pageProps }) {
         </div>
       </div>
 
-      <PropertyChatbot />
+      {showChat && <PropertyChatbot />}
     </ErrorBoundary>
   );
 }

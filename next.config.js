@@ -56,7 +56,11 @@ const nextConfig = {
   },
 
   images: {
+    // Serve AVIF/WebP; add small widths so tiny card thumbnails aren't sent at
+    // 640px+. This is what cuts the multi-MB "improve image delivery" savings.
+    formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 63072000,
     domains: [
       'infra-mantra.s3.ap-south-1.amazonaws.com',
@@ -66,6 +70,7 @@ const nextConfig = {
       'infra-mantra-new.s3.amazonaws.com',
       'inframantra.blr1.cdn.digitaloceanspaces.com',
       'cms.inframantra.com',
+      'images.unsplash.com',
     ],
   },
 

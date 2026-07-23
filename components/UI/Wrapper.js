@@ -1,14 +1,24 @@
 import Head from 'next/head';
 import Script from 'next/script';
-import { useEffect, useMemo, lazy, Suspense } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import 'react-toastify/dist/ReactToastify.css';
 
-// Lazy-load heavy components — deferred until first render
-const NavigationBar     = lazy(() => import('../newComponents/UI/header'));
-const FooterNavigation  = lazy(() => import('../newComponents/UI/footer'));
-const ToastContainer    = lazy(() =>
-  import('react-toastify').then((m) => ({ default: m.ToastContainer }))
+// The header is above the fold. React.lazy does NOT server-render in the Next.js
+// Pages Router — it emitted only the Suspense fallback in the SSR HTML, so the
+// navbar appeared *after* hydration and its 64px placeholder collapsed into the
+// real 10vh bar (a visible layout shift + delayed FCP). next/dynamic with SSR on
+// (the default) puts the header in the first HTML response instead.
+const NavigationBar = dynamic(() => import('../newComponents/UI/header'));
+
+// Footer + toast are below the fold — keep their JS off the critical path.
+const FooterNavigation = dynamic(() => import('../newComponents/UI/footer'), {
+  ssr: false,
+});
+const ToastContainer = dynamic(
+  () => import('react-toastify').then((m) => m.ToastContainer),
+  { ssr: false }
 );
 
 const Wrapper = ({
@@ -167,7 +177,6 @@ const Wrapper = ({
         {/* Preconnect to data + image origins so the first API call and
             LCP image don't pay the DNS/TLS handshake cost on the critical path. */}
         <link key="pc-api" rel="preconnect" href="https://apitest.inframantra.com" crossOrigin="anonymous" />
-        <link key="pc-api2" rel="preconnect" href="https://api.inframantra.com" crossOrigin="anonymous" />
         <link key="pc-cdn" rel="preconnect" href="https://inframantra.blr1.cdn.digitaloceanspaces.com" />
 
         {/* Google Fonts — display=swap already handles font lazy-loading natively */}
@@ -234,38 +243,27 @@ const Wrapper = ({
       />
 
       <main className="main">
-      
-       <Suspense fallback={<div style={{ height: '64px' }} aria-hidden="true" />}>
-          <NavigationBar
-            selectedItems={props.selectedItem}
-            toggleSelection={props.toggleSelection}
-            pageBgd={router.pathname !== '/'}
-           onlyLogo={onlyLogo}
+        <NavigationBar
+          selectedItems={props.selectedItem}
+          toggleSelection={props.toggleSelection}
+          pageBgd={router.pathname !== '/'}
+          onlyLogo={onlyLogo}
           logoUrl={logoUrl}
+        />
 
-          />
-        </Suspense>
-    
-
-        {/* Page content renders immediately — no Suspense wrapper needed here */}
+        {/* Page content renders immediately */}
         {props.children}
       </main>
 
-      {/* Footer and Toast are below the fold — safe to defer with null fallback */}
-      {!onlyLogo && (   <Suspense fallback={null}>
-        <FooterNavigation />
-      </Suspense>)
-      }
-   
+      {/* Footer and Toast are below the fold — their JS is deferred (ssr:false) */}
+      {!onlyLogo && <FooterNavigation />}
 
-      <Suspense fallback={null}>
-        <ToastContainer
-          position="top-right"
-          autoClose={2000}
-          pauseOnHover
-          theme="light"
-        />
-      </Suspense>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 };
