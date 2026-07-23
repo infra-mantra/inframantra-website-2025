@@ -7,6 +7,7 @@ import Head from "next/head";
 import dynamic from "next/dynamic";
 import moment from "moment/moment";
 import MainBanner1 from '../components/newComponents/homepage/MainBanner.js';
+import LazyOnVisible from "../components/UI/LazyOnVisible";
 
 // Premium Picks is the ONLY eager Swiper consumer on the homepage, and it renders
 // nothing but a loading spinner on the server anyway (its data is fetched
@@ -22,14 +23,15 @@ const PremiumPropertyMainComponent = dynamic(
   }
 );
 
-// Below-the-fold sections: code-split into their own chunks. SSR stays on
-// (default for next/dynamic), so the server HTML, layout and SEO are identical
-// — this only shrinks the initial JS the browser must parse/execute up front.
-const StatisticalInsightsSection = dynamic(() => import("../components/newComponents/statisticalInsights/staticalInsight"));
-const ImageGallerySection = dynamic(() => import("../components/newComponents/imageGallery/imageGallerySection"));
-const ReviewsWall = dynamic(() => import("../components/newComponents/reviewsWall/ReviewsWall.jsx"));
-const BlogsMedia = dynamic(() => import("../components/newComponents/blogsSection/blogsMedia.js"));
-const CtaForHome = dynamic(() => import("../components/detailSections/ctaForHome.js"));
+// Below-the-fold sections: code-split AND deferred (ssr:false). They are wrapped
+// in <LazyOnVisible> in the render tree, so their chunks download + hydrate only
+// when the user scrolls near them — keeping this JS off the initial load, which
+// is where Total Blocking Time (the biggest mobile-score factor) is won.
+const StatisticalInsightsSection = dynamic(() => import("../components/newComponents/statisticalInsights/staticalInsight"), { ssr: false });
+const ImageGallerySection = dynamic(() => import("../components/newComponents/imageGallery/imageGallerySection"), { ssr: false });
+const ReviewsWall = dynamic(() => import("../components/newComponents/reviewsWall/ReviewsWall.jsx"), { ssr: false });
+const BlogsMedia = dynamic(() => import("../components/newComponents/blogsSection/blogsMedia.js"), { ssr: false });
+const CtaForHome = dynamic(() => import("../components/detailSections/ctaForHome.js"), { ssr: false });
 
 
 function Home({allData}) {
@@ -121,13 +123,11 @@ function Home({allData}) {
       </Head>
       <MainBanner1 />
       <PremiumPropertyMainComponent/>
-      <BlogsMedia />
-      <StatisticalInsightsSection />
-      <ImageGallerySection />
-      <ReviewsWall current={allData.testimonial} />
-
-
-      <CtaForHome name={'Form Submitted from Home page'} />
+      <LazyOnVisible minHeight={520}><BlogsMedia /></LazyOnVisible>
+      <LazyOnVisible minHeight={480}><StatisticalInsightsSection /></LazyOnVisible>
+      <LazyOnVisible minHeight={520}><ImageGallerySection /></LazyOnVisible>
+      <LazyOnVisible minHeight={520}><ReviewsWall current={allData.testimonial} /></LazyOnVisible>
+      <LazyOnVisible minHeight={420}><CtaForHome name={'Form Submitted from Home page'} /></LazyOnVisible>
     </Wrapper>
   );
 }

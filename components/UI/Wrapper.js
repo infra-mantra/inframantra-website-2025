@@ -21,6 +21,9 @@ const ToastContainer = dynamic(
   { ssr: false }
 );
 
+const FONT_CSS_HREF =
+  'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Inter:wght@400;500;600;700&family=Lexend+Deca:wght@100..900&display=swap';
+
 const Wrapper = ({
   schema,
   title       = 'Infra Mantra',
@@ -179,13 +182,16 @@ const Wrapper = ({
         <link key="pc-api" rel="preconnect" href="https://apitest.inframantra.com" crossOrigin="anonymous" />
         <link key="pc-cdn" rel="preconnect" href="https://inframantra.blr1.cdn.digitaloceanspaces.com" />
 
-        {/* Google Fonts — display=swap already handles font lazy-loading natively */}
+        {/* Google Fonts — loaded WITHOUT blocking render. critters can't rewrite
+            this cross-origin stylesheet, so we do it by hand: preload the CSS
+            (high-priority parallel download) and attach it with media="print" so
+            it isn't render-blocking; the script in the body flips it to media="all"
+            once loaded. display=swap means text still paints immediately in a
+            fallback font, so FCP/LCP are never gated on the font network. */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Inter:wght@400;500;600;700&family=Lexend+Deca:wght@100..900&display=swap"
-          rel="stylesheet"
-        />
+        <link rel="preload" as="style" href={FONT_CSS_HREF} />
+        <link rel="stylesheet" href={FONT_CSS_HREF} media="print" data-google-fonts="1" />
 
         {/* Structured Data */}
         {structuredData.map((entry, i) => (
@@ -211,6 +217,21 @@ const Wrapper = ({
         <meta key="twdesc"  name="twitter:description" content={description} />
         <meta key="twimg"   name="twitter:image"       content={image} />
       </Head>
+
+      {/* Activate the Google Fonts stylesheet (loaded as media="print" above) once
+          it's ready, without ever blocking the initial render. */}
+      <Script
+        id="google-fonts-activate"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            (function(){
+              var l=document.querySelector('link[data-google-fonts]');
+              if(l){ if(l.sheet){l.media='all';} else {l.addEventListener('load',function(){l.media='all';});} }
+            })();
+          `,
+        }}
+      />
 
       {/* GTM — loaded on first user interaction OR after 3.5s, whichever comes
           first. Keeps the full container (GA4, Google Ads, Facebook Pixel) and
