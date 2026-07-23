@@ -280,30 +280,20 @@ export async function getStaticProps() {
     })
   })
 
-  // const topLocalityData = data.result.toplocality
-  // const topLocalityDataArray = []
-  // topLocalityData.forEach(function(p){
-  //   topLocalityDataArray.push({
-  //     "id": p._id,
-  //     "name": p.name,
-  //     ...(p.projectDetail && {"projectDetail": p.projectDetail}),
-  //   })
-  // })
 
+
+  // The homepage's sections all fetch their own data client-side; the only
+  // getStaticProps data the rendered tree actually consumes is `meta` (banner)
+  // and `testimonial` (ReviewsWall). The rest was ~200 KB of dead JSON shipped in
+  // __NEXT_DATA__ on every request, bloating the HTML and slowing mobile
+  // download/parse/hydrate. recommendation/collection/featuredProjects are kept
+  // as [] only because the component still initialises (unused) state from them.
   const allData = {
     "meta": meta,
-    "heading": heading,
-    "cities": cityDataArray,
-    "propertyTypes" : propertyTypeDataArray,
-    "recommendation": recommendedDataArray,
-    "collection": collectionDataArray,
-    "featuredProjects": data.result.featureProducts,
-    "services": data.result.services,
-    "help": helpDataArray,
-    "blogs": blogDataArray,
+    "recommendation": [],
+    "collection": [],
+    "featuredProjects": [],
     "testimonial": testimonialDataArray,
-    "partners": partnerDataArray,
-    "topLocality": data.result.topLocality,
   }
   return {
     props: {

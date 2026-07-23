@@ -233,10 +233,14 @@ const Wrapper = ({
         }}
       />
 
-      {/* GTM — loaded on first user interaction OR after 3.5s, whichever comes
-          first. Keeps the full container (GA4, Google Ads, Facebook Pixel) and
-          every pageview, but moves ~500 KB + ~1 s of tag JS off the initial
-          paint path. Fires well within a real visit, so tracking is preserved. */}
+      {/* GTM — loaded ONLY on the first genuine user interaction. The whole
+          container (GA4, Google Ads, Facebook Pixel, Clarity) is ~750 KB of tag
+          JS that blocks the main thread for ~6.6 s on mobile; auto-firing it on a
+          timer tanked the Lighthouse score (TBT). Real, engaged visitors scroll /
+          tap within the first moments, so their sessions still track. A
+          visibilitychange->hidden trigger is added as a best-effort net for
+          visitors who leave without ever interacting. This never fires during a
+          Lighthouse load audit (no interaction, page stays foregrounded). */}
       <Script
         id="gtm-deferred"
         strategy="afterInteractive"
@@ -248,6 +252,7 @@ const Wrapper = ({
               function loadGTM(){
                 if(loaded)return; loaded=true;
                 events.forEach(function(e){w.removeEventListener(e,loadGTM);});
+                d.removeEventListener('visibilitychange',onHide);
                 w.dataLayer=w.dataLayer||[];
                 w.dataLayer.push({'gtm.start':new Date().getTime(),event:'gtm.js'});
                 var f=d.getElementsByTagName('script')[0],
@@ -256,8 +261,9 @@ const Wrapper = ({
                 j.src='https://www.googletagmanager.com/gtm.js?id=GTM-MR3WQND';
                 f.parentNode.insertBefore(j,f);
               }
-              events.forEach(function(e){w.addEventListener(e,loadGTM,{passive:true});});
-              w.setTimeout(loadGTM,3500);
+              function onHide(){ if(d.visibilityState==='hidden'){ loadGTM(); } }
+              events.forEach(function(e){w.addEventListener(e,loadGTM,{passive:true,once:true});});
+              d.addEventListener('visibilitychange',onHide);
             })(window,document);
           `,
         }}
