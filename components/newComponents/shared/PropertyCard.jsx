@@ -8,7 +8,10 @@ const FALLBACK =
 export default function PropertyCard({ property }) {
   // next/image serves a resized, modern-format (WebP/AVIF) version sized to the
   // card instead of the full-resolution source — identical visually, far
-  // lighter. `fill` keeps the exact same layout (container is 150px tall).
+  // lighter. This project is on Next 12, whose next/image uses the legacy API:
+  // layout="fill" + objectFit (the bare `fill` boolean is Next 13+ and throws
+  // "must use width and height … or layout='fill'"). Container is position:
+  // relative with a fixed height, so fill matches the previous layout exactly.
   const [errored, setErrored] = React.useState(false);
   const src = errored ? FALLBACK : property.imageGallery?.url || FALLBACK;
 
@@ -19,10 +22,10 @@ export default function PropertyCard({ property }) {
           <Image
             src={src}
             alt={property.imageGallery?.title || property.name}
-            fill
+            layout="fill"
+            objectFit="cover"
             sizes="(max-width: 480px) 60vw, (max-width: 768px) 40vw, (max-width: 1024px) 25vw, 300px"
             className={styles.propertyImage}
-            style={{ objectFit: 'cover' }}
             onError={() => setErrored(true)}
           />
         </div>

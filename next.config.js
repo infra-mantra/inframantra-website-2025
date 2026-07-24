@@ -69,6 +69,7 @@ const nextConfig = {
       'infra-mantra-new.s3.ap-south-1.amazonaws.com',
       'infra-mantra-new.s3.amazonaws.com',
       'inframantra.blr1.cdn.digitaloceanspaces.com',
+      'inframantra.blr1.digitaloceanspaces.com',
       'cms.inframantra.com',
       'images.unsplash.com',
     ],

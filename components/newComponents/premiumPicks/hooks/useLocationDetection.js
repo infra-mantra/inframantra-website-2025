@@ -1,10 +1,52 @@
 import { useState, useEffect } from 'react';
 
+// Cache the detected city so we don't re-run detection — and, crucially, don't
+// re-trigger the browser's geolocation permission prompt — on every visit. The
+// entry carries a timestamp and is treated as valid for 10 days; after that we
+// detect afresh (in case the user has moved).
+const STORAGE_KEY = 'im_detected_city';
+const CACHE_TTL_MS = 10 * 24 * 60 * 60 * 1000; // 10 days
+const AVAILABLE_CITIES = ['Gurgaon', 'Pune', 'Jaipur', 'Noida'];
+
+function readStoredCity() {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const { city, ts } = JSON.parse(raw);
+    if (!city || !AVAILABLE_CITIES.includes(city)) return null;
+    if (typeof ts !== 'number' || Date.now() - ts > CACHE_TTL_MS) {
+      localStorage.removeItem(STORAGE_KEY); // expired — force a fresh detection
+      return null;
+    }
+    return city;
+  } catch (e) {
+    return null;
+  }
+}
+
+function storeCity(city) {
+  if (typeof window === 'undefined' || !city) return;
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ city, ts: Date.now() }));
+  } catch (e) {
+    // ignore quota / serialization errors
+  }
+}
+
 export function useLocationDetection() {
   const [detectedCity, setDetectedCity] = useState(null);
   const [locationStatus, setLocationStatus] = useState('detecting'); // detecting, found, failed
 
   useEffect(() => {
+    // Already have a recent (< 10 day) detected city? Reuse it and skip
+    // detection entirely — no repeat location prompt.
+    const stored = readStoredCity();
+    if (stored) {
+      setDetectedCity(stored);
+      setLocationStatus('found');
+      return;
+    }
     detectUserLocation();
   }, []);
 
@@ -22,6 +64,7 @@ export function useLocationDetection() {
             position.coords.longitude
           );
           if (locationCity) {
+            storeCity(locationCity);
             setDetectedCity(locationCity);
             setLocationStatus('found');
             return;
@@ -35,6 +78,7 @@ export function useLocationDetection() {
       // accurate to the ISP/network location).
       const city = await detectCityByIP();
       if (city) {
+        storeCity(city);
         setDetectedCity(city);
         setLocationStatus('found');
         return;
