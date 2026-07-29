@@ -1,9 +1,28 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './banner.module.css';
 
 const BannerVideo = () => {
+  // Only the LCP hero (slideBase) paints on first load. The 5 rotating slide
+  // images (~350 KB) are mounted after the page's `load` event so they don't
+  // steal bandwidth from the hero on slow mobile connections — the single
+  // biggest lever on the banner's LCP.
+  const [showSlides, setShowSlides] = useState(false);
+  useEffect(() => {
+    const reveal = () => setShowSlides(true);
+    if (document.readyState === 'complete') {
+      const t = setTimeout(reveal, 200);
+      return () => clearTimeout(t);
+    }
+    window.addEventListener('load', reveal, { once: true });
+    const t = setTimeout(reveal, 3000); // fallback if load is slow
+    return () => {
+      window.removeEventListener('load', reveal);
+      clearTimeout(t);
+    };
+  }, []);
+
   const slides = [
     {
       link: 'https://inframantra.com/property/whiteland-the-westin-residences-sector-103-gurugram',
@@ -81,11 +100,16 @@ const BannerVideo = () => {
       <div className={styles.demoBanner}>
         <div className={styles.slideshow}>
           {/* Static base = first slide, always painted (stable LCP anchor).
-              Decorative; the rotating slides below carry the alt text + clicks. */}
+              Uses self-hosted, pre-compressed AVIF/WebP (mobile 29 KB vs the
+              original 153 KB) so the LCP image downloads fast on mobile, while
+              keeping the separate mobile/desktop crops via <picture>. */}
           <picture aria-hidden="true">
-            <source media="(max-width: 768px)" srcSet={images[0].mobile} />
+            <source media="(max-width: 768px)" type="image/avif" srcSet="/banner/westin-mobile.avif" />
+            <source media="(max-width: 768px)" type="image/webp" srcSet="/banner/westin-mobile.webp" />
+            <source type="image/avif" srcSet="/banner/whiteland-desktop.avif" />
+            <source type="image/webp" srcSet="/banner/whiteland-desktop.webp" />
             <img
-              src={images[0].desktop}
+              src="/banner/whiteland-desktop.webp"
               alt=""
               className={styles.slideBase}
               draggable="false"
@@ -93,19 +117,20 @@ const BannerVideo = () => {
               fetchpriority="high"
             />
           </picture>
-          {images.map((img, index) => (
-            <picture key={index}>
-              <source media="(max-width: 768px)" srcSet={img.mobile} />
-              <img
-                src={img.desktop}
-                alt={img.alt}
-                className={`${styles.slideImage} ${slides[index].className}`}
-                draggable="false"
-                loading={index === 0 ? 'eager' : 'lazy'}
-                fetchpriority={index === 0 ? 'high' : 'low'}
-              />
-            </picture>
-          ))}
+          {showSlides &&
+            images.map((img, index) => (
+              <picture key={index}>
+                <source media="(max-width: 768px)" srcSet={img.mobile} />
+                <img
+                  src={img.desktop}
+                  alt={img.alt}
+                  className={`${styles.slideImage} ${slides[index].className}`}
+                  draggable="false"
+                  loading="lazy"
+                  fetchpriority="low"
+                />
+              </picture>
+            ))}
         </div>
       </div>
 

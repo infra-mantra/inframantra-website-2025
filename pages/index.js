@@ -104,19 +104,21 @@ function Home({allData}) {
       selectedItem={selectedItems}
     >
       <Head>
-        {/* Preload the LCP hero image so it downloads immediately (matches the
-            <picture> in the banner: desktop vs mobile source). */}
+        {/* Preload the LCP hero (self-hosted, pre-compressed AVIF) so it downloads
+            immediately — matches the <picture> in the banner: desktop vs mobile. */}
         <link
           rel="preload"
           as="image"
-          href="https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/whiteland-b.webp"
+          type="image/avif"
+          href="/banner/whiteland-desktop.avif"
           media="(min-width: 769px)"
           fetchpriority="high"
         />
         <link
           rel="preload"
           as="image"
-          href="https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/WESTIN-mobile.webp"
+          type="image/avif"
+          href="/banner/westin-mobile.avif"
           media="(max-width: 768px)"
           fetchpriority="high"
         />

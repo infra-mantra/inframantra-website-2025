@@ -101,9 +101,9 @@ const nextConfig = {
         headers: [{ key: 'x-edge-runtime', value: 'true' }],
       },
       {
-        // Self-hosted fonts never change (content is stable) — cache them hard so
-        // repeat visits reuse them from disk instead of re-downloading.
-        source: '/fonts/:path*',
+        // Self-hosted fonts + pre-compressed hero images never change (stable
+        // content) — cache them hard so repeat visits reuse them from disk.
+        source: '/:dir(fonts|banner)/:path*',
         headers: [
           {
             key: 'Cache-Control',
