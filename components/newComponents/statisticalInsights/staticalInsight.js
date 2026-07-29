@@ -1,41 +1,39 @@
 import { useRef, useState, useEffect } from "react";
 import StatisticalInsight from "./statisticalInsightWrapper/statisticalInsighData";
-import { FaBuilding, FaRegLaugh } from "react-icons/fa";
+import { FaRegLaugh, FaHandshake, FaAward } from "react-icons/fa";
 import { GrGroup } from "react-icons/gr";
-import {
-
-  MdSquareFoot,
-  
-} from "react-icons/md";
 import styles from "./staticInsight.module.css";
 
 function StatisticalInsightsSection() {
   const [homePageInsightsSection] = useState([
     {
-      title: "Properties Operated",
-      icon: <FaBuilding />,
-      end: "515",
-      duration: 2.2,
-    },
-    {
-      title: "Amazing Team Members",
-      icon: <GrGroup />,
-      end: "138",
+      title: "Developer Partners",
+      icon: <FaHandshake />,
+      end: "50",
+      suffix: "+",
       duration: 2.2,
     },
     {
       title: "Happy Customers",
       icon: <FaRegLaugh />,
-      end: "2493",
+      end: "3500",
+      suffix: "+",
       duration: 2.2,
     },
     {
-      title: "Total Sq. Ft.",
-      icon: <MdSquareFoot />,
-      end: "18153396",
+      title: "Amazing Team Members",
+      icon: <GrGroup />,
+      end: "170",
+      suffix: "+",
       duration: 2.2,
     },
-   
+    {
+      title: "Awards & Recognition",
+      icon: <FaAward />,
+      end: "50",
+      suffix: "+",
+      duration: 2.2,
+    },
   ]);
 
   const [isVisible, setIsVisible] = useState(

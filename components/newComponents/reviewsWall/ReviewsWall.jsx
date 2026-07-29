@@ -166,7 +166,7 @@ function ReviewsWall({ current = [] }) {
         <div className={styles.left}>
           <span className={styles.eyebrow}>Testimonials</span>
           <h2 className={styles.heading}>
-            2093+ Homebuyers Rely on <span>Inframantra</span>
+            3500+ Homebuyers Rely on <span>Inframantra</span>
           </h2>
           <div className={styles.ratingRow}>
             <RatingStars value={ratingValue} />
