@@ -3,14 +3,15 @@ import styles from './faqSection.module.css';
 
 function FaqSection({
   totalProperties,
-  type, 
+  type,
   name,
   state,
   city,
   locality,
   subLocality,
   highRise,
-  readyToMove
+  readyToMove,
+  customFaqs, // optional: [{ question|q, answer|a }] — overrides the auto-generated FAQs
 }) {
   const [activeIndex, setActiveIndex] = useState(null);
 
@@ -29,7 +30,13 @@ function FaqSection({
   const areaLabel = getAreaLabel();
 
   const faqData =
-    type !== 'search'
+    Array.isArray(customFaqs) && customFaqs.length
+      ? customFaqs.map((f, i) => ({
+          id: i + 1,
+          question: f.question ?? f.q,
+          answer: f.answer ?? f.a,
+        }))
+      : type !== 'search'
       ? [
           {
             id: 1,

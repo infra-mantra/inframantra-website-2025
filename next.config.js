@@ -100,6 +100,17 @@ const nextConfig = {
         source: '/api/:path*',
         headers: [{ key: 'x-edge-runtime', value: 'true' }],
       },
+      {
+        // Self-hosted fonts never change (content is stable) — cache them hard so
+        // repeat visits reuse them from disk instead of re-downloading.
+        source: '/fonts/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
     ];
   },
 

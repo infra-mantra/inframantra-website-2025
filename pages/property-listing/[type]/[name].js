@@ -44,7 +44,7 @@ const PropertyListingPage = () => {
 
   const [allPropertyData, setAllPropertyData] = useState([]);
   const [propertyData, setPropertyData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true); // start in loading state so the empty "No Properties Found" never flashes before the first fetch
 
   const [backdropOpen, setBackdropOpen] = useState(false);
   const [selectedPropertyName, setSelectedPropertyName] = useState('');

@@ -5,6 +5,7 @@ export const CityChangeDropdown = ({ handleSelectionChange }) => {
       { name: 'Pune' },
       { name: 'Noida' },
       { name: 'Delhi' },
+      { name: 'Mohali' },
     ];
   
     return (

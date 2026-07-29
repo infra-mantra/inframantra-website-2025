@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
+import "../styles/self-hosted-fonts.css";
 import "../styles/globals.css";
 import "../styles/responsive.css";
 import "react-toastify/dist/ReactToastify.css";

@@ -299,7 +299,7 @@ if (isMobile) {
       {/* Location */}
       <div className={style.sectionTitle}>Location</div>
       <div className={style.locationTags}>
-        {["Gurgaon", "Noida", "Pune", "Jaipur"].map((city) => (
+        {["Gurgaon", "Noida", "Pune", "Jaipur", "Mohali"].map((city) => (
           <span
             key={city}
             className={`${style.tag} ${
@@ -531,7 +531,7 @@ if (isMobile) {
       {/* Location */}
       <div className={style.sectionTitle}>Location</div>
       <div className={style.locationTags}>
-        {["Gurgaon", "Noida", "Pune", "Jaipur"].map((city) => (
+        {["Gurgaon", "Noida", "Pune", "Jaipur", "Mohali"].map((city) => (
           <span
             key={city}
             className={`${style.tag} ${selectedCities.includes(city) ? style.active1 : ""}`}

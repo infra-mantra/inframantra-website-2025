@@ -12,6 +12,7 @@ function AboutSection({
   city,
   locality,
   sublocality,
+  customContent, // optional: overrides the auto-generated about paragraph
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [displayArea, setDisplayArea] = useState('');
@@ -63,10 +64,11 @@ function AboutSection({
     setParentArea(newParentArea);
   }, [normalizedType, state, city, locality, sublocality]);
 
-  const fullText =
-    type === 'search'
-      ? 'Discover the finest properties with Inframantra — your gateway to premium living. Explore an exclusive collection of 2–5 BHK apartments, duplexes, villas, and penthouses, each crafted with world-class design and top-tier amenities. Located in one of the fastest-growing residential destinations, Inframantra offers best properties boasting unmatched connectivity, superior convenience, and a lifestyle perfectly suited for families and professionals seeking luxury, comfort, and long-term value.'
-      : `Explore the best properties in ${displayArea}${parentArea ? `, ${parentArea}` : ''}. In total, there are more than ${totalProperties} properties for sale in ${displayArea}. The prices of these properties range from Rs. ${minPrice} to Rs. ${maxPrice}. These ${displayArea} properties include 2–5 BHK apartments, duplexes, villas, and penthousesthat are thoughtfully designed and come loaded with world-class amenities. It is one of  the fastest growing residential areas that offers unmatched connectivity and convenience, making properties in ${displayArea} ideal for families and professionals seeking high-quality and luxurious living spaces.`;
+  const fullText = customContent
+    ? customContent
+    : type === 'search'
+    ? 'Discover the finest properties with Inframantra — your gateway to premium living. Explore an exclusive collection of 2–5 BHK apartments, duplexes, villas, and penthouses, each crafted with world-class design and top-tier amenities. Located in one of the fastest-growing residential destinations, Inframantra offers best properties boasting unmatched connectivity, superior convenience, and a lifestyle perfectly suited for families and professionals seeking luxury, comfort, and long-term value.'
+    : `Explore the best properties in ${displayArea}${parentArea ? `, ${parentArea}` : ''}. In total, there are more than ${totalProperties} properties for sale in ${displayArea}. The prices of these properties range from Rs. ${minPrice} to Rs. ${maxPrice}. These ${displayArea} properties include 2–5 BHK apartments, duplexes, villas, and penthousesthat are thoughtfully designed and come loaded with world-class amenities. It is one of  the fastest growing residential areas that offers unmatched connectivity and convenience, making properties in ${displayArea} ideal for families and professionals seeking high-quality and luxurious living spaces.`;
 
   const previewText = fullText.slice(0, 180);
 

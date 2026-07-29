@@ -21,9 +21,6 @@ const ToastContainer = dynamic(
   { ssr: false }
 );
 
-const FONT_CSS_HREF =
-  'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Inter:wght@400;500;600;700&family=Lexend+Deca:wght@100..900&display=swap';
-
 const Wrapper = ({
   schema,
   title       = 'Infra Mantra',
@@ -182,16 +179,18 @@ const Wrapper = ({
         <link key="pc-api" rel="preconnect" href="https://apitest.inframantra.com" crossOrigin="anonymous" />
         <link key="pc-cdn" rel="preconnect" href="https://inframantra.blr1.cdn.digitaloceanspaces.com" />
 
-        {/* Google Fonts — loaded WITHOUT blocking render. critters can't rewrite
-            this cross-origin stylesheet, so we do it by hand: preload the CSS
-            (high-priority parallel download) and attach it with media="print" so
-            it isn't render-blocking; the script in the body flips it to media="all"
-            once loaded. display=swap means text still paints immediately in a
-            fallback font, so FCP/LCP are never gated on the font network. */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link rel="preload" as="style" href={FONT_CSS_HREF} />
-        <link rel="stylesheet" href={FONT_CSS_HREF} media="print" data-google-fonts="1" />
+        {/* Fonts are self-hosted (see styles/self-hosted-fonts.css, imported in
+            _app.js). No third-party Google request — the @font-face files are
+            served from our own domain with an immutable 1-year cache. Preload the
+            primary latin font so it's ready for first paint; display=swap means
+            text still paints immediately in a fallback until it arrives. */}
+        <link
+          rel="preload"
+          as="font"
+          type="font/woff2"
+          href="/fonts/lexend-deca-latin.woff2"
+          crossOrigin="anonymous"
+        />
 
         {/* Structured Data */}
         {structuredData.map((entry, i) => (
@@ -217,21 +216,6 @@ const Wrapper = ({
         <meta key="twdesc"  name="twitter:description" content={description} />
         <meta key="twimg"   name="twitter:image"       content={image} />
       </Head>
-
-      {/* Activate the Google Fonts stylesheet (loaded as media="print" above) once
-          it's ready, without ever blocking the initial render. */}
-      <Script
-        id="google-fonts-activate"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-            (function(){
-              var l=document.querySelector('link[data-google-fonts]');
-              if(l){ if(l.sheet){l.media='all';} else {l.addEventListener('load',function(){l.media='all';});} }
-            })();
-          `,
-        }}
-      />
 
       {/* GTM — loaded ONLY on the first genuine user interaction. The whole
           container (GA4, Google Ads, Facebook Pixel, Clarity) is ~750 KB of tag
