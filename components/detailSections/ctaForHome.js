@@ -191,8 +191,11 @@ function App({ name, displayMap = true, countryCode = "in" }) {
             className={
               style.homePageContactUsLeftDetailSectionImg
             }
-            src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/inframantraLogoBlack.png"
+            src="/logos/logo-black.webp"
             alt="Inframantra-Logo"
+            width={280}
+            height={56}
+            loading="lazy"
           />
 
           <div

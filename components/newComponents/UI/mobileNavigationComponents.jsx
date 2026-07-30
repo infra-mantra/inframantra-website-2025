@@ -46,8 +46,10 @@ const MobileMenu = () => {
       {/* Header with Logo and Close Button */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' , color:"#0000"}}>
         <img
-          src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/inframantraLogoBlack.png"
+          src="/logos/logo-black.webp"
           alt="Inframantra Logo"
+          width={150}
+          height={30}
           style={{ width: '150px' }}
         />
        <IoClose size={30} onClick={toggleDrawer(false)} style={{ cursor: 'pointer', color: "#000" }} />

@@ -58,8 +58,11 @@ function Footer() {
       <div className={styles.footerFirstSectionContainer}>
         <div className={styles.footerFirstSectionCompanyDetailsWrapper}>
           <img
-            src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/inframantraLogo.png"
+            src="/logos/logo-white.webp"
             alt="Infra logo white"
+            width={260}
+            height={52}
+            loading="lazy"
           />
           <div className={styles.footerFirstSectionCompanyDetailsFlex}>
             <MdLocationOn style={{

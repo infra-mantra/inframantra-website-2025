@@ -207,14 +207,17 @@ function NavigationBar({ pageBgd, onlyLogo = false, logoUrl }) {
         )}
       </div>
 
-      {/* Center Logo */}
+      {/* Center Logo — self-hosted, pre-compressed (6-7 KB vs ~50 KB), with an
+          explicit aspect ratio so it reserves space and doesn't cause CLS. */}
       <img
         className="navBarLogo"
+        width={310}
+        height={62}
         src={
           (isMobile && (scrolledPast90vh || pageBgd)) ||
           (!isMobile && pageBgd)
-            ? 'https://inframantra.blr1.cdn.digitaloceanspaces.com/logos/inframantraLogoBlack(2).webp'
-            : 'https://inframantra.blr1.cdn.digitaloceanspaces.com/logos/inframantraLogo(1).webp'
+            ? '/logos/nav-black.webp'
+            : '/logos/nav-white.webp'
         }
         style={{
           marginBottom: !pageBgd ? '12px' : '',
@@ -222,7 +225,7 @@ function NavigationBar({ pageBgd, onlyLogo = false, logoUrl }) {
         }}
         alt="Inframantra-logo"
         onClick={logoClickHandler}
-        loading="lazy"
+        loading="eager"
         fetchpriority="high"
       />
 

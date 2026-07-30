@@ -56,23 +56,23 @@ const BannerVideo = () => {
       alt: 'Westin',
     },
     {
-      desktop: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/monsella-b.webp',
-      mobile: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/monsella-mobile.webp',
+      desktop: '/banner/monsella-desktop.webp',
+      mobile: '/banner/monsella-mobile.webp',
       alt: 'Tulip Monsella',
     },
     {
-      desktop: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/melrose-b.webp',
-      mobile: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/melrose-mobile.webp',
+      desktop: '/banner/melrose-desktop.webp',
+      mobile: '/banner/melrose-mobile.webp',
       alt: 'Tulip Melrose',
     },
     {
-      desktop: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/crimson-b.webp',
-      mobile: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/crimson-mobile.webp',
+      desktop: '/banner/crimson-desktop.webp',
+      mobile: '/banner/crimson-mobile.webp',
       alt: 'BPTP 66',
     },
     {
-      desktop: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/godrej-samaris-desktop.webp',
-      mobile: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/godrej-samaris-mobile.webp',
+      desktop: '/banner/godrej-desktop.webp',
+      mobile: '/banner/godrej-mobile.webp',
       alt: 'Vatika',
     },
   ];

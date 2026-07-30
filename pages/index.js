@@ -124,12 +124,29 @@ function Home({allData}) {
         />
       </Head>
       <MainBanner1 />
-      <PremiumPropertyMainComponent/>
+      {/* Reserve the Premium Picks height inline (via styled-jsx, which is
+          inlined at SSR) so the section holds its space from the first paint.
+          The CSS-module placeholder alone was deferred by optimizeCss/critters,
+          letting the section jump 0 -> full height and cause CLS ~0.217. */}
+      <div className="premiumReserve" style={{ minHeight: '578px' }}>
+        <PremiumPropertyMainComponent/>
+      </div>
       <LazyOnVisible minHeight={520}><BlogsMedia /></LazyOnVisible>
       <LazyOnVisible minHeight={480}><StatisticalInsightsSection /></LazyOnVisible>
       <LazyOnVisible minHeight={520}><ImageGallerySection /></LazyOnVisible>
       <LazyOnVisible minHeight={520}><ReviewsWall current={allData.testimonial} /></LazyOnVisible>
       <LazyOnVisible minHeight={420}><CtaForHome name={'Form Submitted from Home page'} /></LazyOnVisible>
+      <style jsx>{`
+        /* Mobile reservation (578px) is an inline style so critters can never
+           defer it. Desktop content is taller — bump it here (!important to beat
+           the inline value); if this rule were ever deferred, desktop simply
+           falls back to 578px (a minor shift), while mobile stays exact. */
+        @media (min-width: 769px) {
+          .premiumReserve {
+            min-height: 628px !important;
+          }
+        }
+      `}</style>
     </Wrapper>
   );
 }

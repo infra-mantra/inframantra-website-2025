@@ -94,9 +94,10 @@ export function useLocationDetection() {
     try {
       
       // Try multiple IP geolocation services
+      // HTTPS only — an http:// endpoint is blocked as mixed content on the
+      // live https site (and flagged by Lighthouse Best Practices).
       const services = [
         'https://ipapi.co/json/',
-        'http://ip-api.com/json/',
         'https://freegeoip.app/json/'
       ];
 
