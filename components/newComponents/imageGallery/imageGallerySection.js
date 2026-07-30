@@ -7,13 +7,15 @@ const AUTOPLAY_MS = 3600;
 
 /* Real moments at Inframantra, shown as an interactive expanding-panel gallery
    with a scroll-triggered staggered entrance and a story-style progress bar. */
+// Self-hosted, pre-compressed WebP (served with immutable cache). The originals
+// were huge — brand.jpg alone was 2.7 MB (8192x5464); these are ~15-71 KB each.
 const itemData = [
-  { img: `${CDN}/homePageImageGallery/IMG_2514-min.webp`, caption: "Celebrating Our Milestones" }, // was 01
-  { img: `${CDN}/homePageImageGallery/IMG_5639-min.webp`, caption: "Times of India Award" }, // was 05
-  { img: `${CDN}/aboutus-page-awards/a1.jpg`, caption: "TOI Channel Partner of the Year" }, // was 02
-  { img: `${CDN}/aboutus-page-awards/a2.jpg`, caption: "Honoured for Performance" }, // was 06
-  { img: `${CDN}/aboutus-page-awards/a3.jpg`, caption: "Recognised as The Champions" }, // was 03 (award image)
-  { img:`https://inframantra.com/guruCollection/brand.jpg`, caption: "Celebrating Our Brand Ambassador" }, // was 04 (award image)
+  { img: `/gallery/img2514.webp`, caption: "Celebrating Our Milestones" },
+  { img: `/gallery/img5639.webp`, caption: "Times of India Award" },
+  { img: `/gallery/a1.webp`, caption: "TOI Channel Partner of the Year" },
+  { img: `/gallery/a2.webp`, caption: "Honoured for Performance" },
+  { img: `/gallery/a3.webp`, caption: "Recognised as The Champions" },
+  { img: `/gallery/brand.webp`, caption: "Celebrating Our Brand Ambassador" },
 ];
 
 const ImageGallerySection = () => {

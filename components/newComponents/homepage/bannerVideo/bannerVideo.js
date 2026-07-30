@@ -49,8 +49,10 @@ const BannerVideo = () => {
 
   const images = [
      {
-      desktop: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/whiteland-b.webp',
-      mobile: 'https://inframantra.blr1.cdn.digitaloceanspaces.com/bannerVideo/banner-enhance-img/WESTIN-mobile.webp',
+      // Self-hosted, pre-compressed (same as the LCP base) so this first rotating
+      // slide reuses the small file instead of re-downloading the 153 KB original.
+      desktop: '/banner/whiteland-desktop.webp',
+      mobile: '/banner/westin-mobile.webp',
       alt: 'Westin',
     },
     {

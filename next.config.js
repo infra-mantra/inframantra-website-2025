@@ -103,7 +103,7 @@ const nextConfig = {
       {
         // Self-hosted fonts + pre-compressed hero images never change (stable
         // content) — cache them hard so repeat visits reuse them from disk.
-        source: '/:dir(fonts|banner)/:path*',
+        source: '/:dir(fonts|banner|gallery)/:path*',
         headers: [
           {
             key: 'Cache-Control',
