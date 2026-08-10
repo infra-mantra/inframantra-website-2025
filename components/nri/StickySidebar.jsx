@@ -85,7 +85,7 @@ export default function StickySidebar({name,  url = "" }) {
       id: "whatsapp",
       label: "WHATS APP",
       icon: <WhatsAppIcon />,
-      href: "https://wa.me/12136575060",
+      href: "https://wa.me/918698009900",
       target: "_blank",
     },
 
@@ -93,7 +93,7 @@ export default function StickySidebar({name,  url = "" }) {
       id: "call",
       label: "INSTANT CALL",
       icon: <PhoneIcon />,
-      href: "tel:+12136575060",
+      href: "tel:+918698009900",
     },
 
     url
@@ -177,7 +177,7 @@ export default function StickySidebar({name,  url = "" }) {
           popUpenable={popForm}
           onClickOff={setPopForm}
           name={name}
-          phone="+1 (213) 6575060"
+          phone="+91 86 9800 9900"
           id="nriGetInTouch"
           countryCode='us'
         />

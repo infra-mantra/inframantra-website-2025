@@ -116,6 +116,8 @@ const FAQS = [
 // Fixed target — this page always lists Gurgaon (city) properties.
 const TYPE = 'city';
 const NAME = 'gurgaon';
+// Heading shown on this page (overrides the generic "Properties in Gurgaon").
+const PAGE_HEADING = 'Luxury Apartments In Gurgaon';
 
 const LuxuryApartmentsGurgaon = () => {
   const router = useRouter();
@@ -424,6 +426,7 @@ const LuxuryApartmentsGurgaon = () => {
 
               <Content
                 customContent={TOP_CONTENT}
+                customHeading={PAGE_HEADING}
                 totalProperties={totalProperties}
                 currentPage={currentPage}
                 maxPrice={maxPrice}
@@ -505,6 +508,7 @@ const LuxuryApartmentsGurgaon = () => {
             <>
               <Content
                 customContent={TOP_CONTENT}
+                customHeading={PAGE_HEADING}
                 totalProperties={totalProperties}
                 currentPage={currentPage}
                 maxPrice={maxPrice}

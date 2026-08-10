@@ -9,12 +9,9 @@ import moment from "moment/moment";
 import MainBanner1 from '../components/newComponents/homepage/MainBanner.js';
 import LazyOnVisible from "../components/UI/LazyOnVisible";
 
-// Premium Picks is the ONLY eager Swiper consumer on the homepage, and it renders
-// nothing but a loading spinner on the server anyway (its data is fetched
-// client-side via axios). Deferring it with ssr:false pulls Swiper + its whole
-// subtree out of the initial JS/hydration path — the biggest single TBT win here.
-// The placeholder reserves the section's exact height (628/578px) so there is no
-// layout shift when the chunk mounts.
+// Premium Picks (Swiper + a large subtree) is deferred with ssr:false to keep it
+// off the initial hydration path (TBT win). It renders client-side; the wrapper
+// below reserves space to limit layout shift.
 const PremiumPropertyMainComponent = dynamic(
   () => import("../components/newComponents/premiumPicks/PremiumPropertyMainComponent.jsx"),
   {
@@ -124,10 +121,6 @@ function Home({allData}) {
         />
       </Head>
       <MainBanner1 />
-      {/* Reserve the Premium Picks height inline (via styled-jsx, which is
-          inlined at SSR) so the section holds its space from the first paint.
-          The CSS-module placeholder alone was deferred by optimizeCss/critters,
-          letting the section jump 0 -> full height and cause CLS ~0.217. */}
       <div className="premiumReserve" style={{ minHeight: '578px' }}>
         <PremiumPropertyMainComponent/>
       </div>
@@ -136,17 +129,6 @@ function Home({allData}) {
       <LazyOnVisible minHeight={520}><ImageGallerySection /></LazyOnVisible>
       <LazyOnVisible minHeight={520}><ReviewsWall current={allData.testimonial} /></LazyOnVisible>
       <LazyOnVisible minHeight={420}><CtaForHome name={'Form Submitted from Home page'} /></LazyOnVisible>
-      <style jsx>{`
-        /* Mobile reservation (578px) is an inline style so critters can never
-           defer it. Desktop content is taller — bump it here (!important to beat
-           the inline value); if this rule were ever deferred, desktop simply
-           falls back to 578px (a minor shift), while mobile stays exact. */
-        @media (min-width: 769px) {
-          .premiumReserve {
-            min-height: 628px !important;
-          }
-        }
-      `}</style>
     </Wrapper>
   );
 }

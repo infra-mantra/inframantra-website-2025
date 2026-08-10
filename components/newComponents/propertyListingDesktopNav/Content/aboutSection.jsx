@@ -13,6 +13,7 @@ function AboutSection({
   locality,
   sublocality,
   customContent, // optional: overrides the auto-generated about paragraph
+  customHeading, // optional: overrides the "Properties in <area>" H1 heading
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [displayArea, setDisplayArea] = useState('');
@@ -77,7 +78,9 @@ function AboutSection({
   return (
     <>
       <h1 className={styles.headerAbout}>
-        {type === 'search'
+        {customHeading
+          ? customHeading
+          : type === 'search'
           ? `Search result has ${totalProperties} properties`
           : `Properties in ${displayArea}${parentArea ? `, ${parentArea}` : ''}`}
       </h1>

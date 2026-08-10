@@ -27,7 +27,7 @@ const isValidName = (v) => /^[a-zA-Z][a-zA-Z\s.]{1,}$/.test((v || "").trim());
 // Accept phone numbers with or without a country code, and with common
 // separators like spaces, dashes and parentheses.
 // e.g. "9876543210", "+91 98765 43210", "919876543210",
-//      "+1 4155551234", "+1 (213) 657-5060", "(213) 6575060"
+//      "+1 4155551234"
 const isValidPhone = (v) => {
   const s = (v || "").replace(/[^\d+]/g, "").replace(/^\+/, "");
   if (/^[6-9]\d{9}$/.test(s)) return true; // 10-digit Indian mobile, no code

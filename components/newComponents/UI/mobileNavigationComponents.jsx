@@ -99,7 +99,7 @@ const MobileMenu = () => {
 
       {/* Company Details */}
       <div style={{ marginTop: '10px' }}>
-        <DetailItem icon={<IoMdCall style={{ color: '#E4A951' }} />} text="+91 86 9800 9900, +1 (213) 6575060" />
+        <DetailItem icon={<IoMdCall style={{ color: '#E4A951' }} />} text="+91 86 9800 9900" />
         <DetailItem icon={<IoMdMail style={{ color: '#E4A951' }} />} text="info@inframantra.com" />
         <DetailItem icon={<IoMdPin style={{ color: '#E4A951' }} />} text="95, Institutional Area, Sector 32, Gurugram, Haryana 122002" />
       </div>
