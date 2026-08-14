@@ -239,6 +239,16 @@ ul {
   list-style-type: none;
 }
 
+/* Restore bullets for article-body lists on blog / news / PR pages — the global
+   rule above strips list markers site-wide. .content = blog + news article body,
+   .content-media = PR article body. */
+.content ul,
+.content-media ul {
+  list-style-type: disc;
+  list-style-position: outside;
+  padding-left: 1.5rem;
+}
+
 .card {
     background: #fff;
     border: 1px solid #e0e0e0;

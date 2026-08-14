@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Wrapper from "../../components/UI/Wrapper";
 import PageHeader from '../../components/UI/PageHeaderNews';
 import BlogContentNews from "../../components/blogsSections/BlogContentNews";
+import ArticleSchema from "../../components/UI/ArticleSchema";
 import moment from 'moment';
 
 
@@ -73,6 +74,7 @@ if(redirecting){
       image={allData.detail.image}
       keyword={allData.detail.metaKeyword}
     >
+      <ArticleSchema detail={detail} type="NewsArticle" path={`/news/${slug}`} />
       <PageHeader classes="" date={data.date} data={data} />
       <BlogContentNews
         detailContent={allData.detail}

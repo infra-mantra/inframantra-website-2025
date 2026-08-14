@@ -9,6 +9,7 @@ import PageHeader from "../../components/UI/blogPageHeader";
 import BlogContent from "../../components/blogsSections/BlogContent";
 import BlogsGrid from "../../components/UI/BlogGridIndividual";
 import HomePageCta from "../../components/detailSections/singlePropertyCta";
+import ArticleSchema from "../../components/UI/ArticleSchema";
 
 const BlogDetail = ({ allData }) => {
   const { detail, recent, related, source   } = allData;
@@ -88,6 +89,7 @@ if(redirecting){
       image={headerData.image}
       keyword={detail.metaKeyword || ""}
     >
+      <ArticleSchema detail={detail} type="BlogPosting" path={`/blog/${slug}`} />
       <PageHeader classes="" date={headerData.date} data={headerData} />
       <BlogContent
         detailContent={detail}

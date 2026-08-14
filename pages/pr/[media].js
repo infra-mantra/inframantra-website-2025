@@ -1,6 +1,7 @@
 import React,{useEffect,useState} from 'react';
 import { useRouter } from "next/router";
 import Wrapper from '../../components/UI/Wrapper';
+import ArticleSchema from '../../components/UI/ArticleSchema';
 import Share from '../share';
 import moment from 'moment';
 import BottomBar from "../../components/UI/Bottombar";
@@ -73,6 +74,7 @@ if(redirecting){
     image={allData?.detail?.image || null} 
     keyword={allData?.detail?.metaKeyword || ''}
     >
+      <ArticleSchema detail={detail} type="Article" path={`/pr/${detail?.slug}`} />
       <div className={styles['media-container-individual']}>
         {/* Search Section */}
         <div className={styles['search-section']}>
@@ -240,6 +242,7 @@ export async function getStaticProps({ params }) {
       date: moment(cmsPost.createdAt).format('DD/MM/YYYY'),
       name: cmsPost.writer_name || '',
       blogType: cmsPost.blogType?.name || '',
+      slug,
     };
 
     const related = (cmsData?.result?.reletedBlogs || []).map((e) => ({
@@ -279,7 +282,8 @@ export async function getStaticProps({ params }) {
       image: '',
       date: moment(wpPost.date).format('DD/MM/YYYY'),
       name: wpPost._embedded?.author?.[0]?.name || '',
-      id : wpPost.categories[0]
+      id : wpPost.categories[0],
+      slug,
     };
 
     return {
