@@ -44,7 +44,7 @@
   font-weight: 700;
   color: #DCAA4C;
   margin: 0 0 7px 0;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Lexend Deca', sans-serif;
   letter-spacing: 0.2px;
   line-height: 1.5;
 
@@ -58,7 +58,7 @@
   padding-top: 8px;
   border-top: 1px solid #eeeae2;
   line-height: 1.4;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Lexend Deca', sans-serif;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -72,7 +72,7 @@
   padding-top: 8px;
   border-top: 1px solid #eeeae2;
   font-weight: 500;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Lexend Deca', sans-serif;
 }
 
 /* Scoped to .propertyContent (specificity 0,2,0) so it beats the GLOBAL
@@ -86,7 +86,7 @@
   margin: 8px 0 0 0;
   padding-top: 8px;
   border-top: 1px solid #eeeae2;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Lexend Deca', sans-serif;
   letter-spacing: 0.3px;
 }
 

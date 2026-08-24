@@ -5,6 +5,7 @@ import LocalitySection from "../localityProperties/LocalityPropertiesSection.jsx
 import OtherCityPropertiesSection from "../localityProperties/OtherCityProperties.jsx";
 import ServiceSection from '../../newComponents/serviceSection/serviceSection.js';
 import AdsBanner from "./AdsBanner.jsx";
+import LazyOnVisible from "../../UI/LazyOnVisible";
 import { useLocationDetection } from './hooks/useLocationDetection'
 import axios from "axios";
 
@@ -71,19 +72,44 @@ export default function PremiumPropertyMainComponent() {
         detectedCity={detectedCity}
         locationStatus={locationStatus}
       /> 
-      <ServiceSection />
-      <LocalitySection 
-        data={localitiesPremiumProperties} 
-        loading={loading} 
-        selectedCity={selectedCity} 
-      />
-        <AdsBanner/>
+      {/* Only PremiumPicksSection above is near the fold. Everything below it
+          starts ~1800px down yet was mounting on initial load, pulling ~365 KB of
+          images (the services background PNG alone is 132 KB, its two icon SVGs
+          another 152 KB, the ad banner 81 KB) into the same connection the LCP
+          hero is competing for. LazyOnVisible mounts them 600px before they
+          scroll in, so the bytes move off the critical path without the user ever
+          seeing a placeholder. */}
+      {/* rootMargin is deliberately tighter than the 600px default here. At first
+          paint PremiumPicksSection is still fetching, so the page is short and this
+          wrapper sits ~1330px down — inside a 600px margin, which fired the observer
+          immediately and pulled the section's ~285KB of art (a 132KB background PNG
+          and two 170KB/36KB vector illustrations on the CDN) straight back onto the
+          critical path. 250px clears that first-paint position while still giving
+          real scrolling a comfortable head start. The sections below keep the 600px
+          default — they already sit far enough down to defer correctly. */}
+      <LazyOnVisible minHeight={620} rootMargin="250px">
+        <ServiceSection />
+      </LazyOnVisible>
 
-      <OtherCityPropertiesSection 
-        data={otherCityPremiumProperties} 
-        loading={loading} 
-        selectedCity={selectedCity} 
-      />
+      <LazyOnVisible minHeight={520}>
+        <LocalitySection
+          data={localitiesPremiumProperties}
+          loading={loading}
+          selectedCity={selectedCity}
+        />
+      </LazyOnVisible>
+
+      <LazyOnVisible minHeight={320}>
+        <AdsBanner />
+      </LazyOnVisible>
+
+      <LazyOnVisible minHeight={520}>
+        <OtherCityPropertiesSection
+          data={otherCityPremiumProperties}
+          loading={loading}
+          selectedCity={selectedCity}
+        />
+      </LazyOnVisible>
     
     </>
   );

@@ -76,7 +76,7 @@
   border: none;
   border-radius: 10px;
   padding: 12px 28px;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Lexend Deca', sans-serif;
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.03em;
@@ -95,7 +95,7 @@
 
 .premiumMainTitle {
 color: #1a1a1a;
-    font-family: Inter, sans-serif;
+    font-family: 'Lexend Deca', sans-serif;
     font-size: 30px;
     font-style: normal;
     font-weight: 600;
@@ -111,7 +111,7 @@ color: #1a1a1a;
 .premiumSubtitle {
 align-self: stretch;
     color: #6b6b6b;
-    font-family: Inter, sans-serif;
+    font-family: 'Lexend Deca', sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;

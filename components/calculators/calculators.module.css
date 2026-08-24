@@ -30,7 +30,7 @@
 }
 
 .heading {
-  font-family: "Inter", sans-serif;
+  font-family: 'Lexend Deca', sans-serif;
   font-size: 21px;
   color: #e7b554;
   font-weight: 700;
@@ -221,7 +221,7 @@
 }
 
 .resultLeadValue {
-  font-family: "Inter", sans-serif;
+  font-family: 'Lexend Deca', sans-serif;
   font-size: 32px;
   font-weight: 700;
   color: var(--c-accent-dark);
@@ -394,7 +394,7 @@
 }
 
 .faqHeading {
-  font-family: "Inter", sans-serif;
+  font-family: 'Lexend Deca', sans-serif;
   font-size: 26px;
   font-weight: 700;
   color: var(--c-ink);
@@ -549,7 +549,7 @@
 }
 
 .cardTitle {
-  font-family: "Inter", sans-serif;
+  font-family: 'Lexend Deca', sans-serif;
   font-size: 18px;
   font-weight: 600;
   color: var(--c-ink);
@@ -591,7 +591,7 @@
 }
 
 .relatedHeading {
-  font-family: "Inter", sans-serif;
+  font-family: 'Lexend Deca', sans-serif;
   font-size: 22px;
   font-weight: 700;
   color: var(--c-ink);
@@ -689,7 +689,7 @@
   position: absolute;
   bottom: 16px;
   right: 5%;
-  font-family: "Inter", sans-serif;
+  font-family: 'Lexend Deca', sans-serif;
   font-size: 62px;
   font-weight: 800;
   letter-spacing: 10px;
@@ -968,7 +968,7 @@
 
 .heroEyebrow {
   display: inline-block;
-  font-family: "Inter", sans-serif;
+  font-family: 'Lexend Deca', sans-serif;
   font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
@@ -978,7 +978,7 @@
 }
 
 .heroTitle {
-  font-family: "Inter", sans-serif;
+  font-family: 'Lexend Deca', sans-serif;
   font-size: 44px;
   font-weight: 700;
   margin: 0 0 18px;
@@ -1058,7 +1058,7 @@
 
 .statValue {
   display: block;
-  font-family: "Inter", sans-serif;
+  font-family: 'Lexend Deca', sans-serif;
   font-size: 30px;
   font-weight: 700;
   background: linear-gradient(135deg, var(--c-accent), var(--c-accent-dark));
@@ -1082,7 +1082,7 @@
 }
 
 .howHeading {
-  font-family: "Inter", sans-serif;
+  font-family: 'Lexend Deca', sans-serif;
   font-size: 26px;
   font-weight: 700;
   color: var(--c-ink);
@@ -1129,7 +1129,7 @@
   border-radius: 50%;
   background: linear-gradient(135deg, var(--c-accent), var(--c-accent-dark));
   color: #fff;
-  font-family: "Inter", sans-serif;
+  font-family: 'Lexend Deca', sans-serif;
   font-weight: 700;
   font-size: 18px;
   margin-bottom: 18px;
@@ -1137,7 +1137,7 @@
 }
 
 .howStepTitle {
-  font-family: "Inter", sans-serif;
+  font-family: 'Lexend Deca', sans-serif;
   font-size: 17px;
   font-weight: 600;
   color: var(--c-ink);
@@ -1169,7 +1169,7 @@
 }
 
 .chartTitle {
-  font-family: "Inter", sans-serif;
+  font-family: 'Lexend Deca', sans-serif;
   font-size: 16px;
   font-weight: 600;
   color: var(--c-ink);
@@ -1257,7 +1257,7 @@
 }
 
 .tableTitle {
-  font-family: "Inter", sans-serif;
+  font-family: 'Lexend Deca', sans-serif;
   font-size: 16px;
   font-weight: 600;
   color: var(--c-ink);
@@ -1311,7 +1311,7 @@
 }
 
 .seoContent h2 {
-  font-family: "Inter", sans-serif;
+  font-family: 'Lexend Deca', sans-serif;
   font-size: 26px;
   font-weight: 700;
   color: var(--c-ink);
@@ -1322,7 +1322,7 @@
 }
 
 .seoContent h3 {
-  font-family: "Inter", sans-serif;
+  font-family: 'Lexend Deca', sans-serif;
   font-size: 19px;
   font-weight: 600;
   color: var(--c-ink);
@@ -1375,7 +1375,7 @@
 }
 
 .leadHeading {
-  font-family: "Inter", sans-serif;
+  font-family: 'Lexend Deca', sans-serif;
   font-size: 28px;
   font-weight: 700;
   margin: 0 0 12px;

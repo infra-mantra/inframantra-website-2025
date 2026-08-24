@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import Ajax1 from '../../helper/Ajax1';
-import { debounce } from 'lodash';
 import { useRouter } from 'next/router';
 import { IoSearchSharp, IoMic, IoMicOutline } from 'react-icons/io5';
-import { RoofingOutlined as RoofingOutlinedIcon } from '@mui/icons-material';
-import { MapOutlined as MapOutlinedIcon } from '@mui/icons-material';
-import { RoomOutlined as RoomOutlinedIcon } from '@mui/icons-material';
+// react-icons equivalents of the old @mui/icons-material outline icons. That
+// barrel dragged @mui/material/SvgIcon + the emotion styling engine (~68 KB)
+// onto the home page's critical path for three icons; react-icons is already
+// loaded here for the search/mic icons, so these cost nothing extra.
+import { MdOutlineRoofing, MdOutlineMap, MdOutlineRoom } from 'react-icons/md';
 import { slugify } from '../../../utils/slugify';
 import Button from '../button/button';
 
@@ -214,26 +214,42 @@ function CustomizedHook({ onSearch }) {
     }
   };
 
-  const fetchSuggestions = debounce(async (value) => {
+  // The debounce timer lives in a ref so it survives re-renders. This used to be
+  // `debounce(...)` evaluated in the component body, which built a brand-new
+  // debounced function on every keystroke's re-render — so nothing was ever
+  // actually debounced and each character fired its own /suggest request. Doing
+  // it by hand also keeps lodash (~68 KB) off the home page's critical path.
+  const suggestTimer = useRef(null);
+
+  useEffect(() => () => clearTimeout(suggestTimer.current), []);
+
+  const fetchSuggestions = (value) => {
+    clearTimeout(suggestTimer.current);
+
     if (!value.trim()) {
       setSuggestLoading(false);
       return;
     }
 
-    try {
-      const response = await Ajax1({
-        url: `/suggest`,
-        method: 'GET',
-        params: { q: value }
-      });
+    suggestTimer.current = setTimeout(async () => {
+      try {
+        // Ajax1 pulls in axios (~58 KB). Importing it lazily keeps that off the
+        // initial load — it's only needed once the user actually types.
+        const { default: Ajax1 } = await import('../../helper/Ajax1');
+        const response = await Ajax1({
+          url: `/suggest`,
+          method: 'GET',
+          params: { q: value }
+        });
 
-      setSuggestions(response?.data?.suggestions || []);
-    } catch (error) {
-      console.error('Error fetching suggestions:', error);
-    } finally {
-      setSuggestLoading(false); // hide the skeleton once the fetch settles
-    }
-  }, 300);
+        setSuggestions(response?.data?.suggestions || []);
+      } catch (error) {
+        console.error('Error fetching suggestions:', error);
+      } finally {
+        setSuggestLoading(false); // hide the skeleton once the fetch settles
+      }
+    }, 300);
+  };
 
   const handleInputChange = (e) => {
     const value = e.target.value;
@@ -274,6 +290,10 @@ function CustomizedHook({ onSearch }) {
 <div className={styles.inputWrapper}>
   <input
     type="text"
+    id="property-search"
+    name="q"
+    aria-label="Search properties"
+    autoComplete="off"
     placeholder={`${SEARCH_PREFIX}${typed}|`}
     value={inputValue}
     onChange={handleInputChange}
@@ -316,9 +336,9 @@ function CustomizedHook({ onSearch }) {
           {suggestions.map((option, index) => (
             <li key={index} onClick={() => handleSelect(option)}>
               <span>
-                {option.type === 'property' && <RoofingOutlinedIcon />}
-                {option.type === 'locality' && <MapOutlinedIcon />}
-                {option.type === 'subLocality' && <RoomOutlinedIcon />}
+                {option.type === 'property' && <MdOutlineRoofing />}
+                {option.type === 'locality' && <MdOutlineMap />}
+                {option.type === 'subLocality' && <MdOutlineRoom />}
                 {option.title}
               </span>
               <span className={styles.optionType}>

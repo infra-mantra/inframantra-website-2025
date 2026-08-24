@@ -115,11 +115,15 @@ function Home({allData}) {
       <Head>
         {/* Preload the LCP hero (self-hosted, pre-compressed AVIF) so it downloads
             immediately — matches the <picture> in the banner: desktop vs mobile. */}
+        {/* Use imageSrcSet (not href) so the browser matches these preloads to
+            the hero's <picture><source srcSet> requests and reuses them — a plain
+            href preload isn't matched to a <source srcset>, causing a "preloaded
+            but not used" warning + a wasted second fetch. */}
         <link
           rel="preload"
           as="image"
           type="image/avif"
-          href="/banner/whiteland-desktop.avif"
+          imageSrcSet="/banner/whiteland-desktop.avif"
           media="(min-width: 769px)"
           fetchpriority="high"
         />
@@ -127,7 +131,7 @@ function Home({allData}) {
           rel="preload"
           as="image"
           type="image/avif"
-          href="/banner/westin-mobile.avif"
+          imageSrcSet="/banner/westin-mobile.avif"
           media="(max-width: 768px)"
           fetchpriority="high"
         />
@@ -136,7 +140,12 @@ function Home({allData}) {
       <div className="premiumReserve" style={{ minHeight: '578px' }}>
         <PremiumPropertyMainComponent/>
       </div>
-      <LazyOnVisible minHeight={520} placeholder={<BlogsSkeleton />}><BlogsMedia /></LazyOnVisible>
+      {/* Tighter rootMargin, same reason as the ServiceSection wrapper: at first
+          paint the premiumReserve above is only 578px tall, so this sits ~1100px
+          down and a 600px margin fired it immediately — putting its 43 KB WP fetch
+          on the wire at High priority, directly against the LCP hero. The sections
+          below keep the 600px default; they already sit far enough down. */}
+      <LazyOnVisible minHeight={520} rootMargin="200px" placeholder={<BlogsSkeleton />}><BlogsMedia /></LazyOnVisible>
       <LazyOnVisible minHeight={480} placeholder={<StatsSkeleton />}><StatisticalInsightsSection /></LazyOnVisible>
       <LazyOnVisible minHeight={520} placeholder={<GallerySkeleton />}><ImageGallerySection /></LazyOnVisible>
       <LazyOnVisible minHeight={520} placeholder={<ReviewsSkeleton />}><ReviewsWall current={allData.testimonial} /></LazyOnVisible>

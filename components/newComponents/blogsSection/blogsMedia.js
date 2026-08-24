@@ -27,10 +27,22 @@ const formatDate = (d) => {
 };
 
 function BlogsMedia(props) {
+  // `?_embed` returns every post's full content plus all embedded authors and
+  // terms — 467 KB of JSON for a carousel that reads six fields. `_fields` trims
+  // the posts and `_embed=wp:featuredmedia` embeds only the featured image,
+  // taking the response to ~43 KB. It was the largest request on the homepage and
+  // landed at High priority, starving the LCP hero of bandwidth on mobile.
+  // NOTE: `_links.wp:featuredmedia` must stay in `_fields` or `_embedded` comes
+  // back empty and every card falls back to /placeholder.jpg.
   const { data } = useSWR(
-    "https://cms.inframantra.com/wp-json/wp/v2/posts?_embed&per_page=10",
+    "https://cms.inframantra.com/wp-json/wp/v2/posts" +
+      "?_embed=wp:featuredmedia" +
+      "&_fields=id,slug,date,categories,title,_links.wp:featuredmedia" +
+      "&per_page=10",
     fetcher,
-    { refreshInterval: 60000 }
+    // Was 60 s: a homepage blog carousel does not need minute-by-minute polling,
+    // and every tick re-downloaded the payload and re-rendered the Swiper.
+    { refreshInterval: 300000 }
   );
 const getPostUrl = (post) => {
   const categories = post?.categories || [];

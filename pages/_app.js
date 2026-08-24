@@ -5,8 +5,9 @@ import "../styles/self-hosted-fonts.css";
 import "../styles/globals.css";
 import "../styles/responsive.css";
 import "react-toastify/dist/ReactToastify.css";
+// swiper/css/bundle already contains swiper/css (core) plus every module's
+// styles — the separate "swiper/css" import below it was a duplicate.
 import "swiper/css/bundle";
-import "swiper/css";
 import "../styles/newHome.css";
 import "../styles/filter.css";
 import "../styles/dropDownMenu.css";
@@ -258,14 +259,14 @@ function MyApp({ Component, pageProps }) {
             rel="noopener noreferrer"
             className={styles.whatsapp}
           >
-            <img src="/logos/whatsapp.svg" alt="WhatsApp" />
+            <img src="/logos/whatsapp.svg" alt="WhatsApp" width="20" height="20" />
             <span>WhatsApp</span>
             </a>
           
         </div>
         <div className={styles.right}>
           <a href="tel:8698009900" className={styles.contact} >
-           <img src="/logos/phone.svg" alt="Contact Us" />
+           <img src="/logos/phone.svg" alt="Contact Us" width="16" height="16" />
             <span>Contact Us</span>
          </a>
         </div>

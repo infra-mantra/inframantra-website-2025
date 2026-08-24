@@ -4,22 +4,21 @@ import React, { useState, useEffect } from 'react';
 import styles from './banner.module.css';
 
 const BannerVideo = () => {
-  // Only the LCP hero (slideBase) paints on first load. The 5 rotating slide
-  // images (~350 KB) are mounted after the page's `load` event so they don't
-  // steal bandwidth from the hero on slow mobile connections — the single
-  // biggest lever on the banner's LCP.
+  // Only the LCP hero (slideBase) paints on first load. The rotating slides are
+  // mounted on the first genuine user interaction — the same trigger already used
+  // for GTM and the chatbot. Revealing them on `load` still put ~99 KB inside the
+  // initial load window, competing with the hero for bandwidth on slow mobile.
+  // Anyone who scrolls or taps gets the rotation within moments; a visitor who
+  // never interacts simply keeps the static hero, which is the first slide anyway.
   const [showSlides, setShowSlides] = useState(false);
   useEffect(() => {
     const reveal = () => setShowSlides(true);
-    if (document.readyState === 'complete') {
-      const t = setTimeout(reveal, 200);
-      return () => clearTimeout(t);
-    }
-    window.addEventListener('load', reveal, { once: true });
-    const t = setTimeout(reveal, 3000); // fallback if load is slow
+    const events = ['scroll', 'mousemove', 'touchstart', 'keydown', 'click'];
+    events.forEach((e) =>
+      window.addEventListener(e, reveal, { passive: true, once: true })
+    );
     return () => {
-      window.removeEventListener('load', reveal);
-      clearTimeout(t);
+      events.forEach((e) => window.removeEventListener(e, reveal));
     };
   }, []);
 
@@ -49,8 +48,14 @@ const BannerVideo = () => {
 
   const images = [
      {
-      // Self-hosted, pre-compressed (same as the LCP base) so this first rotating
-      // slide reuses the small file instead of re-downloading the 153 KB original.
+      // Slide 1 is the SAME picture as the static LCP base above. It was still
+      // costing a second download because the hero resolves to .avif while this
+      // only offered .webp — 29 KB fetched, then 46 KB fetched again for identical
+      // pixels. Listing the AVIF here makes the URLs match, so the browser serves
+      // this slide straight from cache. The other four slides have no AVIF build,
+      // hence the optional fields.
+      desktopAvif: '/banner/whiteland-desktop.avif',
+      mobileAvif: '/banner/westin-mobile.avif',
       desktop: '/banner/whiteland-desktop.webp',
       mobile: '/banner/westin-mobile.webp',
       alt: 'Westin',
@@ -122,7 +127,11 @@ const BannerVideo = () => {
           {showSlides &&
             images.map((img, index) => (
               <picture key={index}>
+                {img.mobileAvif && (
+                  <source media="(max-width: 768px)" type="image/avif" srcSet={img.mobileAvif} />
+                )}
                 <source media="(max-width: 768px)" srcSet={img.mobile} />
+                {img.desktopAvif && <source type="image/avif" srcSet={img.desktopAvif} />}
                 <img
                   src={img.desktop}
                   alt={img.alt}
