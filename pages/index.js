@@ -311,7 +311,14 @@ export async function getStaticProps() {
     props: {
       allData,
     },
-    revalidate: 10,
+    // Was 10 seconds, which meant the page fell out of cache six times a minute.
+    // Vercel answered STALE on 3 of 4 sampled requests, and every one of those
+    // kicked off a regeneration that re-ran the call below — an API that takes
+    // 1.28 s and returns 488 KB, for the two fields this page actually keeps
+    // (banner meta and testimonials). Neither changes minute to minute.
+    // 30 minutes keeps almost every request on a warm edge cache; lower it if
+    // marketing needs banner changes to appear faster.
+    revalidate: 1800,
   }
 }
 
