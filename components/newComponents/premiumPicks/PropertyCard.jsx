@@ -31,9 +31,17 @@ const handleNavigateIndividualProperty = () => {
     <>
     <div className={styles.propertyCard} onClick={handleNavigateIndividualProperty}>
       <div className={styles.propertyImageContainer}>
+        {/* Explicit dimensions so the browser reserves the card image box from
+            the aspect ratio alone. This section is code-split, so its CSS can
+            land after the markup — without these the images were sized only once
+            the stylesheet applied, which Lighthouse reported as "media element
+            lacking an explicit size" and a 0.152 shift inside .premiumReserve.
+            The CSS still drives the real size (100% x 150px, object-fit cover). */}
         <img
           src={imageUrl}
           alt={imageAlt}
+          width="282"
+          height="150"
           loading="lazy"
           onError={handleImageError}
           className={styles.propertyImage}

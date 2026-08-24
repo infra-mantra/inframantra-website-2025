@@ -1,14 +1,21 @@
+/* svh (small viewport height) is fixed for the life of the page, while vh
+   tracks the mobile URL bar. .searchOptionsWrapper below is positioned at
+   top:100% of this box, so every time the viewport height settled it moved —
+   measured as a 0.335 layout shift, the single largest on the page. The vh line
+   stays first as a fallback for browsers without svh. */
 .homePageheader {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     height: 67vh;
+    height: 67svh;
 }
 
 
 .homePageheaderContainer {
     height: 64vh;
+    height: 64svh;
     width: 100vw;
     position: relative;
     overflow: visible;
