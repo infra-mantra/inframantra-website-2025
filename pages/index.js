@@ -3,7 +3,6 @@ import React, {useState, useEffect, lazy } from "react";
 
 
 import Wrapper from "../components/UI/Wrapper";
-import Head from "next/head";
 import dynamic from "next/dynamic";
 import moment from "moment/moment";
 import MainBanner1 from '../components/newComponents/homepage/MainBanner.js';
@@ -112,30 +111,21 @@ function Home({allData}) {
       keyword={'InfraMantra, Residential Properties, Commercial Properties,  Apartments, Flats, Buy flat in gurgaon, buy property in gurgaon,gurgaon property prices, Apartments for sale in gurugram, buy apartment in gurgaon, buy Properties in gurgaon, real estate in gurgaon, best property to buy in gurgaon, noida   apartment for sale, Pune property prices, buy property noida, buy residential property in pune, Property for purchase in gurugram'}
       selectedItem={selectedItems}
     >
-      <Head>
-        {/* Preload the LCP hero (self-hosted, pre-compressed AVIF) so it downloads
-            immediately — matches the <picture> in the banner: desktop vs mobile. */}
-        {/* Use imageSrcSet (not href) so the browser matches these preloads to
-            the hero's <picture><source srcSet> requests and reuses them — a plain
-            href preload isn't matched to a <source srcset>, causing a "preloaded
-            but not used" warning + a wasted second fetch. */}
-        <link
-          rel="preload"
-          as="image"
-          type="image/avif"
-          imageSrcSet="/banner/whiteland-desktop.avif"
-          media="(min-width: 769px)"
-          fetchpriority="high"
-        />
-        <link
-          rel="preload"
-          as="image"
-          type="image/avif"
-          imageSrcSet="/banner/westin-mobile.avif"
-          media="(max-width: 768px)"
-          fetchpriority="high"
-        />
-      </Head>
+      {/* No <link rel="preload"> for the hero.
+
+          It looked free but wasn't: Next's Head manager creates the <link> and sets
+          imagesrcset BEFORE media, so the browser starts fetching before the media
+          gate applies. On a desktop window that downloaded the *mobile* hero, which
+          nothing then used — Chrome logs "preloaded using link preload but not used"
+          once per re-render.
+
+          Nothing is lost by dropping it. The hero lives in a server-rendered
+          <picture> with fetchpriority="high" and loading="eager", so the preload
+          scanner finds it in the same first pass it would have found the link tag —
+          measured as the 3rd request on the page, High priority, starting the
+          instant the document finishes. Lighthouse's lcp-discovery checks all pass
+          without it. A preload only earns its place for images discovered late (CSS
+          backgrounds, JS-inserted); this one is in the initial HTML. */}
       <MainBanner1 />
       <div className="premiumReserve" style={{ minHeight: '578px' }}>
         <PremiumPropertyMainComponent/>
