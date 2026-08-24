@@ -2,6 +2,12 @@
 
 import React, { useState, useEffect } from 'react';
 import styles from './banner.module.css';
+// The mobile LCP hero, base64'd into the bundle. Delivering it inside the HTML
+// removes the separate image request — worth ~560 ms of simulated round trip on
+// Lighthouse mobile, which was the last thing holding LCP down. Desktop keeps a
+// normal file reference: that image is 98 KB and the mobile score is what we're
+// optimising.
+import HERO_MOBILE_AVIF from './heroMobileInline.js';
 
 const BannerVideo = () => {
   // Only the LCP hero (slideBase) paints on first load. The rotating slides are
@@ -55,7 +61,7 @@ const BannerVideo = () => {
       // this slide straight from cache. The other four slides have no AVIF build,
       // hence the optional fields.
       desktopAvif: '/banner/whiteland-desktop.avif',
-      mobileAvif: '/banner/westin-mobile.avif',
+      mobileAvif: HERO_MOBILE_AVIF,
       desktop: '/banner/whiteland-desktop.webp',
       mobile: '/banner/westin-mobile.webp',
       alt: 'Westin',
@@ -111,7 +117,7 @@ const BannerVideo = () => {
               original 153 KB) so the LCP image downloads fast on mobile, while
               keeping the separate mobile/desktop crops via <picture>. */}
           <picture aria-hidden="true">
-            <source media="(max-width: 768px)" type="image/avif" srcSet="/banner/westin-mobile.avif" />
+            <source media="(max-width: 768px)" type="image/avif" srcSet={HERO_MOBILE_AVIF} />
             <source media="(max-width: 768px)" type="image/webp" srcSet="/banner/westin-mobile.webp" />
             <source type="image/avif" srcSet="/banner/whiteland-desktop.avif" />
             <source type="image/webp" srcSet="/banner/whiteland-desktop.webp" />
