@@ -88,13 +88,18 @@ function CustomizedHook({ onSearch }) {
   const [voiceSupported, setVoiceSupported] = useState(false);
   const [phIndex, setPhIndex] = useState(0);
   const [typed, setTyped] = useState('');
+  // Once every term has been shown the placeholder stops moving. A landing page
+  // that animates forever never reaches visual completeness, which is exactly
+  // what Speed Index measures — and six terms is all it takes to teach someone
+  // what they can search by.
+  const [typingSettled, setTypingSettled] = useState(false);
   const recognitionRef = useRef(null);
   const router = useRouter();
 
   // Typewriter placeholder: type a hint, hold, erase, next. Pauses while the user
   // is typing or a voice search is active so it never fights real input.
   useEffect(() => {
-    if (inputValue || isListening) return;
+    if (inputValue || isListening || typingSettled) return;
     const term = SEARCH_TERMS[phIndex];
     let charIndex = 0;
     let deleting = false;
@@ -105,6 +110,11 @@ function CustomizedHook({ onSearch }) {
         charIndex++;
         setTyped(term.slice(0, charIndex));
         if (charIndex === term.length) {
+          if (phIndex === SEARCH_TERMS.length - 1) {
+            // Last term: rest here, fully typed, rather than erasing and looping.
+            setTypingSettled(true);
+            return;
+          }
           deleting = true;
           timer = setTimeout(tick, 1500);
           return;
@@ -123,7 +133,7 @@ function CustomizedHook({ onSearch }) {
 
     timer = setTimeout(tick, 350);
     return () => clearTimeout(timer);
-  }, [phIndex, inputValue, isListening]);
+  }, [phIndex, inputValue, isListening, typingSettled]);
 
   useEffect(() => {
     const handleResize = () => {
