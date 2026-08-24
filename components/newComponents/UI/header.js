@@ -118,7 +118,7 @@ function NavigationBar({ pageBgd, onlyLogo = false, logoUrl }) {
           isMobile
             ? navBarStyles
             : {
-                height: pageBgd ? '' : '10vh',
+                height: pageBgd ? undefined : '10vh',
                 position: !pageBgd ? 'absolute' : 'relative',
               }
         }
@@ -132,7 +132,7 @@ function NavigationBar({ pageBgd, onlyLogo = false, logoUrl }) {
               : logoUrl
           }
           style={{
-            marginBottom: !pageBgd ? '12px' : '',
+            marginBottom: !pageBgd ? '12px' : undefined,
             cursor: 'pointer',
             display: 'block',
             marginLeft: 'auto',
@@ -160,7 +160,7 @@ function NavigationBar({ pageBgd, onlyLogo = false, logoUrl }) {
         isMobile
           ? navBarStyles
           : {
-              height: pageBgd ? '' : '10vh',
+              height: pageBgd ? undefined : '10vh',
               position: !pageBgd ? 'absolute' : 'relative',
             }
       }
@@ -220,7 +220,7 @@ function NavigationBar({ pageBgd, onlyLogo = false, logoUrl }) {
             : '/logos/nav-white.webp'
         }
         style={{
-          marginBottom: !pageBgd ? '12px' : '',
+          marginBottom: !pageBgd ? '12px' : undefined,
           cursor: 'pointer',
         }}
         alt="Inframantra-logo"

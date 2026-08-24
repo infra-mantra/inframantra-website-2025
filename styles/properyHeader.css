@@ -91,7 +91,7 @@
   align-items: center;
   padding: 20px;
   padding-bottom: 0px;
-  font-family: Arial, sans-serif;
+  font-family: 'Lexend Deca', sans-serif;
 }
 .mainLayout,
 .pageWrapper,
@@ -123,9 +123,19 @@
   text-decoration: underline;
 }
 
+/* anchor the tooltip to the button so it positions correctly */
+.rera-hover-container {
+  position: relative;
+  display: inline-block;
+}
+
 .rera-hover-box {
-  display: none;               
-  position: absolute;         
+  display: none;
+  position: absolute;
+  top: calc(100% + 10px);        /* just below the RERA button */
+  left: 0;
+  width: max-content;            /* size to content so the RERA number never trims/wraps */
+  max-width: min(340px, 90vw);
   background: #ffffff;
   border-radius: 12px;
   padding: 16px 20px;
@@ -138,7 +148,7 @@
   line-height: 1.6;
   border-left: 4px solid #e7b554;
   border-right: 4px solid #e7b554;
-  font-family: Arial, sans-serif;
+  font-family: 'Lexend Deca', sans-serif;
 }
 
 /* Show on hover */
@@ -257,6 +267,11 @@ ul {
     margin-bottom: 30px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     overflow: hidden;
+}
+
+/* the property header card must NOT clip the RERA hover tooltip that overflows below it */
+.card.card-width {
+    overflow: visible;
 }
 
 .card-width {

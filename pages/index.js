@@ -8,15 +8,23 @@ import dynamic from "next/dynamic";
 import moment from "moment/moment";
 import MainBanner1 from '../components/newComponents/homepage/MainBanner.js';
 import LazyOnVisible from "../components/UI/LazyOnVisible";
+import {
+  PremiumSkeleton,
+  BlogsSkeleton,
+  StatsSkeleton,
+  GallerySkeleton,
+  ReviewsSkeleton,
+  CtaSkeleton,
+} from "../components/newComponents/homepage/HomeSkeletons";
 
 // Premium Picks (Swiper + a large subtree) is deferred with ssr:false to keep it
-// off the initial hydration path (TBT win). It renders client-side; the wrapper
-// below reserves space to limit layout shift.
+// off the initial hydration path (TBT win). It renders client-side; while its
+// chunk loads we show a skeleton in the reserved space (no layout shift).
 const PremiumPropertyMainComponent = dynamic(
   () => import("../components/newComponents/premiumPicks/PremiumPropertyMainComponent.jsx"),
   {
     ssr: false,
-    loading: () => <div className="homePremiumPlaceholder" aria-hidden="true" />,
+    loading: () => <PremiumSkeleton />,
   }
 );
 
@@ -24,11 +32,15 @@ const PremiumPropertyMainComponent = dynamic(
 // in <LazyOnVisible> in the render tree, so their chunks download + hydrate only
 // when the user scrolls near them — keeping this JS off the initial load, which
 // is where Total Blocking Time (the biggest mobile-score factor) is won.
-const StatisticalInsightsSection = dynamic(() => import("../components/newComponents/statisticalInsights/staticalInsight"), { ssr: false });
-const ImageGallerySection = dynamic(() => import("../components/newComponents/imageGallery/imageGallerySection"), { ssr: false });
-const ReviewsWall = dynamic(() => import("../components/newComponents/reviewsWall/ReviewsWall.jsx"), { ssr: false });
-const BlogsMedia = dynamic(() => import("../components/newComponents/blogsSection/blogsMedia.js"), { ssr: false });
-const CtaForHome = dynamic(() => import("../components/detailSections/ctaForHome.js"), { ssr: false });
+// ssr:false keeps each section's JS off the initial load. `loading` shows the
+// section's skeleton while its chunk downloads, so there is no blank flash once
+// the section scrolls into view (the LazyOnVisible placeholder covers the phase
+// before that). The skeletons are already imported above — no extra page weight.
+const StatisticalInsightsSection = dynamic(() => import("../components/newComponents/statisticalInsights/staticalInsight"), { ssr: false, loading: () => <StatsSkeleton /> });
+const ImageGallerySection = dynamic(() => import("../components/newComponents/imageGallery/imageGallerySection"), { ssr: false, loading: () => <GallerySkeleton /> });
+const ReviewsWall = dynamic(() => import("../components/newComponents/reviewsWall/ReviewsWall.jsx"), { ssr: false, loading: () => <ReviewsSkeleton /> });
+const BlogsMedia = dynamic(() => import("../components/newComponents/blogsSection/blogsMedia.js"), { ssr: false, loading: () => <BlogsSkeleton /> });
+const CtaForHome = dynamic(() => import("../components/detailSections/ctaForHome.js"), { ssr: false, loading: () => <CtaSkeleton /> });
 
 
 function Home({allData}) {
@@ -124,11 +136,11 @@ function Home({allData}) {
       <div className="premiumReserve" style={{ minHeight: '578px' }}>
         <PremiumPropertyMainComponent/>
       </div>
-      <LazyOnVisible minHeight={520}><BlogsMedia /></LazyOnVisible>
-      <LazyOnVisible minHeight={480}><StatisticalInsightsSection /></LazyOnVisible>
-      <LazyOnVisible minHeight={520}><ImageGallerySection /></LazyOnVisible>
-      <LazyOnVisible minHeight={520}><ReviewsWall current={allData.testimonial} /></LazyOnVisible>
-      <LazyOnVisible minHeight={420}><CtaForHome name={'Form Submitted from Home page'} /></LazyOnVisible>
+      <LazyOnVisible minHeight={520} placeholder={<BlogsSkeleton />}><BlogsMedia /></LazyOnVisible>
+      <LazyOnVisible minHeight={480} placeholder={<StatsSkeleton />}><StatisticalInsightsSection /></LazyOnVisible>
+      <LazyOnVisible minHeight={520} placeholder={<GallerySkeleton />}><ImageGallerySection /></LazyOnVisible>
+      <LazyOnVisible minHeight={520} placeholder={<ReviewsSkeleton />}><ReviewsWall current={allData.testimonial} /></LazyOnVisible>
+      <LazyOnVisible minHeight={420} placeholder={<CtaSkeleton />}><CtaForHome name={'Form Submitted from Home page'} /></LazyOnVisible>
     </Wrapper>
   );
 }

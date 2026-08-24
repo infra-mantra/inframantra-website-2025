@@ -9,12 +9,14 @@
 .awardHeader {
   display: flex;
   justify-content: center;
-  font-size: 44px;
+  font-size: 36px;
+  font-weight: 700;
+  color: #1a1a1a;
 }
 
 .brand {
   margin-left: 6px;
-  color: #0A984B;
+  color: #e7b554;
 }
 
 .swiperContainer {

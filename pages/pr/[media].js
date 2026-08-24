@@ -1,5 +1,6 @@
 import React,{useEffect,useState} from 'react';
 import { useRouter } from "next/router";
+import Link from 'next/link';
 import Wrapper from '../../components/UI/Wrapper';
 import ArticleSchema from '../../components/UI/ArticleSchema';
 import Share from '../share';
@@ -128,15 +129,17 @@ if(redirecting){
           <div className={styles['media-sidebar']}>
             {filteredPosts.length > 0 ? (
               filteredPosts.map((post) => (
-                <div key={post.id} className={styles['media-sidebar-item']}>
-                  {post.image && <img src={post.image} alt={post.title} className={styles['media-sidebar-img']} />}
-                  <div className={styles['media-sidebar-content']}>
-                    <p className={styles['media-sidebar-date']}>
-                      {moment(post.date).format('MMM YYYY')} | 8 Mins Read
-                    </p>
-                    <h4 className={styles['media-sidebar-title']}>{post.title}</h4>
-                  </div>
-                </div>
+                <Link key={post.id} href={`/pr/${post.slug}`} passHref>
+                  <a className={styles['media-sidebar-item']}>
+                    {post.image && <img src={post.image} alt={post.title} className={styles['media-sidebar-img']} />}
+                    <div className={styles['media-sidebar-content']}>
+                      <p className={styles['media-sidebar-date']}>
+                        {moment(post.date).format('MMM YYYY')} | 8 Mins Read
+                      </p>
+                      <h4 className={styles['media-sidebar-title']}>{post.title}</h4>
+                    </div>
+                  </a>
+                </Link>
               ))
             ) : (
               <p>No posts available</p>
@@ -144,12 +147,12 @@ if(redirecting){
           </div>
         </div>
 
-        {/* Related Blogs */}
-        <div className={styles['media-grid']}>
-          <h3>Related Blogs</h3>
-          <div className={styles['media-container']}>
-            {allData?.related?.length > 0 ? (
-              allData.related.map((post) => (
+        {/* Related Blogs — only shown when there are related posts */}
+        {allData?.related?.length > 0 && (
+          <div className={styles['media-grid']}>
+            <h3>Related Blogs</h3>
+            <div className={styles['media-container']}>
+              {allData.related.map((post) => (
                 <a
                   key={post._id}
                   href={post.link || '#'}
@@ -162,12 +165,10 @@ if(redirecting){
                     <h4 className={styles['blogs-media-title']}>{post.name}</h4>
                   </div>
                 </a>
-              ))
-            ) : (
-              <p>No related blogs available</p>
-            )}
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {!isDesktop && <BottomBar />}

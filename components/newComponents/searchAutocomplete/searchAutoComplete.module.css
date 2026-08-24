@@ -1,3 +1,7 @@
+.root{
+    position: relative;
+  }
+
 .inputWrapper{
     width: 100%;
     border: 1px solid rgb(217, 217, 217);
@@ -33,38 +37,88 @@
    
   }
   .listbox{
-    width: 500px;
-    max-width: 100%;
-    margin: 20px 0px 0px;
-    padding: 0px;
+    width: 100%;
+    padding: 6px;
     position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
     list-style: none;
-    background-color: rgb(255, 255, 255);
+    background-color: #ffffff;
     overflow: auto;
-    max-height: 225px;
-    border-radius: 4px;
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+    max-height: 320px;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.14);
     z-index: 10000;
+    font-family: 'Lexend Deca', sans-serif;
   }
   .listbox li{
-    padding: 5px 12px;
+    padding: 7px 12px;
     display: flex;
-    -webkit-box-pack: justify;
     justify-content: space-between;
-    -webkit-box-align: center;
     align-items: center;
     cursor: pointer;
+    transition: background-color 0.15s ease;
   }
-  .listbox li span{
+  .listbox li:not(:last-child){
+    border-bottom: 1px solid #eee;
+  }
+  .listbox li:hover{
+    background-color: rgba(220, 170, 76, 0.10);
+  }
+  .listbox li > span:first-child{
     display: flex;
-    -webkit-box-align: center;
     align-items: center;
-    font-size: 15px;
-    color: rgba(0, 0, 0, 0.6);
+    gap: 9px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #333;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
-  .listbox li span svg:hover{
-    color: goldenrod;
+  .listbox li span svg{
+    color: #DCAA4C;
+    flex-shrink: 0;
+    font-size: 18px;
   }
+  .optionType{
+    font-size: 10.5px;
+    font-weight: 500;
+    text-transform: capitalize;
+    color: #8a7a55;
+    background: rgba(220, 170, 76, 0.14);
+    padding: 2px 8px;
+    border-radius: 999px;
+    flex-shrink: 0;
+    margin-left: 10px;
+    white-space: nowrap;
+  }
+  /* Loading skeleton rows shown inside the dropdown while suggestions fetch. */
+  .skelText{
+    height: 12px;
+    width: 60%;
+    border-radius: 6px;
+    background: #e9ecef;
+    animation: skPulse 1.4s ease-in-out infinite;
+  }
+  .skelPill{
+    height: 16px;
+    width: 46px;
+    border-radius: 999px;
+    background: #e9ecef;
+    flex-shrink: 0;
+    animation: skPulse 1.4s ease-in-out infinite;
+  }
+  @keyframes skPulse{
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .skelText, .skelPill { animation: none; }
+  }
+
   .inputSelection{
     display: flex;
     -webkit-box-align: center;

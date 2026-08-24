@@ -58,34 +58,34 @@ const ImageGallerySection = () => {
   return (
     <section
       ref={ref}
-      className={`${styles.gallery} ${inView ? styles.in : ""}`}
+      className={`${styles.igGallery} ${inView ? styles.in : ""}`}
     >
-      <span className={styles.glowA} aria-hidden="true" />
-      <span className={styles.glowB} aria-hidden="true" />
+      <span className={styles.igGlowA} aria-hidden="true" />
+      <span className={styles.igGlowB} aria-hidden="true" />
 
-      <div className={styles.inner}>
-        <div className={styles.header}>
-          <span className={styles.eyebrow}>
-            <span className={styles.eyebrowDot} />
+      <div className={styles.igInner}>
+        <div className={styles.igHeader}>
+          <span className={styles.igEyebrow}>
+            <span className={styles.igEyebrowDot} />
             Moments &amp; Milestones
           </span>
-          <h2 className={styles.title}>
+          <h2 className={styles.igTitle}>
             Frames of <span>Excellence</span>
           </h2>
-          <p className={styles.subtitle}>
+          <p className={styles.igSubtitle}>
             Where vision meets reality — the moments, milestones and people
             behind every home we deliver.
           </p>
         </div>
 
         <div
-          className={`${styles.accordion} ${paused ? styles.paused : ""}`}
+          className={`${styles.igAccordion} ${paused ? styles.paused : ""}`}
           onMouseLeave={() => setPaused(false)}
         >
           {itemData.map((it, i) => (
             <figure
               key={i}
-              className={`${styles.panel} ${i === active ? styles.active : ""}`}
+              className={`${styles.igPanel} ${i === active ? styles.active : ""}`}
               style={{ animationDelay: `${0.12 + i * 0.09}s` }}
               onMouseEnter={() => {
                 setActive(i);
@@ -98,31 +98,31 @@ const ImageGallerySection = () => {
                 alt=""
                 aria-hidden="true"
                 loading="lazy"
-                className={styles.panelBg}
+                className={styles.igPanelBg}
               />
               <img
                 src={it.img}
                 alt={it.caption}
                 loading="lazy"
-                className={styles.panelImg}
+                className={styles.igPanelImg}
               />
-              <span className={styles.scrim} aria-hidden="true" />
-              <span className={styles.shine} aria-hidden="true" />
-              <span className={styles.ring} aria-hidden="true" />
+              <span className={styles.igScrim} aria-hidden="true" />
+              <span className={styles.igShine} aria-hidden="true" />
+              <span className={styles.igRing} aria-hidden="true" />
 
-              <span className={styles.vLabel} aria-hidden="true">
+              <span className={styles.igVLabel} aria-hidden="true">
                 <span>{it.caption}</span>
               </span>
 
-              <figcaption className={styles.label}>
-                <span className={styles.index}>
+              <figcaption className={styles.igLabel}>
+                <span className={styles.igIndex}>
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <span className={styles.labelText}>{it.caption}</span>
+                <span className={styles.igLabelText}>{it.caption}</span>
               </figcaption>
 
               {i === active && (
-                <span key={active} className={styles.progress} aria-hidden="true" />
+                <span key={active} className={styles.igProgress} aria-hidden="true" />
               )}
             </figure>
           ))}

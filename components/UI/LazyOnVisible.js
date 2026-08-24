@@ -12,6 +12,7 @@ export default function LazyOnVisible({
   children,
   minHeight = 500,
   rootMargin = '600px',
+  placeholder = null, // optional skeleton shown in the reserved space until visible
 }) {
   const ref = useRef(null);
   const [show, setShow] = useState(false);
@@ -42,7 +43,7 @@ export default function LazyOnVisible({
 
   return (
     <div ref={ref} style={show ? undefined : { minHeight }}>
-      {show ? children : null}
+      {show ? children : placeholder}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import style from "./ListingFilters.module.css";
 import { useRouter } from "next/router";
 export default function ListingFilters({
@@ -31,12 +31,21 @@ export default function ListingFilters({
   let { type, name } = router.query;
   // console.log(type,name)
 useEffect(() => {
-  if (type === "city") {
-      resetFilters()
-      setSelectedCities([name]);
-  }else{
-    resetFilters()
-  }
+  // Initialize the filter UI FROM THE URL so shared/bookmarked links show the right selections.
+  // LOCAL state only — no parent notify — the listing page reads the same URL and does the fetch
+  // (notifying here would trigger a second identical fetch: the "loading twice" flash).
+  const q = router.query;
+  const csv = (v) => (typeof v === "string" && v.trim() ? v.split(",").map((s) => s.trim()).filter(Boolean) : []);
+  setSelectedUnitTypes(csv(q.unit));
+  setSelectedConfigurations(csv(q.config));
+  setSelectedStatuses(csv(q.status));
+  const min = q.min ? Number(q.min) : null;
+  const max = q.max ? Number(q.max) : null;
+  setPriceRange([min, max]);
+  setMinInput(q.min ? String(q.min) : "");
+  setMaxInput(q.max ? String(q.max) : "");
+  setInputError("");
+  setSelectedCities(type === "city" ? [name] : []);
 }, [name]);
 
   useEffect(() => {
@@ -86,6 +95,23 @@ const toggleSection = (key) => {
     );
 
   };
+
+  // The price slider fires onChange on EVERY pixel of drag, and the price inputs on every
+  // keystroke. Applying on each of those spammed the parent with fetches + URL replaces +
+  // scroll-to-top, making the results crawl upward. Debounce so we apply ONCE the user settles.
+  const priceNotifyTimer = useRef(null);
+  const notifyPriceDebounced = (updatedRange) => {
+    if (priceNotifyTimer.current) clearTimeout(priceNotifyTimer.current);
+    priceNotifyTimer.current = setTimeout(() => {
+      notifyAllFilters({ priceRange: updatedRange });
+    }, 400);
+  };
+  useEffect(
+    () => () => {
+      if (priceNotifyTimer.current) clearTimeout(priceNotifyTimer.current);
+    },
+    []
+  );
 
   // 🔥 FIX: Ensures newValue is passed, not old state
   const updateAndMaybeNotify = (setter, newValue, type) => {
@@ -138,7 +164,7 @@ const toggleSection = (key) => {
   setPriceRange(updated);
 
   if (!isMobile) {
-    notifyAllFilters({ priceRange: updated });
+    notifyPriceDebounced(updated);
   }
 };
 
@@ -241,7 +267,7 @@ const handlePriceInputChange = (e, type) => {
   setPriceRange(updatedRange);
 
   if (!isMobile) {
-    notifyAllFilters({ priceRange: updatedRange });
+    notifyPriceDebounced(updatedRange);
   }
 };
 
@@ -297,9 +323,12 @@ if (isMobile) {
       <div className={style.hr}></div>
 
       {/* Location */}
-      <div className={style.sectionTitle}>Location</div>
+      <div className={style.sectionTitle} style={{ display: "flex", alignItems: "center", gap: "7px" }}>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="#0b6e21" aria-hidden="true"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" /></svg>
+        Location
+      </div>
       <div className={style.locationTags}>
-        {["Gurgaon", "Noida", "Pune", "Jaipur", "Mohali"].map((city) => (
+        {["Gurgaon", "Mohali", "Noida", "Pune", "Jaipur"].map((city) => (
           <span
             key={city}
             className={`${style.tag} ${
@@ -319,7 +348,10 @@ if (isMobile) {
         className={style.sectionHeader}
         onClick={() => toggleSection("unitType")}
       >
-        <span>UNIT TYPE</span>
+        <span style={{ display: "inline-flex", alignItems: "center", gap: "7px" }}>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 21V10l8-6 8 6v11h-5v-6H9v6H4z" /></svg>
+          UNIT TYPE
+        </span>
         <span
           className={`${style.arrowIcon} ${
             expanded.unitType ? style.rotateDown : style.rotateUp
@@ -362,7 +394,10 @@ if (isMobile) {
         className={style.sectionHeader}
         onClick={() => toggleSection("configuration")}
       >
-        <span>CONFIGURATION</span>
+        <span style={{ display: "inline-flex", alignItems: "center", gap: "7px" }}>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 3h8v8H3V3zm10 0h8v5h-8V3zM3 13h8v8H3v-8zm10 3h8v5h-8v-5z" /></svg>
+          CONFIGURATION
+        </span>
         <span
           className={`${style.arrowIcon} ${
             expanded.configuration ? style.rotateDown : style.rotateUp
@@ -405,7 +440,10 @@ if (isMobile) {
         className={style.sectionHeader}
         onClick={() => toggleSection("priceRange")}
       >
-        <span>PRICE RANGE</span>
+        <span style={{ display: "inline-flex", alignItems: "center", gap: "7px" }}>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.4 11.6l-9-9A2 2 0 0 0 11 2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 .6 1.4l9 9a2 2 0 0 0 2.8 0l7-7a2 2 0 0 0 0-2.8zM6.5 8A1.5 1.5 0 1 1 6.5 5a1.5 1.5 0 0 1 0 3z" /></svg>
+          PRICE RANGE
+        </span>
         <span
           className={`${style.arrowIcon} ${
             expanded.priceRange ? style.rotateDown : style.rotateUp
@@ -473,7 +511,10 @@ if (isMobile) {
         className={style.sectionHeader}
         onClick={() => toggleSection("projectStatus")}
       >
-        <span>PROJECT STATUS</span>
+        <span style={{ display: "inline-flex", alignItems: "center", gap: "7px" }}>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 11h-4v-2h2V7h2v6z" /></svg>
+          PROJECT STATUS
+        </span>
         <span
           className={`${style.arrowIcon} ${
             expanded.projectStatus ? style.rotateDown : style.rotateUp
@@ -517,21 +558,24 @@ if (isMobile) {
     return (
     <div className={style.containerWrapper} >
       <div className={style.buttonWrapper}>
-        <button className={style.filterbtn}>Filters</button>
-     <button className={`${style.resetButton}`} onClick={resetFilters}>
-  Reset
-</button>
-
-
-
+        <span className={style.filterbtn}>Filters</span>
+        <button className={`${style.resetButton}`} onClick={resetFilters}>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M17.65 6.35A7.95 7.95 0 0 0 12 4a8 8 0 1 0 7.73 10.19h-2.08A6 6 0 1 1 12 6c1.57 0 2.99.62 4.05 1.6L13 11h7V4l-2.35 2.35z" />
+          </svg>
+          Reset
+        </button>
       </div>
 
       <div className={style.hr}></div>
 
       {/* Location */}
-      <div className={style.sectionTitle}>Location</div>
+      <div className={style.sectionTitle} style={{ display: "flex", alignItems: "center", gap: "7px" }}>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="#0b6e21" aria-hidden="true"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" /></svg>
+        Location
+      </div>
       <div className={style.locationTags}>
-        {["Gurgaon", "Noida", "Pune", "Jaipur", "Mohali"].map((city) => (
+        {["Gurgaon", "Mohali", "Noida", "Pune", "Jaipur"].map((city) => (
           <span
             key={city}
             className={`${style.tag} ${selectedCities.includes(city) ? style.active1 : ""}`}
@@ -549,7 +593,10 @@ if (isMobile) {
         className={style.sectionHeader}
         onClick={() => toggleSection("unitType")}
       >
-        <span>UNIT TYPE</span>
+        <span style={{ display: "inline-flex", alignItems: "center", gap: "7px" }}>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 21V10l8-6 8 6v11h-5v-6H9v6H4z" /></svg>
+          UNIT TYPE
+        </span>
         <span className={`${style.arrowIcon} ${expanded.unitType ? style.rotateDown : style.rotateUp}`}>
           ▼
         </span>
@@ -581,7 +628,10 @@ if (isMobile) {
         className={style.sectionHeader}
         onClick={() => toggleSection("configuration")}
       >
-        <span>CONFIGURATION</span>
+        <span style={{ display: "inline-flex", alignItems: "center", gap: "7px" }}>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 3h8v8H3V3zm10 0h8v5h-8V3zM3 13h8v8H3v-8zm10 3h8v5h-8v-5z" /></svg>
+          CONFIGURATION
+        </span>
         <span className={`${style.arrowIcon} ${expanded.configuration ? style.rotateDown : style.rotateUp}`}>
           ▼
         </span>
@@ -614,7 +664,10 @@ if (isMobile) {
         className={style.sectionHeader}
         onClick={() => toggleSection("priceRange")}
       >
-        <span>PRICE RANGE</span>
+        <span style={{ display: "inline-flex", alignItems: "center", gap: "7px" }}>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.4 11.6l-9-9A2 2 0 0 0 11 2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 .6 1.4l9 9a2 2 0 0 0 2.8 0l7-7a2 2 0 0 0 0-2.8zM6.5 8A1.5 1.5 0 1 1 6.5 5a1.5 1.5 0 0 1 0 3z" /></svg>
+          PRICE RANGE
+        </span>
         <span className={`${style.arrowIcon} ${expanded.priceRange ? style.rotateDown : style.rotateUp}`}>
           ▼
         </span>
@@ -673,7 +726,10 @@ if (isMobile) {
         className={style.sectionHeader}
         onClick={() => toggleSection("projectStatus")}
       >
-        <span>PROJECT STATUS</span>
+        <span style={{ display: "inline-flex", alignItems: "center", gap: "7px" }}>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 11h-4v-2h2V7h2v6z" /></svg>
+          PROJECT STATUS
+        </span>
         <span className={`${style.arrowIcon} ${expanded.projectStatus ? style.rotateDown : style.rotateUp}`}>
           ▼
         </span>

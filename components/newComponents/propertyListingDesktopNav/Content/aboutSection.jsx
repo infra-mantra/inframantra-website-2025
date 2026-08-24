@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './aboutSection.module.css';
+import SortDropdown from '../propertyListingSearch/propertyListingDropdownComponents/properListingSortBy';
 
 function AboutSection({
   totalProperties,
@@ -14,6 +15,8 @@ function AboutSection({
   sublocality,
   customContent, // optional: overrides the auto-generated about paragraph
   customHeading, // optional: overrides the "Properties in <area>" H1 heading
+  onSortChange, // mobile: renders the SORT BY dropdown next to the heading
+  isMobile,
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [displayArea, setDisplayArea] = useState('');
@@ -77,20 +80,26 @@ function AboutSection({
 
   return (
     <>
-      <h1 className={styles.headerAbout}>
-        {customHeading
-          ? customHeading
-          : type === 'search'
-          ? `Search result has ${totalProperties} properties`
-          : `Properties in ${displayArea}${parentArea ? `, ${parentArea}` : ''}`}
-      </h1>
+      <div className={styles.headingRow}>
+        <h1 className={styles.headerAbout}>
+          {customHeading
+            ? customHeading
+            : type === 'search'
+            ? `Search result has ${totalProperties} properties`
+            : `Properties in ${displayArea}${parentArea ? `, ${parentArea}` : ''}`}
+        </h1>
+
+        {isMobile && onSortChange && (
+          <SortDropdown onSortChange={onSortChange} />
+        )}
+      </div>
 
       <p className={styles.pageNumberAbout}>
         {totalProperties === 0 ? (
           'No properties found'
         ) : (
           <>
-            Showing {startIndex} - {endIndex} of {totalProperties} properties
+              Showing {startIndex} - {endIndex} of {totalProperties} properties
           </>
         )}
       </p>

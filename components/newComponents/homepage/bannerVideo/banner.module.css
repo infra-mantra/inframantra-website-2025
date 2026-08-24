@@ -16,6 +16,9 @@
   position: relative;
   cursor: pointer;
   z-index: 1;
+  /* Grey skeleton placeholder shown until the hero image paints. It sits BEHIND
+     the image, so the image is still the LCP element and nothing is delayed. */
+  background: #e6e8ea;
 }
 
 .demoBannerWrapper video {

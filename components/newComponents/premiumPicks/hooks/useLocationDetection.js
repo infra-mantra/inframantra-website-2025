@@ -93,12 +93,12 @@ export function useLocationDetection() {
   async function detectCityByIP() {
     try {
       
-      // Try multiple IP geolocation services
-      // HTTPS only — an http:// endpoint is blocked as mixed content on the
-      // live https site (and flagged by Lighthouse Best Practices).
+      // IP geolocation service. HTTPS only (an http:// endpoint is blocked as
+      // mixed content on the live https site). freegeoip.app was removed — it is
+      // defunct and its request was blocked by CORS on every load, logging a
+      // console error and wasting a network round-trip.
       const services = [
-        'https://ipapi.co/json/',
-        'https://freegeoip.app/json/'
+        'https://ipapi.co/json/'
       ];
 
       for (const serviceUrl of services) {

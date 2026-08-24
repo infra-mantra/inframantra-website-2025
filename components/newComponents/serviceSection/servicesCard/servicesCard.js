@@ -58,13 +58,15 @@ function ServicesCard({ title, Icon, description, key, id, alt, index }) {
       className={`serviceCard order${index}`}
       onClick={handleCardClick}
     >
-      <div className={styles.serviceCardIconContainer}>
-        <div className={styles.serviceCardIconWrapper}>
-          <img src={Icon} alt={alt} />
+      <div className={styles.serviceCardHeaderRow}>
+        <div className={styles.serviceCardIconContainer}>
+          <div className={styles.serviceCardIconWrapper}>
+            <img src={Icon} alt={alt} />
+          </div>
         </div>
-      </div>
-      <div className={styles.serviceCardTitleContainer}>
-        <p className={styles.serviceCardTitle}>{title}</p>
+        <div className={styles.serviceCardTitleContainer}>
+          <p className={styles.serviceCardTitle}>{title}</p>
+        </div>
       </div>
       <div className={styles.serviceCardDescriptionContainer}>
         <p className={styles.serviceCardDescription}>

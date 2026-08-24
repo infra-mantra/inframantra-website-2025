@@ -13,12 +13,12 @@ function ServicesSection() {
         <div className={styles.servicesSectionHeader}>
         <h3
           className={styles.servicesSectionTitle}
-          
+
         >
-        Your Home, Our Hustle
+        Your Home, <span>Our Hustle</span>
         </h3>
         <p>We simplify your property journey with expert support at every step.</p>
-       
+
       </div>
       <div className={styles.servicesSectionCardWrapperFirst}>
         {serviceCardDataSection.map((service, index) => (

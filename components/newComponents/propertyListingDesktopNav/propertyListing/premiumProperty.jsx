@@ -17,11 +17,11 @@ function premiumProperty({premiumProperties}) {
                 spaceBetween={20}
                 autoplay={{ delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: true }}
                 breakpoints={{
-                  320: { slidesPerView: 1.5, spaceBetween: 16 },
-                  480: { slidesPerView: 1.8, spaceBetween: 16 },
+                  320: { slidesPerView: 1.25, spaceBetween: 14, slidesOffsetBefore: 14, slidesOffsetAfter: 14 },
+                  480: { slidesPerView: 1.8, spaceBetween: 16, slidesOffsetBefore: 14, slidesOffsetAfter: 14 },
                   768: { slidesPerView: 2.5, spaceBetween: 20 },
-                  1024: { slidesPerView: Math.min(4, premiumProperties.length), spaceBetween: 24 },
-                  1200: { slidesPerView: Math.min(4, premiumProperties.length), spaceBetween: 24 },
+                  1024: { slidesPerView: 4, spaceBetween: 22 },
+                  1200: { slidesPerView: 4, spaceBetween: 22 },
                 }}
                 loop={premiumProperties.length > 4}
                 grabCursor={true}

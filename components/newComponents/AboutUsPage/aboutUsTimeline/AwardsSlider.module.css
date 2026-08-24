@@ -15,10 +15,20 @@
 
 
 .headingTitle {
-  font-size: 32px;
-  color: #c78911;
+  font-size: 36px;
+  font-weight: 700;
+  color: #e7b554;
   margin-bottom: 2rem;
   text-transform:uppercase;
+}
+.headingTitle::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 4px;
+  border-radius: 2px;
+  background: #e7b554;
+  margin: 12px auto 0;
 }
 .swiperContainer{
 padding: 1rem 5rem;

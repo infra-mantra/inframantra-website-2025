@@ -39,7 +39,7 @@ export default function PremiumPropertyMainComponent() {
         setLoading(true);
         setError(null);
         
-        const response = await axios.get(`https://apitest.inframantra.com/api/v1/property/citywise/${city}?localityLimit=4`);
+        const response = await axios.get(`${process.env.apiUrl1}/property/citywise/${city}?localityLimit=4`);
        
         const data = response.data;
         if (data) {

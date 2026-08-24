@@ -74,14 +74,56 @@ function pickBestTranscript(alternatives) {
   return best;
 }
 
+// Placeholder = a fixed prefix + one rotating term (kept in sync with the listing
+// search bar). Only the term is typed/erased, so "Search properties by …" stays put.
+const SEARCH_PREFIX = 'Search properties by ';
+const SEARCH_TERMS = ['name', 'developer', 'city', 'state', 'locality', 'sub-locality'];
+
 function CustomizedHook({ onSearch }) {
   const [suggestions, setSuggestions] = useState([]);
+  const [suggestLoading, setSuggestLoading] = useState(false); // true while fetching suggestions
   const [inputValue, setInputValue] = useState('');
   const [isDesktop, setIsDesktop] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [voiceSupported, setVoiceSupported] = useState(false);
+  const [phIndex, setPhIndex] = useState(0);
+  const [typed, setTyped] = useState('');
   const recognitionRef = useRef(null);
   const router = useRouter();
+
+  // Typewriter placeholder: type a hint, hold, erase, next. Pauses while the user
+  // is typing or a voice search is active so it never fights real input.
+  useEffect(() => {
+    if (inputValue || isListening) return;
+    const term = SEARCH_TERMS[phIndex];
+    let charIndex = 0;
+    let deleting = false;
+    let timer;
+
+    const tick = () => {
+      if (!deleting) {
+        charIndex++;
+        setTyped(term.slice(0, charIndex));
+        if (charIndex === term.length) {
+          deleting = true;
+          timer = setTimeout(tick, 1500);
+          return;
+        }
+        timer = setTimeout(tick, 90);
+      } else {
+        charIndex--;
+        setTyped(term.slice(0, charIndex));
+        if (charIndex === 0) {
+          setPhIndex((i) => (i + 1) % SEARCH_TERMS.length);
+          return;
+        }
+        timer = setTimeout(tick, 45);
+      }
+    };
+
+    timer = setTimeout(tick, 350);
+    return () => clearTimeout(timer);
+  }, [phIndex, inputValue, isListening]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -173,7 +215,10 @@ function CustomizedHook({ onSearch }) {
   };
 
   const fetchSuggestions = debounce(async (value) => {
-    if (!value.trim()) return;
+    if (!value.trim()) {
+      setSuggestLoading(false);
+      return;
+    }
 
     try {
       const response = await Ajax1({
@@ -185,12 +230,15 @@ function CustomizedHook({ onSearch }) {
       setSuggestions(response?.data?.suggestions || []);
     } catch (error) {
       console.error('Error fetching suggestions:', error);
+    } finally {
+      setSuggestLoading(false); // hide the skeleton once the fetch settles
     }
   }, 300);
 
   const handleInputChange = (e) => {
     const value = e.target.value;
     setInputValue(value);
+    setSuggestLoading(!!value.trim()); // show skeleton immediately (fetch is debounced)
     fetchSuggestions(value);
   };
 
@@ -217,6 +265,7 @@ function CustomizedHook({ onSearch }) {
 
     setInputValue(option.title);
     setSuggestions([]);
+    setSuggestLoading(false);
     onSearch(option);
   };
 
@@ -225,7 +274,7 @@ function CustomizedHook({ onSearch }) {
 <div className={styles.inputWrapper}>
   <input
     type="text"
-    placeholder="Search By Property Name or Location"
+    placeholder={`${SEARCH_PREFIX}${typed}|`}
     value={inputValue}
     onChange={handleInputChange}
     onKeyDown={(e) => e.key === 'Enter' && handleSearchClick()}
@@ -262,7 +311,7 @@ function CustomizedHook({ onSearch }) {
 </div>
 
 
-      {suggestions.length > 0 && inputValue && (
+      {inputValue && suggestions.length > 0 && (
         <ul className={styles.listbox}>
           {suggestions.map((option, index) => (
             <li key={index} onClick={() => handleSelect(option)}>
@@ -275,6 +324,18 @@ function CustomizedHook({ onSearch }) {
               <span className={styles.optionType}>
                 {option.type === 'subLocality' ? 'sub-locality' : option.type}
               </span>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {/* While suggestions are loading (and none shown yet) → skeleton rows. */}
+      {inputValue && suggestLoading && suggestions.length === 0 && (
+        <ul className={styles.listbox}>
+          {[0, 1, 2, 3].map((i) => (
+            <li key={i}>
+              <span className={styles.skelText} />
+              <span className={styles.skelPill} />
             </li>
           ))}
         </ul>

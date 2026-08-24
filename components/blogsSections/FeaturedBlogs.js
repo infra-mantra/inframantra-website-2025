@@ -141,22 +141,25 @@ function FeaturedBlogs({ blogs, PRS }) {
 
       {/* Custom Slider for Featured Blogs */}
       {PRS && PRS.length > 0 && (
-        <div>
+        <div className={styles.featuredMediaWrap}>
           <div className={styles.sectionblogsectionhead}>
             <h2>| Featured Media</h2>
           </div>
           <div className={styles.customslider}>
-            {PRS.map((item, index) => (
-              <div key={index} className={styles.blogslide}>
-                <Link href={`/pr/${item.slug}`}>
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className={styles.blogslideimage}
-                  />
-                </Link>
-              </div>
-            ))}
+            {/* Slides are duplicated so the auto-scroll loops seamlessly. */}
+            <div className={styles.sliderTrack}>
+              {[...PRS, ...PRS].map((item, index) => (
+                <div key={index} className={styles.blogslide}>
+                  <Link href={`/pr/${item.slug}`}>
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className={styles.blogslideimage}
+                    />
+                  </Link>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       )}

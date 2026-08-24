@@ -111,12 +111,31 @@ h6 {
 
 
 .content h2 {
-    color: #DCAA4C;
+    color: #e7b554;
     font-family: "Lexend Deca";
-    font-size: 18px;
+    font-size: 21px;
     font-style: normal;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 34px 0 14px;
+}
+/* Sub-headings (e.g. "Key highlights…", numbered points, FAQ questions) were
+   unstyled — defaulting to pure black + bold 700 (heavy). Soften them. */
+.content h3 {
+    color: #e7b554;
+    font-family: "Lexend Deca";
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 1.4;
+    margin: 26px 0 12px;
+}
+.content h4 {
+    color: #555555;
+    font-family: "Lexend Deca";
+    font-size: 16px;
     font-weight: 600;
-    line-height: normal;
+    line-height: 1.4;
+    margin: 20px 0 10px;
 }
 .react-pdf__Page {
     display: flex !important
@@ -183,18 +202,34 @@ ul.wp-block-list li {
 }
 
 .listingScrollbar{
-  display: flex
-;
+    display: flex;
     flex-direction: column;
-    display: flex
-;
-    flex-direction: column;
-    overflow-y: auto;
-    scroll-behavior: smooth;
-   
-    overflow-x: hidden;
+    /* clip (not hidden) prevents horizontal overflow WITHOUT making this a scroll
+       container — so the sticky search bar can pin to the viewport and the RERA
+       tooltip isn't clipped. */
+    overflow-x: clip;
+    min-width: 0;
     padding-right: 8px;
-    max-height: 1020px;
+}
+
+/* ---- Thin, subtle, minimal scrollbars ---- */
+* {
+  scrollbar-width: thin;                        /* Firefox */
+  scrollbar-color: rgba(0,0,0,0.18) transparent; /* thumb / track */
+}
+*::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.18);
+  border-radius: 10px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(0,0,0,0.32);
 }
 
 
@@ -431,7 +466,11 @@ text-transform: uppercase;
   color: #a0d8ef;
 }
 .heading-developer-name{
-   font-weight:bolder;
+   /* Developer's name — kept black and smaller (it's a proper name, not a gold
+      section label, and can be long). */
+   font-size: 18px;
+   font-weight: 600;
+   color: #1a1a1a;
 }
 
 .project-name {

@@ -194,14 +194,7 @@ export default function BlogContent({
           </div>
 
           {/* ================= SIDEBAR ================= */}
-          <div
-            className={styles.sidebar}
-            style={
-              data === "news" && isDesktop
-                ? { marginTop: "-215px" }
-                : {}
-            }
-          >
+          <div className={styles.sidebar}>
             <div className={styles.sdCardNews}>
               <div className={styles.sdCardHeadNews}>
                 <h3>Recent Blogs</h3>

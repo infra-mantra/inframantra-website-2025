@@ -1,15 +1,64 @@
 
 /* Footer CSS  NEW */
 .footerWrapper {
-  width: 100vw;
+  width: 100%;
   height: 75vh;
-  background: #000;
+  background: linear-gradient(180deg, #131317 0%, #08080a 100%);
+  border-top: 3px solid #e7b554;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   overflow: hidden;
+  font-family: 'Lexend Deca', sans-serif;
   /* z-index: 1000; */
+}
+
+/* ---- Footer visual refresh (colors, links, headings) ---- */
+.footerWrapper a {
+  color: #bdbdbd;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.footerWrapper a:hover {
+  color: #e7b554;
+}
+.footerWrapper h4 {
+  color: #e7b554 !important;
+  letter-spacing: 0.06em;
+}
+/* Section headings get a short gold underline accent */
+.footerSecondSectionCompanyDetailsWrapper > h4,
+.footerThirdSectionCompanyDetailsWrapper > h4,
+.footerForthSectionCompanyDetailsWrapper h4 {
+  position: relative;
+  padding-bottom: 10px;
+  margin-bottom: 8px;
+}
+.footerSecondSectionCompanyDetailsWrapper > h4::after,
+.footerThirdSectionCompanyDetailsWrapper > h4::after,
+.footerForthSectionCompanyDetailsWrapper h4::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 34px;
+  height: 2px;
+  background: #e7b554;
+  border-radius: 2px;
+}
+/* The clickable Quick-Search rows */
+.footerThirdSectionDropdownHeaderFlex > p {
+  cursor: pointer;
+  color: #bdbdbd;
+  transition: color 0.2s ease;
+}
+.footerThirdSectionDropdownHeaderFlex:hover > p,
+.footerThirdSectionDropdownHeaderFlex:hover > svg {
+  color: #e7b554;
+}
+.footerFirstSectionCompanyDetailsFlex > p {
+  color: #d6d6d6;
 }
 .fontWt{
 font-weight: 350!important;
@@ -38,8 +87,18 @@ font-weight: 350!important;
 
 .footerFirstSectionCompanyDetailsWrapper > img {
   width: 100%;
-  margin-bottom: 10%;
+  max-width: 240px;
+  margin-bottom: 18px;
   /* z-index: 1000; */
+}
+
+.footerTagline {
+  width: 100%;
+  text-align: left;
+  color: #9a9a9a;
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0 0 20px;
 }
 
 .footerFirstSectionCompanyDetailsFlex {
@@ -160,7 +219,7 @@ font-weight: 350!important;
 .footerSecondSectionContainer {
   height: 10%;
   width: 90%;
-  border-top: 1px solid white;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -190,7 +249,7 @@ font-weight: 350!important;
 }
 
 .footerSecondSectionCopyRightFlex > * {
-  color: #ffff;
+  color: #8f8f8f;
 }
 .footerSecondSectionCopyRightFlex{
   display: flex;
@@ -333,7 +392,7 @@ font-weight: 350!important;
   .footerWrapper {
     height: 100vh;
   }
- 
+
   .footerFirstSectionContainer {
     display: flex;
     flex-direction: column;

@@ -2,11 +2,18 @@
 .propertyCard {
   background-color: #ffffff;
   border-radius: 12px;
- 
-
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;   /* grow to fit the action buttons instead of being clipped to the slide height */
   cursor: pointer;
+}
 
+/* the link fills the card so the button row sits at the bottom on equal-height cards */
+.propertyCard > a {
+  display: block;
+  flex: 1 1 auto;
+  text-decoration: none;
+  color: inherit;
 }
 
 
@@ -68,10 +75,14 @@
   font-family: 'Inter', sans-serif;
 }
 
-.propertyPrice {
+/* Scoped to .propertyContent (specificity 0,2,0) so it beats the GLOBAL
+   `.propertyPrice` that premiumPicks.module.css also defines (font-weight:700;
+   color:#1a1a1a) and which otherwise leaked onto this card via the unhashed
+   CSS-module collision, keeping the price black + bold. */
+.propertyContent .propertyPrice {
   font-size: 16px;
-  font-weight: 700;
-  color: #1a1a1a;
+  font-weight: 500;
+  color: #707070;
   margin: 8px 0 0 0;
   padding-top: 8px;
   border-top: 1px solid #eeeae2;

@@ -172,7 +172,7 @@ const Wrapper = ({
         <meta key="author"    name="author"    content="INFRAMANTRA" />
         <meta key="copyright" name="copyright" content="inframantra.com" />
         <meta key="lang"      httpEquiv="Content-Language" content="en" />
-        <meta key="viewport"  name="viewport"  content="width=device-width, user-scalable=no" />
+        <meta key="viewport"  name="viewport"  content="width=device-width, initial-scale=1" />
 
         {/* Preconnect to data + image origins so the first API call and
             LCP image don't pay the DNS/TLS handshake cost on the critical path. */}

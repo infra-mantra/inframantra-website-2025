@@ -9,22 +9,25 @@ import "swiper/css/pagination";
 
 const propertyListCardStyles = {
   card: {
-    height: "40vh",
+    height: "290px",
     marginBottom: "20px",
     borderRadius: "10px",
     display: "flex",
+    // Explicit row: the shared home-page card module defines a GLOBAL
+    // `.propertyCard { flex-direction: column }` (CSS modules are unhashed) which
+    // leaks onto this card when navigating from the home page and stacks it. This
+    // inline value only affects this element and beats the leaked class rule.
+    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
     padding: "2% 2%",
-    overflow: "hidden",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
     position: "relative",
   },
   chip: {
     position: "absolute",
     width: "30%",
     borderRadius: "5px",
-    left: "0%",
+    right: "0%",
     top: "0%",
     color: "#fff",
     fontSize: "15px",
@@ -39,7 +42,7 @@ const propertyListCardStyles = {
     width: "30%",
     height: "auto",
     borderRadius: "5px",
-    right: "-5px",
+    left: "-5px",
     top: "1px",
     color: "#fff",
     fontSize: "15px",
@@ -48,6 +51,7 @@ const propertyListCardStyles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    background: "rgba(255, 255, 255, 0.92)", // white backing so light developer logos stay visible
   },
   dimension: {
     width: "5rem",
@@ -65,38 +69,32 @@ function PropertyListingCard({
   name,
   type,
   onOpenBackdrop,
-  propertyTypeFilter,
-  priceRangeFilter,
-  projectStatusFilter,
   propertyData,
-  loading,
+  totalProperties = 0,
+  currentPage: currentPageProp,
+  pageSize = 10,
+  onPageChange,
   currentPageNumber,
+  loading,
 }) {
   const [mapCenter, setMapCenter] = useState({ lat: 28.4595, lng: 77.0266 });
   const [currentZoom, setCurrentZoom] = useState(12);
-  const [fetchedProperties, setFetchedProperties] = useState(propertyData);
-  const [totalPages, setTotalPages] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [localPage, setLocalPage] = useState(1);
   const router = useRouter();
-  console.log(propertyData, "$$$$$$");
 
-  // ✅ Filter properties based on selected filters
-  useEffect(() => {
-    let filteredProperties = propertyData;
-
-    if (projectStatusFilter) {
-      filteredProperties = filteredProperties.filter(
-        (property) => property.status.trim() === projectStatusFilter,
-      );
-    }
-
-    setFetchedProperties(filteredProperties);
-    setTotalPages(Math.ceil(filteredProperties.length / 10));
-  }, [propertyTypeFilter, priceRangeFilter, projectStatusFilter, propertyData]);
+  // server mode (backend pagination) when onPageChange is provided; otherwise legacy client-side slicing
+  const serverMode = typeof onPageChange === "function";
+  const allItems = Array.isArray(propertyData) ? propertyData : [];
+  const currentPage = serverMode ? (currentPageProp || 1) : localPage;
+  const totalPages = Math.max(1, Math.ceil((serverMode ? totalProperties : allItems.length) / pageSize));
+  const fetchedProperties = serverMode
+    ? allItems
+    : allItems.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
   const handlePageChange = (page) => {
-    setCurrentPage(page);
-    currentPageNumber(page);
+    if (page < 1 || page > totalPages) return;
+    if (serverMode) onPageChange(page);
+    else { setLocalPage(page); currentPageNumber?.(page); }
   };
 
   const handleViewMorePropertyClick = (id) => {
@@ -123,9 +121,9 @@ function PropertyListingCard({
           <div className={styles.propertyListPageLeftSection}>
             {fetchedProperties.length > 0 ? (
               fetchedProperties
-                .slice((currentPage - 1) * 10, currentPage * 10)
                 .map((prop) => (
                   <div
+                    className={styles.propertyCard}
                     style={propertyListCardStyles.card}
                     key={prop.id}
                     onMouseEnter={() => {
@@ -142,28 +140,6 @@ function PropertyListingCard({
                         src={prop.imageGallery[0].url}
                         alt="featured"
                       />
-                      {prop.exclusive && (
-                        <div
-                          style={{
-                            ...propertyListCardStyles.chip,
-                            ...propertyListCardStyles.imageChip,
-                          }}
-                        >
-                          <FaTag style={{ marginRight: "5px" }} />
-                          Exclusive
-                        </div>
-                      )}
-                      {prop.featured && (
-                        <div
-                          style={{
-                            ...propertyListCardStyles.chip,
-                            ...propertyListCardStyles.featuredChip,
-                          }}
-                        >
-                          <FaStar style={{ marginRight: "5px" }} />
-                          Featured
-                        </div>
-                      )}
 
                       <div
                         style={{
@@ -182,6 +158,32 @@ function PropertyListingCard({
                     <div className={styles.propertyListingCardRightSection}>
                       <div className={styles.propertyListingCardHeaderFlex}>
                         <h4>{prop.name}</h4>
+                        {prop.exclusive && (
+                          <span className={styles.nameTagExclusive}>
+                            <FaTag />
+                            Exclusive
+                          </span>
+                        )}
+                        {prop.featured && (
+                          <span className={styles.nameTagFeatured}>
+                            <FaStar />
+                            Featured
+                          </span>
+                        )}
+                        {prop.rera && (
+                          <span className={styles.reraWrap}>
+                            <span className={styles.nameTagRera} aria-label={`RERA: ${prop.rera}`}>
+                              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm-1.2 14.4L6.6 12.2l1.4-1.4 2.8 2.8 5.6-5.6 1.4 1.4-7 7z" />
+                              </svg>
+                              RERA
+                            </span>
+                            <span className={styles.reraTooltip} role="tooltip">
+                              <span className={styles.reraTooltipLabel}>RERA Registered</span>
+                              {prop.rera}
+                            </span>
+                          </span>
+                        )}
                       </div>
                       <p
                         className={
@@ -208,7 +210,7 @@ function PropertyListingCard({
                           Price:
                           <span
                             className={styles.listingDetailValue}
-                            style={{ color: "#DCAA4C" }}
+                            style={{ color: "#e7b554" }}
                           >
                             ₹ {prop.startingPrice}
                           </span>
@@ -239,38 +241,33 @@ function PropertyListingCard({
                         </p>
                       </div>
                       <div
-                        className={
-                          styles.propertyListingCardRightSectionBtnContainer
-                        }
+                        className={styles.propertyListingCardRightSectionBtnContainer}
+                        style={{ display: "flex", flexWrap: "nowrap", gap: "8px", width: "100%" }}
                       >
                         <button
-                          style={{
-                            background: "#0ca92e",
-                            marginRight: "15px",
-                            borderRadius: "5px",
-                            fontSize: "12px",
-                            padding: "7px 15px",
-                            color: "white",
-                            border: "none",
-                            cursor: "pointer",
-                          }}
+                          type="button"
                           onClick={() => handleViewMorePropertyClick(prop.slug)}
+                          style={{ flex: "1 1 0", minWidth: 0, background: "#3cc76a", borderRadius: "5px", fontSize: "12px", fontWeight: 600, padding: "7px 8px", color: "#fff", border: "none", cursor: "pointer", whiteSpace: "nowrap" }}
                         >
                           View More
                         </button>
                         <button
-                          style={{
-                            background: "#DCAA4C",
-                            borderRadius: "5px",
-                            fontSize: "12px",
-                            padding: "7px 15px",
-                            color: "white",
-                            border: "none",
-                            cursor: "pointer",
-                          }}
+                          type="button"
                           onClick={() => onOpenBackdrop(prop.name)}
+                          style={{ flex: "1 1 0", minWidth: 0, background: "#e8c274", borderRadius: "5px", fontSize: "12px", fontWeight: 600, padding: "7px 8px", color: "#fff", border: "none", cursor: "pointer", whiteSpace: "nowrap" }}
                         >
                           Enquire Now
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => onOpenBackdrop(prop.name)}
+                          title="Download Brochure"
+                          style={{ flex: "1 1 0", minWidth: 0, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "5px", background: "#fff", borderRadius: "5px", fontSize: "12px", fontWeight: 600, padding: "7px 8px", color: "#3cc76a", border: "1px solid #3cc76a", cursor: "pointer", whiteSpace: "nowrap" }}
+                        >
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style={{ flexShrink: 0 }}>
+                            <path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5z" />
+                          </svg>
+                          Brochure
                         </button>
                       </div>
                     </div>

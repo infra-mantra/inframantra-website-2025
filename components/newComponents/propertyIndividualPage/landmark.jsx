@@ -3,6 +3,19 @@ import dynamic from "next/dynamic";
 
 const LeafletMap = dynamic(() => import("./map"), {
   ssr: false,
+  // Grey placeholder while the map library loads (no library/JS added here).
+  loading: () => (
+    <div
+      aria-hidden="true"
+      style={{
+        width: "100%",
+        height: "100%",
+        minHeight: "320px",
+        borderRadius: "12px",
+        background: "#e6e8ea",
+      }}
+    />
+  ),
 });
 
 import {

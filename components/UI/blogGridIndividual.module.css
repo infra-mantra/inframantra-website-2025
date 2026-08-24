@@ -15,7 +15,8 @@
     gap: 20px;
 }
 .inFBlogsWrap {
-    margin: 0 12rem;
+    max-width: 1280px;
+    margin: 0 auto;
 }
 .sectionHead {
     text-align: center;

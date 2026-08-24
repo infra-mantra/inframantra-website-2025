@@ -10,8 +10,9 @@ const PageHeader = (props) => {
     const handleResize = () => {
       const screenWidth = window.innerWidth;
 
-      const mobileImage = "https://inframantra.blr1.cdn.digitaloceanspaces.com/developer/bannerImages/website%20%20developers2.2.avif";
-      const  desktopImage = "https://inframantra.blr1.cdn.digitaloceanspaces.com/developer/bannerImages/website%20%20developers2.1.avif";
+      // Self-hosted generic architecture banner (not a specific project).
+      const mobileImage = "/banner/developers-banner.jpg";
+      const desktopImage = "/banner/developers-banner.jpg";
 
       setImageUrl(screenWidth >= 768 ? desktopImage : mobileImage);
     };

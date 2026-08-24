@@ -1,8 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
+import PropertySkeleton from "../../components/newComponents/propertyIndividualPage/PropertySkeleton";
 
-const Wrapper = dynamic(() => import("../../components/UI/Wrapper"), { ssr: false });
+// Wrapper is client-only (ssr:false), so the page is blank until its chunk loads.
+// Show the property skeleton during that load instead of an empty screen.
+const Wrapper = dynamic(() => import("../../components/UI/Wrapper"), {
+  ssr: false,
+  loading: () => <PropertySkeleton />,
+});
 
 import PropertyHeaderImageGallery from "../../components/newComponents/propertyIndividualPage/PropertyHeaderImageGallery";
 import PropertyHeader from "../../components/newComponents/propertyIndividualPage/propertyHeaderContent";

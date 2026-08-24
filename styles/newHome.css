@@ -37,21 +37,49 @@ a:link{text-decoration:none}
   .navBarTabsWrapper {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
     align-items: center;
+    gap: 2.4rem;
     font-size: 15px;
     width: 40vw;
     margin: 10px 10px;
   }
-  
+  /* Group the links close to the centre logo (balanced) instead of spreading
+     them to the screen edges and leaving the logo stranded in empty space. */
+  .navBarWrapper > .navBarTabsWrapper:first-child {
+    justify-content: flex-end;
+  }
+  .navBarWrapper > .navBarTabsWrapper:last-child {
+    justify-content: flex-start;
+  }
+
   .navBarTabs {
+    position: relative;
     color: #fff;
     cursor: pointer;
-    transition: color 0.3s ease;
+    margin: 0;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    padding-bottom: 5px;
+    transition: color 0.25s ease;
   }
-  
+  /* Animated gold underline — grows on hover and stays on the active tab */
+  .navBarTabs::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 0;
+    background: #e7b554;
+    border-radius: 2px;
+    transition: width 0.28s ease;
+  }
+
   .navBarTabs:hover {
     color: #e7b554;
+  }
+  .navBarTabs:hover::after {
+    width: 100%;
   }
   
   .navBarLogo {
@@ -71,6 +99,9 @@ a:link{text-decoration:none}
   
   .navBarLink.selected .navBarTabs {
     color: #e7b554;
+  }
+  .navBarLink.selected .navBarTabs::after {
+    width: 100%;
   }
   
   .navBarWishlistIcon {
@@ -2178,9 +2209,41 @@ Similar Property CSS
   transform: translateY(-20%);
 }
 .page-header .page-banner-content h1 {
-  font-size: 50px;
-  font-weight: 600;
+  font-size: 64px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 1px;
   margin-bottom: 30px;
+  /* Readable over a bright photo */
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.55), 0 2px 6px rgba(0, 0, 0, 0.4);
+  /* Entrance animation on load */
+  animation: bannerTitleIn 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+/* Gold underline that draws itself in just after the title */
+.page-header .page-banner-content h1::after {
+  content: "";
+  display: block;
+  width: 84px;
+  height: 4px;
+  border-radius: 2px;
+  margin: 16px auto 0;
+  background: #e7b554;
+  transform-origin: center;
+  animation: bannerUnderlineIn 0.8s ease-out 0.55s both;
+}
+@keyframes bannerTitleIn {
+  from { opacity: 0; transform: translateY(40px) scale(0.96); letter-spacing: 10px; }
+  to { opacity: 1; transform: translateY(0) scale(1); letter-spacing: 1px; }
+}
+@keyframes bannerUnderlineIn {
+  from { transform: scaleX(0); opacity: 0; }
+  to { transform: scaleX(1); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-header .page-banner-content h1,
+  .page-header .page-banner-content h1::after {
+    animation: none;
+  }
 }
 .page-header .overlay {
   position: absolute;
@@ -2295,6 +2358,22 @@ button {
     border-radius: 20px;
 }
 
+/* Mobile: shorter banner that fills nicely (the image is a plain building now). */
+@media (max-width: 768px) {
+  .page-header > div img,
+  .page-header-img {
+    height: 240px;
+    width: 94%;
+    object-fit: cover;
+    margin: 1rem auto auto;
+    border-radius: 14px;
+  }
+  .page-header .page-banner-content h1 {
+    font-size: 34px;
+    margin-bottom: 14px;
+  }
+}
+
 .container {
     padding: 0 15px;
     margin: 0 auto;
@@ -2304,6 +2383,14 @@ button {
 .page-width {
     padding-left: 2rem;
     padding-right: 2rem;
+}
+/* On mobile, trim the blog page's side padding so the hero, Featured Media and
+   blog cards all line up at the same tighter margin. */
+@media (max-width: 768px) {
+    .featured-blog .page-width {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
 }
 .share{
   display: flex;

@@ -20,11 +20,13 @@ function BlogsGrid({
   initial,
   loadMore,
   blogBtn,
+  isLoading,
 }) {
 // console.log(latestNews)
 
   const [isDesktop, setIsDesktop] = useState(true);
   const [isMobile, setIsMobile] = useState(true);
+  const [activeTab, setActiveTab] = useState("blog"); // mobile tab: blog | article | news
 
 const checkScreenWidth = () => {
   setIsDesktop(window.innerWidth >= 768); // You can adjust the threshold for desktop here
@@ -49,10 +51,104 @@ const formatDate = (dateString) => {
   return `${day}-${month}-${year}`; // Return in dd-mm-yyyy format
 };
 
-  
+  // Mobile tabs: each tab shows a different list and links to a different path.
+  const TABS = [
+    { key: "blog", label: "Blogs", items: blogs, base: "blog" },
+    { key: "article", label: "Articles", items: latestNews || [], base: "blog" },
+    { key: "news", label: "News", items: trending || [], base: "news" },
+  ];
+  const activeTabObj = TABS.find((t) => t.key === activeTab) || TABS[0];
+
+  // One card, reused for every tab.
+  const renderTabCard = (item, base, index) => {
+    const src = item?.file?.path || item?.file?.thumbnail || "";
+    const href = item.link ? item.link : `/${base}/${item.slug}`;
+    return (
+      <Link key={index} href={href} passHref>
+        <a
+          className={styles.fblogitem}
+          target={item.link ? "_blank" : "_self"}
+          rel={item.link ? "noreferrer" : ""}
+        >
+          <div className={styles.blogcardimage}>
+            {src ? (
+              <Image
+                src={src}
+                alt={item.title || item.name || "Blog"}
+                layout="fill"
+                objectFit="cover"
+                quality={90}
+                sizes="130px"
+              />
+            ) : (
+              <NoImage />
+            )}
+          </div>
+          <div className={styles.info}>
+            <h4>{item.title || item.name}</h4>
+            <p className={styles.blogmeta}>
+              <span className={styles.metaDot} />
+              {formatDate(item.createdAt)} | {item?.writer_name}
+            </p>
+            <span className={styles.readmore}>Read Article →</span>
+          </div>
+        </a>
+      </Link>
+    );
+  };
 
   return (
     <Section classes={`${styles.featuredblogs} ${styles.secp} ${styles.pt0}`} pageWidth="container">
+      {/* ---- Mobile: tabbed view (Blogs / Articles / News). Hidden on desktop via CSS. ---- */}
+      <div className={styles.mobileTabs}>
+        <div className={styles.tabBar}>
+          {TABS.map((t) => (
+            <button
+              key={t.key}
+              type="button"
+              className={`${styles.tabBtn} ${activeTab === t.key ? styles.tabActive : ""}`}
+              onClick={() => setActiveTab(t.key)}
+            >
+              {t.label}
+            </button>
+          ))}
+        </div>
+
+        <div className={styles.mobileList}>
+          {(activeTabObj.items || []).map((item, index) =>
+            renderTabCard(item, activeTabObj.base, index)
+          )}
+
+          {activeTab === "blog" &&
+            isLoading &&
+            Array.from({ length: 3 }).map((_, i) => (
+              <div key={`msk-${i}`} className={styles.fblogitemSkeleton} aria-hidden="true">
+                <div className={styles.blogcardimageSkeleton} />
+                <div className={styles.infoSkeleton}>
+                  <span className={styles.skLine} style={{ width: "80%", height: 18 }} />
+                  <span className={styles.skLine} style={{ width: "100%" }} />
+                  <span className={styles.skLine} style={{ width: "92%" }} />
+                  <span className={styles.skLine} style={{ width: "35%" }} />
+                </div>
+              </div>
+            ))}
+        </div>
+
+        {activeTab === "blog" && (
+          <div className={`${styles.btnwrap} ${styles.mt5}`}>
+            <button
+              type="button"
+              className={styles.themebtn}
+              onClick={loadMore}
+              disabled={isLoading}
+            >
+              {isLoading ? "Loading..." : "Load More"}
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* ---- Desktop: two-column layout. Hidden on mobile via CSS. ---- */}
       <div className={styles.blogslayout}>
         <div className={styles.blogssection}>
           <h2 className={styles.blogstitle}>| Blogs</h2>
@@ -78,6 +174,8 @@ const formatDate = (dateString) => {
                         alt={blog.name || "Blog Image"}
                         layout="fill"
                         objectFit="cover"
+                        quality={90}
+                        sizes="(max-width: 768px) 130px, 210px"
                       />
                     ) : (
                       <NoImage />
@@ -86,9 +184,11 @@ const formatDate = (dateString) => {
                   <div className={styles.info}>
                     <h4>{blog.name}</h4>
                     {isDesktop ?(<p className={styles.twolinetext}>{blog?.shortDescription?.substring(0,200)}...</p>):(null)}
-                    <p>
+                    <p className={styles.blogmeta}>
+                      <span className={styles.metaDot} />
                       {formatDate(blog.createdAt)} | {blog?.writer_name}
                     </p>
+                    <span className={styles.readmore}>Read Article →</span>
                   </div>
                 </a>
               </Link>)
@@ -96,10 +196,33 @@ const formatDate = (dateString) => {
        
      
             })}
+
+            {/* Skeleton cards while "Load More" is fetching */}
+            {isLoading &&
+              Array.from({ length: 3 }).map((_, i) => (
+                <div
+                  key={`sk-${i}`}
+                  className={styles.fblogitemSkeleton}
+                  aria-hidden="true"
+                >
+                  <div className={styles.blogcardimageSkeleton} />
+                  <div className={styles.infoSkeleton}>
+                    <span className={styles.skLine} style={{ width: "80%", height: 18 }} />
+                    <span className={styles.skLine} style={{ width: "100%" }} />
+                    <span className={styles.skLine} style={{ width: "92%" }} />
+                    <span className={styles.skLine} style={{ width: "35%" }} />
+                  </div>
+                </div>
+              ))}
           </div>
           <div className={`${styles.btnwrap}  ${styles.mt5}`}  >
-          <button type="button" className={styles.themebtn} onClick={loadMore}>
-            Load More
+          <button
+            type="button"
+            className={styles.themebtn}
+            onClick={loadMore}
+            disabled={isLoading}
+          >
+            {isLoading ? "Loading..." : "Load More"}
           </button>
         </div>
         </div>

@@ -8,7 +8,7 @@
 }
 
 .perkYl{
-  color: #E4A951;
+  color: #e7b554;
 }
 
 /* GRID */
@@ -18,11 +18,11 @@
   gap: 2rem;
 }
 .perkHeading{
-color: #000;
+color: #1a1a1a;
 font-family: "Lexend Deca";
-font-size: 44px;
+font-size: 36px;
 font-style: normal;
-font-weight: 500;
+font-weight: 700;
 line-height: normal;
 text-transform: capitalize;
 }

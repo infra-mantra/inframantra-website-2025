@@ -15,60 +15,40 @@
     overflow: hidden;
 }
 .propertyImageChip{
-  max-width: 100%;
-    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-family: 'Lexend Deca', Roboto, Helvetica, Arial, sans-serif;
     display: inline-flex;
-    -webkit-box-align: center;
     align-items: center;
-    -webkit-box-pack: center;
     justify-content: center;
-    height: 32px;
-    cursor: unset;
-    vertical-align: middle;
     box-sizing: border-box;
     position: absolute;
-    width: 30%;
-    left: 2%;
-    top: 5%;
+    left: 10px;
+    top: 10px;
     color: rgb(255, 255, 255);
-    font-size: 15px;
-    font-weight: 700;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
     white-space: nowrap;
-    transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
-    outline: 0px;
-    text-decoration: none;
-    border-width: 0px;
-    border-style: initial;
-    border-color: initial;
-    border-image: initial;
-    padding: 0px;
-
-
-    border-radius: 2.783px;
-background: #0CA92E;
-box-shadow: 0 0 3.71px 0 rgba(0, 0, 0, 0.25);
+    padding: 4px 12px;
+    border-radius: 6px;
+    background: #0CA92E;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
 }
 .propertyImageChipLogo{
-      max-width: 100%;
-  
     display: inline-flex;
-    -webkit-box-align: center;
     align-items: center;
-    -webkit-box-pack: center;
     justify-content: center;
-    height: 32px;
-    cursor: unset;
-    vertical-align: middle;
     box-sizing: border-box;
     position: absolute;
-    width: 30%;
-    right: 2%;
-    top: 5%;
-    border-radius: 2.783px;
-
+    right: 10px;
+    top: 10px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.95); /* white backing so light developer logos stay visible */
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+    padding: 5px 8px;
 }
 .propertyLogo{
-width: 5rem;
+width: 4.5rem;
+max-height: 26px;
 object-fit: scale-down;
 }
 .paginationContainer {
@@ -163,82 +143,50 @@ line-height: normal;
 }
 
 .description{
-  width: 95%;
-
-
-}
-
-
-.propertyListPageLeftSection {
-  width: 78%;
-  height: auto;
-  margin-left: 2%;
-}
-
-.propertyListPageRightSection {
-  position: fixed; 
-  top: 20%; 
-  width: 37%;
-  right: -2%;
-  height: 40vh; 
-  max-height: 80vh; 
-  overflow: hidden; 
-}
-
-
-.propertyListingCardLeftSection {
-  width: 45%;
-  height: 100%;
-  position: relative;
-}
-
-
-
-.propertyListingCardLeftSectionImg {
-  width: 100%;
-  height: 100%;
-  object-fit: fill;
-  border-radius: 10px;
-  position: relative;
-}
-
-.propertyListingCardLeftSectionImgTag {
-  position: absolute;
-  width: 6vw;
-  z-index: 10;
-  border-radius: 10px;
-  left: 0%;
-  top: 0%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 15px;
-  font-weight: 500;
-  color: #fff;
-}
-
-.propertyListingTagExclusive {
-  background: #e7b554;
-}
-
-.propertyListingTagFeatured {
-  background: #0ca92e;
-}
-
-
-
-.propertyListingCardHeaderFlex {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
   width: 100%;
 }
 
-.propertyListingCardHeaderFlex > h4 {
-  margin: 0;
-  font-size: 20px;
+.clampTwoLines {
+  color: #555;
+  font-size: 12.5px;
+  line-height: 1.45;
 }
+
+/* RERA trust badge on the mobile card — sits inline, right after the name.
+   Scoped under the location block to beat its `> *` font-size/margin reset. */
+.propertyListPageMobileDetailLocation .mobileReraBadge {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  gap: 3px;
+  margin: 0 0 0 7px;
+  font-family: 'Lexend Deca', sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  color: #0b6e21;
+  background: #eef7f0;
+  border: 1px solid #cfe3d5;
+  padding: 3px 7px;
+  border-radius: 5px;
+  white-space: nowrap;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .propertyListingCardMobile { animation: none; }
+}
+
+
+/* NOTE: desktop-card structure classes (LeftSection/RightSection/HeaderFlex/etc.)
+   were removed from this mobile module. They were unused by the mobile card and,
+   because CSS modules are unhashed (global), collided with the desktop card's
+   identically-named classes and broke the desktop listing layout. */
 
 
 
@@ -447,10 +395,10 @@ line-height: normal;
     display: inline-block;
     fill: currentcolor;
     flex-shrink: 0;
-    font-size: 1.5rem;
-    color: rgb(11, 110, 33);
-    width: 20px;
-    margin-right: 6px;
+    font-size: 1rem;
+    color: #dcaa4c;
+    width: 15px;
+    margin-right: 4px;
     transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 @media screen and (max-width:768px) {
@@ -468,11 +416,25 @@ line-height: normal;
     .propertyListingCardMobile {
         height: auto;
         width: 92%;
+        margin: 0 auto 16px;
         flex-direction: column;
+        align-items: stretch;
         padding: 0px;
         position: relative;
+        border: 1px solid #eee;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+        animation: cardIn 0.45s ease both;
+        transition: box-shadow 0.25s ease, transform 0.18s ease;
     }
-        .propertyListPageSectionFlex {
+    .propertyListingCardMobile:hover {
+        box-shadow: 0 10px 26px rgba(0, 0, 0, 0.14);
+    }
+    .propertyListingCardMobile:active {
+        transform: scale(0.99);
+    }
+        .mobileListSectionFlex {
         flex-direction: column;
         height: auto;
         justify-content: flex-start;
@@ -481,7 +443,7 @@ line-height: normal;
     }
 }
 
-.propertyListingCardWrapper {
+.mobileListCardWrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -492,7 +454,7 @@ line-height: normal;
 }
 
 
-.propertyListPageSectionFlex {
+.mobileListSectionFlex {
   width: 100vw;
   height: auto;
   display: flex;
@@ -502,119 +464,7 @@ line-height: normal;
   overflow: hidden;
 }
 
-.propertyListPageLeftSection {
-  width: 58%;
-  height: auto;
-  margin-left: 2%;
-
-}
-
-.propertyListPageRightSection {
-  position: fixed; 
-  top: 20%; 
-  width: 37%;
-  right: -2%;
-  height: 40vh; 
-  max-height: 80vh; 
-  overflow: hidden; 
-}
-
-
-
-.propertyListingCardLeftSection {
-  width: 45%;
-  height: 100%;
-  position: relative;
-}
-
-.propertyListingCardRightSection {
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: flex-start;
-  height: 100%;
-  margin-left: 3%;
-}
-
-.propertyListingCardLeftSectionImg {
-  width: 100%;
-  height: 100%;
-  object-fit: fill;
-  border-radius: 10px;
-  position: relative;
-}
-
-.propertyListingCardLeftSectionImgTag {
-  position: absolute;
-  width: 6vw;
-  z-index: 10;
-  border-radius: 10px;
-  left: 0%;
-  top: 0%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 15px;
-  font-weight: 500;
-  color: #fff;
-}
-
-.propertyListingTagExclusive {
-  background: #e7b554;
-}
-
-.propertyListingTagFeatured {
-  background: #0ca92e;
-}
-
-.propertyListingCardRightSectionBtnContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: flex-end;
-  width: 100%;
-}
-
-.propertyListingCardHeaderFlex {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-
-.propertyListingCardHeaderFlex > h4 {
-  margin: 0;
-  font-size: 20px;
-}
-
-.propertyListingCardRightSection > p {
-  margin: 0;
-}
-
-.propertyListingCardRightSectionGridContainer {
-  display: grid;
-  grid-template-columns: 48% 48%;
-  grid-column-gap: 10px;
-  grid-row-gap: 10px;
-  width: 100%;
-}
-
-.propertyListingCardRightSectionGridContainer > p {
-  margin: 0;
-  font-size: 15px;
-}
-
-.propertyListingCardRightSectionDescription {
-  font-size: 15px;
-  width: 100%;
-  font-weight: 600;
-}
-
-.propertyListingCardRightSectionLocation {
-  font-size: 15px;
-}
+/* (dead desktop-card structure classes removed here too — see note above) */
 
 .propertyPageListingPaginationWrapper {
   display: flex;
@@ -688,7 +538,7 @@ line-height: normal;
     width: 60%;
   }
 
-  .propertyListPageSectionFlex {
+  .mobileListSectionFlex {
     flex-direction: column;
     height: auto;
     justify-content: flex-start;
@@ -696,20 +546,20 @@ line-height: normal;
     width: 100%;
   }
   .propertyListPageMobileImgSection {
-    height: 55%;
+    height: 200px;
     width: 100%;
     position: relative;
   }
   .propertyListPageMobileDetailSection {
-    height: 45%;
+    height: auto;
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    margin-bottom: 5%;
-    margin-top: 1rem;
-    gap:1rem
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 12px 14px 14px;
+    margin-top: 0;
+    gap: 0.7rem;
   }
       .propertyListPageMobileDetailLocation > * {
         margin: 0;
@@ -734,7 +584,8 @@ line-height: normal;
   .propertyListPageMobileImgSection > img {
     height: 100%;
     width: 100%;
-    object-fit: fill;
+    object-fit: cover;
+    display: block;
   }
 
   .propertyListPageMobileDetailHeader {
@@ -742,11 +593,26 @@ line-height: normal;
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
-    width: 95%;
+    gap: 10px;
+    width: 100%;
   }
 
   .propertyListPageMobileDetailLocation {
-    max-width: 70%;
+    max-width: 62%;
+  }
+
+  .propertyListPageMobileDetailLocation:last-child {
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .propertyListPageMobileDetailLocation:last-child > h3 {
+    justify-content: flex-end;
+  }
+
+  .propertyListPageMobileDetailLocation:last-child > p {
+    color: #8a8a8a;
+    font-size: 12px;
   }
 
   .propertyListPageMobileDetailLocation > * {
@@ -777,23 +643,30 @@ line-height: normal;
   }
 
   .propertyListPageMobileDetailOverview {
-    background: rgba(217, 217, 217, 0.3);
-    margin-left: 10px;
+    background: #faf6ec;
+    border: 1px solid #f0e6cf;
     font-size: 12px;
-    margin-right: 10px;
-    border-radius: 5px;
+    border-radius: 8px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 0px 9px;
-    width: 95%;
-
+    padding: 8px 4px;
+    width: 100%;
+    margin: 0;
   }
 
 
   .propertyListPageMobileDetailOverview > * {
-    margin: 5px 0px;
+    margin: 0;
+  }
+
+  .propertyListPageMobileDetailOverview p {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: #2a2a2a;
+    white-space: nowrap;
   }
 
   .propertyListPageMobileDetailBtnWrapper {
@@ -806,9 +679,16 @@ line-height: normal;
   }
 
   .propertyListPageMobileDetailOverviewValueFlex {
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 3px;
+    padding: 0 2px;
+  }
+
+  .propertyListPageMobileDetailOverviewValueFlex:not(:last-child) {
+    border-right: 1px solid #ece0c4;
   }
 
   .propertyListPageMobileDetailLocation > p:nth-child(2) {

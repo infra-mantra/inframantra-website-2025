@@ -54,12 +54,12 @@ export default function LocalityPropertiesSection({data,loading,selectedCity}) {
       disableOnInteraction: false,
       pauseOnMouseEnter: true,
     }}
+    /* Match Premium Picks / Locality carousels so every card is the same size */
     breakpoints={{
-      320: { slidesPerView: 1.2, spaceBetween: 16 },
-      480: { slidesPerView: 1.5, spaceBetween: 16 },
+      320: { slidesPerView: 1.5, spaceBetween: 16 },
+      480: { slidesPerView: 1.8, spaceBetween: 16 },
       768: { slidesPerView: 2.5, spaceBetween: 20 },
-      1024: { slidesPerView: Math.min(3, data.length), spaceBetween: 24 },
-      1200: { slidesPerView: Math.min(3, data.length), spaceBetween: 24 },
+      1024: { slidesPerView: 4, spaceBetween: 24 },
     }}
     loop={data.length > 3}
     grabCursor={true}

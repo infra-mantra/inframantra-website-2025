@@ -57,7 +57,7 @@ export default function LocalityPropertiesSection({ data, loading, selectedCity 
         {/* Section Header */}
         <div className={styles.localitySectionHeader}>
           <h2 className={styles.localityMainTitle}>
-            Discover Your Dream Home
+            Discover Your <span>Dream Home</span>
           </h2>
           <p className={styles.localitySubtitle}>
             Explore premium homes across top localities in {selectedCity}
@@ -81,17 +81,17 @@ export default function LocalityPropertiesSection({ data, loading, selectedCity 
                   nextEl: `.locality-next-${index}`,
                   prevEl: `.locality-prev-${index}`,
                 }}
+                /* Match the Premium Picks carousel exactly so the cards are the
+                   same size in both sections. Fixed 4-up at desktop (not
+                   min(4,count)) so even a locality with <4 properties keeps the
+                   Premium card width (it just leaves a gap at the end of the row). */
                 breakpoints={{
-                  320: { slidesPerView: 1.2, spaceBetween: 16 },
-                  480: { slidesPerView: 1.5, spaceBetween: 16 },
+                  320: { slidesPerView: 1.5, spaceBetween: 16 },
+                  480: { slidesPerView: 1.8, spaceBetween: 16 },
                   768: { slidesPerView: 2.5, spaceBetween: 20 },
                   1024: {
-                    slidesPerView: Math.min(3, locality.properties.length),
+                    slidesPerView: 4,
                     spaceBetween: 24,
-                  },
-                  1400: {
-                    slidesPerView: Math.min(4, locality.properties.length),
-                    spaceBetween: 28,
                   },
                 }}
                 autoplay={{

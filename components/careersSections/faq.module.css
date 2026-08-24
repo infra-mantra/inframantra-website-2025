@@ -6,8 +6,9 @@
 }
 
 .faqHeading {
-  font-size: 1.6rem;
-  font-weight: 600;
+  font-size: 36px;
+  font-weight: 700;
+  color: #1a1a1a;
   text-transform: uppercase;
   margin-bottom: 2rem;
   padding-bottom: 0.5rem;

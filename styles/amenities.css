@@ -7,8 +7,10 @@
 }
 
 .amenities-title {
-  font-size: 1.5rem;
-  font-weight: bold;
+  /* Match the page's standard section heading (.Header): 20px / 600.
+     Colour + uppercase come from the co-applied .Header class. */
+  font-size: 20px;
+  font-weight: 600;
   margin-bottom: 15px;
 }
 

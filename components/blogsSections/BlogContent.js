@@ -75,6 +75,7 @@ export default function BlogContent({
 }) {
   const [isDesktop, setIsDesktop] = useState(false);
   const [popForm, setPopForm] = useState(false);
+  const [tocOpen, setTocOpen] = useState(false); // mobile: expand TOC on click
 
   const router = useRouter();
 
@@ -141,8 +142,31 @@ export default function BlogContent({
         <div className={styles.flexLayout}>
 
           {/* ================= TOC ================= */}
-          <aside className={styles.toc}>
-            <h4>Table of Contents</h4>
+          <aside className={`${styles.toc} ${tocOpen ? styles.tocOpen : ""}`}>
+            <h4
+              className={styles.tocHead}
+              onClick={() => setTocOpen((v) => !v)}
+            >
+              <span className={styles.tocHeadLeft}>
+                <svg
+                  className={styles.tocIcon}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                >
+                  <line x1="8" y1="6" x2="21" y2="6" />
+                  <line x1="8" y1="12" x2="21" y2="12" />
+                  <line x1="8" y1="18" x2="21" y2="18" />
+                  <circle cx="3.5" cy="6" r="1.3" fill="currentColor" stroke="none" />
+                  <circle cx="3.5" cy="12" r="1.3" fill="currentColor" stroke="none" />
+                  <circle cx="3.5" cy="18" r="1.3" fill="currentColor" stroke="none" />
+                </svg>
+                Table of Contents
+              </span>
+              <span className={styles.tocChevron}>▾</span>
+            </h4>
             <ul>{tocItems}</ul>
           </aside>
 
@@ -224,11 +248,7 @@ export default function BlogContent({
                           <p className={styles.date}>
                             {b.date}
                           </p>
-                          <h3>
-                            {title.length > 40
-                              ? title.slice(0, 37) + "…"
-                              : title}
-                          </h3>
+                          <h3>{title}</h3>
                         </div>
                       </a>
                     </Link>

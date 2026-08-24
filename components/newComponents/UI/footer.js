@@ -1,423 +1,244 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { SocialIcon } from 'react-social-icons';
-import { MdLocationOn, MdEmail, MdArrowDropDown   } from "react-icons/md";
+import { MdLocationOn, MdEmail, MdArrowDropDown } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
 import Link from 'next/link';
-import styles from './footer.module.css'; // Assuming you have a CSS module for styles
+import styles from './footer.module.css';
+
+// Quick Search — premium-pick projects per city, hardcoded (no API call).
+// Order: Gurgaon, Mohali, Noida, Pune. Each item is [name, slug].
+const QUICK_SEARCH = [
+  {
+    city: 'Gurgaon',
+    items: [
+      ['Whiteland The Westin Residences', 'whiteland-the-westin-residences-sector-103-gurugram'],
+      ['Godrej Samaris', 'godrej-samaris-sector-53-gurgaon'],
+      ['Tulip Monsella', 'tulip-monsella-sector-53-gurgaon'],
+      ['Tulip Melrose', 'tulip-melrose-sector-70-gurgaon'],
+      ['Tulip Crimson', 'tulip-crimson-sector-70-gurgaon'],
+      ['Godrej Sora', 'godrej-sora-sector-53-gurgaon'],
+      ['BPTP Downtown 66', 'bptp-downtown-66-sector-66-gurgaon'],
+      ['Satya Levante Residences', 'satya-levante-residences-sector-104-gurgaon'],
+      ['Whiteland The Aspen', 'whiteland-the-aspen-sector-76-gurgaon'],
+      ['Vatika Seven Elements', 'vatika-seven-elements-sector-89a-gurgaon'],
+      ['Vatika Sovereign Park', 'vatika-sovereign-park-sector-99-gurgaon'],
+      ['Ambience Creacions', 'ambience-creacions-sector-22-gurugram'],
+      ['Saan Verdante', 'saan-verdante-sector-95-gurgaon'],
+      ['Tulip Violet', 'tulip-violet-sector-69-gurgaon'],
+      ['Experion The Trillion', 'experion-the-trillion-sector-48-gurgaon'],
+      ['Shapoorji Pallonji The Dualis', 'shapoorji-pallonji-the-daulis-sector-46-gurgaon'],
+      ['Hero Homes The Palatial', 'hero-homes-the-palatial-sector-104-gurgaon'],
+      ['Birla Pravaah', 'birla-pravaah-sector-71-gurgaon'],
+      ['Signature Global Tonino Lamborghini Residences', 'signature-global-tonino-lamborghini-residencies-sector-71-gurgaon'],
+      ['Birla Arika', 'birla-arika-sector-31-gurgaon'],
+      ['Trevoc Royal Residences', 'trevoc-royal-residences-sector-56-gurgaon'],
+      ['Max Estates The Terraces', 'max-estates-the-terraces-sector-36a-gurgaon'],
+      ['TARC Ishva', 'tarc-ishva-sector-63a-gurgaon'],
+      ['Puri Diplomatic Residences', 'puri-diplomatic-residences-sector-111-gurgaon'],
+      ['Godrej Miraya', 'godrej-miraya-sector-43-gurgaon'],
+      ['Krisumi Waterside Residences', 'krisumi-waterside-residences-sector-36A-gurgaon'],
+      ['BPTP GAIA Residences', 'bptp-gaia-residences-sector-102-gurugram'],
+      ['Signature Global Daxin Vistas', 'signature-global-daxin-vistas-sohna-south-gurgaon'],
+      ['Signature Global Cloverdale', 'signature-global-cloverdale-sector-71-gurgaon'],
+      ['Signature Global Sarvam DXP', 'signature-global-deluxe-dxp-sector-37d-gurgaon'],
+    ],
+  },
+  {
+    city: 'Mohali',
+    items: [
+      ['Noble Callista', 'noble-callista-sector-66b-mohali'],
+      ['Gillco Meraqui', 'gillco-meraqui-sector-126-mohali'],
+      ['Noble Aurellia', 'noble-aurellia-sector-88-mohali'],
+      ['Homeland Regalia', 'homeland-regalia-sector-77-mohali'],
+    ],
+  },
+  {
+    city: 'Noida',
+    items: [
+      ['TATA Eureka Park', 'tata-eureka-park-sector-150-noida'],
+      ['M3M The Cullinan', 'm3m-the-cullinan-sector-94-noida'],
+      ['Kalpataru Vista', 'kalpataru-vista-sector-128-noida'],
+      ['Prateek Canary', 'prateek-canary-sector-150-noida'],
+      ['Experion Elements', 'experion-elements-sector-45-noida'],
+      ["ACE HAN'EI", 'ace-hanei-sector-12-noida'],
+      ['Godrej Woods', 'godrej-woods-sector-43-noida'],
+      ['Amrapali Silicon City', 'amrapali-silicon-city-sector-76-noida'],
+    ],
+  },
+  {
+    city: 'Pune',
+    items: [
+      ['Pristine O2 World', 'pristine-o2-world-kharadi-pune'],
+      ['Gera Island of Joy', 'gera-island-of-joy-kharadi-pune'],
+      ['Kolte Patil Life Republic 24k Espada', 'kolte-patil-24k-espada-hinjewadi-pune'],
+      ['Majestique Evolvus', 'majestique-evolvus-kharadi-pune'],
+      ['Lodha Panache', 'lodha-panache-hinjewadi-pune'],
+      ['Lodha Estilo', 'lodha-estilo-kharadi-pune'],
+      ['Majestique Towers', 'majestique-towers-kharadi-pune-east'],
+      ['Gera Winds of Joy', 'gera-winds-of-joy-hinjewadi-pune'],
+      ['Saheel Itrend Futura', 'saheel-itrend-futura-mahalunge-pune-west'],
+      ['Godrej the Gale', 'godrej-the-gale-hinjewadi-pune-west'],
+      ['Mantra Mirari', 'mantra-mirari-mundhwa-pune'],
+      ['Lodha Bella Vita', 'lodha-bella-vita-nibm-road-pune'],
+      ['Mantra Magnus', 'mantra-magnus-mundhwa-pune'],
+      ['Kolte Patil Springshire', 'kolte-patil-springshire-wagholi-pune'],
+      ['Mantra Melange', 'mantra-melange-kharadi-pune'],
+      ['Mahindra IvyLush', 'mahindra-ivylush-kharadi-pune'],
+    ],
+  },
+  {
+    city: 'Jaipur',
+    items: [
+      ['Vatika Jaipur 21', 'vatika-jaipur-21-vatika-infotech-city-jaipur-rajasthan'],
+      ['Vatika City Front Villa', 'vatika-city-front-villa-vatika-infotech-city-jaipur'],
+    ],
+  },
+];
 
 function Footer() {
   const [openDropDown, setOpenDropdown] = useState(null);
   const [isDesktop, setIsDesktop] = useState(true);
-  const [isMobile, setIsMobile] = useState(true);
   const [loading, setLoading] = useState(false);
+  const footerRef = useRef(null);
 
-  const checkScreenWidth = () => {
-    setIsDesktop(window.innerWidth >= 769); // You can adjust the threshold for desktop here
-    setIsMobile(window.innerWidth <=769);
-  };
+  const checkScreenWidth = () => setIsDesktop(window.innerWidth >= 769);
+
   useEffect(() => {
     checkScreenWidth();
     window.addEventListener('resize', checkScreenWidth);
-  
-    return () => {
-      window.removeEventListener('resize', checkScreenWidth);
-    };
+    return () => window.removeEventListener('resize', checkScreenWidth);
   }, []);
-  const footerRef = useRef(null);
+
   useEffect(() => {
     const updateFooterPosition = () => {
+      if (!footerRef.current) return;
       const footerTop = footerRef.current.getBoundingClientRect().top + window.scrollY;
       const footerHeight = footerRef.current.offsetHeight;
-      window.dispatchEvent(new CustomEvent('footerPosition', {
-        detail: { footerTop, footerHeight }
-      }));
+      window.dispatchEvent(new CustomEvent('footerPosition', { detail: { footerTop, footerHeight } }));
     };
-
-    updateFooterPosition(); // Initial position
+    updateFooterPosition();
     window.addEventListener('resize', updateFooterPosition);
-
-    return () => {
-      window.removeEventListener('resize', updateFooterPosition);
-    };
+    return () => window.removeEventListener('resize', updateFooterPosition);
   }, []);
-  const handleFooterDropdownClick = (index) => {
-    const isOpening = openDropDown !== index;
-  
+
+  const handleFooterDropdownClick = (key) => {
+    const isOpening = openDropDown !== key;
     if (isOpening) {
       setLoading(true);
-      setOpenDropdown(index);         // ← immediately mark it open
-      setTimeout(() => {
-        setLoading(false);
-      }, 500);
+      setOpenDropdown(key);
+      setTimeout(() => setLoading(false), 500);
     } else {
       setOpenDropdown(null);
     }
   };
+
+  const companyColumn = (
+    <div className={styles.footerSecondSectionCompanyDetailsWrapper}>
+      <h4>INFRAMANTRA</h4>
+      <p><Link legacyBehavior href='/'>Home</Link></p>
+      <p><Link legacyBehavior href='/about-us'>About Us</Link></p>
+      <p><Link legacyBehavior href='/our-services'>Services</Link></p>
+      <p><Link legacyBehavior href='/calculators'>Calculators</Link></p>
+      <p><Link legacyBehavior href="/testimonials">Testimonials</Link></p>
+      <p><Link legacyBehavior href='/careers'>Careers</Link></p>
+      <p><Link legacyBehavior href='/blog'>Media And Blogs</Link></p>
+      <p><Link legacyBehavior href='/developer'>Developers</Link></p>
+      <p><Link legacyBehavior href='/contact-us'>Contact Us</Link></p>
+    </div>
+  );
+
+  const quickSearchColumn = (
+    <div className={styles.footerThirdSectionCompanyDetailsWrapper}>
+      <h4>Quick Search</h4>
+      {QUICK_SEARCH.map(({ city, items }) => (
+        <div className={styles.footerThirdSectionDropdownFlex} key={city}>
+          <div className={styles.footerThirdSectionDropdownHeaderFlex}>
+            <p onClick={() => handleFooterDropdownClick(city)}>Top Properties In {city}</p>
+            <MdArrowDropDown onClick={() => handleFooterDropdownClick(city)} />
+          </div>
+          {loading && openDropDown === city && <div className={styles.spinner}></div>}
+          {openDropDown === city && (
+            <div className={styles.footerThirdSectionDropdownLinkWrapper}>
+              {items.map(([name, slug]) => (
+                <p key={slug}><Link legacyBehavior href={`/property/${slug}`}>{name}</Link></p>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+
   return (
     <div className={styles.footerWrapper} id="footer" ref={footerRef}>
       <div className={styles.footerFirstSectionContainer}>
         <div className={styles.footerFirstSectionCompanyDetailsWrapper}>
-          <img
-            src="/logos/logo-white.webp"
-            alt="Infra logo white"
-            width={260}
-            height={52}
-            loading="lazy"
-          />
+          <img src="/logos/logo-white.webp" alt="Infra logo white" width={260} height={52} loading="lazy" />
+          <p className={styles.footerTagline}>
+            Redefining real estate with trust, transparency &amp; a curated
+            portfolio of premium homes.
+          </p>
           <div className={styles.footerFirstSectionCompanyDetailsFlex}>
-            <MdLocationOn style={{
-                color: '#E7B554',
-                fontSize: '25px',
-                marginRight: '10px',
-              }}/>
+            <MdLocationOn style={{ color: '#E7B554', fontSize: '25px', marginRight: '10px' }} />
             <p>95, Institutional Area, Sector 32, Gurugram</p>
           </div>
           <div className={styles.footerFirstSectionCompanyDetailsFlex}>
-            <FaPhoneAlt style={{
-                color: '#E7B554',
-                fontSize: '20px',
-                marginRight: '10px',
-              }}/>
+            <FaPhoneAlt style={{ color: '#E7B554', fontSize: '20px', marginRight: '10px' }} />
             <p>+91 86 9800 9900</p>
           </div>
           <div className={styles.footerFirstSectionCompanyDetailsFlex}>
-            <MdEmail
-              style={{
-                color: '#E7B554',
-                fontSize: '20px',
-                marginRight: '10px',
-              }}
-            />
+            <MdEmail style={{ color: '#E7B554', fontSize: '20px', marginRight: '10px' }} />
             <p>marketing@inframantra.com </p>
           </div>
         </div>
-        {isDesktop && (
+
+        {isDesktop ? (
           <>
-            <div className={styles.footerSecondSectionCompanyDetailsWrapper}>
-              <h4>INFRAMANTRA</h4>
-              <p><Link  legacyBehavior={true} href='/'>Home</Link></p>
-              <p><Link  legacyBehavior={true} href='/about-us'>About Us</Link></p>
-              <p><Link  legacyBehavior={true} href='/our-services'>Services</Link></p>
-              <p><Link  legacyBehavior={true} href='/calculators'>Calculators</Link></p>
-              <p><Link  legacyBehavior={true} href="/testimonials">Testimonials</Link></p>
-              <p><Link  legacyBehavior={true} href='/careers'>Careers</Link></p>
-              <p><Link  legacyBehavior={true} href='/blog'>Media And Blogs</Link></p>
-              <p><Link  legacyBehavior={true} href='/developer'>Developers</Link></p>
-              <p><Link  legacyBehavior={true} href='/contact-us'>Contact Us</Link></p>
-            </div>
-            <div className={styles.footerThirdSectionCompanyDetailsWrapper}>
-              <h4>Quick Search</h4>
-              <div className={styles.footerThirdSectionDropdownFlex}>
-                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
-                  {/* <p  ><a  className={styles.fontWt} legacyBehavior={true} href='/usa-nri'>USA Properties</a></p> */}
-
-
-                </div>
-                
-               
-                
-              </div>
-              <div className={styles.footerThirdSectionDropdownFlex}>
-                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
-                  {/* <p   ><a className={styles.fontWt} legacyBehavior={true} href='/usa-nri-event'>NRI EXPO</a></p> */}
-
-
-                </div>
-
-              </div>
-              <div className={styles.footerThirdSectionDropdownFlex}>
-                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
-                  <p   onClick={() => handleFooterDropdownClick(1)}>Top Properties In Gurgaon</p>
-                  <MdArrowDropDown
-                    onClick={() => handleFooterDropdownClick(1)}
-                  />
-                </div>
-              {loading  && openDropDown ==1 &&  <div className={styles.spinner}></div>}
-                {openDropDown === 1 && (
-                  <div className={styles.footerThirdSectionDropdownLinkWrapper}>
-                     <p><Link  legacyBehavior={true} href='/property/satya-levante-residences-sector-104-gurgaon'>Satya Levante Residences</Link></p>
-                      <p><Link  legacyBehavior={true} href='/property/tulip-melrose-sector-70-gurgaon'>Tulip Melrose</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/m3m-forestia-west-sector-9-manesar-gurgaon'>M3M Forestia West</Link></p>
-
-                  </div>
-                )}
-              </div>
-                <div className={styles.footerThirdSectionDropdownFlex}>
-                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
-                  <p  onClick={() => handleFooterDropdownClick(4)}>Premium Properties</p>
-                  <MdArrowDropDown
-                    onClick={() => handleFooterDropdownClick(4)}
-                  />
-                </div>
-                {loading  && openDropDown ==4 &&  <div className={styles.spinner}></div>}
-                {openDropDown === 4 && (
-                  <div className={styles.footerThirdSectionDropdownLinkWrapper}>
-                   <p><Link  legacyBehavior={true} href='/property/satya-levante-residences-sector-104-gurgaon'>Satya Levante Residences</Link></p>
-                     <p><Link  legacyBehavior={true} href="/property/ambience-creacions-sector-22-gurugram">Ambience Creacions</Link></p>
-                  <p><Link  legacyBehavior={true} href='/property/tulip-melrose-sector-70-gurgaon'>Tulip Melrose</Link></p>
-                      <p><Link  legacyBehavior={true} href='/property/saan-verdante-sector-95-gurgaon'>Saan Verdante</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/whiteland-the-westin-residences-sector-103-gurugram'>Whiteland The Westin Residences</Link></p> 
-                   <p><Link  legacyBehavior={true} href='/property/whiteland-the-aspen-sector-76-gurgaon'>Whiteland The Aspen</Link></p>
-                  
-                  </div>
-                )}
-              </div>
-              <div className={styles.footerThirdSectionDropdownFlex}>
-                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
-                  <p   onClick={() => handleFooterDropdownClick(5)}>Exclusive Properties</p>
-                 
-                  <MdArrowDropDown
-                    onClick={() => handleFooterDropdownClick(5)}
-                  />
-                </div>
-                
-                {loading  && openDropDown ==5 &&  <div className={styles.spinner}></div>}
-                {openDropDown === 5 && (
-                  <div className={styles.footerThirdSectionDropdownLinkWrapper}>
-                     <p><Link  legacyBehavior={true} href='/property/satya-levante-residences-sector-104-gurgaon'>Satya Levante Residences</Link></p>
-                     <p><Link  legacyBehavior={true} href='/property/tulip-monsella-sector-53-gurgaon'>Tulip Monsella</Link></p>
-                       <p><Link  legacyBehavior={true} href='/property/tulip-melrose-sector-70-gurgaon'>Tulip Melrose</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/tulip-crimson-sector-70-gurgaon'>Tulip Crimson</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/vatika-seven-elements-sector-89a-gurgaon'>Vatika Seven Elements</Link></p>
-
-
-                  </div>  
-                )}
-              </div>
-
-              <div className={styles.footerThirdSectionDropdownFlex}>
-                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
-                  <p   onClick={() => handleFooterDropdownClick(2)}>Top Properties In Pune</p>
-                  <MdArrowDropDown
-                    onClick={() => handleFooterDropdownClick(2)}
-                  />
-                </div>
-                {loading  && openDropDown ==2 &&  <div className={styles.spinner}></div>}
-                {openDropDown === 2 && (
-                  <div className={styles.footerThirdSectionDropdownLinkWrapper}>
-                      <p><Link  legacyBehavior={true} href='/property/pristine-o2-world-kharadi-pune'>Pristine O2 World</Link></p>
-                      <p><Link  legacyBehavior={true} href='/property/lodha-estilo-kharadi-pune'>Lodha Estilo</Link></p>
-                      <p><Link  legacyBehavior={true} href='/property/majestique-towers-kharadi-pune-east'>Majestique Towers</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/gera-winds-of-joy-hinjewadi-pune'>Gera Winds of Joy</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/gera-island-of-joy-kharadi-pune'>Gera Island of Joy</Link></p>
-                  </div>
-                )}
-              </div>
-              <div className={styles.footerThirdSectionDropdownFlex}>
-                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
-                  <p  onClick={() => handleFooterDropdownClick(3)}>Top Properties In Noida</p>
-                  <MdArrowDropDown
-                    onClick={() => handleFooterDropdownClick(3)}
-                  />
-                </div>
-                {loading  && openDropDown ==3 &&  <div className={styles.spinner}></div>}
-                {openDropDown === 3 && (
-                  <div className={styles.footerThirdSectionDropdownLinkWrapper}>
-                    <p><Link  legacyBehavior={true} href='/property/experion-elements-sector-45-noida'>Experion Elements</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/ace-hanei-sector-12-noida'>ACE HAN'EI                    </Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/godrej-woods-sector-43-noida'>Godrej Woods
-                    </Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/m3m-the-cullinan-sector-94-noida'>M3M The Cullinan
-                    </Link></p>
-                  </div>
-                )}
-              </div>
-            
-              
-            </div>
+            {companyColumn}
+            {quickSearchColumn}
           </>
-        )}
-        {!isDesktop && (
+        ) : (
           <div className={styles.footerSecondSectionMobileContainer}>
-            <div className={styles.footerSecondSectionCompanyDetailsWrapper}>
-              <h4>INFRAMANTRA</h4>
-              <p><Link  legacyBehavior={true} href='/'>Home</Link></p>
-              <p><Link  legacyBehavior={true} href='/about-us'>About Us</Link></p>
-              <p><Link  legacyBehavior={true} href='/our-services'>Services</Link></p>
-              <p><Link  legacyBehavior={true} href='/calculators'>Calculators</Link></p>
-              <p><Link  legacyBehavior={true} href="/testimonials">Testimonials</Link></p>
-              <p><Link  legacyBehavior={true} href='/careers'>Careers</Link></p>
-              <p><Link  legacyBehavior={true} href='/blog'>Media And Blogs</Link></p>
-              <p><Link  legacyBehavior={true} href='/contact-us'>Contact Us</Link></p>
-              <p><Link  legacyBehavior={true} href='/developer'>Developers</Link></p>
-            </div>
-            <div className={styles.footerThirdSectionCompanyDetailsWrapper}>
-              <h4>Quick Search</h4>
-           
-                   <div className={styles.footerThirdSectionDropdownFlex}>
-                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
-                  {/* <p   ><a className={styles.fontWt} legacyBehavior={true} href='/usa-nri'>USA Properties</a></p> */}
-                  
-                
-                </div>
-               
-              </div>
-                    <div className={styles.footerThirdSectionDropdownFlex}>
-                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
-                  {/* <p   ><a className={styles.fontWt} legacyBehavior={true} href='/usa-nri-event'>NRI EXPO</a></p> */}
-                  
-                
-                </div>
-               
-              </div>
-                 <div className={styles.footerThirdSectionDropdownFlex}>
-                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
-                  <p  onClick={() => handleFooterDropdownClick(1)}>Top Properties In Gurgaon</p>
-                  <MdArrowDropDown
-                    onClick={() => handleFooterDropdownClick(1)}
-                  />
-                </div>
-                {loading  && openDropDown ==1 &&  <div className={styles.spinner}></div>}
-                {openDropDown === 1 && (
-                  <div className={styles.footerThirdSectionDropdownLinkWrapper}>
-                 <p><Link  legacyBehavior={true} href='/property/satya-levante-residences-sector-104-gurgaon'>Satya Levante Residences</Link></p>
-                      <p><Link  legacyBehavior={true} href='/property/tulip-melrose-sector-70-gurgaon'>Tulip Melrose</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/m3m-forestia-west-sector-9-manesar-gurgaon'>M3M Forestia West</Link></p>
-
-                  </div>
-                )}
-              </div>
-               <div className={styles.footerThirdSectionDropdownFlex}>
-                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
-                  <p  onClick={() => handleFooterDropdownClick(4)}>Premium Properties</p>
-                  <MdArrowDropDown
-                    onClick={() => handleFooterDropdownClick(4)}
-                  />
-                </div>
-                {loading  && openDropDown ==4 &&  <div className={styles.spinner}></div>}
-                {openDropDown === 4 && (
-                  <div className={styles.footerThirdSectionDropdownLinkWrapper}>
-                      <p><Link  legacyBehavior={true} href='/property/satya-levante-residences-sector-104-gurgaon'>Satya Levante Residences</Link></p>
-                     <p><Link  legacyBehavior={true} href="/property/ambience-creacions-sector-22-gurugram">Ambience Creacions</Link></p>
-                      <p><Link  legacyBehavior={true} href='/property/saan-verdante-sector-95-gurgaon'>Saan Verdante</Link></p>
-                   <p><Link  legacyBehavior={true} href='/property/whiteland-the-aspen-sector-76-gurgaon'>Whiteland The Aspen</Link></p>
-                  <p><Link  legacyBehavior={true} href='/property/tulip-melrose-sector-70-gurgaon'>Tulip Melrose</Link></p>
-
-                  </div>
-                )}
-              </div>
-              <div className={styles.footerThirdSectionDropdownFlex}>
-                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
-                  <p  onClick={() => handleFooterDropdownClick(5)}>Exclusive Properties</p>
-                  
-                  <MdArrowDropDown
-                    onClick={() => handleFooterDropdownClick(5)}
-                  />
-                </div>
-                {loading  && openDropDown ==5 &&  <div className={styles.spinner}></div>}
-                {openDropDown === 5 && (
-                  <div className={styles.footerThirdSectionDropdownLinkWrapper}>
-                    <p><Link  legacyBehavior={true} href='/property/satya-levante-residences-sector-104-gurgaon'>Satya Levante Residences</Link></p>
-                     <p><Link  legacyBehavior={true} href='/property/tulip-monsella-sector-53-gurgaon'>Tulip Monsella</Link></p>
-                       <p><Link  legacyBehavior={true} href='/property/tulip-melrose-sector-70-gurgaon'>Tulip Melrose</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/tulip-crimson-sector-70-gurgaon'>Tulip Crimson</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/vatika-seven-elements-sector-89a-gurgaon'>Vatika Seven Elements</Link></p>
-
-                  </div>
-                )}
-              </div>
-
-
-              <div className={styles.footerThirdSectionDropdownFlex}>
-                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
-                  <p  onClick={() => handleFooterDropdownClick(2)}>Top Properties In Pune</p>
-                  <MdArrowDropDown
-                    onClick={() => handleFooterDropdownClick(2)}
-                  />
-                </div>
-                {loading  && openDropDown ==2 &&  <div className={styles.spinner}></div>}
-                {openDropDown === 2 && (
-                  <div className={styles.footerThirdSectionDropdownLinkWrapper}>
-                     <p><Link  legacyBehavior={true} href='/property/pristine-o2-world-kharadi-pune'>Pristine O2 World</Link></p>
-                      <p><Link  legacyBehavior={true} href='/property/lodha-estilo-kharadi-pune'>Lodha Estilo</Link></p>
-                      <p><Link  legacyBehavior={true} href='/property/majestique-towers-kharadi-pune-east'>Majestique Towers</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/gera-winds-of-joy-hinjewadi-pune'>Gera Winds of Joy</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/gera-island-of-joy-kharadi-pune'>Gera Island of Joy</Link></p>
-                  </div>
-                )}
-              </div>
-              <div className={styles.footerThirdSectionDropdownFlex}>
-                <div className={styles.footerThirdSectionDropdownHeaderFlex}>
-                  <p  onClick={() => handleFooterDropdownClick(3)}>Top Properties In Noida</p>
-                  <MdArrowDropDown
-                    onClick={() => handleFooterDropdownClick(3)}
-                  />
-                </div>
-                {loading  && openDropDown ==3 &&  <div className={styles.spinner}></div>}
-                {openDropDown === 3 && (
-                  <div className={styles.footerThirdSectionDropdownLinkWrapper}>
-                     <p><Link  legacyBehavior={true} href='/property/experion-elements-sector-45-noida'>Experion Elements</Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/ace-hanei-sector-12-noida'>ACE HAN'EI                    </Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/godrej-woods-sector-43-noida'>Godrej Woods
-                    </Link></p>
-                    <p><Link  legacyBehavior={true} href='/property/m3m-the-cullinan-sector-94-noida'>M3M The Cullinan
-                    </Link></p>
-                    {/* <p>4S The Aurrum</p> */}
-                  </div>
-                )}
-              </div>
-             
-             
-            </div>
+            {companyColumn}
+            {quickSearchColumn}
           </div>
         )}
+
         <div className={styles.footerForthSectionCompanyDetailsWrapper}>
           <h4>Follow Us</h4>
-          {isDesktop && (
+          {isDesktop ? (
             <>
               <div className={styles.footerForthSectionIconWrapper}>
                 <SocialIcon url="https://www.facebook.com/inframantraofficial" style={{ height: '40px', width: '40px' }} />
-                {/* <SocialIcon url="https://x.com/INFRAMANTRA_" style={{ height: '40px', width: '40px' }} /> */}
                 <SocialIcon url="https://www.instagram.com/inframantraofficial/" style={{ height: '40px', width: '40px' }} />
               </div>
               <div className={styles.footerForthSectionIconWrapper}>
                 <SocialIcon url="https://www.youtube.com/@inframantraofficial" style={{ height: '40px', width: '40px' }} />
                 <SocialIcon url="https://in.linkedin.com/company/inframantra" style={{ height: '40px', width: '40px' }} />
-                {/* <SocialIcon url="https://in.pinterest.com/inframantraofficial/" style={{ height: '40px', width: '40px' }} /> */}
               </div>
             </>
-          )}
-          {!isDesktop && (
+          ) : (
             <div className={styles.footerForthSectionIconWrapper}>
               <SocialIcon url="https://www.facebook.com/inframantraofficial" style={{ height: '40px', width: '40px' }} />
-              {/* <SocialIcon url="https://x.com/INFRAMANTRA_" style={{ height: '40px', width: '40px' , backdropFilter: "#FFF"}} /> */}
               <SocialIcon url="https://www.instagram.com/inframantraofficial/" style={{ height: '40px', width: '40px' }} />
               <SocialIcon url="https://www.youtube.com/@inframantraofficial" style={{ height: '40px', width: '40px' }} />
               <SocialIcon url="https://in.linkedin.com/company/inframantra" style={{ height: '40px', width: '40px' }} />
-              {/* <SocialIcon url="https://in.pinterest.com/inframantraofficial/" style={{ height: '40px', width: '40px' }} /> */}
             </div>
           )}
         </div>
       </div>
+
       <div className={styles.footerSecondSectionContainer}>
-        {isDesktop && (
-          <>
-            <div className={styles.footerSecondSectionLinksFlex}>
-              <p><Link  legacyBehavior={true} href='/page/terms-conditions'>Terms And Conditions</Link></p>
-              <p><Link  legacyBehavior={true} href='/page/privacy-policy'>Privacy Policy</Link></p>
-              <p><Link  legacyBehavior={true} href='/page/user-agreement'>User Agreement</Link></p>
-              <p><Link  legacyBehavior={true} href='/page/disclaimer'>Disclaimer</Link></p>
-            </div>
-            <div className={styles.footerSecondSectionCopyRightFlex}>
-              <p>Copyright @ {new Date().getFullYear()} Inframantra</p>
-              <p>All Rights Reserved</p>
-            </div>
-          </>
-        )}
-        {!isDesktop && (
-          <>
-            <div className={styles.footerSecondSectionLinksFlex}>
-              <p><Link  legacyBehavior={true} href='/page/terms-conditions'>Terms And Conditions</Link></p>
-              <p><Link  legacyBehavior={true} href='/page/privacy-policy'>Privacy Policy</Link></p>
-              <p><Link  legacyBehavior={true} href='/page/user-agreement'>User Agreement</Link></p>
-              <p><Link  legacyBehavior={true} href='/page/disclaimer'>Disclaimer</Link></p>
-            </div>
-            <div className={styles.footerSecondSectionCopyRightFlex}>
-              <p>Copyright @ {new Date().getFullYear()} Inframantra</p>
-              <p>All Rights Reserved</p>
-            </div>
-          </>
-        )}
+        <div className={styles.footerSecondSectionLinksFlex}>
+          <p><Link legacyBehavior href='/page/terms-conditions'>Terms And Conditions</Link></p>
+          <p><Link legacyBehavior href='/page/privacy-policy'>Privacy Policy</Link></p>
+          <p><Link legacyBehavior href='/page/user-agreement'>User Agreement</Link></p>
+          <p><Link legacyBehavior href='/page/disclaimer'>Disclaimer</Link></p>
+        </div>
+        <div className={styles.footerSecondSectionCopyRightFlex}>
+          <p>Copyright @ {new Date().getFullYear()} Inframantra</p>
+          <p>All Rights Reserved</p>
+        </div>
       </div>
     </div>
   );

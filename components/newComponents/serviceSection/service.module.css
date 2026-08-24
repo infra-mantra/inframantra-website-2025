@@ -10,16 +10,18 @@ width: 100%;
 }
   .servicesSectionCardWrapperFirst {
     width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
+    /* Grid = equal column widths (1fr) at every width; align-items: stretch
+       (grid default) makes every card the SAME height regardless of text length. */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: stretch;
     padding: 2% 6%;
    gap:20px;
 }
   .servicesSectionCardWrapperFirst > .serviceCard {
-   width: 23%!important;
+   width: auto!important;
+   height: 100%;          /* fill the (stretched) grid cell -> equal heights */
+   min-width: 0;          /* prevent long titles from blowing out the column */
    box-shadow:0px 2.22px 4.45px rgba(0, 0, 0, 0.15)
   }
  
@@ -30,29 +32,33 @@ width: 100%;
     flex-direction: column;
     justify-content: left;
     align-items: center;
-    gap: 25px;
+    gap: 6px;
     padding: 0% 6%;
     padding-bottom: 20px!important;
 }
-  
+
  .servicesSectionTitle {
-    color: #000;
-    font-family: Inter;
-    font-size: 32px;
+    color: #1a1a1a;
+    font-family: Inter, sans-serif;
+    font-size: 30px;
     font-style: normal;
     font-weight: 600;
-    line-height: normal;
+    letter-spacing: -0.4px;
+    line-height: 1.2;
     align-self: stretch;
     margin: 0px;
 }
+.servicesSectionTitle span {
+    color: #d9a23c;
+}
 .servicesSectionHeader p {
     align-self: stretch;
-    color: #000;
-    font-family: Inter;
-    font-size: 20px;
+    color: #6b6b6b;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
     font-style: normal;
     font-weight: 400;
-    line-height: normal;
+    line-height: 1.5;
     margin: 0px;
 }
   
@@ -61,6 +67,26 @@ width: 100%;
  
  
  
+  /* Icon + title side by side (desktop) */
+  .serviceCardHeaderRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+  }
+  .serviceCardHeaderRow .serviceCardIconContainer {
+    width: auto;
+    height: auto;
+    flex-shrink: 0;
+  }
+  .serviceCardHeaderRow .serviceCardTitleContainer {
+    height: auto;
+    justify-content: flex-start;
+    text-align: left;
+    flex: 1;
+  }
+
   .serviceCardIconWrapper {
     display: flex;
     flex-direction: row;
@@ -68,7 +94,7 @@ width: 100%;
     align-items: center;
     height: 70%;
   }
-  
+
   .serviceCardIconContainer {
     width: 100%;
     height: 30%;
@@ -87,11 +113,12 @@ width: 100%;
   }
   
   .serviceCardTitle {
-    font-family: Inter;
-    font-size: 20px;
+    font-family: Inter, sans-serif;
+    font-size: 19px;
     font-style: normal;
-    font-weight: 500;
-    line-height: normal;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+    line-height: 1.25;
     margin: 0px;
   }
   
@@ -104,12 +131,21 @@ width: 100%;
   }
   
   .serviceCardDescription {
-    font-family: Inter;
-    font-size: 16px;
+    font-family: Inter, sans-serif;
+    font-size: 15px;
     font-style: normal;
-    font-weight: 300;
-    line-height: normal;
+    font-weight: 400;
+    line-height: 1.55;
     margin: 0px;
+  }
+  /* muted description on the light (even) cards for better hierarchy */
+  .serviceCard:nth-child(even) .serviceCardDescription {
+    color: #555555;
+  }
+  /* keep description crisp white on the gold (odd) cards */
+  .serviceCard:nth-child(odd) .serviceCardDescription {
+    color: #ffffff;
+    opacity: 0.95;
   }
   
   .serviceCardIconWrapper > img {
@@ -122,11 +158,14 @@ width: 100%;
 }
 
 @media  (min-width: 768px) and (max-width: 991px) {
+.servicesSectionCardWrapperFirst {
+    grid-template-columns: repeat(2, 1fr);
+  }
 .serviceCardDescription {
-    font-size: 14px;  
+    font-size: 14px;
   }
 .serviceCardTitle {
-    font-size: 20px;  
+    font-size: 20px;
   }
 }
 
@@ -175,5 +214,10 @@ width: 100%;
 }
 .servicesSectionCardWrapperFirst > .serviceCard{
   width: 100%!important;
+}
+.serviceCardHeaderRow {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
 }
 }

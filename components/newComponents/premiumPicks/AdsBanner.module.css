@@ -1,25 +1,29 @@
-.adBannerStyle{
-flex-shrink: 0;
-
-background: #D9D9D9;
-
+.imgContainer {
+  padding: 50px 0px;
 }
-.imgContainer{
-padding:50px 0px
 
-}.adBannerStyle {
+/* aspect-ratio reserves the banner's exact height BEFORE the image loads, so it
+   no longer pushes the page down when it arrives (was the main desktop CLS). */
+.imgContainer .adBannerStyle {
+  display: block;
   width: 100%;
   height: auto;
+  aspect-ratio: 1350 / 350;
+  flex-shrink: 0;
+  background: #d9d9d9;
   transition: transform 0.3s ease;
-  cursor: pointer; /* 👈 makes pointer on hover */
+  cursor: pointer;
 }
 
-.adBannerStyle:hover {
-  transform: scale(1.02); /* 👈 small zoom effect on hover (optional) */
+.imgContainer .adBannerStyle:hover {
+  transform: scale(1.02);
 }
 
-@media screen and (max-width:768px) {
+@media screen and (max-width: 768px) {
   .imgContainer {
     padding: 35px 0px;
-}
+  }
+  .imgContainer .adBannerStyle {
+    aspect-ratio: 834 / 625;
+  }
 }

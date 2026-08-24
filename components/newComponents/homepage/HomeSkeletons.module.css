@@ -1,0 +1,98 @@
+/* ------------------------------------------------------------------
+   Home page loading skeletons.
+
+   These are plain grey <div>s that gently "pulse". There are NO images
+   and NO JavaScript libraries here, so they add almost nothing to page
+   weight and do not affect the Lighthouse/PageSpeed score.
+
+   How to tweak: every size below is in px/rem — change a number and the
+   shape changes. `.block` is the grey box that everything is built from.
+------------------------------------------------------------------ */
+
+/* The grey box. Every grey shape uses this class. */
+.block {
+  background: #e9ecef;
+  border-radius: 10px;
+  /* Pulsing opacity is cheap (runs on the GPU compositor), so it does not
+     slow the page down like a moving-gradient shimmer can. */
+  animation: skPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes skPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Respect users who ask for less motion (also = less work for the device). */
+@media (prefers-reduced-motion: reduce) {
+  .block { animation: none; }
+}
+
+/* Section wrapper — centers the skeleton and matches the real sections' width. */
+.section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+.center { text-align: center; }
+.mxAuto { margin-left: auto; margin-right: auto; }
+
+.heading { height: 30px; width: 260px; max-width: 60%; margin-bottom: 12px; }
+.sub     { height: 16px; width: 380px; max-width: 80%; margin-bottom: 28px; }
+
+/* A horizontal row of cards (Premium, Blogs). */
+.row { display: flex; gap: 20px; overflow: hidden; }
+.card { flex: 1; min-width: 0; }
+.thumb { width: 100%; height: 180px; border-radius: 10px; margin-bottom: 12px; }
+.line  { height: 12px; border-radius: 6px; margin-bottom: 8px; }
+.lineShort { width: 55%; }
+
+/* Pills (Premium city tabs / gallery eyebrow / review badges). */
+.pills { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+.pill  { height: 38px; width: 92px; border-radius: 999px; }
+
+/* ---- Statistics (icon + big number + label, no heading) ---- */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+.statItem { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.statIcon { width: 56px; height: 56px; border-radius: 50%; }
+.statNum { height: 38px; width: 90px; }
+.statLabel { height: 14px; width: 120px; }
+
+/* ---- Image gallery (horizontal expanding-panel accordion) ---- */
+.eyebrow { height: 22px; width: 180px; border-radius: 999px; }
+.galleryRow { display: flex; gap: 12px; height: 300px; }
+.panel { flex: 1; height: 100%; border-radius: 14px; }
+.panelWide { flex: 3; } /* the one "open" panel is wider */
+
+/* ---- Reviews wall (left info panel + right scrolling columns) ---- */
+.reviewsWrap { display: flex; gap: 32px; }
+.reviewsLeft { flex: 1; min-width: 0; }
+.reviewsRight { flex: 1; display: flex; gap: 16px; overflow: hidden; height: 360px; }
+.reviewCol { flex: 1; display: flex; flex-direction: column; gap: 16px; }
+.reviewCard { border: 1px solid #eee; border-radius: 12px; padding: 16px; }
+.reviewHead { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.avatar { width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0; }
+
+/* ---- Home CTA (image on one side, contact form on the other) ---- */
+.ctaWrap { display: flex; gap: 32px; align-items: stretch; }
+.ctaImage { flex: 1; min-height: 300px; border-radius: 16px; }
+.ctaForm { flex: 1; display: flex; flex-direction: column; gap: 16px; }
+.input { height: 44px; border-radius: 8px; }
+.button { height: 46px; width: 160px; border-radius: 8px; }
+
+/* On phones: simplify each layout to match the smaller screen. */
+@media (max-width: 768px) {
+  .section { padding: 28px 16px; }
+  .row .card:nth-child(n + 3) { display: none; } /* ~2 cards on mobile */
+  .statsGrid { grid-template-columns: repeat(2, 1fr); }
+  .thumb { height: 150px; }
+  .galleryRow { height: 220px; }
+  .galleryRow .panel:nth-child(n + 4) { display: none; } /* fewer panels */
+  .reviewsWrap { flex-direction: column; }
+  .reviewsRight .reviewCol:nth-child(2) { display: none; } /* one column */
+  .ctaWrap { flex-direction: column; }
+}

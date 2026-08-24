@@ -7,7 +7,6 @@ import { useRouter } from "next/router";
 import Wrapper from "../../components/UI/Wrapper";
 import PageHeader from "../../components/UI/blogPageHeader";
 import BlogContent from "../../components/blogsSections/BlogContent";
-import BlogsGrid from "../../components/UI/BlogGridIndividual";
 import HomePageCta from "../../components/detailSections/singlePropertyCta";
 import ArticleSchema from "../../components/UI/ArticleSchema";
 
@@ -99,7 +98,6 @@ if(redirecting){
         data={headerData}
         slug={slug}
       />
-      <BlogsGrid blogs={recent} section_title="Latest Blogs" button="hide" />
     </Wrapper>
   )
   );
@@ -176,7 +174,7 @@ export async function getStaticProps({ params }) {
       const cmsRecents = cmsRecentArr.map(e => ({
         id: e._id,
         title: e.name,
-        image: e.file?.thumbnail || "",
+        image: e.file?.path || e.file?.thumbnail || "",
         slug: e.slug,
         date: moment(e.createdAt).format("DD MMM YYYY"),
       }));
@@ -254,7 +252,7 @@ export async function getStaticProps({ params }) {
       const cmsRecents = cmsRecentArr.map(e => ({
         id: e._id,
         title: e.name,
-        image: e.file?.thumbnail || "",
+        image: e.file?.path || e.file?.thumbnail || "",
         slug: e.slug,
         date: moment(e.createdAt).format("DD MMM YYYY"),
       }));

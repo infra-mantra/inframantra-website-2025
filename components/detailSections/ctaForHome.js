@@ -211,20 +211,16 @@ function App({ name, displayMap = true, countryCode = "in" }) {
               }
             >
 
-              <div
-                style={{
-                  color: "#E7B554",
-                  fontSize: "25px",
-                  marginRight: "10px",
-                }}
-              >
+              <span className={style.homeCtaIconBadge}>
                 <MdLocationOn />
-              </div>
+              </span>
 
-              <p>
-                95, Institutional Area, Sector 32,
-                Gurugram
-              </p>
+              <div className={style.homeCtaContactText}>
+                <span className={style.homeCtaContactLabel}>Our Office</span>
+                <span className={style.homeCtaContactValue}>
+                  95, Institutional Area, Sector 32, Gurugram
+                </span>
+              </div>
 
             </div>
 
@@ -235,19 +231,16 @@ function App({ name, displayMap = true, countryCode = "in" }) {
               }
             >
 
-              <div
-                style={{
-                  color: "#E7B554",
-                  fontSize: "25px",
-                  marginRight: "10px",
-                }}
-              >
+              <span className={style.homeCtaIconBadge}>
                 <IoMdCall />
-              </div>
+              </span>
 
-              <p>
-                +91 86 9800 9900
-              </p>
+              <div className={style.homeCtaContactText}>
+                <span className={style.homeCtaContactLabel}>Call Us</span>
+                <a href="tel:+918698009900" className={style.homeCtaContactValue}>
+                  +91 86 9800 9900
+                </a>
+              </div>
 
             </div>
 
@@ -258,19 +251,16 @@ function App({ name, displayMap = true, countryCode = "in" }) {
               }
             >
 
-              <div
-                style={{
-                  color: "#E7B554",
-                  fontSize: "25px",
-                  marginRight: "10px",
-                }}
-              >
+              <span className={style.homeCtaIconBadge}>
                 <MdMail />
-              </div>
+              </span>
 
-              <p>
-                marketing@inframantra.com
-              </p>
+              <div className={style.homeCtaContactText}>
+                <span className={style.homeCtaContactLabel}>Email Us</span>
+                <a href="mailto:marketing@inframantra.com" className={style.homeCtaContactValue}>
+                  marketing@inframantra.com
+                </a>
+              </div>
 
             </div>
 
@@ -281,19 +271,16 @@ function App({ name, displayMap = true, countryCode = "in" }) {
               }
             >
 
-              <div
-                style={{
-                  color: "#E7B554",
-                  fontSize: "25px",
-                  marginRight: "10px",
-                }}
-              >
+              <span className={`${style.homeCtaIconBadge} ${style.homeCtaIconBadgeVerify}`}>
                 <FcApproval />
-              </div>
+              </span>
 
-              <p>
-                HARERA/GGM/1813/1408/2022/181
-              </p>
+              <div className={style.homeCtaContactText}>
+                <span className={style.homeCtaContactLabel}>HARERA Registered</span>
+                <span className={style.homeCtaContactValue}>
+                  HARERA/GGM/1813/1408/2022/181
+                </span>
+              </div>
 
             </div>
 
@@ -479,18 +466,7 @@ function App({ name, displayMap = true, countryCode = "in" }) {
               }}
             >
 
-              <button
-                type="submit"
-                style={{
-                  width: "100%",
-                  padding: "10px",
-                  backgroundColor: "#E7B554",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: "4px",
-                  cursor: "pointer",
-                }}
-              >
+              <button type="submit" className={style.homeCtaSubmitBtn}>
                 Submit
               </button>
 
@@ -559,6 +535,8 @@ function App({ name, displayMap = true, countryCode = "in" }) {
                 src="/guruCollection/guru_call.png"
                 alt="Call Icon"
                 className="callImage"
+                width="146"
+                height="115"
               />
 
             </div>

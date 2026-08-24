@@ -6,40 +6,25 @@ import { useRouter } from "next/router";
 import styles from "./propertyListingCardMobile.module.css";
 
 
-function PropertyListingCardMobile({ propertyData = [], onOpenBackdrop, currentPageNumber }) {
+function PropertyListingCardMobile({ propertyData = [], onOpenBackdrop, totalProperties = 0, currentPage: currentPageProp, pageSize = 10, onPageChange, currentPageNumber }) {
   const router = useRouter();
-  const { city } = router.query;
+  const [localPage, setLocalPage] = useState(1);
 
-  const [fetchedProperties, setFetchedProperties] = useState(
-    Array.isArray(propertyData) ? propertyData : []
-  );
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const propertiesPerPage = 10;
-  const [totalPages, setTotalPages] = useState(1);
-
-  useEffect(() => {
-    setFetchedProperties(Array.isArray(propertyData) ? propertyData : []);
-  }, [propertyData, city]);
-
-  useEffect(() => {
-    setTotalPages(Math.ceil(fetchedProperties.length / propertiesPerPage));
-  }, [fetchedProperties]);
+  // server mode (backend pagination) when onPageChange is provided; otherwise legacy client-side slicing
+  const serverMode = typeof onPageChange === "function";
+  const allItems = Array.isArray(propertyData) ? propertyData : [];
+  const currentPage = serverMode ? (currentPageProp || 1) : localPage;
+  const totalPages = Math.max(1, Math.ceil((serverMode ? totalProperties : allItems.length) / pageSize));
+  const currentProperties = serverMode
+    ? allItems
+    : allItems.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
   const handlePageChange = (pageNumber) => {
-    currentPageNumber?.(pageNumber);
-    setCurrentPage(pageNumber);
+    if (pageNumber < 1 || pageNumber > totalPages) return;
+    if (serverMode) onPageChange(pageNumber);
+    else { setLocalPage(pageNumber); currentPageNumber?.(pageNumber); }
     window.scrollTo({ top: 0, behavior: "smooth" });
-
   };
-
-  console.log("$$$$$$$$",propertyData)
-
-  // Ensure safe slicing even if data is invalid
-  const safeProperties = Array.isArray(fetchedProperties) ? fetchedProperties : [];
-  const indexOfLastProperty = currentPage * propertiesPerPage;
-  const indexOfFirstProperty = indexOfLastProperty - propertiesPerPage;
-  const currentProperties = safeProperties.slice(indexOfFirstProperty, indexOfLastProperty);
 
   const handleViewMorePropertyClick = (slug) => {
     router.push(`/property/${slug}`);
@@ -55,8 +40,8 @@ function PropertyListingCardMobile({ propertyData = [], onOpenBackdrop, currentP
         </div>
       }
     >
-      <div className={styles.propertyListingCardWrapper}>
-        <div className={styles.propertyListPageSectionFlex}>
+      <div className={styles.mobileListCardWrapper}>
+        <div className={styles.mobileListSectionFlex}>
           {currentProperties.length > 0 ? (
             currentProperties.map((property) => (
               <div key={property.slug} className={styles.propertyListingCardMobile}>
@@ -90,7 +75,17 @@ function PropertyListingCardMobile({ propertyData = [], onOpenBackdrop, currentP
                 <div className={styles.propertyListPageMobileDetailSection}>
                   <div className={styles.propertyListPageMobileDetailHeader}>
                     <div className={styles.propertyListPageMobileDetailLocation}>
-                      <h3 style={{ fontWeight: "700", fontSize: "18px" }}>{property.name}</h3>
+                      <h3 style={{ fontWeight: "700", fontSize: "18px", display: "inline" }}>
+                        {property.name}
+                        {property.rera && (
+                          <span className={styles.mobileReraBadge} aria-label={`RERA: ${property.rera}`}>
+                            <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                              <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm-1.2 14.4L6.6 12.2l1.4-1.4 2.8 2.8 5.6-5.6 1.4 1.4-7 7z" />
+                            </svg>
+                            RERA
+                          </span>
+                        )}
+                      </h3>
                       <p
                         style={{
                           display: "flex",
@@ -143,30 +138,32 @@ function PropertyListingCardMobile({ propertyData = [], onOpenBackdrop, currentP
                     <p className={styles.clampTwoLines}>{property.description}</p>
                   </div>
 
-                  {/* Buttons */}
-                  <div className={styles.propertyListPageMobileDetailBtnWrapper}>
+                  {/* Three actions — same design as the home page cards; Enquire & Brochure open the enquiry form */}
+                  <div style={{ display: "flex", gap: "8px", width: "100%" }}>
                     <button
-                      className={styles.searchbutton}
-                      style={{
-                        padding: "5px 25px",
-                        borderRadius: "5px",
-                        height: "30px",
-                      }}
+                      type="button"
                       onClick={() => handleViewMorePropertyClick(property.slug)}
+                      style={{ flex: "1 1 0", minWidth: 0, background: "#3cc76a", borderRadius: "5px", fontSize: "11px", fontWeight: 600, padding: "9px 6px", color: "#fff", border: "none", cursor: "pointer", whiteSpace: "nowrap" }}
                     >
                       View More
                     </button>
                     <button
-                      className={styles.searchbutton}
-                      style={{
-                        padding: "5px 25px",
-                        borderRadius: "5px",
-                        backgroundColor: "#0b6e21",
-                        height: "30px",
-                      }}
+                      type="button"
                       onClick={() => onOpenBackdrop(property.name)}
+                      style={{ flex: "1 1 0", minWidth: 0, background: "#e8c274", borderRadius: "5px", fontSize: "11px", fontWeight: 600, padding: "9px 6px", color: "#fff", border: "none", cursor: "pointer", whiteSpace: "nowrap" }}
                     >
-                      Enquire
+                      Enquire Now
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => onOpenBackdrop(property.name)}
+                      title="Download Brochure"
+                      style={{ flex: "1 1 0", minWidth: 0, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "4px", background: "#fff", borderRadius: "5px", fontSize: "11px", fontWeight: 600, padding: "9px 6px", color: "#3cc76a", border: "1px solid #3cc76a", cursor: "pointer", whiteSpace: "nowrap" }}
+                    >
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style={{ flexShrink: 0 }}>
+                        <path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5z" />
+                      </svg>
+                      Brochure
                     </button>
                   </div>
                 </div>

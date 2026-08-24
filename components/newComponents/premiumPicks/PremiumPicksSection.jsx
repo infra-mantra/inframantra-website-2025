@@ -7,6 +7,7 @@ import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
 import PropertyCard from '../shared/PropertyCard';
 import CitySelector from './CitySelector';
+import { PremiumCardsSkeleton } from '../homepage/HomeSkeletons';
 import styles from './premiumPicksSection.module.css';
 import { useRouter } from 'next/router';
 
@@ -32,24 +33,13 @@ export default function PremiumPicksSection({
     router.push(`/property-listing/city/${selectedCity.toLowerCase()}`);
   };
 
-  if (loading) {
-    return (
-      <div className={styles.premiumLoadingContainer}>
-        <div className={styles.premiumLoadingSpinner}></div>
-        <p className={styles.premiumLoadingText}>
-          Loading {selectedCity} properties...
-        </p>
-      </div>
-    );
-  }
-
   return (
     <div className={styles.premiumPicksContainer}>
       <div className={styles.premiumContentWrapper}>
 
         {/* Header */}
         <div className={styles.premiumSectionHeader}>
-          <h1 className={styles.premiumMainTitle}>Premium Picks</h1>
+          <h1 className={styles.premiumMainTitle}>Premium <span>Picks</span></h1>
           <p className={styles.premiumSubtitle}>
             Explore the finest homes across premium locations.
           </p>
@@ -79,8 +69,11 @@ export default function PremiumPicksSection({
           />
         </div>
 
-        {/* Swiper Carousel */}
-        {data.length > 0 && (
+        {/* Swiper Carousel — skeleton cards while a city's data loads */}
+        {loading ? (
+          <PremiumCardsSkeleton />
+        ) : (
+          data.length > 0 && (
           <div className={styles.premiumCarouselContainer}>
 
             {/* Custom Arrows */}
@@ -124,6 +117,7 @@ export default function PremiumPicksSection({
               ))}
             </Swiper>
           </div>
+          )
         )}
 
         {/* View All Button */}

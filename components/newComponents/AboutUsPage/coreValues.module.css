@@ -1,130 +1,259 @@
 .coreSection {
   text-align: center;
-  background: hsla(40,76%,77%,.29);
-  padding: 6px 0px ;
+  background: hsla(40, 76%, 77%, 0.22);
+  padding: 56px 0;
   max-width: 1280px;
   margin: 0 auto;
+  border-radius: 20px;
 }
 
+/* Heading + animated gold underline */
 .heading {
-  font-size: 42px;
-  font-weight: 600;
-  color: #d4a64a;
-  margin-bottom: 60px;
+  font-size: 36px;
+  font-weight: 700;
+  color: #e7b554;
+  letter-spacing: 0.5px;
+  margin: 0 0 44px;
+  font-family: 'Lexend Deca', sans-serif;
 }
+.heading::after {
+  content: "";
+  display: block;
+  width: 70px;
+  height: 4px;
+  border-radius: 2px;
+  background: #e7b554;
+  margin: 14px auto 0;
+}
+
+.coreValuesContaier {
+  padding: 0 1rem;
+}
+
+/* Desktop layout: all four cards in one static row (no slider). Cards stretch
+   to the same height and grow to fit their text. */
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+/* --- Equal-height cards that GROW to fit their text (no clipping) ---
+   Swiper normally forces every slide to height:100% of the row, which crops
+   the tallest card. height:auto lets each slide size to its content, and the
+   card fills that height so all four line up. */
+.coreValuesContaier :global(.swiper-slide) {
+  height: auto;
+  display: flex;
+}
+
+/* Card */
+.cardCoreValue {
+  width: 100%;
+  height: 100%;
+  padding: 32px 28px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  cursor: pointer;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+.cardCoreValue:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.14);
+}
+
+/* Icon badge (the "logo" on each card) */
+.iconBadge {
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  flex-shrink: 0;
+}
+.iconBadge svg {
+  width: 26px;
+  height: 26px;
+}
+
+.cardTitle {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  line-height: 1.35;
+  margin: 0 0 14px;
+  font-family: 'Lexend Deca', sans-serif;
+}
+.cardText {
+  font-size: 15px;
+  line-height: 1.7;
+  text-align: left;
+  margin: 0;
+  font-family: 'Lexend Deca', sans-serif;
+}
+
+/* ---- Card colour variants ---- */
+/* Gold (filled) cards: dark text, white badge with gold icon. */
+.gold {
+  background: #e7b554;
+}
+.gold .cardTitle {
+  color: #1f1a0a;
+}
+.gold .cardText {
+  color: #3a3320;
+}
+.gold .iconBadge {
+  background: #ffffff;
+  color: #e7b554;
+}
+
+/* Light (white) cards: gold title, grey text, gold badge with white icon. */
+.light {
+  background: #ffffff;
+}
+.light .cardTitle {
+  color: #e7b554;
+}
+.light .cardText {
+  color: #555;
+}
+.light .iconBadge {
+  background: #e7b554;
+  color: #ffffff;
+}
+
+/* Navigation buttons */
 .navButtons {
   position: relative;
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-bottom: 1rem;
-  top: 1rem;
+  margin-top: 2rem;
+  gap: 1.5rem;
   z-index: 10;
-  gap:5rem;
 }
-
 .prevBtn,
 .nextBtn {
-  background: rgba(0, 0, 0, 0.1);
-  border: none;
-  padding: 0.5rem 1rem;
-  font-size: 1.5rem;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border: 1px solid #eadfc4;
+  font-size: 1.05rem;
   cursor: pointer;
-  border-radius: 5px;
-  color: #333;
+  border-radius: 50%;
+  color: #e7b554;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
-.coreValuesContaier{
-padding: 0px 1rem;
-}
-
-
 .prevBtn:hover,
 .nextBtn:hover {
-  background: rgba(0, 0, 0, 0.2);
+  background: #e7b554;
+  color: #fff;
+  transform: translateY(-2px);
 }
 
-/* GRID */
-.cardGrid {
+/* ---- Skeleton (shown briefly while loading) ---- */
+.skelGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 30px;
+  gap: 20px;
+}
+.skelCard {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  padding: 32px 28px;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+.skelBadge {
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  margin-bottom: 8px;
+}
+.skelLine {
+  height: 12px;
+  border-radius: 6px;
+  width: 100%;
+}
+/* One soft gold shimmer for every skeleton block. */
+.skelBadge,
+.skelLine {
+  background: linear-gradient(90deg, #f1e6cf 25%, #f8f1e0 37%, #f1e6cf 63%);
+  background-size: 400% 100%;
+  animation: coreShimmer 1.4s ease infinite;
+}
+@keyframes coreShimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
 }
 
-/* CARD */
-.cardCoreValue {
-  background-color: #e9f0f5;
-  padding: 40px 30px;
-  border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
-  transition: transform 0.4s ease, box-shadow 0.4s ease, background-color 0.4s ease;
-  cursor: pointer;
-  height: 320px;
+/* ---- Reveal on scroll (the section adds .inView when it enters the viewport) ---- */
+.heading,
+.coreValuesContaier {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.inView .heading {
+  opacity: 1;
+  transform: translateY(0);
+}
+.inView .coreValuesContaier {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.15s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .heading,
+  .coreValuesContaier {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none;
+  }
+  .skelBadge,
+  .skelLine {
+    animation: none;
+  }
 }
 
-.cardCoreValue:hover {
-  transform: translateY(-10px) scale(1.05);
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
-  background-color: #fdf6e3; /* optional subtle highlight */
-}
-
-/* Smooth transition for swiper active slide too */
-.swiper-slide-active .cardCoreValue {
-  transform: scale(1.05);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-
-.cardTitle {
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  margin-bottom: 20px;
-  color: #3d3d3d;
-}
-
-.cardText {
-  font-size: 16px;
-  line-height: 1.8;
-  text-align: justify;
-
-}
-.swiper-slide-active .cardCoreValue {
-  transform: scale(1.05);
-  transition: transform 0.3s ease;
-}
-/* Odd slides heading */
-.swiper-slide:nth-child(odd) .cardCoreValue h3 {
-   color: #f1f1f1; /* or keep black */
-}
-
-/* Optional: even slides heading color (default black or another color) */
-.swiper-slide:nth-child(even) .cardCoreValue h3 {
-
-   color: #dcaa4c;
-}
-
-/* TABLET */
+/* ---- Responsive ---- */
 @media (max-width: 1024px) {
-  .cardGrid {
+  .skelGrid,
+  .cardsGrid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-
-/* MOBILE */
 @media (max-width: 768px) {
   .coreSection {
-    padding: 5px 10px;
+    padding: 36px 10px;
+    border-radius: 0;
+    margin: 0 8px;
   }
-
-  .cardGrid {
-    grid-template-columns: 1fr;
-  }
-
   .heading {
-    font-size: 32px;
-    margin:1rem 0rem;
+    font-size: 28px;
+    margin-bottom: 28px;
   }
-  .cardCoreValue{
-    height: 333px;
+  .cardCoreValue {
+    min-height: 260px;
+  }
+  .skelGrid {
+    grid-template-columns: 1fr;
   }
 }

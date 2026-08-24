@@ -227,6 +227,8 @@ function MyApp({ Component, pageProps }) {
           <button className={`${styles.btnfloating} ${styles.phone}`}>
             <img
               loading="lazy"
+              width="18"
+              height="18"
               src="https://inframantra.blr1.cdn.digitaloceanspaces.com/logos/call_icon.png"
               alt="Inframantra Call Icon"
             />
@@ -238,6 +240,8 @@ function MyApp({ Component, pageProps }) {
           <button className={`${styles.btnfloating} ${styles.whatsapp}`}>
             <img
               loading="lazy"
+              width="18"
+              height="18"
               src="https://inframantra.blr1.cdn.digitaloceanspaces.com/logos/whats_app.png"
               alt="Inframantra WhatsApp Icon"
             />

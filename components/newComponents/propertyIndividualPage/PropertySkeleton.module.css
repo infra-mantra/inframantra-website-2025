@@ -1,0 +1,89 @@
+/* ------------------------------------------------------------------
+   Property (individual) page loading skeleton.
+
+   Plain grey <div>s that gently pulse — no images, no JS libraries — so
+   it stays light. `.block` is the grey box everything is built from;
+   change a size below to change a shape.
+------------------------------------------------------------------ */
+
+.block {
+  background: #e9ecef;
+  border-radius: 10px;
+  animation: skPulse 1.4s ease-in-out infinite;
+}
+@keyframes skPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .block { animation: none; }
+}
+
+.wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 24px;
+}
+
+/* Hero image gallery: one big image + two side thumbnails. */
+.hero {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 12px;
+  height: 420px;
+  margin-bottom: 28px;
+}
+.heroMain { height: 100%; border-radius: 14px; }
+.heroSide { display: grid; grid-template-rows: 1fr 1fr; gap: 12px; }
+
+/* Header: title + location + a row of config cards (BHK / area / price...). */
+.header { margin-bottom: 28px; }
+.title { height: 32px; width: 45%; margin-bottom: 14px; }
+.loc { height: 16px; width: 28%; margin-bottom: 18px; }
+.configGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  max-width: 720px;
+}
+.configItem { height: 58px; border-radius: 10px; }
+
+/* Sticky section tabs (Highlights, Amenities, Locality...). */
+.nav {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 30px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eee;
+}
+.navTab { height: 20px; width: 90px; }
+
+/* Body: left content sections + right (sticky) enquiry form. */
+.body { display: flex; gap: 32px; align-items: flex-start; }
+.left { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 34px; }
+.right { width: 340px; flex-shrink: 0; }
+
+.secHeading { height: 24px; width: 220px; margin-bottom: 16px; }
+.line { height: 12px; border-radius: 6px; margin-bottom: 10px; }
+.lineShort { width: 60%; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 16px;
+}
+.gridItem { height: 90px; border-radius: 10px; }
+
+.formCard { height: 470px; border-radius: 16px; }
+
+@media (max-width: 900px) {
+  .body { flex-direction: column; }
+  .right { width: 100%; }
+  .formCard { height: 360px; }
+}
+@media (max-width: 768px) {
+  .hero { grid-template-columns: 1fr; height: 280px; }
+  .heroSide { display: none; }
+  .configGrid { grid-template-columns: repeat(2, 1fr); }
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}

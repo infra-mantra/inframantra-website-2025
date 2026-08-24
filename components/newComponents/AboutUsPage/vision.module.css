@@ -9,26 +9,27 @@
 }
 
 .aboutVisionHeading {
-  font-size: 42px;
+  font-size: 36px;
   font-weight: 700;
-  color: #cfa24a;
+  color: #e7b554;
   margin-bottom: 50px;
 
   position: relative;
   display: inline-block; /* important for underline width */
 }
 
-/* underline hidden by default */
+/* gold underline accent */
 .aboutVisionHeading::after {
   content: "";
   position: absolute;
   left: 0;
   bottom: -6px; /* space below text */
-  width: 100%;
-  height: 3px;
-  background-color: #cfa24a;
+  width: 64px;
+  height: 4px;
+  border-radius: 2px;
+  background-color: #e7b554;
 
-  transform: scaleX(0);
+  transform: scaleX(1);
   transform-origin: left;
   transition: transform 0.35s ease;
 }

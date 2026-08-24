@@ -48,11 +48,18 @@ const nextConfig = {
   // it opens thousands of @mui/icons-material files at once, causing EMFILE.
   outputFileTracing: false,
 
-  // Inline above-the-fold critical CSS and defer the rest (via critters). This
-  // removes the render-blocking CSS chain that was gating FCP/LCP and causing
-  // the hero banner's late layout shift — same rendered result, applied sooner.
+  // optimizeCss (critters) inlines above-the-fold critical CSS and defers the
+  // rest, removing the render-blocking CSS chain that gates FCP/LCP — a real
+  // mobile-speed win, and it works on the live (Linux) deploy. It is ON by
+  // default so production gets that benefit.
+  //
+  // CAVEAT: on some LOCAL Windows `next build`s, critters mis-handles this
+  // project's large unhashed global CSS and ships the home page with almost no
+  // CSS (blank / Lighthouse NO_FCP). For a local production build on Windows,
+  // disable it: `DISABLE_OPTIMIZE_CSS=1 npm run build` (then `npm run start`).
+  // `next dev` never uses critters, so local dev is unaffected either way.
   experimental: {
-    optimizeCss: true,
+    optimizeCss: process.env.DISABLE_OPTIMIZE_CSS !== '1',
   },
 
   images: {

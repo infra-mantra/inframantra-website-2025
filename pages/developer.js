@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Section from "../components/UI/Section";
 import Wrapper from "../components/UI/Wrapper";
 import Link from "next/link";
@@ -6,10 +6,30 @@ import NoImage from "../components/UI/NoImage";
 import PageHeader from "../components/UI/PageHeader";
 import styles from "../styles/developer.module.css";
 
+// One developer-card placeholder (image + name + description + stats + button).
+function DeveloperCardSkeleton() {
+  return (
+    <div className={styles.skelCard} aria-hidden="true">
+      <div className={styles.skelImg} />
+      <div className={styles.skelBody}>
+        <div className={styles.skelBlock} style={{ height: 18, width: "55%", margin: "0 auto 16px" }} />
+        <div className={styles.skelBlock} style={{ height: 12, marginBottom: 8 }} />
+        <div className={styles.skelBlock} style={{ height: 12, marginBottom: 8 }} />
+        <div className={styles.skelBlock} style={{ height: 12, width: "80%", marginBottom: 28 }} />
+        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 22 }}>
+          <div className={styles.skelBlock} style={{ height: 12, width: "42%" }} />
+          <div className={styles.skelBlock} style={{ height: 12, width: "42%" }} />
+        </div>
+        <div className={styles.skelBlock} style={{ height: 40, width: 190, borderRadius: 8, margin: "0 auto" }} />
+      </div>
+    </div>
+  );
+}
+
 export default function Developers({ allData }) {
   let data = {
     image: allData.meta.bannerImage,
-    title: allData.meta.bannerTitle,
+    title: "Developers", // shown as the animated overlay on the banner
   };
 
   const itemsPerPage = 9;
@@ -17,6 +37,9 @@ export default function Developers({ allData }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [developerData, setDeveloperData] = useState(allData.developer);
   const [totalDevelopers, setTotalDevelopers] = useState(allData.totalPages);
+  const [loading, setLoading] = useState(false); // true while a new page fetches
+  const [expanded, setExpanded] = useState({}); // developer id -> description expanded?
+  const isFirst = useRef(true); // page 1 is already loaded from getStaticProps
   const totalPages = Math.ceil(totalDevelopers / itemsPerPage);
 
   const [image, setImage] = useState("");
@@ -38,13 +61,27 @@ export default function Developers({ allData }) {
   }, []);
 
   useEffect(() => {
+    // Skip the first run — page 1 is already rendered from getStaticProps, so no
+    // need to refetch (and no skeleton flash). Fetch + skeleton only on page change.
+    if (isFirst.current) {
+      isFirst.current = false;
+      return;
+    }
+
     const fetchDevelopers = async () => {
-      const res = await fetch(
-        `${process.env.apiUrl1}/developer?page=${currentPage}&limit=${itemsPerPage}`
-      );
-      const data = await res.json();
-      setDeveloperData(data.data.developers);
-      setTotalDevelopers(data.data.totalDevelopers);
+      setLoading(true);
+      try {
+        const res = await fetch(
+          `${process.env.apiUrl1}/developer?page=${currentPage}&limit=${itemsPerPage}`
+        );
+        const data = await res.json();
+        setDeveloperData(data.data.developers);
+        setTotalDevelopers(data.data.totalDevelopers);
+      } catch (err) {
+        console.error("Failed to fetch developers:", err);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchDevelopers();
@@ -75,11 +112,18 @@ export default function Developers({ allData }) {
       <PageHeader data={data} />
       <Section classes={`${styles.aboutProjectWrapper} ${styles.pageWidthContainerDeve}`} pageWidth="container">
         <div className={styles.sectionHeadDeveloper}>
-          <h2>Developers</h2>
+          <h2>Our Developers</h2>
+          <p className={styles.developerSubtitle}>
+            Explore India&apos;s leading real estate developers and the landmark projects behind them.
+          </p>
         </div>
 
         <div className={styles.dWraps}>
-          {visibleItems.map((item) => (
+          {loading
+            ? Array.from({ length: itemsPerPage }).map((_, i) => (
+                <DeveloperCardSkeleton key={i} />
+              ))
+            : visibleItems.map((item) => (
             <div key={item.id} className={styles.dItems}>
               <div className={styles.imgWrap}>
                 <Link href={`/property-listing/developer/${item.name}`} target="_blank" rel="noreferrer">
@@ -102,26 +146,20 @@ export default function Developers({ allData }) {
               <div className={styles.infoDeveloper}>
                 <h4>{item.name}</h4>
                 <p className={styles.pDeveloper}>
-                  {item.description.split(" ").length ? (
-                    <>
-                      {item.description.split(" ").slice(0, 25).join(" ")}...
-                      {item.link ? (
-                        <a
-                          href={item.link}
-                          target="_blank"
-                          rel="noreferrer"
-                          style={{ marginLeft: "5px", color: "#DCAA4C", cursor: "pointer" }}
-                        >
-                          Read More
-                        </a>
-                      ) : (
-                        <Link href={`/property-listing/developer/${item.name}`}>
-                          <span style={{ marginLeft: "5px", color: "#DCAA4C", cursor: "pointer" }}>Read More</span>
-                        </Link>
-                      )}
-                    </>
-                  ) : (
-                    item.description
+                  {expanded[item.id]
+                    ? item.description
+                    : `${item.description.split(" ").slice(0, 25).join(" ")}${
+                        item.description.split(" ").length > 25 ? "... " : " "
+                      }`}
+                  {item.description.split(" ").length > 25 && (
+                    <span
+                      onClick={() =>
+                        setExpanded((prev) => ({ ...prev, [item.id]: !prev[item.id] }))
+                      }
+                      style={{ color: "#e7b554", cursor: "pointer", fontWeight: 500 }}
+                    >
+                      {expanded[item.id] ? "Read Less" : "Read More"}
+                    </span>
                   )}
                 </p>
 

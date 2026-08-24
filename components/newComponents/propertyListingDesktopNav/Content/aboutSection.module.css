@@ -7,14 +7,23 @@ box-shadow: 0 0.384px 1.806px 0 rgba(0, 0, 0, 0.35);
 margin: 1rem 2rem;
 margin-bottom: 2rem;
 }
+.headingRow{
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
 .headerAbout{
-color: #000;
+flex: 1;
+min-width: 0;
+color: #1a1a1a;
 font-family: "Lexend Deca";
 font-size: 22px;
 font-style: normal;
-font-weight: 400;
-line-height: normal;
-margin-bottom: 0px;
+font-weight: 600;
+line-height: 1.25;
+letter-spacing: -0.01em;
+margin-bottom: 4px;
 }
 .pageNumberAbout{
 color: rgba(0, 0, 0, 0.35);
@@ -86,22 +95,30 @@ line-height: normal;
 
 @media screen and (max-width: 768px) {
   .contentWrapper{
-
-    margin:1rem 1rem;
+    margin: 0.75rem 14px 1.5rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+  .headingRow{
+    align-items: center;
+    margin: 0.25rem 14px 0.15rem;
   }
   .headerAbout{
-color: #000;
-font-family: "Lexend Deca";
-font-size: 16px;
-width:58%;
-margin: 1rem 1rem;
-
-}
-.pageNumberAbout{
-  font-size: 10px;
-  margin: 1rem 1rem;
-}
-.aboutSection{
-  font-size: 13px;
-}
+    color: #1a1a1a;
+    font-family: "Lexend Deca";
+    font-size: 19px;
+    font-weight: 600;
+    width: auto;
+    margin: 0;
+    line-height: 1.25;
+  }
+  .pageNumberAbout{
+    font-size: 11px;
+    margin: 0 14px 0.85rem;
+  }
+  .aboutSection{
+    font-size: 13px;
+  }
 }

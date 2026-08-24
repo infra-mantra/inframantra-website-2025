@@ -15,7 +15,7 @@ function renderText(text) {
   const parts = String(text || "").split(HL);
   return parts.map((p, i) =>
     i % 2 === 1 ? (
-      <span key={i} className={styles.hl}>{p}</span>
+      <span key={i} className={styles.rwHl}>{p}</span>
     ) : (
       <React.Fragment key={i}>{p}</React.Fragment>
     )
@@ -24,9 +24,9 @@ function renderText(text) {
 
 function Stars({ n = 5 }) {
   return (
-    <span className={styles.stars} aria-label={`${n} star rating`}>
+    <span className={styles.rwStars} aria-label={`${n} star rating`}>
       {Array.from({ length: 5 }).map((_, i) => (
-        <FaStar key={i} className={i < n ? styles.starOn : styles.starOff} />
+        <FaStar key={i} className={i < n ? styles.rwStarOn : styles.rwStarOff} />
       ))}
     </span>
   );
@@ -40,12 +40,12 @@ const row = Array.from({ length: 5 }).map((_, i) =>
 ); 
   return (
     <span
-      className={styles.ratingStars}
+      className={styles.rwRatingStars}
       role="img"
       aria-label={`${value} out of 5 stars`}
     >
-      <span className={styles.ratingStarsBase}>{row}</span>
-      <span className={styles.ratingStarsFill} style={{ width: `${pct}%` }}>
+      <span className={styles.rwRatingStarsBase}>{row}</span>
+      <span className={styles.rwRatingStarsFill} style={{ width: `${pct}%` }}>
         {row}
       </span>
     </span>
@@ -64,14 +64,14 @@ function initialsOf(name) {
 
 function ReviewCard({ review }) {
   return (
-    <article className={styles.card}>
-      <div className={styles.cardHead}>
-        <span className={styles.quote} aria-hidden="true">&#8220;</span>
+    <article className={styles.rwCard}>
+      <div className={styles.rwCardHead}>
+        <span className={styles.rwQuote} aria-hidden="true">&#8220;</span>
         <Stars n={review.rating || 5} />
       </div>
-      <p className={styles.text}>{renderText(review.text)}</p>
-      <div className={styles.cardFoot}>
-        <span className={styles.avatar}>
+      <p className={styles.rwText}>{renderText(review.text)}</p>
+      <div className={styles.rwCardFoot}>
+        <span className={styles.rwAvatar}>
           {review.avatar ? (
             <img
               src={review.avatar}
@@ -83,11 +83,11 @@ function ReviewCard({ review }) {
             initialsOf(review.name)
           )}
         </span>
-        <span className={styles.who}>
+        <span className={styles.rwWho}>
           <strong>{review.name}</strong>
-          <span className={styles.role}>
+          <span className={styles.rwRole}>
             {review.role}
-            {review.source === "google" && <span className={styles.gBadge}>G</span>}
+            {review.source === "google" && <span className={styles.rwGBadge}>G</span>}
           </span>
         </span>
       </div>
@@ -160,43 +160,43 @@ function ReviewsWall({ current = [] }) {
   const totalText = gMeta.total ? `${gMeta.total}+` : "2,493+";
 
   return (
-    <section className={styles.wall}>
-      <div className={styles.inner}>
+    <section className={styles.rwWall}>
+      <div className={styles.rwInner}>
         {/* Left info panel */}
-        <div className={styles.left}>
-          <span className={styles.eyebrow}>Testimonials</span>
-          <h2 className={styles.heading}>
+        <div className={styles.rwLeft}>
+          <span className={styles.rwEyebrow}>Testimonials</span>
+          <h2 className={styles.rwHeading}>
             3500+ Homebuyers Rely on <span>Inframantra</span>
           </h2>
-          <div className={styles.ratingRow}>
+          <div className={styles.rwRatingRow}>
             <RatingStars value={ratingValue} />
-            <span className={styles.ratingText}>
+            <span className={styles.rwRatingText}>
               Rated <strong>{ratingText}</strong> by verified buyers
             </span>
           </div>
-          <div className={styles.badges}>
-            <span className={styles.badge}>
-              <span className={styles.gBadge}>G</span> {ratingText} on Google
+          <div className={styles.rwBadges}>
+            <span className={styles.rwBadge}>
+              <span className={styles.rwGBadge}>G</span> {ratingText} on Google
             </span>
-            <span className={styles.badge}>
+            <span className={styles.rwBadge}>
               {gMeta.total ? `${gMeta.total}+ Google Reviews` : "Verified Google Reviews"}
             </span>
-            <span className={styles.badge}>RERA Approved</span>
-            <span className={styles.badge}>9+ Years</span>
+            <span className={styles.rwBadge}>RERA Approved</span>
+            <span className={styles.rwBadge}>9+ Years</span>
           </div>
           <Link href="/testimonials">
-            <a className={styles.cta}>Read all reviews &#8594;</a>
+            <a className={styles.rwCta}>Read all reviews &#8594;</a>
           </Link>
         </div>
 
         {/* Right animated marquee columns */}
-        <div className={styles.columns}>
+        <div className={styles.rwColumns}>
           {columns.map((col, ci) => (
             <div
               key={ci}
-              className={`${styles.column} ${ci % 2 ? styles.colDown : ""}`}
+              className={`${styles.rwColumn} ${ci % 2 ? styles.rwColDown : ""}`}
             >
-              <div className={styles.track}>
+              <div className={styles.rwTrack}>
                 {[...col, ...col].map((r, i) => (
                   <ReviewCard key={`${ci}-${i}-${r.id}`} review={r} />
                 ))}

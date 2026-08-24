@@ -114,6 +114,34 @@ export default function PropertyChatbot() {
   const [typing, setTyping] = useState(false);
   const [busy, setBusy] = useState(false);
   const [unread, setUnread] = useState(false);
+  const [showLabel, setShowLabel] = useState(true); // the "Need help?" launcher bubble
+
+  // Keep the launcher bubble dismissed once the user closes it.
+  useEffect(() => {
+    try {
+      if (localStorage.getItem("imbot_label_dismissed")) setShowLabel(false);
+    } catch (e) {
+      /* ignore */
+    }
+  }, []);
+
+  // Auto-hide the launcher bubble after a few seconds (non-persistent — a manual
+  // close persists, but the timed hide lets it gently nudge again next visit).
+  useEffect(() => {
+    if (!showLabel) return undefined;
+    const t = setTimeout(() => setShowLabel(false), 7000);
+    return () => clearTimeout(t);
+  }, [showLabel]);
+
+  const dismissLabel = (e) => {
+    e.stopPropagation();
+    setShowLabel(false);
+    try {
+      localStorage.setItem("imbot_label_dismissed", "1");
+    } catch (err) {
+      /* ignore */
+    }
+  };
 
   const stepRef = useRef("greeting");
   const leadRef = useRef({});
@@ -724,33 +752,70 @@ export default function PropertyChatbot() {
   return (
     <>
       {!open && (
-        <button className="imbot-launcher" aria-label="Chat with our AI assistant" onClick={handleOpen}>
-          <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-            {/* antenna */}
-            <circle cx="12" cy="3" r="1" fill="#fff" stroke="none" />
-            <line x1="12" y1="4" x2="12" y2="6.5" />
-            {/* head */}
-            <rect x="4.5" y="6.5" width="15" height="11" rx="3" />
-            {/* eyes */}
-            <circle cx="9" cy="11.5" r="1.3" fill="#fff" stroke="none" />
-            <circle cx="15" cy="11.5" r="1.3" fill="#fff" stroke="none" />
-            {/* mouth */}
-            <line x1="9.5" y1="14.6" x2="14.5" y2="14.6" />
-            {/* ears */}
-            <line x1="4.5" y1="10.5" x2="2.8" y2="10.5" />
-            <line x1="19.5" y1="10.5" x2="21.2" y2="10.5" />
-          </svg>
-          {unread && <span className="imbot-dot" />}
-        </button>
+        <div className="imbot-launch-wrap">
+          {showLabel && (
+            <div
+              className="imbot-launch-label"
+              role="button"
+              tabIndex={0}
+              aria-label="Chat with our AI assistant"
+              onClick={handleOpen}
+              onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && handleOpen()}
+            >
+              <button
+                className="imbot-label-close"
+                aria-label="Dismiss message"
+                onClick={dismissLabel}
+              >
+                ×
+              </button>
+              <strong>Need help finding a home?</strong>
+              <span>Chat with our AI assistant 👋</span>
+            </div>
+          )}
+          <button className="imbot-launcher" aria-label="Chat with our AI assistant" onClick={handleOpen}>
+            <span className="imbot-online" />
+            <svg className="imbot-boticon" viewBox="0 0 32 32" width="32" height="32" fill="none">
+              {/* antenna */}
+              <line x1="16" y1="4.2" x2="16" y2="8" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
+              <circle cx="16" cy="3.2" r="1.9" fill="#fff" />
+              {/* ears */}
+              <rect x="3.4" y="13" width="2.6" height="6" rx="1.3" fill="#fff" />
+              <rect x="26" y="13" width="2.6" height="6" rx="1.3" fill="#fff" />
+              {/* head */}
+              <rect x="6" y="8" width="20" height="16" rx="6" fill="#fff" />
+              {/* eyes */}
+              <circle cx="12" cy="15" r="2" fill="#b8821f" />
+              <circle cx="20" cy="15" r="2" fill="#b8821f" />
+              {/* smile */}
+              <path d="M11.5 19 Q16 22 20.5 19" stroke="#b8821f" strokeWidth="1.9" fill="none" strokeLinecap="round" />
+            </svg>
+            {unread && <span className="imbot-dot" />}
+          </button>
+        </div>
       )}
 
       {open && (
         <div className="imbot-window" role="dialog" aria-label="Property assistant">
           <div className="imbot-header">
-            <div className="imbot-avatar">🤖</div>
+            <div className="imbot-avatar">
+              <svg className="imbot-avatar-bot" viewBox="0 0 32 32" width="24" height="24" fill="none">
+                <line x1="16" y1="4.2" x2="16" y2="8" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
+                <circle cx="16" cy="3.2" r="1.9" fill="#fff" />
+                <rect x="3.4" y="13" width="2.6" height="6" rx="1.3" fill="#fff" />
+                <rect x="26" y="13" width="2.6" height="6" rx="1.3" fill="#fff" />
+                <rect x="6" y="8" width="20" height="16" rx="6" fill="#fff" />
+                <circle cx="12" cy="15" r="2" fill="#1f2a44" />
+                <circle cx="20" cy="15" r="2" fill="#1f2a44" />
+                <path d="M11.5 19 Q16 22 20.5 19" stroke="#1f2a44" strokeWidth="1.9" fill="none" strokeLinecap="round" />
+              </svg>
+              <span className="imbot-avatar-dot" />
+            </div>
             <div className="imbot-hwrap">
               <strong>{COMPANY} Assistant</strong>
-              <span>Typically replies instantly</span>
+              <span className="imbot-status">
+                <i /> Typically replies instantly
+              </span>
             </div>
             <button
               className="imbot-restart"
@@ -869,12 +934,86 @@ export default function PropertyChatbot() {
       )}
 
       <style jsx>{`
-        .imbot-launcher {
+        .imbot-launch-wrap {
           position: fixed;
           /* Sit clear of the site's floating call/WhatsApp buttons
              (right:8px, bottom:25px & 85px) on desktop. */
           right: 13px;
           bottom: 155px;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          z-index: 99998;
+          /* gentle up/down float */
+          animation: imbot-float 2.8s ease-in-out infinite;
+        }
+        .imbot-launch-label {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          text-align: right;
+          gap: 1px;
+          background: #ffffff;
+          border: none;
+          padding: 9px 14px;
+          border-radius: 14px;
+          box-shadow: 0 10px 26px rgba(0, 0, 0, 0.2);
+          cursor: pointer;
+          max-width: 210px;
+          font-family: 'Lexend Deca', Arial, sans-serif;
+          animation: imbot-label-in 0.45s ease both;
+          animation-delay: 0.4s;
+          opacity: 0;
+        }
+        .imbot-launch-label strong {
+          font-size: 13px;
+          font-weight: 700;
+          color: #1f2a44;
+          line-height: 1.25;
+          white-space: nowrap;
+        }
+        .imbot-launch-label span {
+          font-size: 11px;
+          color: #6b7280;
+          white-space: nowrap;
+        }
+        /* little tail pointing at the button */
+        .imbot-launch-label::after {
+          content: "";
+          position: absolute;
+          right: -6px;
+          top: 50%;
+          transform: translateY(-50%);
+          border: 7px solid transparent;
+          border-left-color: #ffffff;
+        }
+        .imbot-label-close {
+          position: absolute;
+          top: -9px;
+          right: -9px;
+          width: 20px;
+          height: 20px;
+          padding: 0;
+          border-radius: 50%;
+          background: #1f2a44;
+          color: #fff;
+          border: 2px solid #fff;
+          font-size: 14px;
+          line-height: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+          z-index: 2;
+        }
+        .imbot-label-close:hover {
+          background: #33415f;
+        }
+        .imbot-launcher {
+          position: relative;
+          flex: 0 0 auto;
           width: 58px;
           height: 58px;
           border-radius: 50%;
@@ -887,9 +1026,18 @@ export default function PropertyChatbot() {
           display: flex;
           align-items: center;
           justify-content: center;
-          z-index: 99998;
-          /* gentle up/down float */
-          animation: imbot-float 2.8s ease-in-out infinite;
+        }
+        /* "online" green dot on the launcher */
+        .imbot-online {
+          position: absolute;
+          top: 3px;
+          right: 3px;
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: #22c55e;
+          border: 2px solid #fff;
+          z-index: 2;
         }
         /* pulsing ring */
         .imbot-launcher::after {
@@ -948,42 +1096,89 @@ export default function PropertyChatbot() {
           flex-direction: column;
           overflow: hidden;
           z-index: 99999;
-          font-family: Arial, Helvetica, sans-serif;
+          font-family: 'Lexend Deca', Arial, Helvetica, sans-serif;
           animation: imbot-pop 0.25s ease;
         }
         .imbot-header {
           display: flex;
           align-items: center;
-          gap: 10px;
-          padding: 12px 14px;
-          background: linear-gradient(135deg, #1f2a44, #2c3e63);
+          gap: 11px;
+          padding: 13px 14px;
+          background: linear-gradient(135deg, #17171c 0%, #0a0a0c 100%);
+          border-bottom: 2px solid #e7b554;
           color: #fff;
         }
         .imbot-avatar {
-          width: 38px;
-          height: 38px;
+          position: relative;
+          width: 40px;
+          height: 40px;
           border-radius: 50%;
-          background: #d69d2e;
-          color: #fff;
-          font-weight: 700;
-          font-size: 14px;
+          background: radial-gradient(circle at 32% 28%, #ffd97a 0%, #e6ac38 55%, #c98c1f 100%);
+          box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3),
+            inset 0 1px 2px rgba(255, 255, 255, 0.45);
           display: flex;
           align-items: center;
           justify-content: center;
           flex: 0 0 auto;
         }
+        .imbot-avatar-bot {
+          animation: imbot-bob 2.6s ease-in-out infinite;
+        }
+        .imbot-avatar-dot {
+          position: absolute;
+          bottom: 1px;
+          right: 1px;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background: #22c55e;
+          border: 2px solid #fff;
+        }
         .imbot-hwrap {
           display: flex;
           flex-direction: column;
-          line-height: 1.25;
+          line-height: 1.3;
           flex: 1;
         }
         .imbot-hwrap strong {
           font-size: 15px;
+          font-weight: 700;
+          letter-spacing: 0.01em;
         }
-        .imbot-hwrap span {
+        .imbot-status {
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
           font-size: 11px;
-          opacity: 0.8;
+          opacity: 0.9;
+        }
+        .imbot-status i {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: #a5f3c0;
+          display: inline-block;
+          animation: imbot-pulse-dot 1.8s ease-out infinite;
+        }
+        @keyframes imbot-bob {
+          0%,
+          100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-2px);
+          }
+        }
+        @keyframes imbot-pulse-dot {
+          0% {
+            box-shadow: 0 0 0 0 rgba(165, 243, 192, 0.6);
+          }
+          70% {
+            box-shadow: 0 0 0 6px rgba(165, 243, 192, 0);
+          }
+          100% {
+            box-shadow: 0 0 0 0 rgba(165, 243, 192, 0);
+          }
         }
         .imbot-restart {
           background: transparent;
@@ -1038,7 +1233,7 @@ export default function PropertyChatbot() {
           box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
         }
         .imbot-bubble.user {
-          background: #d69d2e;
+          background: #DCAA4C;
           color: #fff;
           border-bottom-right-radius: 4px;
         }
@@ -1086,7 +1281,7 @@ export default function PropertyChatbot() {
         }
         .imbot-chip {
           background: #fff;
-          border: 1.5px solid #d69d2e;
+          border: 1.5px solid #DCAA4C;
           color: #b8821f;
           padding: 7px 13px;
           border-radius: 18px;
@@ -1096,7 +1291,7 @@ export default function PropertyChatbot() {
           transition: all 0.15s ease;
         }
         .imbot-chip:hover {
-          background: #d69d2e;
+          background: #DCAA4C;
           color: #fff;
         }
         .imbot-cards {
@@ -1139,7 +1334,7 @@ export default function PropertyChatbot() {
           margin: 6px 0 8px;
         }
         .imbot-card-price {
-          color: #d69d2e;
+          color: #DCAA4C;
           font-weight: 700;
         }
         .imbot-card-btn {
@@ -1173,7 +1368,7 @@ export default function PropertyChatbot() {
           outline: none;
         }
         .imbot-input input:focus {
-          border-color: #d69d2e;
+          border-color: #DCAA4C;
         }
         .imbot-input input:disabled {
           background: #f3f4f6;
@@ -1183,7 +1378,7 @@ export default function PropertyChatbot() {
           height: 40px;
           border-radius: 50%;
           border: none;
-          background: #d69d2e;
+          background: #DCAA4C;
           color: #fff;
           cursor: pointer;
           display: flex;
@@ -1245,6 +1440,25 @@ export default function PropertyChatbot() {
             opacity: 1;
           }
         }
+        @keyframes imbot-label-in {
+          from {
+            opacity: 0;
+            transform: translateX(12px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .imbot-launch-wrap {
+            animation: none;
+          }
+          .imbot-launch-label {
+            animation: none;
+            opacity: 1;
+          }
+        }
         @media (max-width: 480px) {
           .imbot-window {
             right: 0;
@@ -1254,10 +1468,14 @@ export default function PropertyChatbot() {
             max-height: 100vh;
             border-radius: 0;
           }
-          .imbot-launcher {
+          .imbot-launch-wrap {
             /* Above the full-width bottom CTA bar (bottom:0) on mobile. */
             right: 12px;
             bottom: 72px;
+          }
+          /* Space is tight on phones — show just the button. */
+          .imbot-launch-label {
+            display: none;
           }
         }
       `}</style>
