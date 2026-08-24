@@ -31,7 +31,10 @@ const contactFormStyles = {
 
 function PropertyPageFloatingContact({
   name,
-  propertyType
+  propertyType,
+  // Supplied when this form is shown inside the enquiry modal. Rendered inline
+  // on the property page, where there is nothing to close, it stays undefined.
+  onClose
 }) {
 
   const router = useRouter();
@@ -150,207 +153,115 @@ function PropertyPageFloatingContact({
   return (
     <PropertyWrapper>
 
-      <form
-        className={styles.aboutProjectWrapper}
-        onSubmit={handleSubmit}
-      >
+      <form className={styles.imEnqForm} onSubmit={handleSubmit}>
 
-        <div
-          className={
-            styles.propertyPageFloatingContactHeaderWrapper
-          }
-        >
-
-          <p>
-            Get Expert Advice and Information for
-          </p>
-
-          <p
-            style={{
-              color: '#e7b554',
-              fontWeight: '700',
-              fontSize: '20px',
-              marginBottom: '10px',
-            }}
+        {onClose && (
+          <button
+            type="button"
+            className={styles.imEnqClose}
+            onClick={onClose}
+            aria-label="Close enquiry form"
           >
-            {name}
-          </p>
+            &times;
+          </button>
+        )}
 
-        </div>
+        <header className={styles.imEnqHead}>
+          <p className={styles.imEnqEyebrow}>Get expert advice and information for</p>
+          <h2 className={styles.imEnqTitle}>{name}</h2>
+        </header>
 
-        <div
-          className={
-            styles.propertyPageFloatingContactWrapper
-          }
-        >
+        <div className={styles.imEnqFields}>
 
           {/* NAME */}
-          <div className="form-group-project">
-
-            <div className='form-group-input'>
-              <input
-                type="text"
-                id="name"
-                required={true}
-                name="name"
-                placeholder="Name *"
-                value={formData.name}
-                onChange={(e) => {
-
-                  const alphabeticValue =
-                    e.target.value.replace(
-                      /[^a-zA-Z\s]/g,
-                      ''
-                    );
-
-                  setFormData({
-                    ...formData,
-                    name: alphabeticValue
-                  });
-
-                }}
-              />
-            </div>
+          <div className={styles.imEnqField}>
+            <label className={styles.imEnqLabel} htmlFor="name">
+              Name<span aria-hidden="true">*</span>
+            </label>
+            <input
+              className={styles.imEnqInput}
+              type="text"
+              id="name"
+              required={true}
+              name="name"
+              autoComplete="name"
+              placeholder="Your full name"
+              value={formData.name}
+              onChange={(e) => {
+                const alphabeticValue = e.target.value.replace(/[^a-zA-Zs]/g, '');
+                setFormData({ ...formData, name: alphabeticValue });
+              }}
+            />
           </div>
 
-          {/* PHONE INPUT */}
-          <div className="form-group-project">
-
-            <div className='form-group-input'>
-
-              <PhoneInput
-                country={'in'}
-                enableSearch={true}
-                value={formData.phoneNumber}
-                onChange={(phone) =>
-                  setFormData({
-                    ...formData,
-                    phoneNumber: phone
-                  })
-                }
-                placeholder="Phone Number *"
-                containerStyle={{
-                  width: '100%',
-                  marginBottom: '10px'
-                }}
-                inputStyle={{
-                  width: '100%',
-                  height: '45px',
-                  borderRadius: '4px',
-                  border: '1px solid #ccc',
-                  paddingLeft: '48px',
-                  fontSize: '14px'
-                }}
-                buttonStyle={{
-                  border: '1px solid #ccc',
-                  borderRadius: '4px 0 0 4px',
-                  backgroundColor: '#fff'
-                }}
-              />
-
-            </div>
+          {/* PHONE */}
+          <div className={`${styles.imEnqField} ${styles.imEnqPhone}`}>
+            <label className={styles.imEnqLabel} htmlFor="enquiry-phone">
+              Phone number<span aria-hidden="true">*</span>
+            </label>
+            <PhoneInput
+              country={'in'}
+              enableSearch={true}
+              value={formData.phoneNumber}
+              onChange={(phone) => setFormData({ ...formData, phoneNumber: phone })}
+              placeholder="00000 00000"
+              inputProps={{ id: 'enquiry-phone', name: 'phone', autoComplete: 'tel' }}
+            />
           </div>
 
           {/* EMAIL */}
-          <div className="form-group-project">
-
-            <div className='form-group-input'>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Email Address *"
-                value={formData.email}
-                onChange={handleChange}
-                required={true}
-              />
-            </div>
-
+          <div className={styles.imEnqField}>
+            <label className={styles.imEnqLabel} htmlFor="email">
+              Email address<span aria-hidden="true">*</span>
+            </label>
+            <input
+              className={styles.imEnqInput}
+              type="email"
+              id="email"
+              name="email"
+              autoComplete="email"
+              placeholder="you@example.com"
+              value={formData.email}
+              onChange={handleChange}
+              required={true}
+            />
           </div>
 
         </div>
 
-        <div className="propertyPageFloatingContactWrapper propertyPageCheckBox">
-
-          {propertyType != "Commercial" ? (
-            <>
-              <p>I’m looking For</p>
-
-              <div style={contactFormStyles.checkBox}>
-
-                <label>
+        {propertyType != "Commercial" ? (
+          <fieldset className={styles.imEnqField} style={{ border: 0, padding: 0, margin: 0 }}>
+            <legend className={styles.imEnqGroupLabel}>I&rsquo;m looking for</legend>
+            <div className={styles.imEnqChips}>
+              {['2BHK', '3BHK', '4BHK'].map((cfg) => (
+                <label className={styles.imEnqChip} key={cfg}>
                   <input
                     type="checkbox"
-                    value="2BHK"
-                    checked={
-                      selectedConfigurations.includes('2BHK')
-                    }
+                    value={cfg}
+                    checked={selectedConfigurations.includes(cfg)}
                     onChange={handleCheckboxChange}
                   />
-
-                  <span>2BHK</span>
+                  <span className={styles.imEnqChipBox} aria-hidden="true" />
+                  <span className={styles.imEnqChipText}>{cfg}</span>
                 </label>
+              ))}
+            </div>
+          </fieldset>
+        ) : null}
 
-                <label>
-                  <input
-                    type="checkbox"
-                    value="3BHK"
-                    checked={
-                      selectedConfigurations.includes('3BHK')
-                    }
-                    onChange={handleCheckboxChange}
-                  />
-
-                  <span>3BHK</span>
-                </label>
-
-                <label>
-                  <input
-                    type="checkbox"
-                    value="4BHK"
-                    checked={
-                      selectedConfigurations.includes('4BHK')
-                    }
-                    onChange={handleCheckboxChange}
-                  >
-
-                  </input>
-
-                  <span>4BHK</span>
-                </label>
-
-              </div>
-            </>
-          ) : null}
-
-          {/* RECAPTCHA */}
+        <div className={styles.imEnqFoot}>
           <div className="recaptcha-container">
-
             <ReCAPTCHA
               sitekey="6LfrSTUqAAAAAOy2-j9cNvTIujOI5GKjtMVsn2Uk"
               size="invisible"
               ref={recaptchaRef}
               onChange={handleCaptchaChange}
             />
-
           </div>
 
-          {/* BUTTON */}
-          <button
-            type="submit"
-            className="search-button"
-            style={{
-              width: isMobile ? "60vw" : '16vw',
-              marginBottom: '10px',
-              fontWeight: '700',
-              fontSize: '16px',
-              borderRadius: '8px',
-              cursor: 'pointer'
-            }}
-          >
+          <button type="submit" className={styles.imEnqSubmit}>
             Submit
           </button>
-
         </div>
 
       </form>
