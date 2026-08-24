@@ -258,8 +258,6 @@ export default function ContactUsPage() {
                   Contact Now
                 </button>
 
-              </form>
-
               <p className={styles.contactUsPageConditions}>
                 By submitting, I accept Inframantra{' '}
                 <Link href="/page/disclaimer">
@@ -270,6 +268,8 @@ export default function ContactUsPage() {
                   Privacy Policy
                 </Link>
               </p>
+
+              </form>
 
             </div>
           </div>
@@ -445,8 +445,6 @@ export default function ContactUsPage() {
                 Contact Now
               </button>
 
-            </form>
-
             <p className={styles.contactUsPageConditions}>
               By submitting, I accept Inframantra{' '}
               <Link href="/page/disclaimer">
@@ -457,6 +455,8 @@ export default function ContactUsPage() {
                 Privacy Policy
               </Link>
             </p>
+
+            </form>
 
             <img
               className={styles.contactPageGuruImg}

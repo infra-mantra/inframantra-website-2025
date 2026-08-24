@@ -1,301 +1,382 @@
-.contactPageGuruImg {
-    width: 22vw;
-    height: 60vh;
-    left: 0%;
-    top: 21%;
-}
+/* =========================================================================
+   Contact Us.
+
+   The previous version sized nearly everything in vw/vh: the wrapper 100vw,
+   the banner 40vh x 90vw, the form section a fixed 60vh, the form itself 50vh
+   with justify-content:space-around. Two things fell out of that. The banner
+   (a 1300x267 strip) was cropped hard because its box was nowhere near its
+   aspect ratio, so the wordmark was sliced off at both edges. And the fixed
+   form height spread three fields across half the screen, leaving wide empty
+   bands between them.
+
+   This rewrite sizes by content and constrains with max-width instead. Class
+   names are unchanged so the JSX keeps working. Note WANT_HASH is false in
+   next.config.js, so these names ship unhashed and are effectively global:
+   .inputField and .searchButton are defined only here and must stay that way.
+   ========================================================================= */
+
 .contactUsPageWrapper {
-    display: flex
-;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    width: 100vw;
-    height: auto;
-    margin-top: 2%;
+  --cu-gold: #b8860b;
+  --cu-ink: #1c1f24;
+  --cu-muted: #6b7280;
+  --cu-line: #d7dbe0;
+  --cu-radius: 14px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 56px;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 28px 20px 64px;
+  box-sizing: border-box;
 }
+
+/* ---------- banner ---------- */
+
+/* Source is 1300x267. Matching that ratio is what stops the edges being cut. */
 .contactUsPageBannerContainer {
-    height: 40vh;
-    width: 90vw;
-    border-radius: 10px;
+  width: 100%;
+  aspect-ratio: 1300 / 267;
+  border-radius: var(--cu-radius);
+  overflow: hidden;
+  background: #eef0f3;
 }
-.react-tel-input .form-control{
-    border: none;
-   border-bottom: 1px solid #0f0f0f3d;
-    width: fit-content;
-}
+
 .contactUsPageBannerContainer > img {
-    height: 100%;
-    width: 100%;
-    -o-object-fit: cover;
-    object-fit: cover;
-    border-radius: 10px;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
+
+/* ---------- form section ---------- */
+
 .contactUsPageFormSectionContainer {
-    width: 70vw;
-    height: 60vh;
-    display: flex
-;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    margin-top: 5%;
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+  margin: 0;
 }
 
 .contactUsPageFormSectionGuruImgContainer {
-    width: 30%;
-    height: 100%;
-    display: flex
-;
-    justify-content: flex-end;
-    align-items: center;
-}
-.contactPageGuruImg {
-    width: 22vw;
-    height: 60vh;
-    left: 0%;
-    top: 21%;
-}
-.contactUsPageSecondSectionHeader {
-    width: 100%;
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: 400;
-    font-size: 22px;
-    padding-top: 20px;
-}
-.contactUsPageSecondSectionFormWrapper {
-    display: flex
-;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    height: 50vh;
-    width: 100%;
-}
-.contactUsPageConditions {
-    width: 90%;
-    font-size: 12px;
-    color: #cccaca;
-    margin-bottom: 10px;
-}
-.contactUsPageSecondSectionFormWrapper input {
-    font: inherit;
-    letter-spacing: inherit;
-    color: currentcolor;
-    padding: 4px 0px 5px;
-    border: 0px;
-    /* box-sizing: content-box; */
-    background: none;
-    height: 1.4375em;
-    margin: 0px;
-    -webkit-tap-highlight-color: transparent;
-    display: block;
-    min-width: 0px;
-    width: 80%;
-    border-bottom: 1px solid #0f0f0f3d;
-}
-.searchButton {
-    background: #DCAA4C;
-    width: 121px;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    font-size: 10px;
-    cursor: pointer;
-    display: flex
-;
-    justify-content: center;
-    align-items: center;
-}
-.contactUsPageConditions {
-    width: 90%;
-    font-size: 12px;
-    color: #cccaca;
-    margin-bottom: 10px;
-}
-.contactUsPageLocationSectionContainer {
-    display: flex
-;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    width: 70vw;
-    height: 60vh;
-    margin-top: 5%;
-}
-.contactUsPageLocationSectionMapContainer {
-    width: 60%;
-    height: 100%;
-}
-.contactUsPageLocationSectionAddressContainer {
-    display: flex
-;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: flex-start;
-    width: 40%;
-}
-.contactUsPageLastSectionContainerHeader {
-    color: #e4a951;
-    font-size: 22px;
-    margin: 0;
-}
-.contactUsPageLastSectionContainerSubHeader {
-    display: flex
-;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-}
-.contactUsPageLocationSectionAddressDataFlex {
-    display: flex
-;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-}
-.contactUsPageThirdSectionLocationAddress {
-    width: 80%;
-    font-size: 17px;
-    margin-top: 10px;
-    font-weight: 300;
-}
-.contactUsPageThirdSectionLocationCity {
-    display: flex
-;
-    flex-direction: row;
-    margin: 0;
-    font-size: 25px;
-}
-.contactUsPageLastSectionContainer {
-    display: flex
-;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-    height: 10vh;
-    width: 80vw;
-    margin-top: 1%;
-}
-.contactUsPageLastSectionDivider {
-    width: 80%;
-    margin-top: 3%;
-}
-.contactUsPageLocationSectionAddressFlex {
-    align-items: flex-start;
-    display: flex
-;
-    flex-direction: row;
-    justify-content: flex-start;
-    margin-bottom: 30px;
-}
-.inputField {
-  width: 80%;
-  padding: 10px;
-  margin: 10px 0;
-  border: none;
-  border-bottom: 1px solid #ccc;
-  background-color: transparent;
-  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  align-self: stretch;
 }
 
+/* Was width:22vw + height:60vh, which stretched the cut-out at most window
+   sizes. Let the intrinsic ratio hold and cap the height instead. */
+.contactPageGuruImg {
+  width: 100%;
+  max-width: 340px;
+  height: auto;
+  max-height: 460px;
+  object-fit: contain;
+  object-position: bottom center;
+}
+
+.contactUsPageSecondSectionHeader {
+  width: 100%;
+  margin: 0 0 22px;
+  text-align: left;
+  font-size: 25px;
+  line-height: 1.25;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--cu-ink);
+  text-transform: none;
+  text-wrap: balance;
+}
+
+/* space-around across a fixed 50vh produced the empty bands between fields.
+   Gap on an auto-height column keeps the rhythm at any size. */
+.contactUsPageSecondSectionFormWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 18px;
+  width: 100%;
+  height: auto;
+  padding: 30px 30px 26px;
+  box-sizing: border-box;
+  background: #fff;
+  border: 1px solid var(--cu-line);
+  border-radius: var(--cu-radius);
+  box-shadow: 0 1px 2px rgba(20, 23, 28, .04), 0 12px 32px -18px rgba(20, 23, 28, .3);
+}
+
+.contactUsPageSecondSectionFormWrapper input,
+.inputField {
+  width: 100%;
+  box-sizing: border-box;
+  height: 46px;
+  margin: 0;
+  padding: 0 14px;
+  font: inherit;
+  font-size: 15px;
+  color: var(--cu-ink);
+  background: #fff;
+  border: 1px solid var(--cu-line);
+  border-radius: 10px;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.contactUsPageSecondSectionFormWrapper input::placeholder,
+.inputField::placeholder { color: #9aa1ab; }
+
+.contactUsPageSecondSectionFormWrapper input:hover,
+.inputField:hover { border-color: #b9c0c8; }
+
+.contactUsPageSecondSectionFormWrapper input:focus,
 .inputField:focus {
   outline: none;
-  border: none;
-  border-bottom: 1px solid #000;
-  box-shadow: none;
+  border: 1px solid var(--cu-gold);
+  box-shadow: 0 0 0 3px rgba(184, 134, 11, .16);
 }
+
+/* react-phone-input-2 pulled into the same shape as the text fields. */
+.contactUsPageSecondSectionFormWrapper :global(.react-tel-input) {
+  width: 100%;
+  font-family: inherit;
+}
+.contactUsPageSecondSectionFormWrapper :global(.react-tel-input .form-control) {
+  width: 100% !important;
+  height: 46px !important;
+  padding-left: 52px !important;
+  font-size: 15px !important;
+  font-family: inherit !important;
+  border: 1px solid var(--cu-line) !important;
+  border-radius: 10px !important;
+  background: #fff !important;
+}
+.contactUsPageSecondSectionFormWrapper :global(.react-tel-input .form-control:focus) {
+  border-color: var(--cu-gold) !important;
+  box-shadow: 0 0 0 3px rgba(184, 134, 11, .16) !important;
+}
+.contactUsPageSecondSectionFormWrapper :global(.react-tel-input .flag-dropdown) {
+  border: 1px solid var(--cu-line) !important;
+  border-right: 0 !important;
+  border-radius: 10px 0 0 10px !important;
+  background: #fafbfc !important;
+}
+.contactUsPageSecondSectionFormWrapper :global(.react-tel-input .selected-flag) {
+  border-radius: 10px 0 0 10px !important;
+}
+
+/* Was 121px wide at font-size:10px, smaller than the text around it. */
+.searchButton {
+  width: 100%;
+  height: 48px;
+  padding: 0 20px;
+  background: var(--cu-gold);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  transition: background .15s ease, transform .06s ease;
+}
+.searchButton:hover { background: #a5780a; }
+.searchButton:active { transform: translateY(1px); }
+.searchButton:focus-visible {
+  outline: 3px solid rgba(184, 134, 11, .45);
+  outline-offset: 2px;
+}
+
+/* #cccaca on white is about 1.6:1 and effectively unreadable. */
+.contactUsPageConditions {
+  width: 100%;
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--cu-muted);
+}
+
+/* ---------- location ---------- */
+
+.contactUsPageLocationSectionContainer {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  align-items: stretch;
+  gap: 32px;
+  width: 100%;
+  margin: 0;
+}
+
+.contactUsPageLocationSectionMapContainer {
+  width: 100%;
+  min-height: 340px;
+  border-radius: var(--cu-radius);
+  overflow: hidden;
+  border: 1px solid var(--cu-line);
+}
+.contactUsPageLocationSectionMapContainer iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 340px;
+  border: 0;
+}
+
+.contactUsPageLocationSectionAddressContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  gap: 18px;
+  width: 100%;
+}
+
+.contactUsPageLocationSectionAddressFlex {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 14px;
+  margin: 0;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid var(--cu-line);
+  border-radius: var(--cu-radius);
+}
+
+.contactUsPageLocationSectionAddressDataFlex {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  min-width: 0;
+}
+
+.contactUsPageThirdSectionLocationCity {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0;
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--cu-ink);
+}
+
+.contactUsPageThirdSectionLocationAddress {
+  width: 100%;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.55;
+  font-weight: 400;
+  color: var(--cu-muted);
+}
+
+/* ---------- footer strip ---------- */
+
+.contactUsPageLastSectionDivider {
+  width: 100%;
+  margin: 0;
+  border: 0;
+  border-top: 1px solid var(--cu-line);
+}
+
+.contactUsPageLastSectionContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px 32px;
+  width: 100%;
+  height: auto;
+  margin: 0;
+}
+
+.contactUsPageLastSectionContainerHeader {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #9a6c14;
+}
+
+.contactUsPageLastSectionContainerSubHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: var(--cu-ink);
+}
+
 .contactUsPageThirdSectionIconFlex {
-    display: flex
-;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    font-size: 20px;
-    margin: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 18px;
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 1024px) {
+  .contactUsPageFormSectionContainer {
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+    gap: 28px;
+  }
+  .contactUsPageLocationSectionContainer { grid-template-columns: 1fr; }
+  .contactPageGuruImg { max-width: 260px; }
 }
 
 @media (max-width: 768px) {
-    .contactPageGuruImg {
-        position: absolute;
-        z-index: 100;
-        width: 38vw;
-        height: 38vh;
-        left: 62%;
-        top: 14.3%;
-        overflow: hidden;
-    }
-.searchButton{
-        width: 80vw;
+  .contactUsPageWrapper { gap: 40px; padding: 18px 16px 48px; }
+
+  .contactUsPageFormSectionContainer { grid-template-columns: 1fr; gap: 0; }
+
+  /* The cut-out was position:absolute at left:62%/top:14.3%, floating over
+     whatever happened to be underneath. It sits in flow now, above the form,
+     and is dropped on the narrowest screens where it only costs height. */
+  .contactUsPageFormSectionGuruImgContainer {
+    justify-content: center;
+    margin-bottom: -12px;
+  }
+  .contactPageGuruImg {
+    position: static;
+    width: auto;
+    max-width: 190px;
+    max-height: 260px;
+  }
+
+  .contactUsPageSecondSectionHeader {
     font-size: 20px;
-    padding: 10px;
-    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 18px;
+  }
+  .contactUsPageSecondSectionFormWrapper { padding: 22px 18px 20px; gap: 16px; }
+
+  .searchButton { width: 100%; font-size: 16px; }
+
+  .contactUsPageLocationSectionMapContainer,
+  .contactUsPageLocationSectionMapContainer iframe { min-height: 260px; }
+
+  .contactUsPageLastSectionContainer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .contactUsPageThirdSectionIconFlex { font-size: 15px; flex-wrap: wrap; }
 }
-.contactUsPageThirdSectionLocationUpper {
-        width: 100vw;
-        display: flex
-;
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
-        margin-top: 35px;
-        height: 20vh;
-    }
-    .contactUsPageThirdSectionLocationCity {
-        margin-right: 0px;
-    }
-    .contactUsPageThirdSectionLocationCity {
-        font-size: 17px;
-    }
-        .contactUsPageThirdSectionLocationAddress {
-        font-size: 14px;
-        text-align: center;
-    }
-    .contactUsPageThirdSectionLocationAddress {
-    width: 80%;
-    font-size: 17px;
-    margin-top: 10px;
-    font-weight: 300;
+
+@media (max-width: 420px) {
+  .contactUsPageFormSectionGuruImgContainer { display: none; }
 }
-.contactUsPageLocationSectionAddressFlex {
-        background-color: rgb(255, 255, 255);
-        color: rgba(0, 0, 0, 0.87);
-        box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 5px -3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px, rgba(0, 0, 0, 0.12) 0px 3px 14px 2px;
-        width: 46vw;
-        height: auto;
-        display: flex
-;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding-top: 20px;
-        transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
-        border-radius: 10px;
-    }
-    .contactUsPageThirdSectionSocialMediaFlex {
-        display: flex
-;
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
-        flex-wrap: wrap;
-        width: 90%;
-    }
-        .contactUsPageSecondSectionHeader {
-        font-size: 16px;
-        padding-top: 0;
-    }
-        .contactUsPageThirdSectionIconDivider {
-        width: 80%;
-        opacity: 0.7;
-    }
-        .contactUsPageThirdSectionIconFlex {
-        font-size: 13px;
-        flex-direction: column;
-        height: 35%;
-        justify-self: center;
-    align-items: center;
-    }
+
+@media (prefers-reduced-motion: reduce) {
+  .searchButton,
+  .inputField,
+  .contactUsPageSecondSectionFormWrapper input { transition: none; }
 }

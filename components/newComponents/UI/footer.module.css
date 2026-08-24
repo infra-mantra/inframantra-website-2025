@@ -427,7 +427,7 @@ font-weight: 350!important;
     height: max-content;
     width: 90%;
   }
-  .footerForthSectionIconWrappe {
+  .footerForthSectionIconWrapper {
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -509,3 +509,117 @@ font-weight: 350!important;
 }
 
 
+
+
+/* =========================================================================
+   Responsive fix.
+
+   .footerWrapper was height:75vh (100vh on mobile) with overflow:hidden, and
+   every column inside was a percentage of that. The footer content is not a
+   fixed height, so on narrower screens it outgrew the box and got clipped —
+   the legal links row rode up over "Contact Us" in the column above and the
+   social icons collided with the copyright line.
+
+   Heights become content-driven here and the bottom strip is allowed to wrap.
+   Appended rather than edited in place so it overrides the originals by source
+   order without disturbing the rules above.
+   ========================================================================= */
+
+.footerWrapper {
+  height: auto;
+  padding: 44px 0 0;
+  box-sizing: border-box;
+}
+
+.footerFirstSectionContainer {
+  height: auto;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 34px;
+  padding-bottom: 34px;
+}
+
+.footerFirstSectionCompanyDetailsWrapper,
+.footerSecondSectionCompanyDetailsWrapper,
+.footerThirdSectionCompanyDetailsWrapper,
+.footerForthSectionCompanyDetailsWrapper {
+  height: auto;
+}
+
+.footerSecondSectionContainer {
+  height: auto !important;
+  flex-wrap: wrap;
+  gap: 12px 26px;
+  padding: 16px 0 26px;
+  margin-bottom: 0;
+}
+
+.footerSecondSectionLinksFlex {
+  width: auto;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 8px 24px;
+}
+
+.footerSecondSectionLinksFlex > p {
+  margin: 0;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.footerSecondSectionCopyRightFlex { width: auto; }
+.footerSecondSectionCopyRightFlex > p { margin: 0; }
+
+@media screen and (max-width: 786px) {
+  .footerWrapper { height: auto; padding: 32px 0 0; }
+
+  .footerFirstSectionContainer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+    padding-bottom: 28px;
+  }
+
+  .footerSecondSectionMobileContainer {
+    height: auto;
+    gap: 20px;
+  }
+
+  .footerSecondSectionCompanyDetailsWrapper,
+  .footerThirdSectionCompanyDetailsWrapper {
+    height: auto;
+    width: 48%;
+  }
+
+  .footerForthSectionCompanyDetailsWrapper {
+    width: 100%;
+    align-items: flex-start;
+  }
+
+  .footerSecondSectionContainer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .footerSecondSectionLinksFlex > p { font-size: 12px; margin: 0; }
+
+  .footerSecondSectionCopyRightFlex {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+/* The social row: justify-content:space-between pushed the first and last icon
+   flush to the container edges, so on narrow screens they sat under the page
+   margin. Start-aligned with a gap keeps them inside. */
+.footerForthSectionIconWrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  margin-bottom: 12px;
+}
