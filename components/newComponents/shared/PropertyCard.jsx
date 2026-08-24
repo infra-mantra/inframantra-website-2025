@@ -123,7 +123,11 @@ export default function PropertyCard({ property }) {
       {enquiryOpen && typeof document !== 'undefined' &&
         createPortal(
           <CustomBackdrop open={enquiryOpen} onClose={() => setEnquiryOpen(false)}>
-            <PropertyPageFloatingContact name={property.name} onClose={() => setEnquiryOpen(false)} />
+            <PropertyPageFloatingContact
+              name={property.name}
+              configuration={property.configuration}
+              onClose={() => setEnquiryOpen(false)}
+            />
           </CustomBackdrop>,
           document.body
         )}

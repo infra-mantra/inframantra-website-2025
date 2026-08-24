@@ -29,9 +29,47 @@ const contactFormStyles = {
   },
 };
 
+// The CMS stores configuration as one free-text string per project, and the
+// feed is inconsistent: "3/4 BHK", " 3.5/4.5/5.5 BHK   ", "5.5 BHK",
+// "2/3/4 BHK/Penthouse". Only the final segment usually carries the unit, so
+// split on "/", then give the bare numbers the unit the last one declared.
+// Non-numeric segments (Penthouse, Villa) are labels in their own right.
+const DEFAULT_CONFIGURATIONS = ['2BHK', '3BHK', '4BHK'];
+
+export function parseConfigurations(configuration) {
+  if (typeof configuration !== 'string' || !configuration.trim()) {
+    return DEFAULT_CONFIGURATIONS;
+  }
+
+  const parts = configuration.split('/').map((x) => x.trim()).filter(Boolean);
+  if (!parts.length) return DEFAULT_CONFIGURATIONS;
+
+  // Take the unit from the first segment that actually pairs a number with a
+  // word ('4 BHK'), NOT from the end of the string — in '2/3/4 BHK/Penthouse'
+  // the trailing word is a separate label and would turn '2' into '2 Penthouse'.
+  const unitSource = parts.find((x) => /^[d.]+s*[a-zA-Z]/.test(x));
+  const unit = unitSource ? unitSource.replace(/^[d.]+s*/, '').trim() : 'BHK';
+
+  const out = [];
+  for (const part of parts) {
+    if (/^[d.]+$/.test(part)) {
+      out.push(part + ' ' + unit);            // '3'   -> '3 BHK'
+    } else if (/^[d.]+s*[a-zA-Z]/.test(part)) {
+      out.push(part.replace(/s+/g, ' '));    // '4 BHK' -> '4 BHK'
+    } else {
+      out.push(part);                         // 'Penthouse'
+    }
+  }
+
+  const unique = [...new Set(out)];
+  return unique.length ? unique : DEFAULT_CONFIGURATIONS;
+}
 function PropertyPageFloatingContact({
   name,
   propertyType,
+  // Raw CMS string for this project, e.g. "3.5/4.5 BHK". Falls back to the
+  // generic 2/3/4 BHK set when the feed omits it.
+  configuration,
   // Supplied when this form is shown inside the enquiry modal. Rendered inline
   // on the property page, where there is nothing to close, it stays undefined.
   onClose
@@ -233,7 +271,7 @@ function PropertyPageFloatingContact({
           <fieldset className={styles.imEnqField} style={{ border: 0, padding: 0, margin: 0 }}>
             <legend className={styles.imEnqGroupLabel}>I&rsquo;m looking for</legend>
             <div className={styles.imEnqChips}>
-              {['2BHK', '3BHK', '4BHK'].map((cfg) => (
+              {parseConfigurations(configuration).map((cfg) => (
                 <label className={styles.imEnqChip} key={cfg}>
                   <input
                     type="checkbox"
