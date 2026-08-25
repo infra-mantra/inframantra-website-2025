@@ -21,7 +21,7 @@ export default function JobSection({ data }) {
 
   return (
     <section className={styles.container1} id="job">
-      <h2 className={styles.heading}>JOBS AT INFRAMANTRA</h2>
+      <h2 className={styles.jobOpeningHeading}>JOBS AT INFRAMANTRA</h2>
 
       <div className={styles.list}>
         {jobData.map((job, index) => (
