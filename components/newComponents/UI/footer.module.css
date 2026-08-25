@@ -621,5 +621,23 @@ font-weight: 350!important;
   align-items: center;
   gap: 14px;
   width: 100%;
+  height: auto;
+  /* An earlier rule sets margin-left:-60px, which shoved the whole row 60px
+     past the left edge of the page. Reset it explicitly — overriding
+     justify-content alone left the offset in place. */
+  margin-left: 0;
   margin-bottom: 12px;
+}
+
+/* Copyright block: the first paragraph carried margin-bottom:-8px, which pulled
+   "All Rights Reserved" up into the line above it. */
+.footerSecondSectionCopyRightFlex {
+  gap: 2px;
+  text-align: left;
+}
+.footerSecondSectionCopyRightFlex > p,
+.footerSecondSectionCopyRightFlex > p:nth-child(1) {
+  margin: 0;
+  text-align: left;
+  line-height: 1.5;
 }
