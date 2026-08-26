@@ -10,7 +10,9 @@ import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import { FaWhatsapp } from "react-icons/fa";
 
-const locations = [
+// Default = USA NRI Expo (used by /usa-nri, /usa-nri-event, /usa-nri-yupp).
+// Pass `locations` to re-use this popup for another event.
+const defaultLocations = [
   {
     city: 'SEATTLE',
     dates: ['30th May, 2026', '31st May, 2026'],
@@ -31,7 +33,8 @@ function App({
   pdf,
   phone = "",
   id = "defaultId",
-  countryCode = "in"
+  countryCode = "in",
+  locations = defaultLocations
 }) {
 
   const [isAnimating, setIsAnimating] = useState(false);

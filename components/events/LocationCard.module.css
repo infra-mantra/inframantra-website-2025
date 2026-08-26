@@ -64,3 +64,103 @@
     font-size: 12px;
   }
 }
+
+/* Emphasised venue - single-venue events (e.g. /gurgaon-tulip-event),
+   where the address is a headline detail rather than fine print. */
+.venueHighlight {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 7px 14px;
+
+  background: #ab8b26;
+  border-radius: 6px;
+
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: #ffffff;
+}
+
+/* =====================================================================
+   PREMIUM VARIANT  (opt-in via `premium`)
+   Dark glass panel for single-venue events sitting over a hero photo -
+   far more legible than the light grey box on a busy image.
+   ===================================================================== */
+.cardPremium {
+  position: relative;
+  overflow: hidden;
+
+  padding: 26px 30px 28px;
+
+  background: rgba(18, 16, 13, 0.62);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  backdrop-filter: blur(10px) saturate(120%);
+
+  border: 1px solid rgba(214, 180, 108, 0.34);
+  border-radius: 14px;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.34);
+
+  text-align: center;
+}
+
+/* gold hairline across the top edge */
+.cardPremium::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 12%;
+  right: 12%;
+  height: 2px;
+  background: linear-gradient(90deg,
+              rgba(214, 180, 108, 0), #d6b46c, rgba(214, 180, 108, 0));
+}
+
+.cardPremium .city {
+  margin: 0 0 12px 0;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 5px;
+  color: #d6b46c;
+}
+
+.cardPremium .date {
+  margin: 0 0 4px 0;
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: #ffffff;
+}
+
+.cardPremium .venueHighlight {
+  margin-top: 14px;
+  padding: 8px 16px;
+
+  background: transparent;
+  border: 1px solid rgba(214, 180, 108, 0.5);
+  border-radius: 999px;
+
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  color: #f0e7d4;
+}
+
+@media screen and (max-width: 768px) {
+  .cardPremium {
+    padding: 20px 18px 22px;
+  }
+
+  .cardPremium .city {
+    font-size: 12px;
+    letter-spacing: 3.4px;
+  }
+
+  .cardPremium .date {
+    font-size: 17px;
+  }
+
+  .cardPremium .venueHighlight {
+    font-size: 12px;
+    padding: 7px 13px;
+  }
+}

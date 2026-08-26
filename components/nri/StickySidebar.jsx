@@ -73,7 +73,10 @@ const InfoIcon = () => (
 );
 
 /* ── Main Component ───────────────── */
-export default function StickySidebar({name,  url = "" }) {
+// `onMoreInfo` turns the MORE INFO item into a button that runs the callback
+// (e.g. open an event's enquiry popup) instead of navigating to `url`.
+// Omit it and the item behaves exactly as before.
+export default function StickySidebar({name,  url = "", onMoreInfo }) {
 
   const [hovered, setHovered] = useState(null);
   const [popForm, setPopForm] = useState(false);
@@ -102,7 +105,8 @@ export default function StickySidebar({name,  url = "" }) {
           label: "MORE INFO",
           icon: <InfoIcon />,
           href: url,
-          target: "_blank",
+          target: onMoreInfo ? undefined : "_blank",
+          action: onMoreInfo ? "moreInfo" : undefined,
         }
       : {
           id: "touch",
@@ -142,6 +146,11 @@ export default function StickySidebar({name,  url = "" }) {
               if (item.action === "popup") {
                 e.preventDefault();
                 setPopForm(true);
+              }
+
+              if (item.action === "moreInfo" && onMoreInfo) {
+                e.preventDefault();
+                onMoreInfo();
               }
 
             }}

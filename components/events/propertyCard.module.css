@@ -221,3 +221,1123 @@
     font-size: 5px;
   }
 }
+/* Single-project events (e.g. /gurgaon-tulip-event) - one card, centred.
+   Scoped to the r_ prefix so it cannot collide with other module classes. */
+.r_gridSingle {
+  grid-template-columns: 1fr;
+  max-width: 520px;
+}
+@media (max-width: 768px) {
+  .r_gridSingle {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   RICH CARD  (opt-in via the `detailed` prop)
+   Used by single-project events e.g. /gurgaon-tulip-event.
+   All selectors keep the r_ prefix so they cannot collide
+   with other modules under the unhashed class-name setup.
+========================================================= */
+
+.r_card_proRich {
+  background: #fff;
+  border: 1px solid #ece7dd;
+  border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(24, 22, 18, 0.04),
+              0 10px 28px rgba(24, 22, 18, 0.07);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.r_card_proRich:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 2px 4px rgba(24, 22, 18, 0.05),
+              0 18px 40px rgba(24, 22, 18, 0.12);
+}
+
+.r_imageSliderTall {
+  height: 280px;
+}
+
+.r_cardBodyRich {
+  padding: 20px 22px 22px;
+}
+
+/* --- name --- */
+.r_cardBodyRich .r_projectName {
+  font-size: 19px;
+  line-height: 1.25;
+  letter-spacing: 0.06em;
+  margin: 0 0 6px;
+  color: #1f1c18;
+}
+
+.r_cardBodyRich .r_projectName a:hover {
+  color: #b08d4f;
+}
+
+/* --- price --- */
+.r_priceTag {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+
+  margin: 0 0 18px;
+
+  font-size: 21px;
+  font-weight: 700;
+  color: #b08d4f;
+  letter-spacing: 0.01em;
+}
+
+.r_priceNote {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #9a9289;
+}
+
+/* --- spec rows --- */
+.r_specs {
+  border-top: 1px solid #efe9dd;
+  margin-bottom: 20px;
+}
+
+.r_specRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+
+  padding: 11px 0;
+  border-bottom: 1px solid #efe9dd;
+}
+
+.r_specLabel {
+  flex-shrink: 0;
+
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #9a9289;
+}
+
+.r_specValue {
+  text-align: right;
+
+  font-size: 14px;
+  font-weight: 600;
+  color: #2b2721;
+}
+
+/* --- cta --- */
+.r_ctaBtn {
+  display: block;
+  width: 100%;
+
+  padding: 14px 16px;
+
+  background: #b08d4f;
+  color: #fff;
+  border-radius: 6px;
+
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+
+  transition: background 0.25s ease;
+}
+
+.r_ctaBtn:hover {
+  background: #96773f;
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .r_imageSliderTall {
+    height: 210px;
+  }
+
+  .r_cardBodyRich {
+    padding: 16px 16px 18px;
+  }
+
+  .r_cardBodyRich .r_projectName {
+    font-size: 16px;
+  }
+
+  .r_priceTag {
+    font-size: 18px;
+  }
+
+  .r_specValue {
+    font-size: 13px;
+  }
+}
+
+/* --- RERA strip (rich card only) --- */
+.r_reraStrip {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 10px;
+
+  margin: 0;
+  padding: 7px 12px;
+
+  background: #faf7f1;
+  border: 1px solid #efe6d4;
+  border-radius: 6px;
+}
+
+.r_reraBadge {
+  width: 78px;
+  height: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.r_reraText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.r_reraTitle {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8a6e3f;
+}
+
+.r_reraNo {
+  font-size: 11px;
+  color: #6f6a62;
+  word-break: break-all;
+}
+
+/* ---------------------------------------------------------------
+   EQUAL-HEIGHT COLUMNS (rich card only)
+   The gallery column sets the row height; this chain lets the card
+   fill its column instead of sitting short with dead space below.
+   Extra height is absorbed by the image, so the card stays balanced.
+   Only applies when `detailed` is set, so the 4-card USA grid is
+   completely unaffected.
+--------------------------------------------------------------- */
+
+.r_sectionSliderRich {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 100%;
+}
+
+.r_sectionSliderRich .r_gridSingle {
+  flex: 1 1 auto;
+  min-height: 100%;
+}
+
+.r_card_proRich {
+  display: flex;
+  flex-direction: column;
+  /* min-height, not height: the card fills a short column but is never
+     compressed - if its own content is taller, the row grows instead. */
+  min-height: 100%;
+}
+
+/* image takes the slack */
+.r_card_proRich .r_imageSliderTall {
+  flex: 1 1 auto;
+  height: auto;
+  min-height: 280px;
+}
+
+.r_card_proRich .r_cardBodyRich {
+  flex: 0 0 auto;
+}
+
+@media (max-width: 1024px) {
+  /* stacked layout - no column to match, so go back to a fixed image */
+  .r_card_proRich .r_imageSliderTall {
+    flex: 0 0 auto;
+    height: 280px;
+    min-height: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .r_card_proRich .r_imageSliderTall {
+    height: 210px;
+  }
+}
+
+/* --- RERA tooltip (same pattern as the property pages) --- */
+.r_reraTooltip {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  cursor: help;
+}
+
+.r_reraTooltipText {
+  position: absolute;
+  bottom: calc(100% + 9px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+
+  width: max-content;
+  max-width: 230px;
+  padding: 7px 11px;
+
+  background: #1f1c18;
+  color: #fff;
+  border-radius: 6px;
+
+  font-size: 11px;
+  line-height: 1.4;
+  text-align: center;
+
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.18s ease, visibility 0.18s ease;
+}
+
+.r_reraTooltipText::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: #1f1c18;
+}
+
+.r_reraTooltip:hover .r_reraTooltipText {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* --- action buttons --- */
+.r_actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.r_btnPrimary,
+.r_btnGhost {
+  padding: 13px 12px;
+
+  border-radius: 7px;
+
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+
+  cursor: pointer;
+  transition: background 0.22s ease, color 0.22s ease,
+              border-color 0.22s ease, transform 0.15s ease;
+}
+
+.r_btnPrimary {
+  border: 1px solid #b08d4f;
+  background: #b08d4f;
+  color: #fff;
+}
+
+.r_btnPrimary:hover {
+  background: #96773f;
+  border-color: #96773f;
+}
+
+.r_btnGhost {
+  border: 1px solid #d8cdb8;
+  background: #fff;
+  color: #8a6e3f;
+}
+
+.r_btnGhost:hover {
+  background: #faf7f1;
+  border-color: #b08d4f;
+  color: #6f5730;
+}
+
+.r_btnPrimary:active,
+.r_btnGhost:active {
+  transform: translateY(1px);
+}
+
+/* --- view more link --- */
+.r_viewMore {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  padding: 9px 4px 2px;
+
+  color: #6f6a62;
+  text-decoration: none;
+
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+
+  transition: color 0.2s ease;
+}
+
+.r_viewMore:hover {
+  color: #b08d4f;
+}
+
+.r_viewMoreArrow {
+  transition: transform 0.2s ease;
+}
+
+.r_viewMore:hover .r_viewMoreArrow {
+  transform: translateX(3px);
+}
+
+@media (max-width: 400px) {
+  .r_actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* The section wrapper is a panel in its own right (padding + shadow + bg).
+   For the single rich card that nests a panel inside a panel and insets the
+   card from the gallery edges, so strip it back and let the card BE the panel. */
+.r_sectionSliderRich {
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.r_sectionSliderRich .r_gridSingle {
+  max-width: none;
+  margin: 0;
+}
+
+/* =========================================================
+   LISTING-CARD LAYOUT  (rich card)
+   Mirrors components/newComponents/propertyListingPage/
+   propertyListingCardMobile - same structure and colours:
+     price   #dcaa4c
+     buttons #cea24b  (hover #f5b800), Enquire #0b6e21
+     strip   rgba(217, 217, 217, 0.3)
+========================================================= */
+
+/* card shell matched to the listing card */
+.r_card_proRich {
+  border: none;
+  border-radius: 10px;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.87);
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 5px -3px,
+              rgba(0, 0, 0, 0.14) 0px 8px 10px 1px,
+              rgba(0, 0, 0, 0.12) 0px 3px 14px 2px;
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.r_card_proRich:hover {
+  transform: none;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 8px 9px -4px,
+              rgba(0, 0, 0, 0.18) 0px 12px 16px 1px,
+              rgba(0, 0, 0, 0.14) 0px 5px 20px 3px;
+}
+
+.r_cardBodyRich {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px 16px 16px;
+}
+
+/* --- header --- */
+.r_lHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.r_lHeadLeft {
+  min-width: 0;
+}
+
+.r_lName {
+  margin: 0 0 4px;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.25;
+  color: #1a1a1a;
+  text-transform: none;
+}
+
+.r_lLocation {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 0;
+  font-size: 14px;
+  color: #4a4a4a;
+}
+
+.r_lHeadRight {
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.r_lStartingAt {
+  margin: 0 0 2px;
+  font-size: 15px;
+  color: #4a4a4a;
+}
+
+.r_lPrice {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  margin: 0;
+  color: #dcaa4c;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+/* the formatted price already carries the symbol */
+.r_lPrice img {
+  display: none;
+}
+
+/* --- overview strip --- */
+.r_lOverview {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+
+  padding: 0 9px;
+  border-radius: 5px;
+  background: rgba(217, 217, 217, 0.3);
+
+  font-size: 12px;
+}
+
+.r_lOverviewItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 7px 0;
+  min-width: 0;
+}
+
+.r_lOverviewItem p {
+  margin: 0;
+  color: #2b2b2b;
+}
+
+.r_lIcon {
+  flex-shrink: 0;
+  color: #dcaa4c;
+  font-size: 15px;
+}
+
+/* --- description --- */
+.r_lClampTwo {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+
+  margin: 0;
+  color: #000;
+  font-family: "Lexend Deca", sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  line-height: normal;
+}
+
+/* --- buttons --- */
+.r_lBtnWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+
+  margin-top: auto;
+  padding-top: 4px;
+}
+
+.r_lBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+
+  padding: 10px 20px;
+  height: 34px;
+
+  border: none;
+  border-radius: 8px;
+  background: #cea24b;
+  color: #fff;
+  text-decoration: none;
+
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.r_lBtn:hover {
+  background: #f5b800;
+  color: #fff;
+}
+
+.r_lBtnEnquire {
+  background: #0b6e21;
+}
+
+.r_lBtnEnquire:hover {
+  background: #0d8429;
+}
+
+.r_lBtnBrochure {
+  background: #fff;
+  color: #a07a2e;
+  border: 1px solid #cea24b;
+}
+
+.r_lBtnBrochure:hover {
+  background: #faf3e6;
+  color: #8a6722;
+}
+
+@media (max-width: 480px) {
+  .r_lHeader {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .r_lHeadRight {
+    text-align: left;
+  }
+
+  .r_lPrice {
+    justify-content: flex-start;
+  }
+
+  .r_lOverview {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 4px 14px;
+  }
+
+  .r_lBtnWrapper {
+    justify-content: stretch;
+  }
+
+  .r_lBtn {
+    flex: 1;
+    padding: 10px 8px;
+  }
+}
+
+.r_lBtnIcon {
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+/* =========================================================
+   PREMIUM POLISH  (rich card)
+   Same structure + palette as the listing card, elevated:
+   bigger type scale, more air, softer depth, larger CTAs.
+   Appended last so it wins over the base listing rules.
+========================================================= */
+
+.r_card_proRich {
+  border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(28, 25, 20, 0.05),
+              0 8px 24px rgba(28, 25, 20, 0.09),
+              0 24px 48px rgba(28, 25, 20, 0.06);
+}
+
+.r_card_proRich:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 2px 4px rgba(28, 25, 20, 0.06),
+              0 14px 34px rgba(28, 25, 20, 0.13),
+              0 30px 60px rgba(28, 25, 20, 0.09);
+}
+
+.r_cardBodyRich {
+  gap: 16px;
+  padding: 22px 24px 24px;
+}
+
+/* --- header --- */
+.r_lName {
+  margin: 0 0 6px;
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #171412;
+}
+
+.r_lLocation {
+  gap: 6px;
+  font-size: 13.5px;
+  color: #7a736b;
+}
+
+.r_lStartingAt {
+  margin: 0 0 3px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #a49b90;
+}
+
+.r_lPrice {
+  font-size: 23px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #dcaa4c;
+}
+
+/* hairline under the header, like the invite's gold rule */
+.r_lHeader {
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f0ece4;
+}
+
+/* --- overview strip --- */
+.r_lOverview {
+  padding: 4px 16px;
+  border-radius: 8px;
+  border: 1px solid #ece8e0;
+  background: rgba(217, 217, 217, 0.3);
+  font-size: 12.5px;
+}
+
+.r_lOverviewItem {
+  gap: 8px;
+  margin: 11px 0;
+}
+
+.r_lOverviewItem p {
+  color: #3d3833;
+  font-weight: 500;
+}
+
+.r_lIcon {
+  font-size: 16px;
+  color: #cea24b;
+}
+
+/* --- description --- */
+.r_lClampTwo {
+  font-size: 13px;
+  line-height: 1.65;
+  color: #6b655d;
+}
+
+/* --- rera --- */
+.r_reraStrip {
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: #fbf8f2;
+  border: 1px solid #f0e7d6;
+}
+
+/* --- buttons --- */
+.r_lBtnWrapper {
+  gap: 10px;
+  padding-top: 6px;
+}
+
+.r_lBtn {
+  height: 44px;
+  padding: 0 22px;
+
+  border-radius: 8px;
+
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+
+  transition: background 0.22s ease, box-shadow 0.22s ease,
+              transform 0.15s ease, color 0.22s ease;
+}
+
+.r_lBtn:hover {
+  transform: translateY(-1px);
+}
+
+.r_lBtn:active {
+  transform: translateY(0);
+}
+
+/* View More - solid gold */
+.r_lBtnWrapper .r_lBtn {
+  background: #cea24b;
+  box-shadow: 0 2px 8px rgba(206, 162, 75, 0.28);
+}
+
+.r_lBtnWrapper .r_lBtn:hover {
+  background: #f5b800;
+  box-shadow: 0 4px 14px rgba(245, 184, 0, 0.34);
+}
+
+/* Brochure - outlined */
+.r_lBtnBrochure,
+.r_lBtnWrapper .r_lBtnBrochure {
+  background: #fff;
+  color: #a07a2e;
+  border: 1px solid #e0cfa8;
+  box-shadow: none;
+}
+
+.r_lBtnBrochure:hover,
+.r_lBtnWrapper .r_lBtnBrochure:hover {
+  background: #fdf8ee;
+  border-color: #cea24b;
+  color: #8a6722;
+  box-shadow: 0 2px 10px rgba(206, 162, 75, 0.18);
+}
+
+/* Enquire - solid green */
+.r_lBtnEnquire,
+.r_lBtnWrapper .r_lBtnEnquire {
+  background: #0b6e21;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(11, 110, 33, 0.26);
+}
+
+.r_lBtnEnquire:hover,
+.r_lBtnWrapper .r_lBtnEnquire:hover {
+  background: #0d8429;
+  box-shadow: 0 4px 14px rgba(11, 110, 33, 0.32);
+}
+
+.r_lBtnIcon {
+  font-size: 12px;
+}
+
+@media (max-width: 600px) {
+  .r_cardBodyRich {
+    padding: 18px 16px 18px;
+    gap: 13px;
+  }
+
+  .r_lName {
+    font-size: 18px;
+  }
+
+  .r_lPrice {
+    font-size: 20px;
+  }
+
+  .r_lBtn {
+    height: 42px;
+    padding: 0 14px;
+    font-size: 11px;
+  }
+}
+
+/* Developer logo chip - replaces the category pill on the rich card */
+.r_devLogoChip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 6px 12px;
+
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.r_devLogoChip img {
+  display: block;
+  height: 22px;
+  width: auto;
+  max-width: 120px;
+  object-fit: contain;
+}
+
+@media (max-width: 600px) {
+  .r_devLogoChip img {
+    height: 18px;
+    max-width: 96px;
+  }
+}
+
+/* Button row: never overflow the card. Wraps, then goes equal-width
+   3-up, then 1-up on the narrowest phones. */
+.r_lBtnWrapper {
+  flex-wrap: wrap;
+}
+
+.r_lBtn {
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .r_lBtnWrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .r_lBtn {
+    width: 100%;
+    padding: 0 10px;
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+  }
+}
+
+@media (max-width: 380px) {
+  .r_lBtnWrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .r_lBtn {
+    height: 42px;
+    font-size: 11.5px;
+    letter-spacing: 0.1em;
+  }
+}
+
+/* Buttons were oversized and "VIEW MORE" wrapped to two lines.
+   Scale back to a compact, single-line row. */
+.r_lBtnWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.r_lBtn {
+  width: auto;
+  height: 36px;
+  padding: 0 15px;
+
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  white-space: nowrap;
+}
+
+.r_lBtnIcon {
+  font-size: 10.5px;
+}
+
+@media (max-width: 900px) {
+  .r_lBtnWrapper {
+    display: flex;
+    grid-template-columns: none;
+    gap: 8px;
+  }
+
+  .r_lBtn {
+    width: auto;
+    height: 36px;
+    padding: 0 13px;
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+  }
+}
+
+@media (max-width: 380px) {
+  .r_lBtn {
+    flex: 1 1 auto;
+    padding: 0 10px;
+  }
+}
+
+/* RERA badge now sits inline, beside the project name */
+.r_lNameRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-bottom: 6px;
+}
+
+.r_lNameRow .r_lName {
+  margin: 0;
+}
+
+.r_lNameRow .r_reraTooltip {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  cursor: help;
+}
+
+.r_lNameRow .r_reraBadge {
+  width: auto;
+  height: 19px;
+  object-fit: contain;
+  display: block;
+}
+
+/* Card description matched to the "Our Story" body text
+   (NRIHomeFest.module.css .storyText): 15px / 1.9 / #555 */
+.r_lClampTwo {
+  font-family: 'Lexend Deca', sans-serif;
+  font-size: 15px;
+  line-height: 1.9;
+  font-weight: 400;
+  color: #555;
+}
+
+@media (max-width: 600px) {
+  .r_lClampTwo {
+    font-size: 14px;
+    line-height: 1.75;
+  }
+}
+
+/* Possession status shown as a highlighted pill (e.g. "OC Applying Soon") */
+.r_lStatusPill {
+  margin: 0;
+  padding: 4px 11px;
+
+  background: #cea24b;
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .r_lStatusPill {
+    font-size: 10.5px;
+    padding: 4px 9px;
+  }
+}
+
+/* Project name in brand gold - same value the card's original
+   .r_projectName used, so it stays consistent with the rest of the site. */
+.r_lName {
+  color: #d4a64a;
+}
+
+.r_lNameRow .r_lName {
+  color: #d4a64a;
+}
+
+/* Project name is the gold accent, so the price sits in ink -
+   avoids three competing golds in one card. */
+.r_lPrice {
+  color: #1f1c18;
+}
+
+/* =========================================================
+   MOBILE CLEANUP (rich card)
+   Buttons were overflowing the card and the overview strip
+   wrapped into a ragged stack.
+========================================================= */
+@media (max-width: 600px) {
+
+  /* --- overview: tidy stacked rows with hairline separators --- */
+  .r_lOverview {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 2px 14px;
+  }
+
+  .r_lOverviewItem {
+    width: 100%;
+    justify-content: flex-start;
+    margin: 0;
+    padding: 9px 0;
+  }
+
+  .r_lOverviewItem + .r_lOverviewItem {
+    border-top: 1px solid rgba(31, 28, 24, 0.07);
+  }
+
+  /* --- buttons: 2 across, primary full width beneath. Never overflows. --- */
+  .r_lBtnWrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    justify-content: stretch;
+  }
+
+  .r_lBtn {
+    width: 100%;
+    height: 40px;
+    padding: 0 8px;
+    font-size: 10.5px;
+    letter-spacing: 0.05em;
+  }
+
+  .r_lBtnEnquire {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Narrowest phones: give every button its own full-width row */
+@media (max-width: 360px) {
+  .r_lBtnWrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .r_lBtn {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Grid tracks default to min-width:auto, so the nowrap button labels were
+   forcing the columns - and the whole card - wider than the viewport.
+   minmax(0,1fr) + min-width:0 lets them shrink instead. */
+.r_lBtn {
+  min-width: 0;
+}
+
+.r_lOverviewItem {
+  min-width: 0;
+}
+
+.r_lOverviewItem p {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 600px) {
+  .r_lBtnWrapper {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 360px) {
+  .r_lBtnWrapper {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

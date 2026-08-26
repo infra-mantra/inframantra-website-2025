@@ -1,0 +1,480 @@
+/* =====================================================================
+   Tulip Monsella Skyhub - event popup
+   Scoped to /gurgaon-tulip-event.
+
+   NOTE: this project builds CSS modules with localIdentName '[local]',
+   so every class name here is GLOBAL. All selectors carry the tm_
+   prefix so they cannot collide with any other module.
+   ===================================================================== */
+
+.tm_overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(16, 14, 11, 0.62);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+
+  opacity: 0;
+  transition: opacity 0.22s ease;
+}
+
+.tm_overlayOpen {
+  opacity: 1;
+}
+
+.tm_modal {
+  position: relative;
+
+  display: grid;
+  grid-template-columns: 0.85fr 1fr;
+
+  width: 100%;
+  max-width: 860px;
+  max-height: 92vh;
+  overflow: hidden;
+
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.32);
+
+  opacity: 0;
+  transform: translateY(18px) scale(0.985);
+  transition: opacity 0.24s ease, transform 0.24s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.tm_modalOpen {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* ---------------- close ---------------- */
+
+.tm_closeBtn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 4;
+
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  color: #1f1c18;
+
+  font-size: 17px;
+  cursor: pointer;
+
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.tm_closeBtn:hover {
+  background: #fff;
+  transform: rotate(90deg);
+}
+
+/* ---------------- brand panel ---------------- */
+
+.tm_aside {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 40px 34px;
+
+  /* Brand ambassador panel - same asset the About Us page uses.
+     Gradient keeps the copy readable over the photo. */
+  background:
+    linear-gradient(165deg, rgba(24, 21, 18, 0.86) 0%, rgba(24, 21, 18, 0.72) 45%, rgba(24, 21, 18, 0.92) 100%),
+    url("https://inframantra.blr1.cdn.digitaloceanspaces.com/brandAmbassador/Untitled-1,1.jpg");
+  background-size: cover;
+  background-position: center top;
+
+  color: #f4f1ea;
+}
+
+.tm_eyebrow {
+  margin: 0 0 14px;
+
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: #d6b46c;
+}
+
+.tm_asideTitle {
+  margin: 0 0 18px;
+
+  font-size: 25px;
+  line-height: 1.28;
+  font-weight: 600;
+  color: #fff;
+}
+
+.tm_asideRule {
+  display: block;
+  width: 54px;
+  height: 2px;
+  margin-bottom: 20px;
+  background: #d6b46c;
+}
+
+.tm_asideProject {
+  margin: 0 0 24px;
+
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #e8dfcd;
+}
+
+.tm_factList {
+  list-style: none;
+  margin: 0 0 22px;
+  padding: 0;
+}
+
+.tm_fact {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+
+  padding: 12px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.tm_fact:last-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.tm_factLabel {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #b3a894;
+}
+
+.tm_factValue {
+  font-size: 13.5px;
+  line-height: 1.45;
+  font-weight: 500;
+  color: #fff;
+}
+
+.tm_asideNote {
+  margin: 0;
+
+  font-size: 12px;
+  font-style: italic;
+  color: #d6b46c;
+}
+
+/* ---------------- form panel ---------------- */
+
+.tm_formPanel {
+  padding: 38px 34px;
+  overflow-y: auto;
+}
+
+.tm_formTitle {
+  margin: 0 0 8px;
+
+  font-size: 21px;
+  font-weight: 700;
+  color: #1f1c18;
+}
+
+.tm_formSub {
+  margin: 0 0 22px;
+
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: #7a736b;
+}
+
+.tm_field {
+  margin-bottom: 15px;
+}
+
+.tm_label {
+  display: block;
+  margin-bottom: 6px;
+
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #6f6a62;
+}
+
+.tm_req {
+  color: #b5613c;
+}
+
+.tm_input {
+  width: 100%;
+  padding: 11px 13px;
+
+  border: 1px solid #e2ddd3;
+  border-radius: 7px;
+  background: #fcfbf9;
+
+  font-size: 14px;
+  color: #1f1c18;
+
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.tm_input:focus {
+  outline: none;
+  background: #fff;
+  border-color: #b08d4f;
+  box-shadow: 0 0 0 3px rgba(176, 141, 79, 0.14);
+}
+
+.tm_input::placeholder {
+  color: #b3aca2;
+}
+
+.tm_inputError {
+  border-color: #d0714f !important;
+  background: #fdf7f5;
+}
+
+.tm_errorText {
+  display: block;
+  margin-top: 5px;
+
+  font-size: 11px;
+  color: #c2553a;
+}
+
+/* phone input overrides (react-phone-input-2) */
+
+.tm_phoneContainer {
+  width: 100%;
+}
+
+.tm_phoneInput {
+  width: 100% !important;
+
+  padding: 11px 13px 11px 50px !important;
+  height: auto !important;
+
+  border: 1px solid #e2ddd3 !important;
+  border-radius: 7px !important;
+  background: #fcfbf9 !important;
+
+  font-size: 14px !important;
+  color: #1f1c18 !important;
+}
+
+.tm_phoneInput:focus {
+  border-color: #b08d4f !important;
+  box-shadow: 0 0 0 3px rgba(176, 141, 79, 0.14) !important;
+  background: #fff !important;
+}
+
+.tm_phoneButton {
+  border: 1px solid #e2ddd3 !important;
+  border-right: none !important;
+  border-radius: 7px 0 0 7px !important;
+  background: #f6f3ee !important;
+}
+
+/* ---------------- date chip ---------------- */
+
+.tm_dateChip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin: 18px 0 20px;
+  padding: 12px 14px;
+
+  background: #faf7f1;
+  border: 1px solid #efe6d4;
+  border-radius: 8px;
+}
+
+.tm_dateChipLabel {
+  flex-shrink: 0;
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #a08a5e;
+}
+
+.tm_dateChipValue {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1f1c18;
+}
+
+/* ---------------- submit ---------------- */
+
+.tm_submitBtn {
+  width: 100%;
+  padding: 14px 18px;
+
+  border: none;
+  border-radius: 7px;
+  background: #b08d4f;
+  color: #fff;
+
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+
+  cursor: pointer;
+  transition: background 0.22s ease, transform 0.15s ease;
+}
+
+.tm_submitBtn:hover:not(:disabled) {
+  background: #96773f;
+}
+
+.tm_submitBtn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.tm_submitBtn:disabled {
+  opacity: 0.62;
+  cursor: not-allowed;
+}
+
+.tm_consent {
+  margin: 12px 0 0;
+
+  font-size: 10.5px;
+  line-height: 1.55;
+  text-align: center;
+  color: #a09a92;
+}
+
+/* ---------------- success ---------------- */
+
+.tm_successBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  min-height: 320px;
+  padding: 10px;
+}
+
+.tm_successTick {
+  width: 56px;
+  height: 56px;
+  margin-bottom: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  background: #f2ead9;
+  color: #b08d4f;
+
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.tm_successTitle {
+  margin: 0 0 10px;
+
+  font-size: 20px;
+  font-weight: 700;
+  color: #1f1c18;
+}
+
+.tm_successText {
+  margin: 0 0 22px;
+
+  font-size: 13px;
+  line-height: 1.65;
+  color: #7a736b;
+}
+
+/* ---------------- responsive ---------------- */
+
+@media (max-width: 780px) {
+  .tm_modal {
+    grid-template-columns: 1fr;
+    max-width: 460px;
+  }
+
+  .tm_aside {
+    padding: 26px 24px 22px;
+  }
+
+  .tm_asideTitle {
+    font-size: 20px;
+  }
+
+  .tm_factList {
+    margin-bottom: 6px;
+  }
+
+  .tm_asideNote {
+    display: none;
+  }
+
+  .tm_formPanel {
+    padding: 24px 24px 28px;
+  }
+}
+
+@media (max-width: 420px) {
+  .tm_overlay {
+    padding: 12px;
+  }
+
+  .tm_formTitle {
+    font-size: 18px;
+  }
+}
+
+/* Highlighted possession status in the popup's brand panel */
+.tm_ocPill {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 4px 12px;
+
+  background: #d6b46c;
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: 0.06em;
+  color: #1f1c18;
+  white-space: nowrap;
+}
+
+/* The status note now sits at the top of the panel, under the eyebrow. */
+.tm_asideNote {
+  margin: 0 0 16px;
+}

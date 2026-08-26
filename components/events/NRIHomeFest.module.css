@@ -15,11 +15,19 @@
 
 
 
-.heading {
+/* Renamed off the bare `.heading`: with localIdentName '[local]' that name
+   is GLOBAL and collided with aboutEvent.module.css on the same page. */
+.nriStoryHeading {
   font-size: 2rem;
   font-weight: 700;
   color: #d4a64a;
   margin: 0;
+}
+
+/* Compact variant - opt in via the `compact` prop */
+.nriStoryHeadingCompact {
+  font-size: 1.35rem;
+  line-height: 1.25;
 }
 
 /* Desktop Layout */
@@ -144,5 +152,301 @@
 
   .storyText {
     font-size: 13.5px;
+  }
+}
+/* =====================================================================
+   PORTRAIT VIDEO MODE  (opt in via the `portrait` prop)
+   Instagram reel embeds are 9:16 plus ~150px of header/footer chrome.
+   The default 500px frame (sized for landscape YouTube) clipped them.
+   ===================================================================== */
+.storyContentPortrait {
+  /* layout left as-is: grid-template-columns: 0.72fr 0.72fr 1.56fr; */
+}
+
+.videoBoxPortrait {
+  min-width: 0;
+}
+
+.videoBoxPortrait iframe {
+  width: 100%;
+  min-width: 0;
+  height: 640px;
+  border: none;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 992px) {
+  .storyContentPortrait {
+  /* layout left as-is: grid-template-columns: 1fr 1fr; */
+  }
+
+  .videoBoxPortrait iframe {
+    height: 600px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .storyContentPortrait {
+  /* layout left as-is: grid-template-columns: 1fr; */
+  }
+
+  .videoBoxPortrait iframe {
+    height: 620px;
+    max-width: 420px;
+    margin: 0 auto;
+    display: block;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Instagram embeds refuse to render below ~326px wide - they keep
+   their minimum and clip instead of scaling. The 0.72fr columns
+   were ~230px at 1024px, which is what truncated the header and
+   cut off the footer icons. Give the columns a real floor, and
+   drop the text to its own row when there isn't space for three.
+--------------------------------------------------------------- */
+@media screen and (min-width: 1201px) {
+  .storyContentPortrait {
+  /* layout left as-is: grid-template-columns: minmax(340px, 0.8fr) minmax(340px, 0.8fr) 1.3fr; */
+  }
+
+  .videoBoxPortrait iframe {
+    height: 700px;
+  }
+}
+
+@media screen and (min-width: 993px) and (max-width: 1200px) {
+  .storyContentPortrait {
+  /* layout left as-is: grid-template-columns: minmax(330px, 1fr) minmax(330px, 1fr); */
+  }
+
+  /* text spans the full row beneath the two reels */
+  .storyContentPortrait > .storyText {
+  /* layout left as-is: grid-column: 1 / -1; */
+  }
+
+  .videoBoxPortrait iframe {
+    height: 700px;
+  }
+}
+
+@media screen and (max-width: 992px) and (min-width: 769px) {
+  .storyContentPortrait {
+  /* layout left as-is: grid-template-columns: minmax(330px, 1fr) minmax(330px, 1fr); */
+  }
+
+  .videoBoxPortrait iframe {
+    height: 660px;
+  }
+}
+
+/* On mobile the reels carry order:1/2 while .storyText defaults to order:0,
+   so the copy jumped ahead of both videos. Put the reels first. */
+@media screen and (max-width: 768px) {
+  .storyContentPortrait > .storyText {
+    order: 3;
+  }
+}
+
+/* =====================================================================
+   RESPONSIVE EMBED HEIGHT
+   Fixed px heights (640/700/660...) can't work: an Instagram embed's
+   height is a function of its WIDTH (media area) plus ~125px of fixed
+   header/footer chrome. Percentage padding resolves against the
+   container's width, so `calc(130% + 125px)` gives exactly that
+   relationship and scales at every breakpoint.
+   ===================================================================== */
+.videoBoxPortrait {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: calc(130% + 125px);
+  overflow: hidden;
+}
+
+.videoBoxPortrait iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  border: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .videoBoxPortrait {
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .videoBoxPortrait iframe {
+    max-width: none;
+    margin: 0;
+  }
+}
+
+/* Measured the embed at two widths in a browser:
+     w=330 -> 614px content,  w=470 -> 791px content
+   => height = 1.264 x width + 197.  The previous 130% + 125px was ~60px
+   short at every width, which is what clipped the bottom row.
+   A little slack is added so a longer username can't reintroduce the trim. */
+.videoBoxPortrait {
+  padding-bottom: calc(127% + 205px);
+}
+
+/* Extra slack on the CSS fallback: it only has to hold until Instagram
+   posts its real height, and over-shooting is invisible (the iframe just
+   has a little empty space) whereas under-shooting trims the footer. */
+.videoBoxPortrait {
+  padding-bottom: calc(132% + 235px);
+}
+
+/* =====================================================================
+   FINAL: no ratio box.
+   Measured on the live page: the wrapper was 542px but the abspos iframe
+   computed height:100% as 500px - percentage height against a zero-height
+   padding box is unreliable under the global `box-sizing: border-box`.
+   So the iframe now sits in normal flow with a plain height, and the
+   postMessage listener sets the exact pixel height on the IFRAME itself.
+   ===================================================================== */
+.videoBoxPortrait {
+  position: static;
+  height: auto;
+  padding-bottom: 0;
+  overflow: visible;
+}
+
+.videoBoxPortrait iframe {
+  position: static;
+  display: block;
+  width: 100%;
+  height: 640px;
+  min-width: 0;
+  border: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .videoBoxPortrait {
+    max-width: 420px;
+    margin: 0 auto;
+  }
+}
+
+/* =====================================================================
+   Authoritative column widths for the portrait (Instagram) layout.
+   Measured on the live page: tracks were coming out at 262px - below
+   Instagram's ~326px minimum, which truncates the username row. Raised
+   specificity (.storyContent.storyContentPortrait) so this wins outright
+   instead of depending on source order.
+   ===================================================================== */
+@media screen and (min-width: 993px) {
+  .storyContent.storyContentPortrait {
+  /* layout left as-is: grid-template-columns: minmax(340px, 1fr) minmax(340px, 1fr); */
+    column-gap: 30px;
+  }
+
+  .storyContent.storyContentPortrait > .storyText {
+  /* layout left as-is: grid-column: 1 / -1; */
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 992px) {
+  .storyContent.storyContentPortrait {
+  /* layout left as-is: grid-template-columns: minmax(330px, 1fr) minmax(330px, 1fr); */
+  }
+
+  .storyContent.storyContentPortrait > .storyText {
+  /* layout left as-is: grid-column: 1 / -1; */
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .storyContent.storyContentPortrait {
+  /* layout left as-is: grid-template-columns: 1fr; */
+  }
+}
+
+/* Fallback heights, raised specificity so they beat `.videoBox iframe`.
+   These only apply until Instagram posts its exact height, so they are
+   deliberately generous - extra space is invisible, a shortfall trims. */
+@media screen and (min-width: 993px) {
+  .videoBox.videoBoxPortrait iframe { height: 860px; }
+}
+
+@media screen and (min-width: 769px) and (max-width: 992px) {
+  .videoBox.videoBoxPortrait iframe { height: 780px; }
+}
+
+@media screen and (max-width: 768px) {
+  .videoBox.videoBoxPortrait iframe { height: 730px; }
+}
+
+
+/* =====================================================================
+   ANIMATED BORDER - Instagram reels
+   A rotating gradient behind the box, masked by an inset overlay so only
+   a 2px rim shows. Uses transform (not an animated custom property), so
+   it works without @property support. Pure paint - `inset`-pinned
+   pseudo-elements add no width, height or spacing, so the grid layout
+   is completely untouched.
+   ===================================================================== */
+@keyframes tmRingSpin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.videoBoxPortrait {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* rotating gold sweep */
+.videoBoxPortrait::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 260%;
+  height: 260%;
+  z-index: 0;
+  background: conic-gradient(
+    #cea24b 0deg,
+    #f7e6bd 50deg,
+    #cea24b 110deg,
+    rgba(125, 95, 34, 0.35) 190deg,
+    #cea24b 280deg,
+    #f7e6bd 360deg
+  );
+  animation: tmRingSpin 6s linear infinite;
+  pointer-events: none;
+}
+
+/* mask the centre so only the rim is visible */
+.videoBoxPortrait::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  z-index: 1;
+  border-radius: 8px;
+  background: #ffffff;
+  pointer-events: none;
+}
+
+/* embed sits above both paint layers */
+.videoBoxPortrait iframe {
+  position: relative;
+  z-index: 2;
+  border-radius: 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .videoBoxPortrait::before {
+    animation: none;
   }
 }

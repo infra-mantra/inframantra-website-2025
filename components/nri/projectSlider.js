@@ -155,6 +155,18 @@ export const PROJECTS = [
     size: "2,299 sq. ft. Onwards",
     beds: "3.5, 4.5 & 5.5 BHK",
     priceInrCr: 7.99,
+    // Optional detail fields - only rendered by the rich card (`detailed` prop).
+    // Facts sourced from the project description in featuredProperties/DummyData.
+    location: "Sector 53, Golf Course Road, Gurgaon",
+    possession: "OC Applying Soon",
+    towers: "10 Towers on 20 Acres",
+    developer: "Tulip Infratech",
+    developerLogo:
+      "https://inframantra.blr1.cdn.digitaloceanspaces.com/developer/tulipinfratech/tulipinfratech.avif",
+    description:
+      "Tulip Monsella, Sector 53, Golf Course Road - 10 iconic towers set across 20 acres, offering apartments and penthouses with high-quality specifications. Close to Golf Course Road and the rapid metro station.",
+    reraApproved: true,
+    rera: "", // TODO: fill from CMS - shown in the badge tooltip when present
     link: "https://inframantra.com/property/tulip-monsella-sector-53-gurgaon",
     images: [
       "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-page%20/Tulip%20Monsella/monsella%20(1).webp",

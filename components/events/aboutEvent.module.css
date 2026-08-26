@@ -6,11 +6,19 @@
     max-width: 1403px;
     margin: 0 auto;
 }
-.heading {
+/* Renamed off the bare `.heading`: this project builds CSS modules with
+   localIdentName '[local]', so `.heading` is a GLOBAL name and collided
+   with NRIHomeFest.module.css on the same page. */
+.aboutEventHeading {
   font-size: 2rem;
   font-weight: 700;
   color: #d4a64a;
+}
 
+/* Compact variant - opt in via the `compact` prop */
+.aboutEventHeadingCompact {
+  font-size: 1.35rem;
+  line-height: 1.25;
 }
 
 /* Desktop Layout */
@@ -148,5 +156,12 @@
 
   .storyText {
     font-size: 13.5px;
+  }
+}
+/* When the hero already shows this copy (desktop banner overlay), hide the
+   duplicate here at >=993px. Mobile keeps it, since the hero has no room. */
+@media screen and (min-width: 993px) {
+  .aboutEventDesktopHidden {
+    display: none;
   }
 }

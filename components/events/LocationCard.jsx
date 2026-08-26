@@ -1,7 +1,8 @@
 import React from 'react'
 import styles from './LocationCard.module.css'
 
-const locations = [
+// Default = USA NRI Expo (used by /usa-nri-event). Pass `locations` to override.
+const defaultLocations = [
   {
     city: 'SEATTLE',
     date: '30th & 31st May, 2026',
@@ -14,14 +15,29 @@ const locations = [
   },
 ]
 
-function LocationCard() {
+// `highlightVenue` gives the venue the same emphasis as the date - used by
+// single-venue events where the address is a headline detail, not fine print.
+function LocationCard({
+  locations = defaultLocations,
+  highlightVenue = false,
+  premium = false,
+}) {
   return (
     <div className={styles.cardWrapper}>
       {locations.map((loc) => (
-        <div key={loc.city} className={styles.cardevent}>
+        <div
+          key={loc.city}
+          className={`${styles.cardevent} ${premium ? styles.cardPremium : ''}`}
+        >
           <p className={styles.city}>{loc.city}</p>
           <p className={styles.date}>{loc.date}</p>
-          <p className={styles.venue}>{loc.venue}</p>
+          <p
+            className={`${styles.venue} ${
+              highlightVenue ? styles.venueHighlight : ''
+            }`}
+          >
+            {loc.venue}
+          </p>
         </div>
       ))}
     </div>

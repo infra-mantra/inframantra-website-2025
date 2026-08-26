@@ -18,13 +18,29 @@ const RegistrationForm = ({
 
   // project name prop
   name = "USA-EXPO (Event Specific)",
-}) => {
+
+  // default dial code for the mobile field ("us" for the USA expo, "in" for India events)
+  phoneCountry = "us",
+
+  // single-city events don't need a city picker - the one city is selected for you
+  showCity = true,
+
+  // likewise for single-date events - the one date is selected for you
+  showDate = true,
+
+  // shown as a chip under the heading when the date picker is hidden
+  eventDateLabel = "",
+
+  // smaller heading - the default clamp tops out at 30px and wraps
+  // awkwardly in the narrow hero form column
+  compactTitle = false,
 
   /* ============================================
-     Dynamic dates based on city
+     Dynamic dates based on city.
+     Keys MUST match the `value` of an entry in `cities`.
+     Default = USA NRI Expo; override for a different event.
      ============================================ */
-
-  const cityDateMap = {
+  cityDateMap = {
     Seattle: [
       {
         value: "May 30, 2026",
@@ -46,14 +62,26 @@ const RegistrationForm = ({
         labelR: "7th June 2026",
       },
     ],
-  };
+  },
+}) => {
+
+  // When the picker is hidden there is only one city, so preselect it -
+  // this keeps validation and the date list working exactly as before.
+  const presetCity =
+    !showCity && cities.length === 1 ? cities[0].value : "";
+
+  // With the picker hidden there is only one date for that city, so preselect
+  // it - validation and the submitted payload stay exactly as before.
+  const presetCityDates = presetCity ? cityDateMap[presetCity] || [] : [];
+  const presetDate =
+    !showDate && presetCityDates.length === 1 ? presetCityDates[0].value : "";
 
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     mobile: "",
-    city: "",
-    date: "",
+    city: presetCity,
+    date: presetDate,
   });
 
   const [errors, setErrors] = useState({});
@@ -316,7 +344,11 @@ const RegistrationForm = ({
           {eyebrow}
         </span>
 
-        <h3 className={styles.titleR}>
+        <h3
+          className={`${styles.titleR} ${
+            compactTitle ? styles.titleRCompact : ""
+          }`}
+        >
           {title}{" "}
           <em
             className={
@@ -326,6 +358,14 @@ const RegistrationForm = ({
             {titleAccent}
           </em>
         </h3>
+
+        {/* Single-date events state the date here instead of in a dropdown */}
+        {eventDateLabel && (
+          <div className={styles.rfEventChip}>
+            <span className={styles.rfEventChipLabel}>Event</span>
+            <span className={styles.rfEventChipValue}>{eventDateLabel}</span>
+          </div>
+        )}
       </div>
 
       {/* Form */}
@@ -443,7 +483,7 @@ const RegistrationForm = ({
           </labelR>
 
           <PhoneInput
-            country={"us"}
+            country={phoneCountry}
             value={formData.mobile}
             onChange={handlePhoneChange}
             inputProps={{
@@ -479,6 +519,7 @@ const RegistrationForm = ({
 
         {/* City Dropdown */}
 
+        {showCity && (
         <div
           className={`${styles.field} ${
             errors.city
@@ -529,9 +570,11 @@ const RegistrationForm = ({
           )}
 
         </div>
+        )}
 
         {/* Date Dropdown */}
 
+        {showDate && (
         <div
           className={`${styles.field} ${
             errors.date
@@ -564,6 +607,7 @@ const RegistrationForm = ({
                 : "Select city first"}
             </option>
 
+
             {availableDates.map((date) => (
               <option
                 key={date.value}
@@ -585,6 +629,7 @@ const RegistrationForm = ({
           )}
 
         </div>
+        )}
 
         {/* API Error */}
 

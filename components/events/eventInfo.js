@@ -1,41 +1,101 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "./NRIHomeFest.module.css";
 
-const NRIHomeFest = () => {
+// Defaults = the YouTube films used on /usa-nri-event.
+// Pass `videos` to swap them per page (e.g. Instagram reels for an event).
+const DEFAULT_VIDEOS = [
+  {
+    src: "https://www.youtube.com/embed/AArzfBwCHEM",
+    title: "InfraMantra Video 1",
+  },
+  {
+    src: "https://www.youtube.com/embed/PjaY-8rnoNM",
+    title: "InfraMantra Video 2",
+  },
+];
+
+const NRIHomeFest = ({ compact = false, videos = DEFAULT_VIDEOS, portrait = false }) => {
+  // videoBox2 renders first (order:-2), videoBox1 second (order:-1)
+  const boxOrder = [styles.videoBox2, styles.videoBox1];
+
+  const frameRefs = useRef([]);
+
+  /* ------------------------------------------------------------------
+     Instagram's /embed page posts its rendered height to the parent
+     (this is what their embed.js listens for). Using it means the box
+     is sized to the real content instead of a CSS estimate, so nothing
+     can be trimmed at any width. The CSS ratio-box stays as the
+     fallback for the moment before this message arrives.
+     ------------------------------------------------------------------ */
+  useEffect(() => {
+    if (!portrait) return;
+
+    const onMessage = (event) => {
+      if (typeof event.origin !== "string") return;
+      if (!/(^|\.)instagram\.com$/.test(event.origin.replace(/^https?:\/\//, ""))) {
+        return;
+      }
+
+      let payload = event.data;
+      if (typeof payload === "string") {
+        try {
+          payload = JSON.parse(payload);
+        } catch (e) {
+          return;
+        }
+      }
+
+      const height = payload && payload.details && payload.details.height;
+      if (!height) return;
+
+      frameRefs.current.forEach((frame) => {
+        if (frame && frame.contentWindow === event.source) {
+          frame.style.height = `${Math.ceil(height)}px`;
+        }
+      });
+    };
+
+    window.addEventListener("message", onMessage);
+    return () => window.removeEventListener("message", onMessage);
+  }, [portrait]);
+
   return (
     <section className={styles.section1}>
 
       {/* Heading */}
       <div className={styles.headingWrapper}>
-        <h2 className={styles.heading}>
+        <h2
+          className={`${styles.nriStoryHeading} ${
+            compact ? styles.nriStoryHeadingCompact : ""
+          }`}
+        >
           Our Story
         </h2>
       </div>
 
       {/* Main Layout */}
-      <div className={styles.storyContent}>
+      <div className={`${styles.storyContent} ${portrait ? styles.storyContentPortrait : ""}`}>
 
-        {/* Video 1 */}
-        <div className={`${styles.videoBox} ${styles.videoBox2}`}>
-          <iframe
-            src="https://www.youtube.com/embed/AArzfBwCHEM"
-            title="InfraMantra Video 1"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-          ></iframe>
-        </div>
-
-        {/* Video 2 */}
-        <div className={`${styles.videoBox} ${styles.videoBox1}`}>
-          <iframe
-            src="https://www.youtube.com/embed/PjaY-8rnoNM"
-            title="InfraMantra Video 2"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-          ></iframe>
-        </div>
+        {videos.slice(0, 2).map((video, i) => (
+          <div
+            key={video.src}
+            className={`${styles.videoBox} ${boxOrder[i] || ""} ${
+              portrait ? styles.videoBoxPortrait : ""
+            }`}
+          >
+            <iframe
+              ref={(el) => {
+                frameRefs.current[i] = el;
+              }}
+              src={video.src}
+              title={video.title}
+              frameBorder="0"
+              scrolling="no"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            ></iframe>
+          </div>
+        ))}
 
         <div className={styles.storyText}>
 
