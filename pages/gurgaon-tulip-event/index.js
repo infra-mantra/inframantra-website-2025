@@ -16,7 +16,7 @@ import TulipEventPopup from '../../components/events/TulipEventPopup';
 // ============================================
 // EVENT DETAILS  (Iconic Skyhub at Tulip Monsella)
 // ============================================
-const EVENT_NAME = 'Tulip Monsella Skyhub (Event Specific)';
+const EVENT_NAME = 'Tulip Monsella';
 
 const EVENT_LOCATIONS = [
   {
