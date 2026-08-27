@@ -125,7 +125,7 @@ const EVENT_START = '2026-09-06T16:30:00+05:30';
    reviews) its animation cost nothing on first load. It reserves
    its height first, so nothing below it jumps when it arrives.
 
-   FAILSAFE: it mounts anyway after 2.5s, and immediately when
+   FAILSAFE: it mounts anyway after 8s, and immediately when
    IntersectionObserver is missing. Content must never be left out
    because an observer did not fire.
    ============================================================ */
@@ -356,14 +356,16 @@ const Countdown = ({ onRsvp }) => {
 const CONNECTIVITY = [
   {
     g: 'Work',
+    icon: 'work',
     items: [
       ['DLF Cyber City & Cyber Hub', '~15 min'],
-      ['Udyog Vihar', '~20 min'],
+      ['One Horizon Center', '~10 min'],
       ['Golf Course Extension Road', '~10 min'],
     ],
   },
   {
     g: 'Getting around',
+    icon: 'transit',
     items: [
       ['Sector 53-54 Rapid Metro', '~3 min'],
       ['HUDA City Centre Metro', '~15 min'],
@@ -372,18 +374,23 @@ const CONNECTIVITY = [
   },
   {
     g: 'Everyday',
+    icon: 'daily',
     items: [
       ['Galleria Market, DLF Ph-IV', '~8 min'],
       ['Ambience Mall', '~18 min'],
-      ['Sector 54 Chowk', '~5 min'],
+      ['South Point Mall', '~5 min'],
     ],
   },
   {
     g: 'Care & schooling',
+    icon: 'care',
+    // Schools and their distances are the ones the Tulip Monsella
+    // property page lists, so both pages say the same thing.
     items: [
       ['Artemis / Max hospitals', '~15 min'],
-      ['The Shri Ram School, Moulsari', '~10 min'],
-      ['DPS Sector 45', '~12 min'],
+      ['KLAY Preschool & Daycare, Golf Course Road', '1.8 km'],
+      ['Suncity School', '4.3 km'],
+      ['Amazon Public School', '5 km'],
     ],
   },
 ];
@@ -403,12 +410,62 @@ const Connectivity = ({ onRsvp }) => (
       <div className="tmnGrid">
         {CONNECTIVITY.map((col) => (
           <div key={col.g} className="tmnCol">
-            <p className="tmnColTitle">{col.g}</p>
+            <div className="tmnColHead">
+              {/* icons are written out here rather than in a helper:
+                  styled-jsx only scopes JSX inside this return */}
+              <span className="tmnIcon" aria-hidden="true">
+                {col.icon === 'work' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2.5" y="7" width="19" height="13" rx="2.5" />
+                    <path d="M8.5 7V5.6A1.6 1.6 0 0 1 10.1 4h3.8a1.6 1.6 0 0 1 1.6 1.6V7" />
+                    <path d="M2.5 12.5h19" />
+                  </svg>
+                )}
+                {col.icon === 'transit' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="5" y="3" width="14" height="13.5" rx="3.5" />
+                    <path d="M5 10.5h14" />
+                    <path d="M9 13.4h.01M15 13.4h.01" />
+                    <path d="M8.4 16.5 6 20.5M15.6 16.5 18 20.5" />
+                  </svg>
+                )}
+                {col.icon === 'daily' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M4.2 8h15.6l-1.2 11.3a2.2 2.2 0 0 1-2.2 2H7.6a2.2 2.2 0 0 1-2.2-2Z" />
+                    <path d="M9 8.4V6.2a3 3 0 1 1 6 0v2.2" />
+                  </svg>
+                )}
+                {col.icon === 'care' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 20.6C9.6 19 4.4 15.3 4.4 11.1a4.3 4.3 0 0 1 7.6-2.7 4.3 4.3 0 0 1 7.6 2.7c0 4.2-5.2 7.9-7.6 9.5Z" />
+                    <path d="M12 10.8v3.4M10.3 12.5h3.4" />
+                  </svg>
+                )}
+              </span>
+
+              <p className="tmnColTitle">{col.g}</p>
+            </div>
+
             <ul className="tmnList">
               {col.items.map(([place, time]) => (
                 <li key={place} className="tmnItem">
                   <span className="tmnPlace">{place}</span>
-                  <span className="tmnTime">{time}</span>
+                  <span className="tmnTime">
+                    {/* a clock for drive times, a pin for straight distances,
+                        so the chip never implies the wrong kind of number */}
+                    {time.includes('km') ? (
+                      <svg className="tmnClock" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M19 10.2c0 5.1-7 11.3-7 11.3s-7-6.2-7-11.3a7 7 0 0 1 14 0Z" />
+                        <circle cx="12" cy="10" r="2.4" />
+                      </svg>
+                    ) : (
+                      <svg className="tmnClock" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="9" />
+                        <path d="M12 7.4v5l3 1.8" />
+                      </svg>
+                    )}
+                    {time}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -417,8 +474,9 @@ const Connectivity = ({ onRsvp }) => (
       </div>
 
       <p className="tmnNote">
-        Approximate drive times in normal traffic. Our team will walk you through
-        the location in detail on the evening.
+        Approximate drive times in normal traffic; school figures are distances
+        from the site. Our team will walk you through the location in detail on
+        the evening.
       </p>
 
       <button type="button" className="tmnBtn" onClick={onRsvp}>
@@ -427,7 +485,7 @@ const Connectivity = ({ onRsvp }) => (
     </div>
 
     <style jsx>{`
-      .tmn { background: #ffffff; }
+      .tmn { background: #faf8f4; }
       .tmnInner { max-width: 1280px; margin: 0 auto; padding: 56px 24px 60px; }
       .tmnEyebrow {
         margin: 0 0 8px; font-size: 10px; letter-spacing: 4px;
@@ -440,28 +498,65 @@ const Connectivity = ({ onRsvp }) => (
         font-size: 15.5px; line-height: 1.85; color: #55504a;
       }
       .tmnLede strong { color: #1f1c18; }
+
+      /* stretch is the grid default, so every card in a row ends at the
+         same height however long the place names wrap */
       .tmnGrid {
         display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px;
       }
+
       .tmnCol {
-        padding: 24px 22px 18px; background: #faf8f4;
-        border: 1px solid #eee7db; border-top: 3px solid #cea24b; border-radius: 12px;
+        display: flex; flex-direction: column;
+        padding: 22px 20px 8px;
+        background: #ffffff;
+        border: 1px solid #ede5d6;
+        border-radius: 14px;
+        box-shadow: 0 2px 10px rgba(31, 28, 24, 0.04);
+        transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
       }
+      .tmnCol:hover {
+        transform: translateY(-3px);
+        border-color: #e0c68b;
+        box-shadow: 0 16px 34px rgba(31, 28, 24, 0.09);
+      }
+
+      .tmnColHead {
+        display: flex; align-items: center; gap: 12px;
+        margin-bottom: 4px; padding-bottom: 16px;
+        border-bottom: 1px solid #f2ead9;
+      }
+      .tmnIcon {
+        width: 38px; height: 38px; flex-shrink: 0; border-radius: 11px;
+        display: inline-flex; align-items: center; justify-content: center;
+        background: linear-gradient(135deg, #f7edd7 0%, #ecdcb4 100%);
+        color: #a3792e;
+      }
+      .tmnIcon svg { width: 19px; height: 19px; }
       .tmnColTitle {
-        margin: 0 0 14px; font-size: 10px; letter-spacing: 2.6px;
-        text-transform: uppercase; color: #a08a5e; font-weight: 700;
+        margin: 0; font-size: 10px; letter-spacing: 2.4px;
+        text-transform: uppercase; color: #8d7748; font-weight: 700;
       }
-      .tmnList { list-style: none; margin: 0; padding: 0; }
+
+      .tmnList { list-style: none; margin: 0; padding: 0; flex: 1; }
       .tmnItem {
-        display: flex; align-items: baseline; justify-content: space-between;
-        gap: 12px; padding: 11px 0; border-top: 1px solid #ece5d7;
+        display: flex; align-items: center; justify-content: space-between;
+        gap: 12px; padding: 13px 0; border-top: 1px solid #f6f1e6;
       }
-      .tmnItem:first-child { border-top: none; padding-top: 0; }
+      .tmnItem:first-child { border-top: none; }
       .tmnPlace { font-size: 13.5px; line-height: 1.5; color: #2b2721; }
+
+      /* the time is a chip so it stays on one line and keeps its own
+         optical column even when the place name wraps to two lines */
       .tmnTime {
-        flex-shrink: 0; font-size: 12px; font-weight: 700; color: #b08d4f;
-        white-space: nowrap;
+        display: inline-flex; align-items: center; gap: 5px; flex-shrink: 0;
+        padding: 5px 11px 5px 9px; border-radius: 999px;
+        background: rgba(206, 162, 75, 0.1);
+        border: 1px solid rgba(206, 162, 75, 0.24);
+        color: #9c7326; font-size: 11.5px; font-weight: 700;
+        font-variant-numeric: tabular-nums; white-space: nowrap;
       }
+      .tmnClock { width: 12px; height: 12px; opacity: 0.75; }
+
       .tmnNote {
         margin: 22px 0 26px; font-size: 12.5px; line-height: 1.7; color: #8a857d;
       }
@@ -473,12 +568,16 @@ const Connectivity = ({ onRsvp }) => (
         transition: background 0.22s ease, transform 0.15s ease;
       }
       .tmnBtn:hover { background: #f5b800; transform: translateY(-1px); }
+
       @media (max-width: 1024px) { .tmnGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
       @media (max-width: 600px) {
         .tmnInner { padding: 40px 16px 44px; }
-        .tmnGrid { grid-template-columns: 1fr; }
+        .tmnGrid { grid-template-columns: 1fr; gap: 14px; }
         .tmnTitle { font-size: 1.35rem; }
         .tmnBtn { width: 100%; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .tmnCol:hover { transform: none; }
       }
     `}</style>
   </section>
@@ -489,8 +588,9 @@ const Connectivity = ({ onRsvp }) => (
    own data so there is a single source of truth. Two rows drift
    continuously from right to left and pause on hover.
    Nothing here is invented: the names, the words and the 5-star
-   rating come from that data file, and the headline score/count
-   are the same figures the site's own review wall shows.
+   rating come from that data file, and the headline 4.3 / 106 is
+   the live Google figure. NOTE: components/newComponents/
+   reviewsWall still hardcodes 4.4 / 2,493+ and needs the same fix.
    ============================================================ */
 const REVIEW_PICKS = staticGoogleReviews
   .filter((r) => r.text && r.text.length > 70 && r.text.length < 300)
@@ -784,7 +884,7 @@ const FAQS = [
   },
   {
     q: 'What does "OC applying soon" mean for me?',
-    a: 'The Occupancy Certificate is the approval that allows residents to move in. The project is at the stage where it is being applied for, which is why possession is close. Our advisors will give you the current status and expected timelines on the evening.',
+    a: 'The Occupancy Certificate is the approval that allows residents to move in. The project is at the stage where it will be applied for soon, which is why possession is close. Our advisors will give you the current status and expected timelines on the evening.',
   },
   {
     q: 'What is the price?',
@@ -792,7 +892,7 @@ const FAQS = [
   },
   {
     q: 'Am I committing to anything by attending?',
-    a: 'No. The evening is to help you see the address properly and decide in your own time. There is no obligation to book.',
+    a: 'No. The evening is to help you experience the address properly and decide in your own time. There is no obligation to book.',
   },
 ];
 
@@ -1079,7 +1179,7 @@ function TulipMonsellaEvent() {
     <>
       <Wrapper
         title="Iconic Skyhub at Tulip Monsella | Exclusive Sundowner Showcase | INFRAMANTRA"
-        description="An exclusive sundowner showcase of Iconic Skyhub at Tulip Monsella, Sector 53, Gurgaon on 6th September, 4:30 PM onwards. The Occupancy Certificate is being applied for. RSVP with Inframantra."
+        description="An exclusive sundowner showcase of Iconic Skyhub at Tulip Monsella, Sector 53, Gurgaon on 6th September, 4:30 PM onwards. The Occupancy Certificate will be applied for soon. RSVP with Inframantra."
         seo="noindex"
       >
 
