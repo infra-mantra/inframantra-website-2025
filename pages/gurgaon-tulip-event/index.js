@@ -146,7 +146,7 @@ function TulipMonsellaEvent() {
   // ============================================
   // POPUP STATE
   // ============================================
-  // Opens automatically once, 10s after load (see the timer below).
+  // Opens automatically once, when "Our Story" scrolls into view (see below).
   const [showPopup, setShowPopup] = useState(false);
 
   // ============================================
@@ -237,17 +237,37 @@ function TulipMonsellaEvent() {
   }, []);
 
   // ============================================
-  // AUTO POPUP - ONCE, AFTER 10 SEC
-  // Fires a single time per page load. Closing it will not bring it back;
-  // the Enquire and MORE INFO buttons reopen it on demand.
+  // AUTO POPUP - ONCE, WHEN "OUR STORY" COMES INTO VIEW
+  // Fires a single time per page load (the observer disconnects itself).
+  // Closing it will not bring it back; the Enquire and MORE INFO buttons
+  // reopen it on demand.
   // ============================================
   useEffect(() => {
 
-    const timer = setTimeout(() => {
-      setShowPopup(true);
-    }, 10000);
+    if (typeof window === 'undefined') return;
 
-    return () => clearTimeout(timer);
+    // .section1 is the "Our Story" section (components/events/eventInfo).
+    const target = document.querySelector('.section1');
+    if (!target) return;
+
+    if (!('IntersectionObserver' in window)) {
+      return;
+    }
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          setShowPopup(true);
+          io.disconnect();   // once only
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    io.observe(target);
+
+    return () => io.disconnect();
 
   }, []);
 
