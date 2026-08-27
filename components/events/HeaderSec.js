@@ -130,8 +130,14 @@ function HeaderSec({
                      `
                   : ''
               }
-              @media screen and (max-width: 768px) {
-                .tmHeroBg { background-image: url("${mobileBg}") !important; }
+              ${
+                fitBanner
+                  ? /* the <picture> supplies the mobile art; re-declaring it as
+                       a CSS background here would paint it a SECOND time behind
+                       the img and tile it (the date appeared twice) */ ''
+                  : `@media screen and (max-width: 768px) {
+                       .tmHeroBg { background-image: url("${mobileBg}") !important; }
+                     }`
               }
               .tmHeroAside { display: none; }
               @media screen and (min-width: 993px) {

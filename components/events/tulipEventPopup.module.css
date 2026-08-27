@@ -478,3 +478,126 @@
 .tm_asideNote {
   margin: 0 0 16px;
 }
+
+/* =====================================================================
+   MOBILE FIT
+   On short screens the modal can exceed the viewport; make the whole
+   modal scroll (not just the form panel) and leave room at the bottom
+   so the submit button is never the part that falls off.
+   ===================================================================== */
+@media screen and (max-width: 780px) {
+  .tm_overlay {
+    align-items: flex-start;
+    padding: 14px 12px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tm_modal {
+    max-height: none;
+    margin: auto;
+  }
+
+  .tm_formPanel {
+    overflow: visible;
+    padding-bottom: 30px;
+  }
+}
+
+@media screen and (max-height: 720px) and (min-width: 781px) {
+  .tm_overlay {
+    align-items: flex-start;
+    overflow-y: auto;
+    padding: 18px 20px;
+  }
+
+  .tm_modal {
+    max-height: none;
+  }
+}
+
+/* Tighter brand panel on phones so more of the form (and the submit
+   button) is visible without scrolling. */
+@media screen and (max-width: 780px) {
+  .tm_aside {
+    padding: 18px 20px 16px;
+  }
+
+  .tm_asideTitle {
+    margin-bottom: 12px;
+    font-size: 18px;
+    line-height: 1.25;
+  }
+
+  .tm_asideRule {
+    margin-bottom: 12px;
+  }
+
+  .tm_asideProject {
+    margin-bottom: 14px;
+    font-size: 12px;
+  }
+
+  .tm_fact {
+    padding: 8px 0;
+  }
+
+  .tm_factValue {
+    font-size: 12.5px;
+  }
+
+  .tm_formPanel {
+    padding: 20px 20px 26px;
+  }
+
+  .tm_formSub {
+    margin-bottom: 16px;
+  }
+
+  .tm_field {
+    margin-bottom: 12px;
+  }
+}
+
+/* =====================================================================
+   UNIVERSAL FIT (phone, tablet/iPad, laptop, desktop)
+   One rule instead of per-device breakpoints: the overlay itself
+   scrolls and the modal is never height-capped, so the submit button
+   is always reachable whatever the viewport. `margin: auto` still
+   centres the modal when there is room to spare.
+   ===================================================================== */
+.tm_overlay {
+  align-items: flex-start;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tm_modal {
+  max-height: none;
+  margin: auto;
+}
+
+/* iPad portrait/landscape: keep the two-panel layout but let the
+   columns breathe, and stack once the aside would be too narrow. */
+@media screen and (min-width: 781px) and (max-width: 1024px) {
+  .tm_overlay {
+    padding: 24px 22px;
+  }
+
+  .tm_modal {
+    max-width: 720px;
+    grid-template-columns: 0.78fr 1fr;
+  }
+
+  .tm_aside {
+    padding: 28px 24px;
+  }
+
+  .tm_asideTitle {
+    font-size: 21px;
+  }
+
+  .tm_formPanel {
+    padding: 28px 26px 30px;
+  }
+}

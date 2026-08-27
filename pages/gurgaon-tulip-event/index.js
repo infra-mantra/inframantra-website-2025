@@ -280,12 +280,11 @@ function TulipMonsellaEvent() {
           compactTitle
           highlightVenue
           premiumLocation
-          bgImage="/banner/tulip-skyhub-desktop.webp"
-          bgImageMobile="/banner/tulip-skyhub-mobile.webp"
+          bgImage="/banner/final.webp"
+          bgImageMobile="/banner/tulip-skyhub-mobile-portrait.webp"
           showOverlayArt={false}
           showLocationCard={false}
           fitBanner
-          bannerBadge="OC Applying Soon"
           imgAlt="Iconic Skyhub at Tulip Monsella"
         />
 

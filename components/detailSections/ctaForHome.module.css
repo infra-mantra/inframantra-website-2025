@@ -74,9 +74,15 @@
     z-index: -1;
   }
     .homePageContactUsLeftDetailSectionImg {
-    /* height: 10%; */
     width: 50%;
-    object-fit: cover;
+    /* The <img> carries height="56" as an attribute, so with only a % width
+       set the box ends up ~2.95:1 while the logo is 4.98:1. `object-fit:
+       cover` then filled the height and cropped the sides, cutting the final
+       "A" off "INFRAMANTRA" on narrow screens. height:auto keeps the real
+       aspect ratio and `contain` guarantees nothing is ever clipped. */
+    height: auto;
+    max-width: 280px;
+    object-fit: contain;
     align-self: baseline;
     padding-top: 20px;
   }

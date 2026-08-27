@@ -122,6 +122,25 @@ function TulipEventPopup({
   if (!open) return null;
 
   return (
+    <>
+      {/* Three fixed CTA bars sit over the page and were covering this
+          modal's submit button on phones and iPad:
+            .sidebarst   - the WhatsApp / Call / More Info rail (z-index 999)
+            .bottom_cta  - the green WhatsApp + Contact Us bar (<=768px)
+            .cta_visible - the desktop floating buttons
+          Raising the modal's z-index is not enough on its own, because an
+          ancestor creates a stacking context that traps it. Hiding them for
+          as long as the modal is open is reliable at every viewport; they
+          come straight back on close. */}
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            .sidebarst,
+            .bottom_cta,
+            .cta_visible { display: none !important; }
+          `,
+        }}
+      />
     <div
       className={`${styles.tm_overlay} ${visible ? styles.tm_overlayOpen : ''}`}
       onClick={handleClose}
@@ -291,6 +310,7 @@ function TulipEventPopup({
         </div>
       </div>
     </div>
+    </>
   );
 }
 
