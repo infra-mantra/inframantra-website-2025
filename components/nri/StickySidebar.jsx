@@ -78,6 +78,7 @@ const InfoIcon = () => (
 // Omit it and the item behaves exactly as before.
 export default function StickySidebar({name,  url = "", onMoreInfo }) {
 
+
   const [hovered, setHovered] = useState(null);
   const [popForm, setPopForm] = useState(false);
 

@@ -4,24 +4,6 @@ import axios from "axios";
 const Ajax = async (action) => {
 
     try {
-
-        // ============================================
-        // GET SOURCE FROM LOCALSTORAGE
-        // ============================================
-        let source = "";
-
-        if (typeof window !== "undefined") {
-            source = localStorage.getItem("source") || "SEM";
-        }
-
-        // ============================================
-        // MERGE SOURCE IN REQUEST DATA
-        // ============================================
-        const updatedData = {
-            ...(action.data || {}),
-            source
-        };
-
         const resp = await axios({
 
             headers: {

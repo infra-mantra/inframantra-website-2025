@@ -280,7 +280,7 @@ function TulipMonsellaEvent() {
           compactTitle
           highlightVenue
           premiumLocation
-          bgImage="/banner/v2.png"
+          bgImage="/banner/ty.avif"
           bgImageMobile="/banner/tulip-skyhub-mobile-portrait.webp"
           showOverlayArt={false}
           showLocationCard={false}
