@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import styles from "./AboutUs.module.css";
 import RightSlideModal from "../property-detail/Modal.jsx";
 
@@ -91,8 +92,18 @@ const AboutUsPageHeader = () => {
             <h2 className={styles.headingTitleStory}>Our Story</h2>
 
             <div className={styles.storyText} style={{ maxHeight: "300px", overflow: "hidden" }}>
-              <span className={styles.highlightName}>Shiwang Suraj</span> and{" "}
-              <span className={styles.highlightName}>Garvit Tiwari</span> bring together a powerful
+              {/* Linked to their profile pages. Both /team/* pages exist and are
+                  served from the CMS, but nothing on the site linked to them and
+                  they were in no sitemap — an orphan page with no inbound links
+                  is what search engines quietly drop. */}
+              <Link href="/team/shiwang-suraj">
+                <a className={styles.highlightName}>Shiwang Suraj</a>
+              </Link>{" "}
+              and{" "}
+              <Link href="/team/garvit-tiwari">
+                <a className={styles.highlightName}>Garvit Tiwari</a>
+              </Link>{" "}
+              bring together a powerful
               blend of entrepreneurial vision and financial expertise as the driving forces behind
               InfraMantra India Pvt. Ltd.
               <br />

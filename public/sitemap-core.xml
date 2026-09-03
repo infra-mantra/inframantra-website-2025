@@ -103,4 +103,16 @@
     <priority>0.30</priority>
   </url>
 
+  <url>
+    <loc>https://inframantra.com/team/shiwang-suraj</loc>
+    <lastmod>2026-09-03T16:00:00.000Z</lastmod>
+    <priority>0.70</priority>
+  </url>
+
+  <url>
+    <loc>https://inframantra.com/team/garvit-tiwari</loc>
+    <lastmod>2026-09-03T16:00:00.000Z</lastmod>
+    <priority>0.70</priority>
+  </url>
+
 </urlset>
