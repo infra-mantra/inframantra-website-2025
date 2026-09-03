@@ -8,6 +8,7 @@ import NoImage from "../../components/shared/NoImage.jsx";
 import Image from "next/image";
 import Link from "next/link";
 import style from "./team.module.css";
+import { resolveProfileImage, resolveTeamImage } from "../../components/lib/teamImages.js";
 
 const TeamDetail = ({ allData }) => {
   return (
@@ -139,7 +140,10 @@ export async function getStaticProps({ params }) {
       name: data?.result?.detail?.[0]?.name || null,
       designation: data?.result?.detail?.[0]?.designation || null,
       description: data?.result?.detail?.[0]?.description || null,
-      image: data?.result?.detail?.[0]?.file?.path || null,
+      // The CMS still points one director's images at a retired S3 bucket; see
+      // components/lib/teamImages.js. Dead URLs become a known-good portrait, or
+      // null so <NoImage/> shows instead of a broken image.
+      image: resolveProfileImage(data?.result?.detail?.[0]?.file?.path, params.teamId),
       meta_title: data?.result?.detail?.[0]?.meta_title || null,
       meta_description: data?.result?.detail?.[0]?.meta_description || null,
       meta_keywords: data?.result?.detail?.[0]?.meta_keyword || null,
@@ -154,7 +158,7 @@ export async function getStaticProps({ params }) {
       id: e._id,
       title: e.year,
       description: e.description,
-      ...(e.file && { image: e.file.path }),
+      ...(e.file?.path && resolveTeamImage(e.file.path) && { image: e.file.path }),
     }));
 
     const articleDataArray = (data?.result?.BlogList || []).map((e) => ({

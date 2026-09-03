@@ -24,6 +24,27 @@ function CardBlock() {
   );
 }
 
+/*
+  Home-page search bar.
+
+  SearchOptions decides between a desktop and a mobile layout from window.innerWidth,
+  which is only known after mount — so the server rendered the desktop bar and mobile
+  visitors saw it restyle itself on hydration. This placeholder stands in for that one
+  frame instead, and is sized from the real bar's own CSS at both breakpoints
+  (desktop: 75% wide, 55px tall white card; mobile: 90vw grey input) so the swap does
+  not move anything on the page.
+*/
+export function SearchBarSkeleton() {
+  return (
+    <div className={s.searchWrap} aria-hidden="true">
+      <div className={s.searchBar}>
+        <Block className={s.searchInput} />
+        <Block className={s.searchBtn} />
+      </div>
+    </div>
+  );
+}
+
 // ---- Premium Picks: heading + subtitle + city pills + a row of cards ----
 export function PremiumSkeleton() {
   return (

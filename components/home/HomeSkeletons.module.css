@@ -243,3 +243,58 @@
     flex-direction: column;
   }
 }
+
+/* ---- Home search bar -------------------------------------------------
+   Mirrors the real bar so swapping the placeholder for it shifts nothing.
+   Desktop numbers come from SearchOptions.module.css (.searchOptionsFlexContainer:
+   75% wide, 55px tall, white, 10px radius, same shadow); mobile numbers from
+   SearchAutoComplete.module.css (.root is 90vw, .inputWrapper is a grey 10px-radius
+   field). Keep them in step if either of those changes. */
+.searchWrap {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: flex-end;
+  height: 100%;
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 75%;
+  height: 55px;
+  padding: 10px;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0px 6.96px 13.22px 0px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+}
+
+.searchInput {
+  flex: 1;
+  height: 100%;
+  border-radius: 8px;
+}
+
+.searchBtn {
+  width: 46px;
+  height: 100%;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  /* Mobile drops the white card and shows the grey input field on its own. */
+  .searchBar {
+    width: 90vw;
+    height: 48px;
+    padding: 8px;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .searchInput {
+    border-radius: 10px;
+  }
+}
