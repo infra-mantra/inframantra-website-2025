@@ -1,0 +1,148 @@
+/* Property Card Styles */
+.propertyCard {
+  background-color: #ffffff;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%; /* grow to fit the action buttons instead of being clipped to the slide height */
+  cursor: pointer;
+}
+
+/* the link fills the card so the button row sits at the bottom on equal-height cards */
+.propertyCard > a {
+  display: block;
+  flex: 1 1 auto;
+  text-decoration: none;
+  color: inherit;
+}
+
+.propertyImageContainer {
+  height: 150px;
+  overflow: hidden;
+  position: relative;
+}
+
+.propertyImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.propertyCard:hover .propertyImage {
+  transform: scale(1.07);
+}
+
+.propertyContent {
+  padding: 20px;
+}
+
+.propertyTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #dcaa4c;
+  margin: 0 0 7px 0;
+  font-family: "Lexend Deca", sans-serif;
+  letter-spacing: 0.2px;
+  line-height: 1.5;
+
+  overflow: hidden;
+}
+
+.propertyLocation {
+  font-size: 14px;
+  color: #707070;
+  margin: 8px 0 0 0;
+  padding-top: 8px;
+  border-top: 1px solid #eeeae2;
+  line-height: 1.4;
+  font-family: "Lexend Deca", sans-serif;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.propertyConfig {
+  font-size: 14px;
+  color: #dcaa4c;
+  margin: 8px 0 0 0;
+  padding-top: 8px;
+  border-top: 1px solid #eeeae2;
+  font-weight: 500;
+  font-family: "Lexend Deca", sans-serif;
+}
+
+/* Scoped to .propertyContent (specificity 0,2,0) so it beats the GLOBAL
+   `.propertyPrice` that premiumPicks.module.css also defines (font-weight:700;
+   color:#1a1a1a) and which otherwise leaked onto this card via the unhashed
+   CSS-module collision, keeping the price black + bold. */
+.propertyContent .propertyPrice {
+  font-size: 16px;
+  font-weight: 500;
+  color: #707070;
+  margin: 8px 0 0 0;
+  padding-top: 8px;
+  border-top: 1px solid #eeeae2;
+  font-family: "Lexend Deca", sans-serif;
+  letter-spacing: 0.3px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .propertyImageContainer {
+    height: 180px;
+  }
+
+  .propertyContent {
+    padding: 16px;
+  }
+
+  .propertyTitle {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .propertyImageContainer {
+    height: 160px;
+  }
+
+  .propertyContent {
+    padding: 12px;
+  }
+
+  .propertyTitle {
+    font-size: 15px;
+  }
+
+  .propertyLocation {
+    font-size: 13px;
+  }
+
+  .propertyPrice {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 320px) {
+  .propertyImageContainer {
+    height: 140px;
+  }
+}
+
+/* Accessibility improvements */
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .propertyTitle {
+    color: #000;
+  }
+
+  .propertyPrice {
+    color: #000;
+    font-weight: 900;
+  }
+}
+
+/* Reduced motion support */

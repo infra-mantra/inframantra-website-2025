@@ -1,0 +1,66 @@
+/*
+ * Layout for the property-listing page, replacing the inline style={{...}}
+ * objects that used to live in pages/property-listing/[type]/[name].js.
+ *
+ * Those inline styles branched on an `isMobile` React state, so the desktop
+ * values were applied during SSR and then swapped after hydration measured the
+ * viewport. Expressing the same rules as media queries means the correct layout
+ * is right in the first paint, with no JS involved.
+ *
+ * NOTE ON NAMING: next.config.js sets WANT_HASH = false, so CSS-module class
+ * names are emitted verbatim and share one global namespace. Every class here is
+ * prefixed `pll` (property listing layout) so it cannot collide with the generic
+ * names (.row, .overlay, .container) already defined across the global sheets.
+ */
+
+.pllLayout {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: flex-start;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.pllFilters {
+  padding: 1rem;
+  width: 30%;
+  flex-shrink: 0;
+  position: sticky;
+  top: 1rem;
+  align-self: flex-start;
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+}
+
+.pllResults {
+  flex: 1;
+  min-width: 0;
+  margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  .pllLayout {
+    flex-direction: column;
+  }
+
+  .pllFilters {
+    width: 100%;
+    position: static;
+    max-height: none;
+    overflow-y: visible;
+  }
+}
+
+/* Section heading ("Featured Properties" etc.) — was an identical inline style
+   object duplicated in both the desktop and mobile branches of the page. */
+.pllSectionTitle {
+  font-family: "Lexend Deca", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  margin: 1.5rem 0 1.25rem;
+}

@@ -1,14 +1,13 @@
-import React from 'react';
-import { useRouter } from 'next/router';
-import Image from 'next/image';
-import useMediaQuery from '../utils/useMediaQuery.js';
-import Button from '../common/button/button.jsx';
-import styles from '../styles/notFound.module.css'
-import Wrapper from '../components/UI/Wrapper.js';
-
+import React from "react";
+import { useRouter } from "next/router";
+import Image from "next/image";
+import useMediaQuery from "../utils/useMediaQuery.js";
+import Button from "../common/button/button.jsx";
+import styles from "./404.module.css";
+import Wrapper from "../components/shared/Wrapper.jsx";
 
 export const config = {
-  runtime: 'nodejs',
+  runtime: "nodejs",
 };
 
 function NotFoundPage() {
@@ -17,62 +16,63 @@ function NotFoundPage() {
 
   return (
     <Wrapper>
-
-    <div className={styles.notFoundPageWrappe}>
-      {isDesktop ? (
-        <div className={styles.notFoundPageDesktopContainer}>
-          <div className={styles.notFoundPageDesktopLeftContainer}>
-            <div className={styles.notFoundPageDesktopLeftFlex}>
-              <h2>404</h2>
-              <h4>
-                <span style={{ color: '#E4A951' }}>Oops! </span>Seems You've Taken a Wrong Turn.
-              </h4>
-              <p>
-                But don't worry, our expert sales team is here to help you find your perfect home. Let us guide you back on track!
-              </p>
-              <Button
-                btnText="Back To Home"
-                width="25vw"
-                padding="10px"
-                otherStyles={{ fontSize: '30px', fontWeight: '800' }}
-                onClick={() => router.push('/')}
+      <div className={styles.notFoundPageWrappe}>
+        {isDesktop ? (
+          <div className={styles.notFoundPageDesktopContainer}>
+            <div className={styles.notFoundPageDesktopLeftContainer}>
+              <div className={styles.notFoundPageDesktopLeftFlex}>
+                <h2>404</h2>
+                <h4>
+                  <span style={{ color: "#E4A951" }}>Oops! </span>Seems You've Taken a Wrong Turn.
+                </h4>
+                <p>
+                  But don't worry, our expert sales team is here to help you find your perfect home.
+                  Let us guide you back on track!
+                </p>
+                <Button
+                  btnText="Back To Home"
+                  width="25vw"
+                  padding="10px"
+                  otherStyles={{ fontSize: "30px", fontWeight: "800" }}
+                  onClick={() => router.push("/")}
+                />
+              </div>
+            </div>
+            <div className={styles.notFoundPageDesktopRightContainer}>
+              <Image
+                src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/home-building.png"
+                alt="404 not found"
+                width={500}
+                height={500}
               />
             </div>
           </div>
-          <div className={styles.notFoundPageDesktopRightContainer}>
+        ) : (
+          <div className={styles.notFoundPageDesktopContainer}>
+            <h2>404</h2>
+            <h4>
+              <span style={{ color: "#E4A951" }}>Oops! </span>Seems You've Taken a Wrong Turn.
+            </h4>
             <Image
               src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/home-building.png"
               alt="404 not found"
               width={500}
               height={500}
             />
+            <p>
+              But don't worry, our expert sales team is here to help you find your perfect home. Let
+              us guide you back on track!
+            </p>
+            <Button
+              btnText="Back To Home"
+              width="60vw"
+              padding="10px"
+              otherStyles={{ fontSize: "20px", fontWeight: "800" }}
+              onClick={() => router.push("/")}
+            />
           </div>
-        </div>
-      ) : (
-        <div className={styles.notFoundPageDesktopContainer}>
-          <h2>404</h2>
-          <h4>
-            <span style={{ color: '#E4A951' }}>Oops! </span>Seems You've Taken a Wrong Turn.
-          </h4>
-          <Image
-            src="https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/home-building.png"
-            alt="404 not found"
-            width={500}
-            height={500}
-          />
-          <p>
-            But don't worry, our expert sales team is here to help you find your perfect home. Let us guide you back on track!
-          </p>
-          <Button
-            btnText="Back To Home"
-            width="60vw"
-            padding="10px"
-            otherStyles={{ fontSize: '20px', fontWeight: '800' }}
-            onClick={() => router.push('/')}
-          />
-        </div>
-      )}
-    </div>
+        )}
+      </div>
     </Wrapper>
   );
 }

@@ -1,17 +1,14 @@
 import React from "react";
-import Wrapper from "../components/UI/Wrapper";
+import Wrapper from "../components/shared/Wrapper.jsx";
 
-import ContactUsPage from "../components/newComponents/ContactUs/contactUsPage";
+import ContactUsPage from "../components/contact/ContactUsPage.jsx";
 
 const ContactUs = () => {
   return (
     <Wrapper>
-      <ContactUsPage /> 
+      <ContactUsPage />
     </Wrapper>
   );
-} 
+};
 
 export default ContactUs;
-
-
-

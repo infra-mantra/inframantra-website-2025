@@ -3,31 +3,14 @@ import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import "../styles/self-hosted-fonts.css";
 import "../styles/globals.css";
-import "../styles/responsive.css";
-import "react-toastify/dist/ReactToastify.css";
+
 // swiper/css/bundle already contains swiper/css (core) plus every module's
 // styles — the separate "swiper/css" import below it was a duplicate.
 import "swiper/css/bundle";
 import "../styles/newHome.css";
-import "../styles/filter.css";
-import "../styles/dropDownMenu.css";
-import "../styles/PropertyHeaderImageGallery.css";
 import "../styles/properyHeader.css";
-import "../styles/propertyCard.css";
-import "../styles/RightSlideModal.css";
-import "../styles/config.css";
-import "../styles/fullview.css";
-import "../styles/brochureDownload.css";
-import "../styles/site-visite.css";
-import "../styles/developer.css";
 
-import styles from "../styles/_app.module.css";
-import "../styles/navbarsticky.css";
-import "../styles/amenities.css";
-import "../styles/landmark.css";
-
-import "../styles/pageHeader.module.css";
-import "../styles/map.css";
+import styles from "./_app.module.css";
 
 import ErrorStack from "./_error.js";
 
@@ -36,7 +19,7 @@ import ErrorStack from "./_error.js";
 // out of the server HTML and the initial hydration bundle. It's mounted only
 // after the page goes idle or the user interacts (see `showChat` below), so it
 // never competes with first paint / LCP on the homepage.
-const PropertyChatbot = dynamic(() => import("../components/UI/PropertyChatbot.jsx"), {
+const PropertyChatbot = dynamic(() => import("../components/shared/PropertyChatbot.jsx"), {
   ssr: false,
 });
 
@@ -261,14 +244,13 @@ function MyApp({ Component, pageProps }) {
           >
             <img src="/logos/whatsapp.svg" alt="WhatsApp" width="20" height="20" />
             <span>WhatsApp</span>
-            </a>
-          
+          </a>
         </div>
         <div className={styles.right}>
-          <a href="tel:8698009900" className={styles.contact} >
-           <img src="/logos/phone.svg" alt="Contact Us" width="16" height="16" />
+          <a href="tel:8698009900" className={styles.contact}>
+            <img src="/logos/phone.svg" alt="Contact Us" width="16" height="16" />
             <span>Contact Us</span>
-         </a>
+          </a>
         </div>
       </div>
 

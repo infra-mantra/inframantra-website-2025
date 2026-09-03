@@ -1,18 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useRouter } from 'next/router';
+import React, { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/router";
 
-import Wrapper from '../../components/UI/Wrapper';
-import Header from '../../components/nri/header';
-import AboutSection from '../../components/nri/aboutSection';
-import UpcomingProjectsSection from '../../components/nri/projectSlider';
-import WhyInvest from '../../components/nri/WhyInvest';
-import Faq from '../../components/nri/FAQ';
-import ProjecMap from '../../components/nri/ProjectMap';
-import Sticky from '../../components/nri/StickySidebar';
-import PopFormNew from '../../components/detailSections/POPUPCTA';
+import Wrapper from "../../components/shared/Wrapper.jsx";
+import Header from "../../components/nri/Header.jsx";
+import AboutSection from "../../components/nri/AboutSection.jsx";
+import UpcomingProjectsSection from "../../components/nri/ProjectSlider.jsx";
+import WhyInvest from "../../components/nri/WhyInvest.jsx";
+import Faq from "../../components/nri/FAQ.jsx";
+import ProjecMap from "../../components/nri/ProjectMap.jsx";
+import Sticky from "../../components/nri/StickySidebar.jsx";
+import PopFormNew from "../../components/shared/forms/POPUPCTA.jsx";
 
 function Nri() {
-
   const router = useRouter();
 
   const { source } = router.query;
@@ -34,31 +33,25 @@ function Nri() {
   // =========================
   // STORE SOURCE
   // =========================
- useEffect(() => {
-
+  useEffect(() => {
     if (typeof window === "undefined") return;
 
     // If source exists in URL
     if (source) {
       localStorage.setItem("source", source);
     } else {
-       localStorage.setItem("source", "YUPP");
+      localStorage.setItem("source", "YUPP");
     }
-
   }, [source]);
 
   // =========================
   // STORE YUPP TV FLAG + DUMMY UTM
   // =========================
   useEffect(() => {
-
     if (typeof window === "undefined") return;
 
     try {
-
-      const utmData = JSON.parse(
-        localStorage.getItem("utm_params")
-      ) || {};
+      const utmData = JSON.parse(localStorage.getItem("utm_params")) || {};
 
       const dummyUtm = {
         utm_source: "yupptv",
@@ -66,65 +59,43 @@ function Nri() {
         utm_campaign: "USA_EXPO_YUPP_TV",
         utm_term: "nri-property",
         utm_content: "banner_ad",
-        region: "YUPP"
+        region: "YUPP",
       };
 
       const updatedUtm = {
         ...utmData,
-        ...dummyUtm
+        ...dummyUtm,
       };
 
-      localStorage.setItem(
-        "utm_params",
-        JSON.stringify(updatedUtm)
-      );
+      localStorage.setItem("utm_params", JSON.stringify(updatedUtm));
 
-      localStorage.setItem(
-        "campaign_platform",
-        "YUPP TV"
-      );
+      localStorage.setItem("campaign_platform", "YUPP TV");
 
-      console.log(
-        "Dummy UTM Added:",
-        updatedUtm
-      );
-
+      console.log("Dummy UTM Added:", updatedUtm);
     } catch (err) {
-
       console.log(err);
-
     }
-
   }, []);
 
   // =========================
   // STICKY SIDEBAR
   // =========================
   useEffect(() => {
+    const header = document.getElementById("nriHeader");
 
-    const header =
-      document.getElementById('nriHeader');
+    const sidebar = document.querySelector(".sidebarst");
 
-    const sidebar =
-      document.querySelector('.sidebarst');
-
-    const elements =
-      document.querySelector('.cta_visible');
+    const elements = document.querySelector(".cta_visible");
 
     if (elements) {
-      elements.style.display = 'none';
+      elements.style.display = "none";
     }
 
     if (!header || !sidebar) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-
-        sidebar.style.display =
-          entry.isIntersecting
-            ? 'none'
-            : 'flex';
-
+        sidebar.style.display = entry.isIntersecting ? "none" : "flex";
       },
       {
         threshold: 0.1,
@@ -134,16 +105,13 @@ function Nri() {
     observer.observe(header);
 
     return () => {
-
       observer.disconnect();
 
       // Restore CTA
       if (elements) {
-        elements.style.display = 'flex';
+        elements.style.display = "flex";
       }
-
     };
-
   }, []);
 
   // ============================================
@@ -153,9 +121,7 @@ function Nri() {
   // 3rd => 15 sec after second close
   // ============================================
   useEffect(() => {
-
-    const projectSection =
-      document.getElementById('nriProject');
+    const projectSection = document.getElementById("nriProject");
 
     if (!projectSection) return;
 
@@ -163,52 +129,34 @@ function Nri() {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-
-        if (
-          entry.isIntersecting &&
-          !projectTriggeredRef.current
-        ) {
-
+        if (entry.isIntersecting && !projectTriggeredRef.current) {
           projectTriggeredRef.current = true;
 
           // Second popup
           if (popupCountRef.current < 3) {
-
             setShowPopup(true);
 
             popupCountRef.current += 1;
-
           }
 
           // Third popup after 15 sec
           interval = setInterval(() => {
-
             const currentTime = Date.now();
 
-            const diff =
-              currentTime -
-              lastCloseTimeRef.current;
+            const diff = currentTime - lastCloseTimeRef.current;
 
-            if (
-              diff >= 15000 &&
-              popupCountRef.current < 3
-            ) {
-
+            if (diff >= 15000 && popupCountRef.current < 3) {
               setShowPopup(true);
 
               popupCountRef.current += 1;
-
             }
 
             // Stop interval
             if (popupCountRef.current >= 3) {
               clearInterval(interval);
             }
-
           }, 1000);
-
         }
-
       },
       {
         threshold: 0.3,
@@ -218,48 +166,36 @@ function Nri() {
     observer.observe(projectSection);
 
     return () => {
-
       observer.disconnect();
 
       if (interval) {
         clearInterval(interval);
       }
-
     };
-
   }, []);
 
   // ============================================
   // HANDLE POPUP CLOSE
   // ============================================
   const handlePopupClose = (value) => {
-
     setShowPopup(value);
 
     lastCloseTimeRef.current = Date.now();
-
   };
 
   // =========================
   // DEBUG
   // =========================
   useEffect(() => {
-
-    console.log(
-      'Campaign Source:',
-      source
-    );
-
+    console.log("Campaign Source:", source);
   }, [source]);
 
   return (
-
     <Wrapper
       title="Gurgaon Premium Luxury Residences for NRIs | INFRAMANTRA"
       description="Explore Gurgaon premium luxury residences for NRIs with INFRAMANTRA. Discover top projects, exclusive pricing, and secure high-return real estate investments."
       seo="noindex"
     >
-
       {/* HEADER */}
       <section id="nriHeader">
         <Header name="USA-EXPO YUPP TV" />
@@ -272,9 +208,7 @@ function Nri() {
 
       {/* PROJECTS */}
       <section id="nriProject">
-        <UpcomingProjectsSection
-          name="USA-EXPO YUPP TV"
-        />
+        <UpcomingProjectsSection name="USA-EXPO YUPP TV" />
       </section>
 
       {/* MAP */}
@@ -296,7 +230,6 @@ function Nri() {
         name="USA-EXPO YUPP TV"
         id="nri-popup-form"
       />
-
     </Wrapper>
   );
 }

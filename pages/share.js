@@ -36,7 +36,7 @@ const Share = ({ content }) => {
           {/* WhatsApp Icon */}
           <img src="/icons/share/whatapp.png" alt="WhatsApp" />
         </a>
-        
+
         {/* LinkedIn Share */}
         <a
           href={`https://www.linkedin.com/shareArticle?mini=true&url=${url}`}
@@ -84,7 +84,8 @@ const Share = ({ content }) => {
         <p
           className="menu-item twitter_copy_clip"
           style={{ display: "inline-block" }}
-          onClick={handleCopy}        >
+          onClick={handleCopy}
+        >
           <img src="/icons/share/Vector.svg" alt="Email" />
         </p>
 

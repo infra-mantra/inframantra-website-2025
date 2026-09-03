@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../calculators.module.css";
+import styles from "../Calculators.module.css";
 
 const BARS = [
   { x: 10, y: 90, h: 50, d: 0 },
@@ -24,12 +24,25 @@ function HeroBars() {
           <rect
             key={i}
             className={styles.artBar}
-            x={b.x} y={b.y} width="22" height={b.h} rx="4"
-            fill="url(#mbar-gold)" fillOpacity={0.6 + i * 0.13}
+            x={b.x}
+            y={b.y}
+            width="22"
+            height={b.h}
+            rx="4"
+            fill="url(#mbar-gold)"
+            fillOpacity={0.6 + i * 0.13}
             style={{ animationDelay: `${b.d}s` }}
           />
         ))}
-        <line x1="4" y1="141" x2="136" y2="141" stroke="#e7b554" strokeOpacity="0.3" strokeWidth="2" />
+        <line
+          x1="4"
+          y1="141"
+          x2="136"
+          y2="141"
+          stroke="#e7b554"
+          strokeOpacity="0.3"
+          strokeWidth="2"
+        />
       </svg>
     </div>
   );

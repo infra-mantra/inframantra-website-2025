@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Wrapper from "../components/UI/Wrapper";
+import Wrapper from "../components/shared/Wrapper.jsx";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
-import Ajax from "../components/helper/Ajax";
-import styles from "../styles/on_spot_offers.module.css";
+import Ajax from "../components/lib/ajax.js";
+import styles from "./on-spot-offers.module.css";
 
 function OnSpotOffers() {
   const router = useRouter();
@@ -58,8 +58,16 @@ function OnSpotOffers() {
     e.preventDefault();
 
     const newErrors = {
-      name: formData.name ? /^[a-zA-Z\s]+$/.test(formData.name) ? "" : "Name must contain only letters." : "Name is required.",
-      email: formData.email ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) ? "" : "Invalid email address." : "Email is required.",
+      name: formData.name
+        ? /^[a-zA-Z\s]+$/.test(formData.name)
+          ? ""
+          : "Name must contain only letters."
+        : "Name is required.",
+      email: formData.email
+        ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
+          ? ""
+          : "Invalid email address."
+        : "Email is required.",
       phone: formData.phone.length === 10 ? "" : "Phone number must be exactly 10 digits.",
       city: formData.city ? "" : "Please select a project.",
     };
@@ -70,8 +78,8 @@ function OnSpotOffers() {
 
     try {
       const action = {
-        method: 'POST',
-        url: '/enquiry/offerEnquiry',
+        method: "POST",
+        url: "/enquiry/offerEnquiry",
         data: formData,
         loader: true,
       };
@@ -106,29 +114,73 @@ function OnSpotOffers() {
             <form onSubmit={handleSubmit}>
               <h3 className={styles.title}>Fill the form to get an exciting offer</h3>
               <div className={styles.inputContainer}>
-                <input name="name" type="text" className={styles.input} placeholder="Name" value={formData.name} onChange={handleChange} required />
+                <input
+                  name="name"
+                  type="text"
+                  className={styles.input}
+                  placeholder="Name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                />
                 {errors.name && <span className={styles.error}>{errors.name}</span>}
               </div>
               <div className={styles.inputContainer}>
-                <input name="email" type="email" className={styles.input} placeholder="Email" value={formData.email} onChange={handleChange} required />
+                <input
+                  name="email"
+                  type="email"
+                  className={styles.input}
+                  placeholder="Email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
                 {errors.email && <span className={styles.error}>{errors.email}</span>}
               </div>
               <div className={styles.inputContainer}>
-                <input name="phone" type="number" className={styles.input} placeholder="Phone no" value={formData.phone} onChange={handleChange} required />
+                <input
+                  name="phone"
+                  type="number"
+                  className={styles.input}
+                  placeholder="Phone no"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  required
+                />
                 {errors.phone && <span className={styles.error}>{errors.phone}</span>}
               </div>
               <div className={styles.inputContainer}>
-                <select name="city" className={styles.input} value={formData.city} onChange={handleChange} required>
-                  <option value="" disabled>Select a Project</option>
+                <select
+                  name="city"
+                  className={styles.input}
+                  value={formData.city}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="" disabled>
+                    Select a Project
+                  </option>
                   <option value="Vatika Seven Elements">Vatika Seven Elements</option>
                   <option value="Vatika Sovereign Park">Vatika Sovereign Park</option>
                 </select>
                 {errors.city && <span className={styles.error}>{errors.city}</span>}
               </div>
               <div className={`${styles.inputContainer} ${styles.textarea}`}>
-                <textarea name="message" className={`${styles.inputcontainerText} ${styles.input}` } placeholder="Message" value={formData.message} onChange={handleChange}></textarea>
+                <textarea
+                  name="message"
+                  className={`${styles.inputcontainerText} ${styles.input}`}
+                  placeholder="Message"
+                  value={formData.message}
+                  onChange={handleChange}
+                ></textarea>
               </div>
-              <button type="submit" className={styles.btn} disabled={Object.values(errors).some(error => error)}>Submit</button>
+              <button
+                type="submit"
+                className={styles.btn}
+                disabled={Object.values(errors).some((error) => error)}
+              >
+                Submit
+              </button>
             </form>
           </div>
         </div>

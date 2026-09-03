@@ -1,12 +1,12 @@
 import React from "react";
-import Wrapper from "../../components/UI/Wrapper";
-import EmiCalculator from "../../components/newComponents/propertyIndividualPage/emiCalculator";
-import CalcHero from "../../components/calculators/CalcHero";
-import HowItWorks from "../../components/calculators/HowItWorks";
-import LeadForm from "../../components/calculators/LeadForm";
-import RelatedCalculators from "../../components/calculators/RelatedCalculators";
-import FaqBlock from "../../components/calculators/FaqBlock";
-import styles from "../../components/calculators/calculators.module.css";
+import Wrapper from "../../components/shared/Wrapper.jsx";
+import EmiCalculator from "../../components/property-detail/EmiCalculator.jsx";
+import CalcHero from "../../components/calculators/CalcHero.jsx";
+import HowItWorks from "../../components/calculators/HowItWorks.jsx";
+import LeadForm from "../../components/calculators/LeadForm.jsx";
+import RelatedCalculators from "../../components/calculators/RelatedCalculators.jsx";
+import FaqBlock from "../../components/calculators/FaqBlock.jsx";
+import styles from "../../components/calculators/Calculators.module.css";
 
 const faqs = [
   {
@@ -75,12 +75,11 @@ function HomeLoanEmiPage() {
         <section className={styles.seoContent}>
           <h2>Understand your home loan EMI</h2>
           <p>
-            Your EMI (Equated Monthly Instalment) is the fixed amount you pay
-            your lender every month until the loan is fully repaid. Each EMI is
-            split into two parts — interest on the outstanding balance and
-            repayment of the principal. In the early years most of the EMI goes
-            towards interest; as the balance falls, more of it pays down the
-            principal. The charts above visualise exactly this shift.
+            Your EMI (Equated Monthly Instalment) is the fixed amount you pay your lender every
+            month until the loan is fully repaid. Each EMI is split into two parts — interest on the
+            outstanding balance and repayment of the principal. In the early years most of the EMI
+            goes towards interest; as the balance falls, more of it pays down the principal. The
+            charts above visualise exactly this shift.
           </p>
           <h3>How to reduce your total interest</h3>
           <ul>
@@ -90,10 +89,9 @@ function HomeLoanEmiPage() {
             <li>Make part-prepayments whenever you have surplus funds.</li>
           </ul>
           <p>
-            Once you&apos;re comfortable with the EMI, check how much loan your
-            salary supports with our{" "}
-            <a href="/calculators/loan-eligibility">Loan Eligibility Calculator</a>{" "}
-            and plan your down payment with the{" "}
+            Once you&apos;re comfortable with the EMI, check how much loan your salary supports with
+            our <a href="/calculators/loan-eligibility">Loan Eligibility Calculator</a> and plan
+            your down payment with the{" "}
             <a href="/calculators/home-buying-plan">Home Buying Planner</a>.
           </p>
         </section>

@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../calculators.module.css";
+import styles from "../Calculators.module.css";
 
 /* Backdrop layer: gradient base, dotted texture, gold glow, framing arcs and
    the bottom accent line. Pure CSS — the motifs sit independently on top. */

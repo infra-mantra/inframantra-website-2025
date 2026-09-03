@@ -1,0 +1,23 @@
+.popUpMark {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 1000;
+  background: #fff;
+  padding: 10px 14px;
+  border-radius: 8px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  font-size: 14px;
+  font-weight: 500;
+}
+.map > div {
+  z-index: 1;
+}
+@media screen and (max-width: 768px) {
+  .popUpMark {
+    font-size: 12px;
+  }
+  .leaflet-container.leaflet-touch-drag {
+    height: 300px !important;
+  }
+}

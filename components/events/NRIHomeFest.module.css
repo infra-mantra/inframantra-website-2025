@@ -8,12 +8,10 @@
   margin: 0px auto;
 }
 
-.yt-icon-shape .ytSpecIconShapeHost{
+.yt-icon-shape .ytSpecIconShapeHost {
   width: 50% !important;
 }
 /* Heading */
-
-
 
 .heading {
   font-size: 2rem;
@@ -28,7 +26,7 @@
   display: grid;
   grid-template-columns: 0.8fr 0.8fr 1.4fr;
   gap: 30px;
-  align-items: start;
+  align-items: flex-start;
 }
 
 /* Videos */
@@ -74,12 +72,12 @@
 .highlightName:hover::after {
   transform: scaleX(1);
 }
- .videoBox1{
-    order:-1
-  }
-   .videoBox2{
-    order:-2
-  }
+.videoBox1 {
+  order: -1;
+}
+.videoBox2 {
+  order: -2;
+}
 
 /* Tablet */
 
@@ -122,14 +120,13 @@
     line-height: 1.8;
     text-align: left;
   }
-  .videoBox1{
-    order:2
+  .videoBox1 {
+    order: 2;
   }
-   .videoBox2{
-    order:1
+  .videoBox2 {
+    order: 1;
   }
 }
-
 
 /* Small Mobile */
 

@@ -1,103 +1,99 @@
-import React,{useEffect,useState} from 'react';
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Wrapper from "../../components/UI/Wrapper";
-import PageHeader from '../../components/UI/PageHeaderNews';
-import BlogContentNews from "../../components/blogsSections/BlogContentNews";
-import ArticleSchema from "../../components/UI/ArticleSchema";
-import moment from 'moment';
+import Wrapper from "../../components/shared/Wrapper.jsx";
+import PageHeader from "../../components/shared/PageHeaderNews.jsx";
+import BlogContentNews from "../../components/blog/BlogContentNews.jsx";
+import ArticleSchema from "../../components/shared/ArticleSchema.jsx";
+import moment from "moment";
 
-
-import style from './news.module.css';
-
+import style from "./news.module.css";
 
 const BlogDetail = ({ allData }) => {
   const data = {
     title: allData?.detail?.title,
     ...(allData.detail.image && { image: allData.detail.image }),
-    date: allData.detail.date
+    date: allData.detail.date,
   };
-  
-    const router = useRouter();
-     const{detail} = allData || {};
-const { id, blogType, slug } = detail || {};
 
+  const router = useRouter();
+  const { detail } = allData || {};
+  const { id, blogType, slug } = detail || {};
 
-const [redirecting, setRedirecting] = useState(false);
+  const [redirecting, setRedirecting] = useState(false);
 
-
-useEffect(() => {
-  if (!detail) return;
-  let destination = null;
-  if (blogType) {
-    if (blogType === "Blogs") {
-      destination = `/blog/${slug}`;
-    } else if (blogType === "Infra Times") {
-      destination = `/pr/${slug}`;
-    } else if (blogType === "article") {
-      destination = `/blog/${slug}`; 
+  useEffect(() => {
+    if (!detail) return;
+    let destination = null;
+    if (blogType) {
+      if (blogType === "Blogs") {
+        destination = `/blog/${slug}`;
+      } else if (blogType === "Infra Times") {
+        destination = `/pr/${slug}`;
+      } else if (blogType === "article") {
+        destination = `/blog/${slug}`;
+      }
     }
-  }
-  if (!destination && id) {
-    const categoryId = Number(id);
+    if (!destination && id) {
+      const categoryId = Number(id);
 
-    if (categoryId === 5) {
-      destination = null;
-    } else if (categoryId === 12) {
-      destination = `/pr/${slug}`;
-    } else if (categoryId === 3 || categoryId === 4) {
-      destination = `/blog/${slug}`; 
-    } 
-  
-  }
-  if (destination) {
-    setRedirecting(true);
-    setTimeout(() => {
-      router.replace(destination);
-    }, 100);
-  }
+      if (categoryId === 5) {
+        destination = null;
+      } else if (categoryId === 12) {
+        destination = `/pr/${slug}`;
+      } else if (categoryId === 3 || categoryId === 4) {
+        destination = `/blog/${slug}`;
+      }
+    }
+    if (destination) {
+      setRedirecting(true);
+      setTimeout(() => {
+        router.replace(destination);
+      }, 100);
+    }
+  }, [id, blogType, slug, detail, router]);
 
-}, [id, blogType, slug, detail, router]);
-
-if(redirecting){
-  return ( <div style={{ padding: '2rem', textAlign: 'center' }}>
-          <div className="loader-container">
-            <div className="spinner" />
-          </div>
-        </div>)
-}
+  if (redirecting) {
+    return (
+      <div style={{ padding: "2rem", textAlign: "center" }}>
+        <div className="loader-container">
+          <div className="spinner" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     !redirecting && (
-    <Wrapper
-      title={allData.detail.metaTitle}
-      description={allData.detail.metaDescription}
-      image={allData.detail.image}
-      keyword={allData.detail.metaKeyword}
-    >
-      <ArticleSchema detail={detail} type="NewsArticle" path={`/news/${slug}`} />
-      <PageHeader classes="" date={data.date} data={data} />
-      <BlogContentNews
-        detailContent={allData.detail}
-        name={allData.detail.name}
-        recent={allData.recent}
-        data="news"
-        date={data.date}
-        slug={allData.detail.slug}
-      />
-    </Wrapper>
+      <Wrapper
+        title={allData.detail.metaTitle}
+        description={allData.detail.metaDescription}
+        image={allData.detail.image}
+        keyword={allData.detail.metaKeyword}
+      >
+        <ArticleSchema detail={detail} type="NewsArticle" path={`/news/${slug}`} />
+        <PageHeader classes="" date={data.date} data={data} />
+        <BlogContentNews
+          detailContent={allData.detail}
+          name={allData.detail.name}
+          recent={allData.recent}
+          data="news"
+          date={data.date}
+          slug={allData.detail.slug}
+        />
+      </Wrapper>
     )
   );
 };
 
+// Nothing is prerendered at build time. This route sets a short `revalidate`,
+// so any page built during `next build` is stale within seconds and gets
+// regenerated on demand anyway — prerendering all ~14 of them (plus the slug-list
+// fetches) only made the build slower without changing steady-state behaviour.
+// `fallback: "blocking"` means the first request for a slug renders on the server
+// and is cached from then on, which is what happened after the revalidate window
+// regardless.
 export async function getStaticPaths() {
-  const res = await fetch(`${process.env.apiUrl}/blog/slugList?active=true&blogType=news`);
-  const data = await res.json();
-
-  const paths = data.result.map((post) => ({
-    params: { newsId: post.slug }
-  }));
-
-  return { paths, fallback: 'blocking' };
+  return { paths: [], fallback: "blocking" };
 }
 
 export async function getStaticProps({ params }) {
@@ -111,7 +107,6 @@ export async function getStaticProps({ params }) {
     const res = await fetch(`${process.env.apiUrl}/blog/pageDetail?slug=${slug}`);
     const data = await res.json();
     const d = data?.result?.detail?.[0];
-  
 
     if (d) {
       detail = {
@@ -124,15 +119,14 @@ export async function getStaticProps({ params }) {
         date: moment(d.createdAt).format("DD/MM/YYYY"),
         name: d.writer_name,
         blogType: d.blogType?.name,
-        slug: d?.slug
-
+        slug: d?.slug,
       };
 
       relatedDataArray = (data.result.reletedBlogs || []).map((e) => ({
         _id: e._id,
         name: e.name,
         ...(e.file && { file: e.file }),
-        slug: e.slug
+        slug: e.slug,
       }));
     }
   } catch (err) {
@@ -147,12 +141,6 @@ export async function getStaticProps({ params }) {
       ).then((r) => r.json());
 
       const post = wp?.[0];
-
-     
-
-
-
-
 
       if (post) {
         const media = post._embedded?.["wp:featuredmedia"]?.[0] || {};
@@ -169,7 +157,7 @@ export async function getStaticProps({ params }) {
           image,
           date: moment(post.date).format("DD/MM/YYYY"),
           name: post._embedded?.author?.[0]?.name || "",
-          id:wp[0].categories[0],
+          id: wp[0].categories[0],
           slug: post.slug,
         };
       }
@@ -180,8 +168,9 @@ export async function getStaticProps({ params }) {
 
   // RECENT BLOGS — CMS BLOGS ONLY
   try {
-    const cmsList = await fetch(`${process.env.apiUrl}/blog/pageDetail?blogType=news&limit=10`)
-      .then((r) => r.json());
+    const cmsList = await fetch(
+      `${process.env.apiUrl}/blog/pageDetail?blogType=news&limit=10`
+    ).then((r) => r.json());
 
     const cmsRecent = (cmsList?.result?.latestBlogList || [])
       .filter((e) => e.blogType === "637b1be32e436918909f97ce")
@@ -190,7 +179,7 @@ export async function getStaticProps({ params }) {
         title: e.name,
         image: e.file?.smallFile || "",
         slug: e.slug,
-        date: moment(e.createdAt)
+        date: moment(e.createdAt),
       }));
 
     recentDataArray = [...cmsRecent];
@@ -219,7 +208,7 @@ export async function getStaticProps({ params }) {
           title: x.title?.rendered?.replace(/<[^>]*>/g, "") || "Untitled",
           image,
           slug: x.slug,
-          date: moment(x.date)
+          date: moment(x.date),
         };
       });
 
@@ -240,19 +229,19 @@ export async function getStaticProps({ params }) {
       title: r.title,
       image: r.image,
       slug: r.slug,
-      date: r.date.format("DD/MM/YYYY")
+      date: r.date.format("DD/MM/YYYY"),
     }));
   } catch (err) {
     console.warn("WP recent blogs fetch failed:", err.message);
   }
 
   if (!detail) {
-     return {
-    props: {
-      allData: null, 
-    },
-    revalidate: 30,
-  };
+    return {
+      props: {
+        allData: null,
+      },
+      revalidate: 30,
+    };
   }
 
   return {
@@ -264,11 +253,11 @@ export async function getStaticProps({ params }) {
           id: r.id,
           title: r.title,
           image: r.image,
-          slug: r.slug
-        }))
-      }
+          slug: r.slug,
+        })),
+      },
     },
-    revalidate: 10
+    revalidate: 10,
   };
 }
 

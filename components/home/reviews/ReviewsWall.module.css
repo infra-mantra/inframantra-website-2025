@@ -1,0 +1,393 @@
+.rwWall {
+  width: 100%;
+  background: linear-gradient(180deg, #fbf7ee 0%, #ffffff 62%);
+  padding: 64px 6% 72px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.rwInner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 48px;
+  align-items: center;
+}
+
+/* ---------------- Left info panel ---------------- */
+.rwLeft {
+  align-self: center;
+}
+
+.rwEyebrow {
+  display: inline-block;
+  font-family: "Lexend Deca", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #d9a23c;
+  margin-bottom: 14px;
+}
+
+.rwHeading {
+  font-family: "Lexend Deca", sans-serif;
+  font-size: 30px;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.4px;
+  color: #1a1a1a;
+  margin: 0 0 16px;
+}
+
+.rwHeading span {
+  color: #d9a23c;
+}
+
+.rwRatingRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.rwRatingText {
+  font-size: 15px;
+  color: #5a554b;
+}
+
+.rwRatingText strong {
+  color: #1d1d1f;
+}
+
+.rwStars {
+  display: inline-flex;
+  gap: 3px;
+  font-size: 17px;
+  line-height: 1;
+}
+
+.rwStarOn {
+  color: #e7b554;
+}
+
+.rwStarOff {
+  color: #e6ddca;
+}
+
+/* Fractional rating stars (e.g. exactly 4.8) — a gold layer clipped by width
+   over a grey base layer. */
+.rwRatingStars {
+  position: relative;
+  display: inline-flex;
+  line-height: 1;
+}
+
+.rwRatingStarsBase,
+.rwRatingStarsFill {
+  display: inline-flex;
+  gap: 3px;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.rwRatingStarsBase {
+  color: #e6ddca;
+}
+
+.rwRatingStarsFill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #e7b554;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.rwBadges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.rwBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: #fff;
+  border: 1px solid #f0e3c8;
+  box-shadow: 0 4px 14px rgba(120, 90, 20, 0.06);
+  border-radius: 10px;
+  padding: 9px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #5a5345;
+}
+
+.rwGBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid #e6e2ee;
+  color: #4285f4;
+  font-weight: 800;
+  font-size: 12px;
+  font-family: "Lexend Deca", sans-serif;
+}
+
+/* Unified homepage primary button (matches Submit / View All) */
+.rwCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(90deg, #e7b554, #d9a23c);
+  color: #fff;
+  font-family: "Lexend Deca", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 12px 28px;
+  border-radius: 10px;
+  text-decoration: none;
+  box-shadow: 0 8px 20px rgba(217, 162, 60, 0.32);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    filter 0.18s ease;
+}
+
+.rwCta:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.03);
+  box-shadow: 0 12px 26px rgba(217, 162, 60, 0.42);
+}
+
+/* ---------------- Right marquee columns ---------------- */
+.rwColumns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  height: 560px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 11%,
+    #000 89%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 11%, #000 89%, transparent 100%);
+}
+
+.rwColumn {
+  overflow: hidden;
+}
+
+/* The track holds the cards twice; translateY(-50%) = exactly one copy,
+   so the loop is seamless. Cards use margin-bottom (not flex gap) so the
+   two copies are spaced identically. */
+.rwTrack {
+  display: block;
+  animation: scrollUp 48s linear infinite;
+  will-change: transform;
+}
+
+.rwColDown .rwTrack {
+  animation-name: scrollDown;
+}
+
+@keyframes scrollUp {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes scrollDown {
+  from {
+    transform: translateY(-50%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.rwColumns:hover .rwTrack {
+  animation-play-state: paused;
+}
+
+/* ---------------- Card ---------------- */
+.rwCard {
+  background: #fff;
+  border: 1px solid #f1e7d4;
+  border-radius: 16px;
+  padding: 22px 22px 18px;
+  margin-bottom: 20px;
+  box-shadow: 0 6px 22px rgba(120, 90, 20, 0.07);
+  position: relative;
+}
+
+.rwCardHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.rwCardHead .rwStars {
+  font-size: 14px;
+}
+
+.rwQuote {
+  display: block;
+  font-family: Georgia, serif;
+  font-size: 44px;
+  line-height: 0.6;
+  color: #ecd29a;
+  height: 20px;
+  margin: 0;
+}
+
+.rwText {
+  font-size: 14.5px;
+  line-height: 1.62;
+  color: #4a463f;
+  margin: 0 0 18px;
+}
+
+.rwHl {
+  color: #8a6410;
+  font-weight: 700;
+}
+
+.rwCardFoot {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-top: 1px solid #f4ecdd;
+  padding-top: 14px;
+}
+
+.rwAvatar {
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e7b554, #d9a23c);
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.rwAvatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rwWho {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.rwWho strong {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1d1d1f;
+  line-height: 1.25;
+}
+
+.rwRole {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: #9a907c;
+}
+
+/* ---------------- Responsive ---------------- */
+/* Stack the info panel on top and keep the two card columns side by side
+   below it (matching the reference mobile layout). */
+@media (max-width: 1024px) {
+  .rwInner {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .rwWall {
+    padding: 40px 16px 48px;
+  }
+  .rwHeading {
+    font-size: 30px;
+  }
+  /* Keep two scrolling card columns, just shorter + tighter */
+  .rwColumns {
+    gap: 12px;
+    height: 520px;
+  }
+  .rwCard {
+    padding: 16px 15px 14px;
+    margin-bottom: 14px;
+    border-radius: 14px;
+  }
+  .rwQuote {
+    font-size: 38px;
+  }
+  .rwText {
+    font-size: 13px;
+    line-height: 1.55;
+    margin-bottom: 14px;
+  }
+  .rwCardFoot {
+    gap: 9px;
+    padding-top: 12px;
+  }
+  .rwAvatar {
+    width: 36px;
+    height: 36px;
+    font-size: 12px;
+  }
+  .rwWho strong {
+    font-size: 13px;
+  }
+  .rwRole {
+    font-size: 11px;
+  }
+  .rwCardHead .rwStars {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 420px) {
+  .rwHeading {
+    font-size: 26px;
+  }
+  .rwColumns {
+    gap: 10px;
+    height: 470px;
+  }
+  .rwCard {
+    padding: 14px 12px 12px;
+  }
+  .rwText {
+    font-size: 12.5px;
+  }
+}

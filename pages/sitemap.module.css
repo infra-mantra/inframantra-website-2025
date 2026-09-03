@@ -1,0 +1,106 @@
+/*
+ * HTML sitemap (/sitemap). Class names are prefixed `sitemap*`/`section*`/`link*`
+ * deliberately: next.config.js sets WANT_HASH = false, so CSS-module names are
+ * emitted verbatim into one global namespace and a generic name like .container
+ * would collide with the global sheets.
+ */
+
+.sitemapPage {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 4rem;
+}
+
+.sitemapHeader {
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.sitemapTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.01em;
+}
+
+.sitemapIntro {
+  font-size: 0.95rem;
+  color: #5b6270;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.sitemapSection {
+  margin-bottom: 2.5rem;
+}
+
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #1a1a1a;
+  margin: 0 0 1rem;
+}
+
+.sectionCount {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: #5b6270;
+  background: #f1f3f6;
+  border-radius: 999px;
+  padding: 0.15rem 0.55rem;
+}
+
+/* Multi-column so long lists (113 properties, 145 blog posts) stay scannable
+   without a wall of scrolling. Columns collapse to one on narrow screens. */
+.linkList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  columns: 3;
+  column-gap: 2rem;
+}
+
+.linkItem {
+  break-inside: avoid;
+  margin-bottom: 0.45rem;
+}
+
+.link {
+  font-size: 0.9rem;
+  color: #2d6cdf;
+  text-decoration: none;
+  line-height: 1.45;
+}
+
+.link:hover,
+.link:focus-visible {
+  text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+  .linkList {
+    columns: 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .sitemapPage {
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  .sitemapTitle {
+    font-size: 1.5rem;
+  }
+
+  .linkList {
+    columns: 1;
+  }
+}

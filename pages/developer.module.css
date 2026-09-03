@@ -1,0 +1,228 @@
+.aboutProjectWrapper {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.pageWidthContainerDeve {
+  margin-bottom: 2rem !important;
+}
+
+.container {
+  padding: 0 15px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* "Developers" section header (title + subtitle) */
+.sectionHeadDeveloper {
+  max-width: 1200px;
+  margin: 2.5rem auto 1.75rem;
+  padding: 0 1rem;
+  width: 100%;
+}
+.sectionHeadDeveloper h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #e7b554;
+  margin: 0 0 6px;
+  font-family: "Lexend Deca", sans-serif;
+}
+.developerSubtitle {
+  margin: 0;
+  color: #6b6b6b;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  font-family: "Lexend Deca", sans-serif;
+}
+
+/* ---- Responsive card grid (auto 3 -> 2 -> 1 columns) ---- */
+.dWraps {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 28px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* ---- Developer card ---- */
+.dItems {
+  background: #ffffff;
+  border: 1px solid #eee;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.dItems:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+.imgWrap {
+  height: 180px;
+  overflow: hidden;
+  background: #f7f7f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.imgWrap img,
+.imgWrap :global(picture) {
+  width: 100%;
+  height: 100%;
+}
+/* contain (not fill) so developer logos are never stretched */
+.imgWrap img {
+  object-fit: contain !important;
+  padding: 18px;
+}
+
+/* Content below the image fills the rest so the button sits at the bottom. */
+.infoDeveloper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 16px 18px 20px;
+}
+
+.infoDeveloper h4 {
+  color: #e7b554;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.pDeveloper {
+  font-size: 14px;
+  font-weight: 300;
+  color: #555;
+  line-height: 1.55;
+  margin: 0 0 16px;
+  min-height: 65px; /* keeps card heights even across the row */
+}
+
+.developerStats {
+  margin: auto 0 16px; /* auto-top pushes stats + button toward the bottom */
+}
+.statsRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+.statsRow p {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: #444;
+}
+.statsRow p span {
+  font-weight: 700;
+  color: #1a1a1a;
+}
+.statsRowItem2 {
+  text-align: right;
+}
+
+/* Button — simple centered container (the old fixed-size gold wrapper is dropped). */
+.WrapDeveloper {
+  display: flex;
+  justify-content: center;
+  margin-top: auto;
+}
+.developerButton {
+  background: #e7b554;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 11px 22px;
+  min-width: 190px;
+  color: #fff;
+  font-family: "Lexend Deca", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  box-shadow: 0 3px 10px rgba(231, 181, 84, 0.35);
+}
+.developerButton:hover {
+  background: #d9a23c;
+  transform: translateY(-1px);
+  box-shadow: 0 5px 14px rgba(231, 181, 84, 0.45);
+}
+
+/* ---- Loading skeleton (matches the card shape) ---- */
+.skelCard {
+  background: #ffffff;
+  border: 1px solid #eee;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+.skelImg {
+  height: 180px;
+}
+.skelBody {
+  padding: 16px 18px 20px;
+}
+.skelBlock {
+  background: #e9ecef;
+  border-radius: 6px;
+}
+.skelImg,
+.skelBlock {
+  background: #e9ecef;
+  animation: devPulse 1.4s ease-in-out infinite;
+}
+@keyframes devPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .skelImg,
+  .skelBlock {
+    animation: none;
+  }
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 768px) {
+  .sectionHeadDeveloper h2 {
+    font-size: 1.5rem;
+    margin: 1.5rem auto 1.25rem;
+  }
+  .dWraps {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .imgWrap {
+    height: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dWraps {
+    grid-template-columns: 1fr;
+  }
+  .statsRow p {
+    font-size: 12px;
+  }
+}

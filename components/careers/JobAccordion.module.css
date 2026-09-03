@@ -1,0 +1,294 @@
+.modal {
+  display: flex; /* Use flexbox */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* High z-index to ensure it appears above other elements */
+  left: 0;
+  top: 0;
+  width: 100vw; /* Full viewport width */
+  height: 100vh; /* Full viewport height */
+  background-color: rgba(0, 0, 0, 0.8); /* Black overlay with transparency */
+}
+.modalBody {
+  max-width: 800px;
+  width: 100%;
+  max-height: 90vh; /* ✅ prevents overflow */
+  overflow-y: auto; /* ✅ scroll inside */
+  scrollbar-width: none;
+  background: #fff;
+  padding: 30px 20px;
+  border-radius: 15px;
+  position: relative;
+}
+.modalBody .close {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  font-size: 30px;
+  width: 35px;
+  height: 35px;
+  padding: 5px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 0px;
+  background: #e7b554;
+  color: #fff;
+  opacity: 0.6;
+  z-index: 99;
+  transition: 0.2s ease-in-out;
+  cursor: pointer;
+}
+.form-area .form-group:last-child {
+  margin-bottom: 0;
+}
+.contact-form {
+  width: 100%;
+}
+.modalBody .close:hover {
+  opacity: 1;
+}
+.contact-form-wrap .form-group input,
+.contact-form-wrap .form-group textarea {
+  padding: 10px 15px;
+}
+.modalContent {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+.modalContent {
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+  from {
+    transform: scale(0.1);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+.jobsWrapper .accordionItem {
+  background-color: transparent;
+  border: 0;
+  border-bottom: 1px solid #d9d9d9;
+  border-radius: 0;
+  margin-bottom: 0;
+  padding: 30px 0;
+}
+
+.accordionTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 500;
+  color: #434343;
+}
+.jobsWrapper .accordionItem .jobTitle {
+  font-size: 20px;
+  color: #313131;
+  width: 40%;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-family: "Lexend Deca", sans-serif;
+}
+.jobsWrapper .accordionItem .jobLocation {
+  width: 15%;
+  font-size: 18px;
+  color: #313131;
+  font-weight: 400;
+}
+.jobsWrapper .accordionItem .jobType {
+  width: 10%;
+  font-size: 18px;
+  color: #313131;
+  font-weight: 400;
+}
+.accordionTitle .icon {
+  min-width: 28px;
+  min-height: 28px;
+  background-color: #c3972f;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  line-height: 1;
+}
+.accordionContent {
+  margin-top: 16px;
+  color: #898989;
+}
+.jobsWrapper .accordionContent {
+  margin-top: 24px;
+}
+.jobsWrapper .textWrap p {
+  color: #6e6e6e;
+}
+.formGroup input,
+.formGroup textarea {
+  width: 100%;
+  border: 1px solid #cccccc;
+  padding: 8px;
+  border-radius: 7px;
+  font-size: 15px;
+}
+.formGroup {
+  margin-bottom: 15px;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.formGroup {
+  position: relative;
+  margin: 22px 0;
+}
+.formGroup select {
+  width: 100%;
+  border: 1px solid #cccccc;
+  padding: 8px 12px; /* padding like inputs, left/right slightly larger */
+  border-radius: 7px;
+  font-size: 15px;
+  background-color: #fff; /* white background */
+  -webkit-appearance: none; /* remove default arrow on WebKit */
+  -moz-appearance: none; /* remove default arrow on Firefox */
+  appearance: none; /* standard */
+  cursor: pointer;
+  /* Optional: add some right padding to make space for custom arrow */
+  padding-right: 30px;
+  box-sizing: border-box;
+  color: #313131;
+  font-family: inherit;
+  line-height: 1.5;
+  /* For IE fallback */
+  background-image: url("data:image/svg+xml;utf8,<svg fill='none' height='12' stroke='%23313131' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' viewBox='0 0 24 24' width='12' xmlns='http://www.w3.org/2000/svg'><polyline points='6 9 12 15 18 9'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px 12px;
+}
+
+/* Optional: Remove focus outline and add subtle border color */
+.formGroup select:focus {
+  outline: none;
+  border-color: #c3972f;
+  box-shadow: 0 0 3px #c3972f;
+}
+.themeBtn {
+  position: relative;
+  background-color: #313131;
+  font-size: 16px;
+  padding: 10px 30px 12px;
+  display: inline-block;
+  border-radius: 40px;
+  border: 0;
+  font-weight: 500;
+  transition: 0.3s;
+}
+.themeBtn svg {
+  margin-left: 15px;
+}
+.themeBtn svg path {
+  transition: 0.3s;
+}
+.textWrap p {
+  font-size: 16px;
+  line-height: 24px;
+  color: #535353;
+}
+.mt3 {
+  margin-top: 1.5rem;
+}
+.themeBtn {
+  background-color: #e7b554;
+  border: none;
+  padding: 10px 20px;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+.lrnBtn,
+.themeBtn {
+  display: inline-flex;
+  align-items: center;
+}
+
+.loader {
+  width: 18px;
+  height: 18px;
+  border: 3px solid #fff;
+  border-top: 3px solid transparent;
+  border-radius: 50%;
+  display: inline-block;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (max-width: 768px) {
+  .themeBtn {
+    font-size: 0.875rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+  }
+  .modalContent {
+    width: 100%;
+  }
+  .sidebar,
+  .textWrap {
+    width: 100%;
+  }
+  .btnWrap {
+    text-align: center;
+    margin-top: 1rem;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .text-wrap p {
+    line-height: 22px;
+    font-size: 14px;
+    margin: 5px;
+  }
+  .jobs-wrapper .accordion-item .job-title {
+    width: 100%;
+    font-size: 16px;
+  }
+  .accordion-title .icon {
+    font-size: 20px;
+  }
+  .jobs-wrapper .accordion-item .job-type {
+    display: none;
+  }
+  .jobs-wrapper .accordion-item .job-location {
+    display: none;
+  }
+}

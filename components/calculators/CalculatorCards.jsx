@@ -1,15 +1,13 @@
 import React from "react";
 import Link from "next/link";
 import { FiArrowRight } from "react-icons/fi";
-import styles from "./calculators.module.css";
-import { CALCULATORS } from "./calculatorList";
+import styles from "./Calculators.module.css";
+import { CALCULATORS } from "./calculatorList.js";
 
 /* Grid of calculator cards. Used full on the hub page and filtered (exclude
    the current page) in the "Related calculators" footer on each sub-page. */
 function CalculatorCards({ exclude }) {
-  const items = exclude
-    ? CALCULATORS.filter((c) => c.slug !== exclude)
-    : CALCULATORS;
+  const items = exclude ? CALCULATORS.filter((c) => c.slug !== exclude) : CALCULATORS;
 
   return (
     <div className={styles.cardGrid}>

@@ -1,11 +1,11 @@
 /* pages/blog.js */
 
 import React, { useState } from "react";
-import Wrapper from "../components/UI/Wrapper";
-import FeaturedBlogs from "../components/blogsSections/FeaturedBlogs";
-import BlogsGrid from "../components/UI/BlogsGrid";
+import Wrapper from "../components/shared/Wrapper.jsx";
+import FeaturedBlogs from "../components/blog/FeaturedBlogs.jsx";
+import BlogsGrid from "../components/shared/BlogsGrid.jsx";
 import moment from "moment";
-import Ajax from "../components/helper/Ajax";
+import Ajax from "../components/lib/ajax.js";
 import he from "he";
 
 /* ---------------- Date Fix ---------------- */
@@ -22,9 +22,7 @@ const normalizeDate = (date) => {
 };
 
 const sortByCreatedAt = (data = []) =>
-  [...data].sort(
-    (a, b) => normalizeDate(b.createdAt) - normalizeDate(a.createdAt)
-  );
+  [...data].sort((a, b) => normalizeDate(b.createdAt) - normalizeDate(a.createdAt));
 
 function Blogs({ allData }) {
   if (!allData) return null;
@@ -63,10 +61,7 @@ function Blogs({ allData }) {
           const ogImage = p.yoast_head_json?.og_image?.[0]?.url || "";
           const img = media?.source_url || ogImage || "";
 
-          const cat =
-            p._embedded?.["wp:term"]?.[0]?.find(
-              (t) => t.taxonomy === "category"
-            ) || {};
+          const cat = p._embedded?.["wp:term"]?.[0]?.find((t) => t.taxonomy === "category") || {};
 
           return {
             _id: p.id,
@@ -79,9 +74,7 @@ function Blogs({ allData }) {
               thumbnail: img,
             },
             slug: p.slug,
-            shortDescription: he.decode(
-              p.excerpt?.rendered?.replace(/<[^>]*>/g, "").trim() || ""
-            ),
+            shortDescription: he.decode(p.excerpt?.rendered?.replace(/<[^>]*>/g, "").trim() || ""),
             writer_name: p._embedded?.author?.[0]?.name || "",
             blogType: cat.slug || "blogs",
             link: `/blog/${p.slug}`,
@@ -89,14 +82,9 @@ function Blogs({ allData }) {
         });
       }
 
-      const filteredWpBlogs = wpBlogs.filter(
-        (p) => p.blogType === "blogs"
-      );
+      const filteredWpBlogs = wpBlogs.filter((p) => p.blogType === "blogs");
 
-      const mergedBlogs = sortByCreatedAt([
-        ...cmsBlogs,
-        ...filteredWpBlogs,
-      ]);
+      const mergedBlogs = sortByCreatedAt([...cmsBlogs, ...filteredWpBlogs]);
 
       if (newBlogs?.data?.status === "SUCCESS!") {
         setPagination((p) => p + 1);
@@ -106,12 +94,7 @@ function Blogs({ allData }) {
 
           const unique = combined.filter(
             (item, index, self) =>
-              index ===
-              self.findIndex(
-                (b) =>
-                  String(b.id || b._id) ===
-                  String(item.id || item._id)
-              )
+              index === self.findIndex((b) => String(b.id || b._id) === String(item.id || item._id))
           );
 
           return sortByCreatedAt(unique);
@@ -129,10 +112,7 @@ function Blogs({ allData }) {
       title={allData?.meta?.meta_title || ""}
       description={allData?.meta?.meta_description || ""}
     >
-      <FeaturedBlogs
-        blogs={allData.featured || []}
-        PRS={allData.PRSLIST || []}
-      />
+      <FeaturedBlogs blogs={allData.featured || []} PRS={allData.PRSLIST || []} />
 
       <BlogsGrid
         blogs={posts}
@@ -167,10 +147,7 @@ export async function getStaticProps() {
       const ogImage = p.yoast_head_json?.og_image?.[0]?.url || "";
       const img = media?.source_url || ogImage || "";
 
-      const cat =
-        p._embedded?.["wp:term"]?.[0]?.find(
-          (t) => t.taxonomy === "category"
-        ) || {};
+      const cat = p._embedded?.["wp:term"]?.[0]?.find((t) => t.taxonomy === "category") || {};
 
       return {
         _id: p.id,
@@ -180,9 +157,7 @@ export async function getStaticProps() {
         createdAt: normalizeDate(p.date),
         file: { path: img, thumbnail: img },
         slug: p.slug,
-        shortDescription: he.decode(
-          p.excerpt?.rendered?.replace(/<[^>]*>/g, "").trim() || ""
-        ),
+        shortDescription: he.decode(p.excerpt?.rendered?.replace(/<[^>]*>/g, "").trim() || ""),
         writer_name: p._embedded?.author?.[0]?.name || "",
         blogType: cat.slug || "blogs",
         link: `/blog/${p.slug}`,
@@ -200,15 +175,14 @@ export async function getStaticProps() {
     typeJson = {};
 
   try {
-    const [res, newsInfo, PR, articles, Blogs, blogTypes] =
-      await Promise.all([
-        fetch(`${baseUrl}/blog/pageDetail?limit=10`),
-        fetch(`${baseUrl}/blog/pageDetail?blogType=news&limit=6`),
-        fetch(`${baseUrl}/blog/pageDetail?blogType=PressRelease&limit=6`),
-        fetch(`${baseUrl}/blog/pageDetail?blogType=article&limit=6`),
-        fetch(`${baseUrl}/blog/pageDetail?blogType=blogs&limit=10`),
-        fetch(`${baseUrl}/blog/blogType`),
-      ]);
+    const [res, newsInfo, PR, articles, Blogs, blogTypes] = await Promise.all([
+      fetch(`${baseUrl}/blog/pageDetail?limit=10`),
+      fetch(`${baseUrl}/blog/pageDetail?blogType=news&limit=6`),
+      fetch(`${baseUrl}/blog/pageDetail?blogType=PressRelease&limit=6`),
+      fetch(`${baseUrl}/blog/pageDetail?blogType=article&limit=6`),
+      fetch(`${baseUrl}/blog/pageDetail?blogType=blogs&limit=10`),
+      fetch(`${baseUrl}/blog/blogType`),
+    ]);
 
     data = await res.json();
     newsJson = await newsInfo.json();
@@ -239,7 +213,7 @@ export async function getStaticProps() {
       date: moment(p.createdAt).format("DD MMM, YYYY"),
       image: p.file?.thumbnail || p.file?.path || "",
       slug: p.slug,
-    
+
       link: p.link,
       writer_name: p.writer_name,
       createdAt: normalizeDate(p.createdAt),
@@ -269,9 +243,7 @@ export async function getStaticProps() {
 
   const PRSLIST = sortByCreatedAt([
     ...cmsPR,
-    ...wpPosts.filter(
-      (p) => p.blogType?.toLowerCase() === "pr-media"
-    ),
+    ...wpPosts.filter((p) => p.blogType?.toLowerCase() === "pr-media"),
   ]).slice(0, 6);
 
   const latestNews = sortByCreatedAt([
@@ -284,10 +256,7 @@ export async function getStaticProps() {
     ...wpPosts.filter((p) => p.blogType === "news"),
   ]);
 
-  const latest = sortByCreatedAt([
-    ...cmsLatest,
-    ...wpPosts.filter((p) => p.blogType === "blogs"),
-  ]);
+  const latest = sortByCreatedAt([...cmsLatest, ...wpPosts.filter((p) => p.blogType === "blogs")]);
 
   const metaSource = data?.result?.meta?.[0] || {};
 

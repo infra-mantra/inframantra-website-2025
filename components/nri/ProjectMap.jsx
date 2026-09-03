@@ -46,30 +46,85 @@ const LEAFLET_OVERRIDES = `
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 const PROJECTS = [
-  { id: 1, name: "Godrej Sora",       address: "Sector 53, DLF Phase 5, Gurugram",         lat: 28.436814234729656, lng: 77.09768719770094, brand: "godrej", isNew: false },
-  { id: 2, name: "Godrej Miraya",     address: "Sector 43, Sushant Lok Phase I, Gurugram", lat: 28.451171319492865, lng: 77.09014162947909, brand: "godrej", isNew: false },
- 
-  { id: 3, name: "Tulip Monsella",    address: "Golf Course Road, Sector 53, Gurugram",    lat: 28.43466940880153, lng: 77.1034432670051, brand: "tulip",  isNew: false },
-  { id: 4, name: "Tulip Melrose",     address: "Sector 70, Gurugram",                      lat:  28.394800850492956, lng: 77.01585311454005, brand: "tulip",  isNew: false },
-  { id: 5, name: "Tulip Crimson",     address: "Sector 70, SPR Road, Gurugram",            lat: 28.3975290526242, lng: 77.01590097186407, brand: "tulip",  isNew: false },
-   { id: 6, name: "BPTP Downtown 66", address: "Sector 66 , Golf Course Extn Road, Gurugram",  lat:  28.393008421438967, lng: 77.05976718503354, brand: "BPTP Downtown 66", isNew: false },
-    { id: 7, name: "DLF Arbour", address: "Sector 63 , Golf Course Extn Road, Gurugram",  lat:  28.397111016419107, lng: 77.08198520018861, brand: "BPTP Downtown 66", isNew: false },
+  {
+    id: 1,
+    name: "Godrej Sora",
+    address: "Sector 53, DLF Phase 5, Gurugram",
+    lat: 28.436814234729656,
+    lng: 77.09768719770094,
+    brand: "godrej",
+    isNew: false,
+  },
+  {
+    id: 2,
+    name: "Godrej Miraya",
+    address: "Sector 43, Sushant Lok Phase I, Gurugram",
+    lat: 28.451171319492865,
+    lng: 77.09014162947909,
+    brand: "godrej",
+    isNew: false,
+  },
+
+  {
+    id: 3,
+    name: "Tulip Monsella",
+    address: "Golf Course Road, Sector 53, Gurugram",
+    lat: 28.43466940880153,
+    lng: 77.1034432670051,
+    brand: "tulip",
+    isNew: false,
+  },
+  {
+    id: 4,
+    name: "Tulip Melrose",
+    address: "Sector 70, Gurugram",
+    lat: 28.394800850492956,
+    lng: 77.01585311454005,
+    brand: "tulip",
+    isNew: false,
+  },
+  {
+    id: 5,
+    name: "Tulip Crimson",
+    address: "Sector 70, SPR Road, Gurugram",
+    lat: 28.3975290526242,
+    lng: 77.01590097186407,
+    brand: "tulip",
+    isNew: false,
+  },
+  {
+    id: 6,
+    name: "BPTP Downtown 66",
+    address: "Sector 66 , Golf Course Extn Road, Gurugram",
+    lat: 28.393008421438967,
+    lng: 77.05976718503354,
+    brand: "BPTP Downtown 66",
+    isNew: false,
+  },
+  {
+    id: 7,
+    name: "DLF Arbour",
+    address: "Sector 63 , Golf Course Extn Road, Gurugram",
+    lat: 28.397111016419107,
+    lng: 77.08198520018861,
+    brand: "BPTP Downtown 66",
+    isNew: false,
+  },
 ];
 
-
-const GOLD      = "#dcaa4c";
+const GOLD = "#dcaa4c";
 const GOLD_DARK = "#dcaa4c";
 
 // ── Icon factory — label pin (name on a pill, tail below) ─────────────────────
 function makeLabelIcon(L, p, active) {
-  const name   = p.name;
-  const chars  = name.length;
-  const pw     = Math.max(chars * 7.8 + 24, 90);  // pill width
-  const ph     = active ? 36 : 30;                  // pill height
-  const fs     = active ? 12 : 10.5;
-  const bg     = active ? GOLD_DARK : GOLD;
-  const tw     = pw + 4;                             // total svg width (a bit wider for shadow)
-  const th     = ph + 14;                            // total svg height (pill + tail)
+  const name = p.name;
+  const chars = name.length;
+  const pw = Math.max(chars * 7.8 + 24, 90); // pill width
+  const ph = active ? 36 : 30; // pill height
+  const fs = active ? 12 : 10.5;
+  const bg = active ? GOLD_DARK : GOLD;
+  const tw = pw + 4; // total svg width (a bit wider for shadow)
+  const th = ph + 14; // total svg height (pill + tail)
 
   const html = `
     <div style="position:relative;display:flex;flex-direction:column;align-items:center;width:${tw}px;height:${th}px;">
@@ -83,11 +138,13 @@ function makeLabelIcon(L, p, active) {
         white-space:nowrap;
         padding:0 12px;
         height:${ph}px;
-        border-radius:${ph/2}px;
+        border-radius:${ph / 2}px;
         display:flex;align-items:center;justify-content:center;
-        box-shadow:${active
-          ? `0 0 0 3px rgba(200,169,110,0.35), 0 4px 16px rgba(0,0,0,0.4)`
-          : `0 3px 10px rgba(0,0,0,0.35)`};
+        box-shadow:${
+          active
+            ? `0 0 0 3px rgba(200,169,110,0.35), 0 4px 16px rgba(0,0,0,0.4)`
+            : `0 3px 10px rgba(0,0,0,0.35)`
+        };
         border: 2px solid #fff;
         transition: all 0.2s;
         position:relative;z-index:2;
@@ -104,10 +161,10 @@ function makeLabelIcon(L, p, active) {
     </div>`;
 
   return L.divIcon({
-    className:   "proj-label-icon",
+    className: "proj-label-icon",
     html,
-    iconSize:    [tw, th],
-    iconAnchor:  [tw / 2, th],
+    iconSize: [tw, th],
+    iconAnchor: [tw / 2, th],
     popupAnchor: [0, -(th + 6)],
   });
 }
@@ -139,25 +196,25 @@ function popupHTML(p) {
 
 // ── Component ─────────────────────────────────────────────────────────────────
 export default function ProjectMap() {
-  const mapRef     = useRef(null);
+  const mapRef = useRef(null);
   const leafletRef = useRef(null);
   const markersRef = useRef({});
-  const activeRef  = useRef(null);
+  const activeRef = useRef(null);
   const [activeId, setActiveId] = useState(null);
 
   // Inject Leaflet CSS + overrides once
   useEffect(() => {
     if (!document.getElementById("leaflet-css")) {
       const link = document.createElement("link");
-      link.id    = "leaflet-css";
-      link.rel   = "stylesheet";
-      link.href  = "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css";
+      link.id = "leaflet-css";
+      link.rel = "stylesheet";
+      link.href = "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css";
       document.head.appendChild(link);
     }
     if (!document.getElementById("leaflet-overrides")) {
-      const style       = document.createElement("style");
-      style.id          = "leaflet-overrides";
-      style.innerHTML   = LEAFLET_OVERRIDES;
+      const style = document.createElement("style");
+      style.id = "leaflet-overrides";
+      style.innerHTML = LEAFLET_OVERRIDES;
       document.head.appendChild(style);
     }
   }, []);
@@ -166,13 +223,13 @@ export default function ProjectMap() {
   useEffect(() => {
     if (leafletRef.current) return;
 
-    const script  = document.createElement("script");
-    script.src    = "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js";
+    const script = document.createElement("script");
+    script.src = "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js";
     script.onload = () => {
       const L = window.L;
 
       const map = L.map(mapRef.current, {
-        zoomControl:      true,
+        zoomControl: true,
         attributionControl: false,
       }).setView([28.44, 77.05], 12);
 
@@ -191,9 +248,9 @@ export default function ProjectMap() {
       ).addTo(map);
 
       // Add markers
-      PROJECTS.forEach(p => {
+      PROJECTS.forEach((p) => {
         const m = L.marker([p.lat, p.lng], {
-          icon:        makeLabelIcon(L, p, false),
+          icon: makeLabelIcon(L, p, false),
           zIndexOffset: 1000,
         })
           .addTo(map)
@@ -211,7 +268,7 @@ export default function ProjectMap() {
         markersRef.current[p.id] = m;
       });
 
-      const bounds = L.latLngBounds(PROJECTS.map(p => [p.lat, p.lng]));
+      const bounds = L.latLngBounds(PROJECTS.map((p) => [p.lat, p.lng]));
       map.fitBounds(bounds.pad(0.22));
     };
 
@@ -219,18 +276,22 @@ export default function ProjectMap() {
   }, []);
 
   function handleMarkerClick(id, L, map) {
-    const _L   = L   || leafletRef.current?.L;
+    const _L = L || leafletRef.current?.L;
     const _map = map || leafletRef.current?.map;
     if (!_L || !_map) return;
 
     const prev = activeRef.current;
     if (prev && markersRef.current[prev]) {
       markersRef.current[prev].setIcon(
-        makeLabelIcon(_L, PROJECTS.find(x => x.id === prev), false)
+        makeLabelIcon(
+          _L,
+          PROJECTS.find((x) => x.id === prev),
+          false
+        )
       );
     }
 
-    const p = PROJECTS.find(x => x.id === id);
+    const p = PROJECTS.find((x) => x.id === id);
     activeRef.current = id;
     setActiveId(id);
 
@@ -247,28 +308,28 @@ export default function ProjectMap() {
 
   return (
     <div>
-  <div className={`${styles.wrapperMap} ${styles.containerMap}`}>
-      {/* Map */}
-      <div className={styles.mapWrap}>
-        <div ref={mapRef} className={styles.map} />
-      </div>
+      <div className={`${styles.wrapperMap} ${styles.containerMap}`}>
+        {/* Map */}
+        <div className={styles.mapWrap}>
+          <div ref={mapRef} className={styles.map} />
+        </div>
 
-      {/* Project tabs */}
-      <div className={styles.tabBar}>
-        {PROJECTS.map(p => {
-          const isActive = activeId === p.id;
-          return (
-            <button
-              key={p.id}
-              className={`${styles.tab} ${isActive ? styles.tabActive : ""}`}
-              onClick={() => handleTabClick(p.id)}
-            >
-              {p.name}
-            </button>
-          );
-        })}
+        {/* Project tabs */}
+        <div className={styles.tabBar}>
+          {PROJECTS.map((p) => {
+            const isActive = activeId === p.id;
+            return (
+              <button
+                key={p.id}
+                className={`${styles.tab} ${isActive ? styles.tabActive : ""}`}
+                onClick={() => handleTabClick(p.id)}
+              >
+                {p.name}
+              </button>
+            );
+          })}
+        </div>
       </div>
-    </div>
     </div>
   );
 }

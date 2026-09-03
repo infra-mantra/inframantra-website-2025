@@ -43,6 +43,14 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
 
+  // `next dev` and `next build` share one build directory, so running a
+  // production build while a dev server is live deletes .next/static/development
+  // out from under it and every dev request starts 500ing
+  // ("Cannot find module ./chunks/..."). Setting NEXT_DIST_DIR lets a production
+  // build go somewhere else — e.g. NEXT_DIST_DIR=.next-prod npm run build — so
+  // the two can coexist. Unset, the default .next is used exactly as before.
+  distDir: process.env.NEXT_DIST_DIR || ".next",
+
   // Skip per-page file-tracing (.nft.json). It's only needed for standalone/
   // serverless output — not for a normal `next start` deploy — and on Windows
   // it opens thousands of @mui/icons-material files at once, causing EMFILE.

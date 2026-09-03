@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FiChevronDown } from "react-icons/fi";
-import styles from "./calculators.module.css";
+import styles from "./Calculators.module.css";
 
 /* Animated FAQ accordion. Answers stay in the DOM (collapsed via max-height)
    so the text remains crawlable and stays in sync with the FAQPage JSON-LD
@@ -18,10 +18,7 @@ function FaqBlock({ faqs, heading = "Frequently Asked Questions" }) {
       {faqs.map((f, i) => {
         const isOpen = openIndex === i;
         return (
-          <div
-            className={`${styles.faqItem} ${isOpen ? styles.faqOpen : ""}`}
-            key={i}
-          >
+          <div className={`${styles.faqItem} ${isOpen ? styles.faqOpen : ""}`} key={i}>
             <button
               type="button"
               className={styles.faqQ}

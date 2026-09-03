@@ -1,7 +1,7 @@
-'use client';
+"use client";
 import { useState } from "react";
 import styles from "./StickySidebar.module.css";
-import PopUpForm from '../detailSections/POPUPCTA';
+import PopUpForm from "../shared/forms/POPUPCTA.jsx";
 
 /* ── Icons ───────────────────────── */
 const WhatsAppIcon = () => (
@@ -50,31 +50,14 @@ const FormIcon = () => (
 
 const InfoIcon = () => (
   <svg viewBox="0 0 32 32" fill="none">
-    <circle
-      cx="16"
-      cy="16"
-      r="12"
-      stroke="currentColor"
-      strokeWidth="1.8"
-    />
-    <path
-      d="M16 14V22"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-    />
-    <circle
-      cx="16"
-      cy="10"
-      r="1.5"
-      fill="currentColor"
-    />
+    <circle cx="16" cy="16" r="12" stroke="currentColor" strokeWidth="1.8" />
+    <path d="M16 14V22" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    <circle cx="16" cy="10" r="1.5" fill="currentColor" />
   </svg>
 );
 
 /* ── Main Component ───────────────── */
-export default function StickySidebar({name,  url = "" }) {
-
+export default function StickySidebar({ name, url = "" }) {
   const [hovered, setHovered] = useState(null);
   const [popForm, setPopForm] = useState(false);
 
@@ -115,61 +98,33 @@ export default function StickySidebar({name,  url = "" }) {
   return (
     <>
       <div className={styles.sidebarst}>
-
         {ITEMS.map((item, i) => (
           <a
             key={item.id}
             href={item.href || "#"}
             target={item.target}
-            rel={
-              item.target === "_blank"
-                ? "noopener noreferrer"
-                : undefined
-            }
-            className={`${styles.itemst} ${
-              hovered === item.id
-                ? styles.itemHoveredst
-                : ""
-            }`}
-            onMouseEnter={() =>
-              setHovered(item.id)
-            }
-            onMouseLeave={() =>
-              setHovered(null)
-            }
+            rel={item.target === "_blank" ? "noopener noreferrer" : undefined}
+            className={`${styles.itemst} ${hovered === item.id ? styles.itemHoveredst : ""}`}
+            onMouseEnter={() => setHovered(item.id)}
+            onMouseLeave={() => setHovered(null)}
             onClick={(e) => {
-
               if (item.action === "popup") {
                 e.preventDefault();
                 setPopForm(true);
               }
-
             }}
           >
-
-            <span className={styles.iconWrapst}>
-              {item.icon}
-            </span>
+            <span className={styles.iconWrapst}>{item.icon}</span>
 
             <span className={styles.labelst}>
               {Array.isArray(item.label)
-                ? item.label.map((line, j) => (
-                    <span key={j}>
-                      {line}
-                    </span>
-                  ))
+                ? item.label.map((line, j) => <span key={j}>{line}</span>)
                 : item.label}
             </span>
 
-            {i < ITEMS.length - 1 && (
-              <span
-                className={styles.dividerst}
-              ></span>
-            )}
-
+            {i < ITEMS.length - 1 && <span className={styles.dividerst}></span>}
           </a>
         ))}
-
       </div>
 
       {!url && (
@@ -179,9 +134,8 @@ export default function StickySidebar({name,  url = "" }) {
           name={name}
           phone="+91 86 9800 9900"
           id="nriGetInTouch"
-          countryCode='us'
+          countryCode="us"
         />
-
       )}
     </>
   );

@@ -1,45 +1,60 @@
-import React, { useState, useEffect, useRef } from 'react';
-import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router';
-import axios from 'axios';
-import PropertyCardSkeleton, { FeaturedSkeleton, FaqSkeleton, ContentSkeleton, ListingPageSkeleton } from '../../../components/newComponents/propertyListingDesktopNav/propertyListing/PropertyCardSkeleton';
-// import { cityNames } from '../../../components/newComponents/propertyListingPage/propertyListingPriceFilter/dropDownMenuConstants.jsx';
+import React, { useState, useEffect, useRef } from "react";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
+import axios from "axios";
+import PropertyCardSkeleton, {
+  FeaturedSkeleton,
+  FaqSkeleton,
+  ContentSkeleton,
+  ListingPageSkeleton,
+} from "../../../components/property-listing/PropertyCardSkeleton.jsx";
+import pll from "../listingLayout.module.css";
+import { optimizedSrc } from "../../../components/lib/imageUrl.js";
+// import { cityNames } from '../../../components/property-listing/dropDownMenuConstants.js';
 // Lazy load components
-const PropertyListingCard = dynamic(() =>
-  import('../../../components/newComponents/propertyListingDesktopNav/propertyListing/propertyListingCard.jsx')
+const PropertyListingCard = dynamic(
+  () => import("../../../components/property-listing/PropertyListingCard.jsx")
 );
-const ListingFilters = dynamic(() =>
-  import('../../../components/newComponents/propertyListingDesktopNav/propertyListingSearch/ListingFilters.jsx')
+const ListingFilters = dynamic(
+  () => import("../../../components/property-listing/search/ListingFilters.jsx")
 );
-const SearchBar = dynamic(() =>
-  import('../../../components/newComponents/propertyListingDesktopNav/propertyListingSearch/searBar.jsx')
+const SearchBar = dynamic(() => import("../../../components/property-listing/search/SearchBar.jsx"));
+const PropertyListingCardMobile = dynamic(
+  () => import("../../../components/property-listing/PropertyListingCardMobile.jsx")
 );
-const PropertyListingCardMobile = dynamic(() =>
-  import('../../../components/newComponents/propertyListingPage/propertyListingCardMobile.jsx')
+const CustomBackdrop = dynamic(() => import("../../../components/shared/Backdrop.jsx"));
+const Wrapper = dynamic(() => import("../../../components/shared/Wrapper.jsx"));
+const FaqSection = dynamic(
+  () => import("../../../components/property-listing/content/FaqSection.jsx")
 );
-const CustomBackdrop = dynamic(() =>
-  import('../../../components/newComponents/backdrop/backdrop.jsx')
+const Content = dynamic(
+  () => import("../../../components/property-listing/content/AboutSection.jsx")
 );
-const Wrapper = dynamic(() => import('../../../components/UI/Wrapper'));
-const FaqSection = dynamic(() =>
-  import('../../../components/newComponents/propertyListingDesktopNav/Content/faqSection.jsx')
+const PropertyPageFloatingContact = dynamic(
+  () => import("../../../components/property-detail/PropertyPageFloatingContact.jsx")
 );
-const Content = dynamic(() =>
-  import('../../../components/newComponents/propertyListingDesktopNav/Content/aboutSection.jsx')
-);
-const PropertyPageFloatingContact = dynamic(() =>
-  import('../../../components/newComponents/propertyData/propertyRightSection/propertyPageSections/propertyPageFloatingContact.jsx')
-);
-const PremiumProperty = dynamic(() =>
-  import('../../../components/newComponents/propertyListingDesktopNav/propertyListing/premiumProperty.jsx')
+const PremiumProperty = dynamic(
+  () => import("../../../components/property-listing/PremiumProperty.jsx")
 );
 
 const PAGE_SIZE = 10; // results per page (kept in sync with the backend `limit`)
 
-const PropertyListingPage = () => {
+// Server-side twin of the component's buildSearchQuery for the default view
+// (unfiltered, page 1, relevance). getStaticProps cannot see query-string
+// filters, so it seeds exactly this case — the one crawlers and cold visitors
+// land on. Filtered URLs still fetch on the client, as before.
+const initialSearchQuery = (nameVal) => {
+  const p = new URLSearchParams();
+  p.set("q", nameVal);
+  p.set("page", 1);
+  p.set("limit", PAGE_SIZE);
+  return p.toString();
+};
+
+const PropertyListingPage = ({ initialHits = null, initialTotal = 0, initialQuery = "" }) => {
   const router = useRouter();
   const { type, name } = router.query;
-  const nameLc = (typeof name === 'string' ? name : '').toLowerCase(); // city/search term is always lowercase
+  const nameLc = (typeof name === "string" ? name : "").toLowerCase(); // city/search term is always lowercase
 
   const [isDesktop, setIsDesktop] = useState(true);
   // Desktop-first defaults so the desktop branch renders with the correct (row,
@@ -49,28 +64,37 @@ const PropertyListingPage = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalProperties, setTotalProperties] = useState(0);
+  const [totalProperties, setTotalProperties] = useState(initialTotal);
 
-  const [propertyData, setPropertyData] = useState([]);
-  const [loading, setLoading] = useState(true); // start in loading state so the empty "No Properties Found" never flashes before the first fetch
+  // Seeded from getStaticProps so the cards are in the SSR HTML. Previously this
+  // started empty and the first render had no results at all: LCP waited on the
+  // JS bundle, hydration and a /search round trip before a single card existed.
+  const [propertyData, setPropertyData] = useState(initialHits || []);
+  // Only start in the loading state when there is nothing to show yet, so the
+  // seeded cards are never replaced by a skeleton on first paint.
+  const [loading, setLoading] = useState(!initialHits);
 
   const [backdropOpen, setBackdropOpen] = useState(false);
-  const [selectedPropertyName, setSelectedPropertyName] = useState('');
+  const [selectedPropertyName, setSelectedPropertyName] = useState("");
   // filters + sort + page now drive backend fetches (no client-side filtering/slicing)
-  const [filters, setFilters] = useState({ status: [], unitType: [], configuration: [], priceRange: [null, null] });
-  const [sort, setSort] = useState('relevance');
+  const [filters, setFilters] = useState({
+    status: [],
+    unitType: [],
+    configuration: [],
+    priceRange: [null, null],
+  });
+  const [sort, setSort] = useState("relevance");
   const [premiumProperties, setPremiumProperties] = useState([]);
   const [openClosefilter, setOpenCloseFilter] = useState(false);
-  const [city, setCity] = useState('');
-  const [locality, setLocality] = useState('');
-  const [sublocality, setSubLocality] = useState('');
-  const [state, setState] = useState('');
-  const[readyToMove, setReadyToMove] = useState(0);
-  const [highRise,setHighRise] = useState(0);
+  const [city, setCity] = useState("");
+  const [locality, setLocality] = useState("");
+  const [sublocality, setSubLocality] = useState("");
+  const [state, setState] = useState("");
+  const [readyToMove, setReadyToMove] = useState(0);
+  const [highRise, setHighRise] = useState(0);
 
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
-
 
   const [title, setTitle] = useState("");
   const [metadescription, setMetaDescription] = useState("");
@@ -78,10 +102,10 @@ const PropertyListingPage = () => {
 
   const contentRef = useRef(null);
   const filterRef = useRef(null);
-   const divRef = useRef(null);
+  const divRef = useRef(null);
   const [height, setHeight] = useState(0);
-  const lastQueryRef = useRef(''); // guards against duplicate consecutive list fetches (double loading)
-  const initKeyRef = useRef(''); // ensures the per-location initial load runs exactly once
+  const lastQueryRef = useRef(""); // guards against duplicate consecutive list fetches (double loading)
+  const initKeyRef = useRef(""); // ensures the per-location initial load runs exactly once
 
   // ✅ Detect screen size
   useEffect(() => {
@@ -91,8 +115,8 @@ const PropertyListingPage = () => {
     };
 
     checkScreenWidth();
-    window.addEventListener('resize', checkScreenWidth);
-    return () => window.removeEventListener('resize', checkScreenWidth);
+    window.addEventListener("resize", checkScreenWidth);
+    return () => window.removeEventListener("resize", checkScreenWidth);
   }, []);
 
   // ✅ Warm the content chunks while the first fetch is still in flight. These sections
@@ -100,27 +124,25 @@ const PropertyListingPage = () => {
   // otherwise download only when `loading` flips to false — at which point they re-suspend
   // and the page skeleton flashes a SECOND time. Preloading here keeps the load to one pass.
   useEffect(() => {
-    import('../../../components/newComponents/propertyListingDesktopNav/Content/aboutSection.jsx');
-    import('../../../components/newComponents/propertyListingDesktopNav/propertyListing/propertyListingCard.jsx');
-    import('../../../components/newComponents/propertyListingPage/propertyListingCardMobile.jsx');
-    import('../../../components/newComponents/propertyListingDesktopNav/propertyListing/premiumProperty.jsx');
-    import('../../../components/newComponents/propertyListingDesktopNav/Content/faqSection.jsx');
+    import("../../../components/property-listing/content/AboutSection.jsx");
+    import("../../../components/property-listing/PropertyListingCard.jsx");
+    import("../../../components/property-listing/PropertyListingCardMobile.jsx");
+    import("../../../components/property-listing/PremiumProperty.jsx");
+    import("../../../components/property-listing/content/FaqSection.jsx");
   }, []);
 
   // ✅ Sync listing content height with filters
- 
- 
 
   // ✅ Smooth scroll to top when filters/search change
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   }, [type, name, currentPage, filters, sort]);
 
   const handleClose = () => {
     setBackdropOpen(false);
-    setSelectedPropertyName('');
+    setSelectedPropertyName("");
   };
 
   const handleOpen = (name) => {
@@ -131,23 +153,29 @@ const PropertyListingPage = () => {
   // Build the /search query string (filters + pagination + sort) sent to the backend
   const buildSearchQuery = (nameVal, pageVal, f, sortVal) => {
     const p = new URLSearchParams();
-    p.set('q', nameVal);
-    p.set('page', pageVal);
-    p.set('limit', PAGE_SIZE);
-    if (sortVal && sortVal !== 'relevance') p.set('sort', sortVal);
-    if (f.status?.length) p.set('status', f.status.join(','));
-    if (f.configuration?.length) p.set('configuration', f.configuration.join(','));
-    if (f.unitType?.length) p.set('unitType', f.unitType.join(','));
+    p.set("q", nameVal);
+    p.set("page", pageVal);
+    p.set("limit", PAGE_SIZE);
+    if (sortVal && sortVal !== "relevance") p.set("sort", sortVal);
+    if (f.status?.length) p.set("status", f.status.join(","));
+    if (f.configuration?.length) p.set("configuration", f.configuration.join(","));
+    if (f.unitType?.length) p.set("unitType", f.unitType.join(","));
     const [min, max] = f.priceRange || [];
-    if (min) p.set('minPrice', Math.round(Number(min) * 1e7));
-    if (max) p.set('maxPrice', Math.round(Number(max) * 1e7));
+    if (min) p.set("minPrice", Math.round(Number(min) * 1e7));
+    if (max) p.set("maxPrice", Math.round(Number(max) * 1e7));
     return p.toString();
   };
 
   // ---- URL <-> filter/sort/page state (shareable, bookmarkable URLs) ----
   const parseUrlState = (query) => {
-    const csv = (v) => (typeof v === 'string' && v.trim() ? v.split(',').map((s) => s.trim()).filter(Boolean) : []);
-    const num = (v) => (v !== undefined && v !== '' && !isNaN(Number(v)) ? Number(v) : null);
+    const csv = (v) =>
+      typeof v === "string" && v.trim()
+        ? v
+            .split(",")
+            .map((s) => s.trim())
+            .filter(Boolean)
+        : [];
+    const num = (v) => (v !== undefined && v !== "" && !isNaN(Number(v)) ? Number(v) : null);
     return {
       filters: {
         status: csv(query.status),
@@ -155,7 +183,7 @@ const PropertyListingPage = () => {
         configuration: csv(query.config),
         priceRange: [num(query.min), num(query.max)],
       },
-      sort: typeof query.sort === 'string' && query.sort ? query.sort : 'relevance',
+      sort: typeof query.sort === "string" && query.sort ? query.sort : "relevance",
       page: query.page && !isNaN(Number(query.page)) ? Math.max(1, Number(query.page)) : 1,
     };
   };
@@ -163,15 +191,18 @@ const PropertyListingPage = () => {
   // Reflect the current filters/sort/page in the URL (shallow → no reload) so it can be shared
   const syncUrl = (f, sortVal, pageVal) => {
     const q = { type, name: nameLc };
-    if (f.status?.length) q.status = f.status.join(',');
-    if (f.unitType?.length) q.unit = f.unitType.join(',');
-    if (f.configuration?.length) q.config = f.configuration.join(',');
+    if (f.status?.length) q.status = f.status.join(",");
+    if (f.unitType?.length) q.unit = f.unitType.join(",");
+    if (f.configuration?.length) q.config = f.configuration.join(",");
     const [min, max] = f.priceRange || [];
     if (min) q.min = min;
     if (max) q.max = max;
-    if (sortVal && sortVal !== 'relevance') q.sort = sortVal;
+    if (sortVal && sortVal !== "relevance") q.sort = sortVal;
     if (pageVal && pageVal > 1) q.page = pageVal;
-    router.replace({ pathname: router.pathname, query: q }, undefined, { shallow: true, scroll: false });
+    router.replace({ pathname: router.pathname, query: q }, undefined, {
+      shallow: true,
+      scroll: false,
+    });
   };
 
   // ✅ Fetch ONE page of results — filtering + pagination + sorting all happen on the backend
@@ -195,7 +226,7 @@ const PropertyListingPage = () => {
       setPropertyData(hits);
       setTotalProperties(data.total || 0);
     } catch (err) {
-      console.error('Failed to fetch properties:', err);
+      console.error("Failed to fetch properties:", err);
       setPropertyData([]);
       setTotalProperties(0);
     } finally {
@@ -207,25 +238,27 @@ const PropertyListingPage = () => {
   const fetchStats = async (nameVal) => {
     if (!nameVal) return;
     try {
-      const res = await fetch(`${process.env.apiUrl1}/search?q=${encodeURIComponent(nameVal)}&stats=1&limit=1`);
+      const res = await fetch(
+        `${process.env.apiUrl1}/search?q=${encodeURIComponent(nameVal)}&stats=1&limit=1`
+      );
       const data = await res.json();
       const first = data.hits?.[0];
       if (first) {
-        const cityName = first.city?.name || '';
+        const cityName = first.city?.name || "";
         setCity(cityName);
-        setLocality(first.locality?.name || '');
-        setSubLocality(first.subLocality?.name || '');
-        setState(first.state?.name || '');
+        setLocality(first.locality?.name || "");
+        setSubLocality(first.subLocality?.name || "");
+        setState(first.state?.name || "");
         if (cityName) fetchCityData(cityName);
       }
       if (data.stats) {
-        setMinPrice(data.stats.minPrice || '');
-        setMaxPrice(data.stats.maxPrice || '');
+        setMinPrice(data.stats.minPrice || "");
+        setMaxPrice(data.stats.maxPrice || "");
         setReadyToMove(data.stats.readyToMove || 0);
         setHighRise(data.stats.highRise || 0);
       }
     } catch (err) {
-      console.error('Failed to fetch stats:', err);
+      console.error("Failed to fetch stats:", err);
     }
   };
 
@@ -233,7 +266,9 @@ const PropertyListingPage = () => {
   const handleFilterChange = (filterTypes, values) => {
     const map = {};
     if (Array.isArray(filterTypes)) {
-      filterTypes.forEach((t, i) => { map[t] = values[i]; });
+      filterTypes.forEach((t, i) => {
+        map[t] = values[i];
+      });
     } else {
       map[filterTypes] = values;
     }
@@ -276,16 +311,18 @@ const PropertyListingPage = () => {
       const response = await axios.get(`${process.env.apiUrl1}/property/premium/${city}`);
       setPremiumProperties(response.data.data || []);
     } catch (err) {
-      console.error('Error fetching premium properties:', err);
+      console.error("Error fetching premium properties:", err);
     }
   };
-  
- 
 
   // ✅ Normalize city URLs to lowercase (cosmetic; the backend lowercases the query anyway)
   useEffect(() => {
-    if (type === 'city' && name && name !== nameLc) {
-      router.replace({ pathname: router.pathname, query: { ...router.query, name: nameLc } }, undefined, { shallow: true, scroll: false });
+    if (type === "city" && name && name !== nameLc) {
+      router.replace(
+        { pathname: router.pathname, query: { ...router.query, name: nameLc } },
+        undefined,
+        { shallow: true, scroll: false }
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type, name]);
@@ -305,315 +342,284 @@ const PropertyListingPage = () => {
     setFilters(f);
     setSort(s);
     setCurrentPage(pg);
-    lastQueryRef.current = ''; // new location → always fetch fresh (never dedupe the first load)
+    // If the server already seeded this exact query, record it so fetchList's
+    // dedupe skips the redundant first request. A filtered/paged URL builds a
+    // different query string and still fetches.
+    lastQueryRef.current = initialHits ? initialQuery : "";
     fetchStats(nameLc);
     fetchList(nameLc, pg, f, s);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type, nameLc]);
 
-useEffect(() => {
-  if (!type || !name) return;
+  useEffect(() => {
+    if (!type || !name) return;
 
-  let area = "";
-  let parentArea = "";
-  let newTitle = "";
-  let newDescription = "";
-  let newKeyword = "";
+    let area = "";
+    let parentArea = "";
+    let newTitle = "";
+    let newDescription = "";
+    let newKeyword = "";
 
-  // ---------- STATE ----------
-  if (type === "state" && state) {
-    area = state;
+    // ---------- STATE ----------
+    if (type === "state" && state) {
+      area = state;
 
-    newTitle = ` Properties in ${area} | Real Estate in ${area}`;
-    newDescription =` Find ${totalProperties}+ properties for sale on ${area}, ${state}, only on Inframantra. Explore a wide range of ${area} Property options including 2BHK to 5BHK apartments and penthouses.`
-    newKeyword = `Properties in ${city}, ${state}, Properties,  Property for sale in ${city}, ${state}`;
-  }
+      newTitle = ` Properties in ${area} | Real Estate in ${area}`;
+      newDescription = ` Find ${totalProperties}+ properties for sale on ${area}, ${state}, only on Inframantra. Explore a wide range of ${area} Property options including 2BHK to 5BHK apartments and penthouses.`;
+      newKeyword = `Properties in ${city}, ${state}, Properties,  Property for sale in ${city}, ${state}`;
+    }
 
-  // ---------- CITY ----------
-  else if (type === "city" && city) {
-    area = city;
-    parentArea = state;
-    newTitle = `Properties in ${area}, ${parentArea} | Real Estate in ${area}`;
-    newDescription =` Find ${totalProperties}+ properties for sale on ${area}, ${state}, only on Inframantra. Explore a wide range of ${area} Property options including 2BHK to 5BHK apartments and penthouses.`
-    newKeyword = `Properties in ${city}, ${state}, Properties,  Property for sale in ${city}, ${state}`;
-  
-  }
+    // ---------- CITY ----------
+    else if (type === "city" && city) {
+      area = city;
+      parentArea = state;
+      newTitle = `Properties in ${area}, ${parentArea} | Real Estate in ${area}`;
+      newDescription = ` Find ${totalProperties}+ properties for sale on ${area}, ${state}, only on Inframantra. Explore a wide range of ${area} Property options including 2BHK to 5BHK apartments and penthouses.`;
+      newKeyword = `Properties in ${city}, ${state}, Properties,  Property for sale in ${city}, ${state}`;
+    }
 
-  // ---------- LOCALITY ----------
-  else if (type === "locality" && locality && city) {
-    area = locality;
-    parentArea = city;
-    newTitle = `Properties in ${area}, ${parentArea} | Real Estate in ${area}`;
-    newDescription =` Find ${totalProperties}+ properties for sale on ${area}, ${parentArea}, only on Inframantra. Explore a wide range of ${area} Property options including 2BHK to 5BHK apartments and penthouses.`
-    newKeyword = `Properties in ${area}, ${parentArea}, Properties,  Property for sale in ${area}, ${parentArea}`;
-  }
+    // ---------- LOCALITY ----------
+    else if (type === "locality" && locality && city) {
+      area = locality;
+      parentArea = city;
+      newTitle = `Properties in ${area}, ${parentArea} | Real Estate in ${area}`;
+      newDescription = ` Find ${totalProperties}+ properties for sale on ${area}, ${parentArea}, only on Inframantra. Explore a wide range of ${area} Property options including 2BHK to 5BHK apartments and penthouses.`;
+      newKeyword = `Properties in ${area}, ${parentArea}, Properties,  Property for sale in ${area}, ${parentArea}`;
+    }
 
-  // ---------- SUB LOCALITY ----------
-  else if (type === "subLocality" && sublocality && locality && city) {
-    area = sublocality;
-    parentArea = `${locality}, ${city}`;
-    newTitle = `Properties in ${area}, ${parentArea} | Real Estate in ${area}`;
-    newDescription =` Find ${totalProperties}+ properties for sale on ${area}, ${parentArea}, only on Inframantra. Explore a wide range of ${area} Property options including 2BHK to 5BHK apartments and penthouses.`
-    newKeyword = `Properties in ${area}, ${parentArea}, Properties,  Property for sale in ${area}, ${parentArea}`;
-  }
+    // ---------- SUB LOCALITY ----------
+    else if (type === "subLocality" && sublocality && locality && city) {
+      area = sublocality;
+      parentArea = `${locality}, ${city}`;
+      newTitle = `Properties in ${area}, ${parentArea} | Real Estate in ${area}`;
+      newDescription = ` Find ${totalProperties}+ properties for sale on ${area}, ${parentArea}, only on Inframantra. Explore a wide range of ${area} Property options including 2BHK to 5BHK apartments and penthouses.`;
+      newKeyword = `Properties in ${area}, ${parentArea}, Properties,  Property for sale in ${area}, ${parentArea}`;
+    } else if (type === "search") {
+      newTitle = `Search Results | Inframantra`;
+      newDescription = `Explore premium 2–5 BHK apartments, villas, and penthouses with Inframantra. Enjoy world-class amenities, great connectivity, and luxury living for modern families.`;
+      newKeyword = `property search, real estate search, buy property, inframantra search results`;
+    }
 
-  else if (type === "search") {
-    newTitle = `Search Results | Inframantra`;
-    newDescription = `Explore premium 2–5 BHK apartments, villas, and penthouses with Inframantra. Enjoy world-class amenities, great connectivity, and luxury living for modern families.`;
-    newKeyword = `property search, real estate search, buy property, inframantra search results`;
-  }
-
-  setTitle(newTitle);
-  setMetaDescription(newDescription);
-  setKeyword(newKeyword);
-
-}, [
-  type,
-  name,
-  city,
-  locality,
-  sublocality,
-  state,
-  totalProperties,  
-]);
-
+    setTitle(newTitle);
+    setMetaDescription(newDescription);
+    setKeyword(newKeyword);
+  }, [type, name, city, locality, sublocality, state, totalProperties]);
 
   const handleCloseFilterToggle = () => setOpenCloseFilter((prev) => !prev);
 
   return (
-         <Wrapper
-  title={title}
-  description={metadescription}
-  keyword={keyword}
+    <Wrapper
+      title={title}
+      description={metadescription}
+      keyword={keyword}
+      // Must match exactly what the first card renders, now that cards request an
+      // optimizer-sized image — preloading the raw CDN original would download a
+      // ~450 KB file the page never uses and still leave the real LCP image
+      // undiscovered until the card mounts.
+      preloadImage={optimizedSrc(initialHits?.[0]?.imageGallery?.[0]?.url, 384)}
       {...(type === "search" ? { seo: "noindex, follow" } : {})}
       type={type}
       name={name}
->
-  {isDesktop ? (
-  <div
-    className="Wrapper"
-    style={{
-      display: "flex",
-      flexDirection: isMobile ? "column" : "row",
-      gap: "1rem",
-      alignItems: "flex-start",
-      maxWidth: "1280px",
-      margin: "0 auto",
-    }}
-  >
-    {/* LEFT FILTERS */}
-    <div
-      className="listingFilters"
-      ref={filterRef}
-      style={{
-        padding: "1rem",
-        width: isMobile ? "100%" : "30%",
-        flexShrink: 0,
-        position: isMobile ? "static" : "sticky",
-        top: "1rem",
-        alignSelf: "flex-start",
-        maxHeight: isMobile ? "none" : "calc(100vh - 2rem)",
-        overflowY: isMobile ? "visible" : "auto",
-      }}
     >
-      <ListingFilters
-        onFilterChange={handleFilterChange}
-        type={type}
-        name={name}
-      />
-    </div>
+      {isDesktop ? (
+        <div className={`Wrapper ${pll.pllLayout}`}>
+          {/* LEFT FILTERS */}
+          <div className={`listingFilters ${pll.pllFilters}`} ref={filterRef}>
+            <ListingFilters onFilterChange={handleFilterChange} type={type} name={name} />
+          </div>
 
-      <div
-        className="listingScrollbar"
-        ref={contentRef}
-        style={{
-          flex: 1,
-          minWidth: 0,
-          marginTop: "1rem",
-        }}
-      >
-        <SearchBar
-          onSearch={setPropertyData}
-          onSortChange={handleSortChange}
-          isDesktop={isDesktop}
-          isMobile={isMobile}
-          name={name}
-          type={type}
-        />
+          <div className={`listingScrollbar ${pll.pllResults}`} ref={contentRef}>
+            <SearchBar
+              onSearch={setPropertyData}
+              onSortChange={handleSortChange}
+              isDesktop={isDesktop}
+              isMobile={isMobile}
+              name={name}
+              type={type}
+            />
 
-        {loading ? (
-          <ContentSkeleton />
-        ) : (
-          <Content
-            totalProperties={totalProperties}
-            currentPage={currentPage}
-            maxPrice={maxPrice}
-            minPrice={minPrice}
-            type={type}
-            name={name}
-            state={state}
-            city={city}
-            sublocality={sublocality}
-            locality={locality}
-          />
-        )}
+            {loading ? (
+              <ContentSkeleton />
+            ) : (
+              <Content
+                totalProperties={totalProperties}
+                currentPage={currentPage}
+                maxPrice={maxPrice}
+                minPrice={minPrice}
+                type={type}
+                name={name}
+                state={state}
+                city={city}
+                sublocality={sublocality}
+                locality={locality}
+              />
+            )}
 
-        {loading ? (
-          <PropertyCardSkeleton count={4} />
-        ) : (
-          <PropertyListingCard
-            name={name ? decodeURIComponent(name) : ""}
-            type={type}
-            onOpenBackdrop={handleOpen}
-            propertyData={propertyData}
-            totalProperties={totalProperties}
-            currentPage={currentPage}
-            pageSize={PAGE_SIZE}
-            onPageChange={handlePageChange}
-            loading={loading}
-          />
-        )}
+            {loading ? (
+              <PropertyCardSkeleton count={4} />
+            ) : (
+              <PropertyListingCard
+                name={name ? decodeURIComponent(name) : ""}
+                type={type}
+                onOpenBackdrop={handleOpen}
+                propertyData={propertyData}
+                totalProperties={totalProperties}
+                currentPage={currentPage}
+                pageSize={PAGE_SIZE}
+                onPageChange={handlePageChange}
+                loading={loading}
+              />
+            )}
 
-        {loading ? (
-          <FeaturedSkeleton count={4} />
-        ) : (
-          <>
-            <h2
-              style={{
-                fontFamily: "'Lexend Deca', sans-serif",
-                fontSize: "1rem",
-                fontWeight: 700,
-                color: "#1a1a1a",
-                letterSpacing: "0.02em",
-                lineHeight: 1.3,
-                textTransform: "uppercase",
-                margin: "1.5rem 0 1.25rem",
-              }}
-            >
-              Featured Properties
-            </h2>
-            <PremiumProperty premiumProperties={premiumProperties} />
-          </>
-        )}
+            {loading ? (
+              <FeaturedSkeleton count={4} />
+            ) : (
+              <>
+                <h2 className={pll.pllSectionTitle}>Featured Properties</h2>
+                <PremiumProperty premiumProperties={premiumProperties} />
+              </>
+            )}
 
-        {loading ? (
-          <FaqSkeleton count={5} />
-        ) : (
-          <FaqSection
-            totalProperties={totalProperties}
-            type={type}
-            name={name}
-            state={state}
-            city={city}
-            locality={locality}
-            subLocality={sublocality}
-            highRise={highRise}
-            readyToMove={readyToMove}
-          />
-        )}
-      </div>
-  </div>
-) : (
-  /* ---------------- MOBILE VIEW ---------------- */
-  <>
-    <SearchBar
-      onSearch={setPropertyData}
-      onSortChange={handleSortChange}
-      isDesktop={isDesktop}
-      isMobile={isMobile}
-      handleCloseFilterToggle={handleCloseFilterToggle}
-      name={name}
-      type={name}
-    />
-
-    <ListingFilters
-      onFilterChange={handleFilterChange}
-      openClosefilter={openClosefilter}
-      handleCloseFilterToggle={handleCloseFilterToggle}
-      name={name}
-      type={name}
-    />
-
-        {loading ? (
-          <ContentSkeleton />
-        ) : (
-          <Content
-            totalProperties={totalProperties}
-            currentPage={currentPage}
-            maxPrice={maxPrice}
-            minPrice={minPrice}
-            type={type}
-            name={name}
-            state={state}
-            city={city}
-            locality={locality}
-            sublocality={sublocality}
-            isMobile={isMobile}
+            {loading ? (
+              <FaqSkeleton count={5} />
+            ) : (
+              <FaqSection
+                totalProperties={totalProperties}
+                type={type}
+                name={name}
+                state={state}
+                city={city}
+                locality={locality}
+                subLocality={sublocality}
+                highRise={highRise}
+                readyToMove={readyToMove}
+              />
+            )}
+          </div>
+        </div>
+      ) : (
+        /* ---------------- MOBILE VIEW ---------------- */
+        <>
+          <SearchBar
+            onSearch={setPropertyData}
             onSortChange={handleSortChange}
-          />
-        )}
-
-        {loading ? (
-          <PropertyCardSkeleton count={4} />
-        ) : (
-          <PropertyListingCardMobile
-            propertyData={propertyData}
-            onOpenBackdrop={handleOpen}
-            totalProperties={totalProperties}
-            currentPage={currentPage}
-            pageSize={PAGE_SIZE}
-            onPageChange={handlePageChange}
-          />
-        )}
-
-        {loading ? (
-          <FeaturedSkeleton count={4} />
-        ) : (
-          <>
-            <h2
-              style={{
-                fontFamily: "'Lexend Deca', sans-serif",
-                fontSize: "1rem",
-                fontWeight: 700,
-                color: "#1a1a1a",
-                letterSpacing: "0.02em",
-                lineHeight: 1.3,
-                textTransform: "uppercase",
-                margin: "1.5rem 0 1.25rem",
-              }}
-            >
-              Featured Properties
-            </h2>
-            <PremiumProperty premiumProperties={premiumProperties} />
-          </>
-        )}
-
-        {loading ? (
-          <FaqSkeleton count={5} />
-        ) : (
-          <FaqSection
-            totalProperties={totalProperties}
-            type={type}
+            isDesktop={isDesktop}
+            isMobile={isMobile}
+            handleCloseFilterToggle={handleCloseFilterToggle}
             name={name}
-            state={state}
-            city={city}
-            locality={locality}
-            subLocality={sublocality}
-            highRise={highRise}
-            readyToMove={readyToMove}
+            type={name}
           />
-        )}
-  </>
-)}
 
+          <ListingFilters
+            onFilterChange={handleFilterChange}
+            openClosefilter={openClosefilter}
+            handleCloseFilterToggle={handleCloseFilterToggle}
+            name={name}
+            type={name}
+          />
 
-{/* BACKDROP ALWAYS OUTSIDE */}
-<CustomBackdrop open={backdropOpen} onClose={handleClose}>
-  <PropertyPageFloatingContact name={selectedPropertyName} />
-</CustomBackdrop>
+          {loading ? (
+            <ContentSkeleton />
+          ) : (
+            <Content
+              totalProperties={totalProperties}
+              currentPage={currentPage}
+              maxPrice={maxPrice}
+              minPrice={minPrice}
+              type={type}
+              name={name}
+              state={state}
+              city={city}
+              locality={locality}
+              sublocality={sublocality}
+              isMobile={isMobile}
+              onSortChange={handleSortChange}
+            />
+          )}
 
-      </Wrapper>
+          {loading ? (
+            <PropertyCardSkeleton count={4} />
+          ) : (
+            <PropertyListingCardMobile
+              propertyData={propertyData}
+              onOpenBackdrop={handleOpen}
+              totalProperties={totalProperties}
+              currentPage={currentPage}
+              pageSize={PAGE_SIZE}
+              onPageChange={handlePageChange}
+            />
+          )}
+
+          {loading ? (
+            <FeaturedSkeleton count={4} />
+          ) : (
+            <>
+              <h2 className={pll.pllSectionTitle}>Featured Properties</h2>
+              <PremiumProperty premiumProperties={premiumProperties} />
+            </>
+          )}
+
+          {loading ? (
+            <FaqSkeleton count={5} />
+          ) : (
+            <FaqSection
+              totalProperties={totalProperties}
+              type={type}
+              name={name}
+              state={state}
+              city={city}
+              locality={locality}
+              subLocality={sublocality}
+              highRise={highRise}
+              readyToMove={readyToMove}
+            />
+          )}
+        </>
+      )}
+
+      {/* BACKDROP ALWAYS OUTSIDE */}
+      <CustomBackdrop open={backdropOpen} onClose={handleClose}>
+        <PropertyPageFloatingContact name={selectedPropertyName} />
+      </CustomBackdrop>
+    </Wrapper>
   );
 };
 
 export default PropertyListingPage;
+
+// Rendered on demand then cached (ISR), matching /property/[propertyId]. paths
+// is empty so the build does not fetch every city/locality up front; the first
+// request for a listing renders it on the server and later ones are served from
+// the cache.
+export async function getStaticPaths() {
+  return { paths: [], fallback: "blocking" };
+}
+
+export async function getStaticProps({ params }) {
+  const nameVal = (params?.name || "").toLowerCase();
+  const query = initialSearchQuery(nameVal);
+
+  try {
+    const res = await fetch(`${process.env.apiUrl1}/search?${query}`);
+    const data = await res.json();
+    let hits = data.hits || [];
+    // Same safety net as fetchList: if the backend ignores pagination, trim.
+    if (hits.length > PAGE_SIZE) hits = hits.slice(0, PAGE_SIZE);
+
+    return {
+      props: {
+        initialHits: hits,
+        initialTotal: data.total || 0,
+        initialQuery: query,
+      },
+      revalidate: 60,
+    };
+  } catch (err) {
+    // Fall back to the previous client-fetch behaviour rather than failing the page.
+    console.error("Listing getStaticProps failed:", err);
+    return {
+      props: { initialHits: null, initialTotal: 0, initialQuery: "" },
+      revalidate: 60,
+    };
+  }
+}

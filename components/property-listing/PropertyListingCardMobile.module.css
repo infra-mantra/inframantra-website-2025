@@ -1,0 +1,699 @@
+.propertyListingCardMobile {
+  background-color: rgb(255, 255, 255);
+  color: rgba(0, 0, 0, 0.87);
+  box-shadow:
+    rgba(0, 0, 0, 0.2) 0px 5px 5px -3px,
+    rgba(0, 0, 0, 0.14) 0px 8px 10px 1px,
+    rgba(0, 0, 0, 0.12) 0px 3px 14px 2px;
+  width: 100%;
+  height: 32vh;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 10px;
+  padding: 2%;
+  overflow: hidden;
+}
+.propertyImageChip {
+  font-family: "Lexend Deca", Roboto, Helvetica, Arial, sans-serif;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  color: rgb(255, 255, 255);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  padding: 4px 12px;
+  border-radius: 6px;
+  background: #0ca92e;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+.propertyImageChipLogo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.95); /* white backing so light developer logos stay visible */
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  padding: 5px 8px;
+}
+.propertyLogo {
+  width: 4.5rem;
+  max-height: 26px;
+  object-fit: scale-down;
+}
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 25px 0;
+}
+
+.paginationCircle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid #d4af37; /* gold border */
+  background: #fff;
+  color: #333;
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.paginationCircle:hover {
+  background: #f7f3e9;
+}
+/* .chipImage {
+    position: "absolute";
+    width: "30%";
+    height: "auto";
+    borderRadius: "5px";
+    right: "-5px";
+    top: "1px";
+    color: "#fff";
+    fontSize: "15px";
+    fontWeight: "700";
+    padding: "5px";
+    display: "flex";
+    alignItems: "center";
+    justifyContent: "center";
+  }
+  .dimension{
+    width: "5rem";
+    objectFit: "scale-down";
+  } */
+
+.activePage {
+  background: #f7f3e9;
+  border: 2px solid #d4af37;
+  color: #d4af37;
+  font-weight: 600;
+}
+
+.paginationArrow {
+  border: none;
+  background: transparent;
+  color: #d4af37;
+  font-size: 5rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.paginationArrow:hover {
+  color: #b89025;
+}
+
+.paginationArrow:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Property Listing Card  Mobile */
+.clampTwoLines {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Number of lines to show */
+  -webkit-box-orient: vertical;
+  margin: 0px 0px;
+
+  color: #000;
+  font-family: "Lexend Deca";
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+}
+
+.description {
+  width: 100%;
+}
+
+.clampTwoLines {
+  color: #555;
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+
+/* RERA trust badge on the mobile card — sits inline, right after the name.
+   Scoped under the location block to beat its `> *` font-size/margin reset. */
+.propertyListPageMobileDetailLocation .mobileReraBadge {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  gap: 3px;
+  margin: 0 0 0 7px;
+  font-family: "Lexend Deca", sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  color: #0b6e21;
+  background: #eef7f0;
+  border: 1px solid #cfe3d5;
+  padding: 3px 7px;
+  border-radius: 5px;
+  white-space: nowrap;
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .propertyListingCardMobile {
+    animation: none;
+  }
+}
+
+/* NOTE: desktop-card structure classes (LeftSection/RightSection/HeaderFlex/etc.)
+   were removed from this mobile module. They were unused by the mobile card and,
+   because CSS modules are unhashed (global), collided with the desktop card's
+   identically-named classes and broke the desktop listing layout. */
+
+.propertyPageListingPaginationWrapper {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  height: 10vh;
+}
+
+@media (max-width: 768px) {
+  .propertyListingSearchBarWrapper {
+    width: 60%;
+  }
+
+  .propertyListPageSectionHeaderFlex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    margin-bottom: 20px;
+  }
+
+  .propertyListPageMobileDetailDescription {
+    font-size: 12px;
+    width: 95%;
+    text-align: center;
+    margin: 0;
+  }
+
+  .propertyListPageMobileDetailLocation > p:nth-child(2) {
+    font-size: 14px;
+  }
+
+  .propertyListingFilterBtn {
+    padding: 10px;
+    border-radius: 10px;
+    width: 25vw;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 16px;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    background: #fff;
+    border: 0.5px solid rgb(221, 219, 219);
+  }
+  .propertyListingCardMobile {
+    box-shadow: 0 0 3.525px 0.928px rgba(0, 0, 0, 0.25);
+  }
+}
+.propertyListingPageMobileFilterWrapper {
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  z-index: 100;
+}
+
+.propertyListingPageMobileFilterHeader {
+  border-bottom: 1px solid grey;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  width: 100%;
+  height: 8%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+}
+
+.propertyListingPageMobileFilterHeaderValue {
+  color: #0b6e21;
+  font-size: 25px;
+  width: 60%;
+  text-align: center;
+}
+
+.propertyListingPageMobileFilterHeaderReset {
+  width: 20%;
+}
+
+.propertyListingPageMobileFilterHeaderSwipeBar {
+  position: absolute;
+  width: 40%;
+  height: 4px;
+  top: -10px;
+  background: rgb(0, 0, 0);
+}
+
+.propertyListingPageMobileFilterUnitType {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.propertyListingPageMobileFilterValueWrapper {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  align-items: center;
+  height: 85vh;
+}
+
+.propertyListingPageMobileFilterUnitTypeHeader {
+  font-size: 20px;
+  font-weight: 500;
+  margin: 12px 0px;
+}
+
+.propertyListingMobileFilterFlex {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  width: 105%;
+}
+
+.priceFliterFlex {
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.filtersPriceRangeWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 85%;
+}
+
+.mobileFilterBtn {
+  margin-top: 10px;
+}
+.propertyListingPageMobileFilterTabWrapper {
+  border-radius: 5px;
+  height: 20px;
+  width: max-content;
+  padding: 5px 12px;
+  border: 1px solid rgb(215, 212, 212);
+  font-size: 12px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.filter-tab-clicked {
+  background: #0b6e21;
+  color: #fff;
+}
+
+.swipable_drawer {
+  background-color: rgb(255, 255, 255);
+  color: rgba(0, 0, 0, 0.87);
+  box-shadow:
+    rgba(0, 0, 0, 0.2) 0px 8px 10px -5px,
+    rgba(0, 0, 0, 0.14) 0px 16px 24px 2px,
+    rgba(0, 0, 0, 0.12) 0px 6px 30px 5px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  z-index: 1200;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+  max-height: 100%;
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  flex: 1 0 auto;
+  outline: 0px;
+}
+
+.propertyListingPageIcon {
+  user-select: none;
+  height: 1em;
+  display: inline-block;
+  fill: currentcolor;
+  flex-shrink: 0;
+  font-size: 1rem;
+  color: #dcaa4c;
+  width: 15px;
+  margin-right: 4px;
+  transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+@media screen and (max-width: 768px) {
+  .FlexValueMobile {
+    flex-wrap: wrap;
+  }
+  .FlexValueMobile p {
+    font-size: 10px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .propertyListingCardMobile {
+    height: auto;
+    width: 92%;
+    margin: 0 auto 16px;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0px;
+    position: relative;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    animation: cardIn 0.45s ease both;
+    transition:
+      box-shadow 0.25s ease,
+      transform 0.18s ease;
+  }
+  .propertyListingCardMobile:hover {
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.14);
+  }
+  .propertyListingCardMobile:active {
+    transform: scale(0.99);
+  }
+  .mobileListSectionFlex {
+    flex-direction: column;
+    height: auto;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+  }
+}
+
+.mobileListCardWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  overflow: scroll;
+  height: auto;
+  overflow-x: hidden;
+}
+
+.mobileListSectionFlex {
+  width: 100vw;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* (dead desktop-card structure classes removed here too — see note above) */
+
+.propertyPageListingPaginationWrapper {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  column-gap: 6px;
+  align-items: center;
+  height: 10vh;
+}
+.propertyPageListingPaginationWrapper .pagination-button {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  border: 1px solid #b8b8b8;
+}
+.pagination-button.active {
+  border: 1px solid #e7b554;
+  color: #e7b554;
+}
+.pagination-buttons {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  font-family: sans-serif;
+  padding: 25px;
+  background: #fff;
+  color: #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pagination-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.searchbutton:hover {
+  background: #f5b800 !important;
+}
+
+.searchbutton {
+  background: #cea24b;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+@media (max-width: 768px) {
+  .propertyPageListNavWrapper {
+    height: 8vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    overflow: visible;
+  }
+  .searchbutton {
+    width: 50%;
+    font-size: 12px;
+    justify-content: center;
+  }
+
+  .propertyListingSearchBarWrapper {
+    width: 60%;
+  }
+
+  .mobileListSectionFlex {
+    flex-direction: column;
+    height: auto;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+  }
+  .propertyListPageMobileImgSection {
+    height: 200px;
+    width: 100%;
+    position: relative;
+  }
+  .propertyListPageMobileDetailSection {
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 12px 14px 14px;
+    margin-top: 0;
+    gap: 0.7rem;
+  }
+  .propertyListPageMobileDetailLocation > * {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 300;
+  }
+  .propertyListPageMobileDetailLocation > h3 {
+    margin: 0;
+    font-size: 12px;
+  }
+
+  .propertyListPageSectionHeaderFlex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    margin-bottom: 20px;
+  }
+
+  .propertyListPageMobileImgSection > img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .propertyListPageMobileDetailHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .propertyListPageMobileDetailLocation {
+    max-width: 62%;
+  }
+
+  .propertyListPageMobileDetailLocation:last-child {
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .propertyListPageMobileDetailLocation:last-child > h3 {
+    justify-content: flex-end;
+  }
+
+  .propertyListPageMobileDetailLocation:last-child > p {
+    color: #8a8a8a;
+    font-size: 12px;
+  }
+
+  .propertyListPageMobileDetailLocation > * {
+    margin: 0;
+  }
+
+  .propertyListPageMobileDetailLocation > h4 {
+    font-weight: 800;
+  }
+
+  .propertyListPageMobileDetailLocation > p {
+    font-size: 12px;
+    color: #0b6e21;
+  }
+
+  .propertyListPageSectionHeaderLocation {
+    margin: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .propertyListPageMobileDetailDescription {
+    font-size: 12px;
+    width: 95%;
+    text-align: center;
+    margin: 0;
+  }
+
+  .propertyListPageMobileDetailOverview {
+    background: #faf6ec;
+    border: 1px solid #f0e6cf;
+    font-size: 12px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 4px;
+    width: 100%;
+    margin: 0;
+  }
+
+  .propertyListPageMobileDetailOverview > * {
+    margin: 0;
+  }
+
+  .propertyListPageMobileDetailOverview p {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: #2a2a2a;
+    white-space: nowrap;
+  }
+
+  .propertyListPageMobileDetailBtnWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    width: 95%;
+    gap: 10px;
+  }
+
+  .propertyListPageMobileDetailOverviewValueFlex {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+    padding: 0 2px;
+  }
+
+  .propertyListPageMobileDetailOverviewValueFlex:not(:last-child) {
+    border-right: 1px solid #ece0c4;
+  }
+
+  .propertyListPageMobileDetailLocation > p:nth-child(2) {
+    font-size: 14px;
+  }
+
+  .propertyListingFilterBtn {
+    padding: 10px;
+    border-radius: 10px;
+    width: 25vw;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 16px;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    background: #fff;
+    border: 0.5px solid rgb(221, 219, 219);
+  }
+
+  .propertyListingSelectWrapper {
+    width: 25vw;
+  }
+  .propertyListingSelect {
+    height: 30px;
+    width: 25vw;
+  }
+}

@@ -1,27 +1,27 @@
-import React, { useState } from 'react';
-import styles from './FAQ.module.css';
-import PopUpForm from '../detailSections/POPUPCTA'
+import React, { useState } from "react";
+import styles from "./FAQ.module.css";
+import PopUpForm from "../shared/forms/POPUPCTA.jsx";
 
 const faqs = [
   {
-    question: 'WHAT MAKES INFRAMANTRA A PREFERRED CHOICE FOR NRIS IN THE USA?',
+    question: "WHAT MAKES INFRAMANTRA A PREFERRED CHOICE FOR NRIS IN THE USA?",
     answer:
-      'Inframantra offers personalized guidance, transparent processes, and access to properties from top developers in India. Our client-first approach ensures a smooth and trustworthy investment experience tailored to your needs and expectations.',
+      "Inframantra offers personalized guidance, transparent processes, and access to properties from top developers in India. Our client-first approach ensures a smooth and trustworthy investment experience tailored to your needs and expectations.",
   },
   {
-    question: 'CAN NRIS BUY PROPERTY IN INDIA REMOTELY THROUGH INFRAMANTRA?',
+    question: "CAN NRIS BUY PROPERTY IN INDIA REMOTELY THROUGH INFRAMANTRA?",
     answer:
-      'Yes, Inframantra enables NRIs to complete property purchases from the USA through virtual tours, digital documentation, and dedicated assistance at every step.',
+      "Yes, Inframantra enables NRIs to complete property purchases from the USA through virtual tours, digital documentation, and dedicated assistance at every step.",
   },
   {
-    question: 'WHAT DOCUMENTS DO NRIS TYPICALLY NEED TO PURCHASE PROPERTY IN INDIA?',
+    question: "WHAT DOCUMENTS DO NRIS TYPICALLY NEED TO PURCHASE PROPERTY IN INDIA?",
     answer:
-      'NRIs generally need a valid passport, PAN card, proof of overseas address, and relevant financial documents. Additional paperwork may vary depending on the transaction. For more information, please connect with an Inframantra property advisor.',
+      "NRIs generally need a valid passport, PAN card, proof of overseas address, and relevant financial documents. Additional paperwork may vary depending on the transaction. For more information, please connect with an Inframantra property advisor.",
   },
   {
-    question: 'DOES INFRAMANTRA HANDLE THE ENTIRE PROPERTY BUYING PROCESS?',
+    question: "DOES INFRAMANTRA HANDLE THE ENTIRE PROPERTY BUYING PROCESS?",
     answer:
-      'Yes, Inframantra provides end-to-end support, from property selection to hassle-free documentation, transaction management to post-purchase assistance, and key-handover to portfolio management.',
+      "Yes, Inframantra provides end-to-end support, from property selection to hassle-free documentation, transaction management to post-purchase assistance, and key-handover to portfolio management.",
   },
 ];
 
@@ -42,27 +42,23 @@ const CheckIcon = () => (
     <polyline points="2,6 5,9 10,3" />
   </svg>
 );
-const FAQ = ({name}) => {
+const FAQ = ({ name }) => {
   const [openIndex, setOpenIndex] = useState(null);
 
   const toggle = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
-    const [popForm, setPopForm] = useState(false);
-         const onClickOff = (val) =>setPopForm(val)
-         const handleform = () => setPopForm(true);
+  const [popForm, setPopForm] = useState(false);
+  const onClickOff = (val) => setPopForm(val);
+  const handleform = () => setPopForm(true);
 
   return (
-    <section className={styles.sectionfaq} >
+    <section className={styles.sectionfaq}>
       {/* Top Row */}
       <div className={styles.topRow}>
         {/* Heading */}
         <div className={styles.headingWrapper}>
-        
-          <h2 className={styles.heading}>
-            Frequently Asked Questions
-             
-          </h2>
+          <h2 className={styles.heading}>Frequently Asked Questions</h2>
         </div>
 
         {/* Support */}
@@ -72,9 +68,7 @@ const FAQ = ({name}) => {
           </div>
           <div className={styles.supportText}>
             <p className={styles.supportTitle}>24/7 Support</p>
-            <p className={styles.supportDesc}>
-              Got questions? Our team is just a click away!
-            </p>
+            <p className={styles.supportDesc}>Got questions? Our team is just a click away!</p>
           </div>
         </div>
 
@@ -98,26 +92,24 @@ const FAQ = ({name}) => {
                 aria-expanded={isOpen}
               >
                 <span className={styles.questionText}>{faq.question}</span>
-                <span className={`${styles.plusIcon} ${isOpen ? styles.open : ''}`}>
-                  +
-                </span>
+                <span className={`${styles.plusIcon} ${isOpen ? styles.open : ""}`}>+</span>
               </button>
-              <div className={`${styles.answer} ${isOpen ? styles.open : ''}`}>
+              <div className={`${styles.answer} ${isOpen ? styles.open : ""}`}>
                 <p className={styles.answerText}>{faq.answer}</p>
               </div>
             </div>
           );
         })}
       </div>
-       <PopUpForm
+      <PopUpForm
         popUpenable={popForm}
         onClickOff={onClickOff}
         text="TO UNLOCK EXCLUSIVE DEALS"
         name={name}
         phone="+91 86 9800 9900"
         id="nriFaq"
-        countryCode='us'
-        />
+        countryCode="us"
+      />
     </section>
   );
 };

@@ -1,0 +1,107 @@
+/* ========================
+   Navbar Container
+======================== */
+.section-navbar {
+  position: sticky; /* default relative */
+  top: 0px;
+  z-index: 10;
+  background: #fff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+/* Fixed state */
+.section-navbar.fixed {
+  position: fixed; /* becomes fixed on scroll */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+/* ========================
+   Tabs List
+======================== */
+.section-tabs {
+  display: flex;
+  justify-content: space-around; /* scrollable on small screens */
+  align-items: center;
+  list-style: none;
+  padding: 12px 20px;
+  margin: 0;
+  gap: 40px;
+  overflow-x: auto;
+  scroll-behavior: smooth; /* smooth horizontal scroll */
+}
+
+/* Hide scrollbar on all browsers */
+.section-tabs::-webkit-scrollbar {
+  display: none;
+}
+.section-tabs {
+  -ms-overflow-style: none; /* IE 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* ========================
+   Tab Items
+======================== */
+.section-tabs li {
+  font-size: 16px;
+  font-weight: 600;
+  color: #555;
+  cursor: pointer;
+  position: relative;
+  padding: 8px 4px;
+  white-space: nowrap;
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+/* Active tab text & transform */
+.section-tabs li.active {
+  color: #e7b554;
+  font-weight: 700;
+  transform: translateY(-1px);
+}
+
+/* Underline animation */
+.section-tabs li::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0;
+  height: 3px;
+  background: #f4c430;
+  transform: translateX(-50%);
+  transition: width 0.35s ease;
+}
+
+.section-tabs li.active::after {
+  width: 100%;
+}
+
+/* ========================
+   Mobile Responsiveness
+======================== */
+@media (max-width: 768px) {
+  .section-tabs {
+    justify-content: flex-start;
+    gap: 24px;
+    padding: 10px 16px;
+  }
+  .section-navbar {
+    top: 6%;
+  }
+
+  .section-tabs li {
+    font-size: 14px;
+    padding: 6px 4px;
+  }
+  .section-navbar.fixed {
+    position: fixed;
+  }
+}

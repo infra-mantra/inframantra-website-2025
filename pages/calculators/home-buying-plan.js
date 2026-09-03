@@ -1,12 +1,12 @@
 import React from "react";
-import Wrapper from "../../components/UI/Wrapper";
-import PlanCalculator from "../../components/calculators/PlanCalculator";
-import CalcHero from "../../components/calculators/CalcHero";
-import HowItWorks from "../../components/calculators/HowItWorks";
-import LeadForm from "../../components/calculators/LeadForm";
-import RelatedCalculators from "../../components/calculators/RelatedCalculators";
-import FaqBlock from "../../components/calculators/FaqBlock";
-import styles from "../../components/calculators/calculators.module.css";
+import Wrapper from "../../components/shared/Wrapper.jsx";
+import PlanCalculator from "../../components/calculators/PlanCalculator.jsx";
+import CalcHero from "../../components/calculators/CalcHero.jsx";
+import HowItWorks from "../../components/calculators/HowItWorks.jsx";
+import LeadForm from "../../components/calculators/LeadForm.jsx";
+import RelatedCalculators from "../../components/calculators/RelatedCalculators.jsx";
+import FaqBlock from "../../components/calculators/FaqBlock.jsx";
+import styles from "../../components/calculators/Calculators.module.css";
 
 const faqs = [
   {
@@ -75,13 +75,12 @@ function HomeBuyingPlanPage() {
         <section className={styles.seoContent}>
           <h2>From home-buying dream to a concrete plan</h2>
           <p>
-            Most people know the home they want but not the path to afford it.
-            This planner bridges that gap. In <strong>goal mode</strong>, you set
-            a target home price and a date, and it calculates the exact amount to
-            save every month for your 20% down payment — compounding your savings
-            at the return you expect. In <strong>affordability mode</strong>, you
-            enter what you earn and can comfortably pay, and it reveals the
-            maximum property price within reach today.
+            Most people know the home they want but not the path to afford it. This planner bridges
+            that gap. In <strong>goal mode</strong>, you set a target home price and a date, and it
+            calculates the exact amount to save every month for your 20% down payment — compounding
+            your savings at the return you expect. In <strong>affordability mode</strong>, you enter
+            what you earn and can comfortably pay, and it reveals the maximum property price within
+            reach today.
           </p>
           <h3>Why a down payment plan matters</h3>
           <ul>
@@ -91,9 +90,8 @@ function HomeBuyingPlanPage() {
           </ul>
           <p>
             When your plan is ready, confirm the instalment with our{" "}
-            <a href="/calculators/home-loan-emi">EMI Calculator</a> and check the
-            loan your salary supports with the{" "}
-            <a href="/calculators/loan-eligibility">Eligibility Calculator</a>.
+            <a href="/calculators/home-loan-emi">EMI Calculator</a> and check the loan your salary
+            supports with the <a href="/calculators/loan-eligibility">Eligibility Calculator</a>.
           </p>
         </section>
 

@@ -1,0 +1,148 @@
+.toc {
+  width: 22%;
+  position: sticky;
+  top: 20px;
+}
+.secP {
+  padding: 0px 0;
+}
+
+.blogContentWrap,
+.flexLayout {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+.toc a {
+  text-decoration: none;
+  color: #c78911;
+  padding: 0.5rem 0;
+  display: block;
+}
+.textWrap .content p {
+  text-align: justify;
+}
+.textWrap p {
+  font-size: 16px;
+  line-height: 24px;
+  color: #535353;
+}
+
+.blogContentWrap .sidebar {
+  margin-left: 0;
+}
+
+.sidebar {
+  width: 23% !important;
+  position: sticky;
+  top: 20px;
+  align-self: flex-start;
+}
+.sdCardNews {
+  width: 100%;
+  padding: 18px;
+  position: relative;
+  top: 0;
+  border: 1px solid #efe7d4;
+  border-radius: 12px;
+  background: #fffdf8;
+}
+.sdCardHeadNews h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #e7b554;
+  margin: 0 0 6px;
+}
+.sdLatestBlogsNews {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin-top: 10px;
+  text-align: left;
+}
+.sdBlgItemNews {
+  display: block;
+  width: 100%;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+  color: #333;
+  font-family: Lexend Deca;
+  text-transform: capitalize;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.sdBlgItemNews:hover {
+  color: #e7b554;
+}
+.sdBlgItemNews:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.sdBlgItemNews p {
+  display: none; /* date is empty on news recents */
+}
+.sdBlgItemNews h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: inherit;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+p.date {
+  color: #000;
+  font-family: Lexend Deca;
+  font-size: 19.194px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-transform: capitalize;
+}
+.writtenBy span {
+  color: #b8860b;
+  font-size: 20px;
+  display: flex;
+  flex-direction: row;
+}
+.blogContentWrap .textWrap {
+  width: 52%;
+}
+.toc ul {
+  list-style: none;
+  padding: 0;
+}
+
+@media (max-width: 768px) {
+  .blogBannerContent {
+    width: 100%;
+  }
+  .toc {
+    display: none;
+  }
+
+  .blogContentWrap,
+  .flexLayout {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .blogContentWrap .textWrap {
+    width: 100%;
+  }
+  .blogContentWrap .sidebar {
+    width: 100%;
+    margin-left: 0px;
+  }
+  .sidebar {
+    position: relative;
+    width: 100% !important;
+  }
+  .sdCardNews {
+    top: 0px;
+  }
+}

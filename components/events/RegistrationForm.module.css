@@ -16,7 +16,7 @@
 
 /* Gold corner accents */
 .formCard::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -1px;
   left: -1px;
@@ -27,7 +27,7 @@
 }
 
 .formCard::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -1px;
   right: -1px;
@@ -213,7 +213,7 @@
 }
 
 .submitBtn::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(135deg, #d4a64a 0%, #d4a64a 100%);
@@ -313,13 +313,13 @@
   opacity: 0.5;
   margin: 0 0 14px;
 }
-  .react-tel-input .form-control{
-       border: none;
-       width: 100%;
-      border-bottom: 1;
-      border-bottom: 1px solid #e8e4dc
-  };
- /* On focus (important) */
+.react-tel-input .form-control {
+  border: none;
+  width: 100%;
+  border-bottom: 1;
+  border-bottom: 1px solid #e8e4dc;
+}
+/* On focus (important) */
 .react-tel-input .form-control:focus {
   border: none;
   border-bottom: 1px solid #c9a961; /* active color */
@@ -355,7 +355,7 @@
     font-size: 11px;
     letter-spacing: 2.5px;
   }
-  .title{
+  .title {
     font-size: 18px;
   }
 }

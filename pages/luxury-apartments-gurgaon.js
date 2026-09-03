@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/router';
-import axios from 'axios';
-import dynamic from 'next/dynamic';
+import React, { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/router";
+import axios from "axios";
+import dynamic from "next/dynamic";
 
 // Same page as the city property-listing page (/property-listing/city/gurgaon) —
 // identical structure, filters and sections — but served on its own SEO URL with
@@ -10,76 +10,45 @@ import dynamic from 'next/dynamic';
 //
 // Wrapper is imported directly (not lazy) so the custom meta is server-rendered.
 // The interactive listing pieces load client-side, exactly like the listing page.
-import Wrapper from '../components/UI/Wrapper';
+import Wrapper from "../components/shared/Wrapper.jsx";
 
 const PropertyListingCard = dynamic(
-  () =>
-    import(
-      '../components/newComponents/propertyListingDesktopNav/propertyListing/propertyListingCard.jsx'
-    ),
+  () => import("../components/property-listing/PropertyListingCard.jsx"),
   { ssr: false }
 );
 const ListingFilters = dynamic(
-  () =>
-    import(
-      '../components/newComponents/propertyListingDesktopNav/propertyListingSearch/ListingFilters.jsx'
-    ),
+  () => import("../components/property-listing/search/ListingFilters.jsx"),
   { ssr: false }
 );
-const SearchBar = dynamic(
-  () =>
-    import(
-      '../components/newComponents/propertyListingDesktopNav/propertyListingSearch/searBar.jsx'
-    ),
-  { ssr: false }
-);
+const SearchBar = dynamic(() => import("../components/property-listing/search/SearchBar.jsx"), {
+  ssr: false,
+});
 const PropertyListingCardMobile = dynamic(
-  () =>
-    import(
-      '../components/newComponents/propertyListingPage/propertyListingCardMobile.jsx'
-    ),
+  () => import("../components/property-listing/PropertyListingCardMobile.jsx"),
   { ssr: false }
 );
-const CustomBackdrop = dynamic(
-  () => import('../components/newComponents/backdrop/backdrop.jsx'),
-  { ssr: false }
-);
-const FaqSection = dynamic(
-  () =>
-    import(
-      '../components/newComponents/propertyListingDesktopNav/Content/faqSection.jsx'
-    ),
-  { ssr: false }
-);
-const Content = dynamic(
-  () =>
-    import(
-      '../components/newComponents/propertyListingDesktopNav/Content/aboutSection.jsx'
-    ),
-  { ssr: false }
-);
+const CustomBackdrop = dynamic(() => import("../components/shared/Backdrop.jsx"), { ssr: false });
+const FaqSection = dynamic(() => import("../components/property-listing/content/FaqSection.jsx"), {
+  ssr: false,
+});
+const Content = dynamic(() => import("../components/property-listing/content/AboutSection.jsx"), {
+  ssr: false,
+});
 const PropertyPageFloatingContact = dynamic(
-  () =>
-    import(
-      '../components/newComponents/propertyData/propertyRightSection/propertyPageSections/propertyPageFloatingContact.jsx'
-    ),
+  () => import("../components/property-detail/PropertyPageFloatingContact.jsx"),
   { ssr: false }
 );
 const PremiumProperty = dynamic(
-  () =>
-    import(
-      '../components/newComponents/propertyListingDesktopNav/propertyListing/premiumProperty.jsx'
-    ),
+  () => import("../components/property-listing/PremiumProperty.jsx"),
   { ssr: false }
 );
 
 // ----- The only things that differ from the generic listing page -----
-const SEO_TITLE =
-  'Luxury Apartments for Sale in Gurgaon | Luxury Residential Projects';
+const SEO_TITLE = "Luxury Apartments for Sale in Gurgaon | Luxury Residential Projects";
 const SEO_DESCRIPTION =
   "Find luxury apartments in Gurgaon offering elegant designs, premium amenities, spacious configurations, and excellent connectivity in the city's most sought-after locations.";
 const SEO_KEYWORDS =
-  'luxury apartments in gurgaon, luxury apartments for sale in gurgaon, luxury residential projects gurgaon, premium flats in gurgaon, 3 bhk luxury apartments gurgaon, 4 bhk luxury apartments gurgaon, luxury flats golf course road, luxury projects dwarka expressway';
+  "luxury apartments in gurgaon, luxury apartments for sale in gurgaon, luxury residential projects gurgaon, premium flats in gurgaon, 3 bhk luxury apartments gurgaon, 4 bhk luxury apartments gurgaon, luxury flats golf course road, luxury projects dwarka expressway";
 
 // Custom "top content" for the about section (used verbatim).
 const TOP_CONTENT =
@@ -87,37 +56,37 @@ const TOP_CONTENT =
 
 const FAQS = [
   {
-    question: 'What are the best luxury apartments in Gurgaon?',
+    question: "What are the best luxury apartments in Gurgaon?",
     answer:
-      'Some of the best luxury apartments in Gurgaon include Tulip Monsella, DLF The Arbour, Whiteland The Westin Residences, Godrej Miraya, Godrej Samaris, Smartworld One DXP, and Ambience Creacions. These projects offer premium amenities, prime locations, and excellent investment potential.',
+      "Some of the best luxury apartments in Gurgaon include Tulip Monsella, DLF The Arbour, Whiteland The Westin Residences, Godrej Miraya, Godrej Samaris, Smartworld One DXP, and Ambience Creacions. These projects offer premium amenities, prime locations, and excellent investment potential.",
   },
   {
-    question: 'What is the starting price of luxury apartments in Gurgaon?',
+    question: "What is the starting price of luxury apartments in Gurgaon?",
     answer:
-      'The starting price of luxury apartments in Gurgaon typically ranges from ₹2 crore to ₹4 crore, while ultra-luxury residences can cost ₹5 crore to ₹25 crore or more, depending on the location, builder, and apartment size.',
+      "The starting price of luxury apartments in Gurgaon typically ranges from ₹2 crore to ₹4 crore, while ultra-luxury residences can cost ₹5 crore to ₹25 crore or more, depending on the location, builder, and apartment size.",
   },
   {
-    question: 'Which are the best locations to buy luxury apartments in Gurgaon?',
+    question: "Which are the best locations to buy luxury apartments in Gurgaon?",
     answer:
-      'The most sought-after locations include Golf Course Road, Golf Course Extension Road, Dwarka Expressway, Southern Peripheral Road (SPR), New Gurgaon and Sohna Road. These areas offer excellent connectivity, premium infrastructure, and strong appreciation potential.',
+      "The most sought-after locations include Golf Course Road, Golf Course Extension Road, Dwarka Expressway, Southern Peripheral Road (SPR), New Gurgaon and Sohna Road. These areas offer excellent connectivity, premium infrastructure, and strong appreciation potential.",
   },
   {
-    question: 'Are luxury apartments in Gurgaon a good investment?',
+    question: "Are luxury apartments in Gurgaon a good investment?",
     answer:
-      'Yes. Luxury apartments in Gurgaon have witnessed steady demand due to corporate growth, infrastructure development, and the presence of leading developers. They also offer good long-term capital appreciation and attractive rental returns.',
+      "Yes. Luxury apartments in Gurgaon have witnessed steady demand due to corporate growth, infrastructure development, and the presence of leading developers. They also offer good long-term capital appreciation and attractive rental returns.",
   },
   {
-    question: 'Which builders offer luxury apartments in Gurgaon?',
+    question: "Which builders offer luxury apartments in Gurgaon?",
     answer:
-      'Leading developers include DLF, Godrej Properties, Tulip Infratech, Whiteland Corporation, Elan Group, Smartworld Developers, M3M India, Sobha, and Signature Global.',
+      "Leading developers include DLF, Godrej Properties, Tulip Infratech, Whiteland Corporation, Elan Group, Smartworld Developers, M3M India, Sobha, and Signature Global.",
   },
 ];
 
 // Fixed target — this page always lists Gurgaon (city) properties.
-const TYPE = 'city';
-const NAME = 'gurgaon';
+const TYPE = "city";
+const NAME = "gurgaon";
 // Heading shown on this page (overrides the generic "Properties in Gurgaon").
-const PAGE_HEADING = 'Luxury Apartments In Gurgaon';
+const PAGE_HEADING = "Luxury Apartments In Gurgaon";
 
 const LuxuryApartmentsGurgaon = () => {
   const router = useRouter();
@@ -134,16 +103,16 @@ const LuxuryApartmentsGurgaon = () => {
   const [loading, setLoading] = useState(true); // start in loading state so the empty "No Properties Found" never flashes before the first fetch
 
   const [backdropOpen, setBackdropOpen] = useState(false);
-  const [selectedPropertyName, setSelectedPropertyName] = useState('');
+  const [selectedPropertyName, setSelectedPropertyName] = useState("");
   const [propertyTypeFilter, setPropertyTypeFilter] = useState(null);
   const [priceRangeFilter, setPriceRangeFilter] = useState([1000000, 800000000]);
   const [projectStatusFilter, setProjectStatusFilter] = useState(null);
   const [premiumProperties, setPremiumProperties] = useState([]);
   const [openClosefilter, setOpenCloseFilter] = useState(false);
-  const [city, setCity] = useState('');
-  const [locality, setLocality] = useState('');
-  const [sublocality, setSubLocality] = useState('');
-  const [state, setState] = useState('');
+  const [city, setCity] = useState("");
+  const [locality, setLocality] = useState("");
+  const [sublocality, setSubLocality] = useState("");
+  const [state, setState] = useState("");
   const [readyToMove, setReadyToMove] = useState(0);
   const [highRise, setHighRise] = useState(0);
 
@@ -160,20 +129,20 @@ const LuxuryApartmentsGurgaon = () => {
       setIsMobile(window.innerWidth <= 768);
     };
     checkScreenWidth();
-    window.addEventListener('resize', checkScreenWidth);
-    return () => window.removeEventListener('resize', checkScreenWidth);
+    window.addEventListener("resize", checkScreenWidth);
+    return () => window.removeEventListener("resize", checkScreenWidth);
   }, []);
 
   // Smooth scroll to top when filters/search change
   useEffect(() => {
     if (contentRef.current) {
-      contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+      contentRef.current.scrollTo({ top: 0, behavior: "smooth" });
     }
   }, [propertyTypeFilter, priceRangeFilter, projectStatusFilter]);
 
   const handleClose = () => {
     setBackdropOpen(false);
-    setSelectedPropertyName('');
+    setSelectedPropertyName("");
   };
 
   const handleOpen = (propertyName) => {
@@ -204,8 +173,8 @@ const LuxuryApartmentsGurgaon = () => {
   };
 
   function applySingleFilter(property, filterType, value) {
-    if (filterType === 'city' && value.length > 0) {
-      if (type === 'city' && Array.isArray(value) && name) {
+    if (filterType === "city" && value.length > 0) {
+      if (type === "city" && Array.isArray(value) && name) {
         for (let i = 0; i < value.length; i++) {
           if (value[i] != name) {
             router.push(`/property-listing/city/${value[i]}`);
@@ -215,24 +184,24 @@ const LuxuryApartmentsGurgaon = () => {
       return value.includes(property.city?.name);
     }
 
-    if (filterType === 'unitType' && value.length > 0) {
+    if (filterType === "unitType" && value.length > 0) {
       return property.propertyType?.subType?.some((sub) => value.includes(sub));
     }
 
-    if (filterType === 'configuration' && value.length > 0) {
+    if (filterType === "configuration" && value.length > 0) {
       return property.configurationForSearch?.some((config) => {
-        if (typeof config === 'number') {
+        if (typeof config === "number") {
           return value.includes(Math.floor(config).toString());
         }
         return value.includes(config);
       });
     }
 
-    if (filterType === 'projectStatus' && value.length > 0) {
+    if (filterType === "projectStatus" && value.length > 0) {
       return value.includes(property.status);
     }
 
-    if (filterType === 'priceRange') {
+    if (filterType === "priceRange") {
       const [minValue, maxValue] = value;
       const minP = minValue ? minValue * 1e7 : null;
       const maxP = maxValue ? maxValue * 1e7 : null;
@@ -254,16 +223,16 @@ const LuxuryApartmentsGurgaon = () => {
     setPropertyData((prevData) => {
       const sortedData = [...prevData];
       switch (sortType) {
-        case 'priceLowHigh':
+        case "priceLowHigh":
           sortedData.sort((a, b) => (a.priceInFigure || 0) - (b.priceInFigure || 0));
           break;
-        case 'priceHighLow':
+        case "priceHighLow":
           sortedData.sort((a, b) => (b.priceInFigure || 0) - (a.priceInFigure || 0));
           break;
-        case 'newest':
+        case "newest":
           sortedData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
           break;
-        case 'oldest':
+        case "oldest":
           sortedData.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
           break;
         default:
@@ -276,12 +245,10 @@ const LuxuryApartmentsGurgaon = () => {
 
   const fetchCityData = async (cityName) => {
     try {
-      const response = await axios.get(
-        `${process.env.apiUrl1}/property/premium/${cityName}`
-      );
+      const response = await axios.get(`${process.env.apiUrl1}/property/premium/${cityName}`);
       setPremiumProperties(response.data.data || []);
     } catch (err) {
-      console.error('Error fetching premium properties:', err);
+      console.error("Error fetching premium properties:", err);
     }
   };
 
@@ -290,8 +257,8 @@ const LuxuryApartmentsGurgaon = () => {
       setLoading(true);
       try {
         const res = await fetch(`${process.env.apiUrl1}/search?q=${name}`, {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
         });
 
         const data = await res.json();
@@ -305,10 +272,10 @@ const LuxuryApartmentsGurgaon = () => {
           setCurrentPage(1);
 
           const firstProperty = hits[0];
-          const cityName = firstProperty?.city?.name || '';
-          const localityName = firstProperty?.locality?.name || '';
-          const subLocalityName = firstProperty?.subLocality?.name || '';
-          const stateName = firstProperty?.state?.name || '';
+          const cityName = firstProperty?.city?.name || "";
+          const localityName = firstProperty?.locality?.name || "";
+          const subLocalityName = firstProperty?.subLocality?.name || "";
+          const stateName = firstProperty?.state?.name || "";
 
           setCity(cityName);
           setLocality(localityName);
@@ -319,21 +286,25 @@ const LuxuryApartmentsGurgaon = () => {
 
           let min = Infinity;
           let max = -Infinity;
-          let minStr = '';
-          let maxStr = '';
+          let minStr = "";
+          let maxStr = "";
           let highRiseCount = 0;
           let readyToMoveCount = 0;
 
           for (const property of hits) {
             const price = property.priceInFigure || 0;
-            const priceInStr = property.startingPrice || '';
+            const priceInStr = property.startingPrice || "";
 
-            if (String(property.status || '').trim().toLowerCase() === 'ready to move') {
+            if (
+              String(property.status || "")
+                .trim()
+                .toLowerCase() === "ready to move"
+            ) {
               readyToMoveCount++;
             }
 
             const subTypes = property.propertyType?.subType;
-            if (Array.isArray(subTypes) && subTypes.includes('High Rise Apartment')) {
+            if (Array.isArray(subTypes) && subTypes.includes("High Rise Apartment")) {
               highRiseCount++;
             }
 
@@ -353,7 +324,7 @@ const LuxuryApartmentsGurgaon = () => {
           setMaxPrice(maxStr);
         }
       } catch (err) {
-        console.error('Failed to fetch property data:', err);
+        console.error("Failed to fetch property data:", err);
       } finally {
         setLoading(false);
       }
@@ -374,29 +345,22 @@ const LuxuryApartmentsGurgaon = () => {
       selectedItem={[]}
     >
       {isDesktop ? (
-        <div
-          className="Wrapper"
-          style={{ display: 'flex', gap: '1rem', overflow: 'hidden' }}
-        >
+        <div className="Wrapper" style={{ display: "flex", gap: "1rem", overflow: "hidden" }}>
           {/* LEFT FILTERS */}
-          <div className="listingFilters" ref={filterRef} style={{ padding: '1rem' }}>
-            <ListingFilters
-              onFilterChange={handleFilterChange}
-              type={type}
-              name={name}
-            />
+          <div className="listingFilters" ref={filterRef} style={{ padding: "1rem" }}>
+            <ListingFilters onFilterChange={handleFilterChange} type={type} name={name} />
           </div>
 
           {loading ? (
             <div
               style={{
                 flex: 1,
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                minHeight: '300px',
-                fontWeight: 'bold',
-                fontSize: '1.2rem',
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                minHeight: "300px",
+                fontWeight: "bold",
+                fontSize: "1.2rem",
               }}
             >
               Loading...
@@ -407,12 +371,12 @@ const LuxuryApartmentsGurgaon = () => {
               ref={contentRef}
               style={{
                 flex: 1,
-                overflowY: 'auto',
-                marginTop: '1rem',
-                scrollBehavior: 'smooth',
-                willChange: 'transform',
-                WebkitOverflowScrolling: 'touch',
-                scrollbarWidth: 'none',
+                overflowY: "auto",
+                marginTop: "1rem",
+                scrollBehavior: "smooth",
+                willChange: "transform",
+                WebkitOverflowScrolling: "touch",
+                scrollbarWidth: "none",
               }}
             >
               <SearchBar
@@ -440,7 +404,7 @@ const LuxuryApartmentsGurgaon = () => {
               />
 
               <PropertyListingCard
-                name={name ? decodeURIComponent(name) : ''}
+                name={name ? decodeURIComponent(name) : ""}
                 type={type}
                 onOpenBackdrop={handleOpen}
                 propertyData={propertyData}
@@ -494,12 +458,12 @@ const LuxuryApartmentsGurgaon = () => {
             <div
               style={{
                 flex: 1,
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                minHeight: '300px',
-                fontWeight: 'bold',
-                fontSize: '1.2rem',
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                minHeight: "300px",
+                fontWeight: "bold",
+                fontSize: "1.2rem",
               }}
             >
               Loading...

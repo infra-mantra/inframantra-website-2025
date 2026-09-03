@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from './WhyInvest.module.css';
+import React from "react";
+import styles from "./WhyInvest.module.css";
 
 const TaxFreeIcon = () => (
   <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -33,49 +33,45 @@ const InfrastructureIcon = () => (
 const cards = [
   {
     icon: <TaxFreeIcon />,
-    title: 'Expert Guidance',
+    title: "Expert Guidance",
     description:
-      'Receive personalized consultancy and expert insights that help you confidently identify and select the right investment opportunities. ',
+      "Receive personalized consultancy and expert insights that help you confidently identify and select the right investment opportunities. ",
   },
   {
     icon: <HighROIIcon />,
-    title: 'Strong Developer Network ',
+    title: "Strong Developer Network ",
     description:
-      'Access the best projects with complete transparency and reliable details. Enjoy better deals, timely updates, and smoother communication.',
+      "Access the best projects with complete transparency and reliable details. Enjoy better deals, timely updates, and smoother communication.",
   },
   {
     icon: <InfrastructureIcon />,
-    title: 'End-to-End Assistance ',
+    title: "End-to-End Assistance ",
     description:
-      'From virtual site visits to seamless documentation, key handover to post-sales assistance, every step is handled seamlessly for a hassle-free experience.',
+      "From virtual site visits to seamless documentation, key handover to post-sales assistance, every step is handled seamlessly for a hassle-free experience.",
   },
 ];
 
-const WhyInvest = ({name}) => {
+const WhyInvest = ({ name }) => {
   return (
     <div className={styles.bgColor}>
-    <section className={styles.sectionWhy}>
-      <p className={styles.label}>Opportunity Awaits</p>
-      <div style={{ position: 'relative', display: 'inline-block', width: '100%' }}>
-        <h2 className={styles.heading}>
-         Why Invest with Inframantra?
+      <section className={styles.sectionWhy}>
+        <p className={styles.label}>Opportunity Awaits</p>
+        <div style={{ position: "relative", display: "inline-block", width: "100%" }}>
+          <h2 className={styles.heading}>Why Invest with Inframantra?</h2>
+        </div>
 
-       
-        </h2>
-      </div>
-
-      <div className={styles.cardsGrid}>
-        {cards.map((card, index) => (
-          <div key={index} className={styles.card}>
-            <div className={styles.cardHeader}>
-              <div className={styles.iconWrapper}>{card.icon}</div>
-              <h3 className={styles.cardTitle}>{card.title}</h3>
+        <div className={styles.cardsGrid}>
+          {cards.map((card, index) => (
+            <div key={index} className={styles.card}>
+              <div className={styles.cardHeader}>
+                <div className={styles.iconWrapper}>{card.icon}</div>
+                <h3 className={styles.cardTitle}>{card.title}</h3>
+              </div>
+              <p className={styles.cardDescription}>{card.description}</p>
             </div>
-            <p className={styles.cardDescription}>{card.description}</p>
-          </div>
-        ))}
-      </div>
-    </section>
+          ))}
+        </div>
+      </section>
     </div>
   );
 };

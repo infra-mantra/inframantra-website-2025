@@ -32,9 +32,7 @@ export default async function handler(req, res) {
       return res.status(200).json(cache.data);
     }
 
-    const key =
-      process.env.GOOGLE_PLACES_API_KEY ||
-      process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+    const key = process.env.GOOGLE_PLACES_API_KEY || process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
     if (!key) return res.status(200).json(empty("unconfigured"));
 

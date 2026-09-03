@@ -1,18 +1,18 @@
-import React from 'react'
-import styles from './LocationCard.module.css'
+import React from "react";
+import styles from "./LocationCard.module.css";
 
 const locations = [
   {
-    city: 'SEATTLE',
-    date: '30th & 31st May, 2026',
-    venue: 'InterContinental Seattle Bellevue by IHG',
+    city: "SEATTLE",
+    date: "30th & 31st May, 2026",
+    venue: "InterContinental Seattle Bellevue by IHG",
   },
   {
-    city: 'SAN JOSE',
-    date: '6th & 7th June, 2026',
-    venue: 'The Domain Hotel Sunnyvale',
+    city: "SAN JOSE",
+    date: "6th & 7th June, 2026",
+    venue: "The Domain Hotel Sunnyvale",
   },
-]
+];
 
 function LocationCard() {
   return (
@@ -25,7 +25,7 @@ function LocationCard() {
         </div>
       ))}
     </div>
-  )
+  );
 }
 
-export default LocationCard
+export default LocationCard;

@@ -1,12 +1,12 @@
 import React from "react";
-import Wrapper from "../../components/UI/Wrapper";
-import EligibilityCalculator from "../../components/calculators/EligibilityCalculator";
-import CalcHero from "../../components/calculators/CalcHero";
-import HowItWorks from "../../components/calculators/HowItWorks";
-import LeadForm from "../../components/calculators/LeadForm";
-import RelatedCalculators from "../../components/calculators/RelatedCalculators";
-import FaqBlock from "../../components/calculators/FaqBlock";
-import styles from "../../components/calculators/calculators.module.css";
+import Wrapper from "../../components/shared/Wrapper.jsx";
+import EligibilityCalculator from "../../components/calculators/EligibilityCalculator.jsx";
+import CalcHero from "../../components/calculators/CalcHero.jsx";
+import HowItWorks from "../../components/calculators/HowItWorks.jsx";
+import LeadForm from "../../components/calculators/LeadForm.jsx";
+import RelatedCalculators from "../../components/calculators/RelatedCalculators.jsx";
+import FaqBlock from "../../components/calculators/FaqBlock.jsx";
+import styles from "../../components/calculators/Calculators.module.css";
 
 const faqs = [
   {
@@ -75,25 +75,35 @@ function LoanEligibilityPage() {
         <section className={styles.seoContent}>
           <h2>How much home loan can you get on your salary?</h2>
           <p>
-            Banks decide your home loan eligibility primarily on your repayment
-            capacity, measured through the Fixed Obligations to Income Ratio
-            (FOIR). In simple terms, your total monthly EMIs — including the new
-            home loan — should not exceed 50–60% of your net monthly income. The
-            higher your income and the fewer your existing obligations, the
+            Banks decide your home loan eligibility primarily on your repayment capacity, measured
+            through the Fixed Obligations to Income Ratio (FOIR). In simple terms, your total
+            monthly EMIs — including the new home loan — should not exceed 50–60% of your net
+            monthly income. The higher your income and the fewer your existing obligations, the
             larger the loan you qualify for.
           </p>
           <h3>What lenders look at</h3>
           <ul>
-            <li><strong>Net monthly income</strong> — higher take-home pay means higher eligibility.</li>
-            <li><strong>Existing EMIs</strong> — car loans, personal loans and credit-card dues reduce the income available for a home loan.</li>
-            <li><strong>Loan tenure</strong> — a longer tenure lowers the EMI and raises eligibility.</li>
-            <li><strong>Interest rate</strong> — a lower rate means a bigger loan at the same EMI.</li>
-            <li><strong>Credit score</strong> — a strong CIBIL score improves both approval odds and the rate offered.</li>
+            <li>
+              <strong>Net monthly income</strong> — higher take-home pay means higher eligibility.
+            </li>
+            <li>
+              <strong>Existing EMIs</strong> — car loans, personal loans and credit-card dues reduce
+              the income available for a home loan.
+            </li>
+            <li>
+              <strong>Loan tenure</strong> — a longer tenure lowers the EMI and raises eligibility.
+            </li>
+            <li>
+              <strong>Interest rate</strong> — a lower rate means a bigger loan at the same EMI.
+            </li>
+            <li>
+              <strong>Credit score</strong> — a strong CIBIL score improves both approval odds and
+              the rate offered.
+            </li>
           </ul>
           <p>
-            Use the rate-comparison table above to see how even a 0.5% difference
-            in interest changes your eligible amount. Then estimate the monthly
-            instalment with our{" "}
+            Use the rate-comparison table above to see how even a 0.5% difference in interest
+            changes your eligible amount. Then estimate the monthly instalment with our{" "}
             <a href="/calculators/home-loan-emi">Home Loan EMI Calculator</a>.
           </p>
         </section>

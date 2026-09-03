@@ -1,0 +1,124 @@
+.demoBanner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+
+/* Slideshow container */
+.slideshow {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  z-index: 1;
+  /* Grey skeleton placeholder shown until the hero image paints. It sits BEHIND
+     the image, so the image is still the LCP element and nothing is delayed. */
+  background: #e6e8ea;
+}
+
+.demoBannerWrapper video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Always-painted base layer (first slide's image). Gives Lighthouse a stable
+   LCP element from the first frame; the 5 rotating slides fade over it. It is
+   NOT a .slideImage, so the click-to-navigate detection is unaffected. */
+.slideBase {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  opacity: 1;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Common styles for images */
+.slideImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  opacity: 0;
+  animation: fade 40s infinite linear;
+  z-index: 1;
+}
+
+/* Animation delays — 5 images evenly spaced (1/5 of 40s cycle each) */
+
+.slideImage1 {
+  animation-delay: 0s;
+  opacity: 1;
+}
+
+.slideImage2 {
+  animation-delay: 8s;
+}
+
+.slideImage3 {
+  animation-delay: 16s;
+}
+
+.slideImage4 {
+  animation-delay: 24s;
+}
+
+.slideImage5 {
+  animation-delay: 32s;
+}
+
+/* Clickable overlay */
+.clickableSlide {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  cursor: pointer;
+}
+
+/* Animation */
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+
+  5% {
+    opacity: 1;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  25% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.active {
+  opacity: 1;
+}
+
+@media screen and (max-width: 760px) {
+  .demoBannerWrapper + div {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}

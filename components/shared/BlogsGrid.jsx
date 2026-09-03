@@ -1,0 +1,359 @@
+import React, { useEffect, useState } from "react";
+import Section from "./Section.jsx";
+import Image from "next/image";
+import Link from "next/link";
+import NoImage from "./NoImage.jsx";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { Pagination, Navigation } from "swiper";
+import styles from "./BlogGrid.module.css";
+
+function BlogsGrid({
+  blogs,
+  trendingBlogs = [],
+  newsItems = [],
+  latestNews,
+  trending,
+  button,
+  initial,
+  loadMore,
+  blogBtn,
+  isLoading,
+}) {
+  // console.log(latestNews)
+
+  const [isDesktop, setIsDesktop] = useState(true);
+  const [isMobile, setIsMobile] = useState(true);
+  const [activeTab, setActiveTab] = useState("blog"); // mobile tab: blog | article | news
+
+  const checkScreenWidth = () => {
+    setIsDesktop(window.innerWidth >= 768); // You can adjust the threshold for desktop here
+    setIsMobile(window.innerWidth <= 768);
+  };
+  useEffect(() => {
+    checkScreenWidth();
+    window.addEventListener("resize", checkScreenWidth);
+
+    return () => {
+      window.removeEventListener("resize", checkScreenWidth);
+    };
+  }, []);
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+
+    // Get day, month, and year
+    const day = String(date.getDate()).padStart(2, "0"); // Ensure day is 2 digits
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
+    const year = date.getFullYear();
+
+    return `${day}-${month}-${year}`; // Return in dd-mm-yyyy format
+  };
+
+  // Mobile tabs: each tab shows a different list and links to a different path.
+  const TABS = [
+    { key: "blog", label: "Blogs", items: blogs, base: "blog" },
+    { key: "article", label: "Articles", items: latestNews || [], base: "blog" },
+    { key: "news", label: "News", items: trending || [], base: "news" },
+  ];
+  const activeTabObj = TABS.find((t) => t.key === activeTab) || TABS[0];
+
+  // One card, reused for every tab.
+  const renderTabCard = (item, base, index) => {
+    const src = item?.file?.path || item?.file?.thumbnail || "";
+    const href = item.link ? item.link : `/${base}/${item.slug}`;
+    return (
+      <Link key={index} href={href} passHref>
+        <a
+          className={styles.fblogitem}
+          target={item.link ? "_blank" : "_self"}
+          rel={item.link ? "noreferrer" : ""}
+        >
+          <div className={styles.blogcardimage}>
+            {src ? (
+              <Image
+                src={src}
+                alt={item.title || item.name || "Blog"}
+                layout="fill"
+                objectFit="cover"
+                quality={90}
+                sizes="130px"
+              />
+            ) : (
+              <NoImage />
+            )}
+          </div>
+          <div className={styles.info}>
+            <h4>{item.title || item.name}</h4>
+            <p className={styles.blogmeta}>
+              <span className={styles.metaDot} />
+              {formatDate(item.createdAt)} | {item?.writer_name}
+            </p>
+            <span className={styles.readmore}>Read Article →</span>
+          </div>
+        </a>
+      </Link>
+    );
+  };
+
+  return (
+    <Section classes={`${styles.featuredblogs} ${styles.secp} ${styles.pt0}`} pageWidth="container">
+      {/* ---- Mobile: tabbed view (Blogs / Articles / News). Hidden on desktop via CSS. ---- */}
+      <div className={styles.mobileTabs}>
+        <div className={styles.tabBar}>
+          {TABS.map((t) => (
+            <button
+              key={t.key}
+              type="button"
+              className={`${styles.tabBtn} ${activeTab === t.key ? styles.tabActive : ""}`}
+              onClick={() => setActiveTab(t.key)}
+            >
+              {t.label}
+            </button>
+          ))}
+        </div>
+
+        <div className={styles.mobileList}>
+          {(activeTabObj.items || []).map((item, index) =>
+            renderTabCard(item, activeTabObj.base, index)
+          )}
+
+          {activeTab === "blog" &&
+            isLoading &&
+            Array.from({ length: 3 }).map((_, i) => (
+              <div key={`msk-${i}`} className={styles.fblogitemSkeleton} aria-hidden="true">
+                <div className={styles.blogcardimageSkeleton} />
+                <div className={styles.infoSkeleton}>
+                  <span className={styles.skLine} style={{ width: "80%", height: 18 }} />
+                  <span className={styles.skLine} style={{ width: "100%" }} />
+                  <span className={styles.skLine} style={{ width: "92%" }} />
+                  <span className={styles.skLine} style={{ width: "35%" }} />
+                </div>
+              </div>
+            ))}
+        </div>
+
+        {activeTab === "blog" && (
+          <div className={`${styles.btnwrap} ${styles.mt5}`}>
+            <button
+              type="button"
+              className={styles.themebtn}
+              onClick={loadMore}
+              disabled={isLoading}
+            >
+              {isLoading ? "Loading..." : "Load More"}
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* ---- Desktop: two-column layout. Hidden on mobile via CSS. ---- */}
+      <div className={styles.blogslayout}>
+        <div className={styles.blogssection}>
+          <h2 className={styles.blogstitle}>| Blogs</h2>
+          <div className={styles.fblogitemlist}>
+            {blogs.map((blog, index) => {
+              return (
+                <Link key={index} href={blog.link ? blog.link : `/blog/${blog.slug}`} passHref>
+                  <a
+                    className={styles.fblogitem}
+                    target={blog.link ? "_blank" : "_self"}
+                    rel={blog.link ? "noreferrer" : ""}
+                  >
+                    <div className={styles.blogcardimage}>
+                      {blog.file ? (
+                        <Image
+                          src={blog.file.path}
+                          alt={blog.name || "Blog Image"}
+                          layout="fill"
+                          objectFit="cover"
+                          quality={90}
+                          sizes="(max-width: 768px) 130px, 210px"
+                        />
+                      ) : (
+                        <NoImage />
+                      )}
+                    </div>
+                    <div className={styles.info}>
+                      <h4>{blog.name}</h4>
+                      {isDesktop ? (
+                        <p className={styles.twolinetext}>
+                          {blog?.shortDescription?.substring(0, 200)}...
+                        </p>
+                      ) : null}
+                      <p className={styles.blogmeta}>
+                        <span className={styles.metaDot} />
+                        {formatDate(blog.createdAt)} | {blog?.writer_name}
+                      </p>
+                      <span className={styles.readmore}>Read Article →</span>
+                    </div>
+                  </a>
+                </Link>
+              );
+            })}
+
+            {/* Skeleton cards while "Load More" is fetching */}
+            {isLoading &&
+              Array.from({ length: 3 }).map((_, i) => (
+                <div key={`sk-${i}`} className={styles.fblogitemSkeleton} aria-hidden="true">
+                  <div className={styles.blogcardimageSkeleton} />
+                  <div className={styles.infoSkeleton}>
+                    <span className={styles.skLine} style={{ width: "80%", height: 18 }} />
+                    <span className={styles.skLine} style={{ width: "100%" }} />
+                    <span className={styles.skLine} style={{ width: "92%" }} />
+                    <span className={styles.skLine} style={{ width: "35%" }} />
+                  </div>
+                </div>
+              ))}
+          </div>
+          <div className={`${styles.btnwrap}  ${styles.mt5}`}>
+            <button
+              type="button"
+              className={styles.themebtn}
+              onClick={loadMore}
+              disabled={isLoading}
+            >
+              {isLoading ? "Loading..." : "Load More"}
+            </button>
+          </div>
+        </div>
+
+        {/* Sidebar Section */}
+        <div className={styles.sidebarsection}>
+          {/* Trending Section */}
+          <div className={styles.trendingsection}>
+            <h3 className={styles.trendingtitle}>| Trending News</h3>
+            <Swiper
+              pagination={{
+                clickable: true,
+                el: ".trending-pagination",
+              }}
+              navigation={{
+                prevEl: ".customprev",
+                nextEl: ".customnext",
+              }}
+              modules={[Pagination, Navigation]}
+              className="mySwiper"
+            >
+              {trending?.map((article, index) => {
+                return (
+                  <SwiperSlide key={index}>
+                    <Link key={index} href={`/news/${article.slug}`} passHref>
+                      <a
+                        className={styles.trendingcard}
+                        target={article.link ? "_blank" : "_self"}
+                        rel={article.link ? "noopener noreferrer" : ""}
+                      >
+                        <div>
+                          {/* <p className={styles.trending-source">{trendingBlogs[index]?.source || "Source Unknown"}</p> */}
+                          <img src="./logos/INFRAMANTRA NEWS B.svg" />
+                          <h4 className={styles.trendingheading}>{article?.title}</h4>
+                          <p className={styles.trendingdescription}>
+                            {article?.shortDescription.substring(0, 200)}...{" "}
+                          </p>
+                          <div className={styles.trendingmeta}>
+                            <p className={styles.trendingauthor}>
+                              {article?.writer_name || "Anonymous"}
+                            </p>
+                            <p>|</p>
+                            <p className={styles.trendingdate}>{formatDate(article?.createdAt)}</p>
+                          </div>
+                        </div>
+                      </a>
+                    </Link>
+                  </SwiperSlide>
+                );
+              })}
+              {/* Add Arrows Inside Swiper */}
+              <div className={styles.customprev}>‹</div>
+              <div className={styles.customnext}>›</div>
+            </Swiper>
+            {/* Custom Pagination Element */}
+            <div className="trending-pagination"></div>
+          </div>
+
+          {/* News Section */}
+          <div className={styles.newssection}>
+            <h3 className={styles.newsheading}>| Trending Articles</h3>
+            <div className={styles.newslist}>
+              {latestNews?.map((item, index) => {
+                return (
+                  <Link key={index} href={`/blog/${item.slug}`} passHref>
+                    <div className={styles.newscard}>
+                      <div className={styles.newsrank}>#{index + 1}</div>
+                      <div className={styles.newscontent}>
+                        <h4 className={styles.newstitle}>{item.title}</h4>
+                        <p className={styles.newsmeta}>
+                          {formatDate(item.createdAt)} | {item?.writer_name || item?.writer_name}
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {blogBtn && (
+        <div className={`${styles.textcenter} ${styles.mt5}`}>
+          <Link href="/blogs">
+            <a className={styles.theme - btn}>View More</a>
+          </Link>
+        </div>
+      )}
+    </Section>
+  );
+}
+
+// Dummy Data for Trending and News
+BlogsGrid.defaultProps = {
+  trendingBlogs: [
+    {
+      title: "MUMBAI PROPERTY REGISTRATIONS DOUBLE FOR THE FIRST TIME SINCE 2019",
+      description:
+        "Mumbai saw average quarterly value of registered properties at Rs 44,520 crore in the first half of the current year.",
+      source: "Realty",
+      author: "Sanjeev Sinha",
+      date: "Sept 2022",
+    },
+    {
+      title: "COMMERCIAL REAL ESTATE TRENDS TO WATCH IN 2024 FIRST TIME SINCE 2022",
+      description:
+        "The commercial real estate market has shown resilience in the face of economic fluctuations in the second half of the year.",
+      source: "ECONOMIC TIMES",
+      author: "John Doe",
+      date: "Oct 2022",
+    },
+  ],
+  newsItems: [
+    {
+      id: 1,
+      title: "Unsold Housing Stock Down 12% Across Nine Cities At End Of September Quarter",
+      date: "Oct 2022",
+      readTime: "8 Mins Read",
+    },
+    {
+      id: 2,
+      title: "Affordable Housing Schemes Announced for Middle Class Families",
+      date: "Nov 2022",
+      readTime: "6 Mins Read",
+    },
+    {
+      id: 3,
+      title: "Urban Land Use Planning to Improve City Living",
+      date: "Dec 2022",
+      readTime: "7 Mins Read",
+    },
+    {
+      id: 4,
+      title: "Technology Transforming Real Estate Marketing",
+      date: "Feb 2023",
+      readTime: "5 Mins Read",
+    },
+  ],
+};
+
+export default BlogsGrid;

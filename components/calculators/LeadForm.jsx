@@ -4,8 +4,8 @@ import { toast } from "react-toastify";
 import { FaWhatsapp } from "react-icons/fa";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import Ajax1 from "../helper/Ajax1";
-import styles from "./calculators.module.css";
+import Ajax1 from "../lib/ajax1.js";
+import styles from "./Calculators.module.css";
 
 /* Inline lead-capture band for the calculator pages. Reuses the same
    /enquiry/project submission flow as the property pop-up form. */

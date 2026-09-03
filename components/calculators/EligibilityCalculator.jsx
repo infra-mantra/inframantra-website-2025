@@ -1,17 +1,11 @@
 import React, { useMemo, useState } from "react";
 import Link from "next/link";
 import { FiSearch } from "react-icons/fi";
-import styles from "./calculators.module.css";
-import SplitDonut from "./SplitDonut";
-import MiniBarChart from "./MiniBarChart";
-import AnimatedNumber from "./AnimatedNumber";
-import {
-  formatINR,
-  formatShort,
-  emiFor,
-  maxLoanForEmi,
-  sanitizeAmount,
-} from "./calcUtils";
+import styles from "./Calculators.module.css";
+import SplitDonut from "./SplitDonut.jsx";
+import MiniBarChart from "./MiniBarChart.jsx";
+import AnimatedNumber from "./AnimatedNumber.jsx";
+import { formatINR, formatShort, emiFor, maxLoanForEmi, sanitizeAmount } from "./calcUtils.js";
 
 /* Home loan eligibility based on salary (FOIR method) ------------------- */
 
@@ -82,9 +76,9 @@ function EligibilityCalculator() {
     <div className={styles.wrap}>
       <h2 className={styles.heading}>Home Loan Eligibility Calculator</h2>
       <p className={styles.sub}>
-        Find out how much home loan you can get based on your monthly salary.
-        Adjust your income, obligations, interest rate and tenure to see your
-        eligible loan amount and the property budget it supports.
+        Find out how much home loan you can get based on your monthly salary. Adjust your income,
+        obligations, interest rate and tenure to see your eligible loan amount and the property
+        budget it supports.
       </p>
 
       <div className={styles.body}>
@@ -101,9 +95,7 @@ function EligibilityCalculator() {
                   type="text"
                   inputMode="numeric"
                   value={income.toLocaleString("en-IN")}
-                  onChange={(e) =>
-                    setIncome(sanitizeAmount(e.target.value, MAX_INCOME))
-                  }
+                  onChange={(e) => setIncome(sanitizeAmount(e.target.value, MAX_INCOME))}
                 />
               </div>
             </div>
@@ -135,9 +127,7 @@ function EligibilityCalculator() {
                   type="text"
                   inputMode="numeric"
                   value={obligations.toLocaleString("en-IN")}
-                  onChange={(e) =>
-                    setObligations(sanitizeAmount(e.target.value, income))
-                  }
+                  onChange={(e) => setObligations(sanitizeAmount(e.target.value, income))}
                 />
               </div>
             </div>
@@ -243,22 +233,31 @@ function EligibilityCalculator() {
             <li>
               <span className={`${styles.dot} ${styles.dotPrincipal}`} />
               <span className={styles.bLabel}>Eligible loan amount</span>
-              <span className={styles.bValue}><AnimatedNumber value={eligibleLoan} format={formatINR} /></span>
+              <span className={styles.bValue}>
+                <AnimatedNumber value={eligibleLoan} format={formatINR} />
+              </span>
             </li>
             <li>
               <span className={`${styles.dot} ${styles.dotInterest}`} />
               <span className={styles.bLabel}>Indicative down payment (20%)</span>
-              <span className={styles.bValue}><AnimatedNumber value={downPayment} format={formatINR} /></span>
+              <span className={styles.bValue}>
+                <AnimatedNumber value={downPayment} format={formatINR} />
+              </span>
             </li>
             <li>
               <span className={styles.bLabel} style={{ paddingLeft: 20 }}>
                 Affordable EMI (FOIR {Math.round(foir * 100)}%)
               </span>
-              <span className={styles.bValue}><AnimatedNumber value={maxEmi} format={formatINR} />/mo</span>
+              <span className={styles.bValue}>
+                <AnimatedNumber value={maxEmi} format={formatINR} />
+                /mo
+              </span>
             </li>
             <li className={styles.totalRow}>
               <span className={styles.bLabel}>Property budget</span>
-              <span className={styles.bValue}><AnimatedNumber value={propertyBudget} format={formatINR} /></span>
+              <span className={styles.bValue}>
+                <AnimatedNumber value={propertyBudget} format={formatINR} />
+              </span>
             </li>
           </ul>
 
@@ -269,7 +268,11 @@ function EligibilityCalculator() {
             centerValue={formatShort(propertyBudget)}
             legend={[
               { label: "Bank loan", color: "var(--c-accent)", value: formatShort(eligibleLoan) },
-              { label: "Your down payment", color: "var(--c-interest)", value: formatShort(downPayment) },
+              {
+                label: "Your down payment",
+                color: "var(--c-interest)",
+                value: formatShort(downPayment),
+              },
             ]}
           />
 
@@ -315,10 +318,10 @@ function EligibilityCalculator() {
       </div>
 
       <p className={styles.disclaimer}>
-        *Eligibility is estimated using a FOIR (Fixed Obligations to Income
-        Ratio) of {Math.round(foir * 100)}% and an 80% loan-to-value assumption.
-        Actual sanctioned amount depends on your credit score, employer category,
-        property valuation and your lender&apos;s policy.
+        *Eligibility is estimated using a FOIR (Fixed Obligations to Income Ratio) of{" "}
+        {Math.round(foir * 100)}% and an 80% loan-to-value assumption. Actual sanctioned amount
+        depends on your credit score, employer category, property valuation and your lender&apos;s
+        policy.
       </p>
     </div>
   );

@@ -1,18 +1,25 @@
 import React from "react";
 import Link from "next/link";
-import styles from "./calculators.module.css";
-import HeroBackdrop from "./heroArt/HeroBackdrop";
-import HeroHouse from "./heroArt/HeroHouse";
-import HeroCalculator from "./heroArt/HeroCalculator";
-import HeroDonut from "./heroArt/HeroDonut";
-import HeroBars from "./heroArt/HeroBars";
-import HeroMoney from "./heroArt/HeroMoney";
-import HeroPercent from "./heroArt/HeroPercent";
+import styles from "./Calculators.module.css";
+import HeroBackdrop from "./heroArt/HeroBackdrop.jsx";
+import HeroHouse from "./heroArt/HeroHouse.jsx";
+import HeroCalculator from "./heroArt/HeroCalculator.jsx";
+import HeroDonut from "./heroArt/HeroDonut.jsx";
+import HeroBars from "./heroArt/HeroBars.jsx";
+import HeroMoney from "./heroArt/HeroMoney.jsx";
+import HeroPercent from "./heroArt/HeroPercent.jsx";
 
 /* Shared animated hero for all calculator pages. The banner is built from
    independent motif layers (house, calculator, donut, bars, money, percent),
    each with its own animation, floating over the backdrop. */
-function CalcHero({ eyebrow = "Smart Property Tools", crumbLeaf, title, highlight, lede, badges = [] }) {
+function CalcHero({
+  eyebrow = "Smart Property Tools",
+  crumbLeaf,
+  title,
+  highlight,
+  lede,
+  badges = [],
+}) {
   return (
     <section className={styles.hero}>
       <HeroBackdrop />

@@ -6,25 +6,23 @@
   padding: 0px 20px;
   width: 100vw;
 }
-.property-header-title{
+.property-header-title {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.logo_individual_page{
+.logo_individual_page {
   max-height: 60px;
   object-fit: contain;
 }
-.dis-none-desktop{
+.dis-none-desktop {
   display: none;
 }
-.d-flex{
+.d-flex {
   display: flex;
-    justify-content: flex-start;
-    align-items: baseline;
-
+  justify-content: flex-start;
+  align-items: baseline;
 }
-
 
 .bell-pendulum {
   display: inline-block;
@@ -79,19 +77,18 @@
   width: 128px;
   object-fit: cover;
 }
-.property-highlight-container{
-    width: 60%;
-    border: 2px solid rgb(230, 225, 225);
-    height: 300px;
-    border-radius: 15px;
+.property-highlight-container {
+  width: 60%;
+  border: 2px solid rgb(230, 225, 225);
+  height: 300px;
+  border-radius: 15px;
 }
-
 
 .property-container {
   align-items: center;
   padding: 20px;
   padding-bottom: 0px;
-  font-family: 'Lexend Deca', sans-serif;
+  font-family: "Lexend Deca", sans-serif;
 }
 .mainLayout,
 .pageWrapper,
@@ -99,8 +96,6 @@
   overflow: visible !important;
   transform: none !important;
 }
-
-
 
 .about-project {
   letter-spacing: 0px;
@@ -132,9 +127,9 @@
 .rera-hover-box {
   display: none;
   position: absolute;
-  top: calc(100% + 10px);        /* just below the RERA button */
+  top: calc(100% + 10px); /* just below the RERA button */
   left: 0;
-  width: max-content;            /* size to content so the RERA number never trims/wraps */
+  width: max-content; /* size to content so the RERA number never trims/wraps */
   max-width: min(340px, 90vw);
   background: #ffffff;
   border-radius: 12px;
@@ -148,7 +143,7 @@
   line-height: 1.6;
   border-left: 4px solid #e7b554;
   border-right: 4px solid #e7b554;
-  font-family: 'Lexend Deca', sans-serif;
+  font-family: "Lexend Deca", sans-serif;
 }
 
 /* Show on hover */
@@ -260,18 +255,18 @@ ul {
 }
 
 .card {
-    background: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 30px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    overflow: hidden;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
 }
 
 /* the property header card must NOT clip the RERA hover tooltip that overflows below it */
 .card.card-width {
-    overflow: visible;
+  overflow: visible;
 }
 
 .card-width {
@@ -435,9 +430,9 @@ ul {
   .separator {
     display: none;
   }
-  .cta-w{
-   width: 100%;
-   display: flex;
+  .cta-w {
+    width: 100%;
+    display: flex;
   }
 
   .info-section {
@@ -470,47 +465,47 @@ ul {
     gap: 1rem;
     display: flex;
     flex-direction: column;
-}
-.about-container{
-  width: 100%;
-}
-.ul-highlight{
-  gap: .4rem;
-}
-.card-ct-wt{
-  height: auto;
-  margin-bottom: 0px;
-}
-.property-header-images{
-  flex-direction: row-reverse;
-}
-.property-header-high{
-  padding: 0px 2px ;
-  justify-content: space-around;
-}
-.logo_individual_page{
-  display: none;
-}
-.card-width{
- display: none;
-}
-.container-card{
-  display: flex;
+  }
+  .about-container {
+    width: 100%;
+  }
+  .ul-highlight {
+    gap: 0.4rem;
+  }
+  .card-ct-wt {
+    height: auto;
+    margin-bottom: 0px;
+  }
+  .property-header-images {
+    flex-direction: row-reverse;
+  }
+  .property-header-high {
+    padding: 0px 2px;
+    justify-content: space-around;
+  }
+  .logo_individual_page {
+    display: none;
+  }
+  .card-width {
+    display: none;
+  }
+  .container-card {
+    display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-}
-.dis-none-desktop{
-display: block;
-}
+  }
+  .dis-none-desktop {
+    display: block;
+  }
 
-.price-tag-icon,
-.status-icon,
-.unit-icon img {
-  width: 27px !important;
-  height: 27px !important;
-  object-fit: contain;
-}
+  .price-tag-icon,
+  .status-icon,
+  .unit-icon img {
+    width: 27px !important;
+    height: 27px !important;
+    object-fit: contain;
+  }
 }
 
 .projectHighlightListBullet {

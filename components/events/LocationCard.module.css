@@ -10,7 +10,7 @@
 .cardevent {
   background-color: #f1f1f1d6;
   padding: 20px 28px;
-  border-radius: .8rem;
+  border-radius: 0.8rem;
   text-align: center;
   border: 1.5px solid #e8e0cc;
 }
@@ -52,7 +52,7 @@
   }
 
   .city {
-      font-size: 1.5rem;
+    font-size: 1.5rem;
     letter-spacing: 2px;
   }
 

@@ -2,20 +2,19 @@
 
 /* ── Wrapper ──────────────────────────────────────────────────────────────── */
 .wrapperMap {
-     display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 500px;
-    /* border-radius: 12px; */
-    padding: 4px 1rem;
-    overflow: hidden;
-    box-shadow: -14 8px 40px rgba(0, 0, 0, 0.14);
-    background: #fff;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 500px;
+  /* border-radius: 12px; */
+  padding: 4px 1rem;
+  overflow: hidden;
+  box-shadow: -14 8px 40px rgba(0, 0, 0, 0.14);
+  background: #fff;
 }
 .containerMap {
-    max-width: 1280px;
-    margin: 0 auto;
-   
+  max-width: 1280px;
+  margin: 0 auto;
 }
 
 /* ── Map ──────────────────────────────────────────────────────────────────── */
@@ -65,7 +64,11 @@
   font-weight: 600;
   color: #555;
   letter-spacing: -0.01em;
-  transition: border-color 0.15s, background 0.15s, color 0.15s, box-shadow 0.15s;
+  transition:
+    border-color 0.15s,
+    background 0.15s,
+    color 0.15s,
+    box-shadow 0.15s;
   line-height: 1;
 }
 
@@ -99,8 +102,8 @@
     padding: 8px 10px;
     gap: 6px;
   }
-  .mapWrap{
-    flex:none 
+  .mapWrap {
+    flex: none;
   }
 
   .tab {

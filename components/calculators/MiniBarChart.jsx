@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "./calculators.module.css";
-import { formatShort } from "./calcUtils";
+import styles from "./Calculators.module.css";
+import { formatShort } from "./calcUtils.js";
 
 /* Lightweight pure-SVG bar chart (no chart library). Pass:
      data: [{ label, value }]

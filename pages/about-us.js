@@ -1,22 +1,17 @@
 import React, { useState, useEffect } from "react";
-import styles from "../components/newComponents/AboutUsPage/aboutUs.module.css";
-import AboutSection from "../components/newComponents/AboutUsPage/aboutUsPageBanner";
-import Wrapper from "../components/UI/Wrapper";
-import CoreValues from "../components/newComponents/AboutUsPage/coreValues";
-import Achivement from "../components/newComponents/AboutUsPage/Achievement";
-import Developer from "../components/newComponents/AboutUsPage/developerSlider";
-import BrandAmbassador from "../components/newComponents/AboutUsPage/brandAmbassador";
-import Vision from "../components/newComponents/AboutUsPage/vision"
-
+import styles from "../components/about/AboutUs.module.css";
+import AboutSection from "../components/about/AboutUsPageBanner.jsx";
+import Wrapper from "../components/shared/Wrapper.jsx";
+import CoreValues from "../components/about/CoreValues.jsx";
+import Achivement from "../components/about/Achievement.jsx";
+import Developer from "../components/about/DeveloperSlider.jsx";
+import BrandAmbassador from "../components/about/BrandAmbassador.jsx";
+import Vision from "../components/about/Vision.jsx";
 
 import dynamic from "next/dynamic";
-const AwardsSlider = dynamic(
-  () => import("../components/newComponents/AboutUsPage/aboutUsTimeline/Award"),
-  { ssr: false }
-);
+const AwardsSlider = dynamic(() => import("../components/about/Award.jsx"), { ssr: false });
 
 const AboutUsPageHeader = ({ allData }) => {
-
   const bannerTitle = allData?.meta?.bannerTitle || "";
   const metaTitle = allData?.meta?.meta_title || "";
   const metaDescription = allData?.meta?.meta_description || "";
@@ -42,18 +37,16 @@ const AboutUsPageHeader = ({ allData }) => {
 
   return (
     <Wrapper title={metaTitle} description={metaDescription}>
-     <div>
+      <div>
+        <AboutSection />
+        <Vision />
+        <CoreValues />
+        <BrandAmbassador />
 
-       <AboutSection/>
-       <Vision/>
-       <CoreValues/>
-       <BrandAmbassador/>
-       
-       <AwardsSlider/>
-       <Achivement/>
+        <AwardsSlider />
+        <Achivement />
 
-       <Developer/>
-
+        <Developer />
       </div>
     </Wrapper>
   );

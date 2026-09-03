@@ -1,4 +1,4 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document';
+import Document, { Html, Head, Main, NextScript } from "next/document";
 
 /**
  * Custom document, added for one reason: to preload the home page hero as real
@@ -25,7 +25,7 @@ import Document, { Html, Head, Main, NextScript } from 'next/document';
  */
 class MyDocument extends Document {
   render() {
-    const isHomePage = this.props.__NEXT_DATA__?.page === '/';
+    const isHomePage = this.props.__NEXT_DATA__?.page === "/";
 
     return (
       <Html lang="en">

@@ -1,0 +1,108 @@
+.amenities-container {
+  margin: 0 auto;
+  padding: 20px;
+  background: #fff;
+  padding-bottom: 0px;
+  border-radius: 12px;
+}
+
+.amenities-title {
+  /* Match the page's standard section heading (.Header): 20px / 600.
+     Colour + uppercase come from the co-applied .Header class. */
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.amenities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 20px;
+}
+
+.amenity-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fff8e1;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.amenity-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.amenity-icon {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 8px;
+}
+
+.amenity-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #000;
+  font-family: "Lexend Deca";
+}
+
+.overlay-item {
+  justify-content: center;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+.modal-grid {
+  gap: 20px;
+}
+.amenities-grid-w {
+  width: 100%;
+}
+.has-more-amenties {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* MEDIA QUERIES */
+
+@media screen and (max-width: 1024px) {
+  .amenities-grid {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .amenities-grid {
+    width: 100%;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  }
+  .amenity-item {
+    padding: 8px;
+  }
+  .amenity-label {
+    font-size: 0.6rem;
+  }
+  .overlay {
+    font-size: 0.7rem;
+  }
+}

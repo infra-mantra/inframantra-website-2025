@@ -1,0 +1,16 @@
+.searchbutton {
+  background: #e7b554;
+  color: white;
+  border: none;
+  border-radius: 10px !important;
+  font-size: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px !important;
+}
+
+.searchbutton:hover {
+  background: #e0a800;
+}

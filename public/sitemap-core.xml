@@ -97,4 +97,10 @@
     <priority>0.80</priority>
   </url>
 
+  <url>
+    <loc>https://inframantra.com/sitemap</loc>
+    <lastmod>2026-09-03T16:24:28.831Z</lastmod>
+    <priority>0.30</priority>
+  </url>
+
 </urlset>

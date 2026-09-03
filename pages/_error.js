@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
-import Button from '../common/button/button.jsx';
-import { useRouter } from 'next/router';
-import styles from '../styles/error.module.css';
-import Wrapper from "../components/UI/Wrapper.js";
+import Button from "../common/button/button.jsx";
+import { useRouter } from "next/router";
+import styles from "./_error.module.css";
+import Wrapper from "../components/shared/Wrapper.jsx";
 
 const ErrorStack = () => {
   const router = useRouter();
@@ -12,7 +12,7 @@ const ErrorStack = () => {
   useEffect(() => {
     if (counter === 0) {
       const timeout = setTimeout(() => {
-        router.push('/');
+        router.push("/");
       }, 1500);
       return () => clearTimeout(timeout);
     }
@@ -20,7 +20,7 @@ const ErrorStack = () => {
 
   useEffect(() => {
     if (counter === 0) {
-      router.push('/');
+      router.push("/");
     }
     const intervalId = setInterval(() => {
       setCounter((prevCount) => prevCount - 1);
@@ -29,8 +29,7 @@ const ErrorStack = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  const randomIntFromInterval = (min, max) =>
-    Math.floor(Math.random() * (max - min + 1) + min);
+  const randomIntFromInterval = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
 
   useEffect(() => {
     const stackErrorContainer = stackErrorContainerRef.current;
@@ -102,54 +101,54 @@ const ErrorStack = () => {
 
   return (
     <Wrapper>
-    <div className={styles.ErrorContainer}>
-      <div className={styles.error}>
-        <h1>500</h1>
-        <h2>Error</h2>
-        <p>
-          We encountered an unexpected error. Our team has been notified and is working on a fix.
-          In the meantime, you can try refreshing the page or return to the
-        </p>
+      <div className={styles.ErrorContainer}>
+        <div className={styles.error}>
+          <h1>500</h1>
+          <h2>Error</h2>
+          <p>
+            We encountered an unexpected error. Our team has been notified and is working on a fix.
+            In the meantime, you can try refreshing the page or return to the
+          </p>
 
-        <Button
-          btnText={"Back To Home"}
-          width={typeof window !== 'undefined' && window.innerWidth <= 768 ? '70vw' : '23svw'}
-          padding={typeof window !== 'undefined' && window.innerWidth < 768 ? '8px' : '12px'}
-          otherStyles={{
-            fontSize: typeof window !== 'undefined' && window.innerWidth < 768 ? '14px' : '16px',
-          }}
-          onClick={() => router.push('/')}
-        />
-      </div>
+          <Button
+            btnText={"Back To Home"}
+            width={typeof window !== "undefined" && window.innerWidth <= 768 ? "70vw" : "23svw"}
+            padding={typeof window !== "undefined" && window.innerWidth < 768 ? "8px" : "12px"}
+            otherStyles={{
+              fontSize: typeof window !== "undefined" && window.innerWidth < 768 ? "14px" : "16px",
+            }}
+            onClick={() => router.push("/")}
+          />
+        </div>
 
-      <div className={styles.stackErrorContainer} ref={stackErrorContainerRef}>
-        {[...Array(6)].map((_, index) => (
-          <div className={styles.cardErrorContainer} key={index}>
-            <div
-              className={styles.perspec}
-              style={{
-                '--spreaddist': `${125 - index * 25}px`,
-                '--scaledist': `${0.75 + index * 0.05}`,
-                '--vertdist': `${-25 + index * 5}px`
-              }}
-            >
-              <div className={styles.card1}>
-                <div className={styles.writing}>
-                  <div className={styles.topbar}>
-                    <div className={styles.red}></div>
-                    <div className={styles.yellow}></div>
-                    <div className={styles.green}></div>
-                  </div>
-                  <div className={styles.code}>
-                    <ul></ul>
+        <div className={styles.stackErrorContainer} ref={stackErrorContainerRef}>
+          {[...Array(6)].map((_, index) => (
+            <div className={styles.cardErrorContainer} key={index}>
+              <div
+                className={styles.perspec}
+                style={{
+                  "--spreaddist": `${125 - index * 25}px`,
+                  "--scaledist": `${0.75 + index * 0.05}`,
+                  "--vertdist": `${-25 + index * 5}px`,
+                }}
+              >
+                <div className={styles.card1}>
+                  <div className={styles.writing}>
+                    <div className={styles.topbar}>
+                      <div className={styles.red}></div>
+                      <div className={styles.yellow}></div>
+                      <div className={styles.green}></div>
+                    </div>
+                    <div className={styles.code}>
+                      <ul></ul>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
     </Wrapper>
   );
 };

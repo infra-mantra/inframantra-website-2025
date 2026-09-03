@@ -1,0 +1,48 @@
+.brochure-download-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  padding-left: 0px;
+  padding-bottom: 0px;
+  border-radius: 12px;
+  width: 343px;
+}
+
+.brochure-download-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.icon-download {
+  height: 10px;
+  width: 10px;
+}
+
+.pdf-icon-box img {
+  width: 40px;
+  height: auto;
+}
+
+.brochure-download-heading strong {
+  font-size: 18px;
+  font-weight: 600;
+  color: #222;
+}
+
+.brochure-download-section button {
+  padding: 12px 22px;
+  border-radius: 6px;
+  background: rgb(231, 181, 84);
+  color: #fff;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 768px) {
+  .brochure-download-section {
+    width: 100%;
+    justify-content: center;
+  }
+}

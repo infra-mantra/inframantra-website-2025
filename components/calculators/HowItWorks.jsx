@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./calculators.module.css";
+import styles from "./Calculators.module.css";
 
 /* Simple numbered "how it works" strip — adds scannable, keyword-rich
    content to each calculator page (good for SEO and user trust). */

@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import Section from "../components/UI/Section";
-import Wrapper from "../components/UI/Wrapper";
+import Section from "../components/shared/Section.jsx";
+import Wrapper from "../components/shared/Wrapper.jsx";
 import Link from "next/link";
-import NoImage from "../components/UI/NoImage";
-import PageHeader from "../components/UI/PageHeader";
-import styles from "../styles/developer.module.css";
+import NoImage from "../components/shared/NoImage.jsx";
+import PageHeader from "../components/shared/PageHeader.jsx";
+import styles from "./developer.module.css";
 
 // One developer-card placeholder (image + name + description + stats + button).
 function DeveloperCardSkeleton() {
@@ -12,7 +12,10 @@ function DeveloperCardSkeleton() {
     <div className={styles.skelCard} aria-hidden="true">
       <div className={styles.skelImg} />
       <div className={styles.skelBody}>
-        <div className={styles.skelBlock} style={{ height: 18, width: "55%", margin: "0 auto 16px" }} />
+        <div
+          className={styles.skelBlock}
+          style={{ height: 18, width: "55%", margin: "0 auto 16px" }}
+        />
         <div className={styles.skelBlock} style={{ height: 12, marginBottom: 8 }} />
         <div className={styles.skelBlock} style={{ height: 12, marginBottom: 8 }} />
         <div className={styles.skelBlock} style={{ height: 12, width: "80%", marginBottom: 28 }} />
@@ -20,7 +23,10 @@ function DeveloperCardSkeleton() {
           <div className={styles.skelBlock} style={{ height: 12, width: "42%" }} />
           <div className={styles.skelBlock} style={{ height: 12, width: "42%" }} />
         </div>
-        <div className={styles.skelBlock} style={{ height: 40, width: 190, borderRadius: 8, margin: "0 auto" }} />
+        <div
+          className={styles.skelBlock}
+          style={{ height: 40, width: 190, borderRadius: 8, margin: "0 auto" }}
+        />
       </div>
     </div>
   );
@@ -110,89 +116,99 @@ export default function Developers({ allData }) {
       image={allData.meta.bannerImage}
     >
       <PageHeader data={data} />
-      <Section classes={`${styles.aboutProjectWrapper} ${styles.pageWidthContainerDeve}`} pageWidth="container">
+      <Section
+        classes={`${styles.aboutProjectWrapper} ${styles.pageWidthContainerDeve}`}
+        pageWidth="container"
+      >
         <div className={styles.sectionHeadDeveloper}>
           <h2>Our Developers</h2>
           <p className={styles.developerSubtitle}>
-            Explore India&apos;s leading real estate developers and the landmark projects behind them.
+            Explore India&apos;s leading real estate developers and the landmark projects behind
+            them.
           </p>
         </div>
 
         <div className={styles.dWraps}>
           {loading
-            ? Array.from({ length: itemsPerPage }).map((_, i) => (
-                <DeveloperCardSkeleton key={i} />
-              ))
+            ? Array.from({ length: itemsPerPage }).map((_, i) => <DeveloperCardSkeleton key={i} />)
             : visibleItems.map((item) => (
-            <div key={item.id} className={styles.dItems}>
-              <div className={styles.imgWrap}>
-                <Link href={`/property-listing/developer/${item.name}`} target="_blank" rel="noreferrer">
-                  {item.developerImg ? (
-                    <picture>
-                      <img
-                        key={item.id}
-                        src={item.developerImg}
-                        alt={item.name}
-                        className="blog-image"
-                        style={{ cursor: "pointer" }}
-                      />
-                    </picture>
-                  ) : (
-                    <NoImage />
-                  )}
-                </Link>
-              </div>
-
-              <div className={styles.infoDeveloper}>
-                <h4>{item.name}</h4>
-                <p className={styles.pDeveloper}>
-                  {expanded[item.id]
-                    ? item.description
-                    : `${item.description.split(" ").slice(0, 25).join(" ")}${
-                        item.description.split(" ").length > 25 ? "... " : " "
-                      }`}
-                  {item.description.split(" ").length > 25 && (
-                    <span
-                      onClick={() =>
-                        setExpanded((prev) => ({ ...prev, [item.id]: !prev[item.id] }))
-                      }
-                      style={{ color: "#e7b554", cursor: "pointer", fontWeight: 500 }}
+                <div key={item.id} className={styles.dItems}>
+                  <div className={styles.imgWrap}>
+                    <Link
+                      href={`/property-listing/developer/${item.name}`}
+                      target="_blank"
+                      rel="noreferrer"
                     >
-                      {expanded[item.id] ? "Read Less" : "Read More"}
-                    </span>
-                  )}
-                </p>
+                      {item.developerImg ? (
+                        <picture>
+                          <img
+                            key={item.id}
+                            src={item.developerImg}
+                            alt={item.name}
+                            className="blog-image"
+                            style={{ cursor: "pointer" }}
+                          />
+                        </picture>
+                      ) : (
+                        <NoImage />
+                      )}
+                    </Link>
+                  </div>
 
-                <div className={styles.developerStats}>
-                  <div className={styles.statsRow}>
-                    <p>Total Projects: <span>{item.totalProperties}</span></p>
-                    <p className={styles.statsRowItem2}>Years of Experience: <span>{item.experienceYears}</span></p>
+                  <div className={styles.infoDeveloper}>
+                    <h4>{item.name}</h4>
+                    <p className={styles.pDeveloper}>
+                      {expanded[item.id]
+                        ? item.description
+                        : `${item.description.split(" ").slice(0, 25).join(" ")}${
+                            item.description.split(" ").length > 25 ? "... " : " "
+                          }`}
+                      {item.description.split(" ").length > 25 && (
+                        <span
+                          onClick={() =>
+                            setExpanded((prev) => ({ ...prev, [item.id]: !prev[item.id] }))
+                          }
+                          style={{ color: "#e7b554", cursor: "pointer", fontWeight: 500 }}
+                        >
+                          {expanded[item.id] ? "Read Less" : "Read More"}
+                        </span>
+                      )}
+                    </p>
+
+                    <div className={styles.developerStats}>
+                      <div className={styles.statsRow}>
+                        <p>
+                          Total Projects: <span>{item.totalProperties}</span>
+                        </p>
+                        <p className={styles.statsRowItem2}>
+                          Years of Experience: <span>{item.experienceYears}</span>
+                        </p>
+                      </div>
+                    </div>
+                    <div className={styles.WrapDeveloper}>
+                      {item.link ? (
+                        <a href={item.link} target="_blank" rel="noreferrer">
+                          <button type="submit" className={styles.developerButton}>
+                            View All Properties
+                          </button>
+                        </a>
+                      ) : (
+                        <Link href={`/property-listing/developer/${item.name}`}>
+                          <div>
+                            <button type="submit" className={styles.developerButton}>
+                              View All Properties
+                            </button>
+                          </div>
+                        </Link>
+                      )}
+                    </div>
                   </div>
                 </div>
-                    <div className={styles.WrapDeveloper}>
-                {item.link ? (
-                  <a href={item.link} target="_blank" rel="noreferrer">
-                    <button type="submit" className={styles.developerButton}>
-                      View All Properties
-                    </button>
-                  </a>
-                ) : (
-                  <Link href={`/property-listing/developer/${item.name}`}>
-                    <div>
-                      <button type="submit" className={styles.developerButton}>
-                        View All Properties
-                      </button>
-                    </div>
-                  </Link>
-                )}
-                </div>
-              </div>
-            </div>
-          ))}
+              ))}
         </div>
 
         {/* Pagination */}
-          <div className="pagination-buttons" style={{ textAlign: "center", margin: "2rem 0" }}>
+        <div className="pagination-buttons" style={{ textAlign: "center", margin: "2rem 0" }}>
           <button
             type="button"
             className="page-btn start-page"

@@ -1,0 +1,97 @@
+/* SECTION */
+.perkSection {
+  padding: 0rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.perkYl {
+  color: #e7b554;
+}
+
+/* GRID */
+.perkWrapper {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 2rem;
+}
+.perkHeading {
+  color: #1a1a1a;
+  font-family: "Lexend Deca";
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: capitalize;
+}
+
+/* CARD */
+.perkCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* IMAGE */
+.perkImageBox {
+  flex-shrink: 0;
+  background-color: #f0f0f0;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  fill: #f0f0f0;
+  filter: drop-shadow(0 3.818px 3.818px rgba(0, 0, 0, 0.25));
+}
+
+/* TEXT */
+.perkTextBox {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* TITLE */
+.perkTitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* CONTENT */
+.perkContent {
+  font-size: 14px;
+  color: #555;
+  font-weight: 350;
+  margin: 0;
+}
+
+/* 📱 MOBILE */
+@media (max-width: 768px) {
+  .perkWrapper {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .perkTitle {
+    font-size: 14px;
+  }
+  .perkContent {
+    font-size: 12px;
+  }
+  .perkImageBox {
+    height: 69px;
+    width: 69px;
+  }
+  .perkSection {
+    padding: 0rem 1rem;
+  }
+  .perkHeading {
+    white-space: nowrap;
+    font-size: 1.2rem;
+  }
+}

@@ -1,17 +1,11 @@
 import React, { useMemo, useState } from "react";
 import Link from "next/link";
 import { FiSearch } from "react-icons/fi";
-import styles from "./calculators.module.css";
-import SplitDonut from "./SplitDonut";
-import MiniBarChart from "./MiniBarChart";
-import AnimatedNumber from "./AnimatedNumber";
-import {
-  formatINR,
-  formatShort,
-  emiFor,
-  maxLoanForEmi,
-  sanitizeAmount,
-} from "./calcUtils";
+import styles from "./Calculators.module.css";
+import SplitDonut from "./SplitDonut.jsx";
+import MiniBarChart from "./MiniBarChart.jsx";
+import AnimatedNumber from "./AnimatedNumber.jsx";
+import { formatINR, formatShort, emiFor, maxLoanForEmi, sanitizeAmount } from "./calcUtils.js";
 
 // Monthly saving needed to reach a future amount, given a monthly return.
 function monthlySavingFor(gap, months, annualReturn) {
@@ -115,9 +109,8 @@ function PlanCalculator() {
     <div className={styles.wrap}>
       <h2 className={styles.heading}>Make Your Purpose a Plan</h2>
       <p className={styles.sub}>
-        Turn your home-buying dream into a concrete plan. Either set a target
-        home and date to see how much to save each month, or enter your budget
-        to see the home you can buy right now.
+        Turn your home-buying dream into a concrete plan. Either set a target home and date to see
+        how much to save each month, or enter your budget to see the home you can buy right now.
       </p>
 
       <div className={styles.modeToggle} role="group" aria-label="Calculator mode">
@@ -152,9 +145,7 @@ function PlanCalculator() {
                     type="text"
                     inputMode="numeric"
                     value={target.toLocaleString("en-IN")}
-                    onChange={(e) =>
-                      setTarget(sanitizeAmount(e.target.value, 200000000))
-                    }
+                    onChange={(e) => setTarget(sanitizeAmount(e.target.value, 200000000))}
                   />
                 </div>
               </div>
@@ -220,9 +211,7 @@ function PlanCalculator() {
                     type="text"
                     inputMode="numeric"
                     value={savings.toLocaleString("en-IN")}
-                    onChange={(e) =>
-                      setSavings(sanitizeAmount(e.target.value, 200000000))
-                    }
+                    onChange={(e) => setSavings(sanitizeAmount(e.target.value, 200000000))}
                   />
                 </div>
               </div>
@@ -297,22 +286,33 @@ function PlanCalculator() {
               <li>
                 <span className={`${styles.dot} ${styles.dotPrincipal}`} />
                 <span className={styles.bLabel}>Down payment needed (20%)</span>
-                <span className={styles.bValue}><AnimatedNumber value={goal.downPayment} format={formatINR} /></span>
+                <span className={styles.bValue}>
+                  <AnimatedNumber value={goal.downPayment} format={formatINR} />
+                </span>
               </li>
               <li>
                 <span className={`${styles.dot} ${styles.dotInterest}`} />
                 <span className={styles.bLabel}>Still to save</span>
-                <span className={styles.bValue}><AnimatedNumber value={goal.gap} format={formatINR} /></span>
+                <span className={styles.bValue}>
+                  <AnimatedNumber value={goal.gap} format={formatINR} />
+                </span>
               </li>
               <li>
                 <span className={styles.bLabel} style={{ paddingLeft: 20 }}>
                   Home loan at purchase
                 </span>
-                <span className={styles.bValue}><AnimatedNumber value={goal.loan} format={formatINR} /></span>
+                <span className={styles.bValue}>
+                  <AnimatedNumber value={goal.loan} format={formatINR} />
+                </span>
               </li>
               <li className={styles.totalRow}>
-                <span className={styles.bLabel}>Future EMI (~{goalRate}%, {goalTenure}y)</span>
-                <span className={styles.bValue}><AnimatedNumber value={goal.emi} format={formatINR} />/mo</span>
+                <span className={styles.bLabel}>
+                  Future EMI (~{goalRate}%, {goalTenure}y)
+                </span>
+                <span className={styles.bValue}>
+                  <AnimatedNumber value={goal.emi} format={formatINR} />
+                  /mo
+                </span>
               </li>
             </ul>
 
@@ -322,8 +322,16 @@ function PlanCalculator() {
               centerLabel="Down payment"
               centerValue={formatShort(goal.downPayment)}
               legend={[
-                { label: "Already saved", color: "var(--c-accent)", value: formatShort(Math.min(savings, goal.downPayment)) },
-                { label: "Still to save", color: "var(--c-interest)", value: formatShort(goal.gap) },
+                {
+                  label: "Already saved",
+                  color: "var(--c-accent)",
+                  value: formatShort(Math.min(savings, goal.downPayment)),
+                },
+                {
+                  label: "Still to save",
+                  color: "var(--c-interest)",
+                  value: formatShort(goal.gap),
+                },
               ]}
             />
 
@@ -401,9 +409,7 @@ function PlanCalculator() {
                     type="text"
                     inputMode="numeric"
                     value={income.toLocaleString("en-IN")}
-                    onChange={(e) =>
-                      setIncome(sanitizeAmount(e.target.value, 5000000))
-                    }
+                    onChange={(e) => setIncome(sanitizeAmount(e.target.value, 5000000))}
                   />
                 </div>
               </div>
@@ -435,9 +441,7 @@ function PlanCalculator() {
                     type="text"
                     inputMode="numeric"
                     value={budget.toLocaleString("en-IN")}
-                    onChange={(e) =>
-                      setBudget(sanitizeAmount(e.target.value, income))
-                    }
+                    onChange={(e) => setBudget(sanitizeAmount(e.target.value, income))}
                   />
                 </div>
               </div>
@@ -469,9 +473,7 @@ function PlanCalculator() {
                     type="text"
                     inputMode="numeric"
                     value={haveSavings.toLocaleString("en-IN")}
-                    onChange={(e) =>
-                      setHaveSavings(sanitizeAmount(e.target.value, 200000000))
-                    }
+                    onChange={(e) => setHaveSavings(sanitizeAmount(e.target.value, 200000000))}
                   />
                 </div>
               </div>
@@ -576,16 +578,22 @@ function PlanCalculator() {
               <li>
                 <span className={`${styles.dot} ${styles.dotPrincipal}`} />
                 <span className={styles.bLabel}>Home loan</span>
-                <span className={styles.bValue}><AnimatedNumber value={afford.usedLoan} format={formatINR} /></span>
+                <span className={styles.bValue}>
+                  <AnimatedNumber value={afford.usedLoan} format={formatINR} />
+                </span>
               </li>
               <li>
                 <span className={`${styles.dot} ${styles.dotInterest}`} />
                 <span className={styles.bLabel}>Down payment</span>
-                <span className={styles.bValue}><AnimatedNumber value={afford.downPayment} format={formatINR} /></span>
+                <span className={styles.bValue}>
+                  <AnimatedNumber value={afford.downPayment} format={formatINR} />
+                </span>
               </li>
               <li className={styles.totalRow}>
                 <span className={styles.bLabel}>Max property price</span>
-                <span className={styles.bValue}><AnimatedNumber value={afford.maxPrice} format={formatINR} /></span>
+                <span className={styles.bValue}>
+                  <AnimatedNumber value={afford.maxPrice} format={formatINR} />
+                </span>
               </li>
             </ul>
 
@@ -595,8 +603,16 @@ function PlanCalculator() {
               centerLabel="Max price"
               centerValue={formatShort(afford.maxPrice)}
               legend={[
-                { label: "Home loan", color: "var(--c-accent)", value: formatShort(afford.usedLoan) },
-                { label: "Down payment", color: "var(--c-interest)", value: formatShort(afford.downPayment) },
+                {
+                  label: "Home loan",
+                  color: "var(--c-accent)",
+                  value: formatShort(afford.usedLoan),
+                },
+                {
+                  label: "Down payment",
+                  color: "var(--c-interest)",
+                  value: formatShort(afford.downPayment),
+                },
               ]}
             />
 
@@ -644,10 +660,9 @@ function PlanCalculator() {
       )}
 
       <p className={styles.disclaimer}>
-        *Figures are indicative and assume a 20% down payment with the bank
-        funding the balance. Goal-mode savings use compounding at your chosen
-        expected return. Actual loan eligibility, interest rates and returns vary
-        by lender and market conditions.
+        *Figures are indicative and assume a 20% down payment with the bank funding the balance.
+        Goal-mode savings use compounding at your chosen expected return. Actual loan eligibility,
+        interest rates and returns vary by lender and market conditions.
       </p>
     </div>
   );

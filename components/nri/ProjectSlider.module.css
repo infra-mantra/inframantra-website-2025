@@ -1,0 +1,289 @@
+/* ProjectsSection.module.css */
+
+.sectionSlider {
+  background: #000;
+  padding: 2rem 1rem;
+}
+
+.header {
+  max-width: 1280px;
+  margin: 0 auto 40px;
+}
+
+.eyebrow {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #fff;
+  margin: 0 0 10px;
+}
+
+.title {
+  font-size: 1.8rem;
+  line-height: 1.08;
+  font-weight: 700;
+  color: #d4a64a;
+  margin: 0 0 32px 0;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #fff;
+  margin: 0;
+  font-weight: 400;
+}
+
+/* Grid */
+.grid {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .section {
+    padding: 48px 20px 60px;
+  }
+
+  .subtitle {
+    font-size: 12px;
+  }
+}
+
+/* Card */
+.card_pro {
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Image Slider */
+.imageSlider {
+  position: relative;
+  height: 280px;
+  overflow: hidden;
+  background: #e0ddd8;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Category Badge */
+.badgeContainer {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  z-index: 2;
+}
+
+.badge {
+  background: rgba(255, 255, 255, 0.95);
+  color: #1a1a1a;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.02em;
+  backdrop-filter: blur(4px);
+}
+
+/* Arrows */
+.arrowC {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: opacity 0.2s ease;
+  font-size: 14px;
+  color: #1a1a1a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.card:hover .arrowC {
+  opacity: 1;
+}
+
+.arrowLeft {
+  left: 12px;
+}
+
+.arrowRight {
+  right: 12px;
+}
+
+/* Card Body */
+.cardBody {
+  padding: 20px 22px 24px;
+}
+
+.projectName {
+  font-size: 20px;
+  font-weight: 700;
+  color: #d4a64a;
+  margin: 0 0 5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.projectName a {
+  color: inherit;
+  text-decoration: none;
+
+  transition: color 0.2s;
+}
+
+.projectName a:hover {
+  color: #d4a64a;
+}
+
+/* Meta */
+.meta {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 13px;
+  color: #fff;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #fff;
+}
+
+.metaIcon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+.metaDivider {
+  width: 1px;
+  height: 14px;
+  background: #ddd;
+}
+
+/* Download Button — full width */
+.downloadBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px 0;
+  border: 1px solid #1a1a1a;
+  background: #dcaa4c !important;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-sizing: border-box;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+
+.downloadBtn:hover {
+  background: #dcaa4c !important;
+  color: #fff;
+}
+
+.downloadIcon {
+  width: 14px;
+  height: 14px;
+}
+
+/* Load More */
+.loadMoreWrapper {
+  max-width: 1280px;
+  margin: 40px auto 0;
+  text-align: center;
+}
+
+.loadMoreBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  background: transparent;
+  border: 1px solid #1a1a1a;
+  padding: 13px 32px;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+
+.loadMoreBtn:hover {
+  background: #dcaa4c !important;
+  color: #fff;
+}
+.badgeContainerLogo {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  z-index: 2;
+}
+@media (max-width: 768px) {
+  .cardBody {
+    padding: 7px 0px 20px;
+  }
+}
