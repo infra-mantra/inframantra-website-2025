@@ -48,15 +48,19 @@ function Masthead({ name, designation, image }) {
 
       {image && (
         <figure className={s.dpfPortrait}>
-          <Image
-            src={image}
-            alt={name || "Portrait"}
-            layout="fill"
-            objectFit="cover"
-            objectPosition="50% 18%"
-            priority
-            sizes="(max-width: 900px) 92vw, 420px"
-          />
+          {/* The inner element carries the 3D transform so the perspective
+              context never lands on a grid item that other rules depend on. */}
+          <div className={s.dpfPortraitInner}>
+            <Image
+              src={image}
+              alt={name || "Portrait"}
+              layout="fill"
+              objectFit="cover"
+              objectPosition="50% 18%"
+              priority
+              sizes="(max-width: 900px) 92vw, 420px"
+            />
+          </div>
         </figure>
       )}
     </header>
@@ -120,6 +124,12 @@ function Journey({ journey, hasFigures }) {
       <ul className={`${s.dpfEntries} ${hasFigures ? "" : s.dpfJourneyNoFigs}`}>
         {journey.map((e, i) => (
           <li key={e.id} id={`dpf-yr-${i + 1}`} className={s.dpfEntry}>
+            {/* Oversized watermark numeral for depth. aria-hidden so the year is
+                announced once, by the real heading below, not twice. */}
+            <span className={s.dpfGhostYear} aria-hidden="true">
+              {e.yearHead}
+            </span>
+
             <div className={s.dpfYearCell}>
               <span className={s.dpfOrdinal}>
                 {String(i + 1).padStart(2, "0")} / {total}
