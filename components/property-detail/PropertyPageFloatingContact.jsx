@@ -9,6 +9,7 @@ import styles from "./PropertyPageFloatingContact.module.css";
 import Ajax1 from "../lib/ajax1.js";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+import { useRecaptchaEnabled } from "../lib/recaptcha.js";
 
 const contactFormStyles = {
   textField: {
@@ -112,6 +113,7 @@ function PropertyPageFloatingContact({
   const [captchaError, setCaptchaError] = useState("");
 
   const recaptchaRef = useRef(null);
+  const recaptchaEnabled = useRecaptchaEnabled();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -138,7 +140,12 @@ function PropertyPageFloatingContact({
     e.preventDefault();
 
     try {
-      const token = await recaptchaRef.current.executeAsync();
+      // The widget is only mounted where the site key is valid (see
+      // components/lib/recaptcha.js), so the ref can legitimately be null on a
+      // preview or local host. Calling executeAsync() on null would throw into
+      // the catch below and the enquiry would silently never send — so submit
+      // without a token there, exactly as the other two forms already do.
+      const token = recaptchaRef.current ? await recaptchaRef.current.executeAsync() : null;
 
       setCaptchaToken(token);
 
@@ -264,12 +271,16 @@ function PropertyPageFloatingContact({
 
         <div className={styles.imEnqFoot}>
           <div className="recaptcha-container">
-            <ReCAPTCHA
-              sitekey="6LfrSTUqAAAAAOy2-j9cNvTIujOI5GKjtMVsn2Uk"
-              size="invisible"
-              ref={recaptchaRef}
-              onChange={handleCaptchaChange}
-            />
+            {/* Only where the site key is registered — elsewhere Google paints an
+                "Invalid domain for site key" error box over the form. */}
+            {recaptchaEnabled && (
+              <ReCAPTCHA
+                sitekey="6LfrSTUqAAAAAOy2-j9cNvTIujOI5GKjtMVsn2Uk"
+                size="invisible"
+                ref={recaptchaRef}
+                onChange={handleCaptchaChange}
+              />
+            )}
           </div>
 
           <button type="submit" className={styles.imEnqSubmit}>

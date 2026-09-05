@@ -14,6 +14,7 @@ import { IoMdCall } from "react-icons/io";
 import { MdMail } from "react-icons/md";
 import { FcApproval } from "react-icons/fc";
 import { FaWhatsapp } from "react-icons/fa";
+import { useRecaptchaEnabled } from "../../lib/recaptcha.js";
 
 function App({ name, displayMap = true, countryCode = "in" }) {
   const [isDesktop, setIsDesktop] = useState(true);
@@ -51,6 +52,7 @@ function App({ name, displayMap = true, countryCode = "in" }) {
   const [captchaReady, setCaptchaReady] = useState(false);
 
   const recaptchaRef = useRef(null);
+  const recaptchaEnabled = useRecaptchaEnabled();
 
   const handleChange = (e) => {
     setFormData((prevFormData) => ({
@@ -328,7 +330,7 @@ function App({ name, displayMap = true, countryCode = "in" }) {
 
             {/* RECAPTCHA — mounted only once the user engages the form */}
             <div className="recaptcha-container">
-              {captchaReady && (
+              {captchaReady && recaptchaEnabled && (
                 <ReCAPTCHA
                   sitekey="6LfrSTUqAAAAAOy2-j9cNvTIujOI5GKjtMVsn2Uk"
                   size="invisible"

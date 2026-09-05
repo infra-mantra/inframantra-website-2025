@@ -5,6 +5,7 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
 import Ajax1 from "../lib/ajax1.js";
 import { useRouter } from "next/router";
+import { useRecaptchaEnabled } from "../lib/recaptcha.js";
 
 const textFieldStyles = {
   width: "90%",
@@ -38,6 +39,7 @@ function PropertyHeaderContact({ name }) {
   const [captchaToken, setCaptchaToken] = useState(null);
   //   const dispatch = useDispatch();
   const recaptchaRef = useRef(null);
+  const recaptchaEnabled = useRecaptchaEnabled();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -132,11 +134,15 @@ function PropertyHeaderContact({ name }) {
           />
         </div>
         <div className="recaptcha-container">
-          <ReCAPTCHA
-            sitekey={`6LfrSTUqAAAAAOy2-j9cNvTIujOI5GKjtMVsn2Uk`}
-            size="invisible"
-            ref={recaptchaRef} // Reference to the ReCAPTCHA component
-          />
+          {/* Only where the site key is registered — elsewhere Google paints an
+              "Invalid domain for site key" error box over the form. */}
+          {recaptchaEnabled && (
+            <ReCAPTCHA
+              sitekey={`6LfrSTUqAAAAAOy2-j9cNvTIujOI5GKjtMVsn2Uk`}
+              size="invisible"
+              ref={recaptchaRef} // Reference to the ReCAPTCHA component
+            />
+          )}
         </div>
 
         <button
