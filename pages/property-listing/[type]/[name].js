@@ -326,6 +326,7 @@ const PropertyListingPage = ({
 
   // ✅ Sync listing content height with filters
 
+  
   // ✅ Smooth scroll to top when filters/search change
   useEffect(() => {
     if (typeof window !== "undefined") {
