@@ -217,7 +217,13 @@
   }
 
   .localityTitle {
-    font-size: 20px;
+    font-size: 16.5px;
+    margin-bottom: 12px;
+  }
+
+  .localityTitle::before {
+    width: 4px;
+    height: 18px;
   }
 
   .localityContentWrapper {
@@ -245,7 +251,17 @@
     font-size: 20px;
   }
   .localityTitle {
-    font-weight: 500;
+    /* 600, not 500 — it is still a heading. The step below the section title is
+       carried by size, which is what keeps the two apart without making this
+       one look like body copy. */
+    font-weight: 600;
+    font-size: 15.5px;
+    margin-bottom: 10px;
+  }
+
+  .localityTitle::before {
+    width: 3.5px;
+    height: 16px;
   }
   .localitySectionHeader {
     gap: 6px;
@@ -262,9 +278,7 @@
     margin-bottom: 30px;
   }
 
-  .localityTitle {
-    font-size: 18px;
-  }
+
   .localityViewMoreButton {
     font-size: 14px;
   }
