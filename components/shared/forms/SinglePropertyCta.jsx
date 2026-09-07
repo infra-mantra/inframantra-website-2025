@@ -298,14 +298,9 @@ function App({ name, id = "defaultId", countryCode = "in" }) {
                 <p className={style.hometextForm}>Give us a call and book your visit now!</p>
               </div>
 
-              {/* Decorative, and it carries no information the heading beside it
-                  does not already give — so it is hidden from screen readers
-                  rather than announced as "Call Icon". Explicit dimensions stop
-                  it reflowing the card as it loads. */}
               <img
                 src="https://inframantra.com/guruCollection/guru_call.png"
-                alt=""
-                aria-hidden="true"
+                alt="Guru Randhawa, Inframantra brand ambassador"
                 className="callImage"
                 width="146"
                 height="115"

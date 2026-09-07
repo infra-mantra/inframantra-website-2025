@@ -150,6 +150,11 @@
     top: 100%;
     left: 50%;
     transform: translate(-50%, -50%);
+
+    /* The transform opens a stacking context, so the dropdown z-index only ranks
+       it inside this wrapper — against the page it is the wrapper that competes.
+       At auto, later positioned sections painted over the suggestions. */
+    z-index: 60;
   }
 
   .searchOptionsWrapper .inputWrapper {
@@ -184,5 +189,10 @@
     top: 100%;
     left: 50%;
     transform: translate(-50%, -50%);
+
+    /* The transform opens a stacking context, so the dropdown z-index only ranks
+       it inside this wrapper — against the page it is the wrapper that competes.
+       At auto, later positioned sections painted over the suggestions. */
+    z-index: 60;
   }
 }

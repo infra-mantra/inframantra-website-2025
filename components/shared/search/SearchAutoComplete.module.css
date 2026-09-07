@@ -255,10 +255,18 @@
   .micButton {
     margin-right: 30px;
   }
+  /*
+    z-index was 1 here, overriding the 10000 the desktop rule sets — which is why
+    the city tabs painted straight through the suggestions. It keeps the full
+    value on mobile now.
+
+    Width was a hardcoded 335px !important, so the dropdown was a fixed size on
+    every phone regardless of how wide the bar above it actually is. It follows
+    the bar instead.
+  */
   .listbox {
-    width: 335px !important;
-    margin: 5px 0px 0px;
-    z-index: 1;
+    width: 100%;
+    margin: 6px 0 0;
   }
   .listbox li span {
     font-size: 12px;

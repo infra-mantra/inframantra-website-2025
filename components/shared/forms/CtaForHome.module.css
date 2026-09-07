@@ -521,15 +521,13 @@ a.homeCtaContactItem:hover .homeCtaContactValue {
 
 .homeCtaCallRow .callImage {
   flex-shrink: 0;
-  width: 104px;
+  width: 146px;
   height: auto;
 }
 
 @media (max-width: 560px) {
-  /* A decorative photo should not take a third of a narrow card from the copy
-     and the number, which are the only parts anyone acts on. */
   .homeCtaCallRow .callImage {
-    width: 76px;
+    width: 120px;
   }
   .hometextForm {
     font-size: 13px;

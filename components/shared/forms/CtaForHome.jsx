@@ -306,8 +306,7 @@ function App({ name, displayMap = true, countryCode = "in" }) {
 
               <img
                 src="/guruCollection/guru_call.png"
-                alt=""
-                aria-hidden="true"
+                alt="Guru Randhawa, Inframantra brand ambassador"
                 className="callImage"
                 width="146"
                 height="115"
