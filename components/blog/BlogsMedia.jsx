@@ -1,7 +1,17 @@
 import React from "react";
 import useSWR from "swr";
+import dynamic from "next/dynamic";
+import { createPortal } from "react-dom";
 import style from "./BlogsMedia.module.css";
 import Image from "next/image";
+import CustomBackdrop from "../shared/Backdrop.jsx";
+
+// Same treatment as the property card: the enquiry form is only fetched when a
+// card's "Enquire Now" is actually pressed, so it costs the home page nothing.
+const PropertyPageFloatingContact = dynamic(
+  () => import("../property-detail/PropertyPageFloatingContact.jsx"),
+  { ssr: false }
+);
 
 // Swiper
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -26,6 +36,10 @@ const formatDate = (d) => {
 };
 
 function BlogsMedia(props) {
+  // Which post's enquiry form is open, or null. Held here rather than per card so
+  // there is one modal in the tree instead of one per slide.
+  const [enquiryPost, setEnquiryPost] = React.useState(null);
+
   // `?_embed` returns every post's full content plus all embedded authors and
   // terms — 467 KB of JSON for a carousel that reads six fields. `_fields` trims
   // the posts and `_embed=wp:featuredmedia` embeds only the featured image,
@@ -66,9 +80,14 @@ function BlogsMedia(props) {
           spaceBetween={20}
           autoplay={{ delay: 3000 }}
           loop={true}
+          /* Same steps as the property carousel in PremiumPicksSection.jsx, so a blog
+             card is exactly as wide as a property card at every breakpoint — three
+             per row here against four there was the visible size mismatch. */
           breakpoints={{
-            0: { slidesPerView: 1.5, spaceBetween: 15 }, // mobile
-            768: { slidesPerView: 3, spaceBetween: 20 }, // desktop
+            320: { slidesPerView: 1.5, spaceBetween: 16 },
+            480: { slidesPerView: 1.8, spaceBetween: 16 },
+            768: { slidesPerView: 2.5, spaceBetween: 20 },
+            1024: { slidesPerView: 4, spaceBetween: 24 },
           }}
           className={style.blogPostSwiper}
         >
@@ -76,8 +95,8 @@ function BlogsMedia(props) {
             const media = post._embedded?.["wp:featuredmedia"]?.[0];
             return (
               <SwiperSlide key={post.id}>
-                <a href={getPostUrl(post)}>
-                  <div className={style.blogPostCard}>
+                <div className={style.blogPostCard}>
+                  <a href={getPostUrl(post)}>
                     <div className={style.blogPostImgWrap}>
                       <Image
                         src={media?.source_url || "/placeholder.jpg"}
@@ -86,7 +105,7 @@ function BlogsMedia(props) {
                         objectFit="cover"
                         objectPosition="center"
                         quality={90}
-                        sizes="(max-width: 768px) 60vw, 33vw"
+                        sizes="(max-width: 480px) 60vw, (max-width: 768px) 40vw, (max-width: 1024px) 25vw, 300px"
                       />
                     </div>
                     <div className={style.blogPostBody}>
@@ -110,25 +129,28 @@ function BlogsMedia(props) {
                         </span>
                       )}
                       <h3>{post.title.rendered}</h3>
-                      <span className={style.blogPostReadMore}>
-                        Read article
-                        <svg
-                          width="15"
-                          height="15"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2.2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          aria-hidden="true"
-                        >
-                          <path d="M5 12h14M13 6l6 6-6 6" />
-                        </svg>
-                      </span>
                     </div>
+                  </a>
+
+                  {/* Matches the property card's action row. "Read article" was a
+                      text link doing the same job as View More, so it is folded in
+                      rather than sitting alongside a button that repeats it. */}
+                  <div className={style.blogPostActions}>
+                    <a
+                      href={getPostUrl(post)}
+                      className={`${style.blogPostBtn} ${style.blogPostBtnView}`}
+                    >
+                      View More
+                    </a>
+                    <button
+                      type="button"
+                      onClick={() => setEnquiryPost(post)}
+                      className={`${style.blogPostBtn} ${style.blogPostBtnEnquire}`}
+                    >
+                      Enquire Now
+                    </button>
                   </div>
-                </a>
+                </div>
               </SwiperSlide>
             );
           })}
@@ -138,6 +160,18 @@ function BlogsMedia(props) {
       <a className={style.moreBlogs} href={`/blog`}>
         Explore More
       </a>
+
+      {enquiryPost &&
+        typeof document !== "undefined" &&
+        createPortal(
+          <CustomBackdrop open onClose={() => setEnquiryPost(null)}>
+            <PropertyPageFloatingContact
+              name={enquiryPost.title?.rendered}
+              onClose={() => setEnquiryPost(null)}
+            />
+          </CustomBackdrop>,
+          document.body
+        )}
     </div>
   );
 }

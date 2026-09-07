@@ -1,0 +1,117 @@
+/*
+  Modal shell for the enquiry forms opened from property cards and listings.
+
+  Replaces the .custom-backdrop rules that lived in styles/newHome.css. Those
+  centred their content and stopped there — no padding, no height limit and no
+  overflow — so on any viewport shorter than the form (a landscape phone, a small
+  laptop, a phone with the keyboard open) the top and bottom were simply cut off
+  with no way to reach them.
+
+  next.config.js sets WANT_HASH = false, so these names land verbatim in one global
+  namespace. The imBd* prefix keeps them off everything else.
+*/
+
+.imBdOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  justify-content: center;
+  /* flex-start, not center: a form taller than the viewport must overflow
+     downward into the scroll area. Centring it would push the top edge above
+     the viewport where it cannot be scrolled back into view. */
+  align-items: flex-start;
+
+  /* Safe-area aware so the panel clears notches and home indicators. */
+  padding: max(16px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right))
+    max(16px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+
+  background: rgba(8, 8, 10, 0.62);
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  animation: imBdFade 180ms ease-out;
+}
+
+/* Vertically centre only when there is room. Above this height the panel sits at
+   the top of a scrollable area instead. */
+@media (min-height: 720px) {
+  .imBdOverlay {
+    align-items: center;
+  }
+}
+
+.imBdPanel {
+  position: relative;
+  width: 100%;
+  /* Wide enough for the two-column field rows the enquiry form uses, and it stops
+     growing on desktop rather than stretching across a large monitor. */
+  max-width: 460px;
+  margin: auto;
+
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.42);
+
+  animation: imBdRise 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/*
+  The enquiry form ships wrapped in .propertyWrapper, a global class that paints
+  its own white card: shadow, 10px radius and 30px top/bottom margins. That is
+  right where the form sits inline on the property page, and wrong here — inside
+  the panel it rendered a card within a card, with transparent strips above and
+  below where the margins pushed it away from the panel edges.
+
+  Flattened to a plain surface so the panel is the only card. :global because
+  .propertyWrapper is defined in styles/newHome.css, not in this module.
+*/
+.imBdPanel :global(.propertyWrapper) {
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 22px 20px 20px;
+}
+
+@media (max-width: 480px) {
+  .imBdPanel {
+    /* Corner radius shrinks as the panel approaches the screen edges — a large
+       radius reads as a mistake once the gap either side is only a few pixels. */
+    border-radius: 12px;
+  }
+
+  .imBdPanel :global(.propertyWrapper) {
+    padding: 18px 16px 16px;
+  }
+}
+
+@keyframes imBdFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes imBdRise {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Respect a reduced-motion preference: the panel still appears, it just does not
+   travel or scale on the way in. */
+@media (prefers-reduced-motion: reduce) {
+  .imBdOverlay,
+  .imBdPanel {
+    animation: none;
+  }
+}

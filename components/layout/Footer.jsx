@@ -191,6 +191,51 @@ function Footer() {
   const quickSearchColumn = (
     <div className={styles.footerThirdSectionCompanyDetailsWrapper}>
       <h4>Quick Search</h4>
+      {/* Configuration landing pages. Two per line — the labels are short enough
+          that one per row left a column of half-empty space next to the city
+          toggles below. Each still uses the header-row classes so the type and size
+          match those toggles exactly; only the wrapper adds the two-column grid. */}
+      <p className={styles.footerConfigLabel}>By Configuration</p>
+      <div className={styles.footerConfigGrid}>
+        <div className={styles.footerThirdSectionDropdownHeaderFlex}>
+          <p>
+            <Link legacyBehavior href="/property-listing/configuration/2-bhk">
+              2 & 2.5 BHK
+            </Link>
+          </p>
+        </div>
+        <div className={styles.footerThirdSectionDropdownHeaderFlex}>
+          <p>
+            <Link legacyBehavior href="/property-listing/configuration/3-bhk">
+              3 & 3.5 BHK
+            </Link>
+          </p>
+        </div>
+        <div className={styles.footerThirdSectionDropdownHeaderFlex}>
+          <p>
+            <Link legacyBehavior href="/property-listing/configuration/4-bhk">
+              4 & 4.5 BHK
+            </Link>
+          </p>
+        </div>
+        <div className={styles.footerThirdSectionDropdownHeaderFlex}>
+          <p>
+            <Link legacyBehavior href="/property-listing/configuration/5-bhk">
+              5 & 5.5 BHK
+            </Link>
+          </p>
+        </div>
+        <div className={styles.footerThirdSectionDropdownHeaderFlex}>
+          <p>
+            <Link legacyBehavior href="/property-listing/configuration/penthouse">
+              Penthouses
+            </Link>
+          </p>
+        </div>
+      </div>
+      {/* Same label treatment as the configuration group above, so the column reads
+          as two labelled categories rather than one undifferentiated list. */}
+      <p className={styles.footerConfigLabel}>By City</p>
       {QUICK_SEARCH.map(({ city, items }) => (
         <div className={styles.footerThirdSectionDropdownFlex} key={city}>
           <div className={styles.footerThirdSectionDropdownHeaderFlex}>

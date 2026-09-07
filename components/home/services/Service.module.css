@@ -21,7 +21,41 @@
   width: auto !important;
   height: 100%; /* fill the (stretched) grid cell -> equal heights */
   min-width: 0; /* prevent long titles from blowing out the column */
-  box-shadow: 0px 2.22px 4.45px rgba(0, 0, 0, 0.15);
+
+  /* Padding / radius / flow used to live in an inline style object inside
+     ServicesCard.jsx, where no breakpoint could override them. They belong here. */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 14px;
+  padding: 22px 20px;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid rgba(26, 26, 26, 0.06);
+  cursor: pointer;
+
+  /* Two soft layers instead of one hard 15%-black drop: a contact shadow for
+     the edge, a wide ambient one for the lift. */
+  box-shadow:
+    0 1px 2px rgba(26, 26, 26, 0.05),
+    0 6px 16px rgba(26, 26, 26, 0.07);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* The whole card navigates to /our-services#<title>, so give it the affordance. */
+.servicesSectionCardWrapperFirst > .serviceCard:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 2px 4px rgba(26, 26, 26, 0.06),
+    0 14px 30px rgba(26, 26, 26, 0.12);
+}
+
+.servicesSectionCardWrapperFirst > .serviceCard:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(220, 170, 76, 0.55);
 }
 
 .servicesSectionHeader {
@@ -37,7 +71,7 @@
 .servicesSectionTitle {
   color: #1a1a1a;
   font-family: "Lexend Deca", sans-serif;
-  font-size: 30px;
+  font-size: 24px;
   font-style: normal;
   font-weight: 600;
   letter-spacing: -0.4px;
@@ -52,7 +86,7 @@
   align-self: stretch;
   color: #6b6b6b;
   font-family: "Lexend Deca", sans-serif;
-  font-size: 16px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -66,6 +100,11 @@
   align-items: center;
   gap: 12px;
   width: 100%;
+
+  /* Room for two title lines. "Portfolio Management" wraps where the other
+     three titles don't, which left its description starting lower than the
+     rest of the row. Reserving the second line keeps all four aligned. */
+  min-height: 46px;
 }
 .serviceCardHeaderRow .serviceCardIconContainer {
   width: auto;
@@ -84,19 +123,16 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  height: 70%;
 }
 
 .serviceCardIconContainer {
   width: 100%;
-  height: 30%;
   display: flex;
   justify-content: left;
   align-items: center;
 }
 
 .serviceCardTitleContainer {
-  height: 10%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -104,28 +140,29 @@
 
 .serviceCardTitle {
   font-family: "Lexend Deca", sans-serif;
-  font-size: 19px;
+  font-size: 17px;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: -0.2px;
-  line-height: 1.25;
+  line-height: 1.3;
   margin: 0px;
 }
 
+/* Percentage heights on the blocks above resolved to auto against an
+   auto-height card, so they never did anything. Top-align the copy instead. */
 .serviceCardDescriptionContainer {
-  height: 40%;
   width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .serviceCardDescription {
   font-family: "Lexend Deca", sans-serif;
-  font-size: 15px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 1.55;
+  line-height: 1.6;
   margin: 0px;
 }
 /* muted description on the light (even) cards for better hierarchy */
@@ -143,8 +180,9 @@
   width: 38px;
 }
 .serviceCard:nth-child(odd) {
-  background: #dcaa4c !important;
-  color: white;
+  background: linear-gradient(155deg, #e3b45f 0%, #d5a03e 100%) !important;
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.18);
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
@@ -155,7 +193,7 @@
     font-size: 14px;
   }
   .serviceCardTitle {
-    font-size: 20px;
+    font-size: 17px;
   }
 }
 
@@ -164,27 +202,44 @@
     margin: 0px 0px;
     padding: 15px 0px;
   }
-  .serviceCardDescription {
-    font-size: 12px;
-  }
+  /*
+    Title and body were 15px and 13px — two steps apart, which on a card this
+    narrow read as one block of text rather than a heading with copy under it.
+    Widening the gap and tightening the title's tracking gives each card a clear
+    first line, and the smaller body fits more words per line so the descriptions
+    wrap three times instead of four.
+  */
   .serviceCardTitle {
-    font-size: 14px;
+    font-size: 15.5px;
+    font-weight: 600;
+    letter-spacing: -0.25px;
+    line-height: 1.25;
+  }
+  .serviceCardDescription {
+    font-size: 12.5px;
+    line-height: 1.55;
+    letter-spacing: 0.01em;
   }
   .servicesSectionCardWrapperFirst > .serviceCard {
     width: 47% !important;
-    padding: 15px !important;
-    gap: 8px !important;
+    padding: 16px;
+    gap: 10px;
+    border-radius: 12px;
+  }
+  /* No hover on touch; the lift just fights the tap highlight. */
+  .servicesSectionCardWrapperFirst > .serviceCard:hover {
+    transform: none;
   }
   .servicesSectionCardWrapperFirst {
-    gap: 20px;
+    gap: 14px;
   }
   .serviceCard.order2 {
-    background: none !important;
-    color: black;
+    background: #ffffff !important;
+    color: #1a1a1a;
   }
   .serviceCard.order3 {
-    color: white;
-    background: #dcaa4c !important;
+    color: #ffffff;
+    background: linear-gradient(155deg, #e3b45f 0%, #d5a03e 100%) !important;
   }
   /* The two rules above swap which cards are gold on mobile, but the description
    colour is set by :nth-child(odd/even) higher up, which does NOT swap with them.
@@ -198,13 +253,13 @@
   }
   .serviceCard.order3 .serviceCardDescription {
     color: #ffffff;
-    opacity: 0.95;
+    opacity: 1;
   }
   .servicesSectionTitle {
-    font-size: 20px;
+    font-size: 22px;
   }
   .servicesSectionHeader p {
-    font-size: 14px;
+    font-size: 13.5px;
   }
   .servicesSectionHeader {
     gap: 12px;
@@ -223,5 +278,38 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
+    min-height: 0;
+  }
+
+  /*
+    The icon sits on its own line here rather than beside the title, so it costs
+    a full row of height in a card that has little to spare — 38px was sized for
+    the desktop layout where it shares a line with the heading.
+  */
+  .serviceCardIconWrapper > img {
+    width: 32px;
+    height: 32px;
+  }
+
+  /*
+    Two title lines reserved. Three of the four titles wrap to two lines and one
+    does not, so without this the descriptions start at different heights in each
+    row of the grid — the same problem the desktop header row solves with its own
+    min-height.
+  */
+  .serviceCardTitleContainer {
+    min-height: 39px;
+    align-items: flex-start;
+  }
+}
+
+/* Matches the <=480px heading step used by Premium Picks / Localities so every
+   homepage section header lands on the same size at phone widths. */
+@media (max-width: 480px) {
+  .servicesSectionTitle {
+    font-size: 20px;
+  }
+  .servicesSectionHeader p {
+    font-size: 13px;
   }
 }

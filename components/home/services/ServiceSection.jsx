@@ -18,6 +18,7 @@ function ServicesSection() {
       <div className={styles.servicesSectionCardWrapperFirst}>
         {serviceCardDataSection.map((service, index) => (
           <ServicesCard
+            key={service.title}
             title={service.title}
             Icon={service.icon}
             description={service.description}

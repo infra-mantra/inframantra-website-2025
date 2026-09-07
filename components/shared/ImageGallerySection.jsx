@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./ImageGallerySection.module.css";
+import { ShortsRail } from "../home/shorts/ShortsSection.jsx";
+import SHORTS from "../home/shorts/shortsData.js";
 
 const CDN = "https://inframantra.blr1.cdn.digitaloceanspaces.com";
 
@@ -17,6 +19,24 @@ const itemData = [
   { img: `/gallery/a3.webp`, caption: "Recognised as The Champions" },
   { img: `/gallery/brand.webp`, caption: "Celebrating Our Brand Ambassador" },
 ];
+
+/*
+  Award films, as a rail beneath the heading rather than as extra accordion panels.
+
+  Deliberately the Shorts strip's own rail — same 9:16 card, same scroller, same
+  play facade as the video section higher up the page, so the two read as one
+  treatment. ShortCard also reads the `frame` tag each entry carries, which is
+  what stops a Short's 16:9 composite thumbnail being shown whole.
+
+  One of the three is an ordinary landscape upload rather than a Short, so it is
+  matted top and bottom inside the vertical card. That is the accepted cost of
+  matching the strip above; a 16:9 card would fit it exactly but would then be the
+  wrong frame for the other two.
+
+  Read from shortsData.js rather than copied, so adding an entry there under the
+  "awards" category appears here with nothing else to change.
+*/
+const AWARD_VIDEOS = SHORTS.filter((v) => v.category === "awards");
 
 const ImageGallerySection = () => {
   const [active, setActive] = useState(0);
@@ -70,6 +90,14 @@ const ImageGallerySection = () => {
             Where vision meets reality — the moments, milestones and people behind every home we
             deliver.
           </p>
+
+          <div className={styles.igVideos}>
+            <div className={styles.igVideosHead}>
+              <h3 className={styles.igVideosTitle}>Awards &amp; Recognition</h3>
+              <span className={styles.igVideosCount}>{AWARD_VIDEOS.length} videos</span>
+            </div>
+            <ShortsRail items={AWARD_VIDEOS} />
+          </div>
         </div>
 
         <div

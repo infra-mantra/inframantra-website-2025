@@ -12,12 +12,69 @@
   display: grid;
   grid-template-columns: 0.85fr 1.15fr;
   gap: 48px;
-  align-items: center;
+  /* Top-aligned, not centred: centring the shorter left panel against the 560px
+     marquee started the eyebrow well below the first review card, so the two
+     halves of the section began at different heights. */
+  align-items: start;
+}
+
+/*
+  Entrance, matching the Frames of Excellence gallery: the info panel rises, the
+  two marquee columns lift in behind it on a stagger. Both stay hidden until the
+  section scrolls into view, which is what .in switches on.
+*/
+.rwLeft,
+.rwColumn {
+  opacity: 0;
+}
+
+.rwLeft {
+  transform: translateY(24px);
+}
+
+.rwColumn {
+  transform: translateY(46px) scale(0.96);
+}
+
+.rwWall.in .rwLeft {
+  animation: rwRiseIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.rwWall.in .rwColumn {
+  animation: rwColumnIn 0.75s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes rwRiseIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rwColumnIn {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Nothing should be left invisible if the reveal is suppressed. */
+@media (prefers-reduced-motion: reduce) {
+  .rwLeft,
+  .rwColumn {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
 }
 
 /* ---------------- Left info panel ---------------- */
 .rwLeft {
-  align-self: center;
+  align-self: start;
+  /* Grid items default to min-width: auto, so the horizontal video scroller inside
+     this column sized it to its full content width, blew the grid out and pushed
+     the marquee off screen. This is what lets the scroller actually scroll. */
+  min-width: 0;
 }
 
 .rwEyebrow {
@@ -33,7 +90,7 @@
 
 .rwHeading {
   font-family: "Lexend Deca", sans-serif;
-  font-size: 30px;
+  font-size: 24px;
   line-height: 1.2;
   font-weight: 600;
   letter-spacing: -0.4px;
@@ -49,7 +106,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
 .rwRatingText {
@@ -108,68 +165,63 @@
 .rwBadges {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 28px;
+  gap: 8px;
+  /* Was 26px. The 14px given up here is taken back as padding on the video strip
+     below, so adding the rule between them leaves the panel exactly as tall. */
+  margin-bottom: 12px;
 }
 
+/* Same separator as the award rail in Frames of Excellence: it marks where the
+   panel stops introducing the section and starts showing the films. Scoped to
+   this panel — the gallery draws its own on .igVideos, and ReviewVideos renders
+   in both places now, so an unscoped rule would give that one two lines. */
+.rwLeft .rvidStrip {
+  padding-top: 14px;
+  border-top: 1px solid rgba(231, 181, 84, 0.28);
+}
+
+/*
+  These are labels, not buttons — 10px corners, 600 weight and a drop shadow each
+  gave four small chips the presence of a button row, and solid white on the
+  section's cream ground made them read as holes punched in it. Pill shape, a
+  translucent fill that sits on the warm background, one gold hairline, no shadow.
+  Tighter metrics also give the fourth chip a chance of joining the second row
+  rather than being orphaned on a third.
+*/
 .rwBadge {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  background: #fff;
-  border: 1px solid #f0e3c8;
-  box-shadow: 0 4px 14px rgba(120, 90, 20, 0.06);
-  border-radius: 10px;
-  padding: 9px 14px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #5a5345;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(231, 181, 84, 0.32);
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-family: "Lexend Deca", sans-serif;
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: #6b6455;
+  white-space: nowrap;
 }
 
 .rwGBadge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 18px;
-  height: 18px;
+  flex-shrink: 0;
+  width: 17px;
+  height: 17px;
   border-radius: 50%;
-  background: #fff;
-  border: 1px solid #e6e2ee;
+  background: #ffffff;
+  border: 1px solid #e3e6ee;
   color: #4285f4;
-  font-weight: 800;
-  font-size: 12px;
+  font-weight: 700;
+  font-size: 11px;
+  line-height: 1;
   font-family: "Lexend Deca", sans-serif;
 }
 
 /* Unified homepage primary button (matches Submit / View All) */
-.rwCta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background: linear-gradient(90deg, #e7b554, #d9a23c);
-  color: #fff;
-  font-family: "Lexend Deca", sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  padding: 12px 28px;
-  border-radius: 10px;
-  text-decoration: none;
-  box-shadow: 0 8px 20px rgba(217, 162, 60, 0.32);
-  transition:
-    transform 0.18s ease,
-    box-shadow 0.18s ease,
-    filter 0.18s ease;
-}
-
-.rwCta:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.03);
-  box-shadow: 0 12px 26px rgba(217, 162, 60, 0.42);
-}
-
 /* ---------------- Right marquee columns ---------------- */
 .rwColumns {
   display: grid;
@@ -335,9 +387,11 @@
   .rwWall {
     padding: 40px 16px 48px;
   }
+
   .rwHeading {
-    font-size: 30px;
+    font-size: 22px;
   }
+
   /* Keep two scrolling card columns, just shorter + tighter */
   .rwColumns {
     gap: 12px;
@@ -378,8 +432,10 @@
 
 @media (max-width: 420px) {
   .rwHeading {
-    font-size: 26px;
+    font-size: 20px;
   }
+
+
   .rwColumns {
     gap: 10px;
     height: 470px;

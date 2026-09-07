@@ -46,7 +46,13 @@
 
   align-items: flex-start; /* ✅ IMPORTANT CHANGE */
 
-  padding: 20px 0;
+  /* The overlay painted nothing, so the popup floated over a fully lit page with
+     no separation from it — .mobilePopupOverlay already dims at .6, so this was an
+     omission rather than a decision. Safe-area padding keeps the card clear of
+     notches and home indicators. */
+  background: rgba(8, 8, 10, 0.62);
+  padding: max(20px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right))
+    max(20px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
 
   z-index: 9999;
 
@@ -54,9 +60,11 @@
   transform: scale(0.9);
   pointer-events: none;
 
+  /* Was 1000ms. A full second to open reads as lag, not polish; a modal wants to
+     feel immediate. */
   transition:
-    opacity 1000ms ease-out,
-    transform 1000ms ease-out;
+    opacity 200ms ease-out,
+    transform 200ms ease-out;
 
   overflow-y: auto; /* ✅ ENABLE SCROLL */
 }
@@ -68,15 +76,29 @@
 }
 
 .popupForm {
-  background: #f1e2c2;
-  padding: 3px 20px;
-  border-radius: 10px;
-  width: auto;
-  max-width: 100%;
+  --cta-ink: #1c1f24;
+  --cta-muted: #6b7280;
+  --cta-gold: #9a6c14;
+
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+
+  /* White, not the old #f1e2c2. That cream could not carry either the gold
+     heading (1.47:1) or the white fields (1.28:1) sitting on it — everything
+     floated. The gold now earns its place on the submit button and the accents
+     instead of as a background. */
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
+
+  padding: 26px 22px 20px;
+  /* Left-aligned: the old centre alignment centred the field labels too, which is
+     why the form read as a poster rather than something to fill in. */
+  text-align: left;
+
   transform: translateY(-30px);
-  transition: transform 1000ms ease-out;
-  text-align: center;
-  margin-bottom: 20px;
+  transition: transform 200ms ease-out;
 }
 
 .popupAnimatingForm {
@@ -89,30 +111,53 @@
 }
 
 .crossBtn {
-  position: relative;
-  left: 28%;
-  top: 16px;
+  /* Was position: relative with left: 28% — a percentage nudge, so it drifted with
+     the card width instead of staying in the corner. */
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #f3f4f6;
+  border: 1px solid #e3e6ea;
+  color: #374151;
+  font-size: 17px;
+  cursor: pointer;
 }
 
 .headingForm {
 }
 
 .popUpHead {
-  color: #000;
+  margin: 0 0 2px;
+  color: var(--cta-muted);
   text-align: center;
   font-family: "Lexend Deca";
-  font-size: 14px;
-  font-weight: 400;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .popUpHead2 {
-  color: #e4a951;
+  margin: 0 0 20px;
+  /* #e4a951 on the old cream was 1.47:1. This deeper gold clears AA on white and
+     is the same one the enquiry modal titles with, so the two now read as siblings. */
+  color: var(--cta-gold);
   text-align: center;
   font-family: "Lexend Deca";
-  font-size: 18px;
+  /* Was 19px/700 — it shouted over the fields it introduces. The eyebrow above
+     already carries the framing, so this only needs to name the offer. */
+  font-size: 15px;
   font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
   text-transform: uppercase;
-  margin: 0;
 }
 
 .formGroup {
@@ -129,31 +174,38 @@
 }
 
 .propertyPageHeaderContactUsDisclaimer {
-  color: #000;
+  margin: 12px 0 0;
+  color: var(--cta-muted);
   text-align: center;
   font-family: "Lexend Deca";
-  font-size: 6px;
-  font-weight: 300;
+  /* Was 6px, which is not readable at any viewing distance. */
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.5;
 }
 
 .ctaText {
 }
 
 .numberFor {
-  color: #000;
-  font-family: "Lexend Deca";
-  font-size: 16px;
-  font-weight: 400;
-  margin: 2rem 0 0;
+  margin: 18px 0 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 8px;
+
+  color: var(--cta-ink);
+  font-family: "Lexend Deca";
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .textForm {
-  color: #000;
+  margin: 2px 0 0;
+  color: var(--cta-muted);
+  text-align: center;
   font-family: "Lexend Deca";
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 400;
 }
 .formGroup input,

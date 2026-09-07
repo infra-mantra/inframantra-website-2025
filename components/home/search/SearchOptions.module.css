@@ -9,18 +9,32 @@
 .searchOptionsFlexContainer .root {
   width: 100%;
 }
+/*
+  This used to be a white 10px-radius card with its own hard shadow, wrapped
+  around the search bar's own grey field — a rectangle inside a rectangle. The
+  bar itself is now the white pill (SearchAutoComplete.module.css), so this is
+  just the positioning/sizing shell and carries the drop shadow for it.
+*/
 .searchOptionsFlexContainer {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  background: #ffffff;
-  padding: 10px;
-  border-radius: 10px;
-  box-shadow: 0px 6.96px 13.22px 0px rgba(0, 0, 0, 0.25);
   width: 75%;
   position: relative;
-  height: 55px;
-  gap: 10px;
+}
+
+/* The lift belongs on the pill, not on this shell: a filter/drop-shadow here
+   would open a stacking context and trap the suggestions dropdown's z-index
+   inside it. */
+.searchOptionsFlexContainer .inputWrapper {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+}
+
+/* Keep the lift when the focus ring comes on — box-shadow is one property, so
+   the ring alone would have replaced the drop shadow. */
+.searchOptionsFlexContainer .inputWrapper:focus-within {
+  box-shadow:
+    0 0 0 3px rgba(231, 181, 84, 0.22),
+    0 8px 20px rgba(0, 0, 0, 0.18);
 }
 
 .search-field {
@@ -139,7 +153,13 @@
   }
 
   .searchOptionsWrapper .inputWrapper {
-    box-shadow: 0px 6.96px 13.22px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.14);
+  }
+
+  .searchOptionsWrapper .inputWrapper:focus-within {
+    box-shadow:
+      0 0 0 3px rgba(231, 181, 84, 0.22),
+      0 6px 16px rgba(0, 0, 0, 0.14);
   }
 
   .searchOptionsMobileFlexContainer {

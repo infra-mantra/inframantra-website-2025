@@ -13,6 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 const NavigationBar = dynamic(() => import("../layout/Header.jsx"));
 
 // Footer + toast are below the fold — keep their JS off the critical path.
+
 const FooterNavigation = dynamic(() => import("../layout/Footer.jsx"), {
   ssr: false,
 });

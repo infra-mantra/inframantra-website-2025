@@ -2,27 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router"; // Replaces navigate from react-router-dom
 import styles from "./Service.module.css"; // Assuming you have a CSS module for styles
 
-const serviceCardStyles = {
-  paper: {
-    width: "100%",
-    borderRadius: "10px",
-    padding: "22px",
-    background: "#ffffffff",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "flex-start",
-    justifyContent: "space-evenly",
-    cursor: "pointer",
-    gap: "15px",
-    // Note: media queries inside JS objects don’t apply unless you use a CSS-in-JS library
-  },
-  icon: {
-    color: "white",
-    fontSize: "200%",
-  },
-};
-
-function ServicesCard({ title, Icon, description, key, id, alt, index }) {
+function ServicesCard({ title, Icon, description, id, alt, index }) {
   const router = useRouter();
   const [isDesktop, setIsDesktop] = useState(true);
   // console.log("##########",key,index)
@@ -52,15 +32,24 @@ function ServicesCard({ title, Icon, description, key, id, alt, index }) {
   return (
     <div
       id={id}
-      key={index}
-      style={serviceCardStyles.paper}
       className={`serviceCard order${index}`}
       onClick={handleCardClick}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          handleCardClick();
+        }
+      }}
+      role="link"
+      tabIndex={0}
     >
       <div className={styles.serviceCardHeaderRow}>
         <div className={styles.serviceCardIconContainer}>
           <div className={styles.serviceCardIconWrapper}>
-            <img src={Icon} alt={alt} />
+            {/* These cards sit below the fold, but the section renders as soon as its
+                chunk arrives, so the icons were fetching eagerly against the LCP hero.
+                One of them (SitevisitsHome.svg) is 166 KB. */}
+            <img src={Icon} alt={alt} loading="lazy" decoding="async" width="56" height="56" />
           </div>
         </div>
         <div className={styles.serviceCardTitleContainer}>

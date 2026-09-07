@@ -164,9 +164,13 @@
   width: 50px;
   height: 50px;
   border-radius: 100px;
-  border: 0;
   z-index: 9999;
-  color: white;
+
+  /* The icons render with currentColor, so `color` drives the glyph and the
+     label together and each button only needs the one declaration. */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: 0.2s;
 }
 
@@ -190,22 +194,31 @@
 
 /* Phone */
 .btnfloating.phone {
-  bottom: 85px;
-  background-color: #34af23;
+  bottom: 145px;
+  background-color: #fff;
+  color: #34af23;
+  /* A white circle on a white page needs an edge of its own. */
+  border: 1px solid #dbe0e6;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
 }
 
 .btnfloating.phone:hover {
-  background-color: #1f7a12;
+  background-color: #f3faf2;
+  color: #1f7a12;
 }
 
 /* WhatsApp */
 .btnfloating.whatsapp {
-  background-color: #34af23;
   bottom: 25px;
+  background-color: #fff;
+  color: #34af23;
+  border: 1px solid #dbe0e6;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
 }
 
 .btnfloating.whatsapp:hover {
-  background-color: #1f7a12;
+  background-color: #f3faf2;
+  color: #1f7a12;
 }
 
 .bottom_cta {
@@ -251,4 +264,47 @@
     /* hide the floating buttons */
     display: none;
   }
+}
+
+/* Enquire — the third floating button, stacked above Phone (85px) and WhatsApp
+   (25px). Brand gold #e7b554 rather than their #34af23 green, because it is the
+   primary action rather than another contact channel. Dark text: white on this
+   gold is 1.89:1 and fails contrast, while #333 on it is 6.70:1. */
+.btnfloating.enquire {
+  bottom: 85px;
+  background-color: #e7b554;
+  color: #fff;
+  border: 0;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
+}
+
+/* The mobile bar was two 50% halves; three cells now share it evenly. */
+.bottom_cta .middle {
+  width: 33.33%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 10px 0;
+  background: #e7b554;
+}
+
+.bottom_cta .left,
+.bottom_cta .right {
+  width: 33.33%;
+}
+
+.enquireMobile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 0;
+  background: transparent;
+  border-radius: 8px;
+  cursor: pointer;
+
+  color: #333;
+  font-family: "Lexend Deca";
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
 }

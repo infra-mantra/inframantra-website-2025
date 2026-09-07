@@ -50,12 +50,61 @@
 .igHeader {
   text-align: left;
   margin-bottom: 0;
+
+  /* Grid items default to min-width: auto, so the horizontal video rail inside
+     this column sized the column to its full scrolling content width (three
+     180px cards plus gaps). That pushed the section wider than the viewport and
+     .igGallery's overflow:hidden clipped the subtitle. Same fix as .rwLeft in
+     ReviewsWall.module.css, which hit this with the same rail. */
+  min-width: 0;
+
   opacity: 0;
   transform: translateY(24px);
 }
 
 .igGallery.in .igHeader {
   animation: riseIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+/* Award-film rail under the heading, mirroring how the video strip sits under the
+   testimonials heading. The rail brings its own card styling (shrt*); only the
+   little heading above it belongs to this section. */
+.igVideos {
+  /* 14 + 16 = the 30px gap this rail had before the rule was added, so the line
+     sits inside the existing spacing rather than adding to it. */
+  margin-top: 14px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(231, 181, 84, 0.28);
+}
+
+/*
+  The rail is the Shorts strip's own — 9:16 cards in a horizontal scroller — so it
+  needs no overrides here beyond the heading above it. Only the small label row
+  belongs to this section.
+*/
+.igVideosHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+/* Matches .rvidTitle on the testimonials rail. */
+.igVideosTitle {
+  margin: 0;
+  font-family: "Lexend Deca", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  color: #707070;
+}
+
+.igVideosCount {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: #a2977f;
 }
 
 .igEyebrow {
@@ -98,7 +147,7 @@
 
 .igTitle {
   font-family: "Lexend Deca", sans-serif;
-  font-size: 30px;
+  font-size: 24px;
   font-weight: 600;
   letter-spacing: -0.4px;
   line-height: 1.2;
@@ -111,7 +160,7 @@
 }
 
 .igSubtitle {
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.6;
   color: #6b6b6b;
   max-width: 460px;
@@ -121,7 +170,7 @@
 /* ---------------- Expanding panels ---------------- */
 .igAccordion {
   display: flex;
-  gap: 14px;
+  gap: 10px;
   height: 470px;
 }
 
@@ -152,8 +201,21 @@
   box-shadow: 0 22px 50px rgba(40, 32, 12, 0.22);
 }
 
-/* Blurred fill so the slim panels look full while the sharp image is never
-   cropped. Sits behind the contained foreground image. */
+/*
+  Two layers, and which one you see depends on whether the panel is open.
+
+  Previously BOTH layers were painted at all times: a heavy blur behind, and the
+  sharp photo contained on top. In a collapsed panel — a ~60px-wide strip — the
+  contained photo shrinks to a postage stamp floating in the middle of a dark
+  blurred rectangle, which is what made the closed panels read as empty grey
+  slabs with a thumbnail stuck to them.
+
+  Now the sharp layer only appears once a panel opens. Collapsed panels show the
+  cover-fitted image itself (a real slice of the photo, which is what an
+  accordion spine should be), and on opening that same layer blurs back into a
+  matte while the full uncropped photo fades in over it. Fading rather than
+  swapping object-fit keeps the change smooth — object-fit cannot be animated.
+*/
 .igPanelBg {
   position: absolute;
   inset: 0;
@@ -161,16 +223,27 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  filter: blur(24px) brightness(0.5) saturate(1.15);
-  transform: scale(1.25);
-  transition: transform 6s linear;
+  /* Collapsed: the visible image. Only dimmed enough for the vertical label. */
+  filter: blur(0px) brightness(0.8) saturate(1.06);
+  transform: scale(1.04);
+  transition:
+    filter 0.55s ease,
+    transform 6s linear;
 }
 
-.igPanel.active .igPanelBg {
-  transform: scale(1.4);
+.igPanel:hover .igPanelBg {
+  filter: blur(0px) brightness(0.86) saturate(1.08);
 }
 
-/* Foreground = the full photo, contained so it is NEVER trimmed left/right */
+/* Open: recedes into a soft matte behind the real photo. */
+.igPanel.active .igPanelBg,
+.igPanel.active:hover .igPanelBg {
+  filter: blur(26px) brightness(0.55) saturate(1.15);
+  transform: scale(1.35);
+}
+
+/* Foreground = the full photo, contained so it is NEVER trimmed left/right.
+   Only painted on the open panel. */
 .igPanelImg {
   position: absolute;
   inset: 0;
@@ -178,13 +251,15 @@
   height: 100%;
   object-fit: contain;
   display: block;
-  transition: filter 0.6s ease;
-  filter: saturate(1) brightness(0.88);
+  opacity: 0;
+  filter: saturate(1.06) brightness(1.02);
+  transition: opacity 0.45s ease 0.1s;
 }
 
 .igPanel.active .igPanelImg {
-  filter: saturate(1.06) brightness(1.03);
+  opacity: 1;
 }
+
 
 /* Legibility scrim */
 .igScrim {
@@ -192,9 +267,9 @@
   inset: 0;
   background: linear-gradient(
     to top,
-    rgba(12, 9, 4, 0.8) 0%,
-    rgba(12, 9, 4, 0.2) 40%,
-    transparent 64%
+    rgba(12, 9, 4, 0.72) 0%,
+    rgba(12, 9, 4, 0.14) 46%,
+    transparent 70%
   );
   pointer-events: none;
 }
@@ -232,7 +307,7 @@
 }
 
 .igPanel.active .igRing {
-  box-shadow: inset 0 0 0 3px rgba(231, 181, 84, 0.92);
+  box-shadow: inset 0 0 0 2px rgba(231, 181, 84, 0.8);
 }
 
 /* Story-style auto-play progress bar on the active panel */
@@ -275,10 +350,17 @@
   white-space: nowrap;
   color: #fff;
   font-family: "Lexend Deca", sans-serif;
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 600;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.5px;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.55);
+
+  /* In vertical writing the block axis is the panel's height, so this caps how
+     far a caption may run before it ellipsises — "Celebrating Our Brand
+     Ambassador" otherwise reached almost the full panel. */
+  max-height: 72%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .igPanel.active .igVLabel {
@@ -391,15 +473,18 @@
     grid-template-columns: 1fr;
     gap: 28px;
   }
+  /* Left, not centred: the video rail now sits inside this header and a rail is
+     inherently left-aligned, so a centred title above it read as two different
+     alignments in one block. */
   .igHeader {
-    text-align: center;
+    text-align: left;
     margin-bottom: 4px;
   }
   .igSubtitle {
-    margin: 0 auto;
+    margin: 0;
   }
   .igTitle {
-    font-size: 26px;
+    font-size: 22px;
   }
   .igAccordion {
     height: 400px;
@@ -416,10 +501,10 @@
     margin-bottom: 30px;
   }
   .igTitle {
-    font-size: 30px;
+    font-size: 22px;
   }
   .igSubtitle {
-    font-size: 14.5px;
+    font-size: 13.5px;
   }
   /* Keep the SAME expanding-accordion design as desktop, just shorter */
   .igAccordion {
@@ -444,7 +529,7 @@
 
 @media (max-width: 420px) {
   .igTitle {
-    font-size: 26px;
+    font-size: 20px;
   }
   .igAccordion {
     height: 320px;

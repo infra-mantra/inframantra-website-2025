@@ -355,12 +355,7 @@ function CustomizedHook({ onSearch }) {
         )}
 
         {isDesktop && (
-          <Button
-            width="14%"
-            otherStyles={{ height: "50px", fontSize: "22px", borderRadius: "5px" }}
-            btnText="Search"
-            onClick={handleSearchClick}
-          />
+          <Button btnText="Search" onClick={handleSearchClick} />
         )}
       </div>
 

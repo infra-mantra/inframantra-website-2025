@@ -4,6 +4,8 @@ import PremiumPicksSection from "./PremiumPicksSection.jsx";
 import LocalitySection from "../localities/LocalityPropertiesSection.jsx";
 import OtherCityPropertiesSection from "../localities/OtherCityProperties.jsx";
 import ServiceSection from "../services/ServiceSection.jsx";
+import ShortsSection from "../shorts/ShortsSection.jsx";
+import { ShortsSkeleton } from "../HomeSkeletons.jsx";
 import AdsBanner from "./AdsBanner.jsx";
 import LazyOnVisible from "../../shared/LazyOnVisible.jsx";
 import { useLocationDetection } from "./hooks/useLocationDetection.js";
@@ -74,6 +76,13 @@ export default function PremiumPropertyMainComponent() {
         detectedCity={detectedCity}
         locationStatus={locationStatus}
       />
+      {/* Directly under Premium Picks, where it was asked to sit. Same LazyOnVisible
+          treatment as the sections below: it renders a facade (thumbnail + a CSS play
+          button), so no YouTube JavaScript loads until a card is clicked. minHeight
+          reserves the row so nothing below it shifts when the cards mount. */}
+      <LazyOnVisible minHeight={430} rootMargin="250px" placeholder={<ShortsSkeleton />}>
+        <ShortsSection />
+      </LazyOnVisible>
       {/* Only PremiumPicksSection above is near the fold. Everything below it
           starts ~1800px down yet was mounting on initial load, pulling ~365 KB of
           images (the services background PNG alone is 132 KB, its two icon SVGs

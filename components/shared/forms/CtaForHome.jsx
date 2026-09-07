@@ -114,105 +114,22 @@ function App({ name, displayMap = true, countryCode = "in" }) {
 
   return (
     <div className={style.homeApp}>
-      <div className={style.homeCtaMainWrapper}>
-        {/* LEFT SECTION */}
-        <div
-          className={style.homePageContactUsLeftDetailSection}
-          style={{
-            display: displayMap === false ? "none" : "block",
-          }}
-        >
-          {isDesktop && (
-            <div className={style.homePageContactUsLeftMapPhotoContainer}>
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14032.085916196966!2d77.0413113!3d28.4487689!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d193e2433c0cf%3A0xef40ba926f65e0ec!2sINFRAMANTRA!5e0!3m2!1sen!2sin!4v1731478063313!5m2!1sen!2sin"
-                width="500"
-                height="300"
-                style={{ border: "0px" }}
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              ></iframe>
-
-              <div className={style.homePageMapPhotoBgdTopLeft}></div>
-
-              <div className={style.homePageMapPhotoBgdBottomRight}></div>
-            </div>
-          )}
-
-          <img
-            className={style.homePageContactUsLeftDetailSectionImg}
-            src="/logos/logo-black.webp"
-            alt="Inframantra-Logo"
-            width={280}
-            height={56}
-            loading="lazy"
-          />
-
-          <div className={style.homePageContactUsLeftDetailsContainer}>
-            {/* LOCATION */}
-            <div className={style.homePageContactUsLeftDetailFlex}>
-              <span className={style.homeCtaIconBadge}>
-                <MdLocationOn />
-              </span>
-
-              <div className={style.homeCtaContactText}>
-                <span className={style.homeCtaContactLabel}>Our Office</span>
-                <span className={style.homeCtaContactValue}>
-                  95, Institutional Area, Sector 32, Gurugram
-                </span>
-              </div>
-            </div>
-
-            {/* PHONE */}
-            <div className={style.homePageContactUsLeftDetailFlex}>
-              <span className={style.homeCtaIconBadge}>
-                <IoMdCall />
-              </span>
-
-              <div className={style.homeCtaContactText}>
-                <span className={style.homeCtaContactLabel}>Call Us</span>
-                <a href="tel:+918698009900" className={style.homeCtaContactValue}>
-                  +91 86 9800 9900
-                </a>
-              </div>
-            </div>
-
-            {/* EMAIL */}
-            <div className={style.homePageContactUsLeftDetailFlex}>
-              <span className={style.homeCtaIconBadge}>
-                <MdMail />
-              </span>
-
-              <div className={style.homeCtaContactText}>
-                <span className={style.homeCtaContactLabel}>Email Us</span>
-                <a href="mailto:marketing@inframantra.com" className={style.homeCtaContactValue}>
-                  marketing@inframantra.com
-                </a>
-              </div>
-            </div>
-
-            {/* RERA */}
-            <div className={style.homePageContactUsLeftDetailFlex}>
-              <span className={`${style.homeCtaIconBadge} ${style.homeCtaIconBadgeVerify}`}>
-                <FcApproval />
-              </span>
-
-              <div className={style.homeCtaContactText}>
-                <span className={style.homeCtaContactLabel}>HARERA Registered</span>
-                <span className={style.homeCtaContactValue}>HARERA/GGM/1813/1408/2022/181</span>
-              </div>
-            </div>
-          </div>
+      <div className={`${style.homeCtaMainWrapper} ${style.homeCtaStacked}`}>
+        {/* SECTION HEADING */}
+        <div className={style.homeCtaHeader}>
+          <span className={style.homeCtaEyebrow}>Get in touch</span>
+          <h2 className={style.homeCtaTitle}>
+            Talk to a <span>Property Advisor</span>
+          </h2>
+          <p className={style.homeCtaSubtitle}>
+            Tell us what you are looking for and we will call you back with options that fit.
+          </p>
         </div>
 
-        {/* RIGHT SECTION */}
-        <div
-          className={style.homeCtaInnerWrapper}
-          style={{
-            width: displayMap === false ? "100%" : "",
-          }}
-        >
+        {/* BODY — map + contact details on one side, form on the other */}
+        <div className={style.homeCtaBody}>
+        {/* FORM CARD */}
+        <div className={style.homeCtaInnerWrapper}>
           <form
             onSubmit={handleSubmit}
             onFocusCapture={() => setCaptchaReady(true)}
@@ -382,20 +299,93 @@ function App({ name, displayMap = true, countryCode = "in" }) {
           <div className={style.homePagePropertyPageHeaderContactIconContainer2}>
             <hr width="100%" color="#DCAA4C" size="1" />
 
-            <div style={{ display: "flex" }}>
+            <div className={style.homeCtaCallRow}>
               <div className={style.homeCtaText}>
                 <p className={style.hometextForm}>Give us a call and book your visit now!</p>
               </div>
 
               <img
                 src="/guruCollection/guru_call.png"
-                alt="Call Icon"
+                alt=""
+                aria-hidden="true"
                 className="callImage"
                 width="146"
                 height="115"
               />
             </div>
           </div>
+        </div>
+
+        {/* MAP + CONTACT DETAILS, below the form */}
+        {displayMap !== false && (
+          <div className={style.homeCtaFooter}>
+            {/* Desktop only, as it always was — a Maps embed is a few hundred KB
+                of third-party script and phones never rendered it. */}
+            {isDesktop && (
+              <div className={style.homeCtaMap}>
+                <iframe
+                  title="Inframantra office location"
+                  width="560"
+                  height="280"
+                  src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14032.085916196966!2d77.0413113!3d28.4487689!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d193e2433c0cf%3A0xef40ba926f65e0ec!2sINFRAMANTRA!5e0!3m2!1sen!2sin!4v1731478063313!5m2!1sen!2sin"
+                  style={{ border: "0px" }}
+                  allowFullScreen=""
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              </div>
+            )}
+
+            <div className={style.homeCtaContactRow}>
+            <a
+              className={style.homeCtaContactItem}
+              href="https://maps.app.goo.gl/inframantra"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span className={style.homeCtaIconBadge}>
+                <MdLocationOn />
+              </span>
+              <span className={style.homeCtaContactText}>
+                <span className={style.homeCtaContactLabel}>Our Office</span>
+                <span className={style.homeCtaContactValue}>
+                  95, Institutional Area, Sector 32, Gurugram
+                </span>
+              </span>
+            </a>
+
+            <a className={style.homeCtaContactItem} href="tel:+918698009900">
+              <span className={style.homeCtaIconBadge}>
+                <IoMdCall />
+              </span>
+              <span className={style.homeCtaContactText}>
+                <span className={style.homeCtaContactLabel}>Call Us</span>
+                <span className={style.homeCtaContactValue}>+91 86 9800 9900</span>
+              </span>
+            </a>
+
+            <a className={style.homeCtaContactItem} href="mailto:marketing@inframantra.com">
+              <span className={style.homeCtaIconBadge}>
+                <MdMail />
+              </span>
+              <span className={style.homeCtaContactText}>
+                <span className={style.homeCtaContactLabel}>Email Us</span>
+                <span className={style.homeCtaContactValue}>marketing@inframantra.com</span>
+              </span>
+            </a>
+
+            <div className={style.homeCtaContactItem}>
+              <span className={`${style.homeCtaIconBadge} ${style.homeCtaIconBadgeVerify}`}>
+                <FcApproval />
+              </span>
+              <span className={style.homeCtaContactText}>
+                <span className={style.homeCtaContactLabel}>HARERA Registered</span>
+                <span className={style.homeCtaContactValue}>HARERA/GGM/1813/1408/2022/181</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
         </div>
       </div>
     </div>

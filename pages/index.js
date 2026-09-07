@@ -49,6 +49,7 @@ const BlogsMedia = dynamic(() => import("../components/blog/BlogsMedia.jsx"), {
   ssr: false,
   loading: () => <BlogsSkeleton />,
 });
+
 const CtaForHome = dynamic(() => import("../components/shared/forms/CtaForHome.jsx"), {
   ssr: false,
   loading: () => <CtaSkeleton />,

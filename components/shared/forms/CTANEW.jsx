@@ -6,6 +6,7 @@ import Ajax1 from "../../lib/ajax1.js";
 import { useRouter } from "next/router";
 import { downloadBrochure } from "../../lib/downloadBrochurePdf.js";
 import ctaStyle from "./Cta.module.css";
+import fld from "./formFields.module.css";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
@@ -34,7 +35,6 @@ function App({
     email: "",
     projectName: name,
   });
-
 
   useEffect(() => {
     if (popUpenable) {
@@ -147,100 +147,86 @@ function App({
 
             {/* Form */}
             <form onSubmit={handleSubmit} id={id}>
-              {/* Name */}
-              <div className={ctaStyle.formGroup}>
-                <input
-                  type="text"
-                  placeholder="Name"
-                  value={formData.name}
-                  onChange={(e) => {
-                    const alphabeticValue = e.target.value.replace(/[^a-zA-Z\s]/g, "");
+              {/* Fields use the shared primitives from formFields.module.css, the same
+                    ones the property enquiry modal uses, so the two popups stay visually
+                    identical. Labels float rather than sitting above the input, which is
+                    what took the height out; placeholder=" " is required for that — an
+                    empty placeholder counts as absent and :placeholder-shown never
+                    matches. */}
+              <div className={fld.imFldStack}>
+                <div className={fld.imFldGroup}>
+                  <input
+                    className={fld.imFldInput}
+                    type="text"
+                    id={`${id}-name`}
+                    placeholder=" "
+                    value={formData.name}
+                    onChange={(e) => {
+                      const alphabeticValue = e.target.value.replace(/[^a-zA-Z\s]/g, "");
 
-                    setFormData({
-                      ...formData,
-                      name: alphabeticValue,
-                    });
-                  }}
-                  required
-                />
+                      setFormData({
+                        ...formData,
+                        name: alphabeticValue,
+                      });
+                    }}
+                    required
+                  />
+                  <label className={fld.imFldLabel} htmlFor={`${id}-name`}>
+                    Name<span aria-hidden="true">*</span>
+                  </label>
+                </div>
+
+                <div className={`${fld.imFldGroup} ${fld.imFldPhone}`}>
+                  <PhoneInput
+                    country={countryCode}
+                    enableSearch={true}
+                    value={formData.phoneNumber}
+                    onChange={(phone) =>
+                      setFormData({
+                        ...formData,
+                        phoneNumber: phone,
+                      })
+                    }
+                    placeholder="00000 00000"
+                    inputProps={{ id: `${id}-phone`, name: "phone", autoComplete: "tel" }}
+                  />
+                  <label className={fld.imFldLabel} htmlFor={`${id}-phone`}>
+                    Phone number<span aria-hidden="true">*</span>
+                  </label>
+                </div>
+
+                <div className={fld.imFldGroup}>
+                  <input
+                    className={fld.imFldInput}
+                    type="email"
+                    name="email"
+                    id={`${id}-email`}
+                    placeholder=" "
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
+                  <label className={fld.imFldLabel} htmlFor={`${id}-email`}>
+                    Email address<span aria-hidden="true">*</span>
+                  </label>
+                </div>
               </div>
 
-              {/* Phone */}
-              <div className={ctaStyle.formGroup}>
-                <PhoneInput
-                  country={countryCode}
-                  enableSearch={true}
-                  value={formData.phoneNumber}
-                  onChange={(phone) =>
-                    setFormData({
-                      ...formData,
-                      phoneNumber: phone,
-                    })
-                  }
-                  inputClass={ctaStyle.input}
-                  containerClass={ctaStyle.phoneContainer}
-                  buttonClass={ctaStyle.flagDropdown}
-                  placeholder="Enter phone number"
-                />
-              </div>
-
-              {/* Email */}
-              <div className={ctaStyle.formGroup}>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-
-              {/* WhatsApp Consent */}
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "flex-start",
-                  gap: "10px",
-                  marginBottom: "15px",
-                  marginTop: "10px",
-                }}
-              >
+              {/* WhatsApp consent. Wording unchanged (it is a consent statement); only the
+                  styling moved out of inline styles into the shared module. */}
+              <label className={fld.imFldConsent} htmlFor="whatsappConsent">
                 <input
                   type="checkbox"
                   id="whatsappConsent"
                   checked={whatsappConsent}
                   onChange={(e) => setWhatsappConsent(e.target.checked)}
-                  style={{
-                    marginTop: "4px",
-                    cursor: "pointer",
-                    accentColor: "green",
-                    minWidth: "16px",
-                    height: "16px",
-                  }}
                 />
-
-                <label
-                  htmlFor="whatsappConsent"
-                  style={{
-                    fontSize: "13px",
-                    lineHeight: "1.5",
-                    color: "#444",
-                    cursor: "pointer",
-                  }}
-                >
-                  <FaWhatsapp
-                    style={{
-                      color: "green",
-                      marginRight: "6px",
-                      fontSize: "16px",
-                      verticalAlign: "middle",
-                    }}
-                  />
-                  I consent/authorize Inframantra to send me updates and promotional messages on
+                <span className={fld.imFldConsentText}>
+                  <FaWhatsapp className={fld.imFldConsentIcon} aria-hidden="true" />I
+                  consent/authorize Inframantra to send me updates and promotional messages on
                   WhatsApp.
-                </label>
-              </div>
+                </span>
+              </label>
 
               {/* Submit Button */}
               <div
@@ -249,19 +235,10 @@ function App({
                   justifyContent: "center",
                 }}
               >
-                <button
-                  type="submit"
-                  disabled={loading}
-                  style={{
-                    width: "100%",
-                    padding: "10px",
-                    backgroundColor: loading ? "#ccc" : "#E7B554",
-                    color: "#fff",
-                    border: "none",
-                    borderRadius: "4px",
-                    cursor: loading ? "not-allowed" : "pointer",
-                  }}
-                >
+                {/* Shared submit primitive — the inline styles here set a different radius,
+                    padding and gold (#E7B554 vs #b8860b) to the enquiry modal, which is exactly
+                    the drift the shared module exists to stop. */}
+                <button type="submit" disabled={loading} className={fld.imFldSubmit}>
                   {loading ? "Submitting..." : "Submit"}
                 </button>
               </div>

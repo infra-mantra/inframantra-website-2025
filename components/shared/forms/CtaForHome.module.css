@@ -30,27 +30,32 @@
 /* Polished gradient submit button */
 .homeCtaSubmitBtn {
   width: 100%;
-  padding: 13px;
-  background: linear-gradient(90deg, #e7b554, #d9a23c);
+  padding: 14px;
+  background: linear-gradient(180deg, #e9bb63 0%, #dfa63c 100%);
   color: #fff;
   border: none;
-  border-radius: 10px;
+  border-radius: 999px;
   font-family: "Lexend Deca", sans-serif;
   font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
+  font-weight: 600;
+  /* Sentence case: SUBMIT in caps with 0.03em tracking read as a banner rather
+     than a control, and it was the only shouting element in the card. */
+  letter-spacing: 0.01em;
   cursor: pointer;
-  box-shadow: 0 8px 20px rgba(217, 162, 60, 0.32);
+  box-shadow: 0 4px 12px rgba(214, 158, 52, 0.3);
   transition:
     transform 0.18s ease,
     box-shadow 0.18s ease,
     filter 0.18s ease;
 }
 .homeCtaSubmitBtn:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.03);
-  box-shadow: 0 12px 26px rgba(217, 162, 60, 0.42);
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+  box-shadow: 0 8px 20px rgba(214, 158, 52, 0.42);
+}
+.homeCtaSubmitBtn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(220, 170, 76, 0.55);
 }
 .homeCtaInnerWrapper {
   display: flex;
@@ -245,5 +250,254 @@ a.homeCtaContactValue:hover {
   .homeCtaMainWrapper,
   .pt {
     padding-top: 0px !important;
+  }
+}
+
+
+/* ==================================================================
+   Home CTA — stacked layout
+   ==================================================================
+
+   Was map-left / form-right. The map was a Google embed (several hundred KB of
+   third-party script for a section nobody scrolls to for directions), the left
+   column ran much taller than the form beside it, and the contact details were
+   stacked in a narrow strip under the map.
+
+   Now: heading, then the form centred, then the contact details as one row. The
+   map is gone and the office address links out to it instead.
+
+   .homeCtaStacked is only on the home page's wrapper — the property-page sidebar
+   uses .homeCtaMainWrapper on its own and is unaffected by anything in here.
+   ================================================================== */
+
+.homeCtaStacked {
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.homeCtaHeader {
+  text-align: center;
+  max-width: 620px;
+  margin-bottom: 28px;
+}
+
+.homeCtaEyebrow {
+  display: inline-block;
+  font-family: "Lexend Deca", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #c98f2b;
+  margin-bottom: 12px;
+}
+
+.homeCtaTitle {
+  margin: 0 0 10px;
+  font-family: "Lexend Deca", sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.4px;
+  color: #1a1a1a;
+}
+
+.homeCtaTitle span {
+  color: #d9a23c;
+}
+
+.homeCtaSubtitle {
+  margin: 0;
+  font-family: "Lexend Deca", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #6b6b6b;
+}
+
+/* Two columns: map + contact details on the left, the form on the right. A
+   centred 520px card left a third of the section empty either side of it. */
+.homeCtaBody {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 48px;
+  align-items: start;
+  width: 100%;
+}
+
+.homeCtaStacked .homeCtaInnerWrapper {
+  width: 100%;
+  max-width: none;
+}
+
+/* ---------------------------------------------------------- contact row */
+
+/* Map on the left, the four contact details stacked on the right, both below the
+   form. The separator and the top spacing live here now rather than on the
+   contact list, so the map sits inside the same block. */
+/*
+  The left column: map above, contact details below it.
+
+  `order: -1` puts it first visually while the form stays first in the DOM, so
+  the primary action is still what a keyboard reaches first.
+*/
+.homeCtaFooter {
+  order: -1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  min-width: 0;
+}
+
+.homeCtaMap {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #f0e3c8;
+  box-shadow: 0 12px 30px rgba(40, 32, 12, 0.14);
+}
+
+.homeCtaMap iframe {
+  display: block;
+  width: 100%;
+  height: 300px;
+  border: 0;
+}
+
+.homeCtaContactRow {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+
+.homeCtaContactItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+  text-decoration: none;
+  color: inherit;
+}
+
+.homeCtaContactItem .homeCtaContactText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+@media (max-width: 900px) {
+  /* One column. The form leads and the map/details follow it, so `order` goes
+     back to source order rather than putting a map above the thing to fill in. */
+  .homeCtaBody {
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+  .homeCtaFooter {
+    order: 0;
+    gap: 22px;
+  }
+  .homeCtaMap iframe {
+    height: 240px;
+  }
+}
+
+@media (max-width: 560px) {
+  .homeCtaFooter {
+    gap: 20px;
+  }
+  .homeCtaHeader {
+    margin-bottom: 22px;
+  }
+  .homeCtaTitle {
+    font-size: 20px;
+  }
+}
+
+/* Contact items are four across now rather than stacked in a wide column, so the
+   badge and the value both come down a step to fit without wrapping awkwardly. */
+.homeCtaContactRow .homeCtaIconBadge {
+  width: 44px;
+  height: 44px;
+  font-size: 20px;
+  box-shadow: 0 5px 14px rgba(217, 162, 60, 0.28);
+}
+
+.homeCtaContactRow .homeCtaIconBadgeVerify {
+  font-size: 22px;
+}
+
+.homeCtaContactRow .homeCtaContactValue {
+  font-size: 14.5px;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.homeCtaContactRow .homeCtaContactLabel {
+  font-size: 11px;
+  margin-bottom: 3px;
+}
+
+/* Only the three that navigate somewhere should respond to a pointer. */
+a.homeCtaContactItem:hover .homeCtaContactValue {
+  color: #b8912f;
+}
+
+/* ==================================================================
+   Call-us footer, below the form
+   ==================================================================
+
+   .hometextForm was never defined in this stylesheet, so styles.hometextForm
+   resolved to undefined and the paragraph rendered with className="undefined" —
+   unstyled, at the browser's default paragraph size and margins. That is why it
+   wrapped to four short lines beside the photo on a phone.
+
+   Shared with SinglePropertyCta.jsx, so the property pages get this too.
+   ================================================================== */
+
+.homeCtaCallRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+}
+
+.homeCtaText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 6px;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.hometextForm {
+  margin: 0;
+  font-family: "Lexend Deca", sans-serif;
+  font-size: 13.5px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0;
+  color: #707070;
+  text-align: left;
+}
+
+.homeCtaCallRow .callImage {
+  flex-shrink: 0;
+  width: 104px;
+  height: auto;
+}
+
+@media (max-width: 560px) {
+  /* A decorative photo should not take a third of a narrow card from the copy
+     and the number, which are the only parts anyone acts on. */
+  .homeCtaCallRow .callImage {
+    width: 76px;
+  }
+  .hometextForm {
+    font-size: 13px;
   }
 }

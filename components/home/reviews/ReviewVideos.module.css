@@ -1,0 +1,228 @@
+/*
+  Testimonial videos, in the reviews section's left info panel.
+
+  Deliberately built to match the Shorts rail higher up the page: horizontal
+  scroller, no card chrome, title overlaid on a gradient, same play button, same
+  radius and hover. Sizes here are kept in step with Shorts.module.css — change one
+  and change the other.
+
+  The one intentional difference is aspect ratio. The Shorts rail is 9:16 because
+  its videos are Shorts; four of the six testimonials have no vertical thumbnail at
+  all (oardefault returns a 120x90 placeholder) and three of them are genuine
+  landscape interviews, so a 9:16 card would letterbox most of this section. These
+  stay 16:9, which is the native frame of every thumbnail used here.
+
+  next.config.js sets WANT_HASH = false, so these names land verbatim in one global
+  namespace — the rvid* prefix is what keeps them off everything else.
+*/
+
+.rvidStrip {
+  margin: 0;
+}
+
+/* ------------------------------------------------------------------- heading */
+
+.rvidHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+/*
+  Dark and sentence-case: the column already carries the gold "TESTIMONIALS"
+  eyebrow above it, and a second gold all-caps line beneath gave it two competing
+  labels. The Shorts rail needs no heading because it is its own section; this one
+  sits inside a panel and would read as an unlabelled strip without it.
+*/
+.rvidTitle {
+  margin: 0;
+  font-family: "Lexend Deca", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  /* Grey rather than near-black: this is a label over a rail, sitting below the
+     section heading proper, so it should not compete with it. Same #707070 the
+     property and blog cards use for body text. Applies to the Awards &
+     Recognition rail in the gallery too, which renders the same component. */
+  color: #707070;
+}
+
+.rvidCount {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: #a2977f;
+}
+
+/* ---------------------------------------------------------------------- row */
+
+/* Mirrors .shrtRow. Below 1025px the info panel is full width (see
+   ReviewsWall.module.css), where a horizontal rail is the right shape. */
+.rvidRow {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  /* Padding rather than margin so the last card is not clipped, and the row still
+     ends flush with the panel. */
+  padding: 2px 2px 12px;
+
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+
+.rvidRow::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.rvidRow::-webkit-scrollbar-thumb {
+  background: #e6d9bd;
+  border-radius: 999px;
+}
+
+/*
+  Two-up grid on desktop only.
+
+  Once the panel is top-aligned it is shorter than the 560px marquee beside it,
+  leaving dead space at the bottom of the column. A single 240px-wide rail showed
+  two cards and left that gap; two columns of two fill it, so four are visible at
+  rest. All six stay in the DOM — the last pair scrolls, and the max-height is set
+  a little under two card-rows so a sliver of the third row shows as the cue.
+*/
+@media (min-width: 1025px) {
+  .rvidRow {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    padding: 2px 2px 4px;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 300px;
+    scroll-snap-type: y proximity;
+    overscroll-behavior-y: contain;
+  }
+
+  /* Grid tracks own the width here; the fixed 240px basis would break them. */
+  .rvidRow > .rvidCard {
+    width: auto;
+  }
+}
+
+/* --------------------------------------------------------------------- card */
+
+/* Mirrors .shrtCard, at 16:9. */
+.rvidCard {
+  position: relative;
+  flex: 0 0 auto;
+  width: 240px;
+  /* Reserves the full height before the image decodes — no shift. */
+  aspect-ratio: 16 / 9;
+  scroll-snap-align: start;
+
+  display: block;
+  overflow: hidden;
+  border: 0;
+  padding: 0;
+  border-radius: 12px;
+  background: #eef0f3;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: left;
+
+  transition: transform 0.16s ease;
+}
+
+.rvidCard:hover {
+  transform: translateY(-2px);
+}
+
+.rvidCard:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.35);
+}
+
+.rvidThumb,
+.rvidFrame {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border: 0;
+}
+
+.rvidThumb {
+  object-fit: cover;
+}
+
+/* Play triangle drawn in CSS — no icon font, no SVG request. Mirrors .shrtPlay. */
+.rvidPlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 46px;
+  height: 46px;
+  margin: -23px 0 0 -23px;
+
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
+  transition: background 0.16s ease;
+}
+
+.rvidPlay::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 52%;
+  transform: translate(-50%, -50%);
+  border-style: solid;
+  border-width: 9px 0 9px 15px;
+  border-color: transparent transparent transparent #fff;
+}
+
+.rvidCard:hover .rvidPlay {
+  background: rgba(184, 134, 11, 0.92);
+}
+
+/* Mirrors .shrtTitle. */
+.rvidLabel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 22px 10px 9px;
+
+  font-size: 11.5px;
+  font-weight: 500;
+  line-height: 1.35;
+  color: #fff;
+  text-align: left;
+
+  /* Gradient rather than a solid bar, so the frame stays visible behind the text. */
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0));
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .rvidCard {
+    width: 210px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rvidCard,
+  .rvidPlay {
+    transition: none;
+  }
+
+  .rvidCard:hover {
+    transform: none;
+  }
+}

@@ -191,3 +191,26 @@ export function CtaSkeleton() {
     </div>
   );
 }
+
+/*
+  Shorts strip: a row of chips over a row of 9:16 cards.
+
+  Six cards, matching the data, so the row is the same width before and after and
+  the horizontal scroller does not jump when the real strip mounts.
+*/
+export function ShortsSkeleton() {
+  return (
+    <div className={s.shortsSection} aria-hidden="true">
+      <div className={s.shortsPills}>
+        {[0, 1, 2, 3].map((i) => (
+          <Block className={s.shortsPill} key={i} />
+        ))}
+      </div>
+      <div className={s.shortsRow}>
+        {[0, 1, 2, 3, 4, 5].map((i) => (
+          <Block className={s.shortsCard} key={i} />
+        ))}
+      </div>
+    </div>
+  );
+}

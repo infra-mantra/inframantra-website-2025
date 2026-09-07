@@ -38,13 +38,30 @@
   transform: translateY(34px);
 }
 
-.statIcon {
+/*
+  The icons used to be bare 36px gold glyphs sitting beside gold numbers, so the
+  whole band was one flat sheet of gold with nothing leading the eye. Seating each
+  glyph in a tinted chip gives the row a repeating anchor and lets the number stay
+  the brightest thing in each item.
+
+  Scoped to the container: HomeSkeletons.module.css declares its own global
+  .statIcon (a 56px circle) and module names are not hashed in this build.
+*/
+.statisticalInsightsContainer .statIcon {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  font-size: 36px;
-  color: #e7b554;
+
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  font-size: 25px;
+  color: #c08722;
+
+  background: linear-gradient(180deg, #fdf6e8 0%, #f8e9cd 100%);
+  border: 1px solid rgba(231, 181, 84, 0.4);
+  box-shadow: 0 4px 12px rgba(201, 143, 43, 0.13);
 }
 
 .statText {
@@ -59,10 +76,10 @@
   content: "";
   position: absolute;
   right: -12px;
-  top: 16%;
-  height: 68%;
+  top: 26%;
+  height: 48%;
   width: 1px;
-  background: linear-gradient(180deg, transparent, rgba(231, 181, 84, 0.42), transparent);
+  background: linear-gradient(180deg, transparent, rgba(231, 181, 84, 0.3), transparent);
 }
 
 .statisticalInsightsContainer.in {
@@ -76,24 +93,26 @@
   }
 }
 
-/* Icon pop on hover */
-.statIcon {
+/* The container carries the reveal animation with fill-mode forwards, so a hover
+   transform there would never take effect — the chip is what moves. */
+.statisticalInsightsContainer .statIcon {
   transition:
-    transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
-    filter 0.35s ease;
-  filter: drop-shadow(0 4px 10px rgba(231, 181, 84, 0.25));
+    transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .statisticalInsightsContainer:hover .statIcon {
-  transform: scale(1.16) translateY(-2px);
-  filter: drop-shadow(0 6px 14px rgba(231, 181, 84, 0.45));
+  transform: translateY(-3px);
+  border-color: rgba(231, 181, 84, 0.75);
+  box-shadow: 0 9px 20px rgba(201, 143, 43, 0.26);
 }
 
 .statisticalInsightValues {
   font-family: "Lexend Deca", sans-serif;
-  font-size: 33px;
-  font-weight: 800;
-  letter-spacing: -0.8px;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.6px;
   line-height: 1.05;
   background: linear-gradient(100deg, #e7b554 0%, #d9a23c 50%, #c98f2b 100%);
   -webkit-background-clip: text;
@@ -103,26 +122,29 @@
 }
 
 .statisticalInsightTitle {
-  margin: 3px 0 0;
+  margin: 4px 0 0;
   font-family: "Lexend Deca", Helvetica, Arial, sans-serif;
-  font-weight: 600;
-  font-size: 0.92rem;
-  line-height: 1.25;
-  letter-spacing: 0.2px;
-  color: #3a352d;
+  font-weight: 500;
+  font-size: 13.5px;
+  line-height: 1.3;
+  letter-spacing: 0.1px;
+  color: #6f6757;
   text-align: left;
 }
 
 /* ---------------- Responsive ---------------- */
 @media (min-width: 760px) and (max-width: 1100px) {
-  .statIcon {
-    font-size: 30px;
+  .statisticalInsightsContainer .statIcon {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    font-size: 21px;
   }
   .statisticalInsightValues {
-    font-size: 27px;
+    font-size: 26px;
   }
   .statisticalInsightTitle {
-    font-size: 0.82rem;
+    font-size: 12px;
   }
   .statisticalInsightsContainer {
     gap: 10px;
@@ -134,8 +156,8 @@
   .statisticalInsightsSectionGridContainer {
     grid-template-columns: repeat(2, 1fr);
     max-width: 520px;
-    padding: 30px 18px;
-    gap: 26px 18px;
+    padding: 24px 16px;
+    gap: 20px 14px;
   }
   .statisticalInsightsContainer:not(:last-child)::before {
     display: none;
@@ -147,14 +169,17 @@
     top: 18%;
     height: 64%;
   }
-  .statIcon {
-    font-size: 28px;
+  .statisticalInsightsContainer .statIcon {
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+    font-size: 17px;
   }
   .statisticalInsightValues {
-    font-size: 25px;
+    font-size: 21px;
   }
   .statisticalInsightTitle {
-    font-size: 12.5px;
+    font-size: 11.5px;
     margin-top: 2px;
   }
 }
@@ -163,11 +188,28 @@
   .statisticalInsightsContainer {
     gap: 10px;
   }
-  .statIcon {
-    font-size: 24px;
+  .statisticalInsightsContainer .statIcon {
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    font-size: 14px;
   }
   .statisticalInsightValues {
-    font-size: 21px;
+    font-size: 18px;
+    letter-spacing: -0.3px;
+  }
+  .statisticalInsightTitle {
+    font-size: 11px;
+    line-height: 1.25;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .statisticalInsightsContainer .statIcon {
+    transition: none;
+  }
+  .statisticalInsightsContainer:hover .statIcon {
+    transform: none;
   }
 }
 /* imageGallerySection.css */

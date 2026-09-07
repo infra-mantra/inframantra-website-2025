@@ -670,37 +670,9 @@ Projects Highlight CSS
 
 
 
-/* Custom Backdrop */
-.custom-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-
-.custom-backdrop.open {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.custom-backdrop-content {
-  transition: transform 0.3s ease;
-}
-
-.custom-backdrop.open .custom-backdrop-content {
-  transform: scale(1);
-  display: flex;
-  justify-content: center;
-}
+/* The .custom-backdrop rules that were here now live in
+   components/shared/Backdrop.module.css, alongside the component that uses them,
+   with the padding, height cap and overflow they were missing. */
 
 @keyframes spin {
   0% { transform: rotate(0deg); }

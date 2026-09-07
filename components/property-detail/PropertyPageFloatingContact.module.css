@@ -15,10 +15,15 @@
   width: 90%;
   margin-left: 5%;
 }
-.react-tel-input .form-control {
-  background: none !important;
-  border: none !important;
-}
+/*
+  A rule stripping the phone input to nothing used to live here, unscoped and with
+  !important — CSS modules with WANT_HASH=false emit .react-tel-input verbatim, so it
+  applied to every phone field on the site and beat any later rule regardless of
+  specificity. It is why the shared .imFldPhone styling had no visible effect.
+
+  The phone field is now styled in components/shared/forms/formFields.module.css,
+  scoped under .imFldPhone.
+*/
 
 .propertyPageFloatingContactHeaderWrapper {
   display: flex;
@@ -207,6 +212,11 @@
   --imEnq-muted: #6b7280;
   --imEnq-line: #d7dbe0;
 
+  /* The close button is absolutely positioned; without this it anchors to whatever
+     ancestor happens to be positioned (in a modal that is the panel, inline it could
+     be the page). Pin it to the form so it lands in the same place either way. */
+  position: relative;
+
   display: flex;
   flex-direction: column;
   gap: 22px;
@@ -223,6 +233,18 @@
   flex-direction: column;
   gap: 4px;
   text-align: center;
+}
+
+/*
+  Clear the close button, which is absolutely positioned at top-right and only
+  rendered when the form is in a modal (it takes an onClose). At narrow widths the
+  centred eyebrow wrapped to two lines and the second line ran underneath it.
+
+  Scoped with the sibling combinator so the inline form on the property page — which
+  has no close button — keeps the full width for its heading.
+*/
+.imEnqClose ~ .imEnqHead {
+  padding: 0 40px;
 }
 
 .imEnqEyebrow {
@@ -459,10 +481,13 @@
   height: 34px;
   display: grid;
   place-items: center;
-  border: 0;
+  /* Was rgba(0,0,0,.05) on a white panel — about 1.05:1, so the control was
+     effectively invisible until hovered. A solid fill plus a border gives it an
+     edge; the glyph itself was always fine at 6.75:1. */
+  border: 1px solid #e3e6ea;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.05);
-  color: #4b5563;
+  background: #f3f4f6;
+  color: #374151;
   font-size: 21px;
   line-height: 1;
   cursor: pointer;

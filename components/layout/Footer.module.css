@@ -643,3 +643,81 @@
   text-align: left;
   line-height: 1.5;
 }
+
+/*
+  The configuration links (3/4/5 BHK, Penthouse) are rendered as top-level rows,
+  using the same markup as the "Top Properties In <city>" toggles so they match in
+  type and size. Those toggles are plain text, so they never hit
+  .footerThirdSectionDropdownFlex a { font-weight: 200 } — that rule exists to thin
+  the links revealed *inside* an open dropdown, and it was making these four look
+  lighter than every row around them.
+
+  Scoped to anchors sitting directly in a header row, which only these links are.
+  Declared after that rule so it wins on source order at equal specificity.
+*/
+.footerThirdSectionDropdownHeaderFlex a {
+  font-weight: inherit;
+  font-size: inherit;
+}
+
+/* Two configuration links per line. Row gap matches the spacing the city toggles
+   below sit at, so the two groups read as one list rather than two blocks. */
+.footerConfigGrid {
+  /* The Quick Search column is align-items: center, so a grid that sizes to its
+     content gets centred and sits indented next to the full-width city rows.
+     Every sibling row here is width: 100% for exactly this reason. */
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 12px;
+}
+
+/* Two per line on phones as well. The labels are short, the footer column goes
+   full-width once it stacks, and nowrap stops one breaking across two lines and
+   leaving the rows uneven. */
+@media (max-width: 480px) {
+  .footerConfigGrid {
+    column-gap: 8px;
+  }
+
+  .footerConfigGrid p {
+    white-space: nowrap;
+  }
+}
+
+/* Group label for the configuration links, matching the left edge of the rows
+   below it. Not a heading element: the column already has its h4. */
+.footerConfigLabel {
+  width: 100%;
+  margin: 18px 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  /* A micro-label, not a second heading. The column h4 already owns the gold and
+     the underline accent, so this is deliberately quiet: dimmer than the links it
+     introduces (#bdbdbd), small, and widely tracked — tracking is what makes a
+     label at this size read as a label rather than as shrunken body text. */
+  color: #8a8a94;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* A hairline finishes the row and fades out, so each group gets a clear band
+   without a hard divider cutting the column in two. Picks up the same gold as the
+   top border and the h4 rule, at low opacity so it stays subordinate to both. */
+.footerConfigLabel::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(231, 181, 84, 0.3), rgba(231, 181, 84, 0));
+}
+
+/* The first label follows the column h4, which already carries its own bottom
+   margin and accent rule — the full 18px on top of that reads as a gap. */
+.footerWrapper h4 + .footerConfigLabel {
+  margin-top: 2px;
+}

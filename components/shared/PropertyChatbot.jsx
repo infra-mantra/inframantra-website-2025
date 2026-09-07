@@ -982,10 +982,11 @@ export default function PropertyChatbot() {
       <style jsx>{`
         .imbot-launch-wrap {
           position: fixed;
-          /* Sit clear of the site's floating call/WhatsApp buttons
-             (right:8px, bottom:25px & 85px) on desktop. */
+          /* Clears the floating contact stack, which is three buttons now, not
+             two: whatsapp 25-75, enquire 85-135, phone 145-195. Sitting at 155
+             put this launcher inside the phone button. */
           right: 13px;
-          bottom: 155px;
+          bottom: 205px;
           display: flex;
           align-items: center;
           gap: 12px;

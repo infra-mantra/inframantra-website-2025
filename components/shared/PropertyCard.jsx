@@ -33,7 +33,7 @@ export default function PropertyCard({ property }) {
   const openEnquiry = () => setEnquiryOpen(true);
 
   return (
-    <div className={styles.propertyCard}>
+    <div className={styles.sharedPropCard}>
       <a href={`/property/${property.slug}`}>
         <div className={styles.propertyImageContainer}>
           <Image
@@ -88,55 +88,21 @@ export default function PropertyCard({ property }) {
         </div>
       </a>
 
-      {/* Three actions (outside the <a>) — Enquire Now & Brochure open the same enquiry form.
-          `flex: 1 1 auto` + a minWidth wide enough for "Enquire Now" means the row wraps to a
-          second line on narrow cards instead of squeezing the buttons until their labels clip.
-          Previously these were `flex: 1 1 0` with minWidth 0, which let them shrink below the
-          text width — on mobile that rendered as "View Mor…", "Enquire No…", "Brochur…". */}
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "6px",
-          padding: "10px 14px 14px",
-          marginTop: "auto",
-        }}
-      >
+      {/* Three actions, outside the <a> — Enquire Now & Brochure open the same enquiry
+          form. Sizing and wrapping now live in PropertyCard.module.css alongside the rest
+          of the card, so the breakpoints can reach them. */}
+      <div className={styles.propCardActions}>
         <button
           type="button"
           onClick={goToProperty}
-          style={{
-            flex: "1 1 auto",
-            minWidth: "88px",
-            background: "#3cc76a",
-            borderRadius: "5px",
-            fontSize: "11px",
-            fontWeight: 600,
-            padding: "7px 6px",
-            color: "#fff",
-            border: "none",
-            cursor: "pointer",
-            whiteSpace: "nowrap",
-          }}
+          className={`${styles.propCardBtn} ${styles.propCardBtnPrimary}`}
         >
           View More
         </button>
         <button
           type="button"
           onClick={openEnquiry}
-          style={{
-            flex: "1 1 auto",
-            minWidth: "88px",
-            background: "#e8c274",
-            borderRadius: "5px",
-            fontSize: "11px",
-            fontWeight: 600,
-            padding: "7px 6px",
-            color: "#fff",
-            border: "none",
-            cursor: "pointer",
-            whiteSpace: "nowrap",
-          }}
+          className={`${styles.propCardBtn} ${styles.propCardBtnSecondary}`}
         >
           Enquire Now
         </button>
@@ -144,31 +110,15 @@ export default function PropertyCard({ property }) {
           type="button"
           onClick={openEnquiry}
           title="Download Brochure"
-          style={{
-            flex: "1 1 auto",
-            minWidth: "88px",
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "4px",
-            background: "#fff",
-            borderRadius: "5px",
-            fontSize: "11px",
-            fontWeight: 600,
-            padding: "7px 6px",
-            color: "#3cc76a",
-            border: "1px solid #3cc76a",
-            cursor: "pointer",
-            whiteSpace: "nowrap",
-          }}
+          className={`${styles.propCardBtn} ${styles.propCardBtnGhost}`}
         >
           <svg
-            width="12"
-            height="12"
+            width="13"
+            height="13"
             viewBox="0 0 24 24"
             fill="currentColor"
             aria-hidden="true"
-            style={{ flexShrink: 0 }}
+            className={styles.propCardBtnIcon}
           >
             <path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5z" />
           </svg>

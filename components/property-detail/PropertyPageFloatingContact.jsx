@@ -5,6 +5,7 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
 import styles from "./PropertyPageFloatingContact.module.css";
+import fld from "../shared/forms/formFields.module.css";
 
 import Ajax1 from "../lib/ajax1.js";
 import { toast } from "react-toastify";
@@ -193,33 +194,31 @@ function PropertyPageFloatingContact({
           <h2 className={styles.imEnqTitle}>{name}</h2>
         </header>
 
-        <div className={styles.imEnqFields}>
-          {/* NAME */}
-          <div className={styles.imEnqField}>
-            <label className={styles.imEnqLabel} htmlFor="name">
-              Name<span aria-hidden="true">*</span>
-            </label>
+        <div className={fld.imFldStack}>
+          {/* Floating labels: the label follows the input so it can be driven by
+                :focus / :placeholder-shown on the preceding sibling. placeholder must
+                be a single space — an empty one counts as absent and never matches. */}
+          <div className={fld.imFldGroup}>
             <input
-              className={styles.imEnqInput}
+              className={fld.imFldInput}
               type="text"
               id="name"
               required={true}
               name="name"
               autoComplete="name"
-              placeholder="Your full name"
+              placeholder=" "
               value={formData.name}
               onChange={(e) => {
                 const alphabeticValue = e.target.value.replace(/[^a-zA-Zs]/g, "");
                 setFormData({ ...formData, name: alphabeticValue });
               }}
             />
+            <label className={fld.imFldLabel} htmlFor="name">
+              Name<span aria-hidden="true">*</span>
+            </label>
           </div>
 
-          {/* PHONE */}
-          <div className={`${styles.imEnqField} ${styles.imEnqPhone}`}>
-            <label className={styles.imEnqLabel} htmlFor="enquiry-phone">
-              Phone number<span aria-hidden="true">*</span>
-            </label>
+          <div className={`${fld.imFldGroup} ${fld.imFldPhone}`}>
             <PhoneInput
               country={"in"}
               enableSearch={true}
@@ -228,41 +227,46 @@ function PropertyPageFloatingContact({
               placeholder="00000 00000"
               inputProps={{ id: "enquiry-phone", name: "phone", autoComplete: "tel" }}
             />
+            <label className={fld.imFldLabel} htmlFor="enquiry-phone">
+              Phone number<span aria-hidden="true">*</span>
+            </label>
           </div>
 
-          {/* EMAIL */}
-          <div className={styles.imEnqField}>
-            <label className={styles.imEnqLabel} htmlFor="email">
-              Email address<span aria-hidden="true">*</span>
-            </label>
+          <div className={fld.imFldGroup}>
             <input
-              className={styles.imEnqInput}
+              className={fld.imFldInput}
               type="email"
               id="email"
               name="email"
               autoComplete="email"
-              placeholder="you@example.com"
+              placeholder=" "
               value={formData.email}
               onChange={handleChange}
               required={true}
             />
+            <label className={fld.imFldLabel} htmlFor="email">
+              Email address<span aria-hidden="true">*</span>
+            </label>
           </div>
         </div>
 
         {propertyType != "Commercial" ? (
-          <fieldset className={styles.imEnqField} style={{ border: 0, padding: 0, margin: 0 }}>
-            <legend className={styles.imEnqGroupLabel}>I&rsquo;m looking for</legend>
-            <div className={styles.imEnqChips}>
+          <fieldset style={{ border: 0, padding: 0, margin: 0 }}>
+            <legend className={fld.imFldGroupLabel}>I&rsquo;m looking for</legend>
+            <div className={fld.imFldChips}>
               {parseConfigurations(configuration).map((cfg) => (
-                <label className={styles.imEnqChip} key={cfg}>
+                <label className={fld.imFldChip} key={cfg}>
+                  {/* The pill is the control. A drawn checkbox square sat inside it
+                        before, which is what most dated these forms; the input is now
+                        off-screen but still focusable, and its :checked state styles
+                        the pill. */}
                   <input
                     type="checkbox"
                     value={cfg}
                     checked={selectedConfigurations.includes(cfg)}
                     onChange={handleCheckboxChange}
                   />
-                  <span className={styles.imEnqChipBox} aria-hidden="true" />
-                  <span className={styles.imEnqChipText}>{cfg}</span>
+                  <span className={fld.imFldChipText}>{cfg}</span>
                 </label>
               ))}
             </div>
@@ -283,7 +287,7 @@ function PropertyPageFloatingContact({
             )}
           </div>
 
-          <button type="submit" className={styles.imEnqSubmit}>
+          <button type="submit" className={fld.imFldSubmit}>
             Submit
           </button>
         </div>

@@ -13,6 +13,7 @@ import "react-phone-input-2/lib/style.css";
 
 import { toast } from "react-toastify";
 import ctaStyle from "./Cta.module.css";
+import fld from "./formFields.module.css";
 import style from "./CtaForHome.module.css";
 import Ajax1 from "../../lib/ajax1.js";
 import { useRouter } from "next/router";
@@ -60,15 +61,12 @@ function App({ name, id = "defaultId", countryCode = "in" }) {
     projectName: name,
   });
 
-
-
   const handleChange = (e) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
       [e.target.name]: e.target.value,
     }));
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -251,21 +249,10 @@ function App({ name, id = "defaultId", countryCode = "in" }) {
                 justifyContent: "center",
               }}
             >
-              <button
-                type="submit"
-                disabled={loading}
-                style={{
-                  width: "100%",
-                  padding: "10px",
-                  backgroundColor: loading ? "#ccc" : "#E7B554",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: "4px",
-                  cursor: loading ? "not-allowed" : "pointer",
-                  justifyContent: "center",
-                  display: "flex",
-                }}
-              >
+              {/* Shared submit primitive. This was an inline style block using #E7B554 at
+                  4px radius, against the enquiry modal's #b8860b at 12px — the same button
+                  written once per form, drifting a little each time. */}
+              <button type="submit" disabled={loading} className={fld.imFldSubmit}>
                 {loading ? "Submitting..." : "Submit"}
               </button>
             </div>
@@ -306,19 +293,22 @@ function App({ name, id = "defaultId", countryCode = "in" }) {
           <div className={style.homePagePropertyPageHeaderContactIconContainer2}>
             <hr width="100%" color="#DCAA4C" size="1" />
 
-            <div
-              style={{
-                display: "flex",
-              }}
-            >
+            <div className={style.homeCtaCallRow}>
               <div className={style.homeCtaText}>
                 <p className={style.hometextForm}>Give us a call and book your visit now!</p>
               </div>
 
+              {/* Decorative, and it carries no information the heading beside it
+                  does not already give — so it is hidden from screen readers
+                  rather than announced as "Call Icon". Explicit dimensions stop
+                  it reflowing the card as it loads. */}
               <img
                 src="https://inframantra.com/guruCollection/guru_call.png"
-                alt="Call Icon"
+                alt=""
+                aria-hidden="true"
                 className="callImage"
+                width="146"
+                height="115"
               />
             </div>
           </div>

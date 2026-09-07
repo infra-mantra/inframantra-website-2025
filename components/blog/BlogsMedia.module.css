@@ -18,10 +18,13 @@
 .blogPostSwiper :global(.swiper-wrapper) {
   align-items: stretch;
 }
-.blogPostSwiper a {
+/* Scoped to the card's own link: .blogPostSwiper a would also catch the
+   View More button-anchor in the action row and stretch it to full height. */
+.blogPostCard > a {
   display: block;
-  height: 100%;
+  flex: 1 1 auto;
   text-decoration: none;
+  color: inherit;
 }
 
 /* Full card: image on top + body (date / title / read article) below */
@@ -80,17 +83,21 @@
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
-  padding: 15px 17px 17px;
+  padding: 15px 17px 0;
 }
 
+/* Meta line, so it sits a full step below the headline rather than beside it —
+   14px against a 15.5px title left the card with no clear entry point. Colour is
+   the property card's #707070 either way. */
 .blogPostDate {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   font-family: "Lexend Deca", sans-serif;
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 500;
-  color: #8a8f98;
+  color: #707070;
+  letter-spacing: 0.01em;
   margin-bottom: 9px;
 }
 
@@ -99,25 +106,68 @@
   flex-shrink: 0;
 }
 
-.blogPostReadMore {
+/* ------------------------------------------------------------------ actions
+
+   Same row as the property card's: same sizing, same soft tinted fills, so a
+   blog card and a property card carry identical-looking actions. Class names are
+   duplicated rather than shared because module names are not hashed in this
+   build — reusing .propCardBtn here would put two components on one global class.
+*/
+.blogPostActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  padding: 14px 17px 17px;
+  margin-top: auto;
+}
+
+.blogPostBtn {
+  flex: 1 1 auto;
+  min-width: 92px;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  margin-top: auto;
-  padding-top: 14px;
+  justify-content: center;
+  gap: 5px;
+
+  padding: 9px 8px;
+  border-radius: 8px;
   font-family: "Lexend Deca", sans-serif;
-  font-size: 13.5px;
+  font-size: 12.5px;
   font-weight: 600;
   letter-spacing: 0.01em;
-  color: #d9a23c;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease;
 }
 
-.blogPostReadMore svg {
-  transition: transform 0.25s ease;
+.blogPostBtnView {
+  background: #e8f6ec;
+  color: #14722e;
+  border: 1px solid #cfead8;
 }
 
-.blogPostCard:hover .blogPostReadMore svg {
-  transform: translateX(4px);
+.blogPostBtnView:hover {
+  background: #dbefe2;
+  border-color: #14722e;
+}
+
+.blogPostBtnEnquire {
+  background: #fdf3e0;
+  color: #8a6410;
+  border: 1px solid #f0dfbc;
+}
+
+.blogPostBtnEnquire:hover {
+  background: #f9e9cd;
+  border-color: #e7b554;
+}
+
+.blogPostBtn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(220, 170, 76, 0.5);
 }
 .blogPostCardWrapper img {
   border-radius: 12px;
@@ -125,11 +175,14 @@
   object-position: left;
 }
 .blogPostCard h3 {
-  font-size: 15.5px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 500;
   font-family: "Lexend Deca", sans-serif;
-  color: #1a1a1a;
-  line-height: 1.4;
+  /* A step lighter than the property section grey. #7d7d7d holds ~4.5:1 on
+     white, which is the AA floor for text this size — going further would put
+     the headline below it. */
+  color: #7d7d7d;
+  line-height: 1.35;
   letter-spacing: -0.1px;
   margin: 0;
   /* Clamp to 2 lines + reserve the height so titles line up card-to-card */
@@ -138,7 +191,7 @@
   line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  min-height: 43px;
+  min-height: 38px;
   transition: color 0.22s ease;
 }
 
@@ -146,7 +199,7 @@
   color: #d9a23c;
 }
 .blogsMediaSectionWrapper > h3 {
-  font-size: 30px;
+  font-size: 24px;
   font-weight: 600;
   font-family: "Lexend Deca", sans-serif;
   color: #1a1a1a;
@@ -165,43 +218,76 @@
 .blogPostCardWrapper a {
   width: 31%;
 }
-/* Unified homepage primary button (matches Submit / Read all reviews) */
+/* Unified homepage primary button (matches Submit / Read all reviews).
+
+   This one still carried the pre-unification styling the comment describes:
+   a solid gold gradient slab with a heavy gold glow, while the equivalent
+   buttons in Premium Picks and Localities had already moved to the outlined
+   pill below. Same rules as .localityViewMoreButton now, arrow included. */
 .blogsMediaSectionWrapper > a {
+  /* Block-level flex, not inline-flex: `margin: 2% auto` below is what centres
+     this button, and auto margins do not centre an inline-level box. */
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  background: linear-gradient(90deg, #e7b554, #d9a23c);
-  color: #ffffff;
-  border: none;
-  border-radius: 10px;
-  padding: 12px 28px;
+  gap: 10px;
+
+  background: #ffffff;
+  color: #8a6410;
+  border: 1.5px solid #e7b554;
+  border-radius: 999px;
+  padding: 12px 30px;
+
   font-family: "Lexend Deca", sans-serif;
   font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.01em;
   text-decoration: none;
+  cursor: pointer;
   width: fit-content;
   margin: 2% auto;
-  box-shadow: 0 8px 20px rgba(217, 162, 60, 0.32);
+  box-shadow: 0 2px 10px rgba(120, 90, 20, 0.08);
   transition:
     transform 0.18s ease,
-    box-shadow 0.18s ease,
-    filter 0.18s ease;
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+/* Arrow drawn from two borders — no icon import for a single glyph. */
+.blogsMediaSectionWrapper > a::after {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-top: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.18s ease;
 }
 
 .blogsMediaSectionWrapper > a:hover {
   transform: translateY(-2px);
-  filter: brightness(1.03);
-  box-shadow: 0 12px 26px rgba(217, 162, 60, 0.42);
+  background: #e7b554;
+  border-color: #e7b554;
+  color: #ffffff;
+  box-shadow: 0 10px 22px rgba(217, 162, 60, 0.34);
+}
+
+.blogsMediaSectionWrapper > a:hover::after {
+  transform: rotate(45deg) translate(2px, -2px);
+}
+
+.blogsMediaSectionWrapper > a:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(220, 170, 76, 0.45);
 }
 @media (max-width: 768px) {
   .blogsMediaSectionWrapper {
     padding-right: 0px !important;
   }
   .blogsMediaSectionWrapper > h3 {
-    font-size: 20px;
+    font-size: 22px;
   }
   .blogsMediaSectionWrapper > a {
     font-size: 14px;
@@ -213,20 +299,26 @@
   .blogPostBody {
     padding: 12px 13px 14px;
   }
+  /*
+    These carried the weights from before the desktop type was settled: the title
+    was 600 here against 500 there, so the same card changed weight at the
+    breakpoint. Sizes come down proportionally from desktop instead of being set
+    independently — 14 -> 13.5 for the title, 12.5 -> 11.5 for the date — which
+    keeps the two a full step apart on a card only ~150px wide.
+  */
   .blogPostDate {
-    font-size: 11px;
+    font-size: 11.5px;
+    font-weight: 500;
     margin-bottom: 7px;
   }
   .blogPostCard h3 {
-    font-size: 13px;
-    font-weight: 600;
+    font-size: 13.5px;
+    font-weight: 500;
     line-height: 1.35;
+    letter-spacing: -0.1px;
     margin: 0;
-    min-height: 35px;
-  }
-  .blogPostReadMore {
-    font-size: 12.5px;
-    padding-top: 10px;
+    /* 13.5 x 1.35 x 2 lines */
+    min-height: 37px;
   }
   .blogPostCard div p {
     font-size: 12px;
@@ -234,5 +326,36 @@
   }
   .blogsMediaSectionWrapper > h3 {
     margin: 16px 0 20px;
+  }
+}
+
+/* Same <=480px heading step as the other homepage sections. */
+@media (max-width: 480px) {
+  .blogsMediaSectionWrapper > h3 {
+    font-size: 20px;
+  }
+}
+
+/*
+  Keep View More and Enquire Now on one line on phones.
+
+  They carry min-width: 92px so their labels never clip on a wide card. On a
+  1.5-slides-per-view phone the card is around 150px, so two of them plus the gap
+  could not fit and the row wrapped to two stacked buttons. Below 768px they
+  share the width equally instead (flex-basis 0), and the type comes down a step
+  so "Enquire Now" still fits on one line inside the narrower button.
+*/
+@media (max-width: 768px) {
+  .blogPostActions {
+    gap: 6px;
+    padding: 12px 14px 14px;
+  }
+
+  .blogPostBtn {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 8px 6px;
+    font-size: 11.5px;
+    letter-spacing: 0;
   }
 }

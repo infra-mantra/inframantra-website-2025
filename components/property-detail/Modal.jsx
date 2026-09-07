@@ -6,6 +6,7 @@ import PopUpForm from "../shared/forms/CTANEW.jsx";
 // WANT_HASH = false (next.config.js) means rsm["x"] resolves to the identical
 // unhashed name "x", so the rendered markup is byte-for-byte unchanged.
 import rsm from "./Modal.module.css";
+import fld from "../shared/forms/formFields.module.css";
 
 const RightSlideModal = ({ isOpen, onClose, title, children, name, id = "defult" }) => {
   if (!isOpen) return null;
@@ -26,16 +27,14 @@ const RightSlideModal = ({ isOpen, onClose, title, children, name, id = "defult"
         </div>
 
         <div className={rsm["slide-modal-body"]}>{children}</div>
-        <div className="highlight-wrappers">
-          <button
-            style={{ background: "#e7b554" }}
-            className="card-bg card card-ct-wt"
-            type="button"
-            onClick={handleform}
-          >
-            Request Callback
-          </button>
-        </div>
+        {/* Shared submit primitive. This stacked three class sets that fight each other:
+            .card is a CARD style (white background, border, 20px padding, 30px bottom
+            margin, box-shadow) applied to a button, .card-ct-wt is a button style, and the
+            gold was then set a third time inline. Its wrapper class .highlight-wrappers has
+            no rule defined anywhere. */}
+        <button type="button" onClick={handleform} className={fld.imFldSubmit}>
+          Request Callback
+        </button>
       </div>
       <PopUpForm
         popUpenable={popForm}

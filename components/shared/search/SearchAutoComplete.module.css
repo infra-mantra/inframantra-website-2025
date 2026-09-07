@@ -1,36 +1,68 @@
 .root {
   position: relative;
+  width: 100%;
 }
 
+/*
+  The bar used to be a grey (230,230,230) slab with a grey border, sitting inside
+  the white card that SearchOptions draws around it — a grey rectangle inside a
+  white rectangle, with the gold button overflowing both because the wrapper was
+  40px tall and the button 40px on top of 8px of padding.
+
+  It is now a single pill: white field, one hairline border, the button sized to
+  sit inside it. On desktop the surrounding card goes transparent (see
+  SearchOptions.module.css) so only one pill is ever visible.
+*/
 .inputWrapper {
+  position: relative;
   width: 100%;
-  border: 1px solid rgb(217, 217, 217);
-  background-color: rgb(230, 230, 230);
-  border-radius: 10px;
-  padding: 8px;
-  display: inline-flex;
+  /* Exactly the height the outer white card used to be, so the bar sits where
+     it always did in the banner. */
+  height: 55px;
+  box-sizing: border-box;
+
+  display: flex;
   flex-wrap: nowrap;
-  overflow: auto hidden;
-  -webkit-box-align: center;
   align-items: center;
-  scrollbar-width: thin;
-  scrollbar-color: rgb(193, 193, 193) rgb(240, 240, 240);
-  height: 40px;
+  gap: 4px;
+  padding: 4px 4px 4px 20px;
+
+  background-color: #ffffff;
+  border: 1px solid rgba(26, 26, 26, 0.1);
+  border-radius: 999px;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+/* The whole bar reacts, rather than the borderless input showing no focus at all. */
+.inputWrapper:focus-within {
+  border-color: #e7b554;
+  box-shadow: 0 0 0 3px rgba(231, 181, 84, 0.22);
 }
 
 .inputWrapper input {
-  background-color: rgb(230, 230, 230);
-  color: rgba(0, 0, 0, 0.85);
-  height: 30px;
+  background-color: transparent;
+  color: #1a1a1a;
+  height: 100%;
   box-sizing: border-box;
-  padding: 4px 6px;
-  border-radius: 10px;
+  padding: 0;
   -webkit-box-flex: 1;
-  flex-grow: 1;
-  min-width: 150px;
+  flex: 1 1 auto;
+  /* Was min-width: 150px, which stopped the field shrinking and forced the
+     wrapper to scroll horizontally on narrow phones. */
+  min-width: 0;
   border: 0px;
   margin: 0px;
   outline: 0px;
+
+  font-family: "Lexend Deca", sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.inputWrapper input::placeholder {
+  color: #8d8d8d;
 }
 .listbox {
   width: 100%;
@@ -140,12 +172,12 @@
   min-width: max-content;
 }
 
+/* Mobile only — the desktop branch renders the gold Search button instead. */
 .searchIcon {
   position: absolute;
-  right: 5px;
+  right: 14px;
   color: rgb(218, 158, 39);
   cursor: pointer;
-  /* display: none; */
   width: 1.4rem;
   height: 1.4rem;
 }
@@ -156,20 +188,38 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  width: 38px;
+  height: 38px;
   background: transparent;
   border: 0;
   outline: 0;
   cursor: pointer;
   color: rgb(218, 158, 39);
-  padding: 4px;
-  margin-right: 4px;
+  padding: 0;
+  margin-right: 6px;
   border-radius: 50%;
   transition:
     background-color 0.2s ease,
     color 0.2s ease;
 }
+/* Hairline between the typed text and the controls, so the mic reads as a
+   control rather than as part of the query. */
+.micButton::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: -14px;
+  width: 1px;
+  height: 22px;
+  background: rgba(26, 26, 26, 0.12);
+}
 .micButton:hover {
   background-color: rgba(218, 158, 39, 0.15);
+}
+.micButton:focus-visible {
+  background-color: rgba(218, 158, 39, 0.15);
+  box-shadow: 0 0 0 3px rgba(220, 170, 76, 0.4);
 }
 .micButton.listening {
   color: #e53935;
@@ -193,11 +243,17 @@
   }
   .inputWrapper {
     width: 100%;
-    position: relative;
+    height: 48px;
+    padding-left: 18px;
+    /* No gold button on mobile, so the bar carries its own lift. */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.14);
   }
-  /* clear the absolute search icon pinned at right:5px on mobile */
+  .inputWrapper input {
+    font-size: 14px;
+  }
+  /* clear the absolute search icon pinned at the right edge on mobile */
   .micButton {
-    margin-right: 28px;
+    margin-right: 30px;
   }
   .listbox {
     width: 335px !important;

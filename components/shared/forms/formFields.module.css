@@ -1,0 +1,363 @@
+/*
+  Shared field primitives for every enquiry form on the site.
+
+  Both the property enquiry modal and the beige callback popup used to style their
+  own inputs, so they drifted: different heights, radii, label treatments and
+  spacing. These are the single definition both import, which is the only way
+  "make them match" stays true after the next edit.
+
+  Compact by design. The old forms put a label on its own row above every input,
+  which is where most of their height went — three fields cost ~270px. Floating
+  the label into the input costs ~190px for the same three, so a phone shows the
+  submit button without scrolling.
+
+ Every var() carries its literal fallback. The tokens are declared on .imFldStack,
+  but these primitives are used outside it too — the chips and the submit button sit
+  in their own wrappers — and an unresolved var() silently computes to nothing, which
+  rendered white button text on a transparent background. A shared primitive must not
+  depend on where it happens to be nested.
+
+  next.config.js sets WANT_HASH = false: these names land verbatim in one global
+  namespace, so the imFld* prefix is load-bearing, not decoration.
+*/
+
+.imFldStack {
+  --imFld-accent: #b8860b;
+  --imFld-accent-soft: rgba(184, 134, 11, 0.14);
+  --imFld-ink: #1c1f24;
+  --imFld-muted: #6b7280;
+  --imFld-line: #dfe3e8;
+  --imFld-surface: #fff;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+/* ---------------------------------------------------------------- text field */
+
+.imFldGroup {
+  position: relative;
+  width: 100%;
+}
+
+.imFldInput {
+  width: 100%;
+  /* 48, not 54: the taller box read as heavy, particularly on the beige popup
+     where the white fields carry a lot of visual weight already. */
+  height: 48px;
+  box-sizing: border-box;
+  /* Top padding leaves room for the label once it floats up into the field. */
+  padding: 17px 13px 4px;
+
+  font-family: inherit;
+  font-size: 14.5px;
+  color: var(--imFld-ink, #1c1f24);
+  background: var(--imFld-surface, #fff);
+  border: 1px solid var(--imFld-line, #e6e9ed);
+  border-radius: 10px;
+  outline: none;
+
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.imFldInput:hover {
+  border-color: #c8ced6;
+}
+
+.imFldInput:focus {
+  border-color: var(--imFld-accent, #b8860b);
+  box-shadow: 0 0 0 3px var(--imFld-accent-soft, rgba(184, 134, 11, 0.14));
+}
+
+/*
+  The label is a sibling AFTER the input so it can react to :focus and
+  :placeholder-shown on the input. It starts centred in the field and rises when
+  the field is focused or has a value. The markup must carry placeholder=" " —
+  an empty placeholder counts as absent and :placeholder-shown never matches.
+*/
+.imFldLabel {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  transform-origin: left top;
+
+  pointer-events: none;
+  font-size: 14.5px;
+  font-weight: 400;
+  color: var(--imFld-muted, #6b7280);
+
+  transition:
+    transform 0.16s ease,
+    font-size 0.16s ease,
+    color 0.16s ease;
+}
+
+.imFldInput:focus + .imFldLabel,
+.imFldInput:not(:placeholder-shown) + .imFldLabel {
+  transform: translateY(-19px);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.imFldInput:focus + .imFldLabel {
+  color: var(--imFld-accent, #b8860b);
+}
+
+/* The required marker should not shout; it is a hint, not an error. */
+.imFldLabel span {
+  color: #c0392b;
+  margin-left: 2px;
+}
+
+/* ------------------------------------------------------------------ phone field */
+
+/*
+  react-phone-input-2 renders its own markup, and the country code means the
+  input is never empty — so its label sits permanently in the raised position
+  rather than floating.
+*/
+.imFldPhone .imFldLabel {
+  transform: translateY(-19px);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/*
+  The container itself had no width, so it sized to its content and the phone field
+  never filled the row while the other two did — the field looked broken at every
+  width rather than only on small screens.
+*/
+.imFldPhone :global(.react-tel-input) {
+  width: 100%;
+}
+
+.imFldPhone :global(.react-tel-input .form-control) {
+  width: 100%;
+  height: 48px;
+  /* 52px clears the 38px flag button plus its arrow. */
+  padding: 17px 13px 4px 52px;
+  font-family: inherit;
+  font-size: 14.5px;
+  color: var(--imFld-ink, #1c1f24);
+  background: var(--imFld-surface, #fff);
+  border: 1px solid var(--imFld-line, #e6e9ed);
+  border-radius: 10px;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.imFldPhone :global(.react-tel-input .form-control:focus) {
+  border-color: var(--imFld-accent, #b8860b);
+  box-shadow: 0 0 0 3px var(--imFld-accent-soft, rgba(184, 134, 11, 0.14));
+}
+
+/*
+  The country selector must keep looking like a control. The library gives it a
+  #f5f5f5 fill and a 1px border; flattening both to transparent removed every cue
+  that it opens, so it stopped reading as a dropdown at all. Restored, toned to
+  this palette, with the divider kept so the flag reads as separate from the number.
+*/
+.imFldPhone :global(.react-tel-input .flag-dropdown) {
+  background: #f7f8fa;
+  border: 1px solid var(--imFld-line, #e6e9ed);
+  border-right: 1px solid var(--imFld-line, #e6e9ed);
+  border-radius: 10px 0 0 10px;
+}
+
+.imFldPhone :global(.react-tel-input .selected-flag) {
+  border-radius: 10px 0 0 10px;
+}
+
+.imFldPhone :global(.react-tel-input .selected-flag:hover),
+.imFldPhone :global(.react-tel-input .selected-flag:focus),
+.imFldPhone :global(.react-tel-input .flag-dropdown.open .selected-flag) {
+  background: #eef0f3;
+}
+
+/* The country list must sit above the field that follows it. */
+.imFldPhone :global(.react-tel-input .country-list) {
+  z-index: 5;
+  text-align: left;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+}
+
+/* --------------------------------------------------------------------- chips */
+
+.imFldChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/*
+  The pill IS the control. Previously a checkbox square was drawn next to the
+  label inside each pill, which is the single thing that most dated these forms.
+  The input stays in the DOM for semantics and keyboard use, and is positioned
+  off-screen rather than display:none so it can still receive focus.
+*/
+.imFldChip {
+  cursor: pointer;
+}
+
+.imFldChip input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  margin: 0;
+}
+
+.imFldChipText {
+  display: inline-block;
+  padding: 9px 15px;
+
+  font-size: 13.5px;
+  font-weight: 500;
+  line-height: 1;
+  color: #454b53;
+  background: var(--imFld-surface, #fff);
+  border: 1px solid var(--imFld-line, #dfe3e8);
+  border-radius: 999px;
+
+  transition:
+    background 0.14s ease,
+    border-color 0.14s ease,
+    color 0.14s ease;
+}
+
+.imFldChip:hover .imFldChipText {
+  border-color: var(--imFld-accent, #b8860b);
+  color: var(--imFld-accent, #b8860b);
+}
+
+.imFldChip input:checked + .imFldChipText {
+  background: var(--imFld-accent, #b8860b);
+  border-color: var(--imFld-accent, #b8860b);
+  color: #fff;
+}
+
+/* Keyboard users need to see which pill is focused; hover alone is not enough. */
+.imFldChip input:focus-visible + .imFldChipText {
+  box-shadow: 0 0 0 3px var(--imFld-accent-soft, rgba(184, 134, 11, 0.14));
+}
+
+/* -------------------------------------------------------------------- submit */
+
+.imFldSubmit {
+  width: 100%;
+  height: 48px;
+  border: 0;
+  border-radius: 10px;
+
+  font-family: inherit;
+  font-size: 15.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #fff;
+  background: var(--imFld-accent, #b8860b);
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    transform 0.06s ease;
+}
+
+.imFldSubmit:hover {
+  background: #9a6c14;
+}
+
+.imFldSubmit:active {
+  transform: translateY(1px);
+}
+
+.imFldSubmit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* --------------------------------------------------------------------- misc */
+
+.imFldGroupLabel {
+  display: block;
+  margin: 0 0 8px;
+  padding: 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--imFld-muted, #6b7280);
+}
+
+@media (max-width: 480px) {
+  .imFldStack {
+    gap: 10px;
+  }
+
+  .imFldInput,
+  .imFldPhone :global(.react-tel-input .form-control) {
+    /* 16px stops iOS Safari zooming the page when the field takes focus. */
+    font-size: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .imFldInput,
+  .imFldLabel,
+  .imFldChipText,
+  .imFldSubmit {
+    transition: none;
+  }
+}
+
+/* ------------------------------------------------------------------ consent */
+
+/*
+  The WhatsApp opt-in. Was styled inline with color:"green" — the CSS keyword,
+  #008000, which is a darker and duller green than WhatsApp’s own #25d366 and read
+  as an arbitrary colour rather than the brand it refers to.
+
+  The wording is left exactly as it was: it is a consent statement, not copy to
+  tidy.
+*/
+.imFldConsent {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 12px 0 14px;
+  cursor: pointer;
+}
+
+.imFldConsent input[type="checkbox"] {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  margin: 2px 0 0;
+  accent-color: #25d366;
+  cursor: pointer;
+}
+
+.imFldConsentText {
+  font-family: inherit;
+  /* Legal small print, not body copy — it should sit quietly under the fields. */
+  font-size: 11.5px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #6b7280;
+  text-align: left;
+}
+
+.imFldConsentIcon {
+  color: #25d366;
+  font-size: 15px;
+  vertical-align: -2px;
+  margin-right: 5px;
+}

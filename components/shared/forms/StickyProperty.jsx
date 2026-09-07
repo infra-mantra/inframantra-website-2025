@@ -12,6 +12,7 @@ import Ajax1 from "../../lib/ajax1.js";
 import { downloadBrochure } from "../../lib/downloadBrochurePdf.js";
 
 import ctaStyle from "./Cta.module.css";
+import fld from "./formFields.module.css";
 
 const locations = [
   {
@@ -37,7 +38,6 @@ function StickyProperty({
   countryCode = "in",
 }) {
   const router = useRouter();
-
 
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -287,20 +287,10 @@ function StickyProperty({
             justifyContent: "center",
           }}
         >
-          <button
-            type="submit"
-            disabled={loading}
-            style={{
-              width: "100%",
-              padding: "12px",
-              backgroundColor: loading ? "#ccc" : "#E7B554",
-              color: "#fff",
-              border: "none",
-              borderRadius: "4px",
-              cursor: loading ? "not-allowed" : "pointer",
-              fontWeight: "600",
-            }}
-          >
+          {/* Shared submit primitive. This was an inline style block using #E7B554 at
+              4px radius, against the enquiry modal's #b8860b at 12px — the same button
+              written once per form, drifting a little each time. */}
+          <button type="submit" disabled={loading} className={fld.imFldSubmit}>
             {loading ? "Submitting..." : "Submit"}
           </button>
         </div>

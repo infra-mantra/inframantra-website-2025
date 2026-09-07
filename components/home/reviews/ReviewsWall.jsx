@@ -1,8 +1,8 @@
-import React, { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import styles from "./ReviewsWall.module.css";
 import { currentReviews } from "./currentReviews.js";
+import ReviewVideos from "./ReviewVideos.jsx";
 import { staticGoogleReviews } from "./googleReviews.js";
 
 /* Highlight figures (numbers, %, ₹, durations, "zero/0 brokerage") so cards
@@ -157,10 +157,34 @@ function ReviewsWall({ current = [] }) {
 
   const ratingValue = gMeta.rating || 4.4;
   const ratingText = ratingValue.toFixed(1);
-  const totalText = gMeta.total ? `${gMeta.total}+` : "2,493+";
+
+  // Same scroll-triggered entrance as the Frames of Excellence gallery: the
+  // section reveals once, on first intersection, and the observer disconnects.
+  const wallRef = useRef(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !("IntersectionObserver" in window)) {
+      setInView(true);
+      return undefined;
+    }
+    const el = wallRef.current;
+    if (!el) return undefined;
+    const ob = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setInView(true);
+          ob.disconnect();
+        }
+      },
+      { threshold: 0.15 }
+    );
+    ob.observe(el);
+    return () => ob.disconnect();
+  }, []);
 
   return (
-    <section className={styles.rwWall}>
+    <section ref={wallRef} className={`${styles.rwWall} ${inView ? styles.in : ""}`}>
       <div className={styles.rwInner}>
         {/* Left info panel */}
         <div className={styles.rwLeft}>
@@ -184,15 +208,20 @@ function ReviewsWall({ current = [] }) {
             <span className={styles.rwBadge}>RERA Approved</span>
             <span className={styles.rwBadge}>9+ Years</span>
           </div>
-          <Link href="/testimonials">
-            <a className={styles.rwCta}>Read all reviews &#8594;</a>
-          </Link>
+
+          {/* Video testimonials, in the panel rather than a full-width strip.
+              Facade-rendered: no YouTube JavaScript loads until a card is clicked. */}
+          <ReviewVideos />
         </div>
 
         {/* Right animated marquee columns */}
         <div className={styles.rwColumns}>
           {columns.map((col, ci) => (
-            <div key={ci} className={`${styles.rwColumn} ${ci % 2 ? styles.rwColDown : ""}`}>
+            <div
+              key={ci}
+              className={`${styles.rwColumn} ${ci % 2 ? styles.rwColDown : ""}`}
+              style={{ animationDelay: `${0.18 + ci * 0.12}s` }}
+            >
               <div className={styles.rwTrack}>
                 {[...col, ...col].map((r, i) => (
                   <ReviewCard key={`${ci}-${i}-${r.id}`} review={r} />
