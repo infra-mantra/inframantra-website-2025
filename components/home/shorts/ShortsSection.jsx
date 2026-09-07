@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo, useState } from "react";
 import SHORTS, { CATEGORIES } from "./shortsData.js";
 import styles from "./Shorts.module.css";
+import { useVideos } from "../../lib/useVideos.js";
 
 /*
   Shorts strip for the home page.
@@ -144,14 +145,17 @@ const ShortsSection = () => {
   const [active, setActive] = useState("all");
   const [playing, setPlaying] = useState(null);
 
-  // Six items filtered in memory — no request, no measurable cost.
+  // From the CMS, falling back to the bundled list until it answers.
+  const shorts = useVideos("shorts", SHORTS);
+
+  // Filtered in memory — no request, no measurable cost.
   const visible = useMemo(
-    () => (active === "all" ? SHORTS : SHORTS.filter((s) => s.category === active)),
-    [active]
+    () => (active === "all" ? shorts : shorts.filter((s) => s.category === active)),
+    [active, shorts]
   );
 
   // Only offer a chip that actually has videos behind it.
-  const chips = CATEGORIES.filter((c) => c.id === "all" || SHORTS.some((s) => s.category === c.id));
+  const chips = CATEGORIES.filter((c) => c.id === "all" || shorts.some((s) => s.category === c.id));
 
   return (
     <section className={styles.shrtSection} aria-label="Inframantra video shorts">

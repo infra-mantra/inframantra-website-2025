@@ -30,7 +30,7 @@
 
 .localitySubtitle {
   align-self: stretch;
-  color: #6b6b6b;
+  color: #707070;
   font-family: "Lexend Deca", sans-serif;
   font-size: 14px;
   font-style: normal;
@@ -225,6 +225,15 @@
     padding-right: 0px !important;
   }
 
+  /* The wrapper drops its right padding so the card carousel can run off the
+     screen edge. The heading and subtitle are inside that wrapper and are not
+     carousels — without their own right padding they ran under the edge and
+     were clipped mid-word ("across premi…"). */
+  .localitySectionHeader,
+  .localityTitle {
+    padding-right: 16px;
+  }
+
   .localityNavButtonPrev,
   .localityNavButtonNext {
     display: none;
@@ -239,9 +248,9 @@
     font-weight: 500;
   }
   .localitySectionHeader {
-    gap: 12px;
-    padding-bottom: 20px;
-    padding-top: 40px;
+    gap: 6px;
+    padding-bottom: 14px;
+    padding-top: 28px;
   }
   .localitySubtitle {
     font-size: 13px;

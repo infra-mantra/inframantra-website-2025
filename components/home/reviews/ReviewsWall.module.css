@@ -1,7 +1,7 @@
 .rwWall {
   width: 100%;
   background: linear-gradient(180deg, #fbf7ee 0%, #ffffff 62%);
-  padding: 64px 6% 72px;
+  padding: 48px 6% 52px;
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -385,7 +385,7 @@
 
 @media (max-width: 768px) {
   .rwWall {
-    padding: 40px 16px 48px;
+    padding: 32px 16px 36px;
   }
 
   .rwHeading {

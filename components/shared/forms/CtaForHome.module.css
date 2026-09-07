@@ -1,5 +1,5 @@
 .homeCtaMainWrapper {
-  padding: 64px 6%;
+  padding: 48px 6%;
   display: flex;
   width: 100%;
   max-width: 1260px;
@@ -313,7 +313,7 @@ a.homeCtaContactValue:hover {
   font-size: 14px;
   font-weight: 400;
   line-height: 1.5;
-  color: #6b6b6b;
+  color: #707070;
 }
 
 /* Two columns: map + contact details on the left, the form on the right. A
@@ -400,6 +400,12 @@ a.homeCtaContactValue:hover {
   }
   .homeCtaMap iframe {
     height: 240px;
+  }
+}
+
+@media (max-width: 768px) {
+  .homeCtaMainWrapper {
+    padding: 32px 16px;
   }
 }
 

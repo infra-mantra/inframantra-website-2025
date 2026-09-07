@@ -1,5 +1,5 @@
 .blogsMediaSectionWrapper {
-  padding: 35px 6%;
+  padding: 28px 6%;
   padding-top: 0px;
 }
 .blogPostCardWrapper {
@@ -245,7 +245,7 @@
   text-decoration: none;
   cursor: pointer;
   width: fit-content;
-  margin: 2% auto;
+  margin: 20px auto 0;
   box-shadow: 0 2px 10px rgba(120, 90, 20, 0.08);
   transition:
     transform 0.18s ease,
@@ -286,6 +286,14 @@
   .blogsMediaSectionWrapper {
     padding-right: 0px !important;
   }
+
+  /* The wrapper drops its right padding so the card carousel can run off the
+     screen edge. The heading and subtitle are inside that wrapper and are not
+     carousels — without their own right padding they ran under the edge and
+     were clipped mid-word ("across premi…"). */
+  .blogsMediaSectionWrapper > h3 {
+    padding-right: 16px;
+  }
   .blogsMediaSectionWrapper > h3 {
     font-size: 22px;
   }
@@ -294,8 +302,24 @@
   }
   .blogsMediaSectionWrapper {
     padding-top: 20px;
-    padding-bottom: 40px;
+    padding-bottom: 28px;
   }
+  /*
+    Taller image frame on phones.
+
+    The 1293/469 ratio is the source banners' exact ratio, so on desktop the
+    frame fills with no cropping at all. On a ~200px-wide card that same ratio is
+    only ~72px tall — a strip too thin to read, and it left the card looking top
+    heavy. 16/9 gives ~112px.
+
+    The cost is that cover now trims the banner's left and right edges here.
+    These banners put their title in the middle ("SECTOR 70 GURGAON"), so the
+    part that matters survives; object-position stays centred for that reason.
+  */
+  .blogPostImgWrap {
+    aspect-ratio: 16 / 9;
+  }
+
   .blogPostBody {
     padding: 12px 13px 14px;
   }

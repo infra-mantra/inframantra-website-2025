@@ -55,8 +55,8 @@
   display: flex;
   flex-direction: column;
   justify-content: left;
-  gap: 6px;
-  padding-bottom: 22px;
+  gap: 4px;
+  padding-bottom: 14px;
 }
 
 .localityViewMoreContainer {
@@ -141,7 +141,7 @@
 
 .premiumSubtitle {
   align-self: stretch;
-  color: #6b6b6b;
+  color: #707070;
   font-family: "Lexend Deca", sans-serif;
   font-size: 14px;
   font-style: normal;
@@ -152,7 +152,7 @@
 
 /* Premium Picks City Selector Container */
 .premiumCitySelectorContainer {
-  margin-bottom: 48px;
+  margin-bottom: 28px;
 }
 
 /* Premium Picks Location Status Messages */
@@ -306,8 +306,16 @@
     padding-right: 0px !important;
   }
 
+  /* The wrapper drops its right padding so the card carousel can run off the
+     screen edge. The heading and subtitle are inside that wrapper and are not
+     carousels — without their own right padding they ran under the edge and
+     were clipped mid-word ("across premi…"). */
+  .premiumSectionHeader {
+    padding-right: 16px;
+  }
+
   .premiumPicksContainer {
-    padding-top: 40px;
+    padding-top: 28px;
     padding-bottom: 12px;
   }
 
@@ -331,7 +339,8 @@
     font-size: 20px;
   }
   .premiumSectionHeader {
-    gap: 12px;
+    gap: 6px;
+    padding-bottom: 12px;
   }
   .premiumSubtitle {
     font-size: 13px;

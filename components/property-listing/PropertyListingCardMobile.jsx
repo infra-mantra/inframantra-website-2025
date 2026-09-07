@@ -85,9 +85,29 @@ function PropertyListingCardMobile({
                     </div>
                   )}
 
-                  <div className={styles.propertyImageChipLogo}>
-                    <img class={styles.propertyLogo} src={property.developer.developerImg} />
-                  </div>
+                  {/*
+                    Was `class={...}`, which React drops — it is `className` in JSX —
+                    so .propertyLogo (width 4.5rem, max-height 26px, scale-down)
+                    never applied and the logo rendered at its intrinsic size.
+
+                    Also guarded: property.developer was read without optional
+                    chaining, so a listing with no developer threw on render.
+                  */}
+                  {property.developer?.developerImg && (
+                    <div className={styles.propertyImageChipLogo}>
+                      <img
+                        className={styles.propertyLogo}
+                        src={property.developer.developerImg}
+                        alt={
+                          property.developer.name
+                            ? `${property.developer.name} logo`
+                            : "Developer logo"
+                        }
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  )}
                 </div>
 
                 {/* Property Details Section */}

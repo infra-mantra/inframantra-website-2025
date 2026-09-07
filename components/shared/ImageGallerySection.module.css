@@ -5,7 +5,7 @@
 .igGallery {
   position: relative;
   width: 100%;
-  padding: 70px 4% 84px;
+  padding: 48px 4% 52px;
   box-sizing: border-box;
   background: linear-gradient(180deg, #ffffff 0%, #fbf7ee 55%, #ffffff 100%);
   overflow: hidden;
@@ -50,61 +50,13 @@
 .igHeader {
   text-align: left;
   margin-bottom: 0;
-
-  /* Grid items default to min-width: auto, so the horizontal video rail inside
-     this column sized the column to its full scrolling content width (three
-     180px cards plus gaps). That pushed the section wider than the viewport and
-     .igGallery's overflow:hidden clipped the subtitle. Same fix as .rwLeft in
-     ReviewsWall.module.css, which hit this with the same rail. */
   min-width: 0;
-
   opacity: 0;
   transform: translateY(24px);
 }
 
 .igGallery.in .igHeader {
   animation: riseIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-}
-
-/* Award-film rail under the heading, mirroring how the video strip sits under the
-   testimonials heading. The rail brings its own card styling (shrt*); only the
-   little heading above it belongs to this section. */
-.igVideos {
-  /* 14 + 16 = the 30px gap this rail had before the rule was added, so the line
-     sits inside the existing spacing rather than adding to it. */
-  margin-top: 14px;
-  padding-top: 16px;
-  border-top: 1px solid rgba(231, 181, 84, 0.28);
-}
-
-/*
-  The rail is the Shorts strip's own — 9:16 cards in a horizontal scroller — so it
-  needs no overrides here beyond the heading above it. Only the small label row
-  belongs to this section.
-*/
-.igVideosHead {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-
-/* Matches .rvidTitle on the testimonials rail. */
-.igVideosTitle {
-  margin: 0;
-  font-family: "Lexend Deca", sans-serif;
-  font-size: 16px;
-  font-weight: 600;
-  letter-spacing: -0.2px;
-  color: #707070;
-}
-
-.igVideosCount {
-  flex-shrink: 0;
-  font-size: 12px;
-  font-weight: 600;
-  color: #a2977f;
 }
 
 .igEyebrow {
@@ -162,7 +114,7 @@
 .igSubtitle {
   font-size: 14px;
   line-height: 1.6;
-  color: #6b6b6b;
+  color: #707070;
   max-width: 460px;
   margin: 0;
 }
@@ -473,15 +425,12 @@
     grid-template-columns: 1fr;
     gap: 28px;
   }
-  /* Left, not centred: the video rail now sits inside this header and a rail is
-     inherently left-aligned, so a centred title above it read as two different
-     alignments in one block. */
   .igHeader {
-    text-align: left;
+    text-align: center;
     margin-bottom: 4px;
   }
   .igSubtitle {
-    margin: 0;
+    margin: 0 auto;
   }
   .igTitle {
     font-size: 22px;
@@ -495,7 +444,7 @@
    with captions always visible. */
 @media (max-width: 768px) {
   .igGallery {
-    padding: 50px 16px 60px;
+    padding: 34px 16px 38px;
   }
   .igHeader {
     margin-bottom: 30px;

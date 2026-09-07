@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import REVIEW_VIDEOS from "./reviewVideosData.js";
 import styles from "./ReviewVideos.module.css";
+import { useVideos } from "../../lib/useVideos.js";
 
 /*
   Testimonial videos, in the reviews section's left info panel.
@@ -82,17 +83,24 @@ const VideoCard = ({ item, playing, onPlay }) => {
   Excellence gallery passes its award films in, so both sections carry the same
   rail instead of two different video treatments.
 */
-const ReviewVideos = ({ items = REVIEW_VIDEOS, title = "Hear it from them" }) => {
+/*
+  `items` is only passed by callers that have already chosen a list (the Frames of
+  Excellence gallery passes its award films). Left unset, the rail fetches the
+  testimonial section from the CMS and falls back to the bundled list.
+*/
+const ReviewVideos = ({ items, title = "Hear it from them" }) => {
   const [playing, setPlaying] = useState(null);
+  const fetched = useVideos("testimonial", REVIEW_VIDEOS);
+  const videos = items || fetched;
 
   return (
     <div className={styles.rvidStrip}>
       <div className={styles.rvidHead}>
         <h3 className={styles.rvidTitle}>{title}</h3>
-        <span className={styles.rvidCount}>{items.length} videos</span>
+        <span className={styles.rvidCount}>{videos.length} videos</span>
       </div>
       <div className={styles.rvidRow}>
-        {items.map((item) => (
+        {videos.map((item) => (
           <VideoCard key={item.id} item={item} playing={playing === item.id} onPlay={setPlaying} />
         ))}
       </div>
