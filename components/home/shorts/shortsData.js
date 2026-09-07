@@ -27,14 +27,23 @@
   entry with it; nothing else needs to change.
 */
 
+/*
+  One-word labels, so these pills come out the width of the city tabs directly
+  above them ("Gurugram", "Mohali", "Pune") rather than two or three times wider.
+  "Investment & Market" and "Awards & Recognition" made a row that could not fit a
+  phone and left the last chip cut off mid-word.
+
+  The ids are unchanged, so nothing else — the video data, the CMS category enum,
+  the gallery's awards filter — is affected by this.
+*/
 export const CATEGORIES = [
   { id: "all", label: "All" },
   { id: "projects", label: "Projects" },
   // Investment and Market were separate chips holding three videos between them,
   // which is too thin a slice to be worth two tabs.
-  { id: "investment", label: "Investment & Market" },
+  { id: "investment", label: "Investment" },
   { id: "events", label: "Events" },
-  { id: "awards", label: "Awards & Recognition" },
+  { id: "awards", label: "Awards" },
 ];
 
 const SHORTS = [

@@ -197,20 +197,19 @@ a.homeCtaContactValue:hover {
 }
 .homeCtaInnerWrapper {
   background: #ffffff;
-  border: 1px solid #f0e6d4;
-  border-radius: 18px;
+  border: 1px solid #eef0f2;
+  border-radius: 16px;
   box-shadow:
-    0 24px 54px rgba(120, 90, 20, 0.14),
+    0 6px 20px rgba(0, 0, 0, 0.07),
     inset 0 4px 0 0 #e7b554;
-  padding: 32px 28px 0;
+  padding: 30px 26px 0;
   justify-content: space-between;
 }
+/* Size, weight and colour for this line live on .hometextForm. They used to be
+   repeated here too, and an element selector outranks a bare class, so this
+   quietly won and the line stayed 18px/700 near-black. */
 .homeCtaText p {
-  font-size: 18px;
-  font-weight: 700;
-  color: #1d1d1f;
-  width: 85%;
-  line-height: 1.35;
+  width: 100%;
 }
 /* Wider container + larger column gap on big screens */
 @media (min-width: 1440px) {
@@ -407,6 +406,29 @@ a.homeCtaContactValue:hover {
   .homeCtaMainWrapper {
     padding: 32px 16px;
   }
+
+  /* 30px of card padding inside a 16px page gutter left the inputs in a narrow
+     channel down the middle of the screen. */
+  .homeCtaInnerWrapper {
+    padding: 22px 18px 0;
+    border-radius: 14px;
+  }
+
+  /* Left-aligned like every other section heading on the page. Centring it
+     made sense above a two-column desktop body; once everything stacks it is
+     the only centred heading on the page. */
+  .homeCtaHeader {
+    text-align: left;
+    margin-bottom: 20px;
+  }
+
+  .homeCtaTitle {
+    font-size: 22px;
+  }
+
+  .homeCtaSubtitle {
+    font-size: 13.5px;
+  }
 }
 
 @media (max-width: 560px) {
@@ -416,8 +438,14 @@ a.homeCtaContactValue:hover {
   .homeCtaHeader {
     margin-bottom: 22px;
   }
+}
+
+@media (max-width: 480px) {
   .homeCtaTitle {
     font-size: 20px;
+  }
+  .homeCtaSubtitle {
+    font-size: 13px;
   }
 }
 

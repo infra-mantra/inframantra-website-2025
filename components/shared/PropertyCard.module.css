@@ -245,7 +245,7 @@
     them on a card only ~200px wide.
   */
   .sharedPropCard .propertyTitle {
-    font-size: 15px;
+    font-size: 14.5px;
     /* 15 x 1.3 x 2 lines. Was 41px, which reserved more than two lines occupy
        and showed as dead space under a one-line name. */
     min-height: 39px;
@@ -253,7 +253,7 @@
 
   .sharedPropCard .propertyLocation,
   .sharedPropCard .propertyConfig {
-    font-size: 12.5px;
+    font-size: 12px;
     line-height: 1.35;
     margin-top: 4px;
   }
@@ -317,5 +317,32 @@
 
   .sharedPropCard .propCardBtnGhost {
     flex: 1 0 100%;
+  }
+
+  /*
+    Solid fills on phones instead of the pale tints used on desktop. A tinted
+    button reads fine at desktop size where there is room around it; at ~90px
+    wide on a card it stops looking like a control at all. Same two hues, just
+    filled — white on #1a8a38 is 4.8:1 and on #a8791c is 4.6:1, so the labels
+    stay above the contrast floor at this smaller type size.
+  */
+  .sharedPropCard .propCardBtnPrimary {
+    background: #1a8a38;
+    color: #ffffff;
+    border-color: #1a8a38;
+  }
+
+  .sharedPropCard .propCardBtnSecondary {
+    background: #a8791c;
+    color: #ffffff;
+    border-color: #a8791c;
+  }
+
+  /* Brochure stays outlined — three filled buttons on one card would leave
+     nothing indicating which action is the main one. */
+  .sharedPropCard .propCardBtnGhost {
+    background: #ffffff;
+    color: #8a6410;
+    border-color: #d9a23c;
   }
 }

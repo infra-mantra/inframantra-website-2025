@@ -206,7 +206,7 @@
     wrap three times instead of four.
   */
   .serviceCardTitle {
-    font-size: 15.5px;
+    font-size: 15px;
     font-weight: 600;
     letter-spacing: -0.25px;
     line-height: 1.25;
@@ -307,5 +307,11 @@
   }
   .servicesSectionHeader p {
     font-size: 13px;
+  }
+  .serviceCardTitle {
+    font-size: 14.5px;
+  }
+  .serviceCardDescription {
+    font-size: 12px;
   }
 }

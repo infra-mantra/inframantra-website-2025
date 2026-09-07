@@ -90,6 +90,14 @@ a {
   font-family: "Lexend Deca", sans-serif;
 }
 
+/* Clears the fixed mobile action bar (components/shared/BottomCta.jsx) so the
+   end of every page stays reachable instead of sitting under it. */
+@media (max-width: 768px) {
+  body {
+    padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
 h1,
 h2,
 h3,

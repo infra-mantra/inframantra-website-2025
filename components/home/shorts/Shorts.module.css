@@ -58,7 +58,13 @@
   transform: translateY(-1px);
 }
 
-.shrtChipOn {
+/*
+   Compound selector on purpose. As a bare .shrtChipOn this was (0,1,0) and lost
+   to .shrtChip:hover (0,2,0) above — and a tap leaves the chip hovered on mobile,
+   so the selected chip went grey. .cityTab.active does not have the problem
+   because it is already (0,2,0); this now matches it.
+*/
+.shrtChip.shrtChipOn {
   background: #dcaa4c;
   border-color: #dcaa4c;
   color: #ffffff;

@@ -79,6 +79,16 @@
   box-shadow: 0 3px 10px rgba(220, 170, 76, 0.35);
 }
 
+/* Matches .shrtChip:focus-visible in home/shorts/Shorts.module.css. These two
+   pill rows are deliberately identical, and this was the one state where they
+   were not — the reel chips showed a gold ring on keyboard focus and these
+   showed nothing. Keeping the ring on both, rather than dropping it, is what
+   lets either row be used without a mouse. */
+.cityTab:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(220, 170, 76, 0.4);
+}
+
 /* Carousel Container */
 .carouselContainer {
   position: relative;

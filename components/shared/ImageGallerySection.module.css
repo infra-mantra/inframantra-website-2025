@@ -425,12 +425,13 @@
     grid-template-columns: 1fr;
     gap: 28px;
   }
+  /* Left, matching desktop and every other section heading on the page. */
   .igHeader {
-    text-align: center;
+    text-align: left;
     margin-bottom: 4px;
   }
   .igSubtitle {
-    margin: 0 auto;
+    margin: 0;
   }
   .igTitle {
     font-size: 22px;
@@ -448,9 +449,6 @@
   }
   .igHeader {
     margin-bottom: 30px;
-  }
-  .igTitle {
-    font-size: 22px;
   }
   .igSubtitle {
     font-size: 13.5px;
@@ -476,9 +474,12 @@
   }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 480px) {
   .igTitle {
     font-size: 20px;
+  }
+  .igSubtitle {
+    font-size: 13px;
   }
   .igAccordion {
     height: 320px;

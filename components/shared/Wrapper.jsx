@@ -17,6 +17,10 @@ const NavigationBar = dynamic(() => import("../layout/Header.jsx"));
 const FooterNavigation = dynamic(() => import("../layout/Footer.jsx"), {
   ssr: false,
 });
+/* Mobile-only action bar. ssr:false because it decides on width, and the
+   component itself renders nothing until the width is known. */
+const BottomCta = dynamic(() => import("./BottomCta.jsx"), { ssr: false });
+
 const ToastContainer = dynamic(() => import("react-toastify").then((m) => m.ToastContainer), {
   ssr: false,
 });
@@ -292,6 +296,8 @@ const Wrapper = ({
 
       {/* Footer and Toast are below the fold — their JS is deferred (ssr:false) */}
       {!onlyLogo && <FooterNavigation />}
+
+      {!onlyLogo && <BottomCta />}
 
       <ToastContainer position="top-right" autoClose={2000} pauseOnHover theme="light" />
     </div>

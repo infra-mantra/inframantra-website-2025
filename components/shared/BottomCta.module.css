@@ -1,0 +1,117 @@
+/*
+  Mobile bottom action bar. Desktop never renders the component, so there are no
+  min-width guards in here.
+*/
+
+.bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1100;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  /* Keeps the row clear of the home indicator on iPhones, and adds nothing on
+     devices that have none. */
+  padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+
+  background: #ffffff;
+  border-top: 1px solid #eef0f2;
+  box-shadow: 0 -4px 18px rgba(26, 26, 26, 0.1);
+}
+
+/* ------------------------------------------------------------- icon buttons */
+
+/*
+  44px is the smallest square that is comfortably tappable; below that the two
+  secondary actions become a source of mis-taps next to a full-width primary.
+*/
+.iconBtn {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  text-decoration: none;
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.whatsapp {
+  background: #e9f9ef;
+  border-color: #cceedb;
+  color: #128c4b;
+}
+
+.whatsapp:active {
+  background: #d8f2e3;
+}
+
+.call {
+  background: #ffffff;
+  border-color: #dfe3e8;
+  color: #3d4753;
+}
+
+.call:active {
+  background: #f3f5f7;
+}
+
+.iconBtn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(220, 170, 76, 0.5);
+}
+
+/* ---------------------------------------------------------------- primary */
+
+/*
+  Takes whatever the two icons leave. It is the only filled, labelled control in
+  the bar, which is the whole point — the previous version had three coloured
+  blocks of equal width and no primary.
+*/
+.primary {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 44px;
+  padding: 0 18px;
+
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #e9bb63 0%, #dfa63c 100%);
+  color: #ffffff;
+
+  font-family: "Lexend Deca", sans-serif;
+  font-size: 14.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  cursor: pointer;
+
+  box-shadow: 0 4px 12px rgba(214, 158, 52, 0.3);
+  transition:
+    filter 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.primary:active {
+  filter: brightness(0.97);
+}
+
+.primary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(220, 170, 76, 0.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .iconBtn,
+  .primary {
+    transition: none;
+  }
+}
