@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import moment from "moment/moment";
 import MainBanner1 from "../components/home/MainBanner.jsx";
 import LazyOnVisible from "../components/shared/LazyOnVisible.jsx";
+import { fetchHomeVideos } from "../components/lib/homeVideos.js";
 import {
   PremiumSkeleton,
   BlogsSkeleton,
@@ -55,7 +56,7 @@ const CtaForHome = dynamic(() => import("../components/shared/forms/CtaForHome.j
   loading: () => <CtaSkeleton />,
 });
 
-function Home({ allData }) {
+function Home({ allData, videos }) {
   const bannerItems = [
     {
       image: allData.meta.bannerImage,
@@ -139,7 +140,7 @@ function Home({ allData }) {
           backgrounds, JS-inserted); this one is in the initial HTML. */}
       <MainBanner1 />
       <div className="premiumReserve" style={{ minHeight: "578px" }}>
-        <PremiumPropertyMainComponent />
+        <PremiumPropertyMainComponent shorts={videos.shorts} />
       </div>
       {/* Tighter rootMargin, same reason as the ServiceSection wrapper: at first
           paint the premiumReserve above is only 578px tall, so this sits ~1100px
@@ -156,7 +157,7 @@ function Home({ allData }) {
         <ImageGallerySection />
       </LazyOnVisible>
       <LazyOnVisible minHeight={520} placeholder={<ReviewsSkeleton />}>
-        <ReviewsWall current={allData.testimonial} />
+        <ReviewsWall current={allData.testimonial} videos={videos.testimonials} />
       </LazyOnVisible>
       <LazyOnVisible minHeight={420} placeholder={<CtaSkeleton />}>
         <CtaForHome name={"Form Submitted from Home page"} />
@@ -166,7 +167,12 @@ function Home({ allData }) {
 }
 
 export async function getStaticProps() {
-  const res = await fetch(`${process.env.apiUrl}/home?city=635b68b7c6c1fe18701d3020`);
+  const [res, videos] = await Promise.all([
+    fetch(`${process.env.apiUrl}/home?city=635b68b7c6c1fe18701d3020`),
+    // Both video rails, from the CMS. Either list is null when the API failed or
+    // had nothing for that section; the rail then renders its bundled list.
+    fetchHomeVideos(),
+  ]);
   const data = await res.json();
 
   const headingsData = data.result.homeHeading[0];
@@ -325,6 +331,7 @@ export async function getStaticProps() {
   return {
     props: {
       allData,
+      videos,
     },
     // Was 10 seconds, which meant the page fell out of cache six times a minute.
     // Vercel answered STALE on 3 of 4 sampled requests, and every one of those

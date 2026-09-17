@@ -5,6 +5,10 @@ export default function ListingFilters({
   onFilterChange,
   openClosefilter,
   handleCloseFilterToggle,
+  // On /property-listing/configuration/<slug> the page is already scoped to that
+  // configuration, so its tick should show even though the URL carries no
+  // ?config=. "2" for 2-bhk, "Penthouse" for penthouse; undefined elsewhere.
+  defaultConfiguration,
 }) {
   // ---------------- STATES ----------------
   const [expanded, setExpanded] = useState({
@@ -32,6 +36,11 @@ export default function ListingFilters({
     // Initialize the filter UI FROM THE URL so shared/bookmarked links show the right selections.
     // LOCAL state only — no parent notify — the listing page reads the same URL and does the fetch
     // (notifying here would trigger a second identical fetch: the "loading twice" flash).
+    // On a direct load of a static page, router.query holds only the path params
+    // until isReady flips; the ?querystring is merged in after hydration. Seeding
+    // before that read ?config= as empty, and the page default then filled the gap,
+    // so /2-bhk?config=3 ticked 2 BHK. Client-side navigations are ready at once.
+    if (!router.isReady) return;
     const q = router.query;
     const csv = (v) =>
       typeof v === "string" && v.trim()
@@ -41,7 +50,13 @@ export default function ListingFilters({
             .filter(Boolean)
         : [];
     setSelectedUnitTypes(csv(q.unit));
-    setSelectedConfigurations(csv(q.config));
+    // An explicit ?config= wins; otherwise the page's own configuration is the
+    // selection. Without this, the footer's 2 BHK link showed 2 BHK results with
+    // nothing ticked, and the first click on another tick dropped 2 BHK entirely.
+    const fromUrl = csv(q.config);
+    setSelectedConfigurations(
+      fromUrl.length ? fromUrl : defaultConfiguration ? [defaultConfiguration] : []
+    );
     setSelectedStatuses(csv(q.status));
     const min = q.min ? Number(q.min) : null;
     const max = q.max ? Number(q.max) : null;
@@ -50,7 +65,7 @@ export default function ListingFilters({
     setMaxInput(q.max ? String(q.max) : "");
     setInputError("");
     setSelectedCities(type === "city" ? [name] : []);
-  }, [name]);
+  }, [name, defaultConfiguration, router.isReady]);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -115,6 +130,12 @@ export default function ListingFilters({
 
   // 🔥 FIX: Ensures newValue is passed, not old state
   const updateAndMaybeNotify = (setter, newValue, type) => {
+    // A configuration page cannot have an empty selection. The path already scopes
+    // it to one configuration, and an empty list falls back to exactly that — so
+    // unticking the last one changed nothing but the tick. Keep the page's own.
+    if (type === "configuration" && newValue.length === 0 && defaultConfiguration) {
+      newValue = [defaultConfiguration];
+    }
     setter(newValue);
 
     if (!isMobile) {
@@ -196,7 +217,7 @@ export default function ListingFilters({
   const resetFilters = () => {
     setSelectedCities([]);
     setSelectedUnitTypes([]);
-    setSelectedConfigurations([]);
+    setSelectedConfigurations(defaultConfiguration ? [defaultConfiguration] : []);
     setSelectedStatuses([]);
     setPriceRange([null, null]);
 
@@ -208,6 +229,7 @@ export default function ListingFilters({
     // Notify parent
     notifyAllFilters(
       {
+        configuration: defaultConfiguration ? [defaultConfiguration] : [],
         priceRange: [null, null], // FIX: send default values
       },
       true

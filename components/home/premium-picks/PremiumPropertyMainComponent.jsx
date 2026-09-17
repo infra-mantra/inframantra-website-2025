@@ -11,7 +11,7 @@ import LazyOnVisible from "../../shared/LazyOnVisible.jsx";
 import { useLocationDetection } from "./hooks/useLocationDetection.js";
 import axios from "axios";
 
-export default function PremiumPropertyMainComponent() {
+export default function PremiumPropertyMainComponent({ shorts }) {
   const [selectedCity, setSelectedCity] = useState("Gurgaon");
   const [cityPremiumProperties, setCityPremiumProperties] = useState([]);
   const [localitiesPremiumProperties, setLocalitiesPremiumProperties] = useState([]);
@@ -81,7 +81,7 @@ export default function PremiumPropertyMainComponent() {
           button), so no YouTube JavaScript loads until a card is clicked. minHeight
           reserves the row so nothing below it shifts when the cards mount. */}
       <LazyOnVisible minHeight={430} rootMargin="250px" placeholder={<ShortsSkeleton />}>
-        <ShortsSection />
+        <ShortsSection items={shorts} />
       </LazyOnVisible>
       {/* Only PremiumPicksSection above is near the fold. Everything below it
           starts ~1800px down yet was mounting on initial load, pulling ~365 KB of

@@ -392,7 +392,12 @@ const PropertyListingPage = ({
     const q = { type, name: nameLc };
     if (f.status?.length) q.status = f.status.join(",");
     if (f.unitType?.length) q.unit = f.unitType.join(",");
-    if (f.configuration?.length) q.config = f.configuration.join(",");
+    // On a configuration page the path already names the configuration; only write
+    // ?config= when the selection differs from it. After any click the sidebar's
+    // selection includes the page's own, which turned /5-bhk into /5-bhk?config=5.
+    const pageCfg = type === "configuration" ? CONFIGURATIONS[nameLc]?.filter : undefined;
+    const restatesPath = pageCfg && f.configuration?.length === 1 && f.configuration[0] === pageCfg;
+    if (f.configuration?.length && !restatesPath) q.config = f.configuration.join(",");
     if (f.city?.length) q.city = f.city.join(",");
     const [min, max] = f.priceRange || [];
     if (min) q.min = min;
@@ -560,6 +565,13 @@ const PropertyListingPage = ({
   useEffect(() => {
     if (!type || !nameLc) return;
 
+    // On a direct load of a static page, router.query holds only the path params
+    // until isReady flips; the ?querystring is merged in after hydration. Reading
+    // it before that dropped ?config= / ?status= / ?min= from the first fetch, and
+    // the once-per-location guard below then blocked the corrected re-run — so a
+    // direct load of /2-bhk?config=3 fetched 2 BHK. Must sit above that guard.
+    if (!router.isReady) return;
+
     // Run the initial load exactly once per location. Without this guard, React
     // StrictMode (and Fast Refresh) re-invoke this effect and it fetches twice,
     // which flashed the skeleton on/off ("loading multiple times").
@@ -588,7 +600,7 @@ const PropertyListingPage = ({
     fetchStats(nameLc);
     fetchList(nameLc, pg, f, s);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [type, nameLc]);
+  }, [type, nameLc, router.isReady]);
 
   useEffect(() => {
     if (!type || !name) return;
@@ -676,7 +688,12 @@ const PropertyListingPage = ({
         <div className={`Wrapper ${pll.pllLayout}`}>
           {/* LEFT FILTERS */}
           <div className={`listingFilters ${pll.pllFilters}`} ref={filterRef}>
-            <ListingFilters onFilterChange={handleFilterChange} type={type} name={name} />
+            <ListingFilters
+              onFilterChange={handleFilterChange}
+              type={type}
+              name={name}
+              defaultConfiguration={CONFIGURATIONS[nameLc]?.filter}
+            />
           </div>
 
           <div className={`listingScrollbar ${pll.pllResults}`} ref={contentRef}>
@@ -768,6 +785,7 @@ const PropertyListingPage = ({
             openClosefilter={openClosefilter}
             handleCloseFilterToggle={handleCloseFilterToggle}
             name={name}
+            defaultConfiguration={CONFIGURATIONS[nameLc]?.filter}
             type={name}
           />
 

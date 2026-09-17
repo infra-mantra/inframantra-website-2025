@@ -1,7 +1,6 @@
 import React, { useCallback, useMemo, useState } from "react";
 import SHORTS, { CATEGORIES } from "./shortsData.js";
 import styles from "./Shorts.module.css";
-import { useVideos } from "../../lib/useVideos.js";
 
 /*
   Shorts strip for the home page.
@@ -141,12 +140,13 @@ export const ShortsRail = ({ items }) => {
   );
 };
 
-const ShortsSection = () => {
+const ShortsSection = ({ items }) => {
   const [active, setActive] = useState("all");
   const [playing, setPlaying] = useState(null);
 
-  // From the CMS, falling back to the bundled list until it answers.
-  const shorts = useVideos("shorts", SHORTS);
+  // From the CMS, fetched in getStaticProps and passed down. The bundled list
+  // stands in when that fetch failed or had nothing, so this rail is never empty.
+  const shorts = items || SHORTS;
 
   // Filtered in memory — no request, no measurable cost.
   const visible = useMemo(

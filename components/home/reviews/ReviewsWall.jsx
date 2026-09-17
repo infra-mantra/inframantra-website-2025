@@ -95,7 +95,7 @@ function ReviewCard({ review }) {
   );
 }
 
-function ReviewsWall({ current = [] }) {
+function ReviewsWall({ current = [], videos }) {
   const [google, setGoogle] = useState([]);
   const [gMeta, setGMeta] = useState({ rating: null, total: null });
 
@@ -211,7 +211,7 @@ function ReviewsWall({ current = [] }) {
 
           {/* Video testimonials, in the panel rather than a full-width strip.
               Facade-rendered: no YouTube JavaScript loads until a card is clicked. */}
-          <ReviewVideos />
+          <ReviewVideos items={videos} />
         </div>
 
         {/* Right animated marquee columns */}

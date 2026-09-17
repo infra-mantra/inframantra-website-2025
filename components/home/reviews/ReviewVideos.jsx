@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import REVIEW_VIDEOS from "./reviewVideosData.js";
 import styles from "./ReviewVideos.module.css";
-import { useVideos } from "../../lib/useVideos.js";
 
 /*
   Testimonial videos, in the reviews section's left info panel.
@@ -79,19 +78,13 @@ const VideoCard = ({ item, playing, onPlay }) => {
 };
 
 /*
-  Defaults to the customer testimonials, but takes any list — the Frames of
-  Excellence gallery passes its award films in, so both sections carry the same
-  rail instead of two different video treatments.
-*/
-/*
-  `items` is only passed by callers that have already chosen a list (the Frames of
-  Excellence gallery passes its award films). Left unset, the rail fetches the
-  testimonial section from the CMS and falls back to the bundled list.
+  `items` comes from the CMS via getStaticProps (ReviewsWall passes it through).
+  The bundled list stands in when that fetch failed or had nothing, so this rail
+  is never empty.
 */
 const ReviewVideos = ({ items, title = "Hear it from them" }) => {
   const [playing, setPlaying] = useState(null);
-  const fetched = useVideos("testimonial", REVIEW_VIDEOS);
-  const videos = items || fetched;
+  const videos = items || REVIEW_VIDEOS;
 
   return (
     <div className={styles.rvidStrip}>

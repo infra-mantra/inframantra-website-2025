@@ -1,4 +1,4 @@
-import s from "./HomeSkeletons.module.css";
+  import s from "./HomeSkeletons.module.css";
 
 /*
   Loading skeletons for each home-page section. Each export mirrors the shape
