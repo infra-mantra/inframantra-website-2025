@@ -1,0 +1,383 @@
+/* ============================================
+   EVENT GALLERY — Auto-sliding carousel
+   ============================================ */
+
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sliderWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: #1a1a1a;
+  overflow: hidden;
+  border-radius: 2px;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 8px 32px rgba(20, 20, 20, 0.08);
+}
+
+.sliderTrack {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.slideG {
+  flex: 0 0 100%;
+  height: 100%;
+  position: relative;
+  opacity: 1;
+}
+
+.slideG img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Navigation arrows */
+
+.navBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 42px;
+  height: 42px;
+  background: rgba(255, 255, 255, 0.95);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  color: #1a1a1a;
+  padding: 0;
+}
+
+.navBtn:hover {
+  background: #c9a961;
+  color: white;
+}
+
+.navBtn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.navPrev {
+  left: 16px;
+}
+
+.navNext {
+  right: 16px;
+}
+
+/* Dot indicators */
+
+.dots {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 3;
+}
+
+.dot {
+  width: 18px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.4);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.dotActive {
+  background: #e4cf94;
+  width: 36px;
+}
+
+/* Counter */
+
+.counter {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(26, 26, 26, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: white;
+  padding: 6px 12px;
+  font-size: 13px;
+  letter-spacing: 2px;
+  z-index: 3;
+}
+
+.current {
+  color: #e4cf94;
+  font-weight: 500;
+}
+
+.divider {
+  opacity: 0.5;
+  margin: 0 4px;
+}
+
+/* Caption BELOW image */
+
+.bottomCaptionWrap {
+  background: #ffffff;
+  padding: 18px 22px;
+  border-left: 3px solid #e4cf94;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.bottomCaption {
+  margin: 0;
+  color: #1a1a1a;
+  font-size: 16px;
+  line-height: 1.7;
+  font-style: italic;
+  letter-spacing: 0.2px;
+}
+
+.bottomCaption::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 2px;
+  background: #e4cf94;
+  margin-bottom: 12px;
+}
+
+/* ============================================
+   LIGHTBOX
+   ============================================ */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 15, 15, 0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 80px;
+  animation: lbFadeIn 0.3s ease;
+}
+
+@keyframes lbFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.lightboxClose {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(228, 207, 148, 0.4);
+  background: transparent;
+  color: #e4cf94;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.lightboxClose:hover {
+  background: rgba(228, 207, 148, 0.1);
+  border-color: #e4cf94;
+  transform: rotate(90deg);
+}
+
+.lightboxClose svg {
+  width: 18px;
+  height: 18px;
+}
+
+.lightboxNav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+  border: 1px solid rgba(228, 207, 148, 0.4);
+  background: rgba(20, 20, 20, 0.6);
+  color: #e4cf94;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.lightboxNav:hover {
+  background: rgba(228, 207, 148, 0.15);
+  border-color: #e4cf94;
+}
+
+.lightboxNav svg {
+  width: 22px;
+  height: 22px;
+}
+
+.lightboxPrev {
+  left: 24px;
+}
+
+.lightboxNext {
+  right: 24px;
+}
+
+.lightboxImageWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  max-width: 100%;
+  max-height: 100%;
+  animation: lbZoomIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes lbZoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.lightboxImage {
+  max-width: 100%;
+  max-height: calc(100vh - 200px);
+  object-fit: contain;
+  border: 1px solid rgba(228, 207, 148, 0.2);
+  box-shadow: 0 20px 80px rgba(0, 0, 0, 0.8);
+}
+
+.lightboxCaption {
+  font-style: italic;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  text-align: center;
+  max-width: 700px;
+  line-height: 1.6;
+  letter-spacing: 0.3px;
+}
+
+.lightboxCounter {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 14px;
+}
+
+.lightboxCurrent {
+  font-size: 20px;
+  color: #e4cf94;
+  font-weight: 500;
+}
+
+.lightboxDividerText {
+  margin: 0 8px;
+  opacity: 0.5;
+}
+.fontClr{
+color: #d4a64a 
+}
+  .fontWt{
+    font-weight: 500;
+
+  }
+
+/* ============================================
+   MOBILE
+   ============================================ */
+
+@media (max-width: 600px) {
+  .navBtn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .navPrev {
+    left: 10px;
+  }
+
+  .navNext {
+    right: 10px;
+  }
+
+  .bottomCaptionWrap {
+    padding: 14px 16px;
+  }
+
+  .bottomCaption {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .lightbox {
+    padding: 60px 12px;
+  }
+
+  .lightboxClose {
+    top: 12px;
+    right: 12px;
+    width: 38px;
+    height: 38px;
+  }
+
+  .lightboxNav {
+    width: 40px;
+    height: 40px;
+  }
+
+  .lightboxPrev {
+    left: 8px;
+  }
+
+  .lightboxNext {
+    right: 8px;
+  }
+  .order{
+    order: 2;
+  }
+
+}

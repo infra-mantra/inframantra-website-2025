@@ -1,0 +1,166 @@
+.cardWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.cardevent {
+  background-color: #f1f1f1d6;
+  padding: 20px 28px;
+  border-radius: .8rem;
+  text-align: center;
+  border: 1.5px solid #e8e0cc;
+}
+
+.city {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  color: #ab8b26;
+  text-transform: uppercase;
+  margin: 0 0 8px 0;
+}
+
+.date {
+  font-size: 14px;
+  font-weight: 700;
+  color: #222222;
+  margin: 0 0 4px 0;
+}
+
+.venue {
+  font-size: 13px;
+  font-weight: 400;
+  color: #000;
+  margin: 0;
+}
+
+/* Mobile */
+@media screen and (max-width: 768px) {
+  .cardWrapper {
+    max-width: 100%;
+    padding: 0 16px;
+    gap: 12px;
+  }
+
+  .card {
+    padding: 16px 20px;
+    border-radius: 14px;
+  }
+
+  .city {
+      font-size: 1.5rem;
+    letter-spacing: 2px;
+  }
+
+  .date {
+    font-size: 13px;
+  }
+
+  .venue {
+    font-size: 12px;
+  }
+}
+
+/* Emphasised venue - single-venue events (e.g. /gurgaon-tulip-event),
+   where the address is a headline detail rather than fine print. */
+.venueHighlight {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 7px 14px;
+
+  background: #ab8b26;
+  border-radius: 6px;
+
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: #ffffff;
+}
+
+/* =====================================================================
+   PREMIUM VARIANT  (opt-in via `premium`)
+   Dark glass panel for single-venue events sitting over a hero photo -
+   far more legible than the light grey box on a busy image.
+   ===================================================================== */
+.cardPremium {
+  position: relative;
+  overflow: hidden;
+
+  padding: 26px 30px 28px;
+
+  background: rgba(18, 16, 13, 0.62);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  backdrop-filter: blur(10px) saturate(120%);
+
+  border: 1px solid rgba(214, 180, 108, 0.34);
+  border-radius: 14px;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.34);
+
+  text-align: center;
+}
+
+/* gold hairline across the top edge */
+.cardPremium::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 12%;
+  right: 12%;
+  height: 2px;
+  background: linear-gradient(90deg,
+              rgba(214, 180, 108, 0), #d6b46c, rgba(214, 180, 108, 0));
+}
+
+.cardPremium .city {
+  margin: 0 0 12px 0;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 5px;
+  color: #d6b46c;
+}
+
+.cardPremium .date {
+  margin: 0 0 4px 0;
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: #ffffff;
+}
+
+.cardPremium .venueHighlight {
+  margin-top: 14px;
+  padding: 8px 16px;
+
+  background: transparent;
+  border: 1px solid rgba(214, 180, 108, 0.5);
+  border-radius: 999px;
+
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  color: #f0e7d4;
+}
+
+@media screen and (max-width: 768px) {
+  .cardPremium {
+    padding: 20px 18px 22px;
+  }
+
+  .cardPremium .city {
+    font-size: 12px;
+    letter-spacing: 3.4px;
+  }
+
+  .cardPremium .date {
+    font-size: 17px;
+  }
+
+  .cardPremium .venueHighlight {
+    font-size: 12px;
+    padding: 7px 13px;
+  }
+}
