@@ -231,8 +231,8 @@
 .imEnqHead {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  text-align: center;
+  gap: 2px;
+  text-align: left;
 }
 
 /*
@@ -244,25 +244,32 @@
   has no close button — keeps the full width for its heading.
 */
 .imEnqClose ~ .imEnqHead {
-  padding: 0 40px;
+  /* Right only. The close button is pinned to the top-RIGHT (right: 12px, 34px
+     wide), so the matching 40px on the left cleared nothing — it just took 40px
+     off an already narrow popup and wrapped both header lines a word early.
+     Symmetric padding was right when this header was centred; it is left-aligned
+     now. */
+  padding: 0 46px 0 0;
 }
 
+/* The gold line, under the heading. */
 .imEnqEyebrow {
   margin: 0;
-  font-size: 13px;
+  font-size: 14px;
+  font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--imEnq-muted);
+  color: #d9a23c;
 }
 
 /* #e7b554 on white was ~1.9:1 and failed contrast. This darker gold reads at
    ~4.6:1 while staying recognisably the brand colour. */
 .imEnqTitle {
   margin: 0;
-  font-size: 21px;
-  line-height: 1.25;
-  font-weight: 700;
-  color: var(--imEnq-gold-strong);
+  font-size: 18px;
+  line-height: 1.3;
+  font-weight: 600;
+  color: var(--imEnq-ink);
   text-wrap: balance;
 }
 
@@ -546,4 +553,84 @@
   .imEnqClose {
     transition: none;
   }
+}
+
+/*
+  Brand-ambassador figure, shown only when a caller passes heroImage — the bottom
+  action bar does, the property and blog cards do not.
+
+  guru_call.png is a transparent cut-out, so it is CONTAINED on a tinted band and
+  never cropped. The other asset in that folder, guru-form-image.jpg, is 816x1140
+  — a portrait authored as the full-height side panel of the two-column layout on
+  /on-spot-offers. Cropping a 0.72:1 portrait into a wide header band cuts the
+  subject out of it, which is exactly what it did here.
+*/
+.imEnqHero {
+  /* .imEnqForm pads 4px 2px 8px, so this reaches the form edge, not past it. */
+  margin: -4px -2px 0;
+  border-radius: 12px 12px 0 0;
+  overflow: hidden;
+  background: linear-gradient(180deg, #fdf6e8 0%, #f8e9cd 100%);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.imEnqHero img {
+  display: block;
+  width: auto;
+  height: 104px;
+  /* Contain, not cover: a cut-out has nothing to spare at its edges. */
+  object-fit: contain;
+}
+
+@media (max-width: 560px) {
+  .imEnqHero img {
+    height: 86px;
+  }
+}
+
+/* ------------------------------------------------------------ consent + terms
+
+   This form had neither, while every other enquiry form on the site has both.
+   Same wording and the same default (checked) as SinglePropertyCta.
+*/
+.imEnqConsent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 2px 0 4px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #4b5563;
+  cursor: pointer;
+}
+
+.imEnqConsent input {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  accent-color: #1a8a38;
+  cursor: pointer;
+}
+
+.imEnqConsent svg {
+  color: #1a8a38;
+  font-size: 15px;
+  vertical-align: -2px;
+  margin-right: 4px;
+}
+
+.imEnqTerms {
+  margin: 10px 0 0;
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--imEnq-muted);
+}
+
+.imEnqTerms a {
+  color: var(--imEnq-gold-strong);
+  text-decoration: underline;
 }

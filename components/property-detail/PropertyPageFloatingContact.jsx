@@ -10,6 +10,7 @@ import fld from "../shared/forms/formFields.module.css";
 import Ajax1 from "../lib/ajax1.js";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+import { FaWhatsapp } from "react-icons/fa";
 import { useRecaptchaEnabled } from "../lib/recaptcha.js";
 
 const contactFormStyles = {
@@ -36,7 +37,7 @@ const contactFormStyles = {
 // "2/3/4 BHK/Penthouse". Only the final segment usually carries the unit, so
 // split on "/", then give the bare numbers the unit the last one declared.
 // Non-numeric segments (Penthouse, Villa) are labels in their own right.
-const DEFAULT_CONFIGURATIONS = ["2BHK", "3BHK", "4BHK"];
+const DEFAULT_CONFIGURATIONS = ["2BHK", "3BHK", "4BHK", "5BHK", "Penthouse"];
 
 export function parseConfigurations(configuration) {
   if (typeof configuration !== "string" || !configuration.trim()) {
@@ -69,8 +70,16 @@ export function parseConfigurations(configuration) {
   const unique = [...new Set(out)];
   return unique.length ? unique : DEFAULT_CONFIGURATIONS;
 }
+/*
+  `name` does two jobs: it is the heading AND the projectName sent with the
+  lead. That is fine when it is a property name, but a caller whose lead label
+  is not a display string (the bottom bar sends "Form Submitted from Bottom
+  Bar") had it printed as the title. `title` separates the two and defaults to
+  `name`, so every existing caller is unaffected.
+*/
 function PropertyPageFloatingContact({
   name,
+  heroImage,
   propertyType,
   // Raw CMS string for this project, e.g. "3.5/4.5 BHK". Falls back to the
   // generic 2/3/4 BHK set when the feed omits it.
@@ -108,6 +117,14 @@ function PropertyPageFloatingContact({
   });
 
   const [selectedConfigurations, setSelectedConfigurations] = useState([]);
+
+  /*
+    This form collected a phone number with no consent capture at all, while
+    CtaForHome, SinglePropertyCta, CTANEW, POPUPCTA and StickyProperty all take
+    it and send it with the lead. Same default (checked) and same payload key as
+    SinglePropertyCta, so the backend sees an identical shape either way.
+  */
+  const [whatsappConsent, setWhatsappConsent] = useState(true);
 
   const [captchaToken, setCaptchaToken] = useState(null);
 
@@ -156,6 +173,7 @@ function PropertyPageFloatingContact({
         data: {
           ...formData,
           configuration: selectedConfigurations.join(", "),
+          message: whatsappConsent,
           captchaToken: token,
         },
         token: false,
@@ -189,9 +207,17 @@ function PropertyPageFloatingContact({
           </button>
         )}
 
+        {/* Opt-in: only callers that pass heroImage get the band, so the compact
+            form the property and blog cards open is unchanged. */}
+        {heroImage && (
+          <div className={styles.imEnqHero}>
+            <img src={heroImage} alt="Guru Randhawa, Inframantra brand ambassador" />
+          </div>
+        )}
+
         <header className={styles.imEnqHead}>
-          <p className={styles.imEnqEyebrow}>Get expert advice and information for</p>
-          <h2 className={styles.imEnqTitle}>{name}</h2>
+          <h2 className={styles.imEnqTitle}>Please share your contact details</h2>
+          <p className={styles.imEnqEyebrow}>To unlock exclusive deals</p>
         </header>
 
         <div className={fld.imFldStack}>
@@ -287,9 +313,41 @@ function PropertyPageFloatingContact({
             )}
           </div>
 
+          <label className={styles.imEnqConsent} htmlFor="imEnqWhatsappConsent">
+            <input
+              type="checkbox"
+              id="imEnqWhatsappConsent"
+              checked={whatsappConsent}
+              onChange={(e) => setWhatsappConsent(e.target.checked)}
+            />
+            <span>
+              <FaWhatsapp aria-hidden="true" /> I consent/authorize Inframantra to send me updates
+              and promotional messages on WhatsApp.
+            </span>
+          </label>
+
           <button type="submit" className={fld.imFldSubmit}>
             Submit
           </button>
+
+          <p className={styles.imEnqTerms}>
+            *By submitting, I accept Inframantra{" "}
+            <a
+              href="https://inframantra.com/page/terms-conditions"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Terms &amp; Conditions
+            </a>{" "}
+            and{" "}
+            <a
+              href="https://inframantra.com/page/privacy-policy"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Privacy Policy.
+            </a>
+          </p>
         </div>
       </form>
     </PropertyWrapper>

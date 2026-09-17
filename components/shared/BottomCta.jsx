@@ -72,7 +72,11 @@ export default function BottomCta({ name = "Form Submitted from Bottom Bar" }) {
         typeof document !== "undefined" &&
         createPortal(
           <CustomBackdrop open onClose={() => setEnquiryOpen(false)}>
-            <PropertyPageFloatingContact name={name} onClose={() => setEnquiryOpen(false)} />
+            <PropertyPageFloatingContact
+              name={name}
+              heroImage="/guruCollection/guru_call.png"
+              onClose={() => setEnquiryOpen(false)}
+            />
           </CustomBackdrop>,
           document.body
         )}

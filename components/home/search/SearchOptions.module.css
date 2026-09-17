@@ -151,6 +151,14 @@
     left: 50%;
     transform: translate(-50%, -50%);
 
+    /* Reset the base rule's height:100%. Absolutely positioned here, that made
+       the wrapper as tall as the whole banner while sitting at top:100%, so half
+       of it (~32svh) hung BELOW the hero as an invisible full-width box at
+       z-index 60 — swallowing every click on the Premium Picks city tabs
+       underneath. The bar itself does not move: it is centred in the wrapper
+       either way, so its centre stays on the banner's bottom edge. */
+    height: auto;
+
     /* The transform opens a stacking context, so the dropdown z-index only ranks
        it inside this wrapper — against the page it is the wrapper that competes.
        At auto, later positioned sections painted over the suggestions. */
@@ -189,6 +197,14 @@
     top: 100%;
     left: 50%;
     transform: translate(-50%, -50%);
+
+    /* Reset the base rule's height:100%. Absolutely positioned here, that made
+       the wrapper as tall as the whole banner while sitting at top:100%, so half
+       of it (~32svh) hung BELOW the hero as an invisible full-width box at
+       z-index 60 — swallowing every click on the Premium Picks city tabs
+       underneath. The bar itself does not move: it is centred in the wrapper
+       either way, so its centre stays on the banner's bottom edge. */
+    height: auto;
 
     /* The transform opens a stacking context, so the dropdown z-index only ranks
        it inside this wrapper — against the page it is the wrapper that competes.

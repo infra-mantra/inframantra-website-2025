@@ -383,3 +383,18 @@
     letter-spacing: 0;
   }
 }
+
+/* iPhone SE and narrower. */
+@media (max-width: 380px) {
+  .blogPostBody {
+    padding: 10px 11px 0;
+  }
+  .blogPostActions {
+    padding: 10px 11px 11px;
+    gap: 5px;
+  }
+  .blogPostBtn {
+    padding: 8px 4px;
+    font-size: 11px;
+  }
+}

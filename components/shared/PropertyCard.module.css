@@ -346,3 +346,18 @@
     border-color: #d9a23c;
   }
 }
+
+/* iPhone SE and narrower. */
+@media (max-width: 380px) {
+  .sharedPropCard .propertyContent {
+    padding: 11px 12px 0;
+  }
+  .sharedPropCard .propCardActions {
+    padding: 8px 12px 11px;
+    gap: 5px;
+  }
+  .sharedPropCard .propCardBtn {
+    padding: 8px 4px;
+    font-size: 11px;
+  }
+}

@@ -315,3 +315,22 @@
     font-size: 12px;
   }
 }
+
+/* iPhone SE and narrower: two cards plus a 14px gutter inside a 375px screen
+   leaves ~165px each, so the gutter and the card padding both come down. */
+@media (max-width: 380px) {
+  .servicesSectionCardWrapperFirst {
+    gap: 10px;
+  }
+  .servicesSectionCardWrapperFirst > .serviceCard {
+    padding: 13px;
+    gap: 8px;
+  }
+  .serviceCardTitleContainer {
+    min-height: 36px;
+  }
+  .serviceCardIconWrapper > img {
+    width: 28px;
+    height: 28px;
+  }
+}
