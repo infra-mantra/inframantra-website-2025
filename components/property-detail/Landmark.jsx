@@ -11,7 +11,7 @@ const LeafletMap = dynamic(() => import("./Map.jsx"), {
         width: "100%",
         height: "100%",
         minHeight: "320px",
-        borderRadius: "12px",
+        borderRadius: "14px",
         background: "#e6e8ea",
       }}
     />
@@ -75,7 +75,7 @@ const LandMark = ({ propertyData, propertyInfo, name }) => {
         title: rawData.title,
         items: rawData.guideList.map(({ name, distance, lat, lon }) => ({
           name,
-          distance,
+          distance: distance ? String(distance).replace(/\s*km\b/i, " km") : "",
           lat,
           lng: lon,
           hasLocation: lat != null && lon != null,
@@ -91,6 +91,10 @@ const LandMark = ({ propertyData, propertyInfo, name }) => {
     lng: propertyInfo?.lon,
   };
 
+  const isActive = (item) =>
+    activeLandmark && activeLandmark.name === item.name && activeLandmark.type === item.type;
+
+  // Same layout as before: map, category tabs under it, then the list.
   return (
     <div className="pd">
       <h2 className="Header">Nearby Landmarks - {propertyInfo.name}</h2>
@@ -120,6 +124,7 @@ const LandMark = ({ propertyData, propertyInfo, name }) => {
                 >
                   <span className="tab-icon">{ICON_MAP[tab.title] || <FaMapMarkerAlt />}</span>
                   {tab.title}
+                  <span className={lm["lm-chip-count"]}>{tab.guideList?.length || 0}</span>
                 </li>
               ))}
             </ul>
@@ -138,10 +143,19 @@ const LandMark = ({ propertyData, propertyInfo, name }) => {
               </thead>
               <tbody>
                 {currentData.items.map((item, i) => (
-                  <tr key={i} onClick={() => setActiveLandmark(item)}>
-                    <td>{item.name}</td>
+                  <tr
+                    key={i}
+                    className={isActive(item) ? lm["is-active"] : ""}
+                    onClick={() => setActiveLandmark(isActive(item) ? null : item)}
+                  >
                     <td>
-                      <FaMapMarkerAlt /> {item.distance}
+                      <span className={lm["lm-item-icon"]}>{item.icon}</span>
+                      <span className={lm["lm-item-name"]}>{item.name}</span>
+                    </td>
+                    <td>
+                      <span className={lm["lm-item-dist"]}>
+                        <FaMapMarkerAlt /> {item.distance}
+                      </span>
                     </td>
                   </tr>
                 ))}

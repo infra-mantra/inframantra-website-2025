@@ -69,10 +69,16 @@ a:link{text-decoration:none}
     width: 100%;
   }
   
+  /* The logo file is 5:1 (900x180). Sizing it by height (9vh) while the <img>
+     carries width="310" squashed it into a tall, narrow wordmark. Size by width
+     and let the height follow the real aspect ratio. */
   .navBarLogo {
     cursor: pointer;
-    height: 9vh;
-    margin-top: 1rem;
+    width: clamp(190px, 17vw, 260px);
+    height: auto;
+    aspect-ratio: 5 / 1;
+    object-fit: contain;
+    margin-top: 0.5rem;
   }
   
   .navBarLink {

@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import nbs from "./NavBar.module.css";
 
 const PropertySectionNavbar = () => {
-  const [activeTab, setActiveTab] = useState("Highlights");
+  const [activeTab, setActiveTab] = useState("Overview");
 
   const tabs = [
     "Overview",

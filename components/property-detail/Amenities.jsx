@@ -71,8 +71,12 @@ const TopAmenities = ({ propertyData }) => {
           <div
             className={`${s["amenity-item"]} ${s["has-more-amenties"]}`}
             onClick={() => setIsModalOpen(true)}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setIsModalOpen(true)}
           >
-            +{remainingCount} more
+            <span className={s["more-count"]}>+{remainingCount}</span>
+            <span className={s["more-label"]}>More amenities</span>
           </div>
         )}
       </div>

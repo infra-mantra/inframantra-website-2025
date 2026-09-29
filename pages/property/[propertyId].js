@@ -34,6 +34,9 @@ const PropertyDetail = ({ allData }) => {
   const { utm_campaign } = router.query;
 
   const rightRef = useRef(null);
+  // Callback ref (state), not useRef: Wrapper is a dynamic() import, so this
+  // div can mount after the page's first effects have already run.
+  const [wrapperEl, setWrapperEl] = useState(null);
 
   const [locoScroll, setLocoScroll] = useState(null);
   const [propertyData, setPropertyData] = useState(allData.propertyData.data);
@@ -101,6 +104,49 @@ const PropertyDetail = ({ allData }) => {
   }, [allData]);
 
   // =========================
+  // SCROLL REVEAL (desktop)
+  // Sections fade up as they enter the viewport. The hiding class (.pp-anim)
+  // is only added here, so SSR / no-JS / reduced-motion visitors always see
+  // everything. Styles live in styles/propertyDetailDesktop.css.
+  // =========================
+  useEffect(() => {
+    const wrapper = wrapperEl;
+    if (!wrapper || typeof IntersectionObserver === "undefined") return;
+    const mq = window.matchMedia("(min-width: 769px) and (prefers-reduced-motion: no-preference)");
+    if (!mq.matches) return;
+
+    const sections = wrapper.querySelectorAll(".property-left > section");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 }
+    );
+
+    // Anything already on screen is shown immediately (no flash on refresh
+    // mid-page); only what's below the fold waits for its reveal.
+    sections.forEach((section) => {
+      if (section.getBoundingClientRect().top < window.innerHeight) {
+        section.classList.add("is-visible");
+      } else {
+        observer.observe(section);
+      }
+    });
+    wrapper.classList.add("pp-anim");
+
+    return () => {
+      observer.disconnect();
+      wrapper.classList.remove("pp-anim");
+      sections.forEach((section) => section.classList.remove("is-visible"));
+    };
+  }, [wrapperEl, propertyData]);
+
+  // =========================
   // UTM TRACKING
   // =========================
   useEffect(() => {
@@ -135,16 +181,19 @@ const PropertyDetail = ({ allData }) => {
       faq={propertyData.faqs}
       preloadImage={schemaInfo.image}
     >
-      <div className="propertyPageWrapper">
+      <div className="propertyPageWrapper" ref={setWrapperEl}>
         <PropertyHeaderImageGallery
           imageGallery={propertyData.imageGallery}
           propertyData={propertyData}
           projectName={schemaInfo.name}
         />
 
-        <section id="Highlights">
+        {/* Plain div: PropertyHeader renders its own #Overview / #About Project /
+            #Highlights sections, and a second #Highlights here made the tab bar
+            scroll to (and highlight) the wrong place. */}
+        <div className="property-header-block">
           <PropertyHeader propertyData={propertyData} name={schemaInfo.name} />
-        </section>
+        </div>
 
         <PropertySectionNavbar locoScroll={locoScroll} />
 

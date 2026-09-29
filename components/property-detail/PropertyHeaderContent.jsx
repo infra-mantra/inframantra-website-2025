@@ -30,15 +30,25 @@ function PropertyHeaderHigh({ propertyData, name }) {
 
   const aboutText = propertyData.description[0];
 
+  // Split only on a full stop followed by whitespace, so numbers like "3.5bhk"
+  // or "1.5km" aren't broken into "3. 5bhk".
   const sentences = aboutText
-    .split(".")
+    .split(/(?<=\.)\s+/)
     .map((s) => s.trim())
     .filter(Boolean);
   const PREVIEW_SENTENCES = 3;
   const aboutPreview =
     sentences.length > PREVIEW_SENTENCES
-      ? sentences.slice(0, PREVIEW_SENTENCES).join(". ") + "."
+      ? sentences.slice(0, PREVIEW_SENTENCES).join(" ")
       : aboutText;
+
+  const locationText = [
+    propertyData?.subLocality?.name,
+    propertyData?.locality?.name,
+    propertyData?.city?.name,
+  ]
+    .filter(Boolean)
+    .join(", ");
 
   const handleRedirect = (lat, lng) => {
     const url = `https://maps.google.com/?q=${lat},${lng}`;
@@ -48,30 +58,47 @@ function PropertyHeaderHigh({ propertyData, name }) {
   return (
     <>
       <header className="property-header-high">
-        <div className="property-header-title">
-          <h1 className="propertyPageHeaderMobilePropertyTitle">{propertyData.name}</h1>
-        </div>
+        <div className="property-header-main">
+          <div className="property-header-title">
+            <h1 className="propertyPageHeaderMobilePropertyTitle">{propertyData.name}</h1>
+            <p className="property-header-sub">
+              {locationText && <span>{locationText}</span>}
+              {propertyData?.developer?.name && (
+                <span>
+                  by <strong>{propertyData.developer.name}</strong>
+                </span>
+              )}
+            </p>
+          </div>
 
-        <div className="property-header-images">
-          <img
-            src={propertyData.propertyLogo[0]}
-            alt={`${propertyData.name} logo`}
-            className="logo_individual_page"
-          />
-          <img
-            className="arrow-logo"
-            src="/propertyIndividualPage/icons/arrowlogo.png"
-            alt="Arrow Logo"
-            onClick={() =>
-              handleRedirect(propertyData.coordinates.lat, propertyData.coordinates.lng)
-            }
-          />
+          <div className="property-header-images">
+            <img
+              src={propertyData.propertyLogo[0]}
+              alt={`${propertyData.name} logo`}
+              className="logo_individual_page"
+            />
+            <button
+              type="button"
+              className="property-map-btn"
+              aria-label={`View ${propertyData.name} on Google Maps`}
+              onClick={() =>
+                handleRedirect(propertyData.coordinates.lat, propertyData.coordinates.lng)
+              }
+            >
+              <img
+                className="arrow-logo"
+                src="/propertyIndividualPage/icons/arrowlogo.png"
+                alt=""
+              />
+              <span className="property-map-btn-label">View on map</span>
+            </button>
 
-          <img
-            className="property-image"
-            src={propertyData.developer.developerImg}
-            alt={`${propertyData.developer.name} logo`}
-          />
+            <img
+              className="property-image"
+              src={propertyData.developer.developerImg}
+              alt={`${propertyData.developer.name} logo`}
+            />
+          </div>
         </div>
       </header>
       <div className="property-container">
@@ -135,9 +162,9 @@ function PropertyHeaderHigh({ propertyData, name }) {
                     <div className="rera-hover-box">
                       <h3>RERA INFO</h3>
                       <p>
-                        <FontAwesomeIcon icon={faBell} className="bell-pendulum" /> Rera No. -{" "}
-                        {propertyData.rera}
+                        <FontAwesomeIcon icon={faBell} className="bell-pendulum" /> Rera No.
                       </p>
+                      <p className="rera-number">{propertyData.rera}</p>
                     </div>
                   </div>
                 </div>

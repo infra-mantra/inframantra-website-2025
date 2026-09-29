@@ -1,5 +1,53 @@
+/* Featured-project banner on the home page: sits in the content width as a
+   rounded card, zooms inside its frame on hover with a light sweep, and carries
+   a "Featured Project" tag + "Explore Project" button. */
 .imgContainer {
-  padding: 50px 0px;
+  /* Same width as the home sections around it (88% of the screen), so the banner
+     lines up with the card rows on wide screens instead of floating at 1160px.
+     Capped at 1720px: the artwork is 1350px wide and gets soft beyond that. */
+  width: 88%;
+  max-width: 1720px;
+  margin: 0 auto;
+  padding: 50px 0;
+  box-sizing: border-box;
+}
+
+.adLink {
+  position: relative;
+  display: block;
+  overflow: hidden; /* hover zoom stays inside the frame */
+  border-radius: 20px;
+  isolation: isolate;
+  box-shadow: 0 14px 36px rgba(17, 17, 17, 0.16);
+  transition: box-shadow 0.35s ease, transform 0.35s ease;
+}
+
+.adLink:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 44px rgba(17, 17, 17, 0.22);
+}
+
+/* light sweep across the banner on hover */
+.adLink::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  transform: skewX(-20deg);
+  pointer-events: none;
+}
+
+.adLink:hover::after {
+  animation: adSweep 0.9s ease;
+}
+
+@keyframes adSweep {
+  to {
+    left: 130%;
+  }
 }
 
 /* aspect-ratio reserves the banner's exact height BEFORE the image loads, so it
@@ -11,19 +59,101 @@
   aspect-ratio: 1350 / 350;
   flex-shrink: 0;
   background: #d9d9d9;
-  transition: transform 0.3s ease;
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
   cursor: pointer;
 }
 
-.imgContainer .adBannerStyle:hover {
-  transform: scale(1.02);
+.adLink:hover .adBannerStyle {
+  transform: scale(1.04);
+}
+
+.adTag {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(20, 20, 20, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #fff;
+  font-family: "Lexend Deca", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.adTag svg {
+  color: #e7b554;
+}
+
+.adCta {
+  position: absolute;
+  right: 20px;
+  bottom: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #e9bb63 0%, #dfa63c 100%);
+  color: #fff;
+  font-family: "Lexend Deca", sans-serif;
+  font-size: 13.5px;
+  font-weight: 600;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  transition: gap 0.25s ease, filter 0.25s ease;
+}
+
+.adLink:hover .adCta {
+  gap: 12px;
+  filter: brightness(1.05);
+}
+
+.adLink:focus-visible {
+  outline: 3px solid rgba(231, 181, 84, 0.8);
+  outline-offset: 4px;
 }
 
 @media screen and (max-width: 768px) {
   .imgContainer {
-    padding: 35px 0px;
+    width: auto;
+    max-width: none;
+    padding: 35px 16px;
+  }
+  .adLink {
+    border-radius: 16px;
   }
   .imgContainer .adBannerStyle {
     aspect-ratio: 834 / 625;
+  }
+  .adTag {
+    top: 12px;
+    left: 12px;
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+  /* the mobile artwork has the price in this corner, and the whole banner is
+     already a link — so no separate button on phones */
+  .adCta {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .adLink,
+  .imgContainer .adBannerStyle,
+  .adCta {
+    transition: none;
+  }
+  .adLink:hover::after {
+    animation: none;
+  }
+  .adLink:hover .adBannerStyle {
+    transform: none;
   }
 }

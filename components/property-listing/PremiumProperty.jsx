@@ -1,5 +1,8 @@
 import React from "react";
-import PropertyCard from "../home/premium-picks/PropertyCard.jsx";
+// Listing-specific card (developer logo, status, configuration); the home page
+// keeps its own PropertyCard.
+import FeaturedPropertyCard from "./FeaturedPropertyCard.jsx";
+import fs from "./FeaturedPropertyCard.module.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay, Pagination } from "swiper";
 import "swiper/css";
@@ -11,7 +14,7 @@ function premiumProperty({ premiumProperties }) {
     <>
       {" "}
       {premiumProperties.length > 0 && (
-        <div>
+        <div className={fs["fp-slider"]}>
           <Swiper
             modules={[Navigation, Pagination, Autoplay]}
             spaceBetween={20}
@@ -33,12 +36,13 @@ function premiumProperty({ premiumProperties }) {
               1024: { slidesPerView: 4, spaceBetween: 22 },
               1200: { slidesPerView: 4, spaceBetween: 22 },
             }}
+            pagination={{ clickable: true }}
             loop={premiumProperties.length > 4}
             grabCursor={true}
           >
             {premiumProperties.map((property) => (
               <SwiperSlide key={property._id}>
-                <PropertyCard property={property} />
+                <FeaturedPropertyCard property={property} />
               </SwiperSlide>
             ))}
           </Swiper>

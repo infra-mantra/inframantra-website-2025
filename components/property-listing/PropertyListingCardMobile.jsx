@@ -4,6 +4,14 @@ import { TfiRulerAlt2 } from "react-icons/tfi";
 import { CiClock2 } from "react-icons/ci";
 import { useRouter } from "next/router";
 import styles from "./PropertyListingCardMobile.module.css";
+// Project status badge on the photo. CMS spellings vary ("UNDER CONSTRUCTION",
+// "Under Construction "), so show one form.
+const statusLabel = (s) =>
+  String(s || "")
+    .trim()
+    .toLowerCase()
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+
 import { optimizedSrc } from "../lib/imageUrl.js";
 
 function PropertyListingCardMobile({
@@ -72,6 +80,16 @@ function PropertyListingCardMobile({
                     alt={property.name}
                     className={styles.propertyListingImage}
                   />
+
+                  {property.status && (
+                    <span
+                      className={`${styles.cardStatus} ${
+                        /ready/i.test(property.status) ? styles.cardStatusReady : ""
+                      }`}
+                    >
+                      {statusLabel(property.status)}
+                    </span>
+                  )}
 
                   {/* Badges */}
                   {property.exclusive && (

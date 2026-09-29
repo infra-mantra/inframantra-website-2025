@@ -1,0 +1,108 @@
+/* Applied-filters strip above the listing results. Green accent to match the
+   sidebar filters. Class names prefixed af- (CSS module names are unhashed). */
+.af-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  border: 1px solid #e3f1e6;
+  border-radius: 12px;
+  background: #f6faf7;
+  font-family: "Lexend Deca", sans-serif;
+}
+
+.af-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #0b6e21;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.af-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.af-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 4px 4px 10px;
+  border: 1px solid #b8dcc1;
+  border-radius: 999px;
+  background: #fff;
+  color: #1a1a1a;
+  font-size: 12.5px;
+  font-weight: 500;
+}
+
+.af-kind {
+  color: #6b7280;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.af-remove {
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #e3f1e6;
+  color: #0b6e21;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.af-remove:hover {
+  background: #0b6e21;
+  color: #fff;
+}
+
+.af-clear {
+  padding: 5px 12px;
+  border: 1px solid #0b6e21;
+  border-radius: 999px;
+  background: transparent;
+  color: #0b6e21;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.af-clear:hover {
+  background: #0b6e21;
+  color: #fff;
+}
+
+.af-remove:focus-visible,
+.af-clear:focus-visible {
+  outline: 2px solid #0b6e21;
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+  .af-bar {
+    margin: 0 12px 14px;
+    padding: 10px 12px;
+  }
+  .af-chip {
+    font-size: 12px;
+  }
+}

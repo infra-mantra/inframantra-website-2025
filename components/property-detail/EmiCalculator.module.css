@@ -38,22 +38,28 @@
 
 .emiBody {
   display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: 34px;
-  align-items: center;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: 40px;
+  align-items: start;
 }
 
 /* ---------------- Controls ---------------- */
+.emiControls,
+.emiResult {
+  min-width: 0;
+}
+
 .emiControls {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 28px;
+  padding-top: 6px;
 }
 
 .field {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .fieldTop {
@@ -64,47 +70,74 @@
 }
 
 .fieldTop label {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
   font-size: 14px;
   font-weight: 600;
   color: var(--emi-ink);
 }
 
+/* Short amount ("4.40 Cr") next to the Loan Amount label */
+.labelHint {
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: var(--emi-light);
+  color: var(--emi-accent-dark);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Value box: hugs its content on the right, so the rupee sign / % / Yr sit
+   right next to the number instead of at the far edge of a wide box. */
 .amountBox {
+  flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
-  background: var(--emi-light);
-  border: 1px solid var(--emi-border);
-  border-radius: 5px;
-  padding: 6px 10px;
-  min-width: 110px;
+  justify-content: flex-end;
+  gap: 4px;
+  min-width: 96px;
+  height: 42px;
+  padding: 0 12px;
+  box-sizing: border-box;
+  background: #fff;
+  border: 1px solid #eadfc4;
+  border-radius: 10px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.amountBox:hover {
+  border-color: var(--emi-accent);
 }
 
 .amountBox:focus-within {
   border-color: var(--emi-accent);
-  box-shadow: 0 0 0 2px rgba(231, 181, 84, 0.25);
+  box-shadow: 0 0 0 3px rgba(231, 181, 84, 0.2);
 }
 
 .rupee,
 .unit {
+  flex-shrink: 0;
   color: var(--emi-muted);
   font-weight: 600;
   font-size: 14px;
 }
 
-.unit {
-  margin-left: 4px;
-}
-
 .amountBox input {
+  width: auto;
+  min-width: 0;
+  padding: 0;
   border: 0;
   outline: 0;
   background: transparent;
-  font-size: 15px;
+  font-family: inherit;
+  font-size: 16px;
   font-weight: 700;
   color: var(--emi-ink);
-  width: 100%;
   text-align: right;
-  min-width: 60px;
   -moz-appearance: textfield;
 }
 
@@ -120,6 +153,7 @@
   appearance: none;
   width: 100%;
   height: 6px;
+  margin: 4px 0;
   border-radius: 6px;
   background: var(--emi-light);
   outline: none;
@@ -129,23 +163,30 @@
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
-  background: var(--emi-accent);
-  border: 3px solid #fff;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  background: #fff;
+  border: 5px solid var(--emi-accent);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   cursor: pointer;
+  transition: transform 0.15s ease;
 }
 
 .slider::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
+  box-sizing: border-box;
   border-radius: 50%;
-  background: var(--emi-accent);
-  border: 3px solid #fff;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  background: #fff;
+  border: 5px solid var(--emi-accent);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   cursor: pointer;
+}
+
+.slider:hover::-webkit-slider-thumb,
+.slider:focus-visible::-webkit-slider-thumb {
+  transform: scale(1.15);
 }
 
 .rangeHints {
@@ -155,47 +196,54 @@
   color: var(--emi-muted);
 }
 
-/* ---------------- Result ---------------- */
+/* ---------------- Result: one soft-gold summary card ---------------- */
 .emiResult {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 18px;
+  padding: 22px 20px 20px;
+  background: linear-gradient(180deg, #fffaf0 0%, #fff4dc 100%);
+  border: 1px solid #f1e3bf;
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(214, 158, 52, 0.08);
 }
 
-/* Period toggle (Monthly / Yearly) — styled like .near-location chips */
+/* Monthly / Yearly: white pill with a gold active segment */
 .periodToggle {
   display: inline-flex;
-  background: var(--emi-light);
-  border-radius: 6px;
-  padding: 4px;
-  gap: 4px;
+  gap: 2px;
+  padding: 3px;
+  background: #fff;
+  border-radius: 999px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
 .periodBtn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  padding: 7px 18px;
   border: 0;
+  border-radius: 999px;
   background: transparent;
-  color: var(--emi-ink);
+  color: var(--emi-muted);
   font-size: 13px;
   font-weight: 600;
-  padding: 7px 14px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.25s ease;
   white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease;
 }
 
 .periodBtn svg {
-  width: 15px;
-  height: 15px;
+  width: 14px;
+  height: 14px;
 }
 
 .periodBtn.active {
-  background: var(--emi-accent);
+  background: linear-gradient(180deg, #e9bb63 0%, #dfa63c 100%);
   color: #fff;
+  box-shadow: 0 3px 10px rgba(214, 158, 52, 0.35);
 }
 
 .donutWrap {
@@ -204,27 +252,28 @@
 }
 
 .donut {
-  width: 184px;
-  height: 184px;
+  width: 190px;
+  height: 190px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 6px 18px rgba(214, 158, 52, 0.18);
   transition: background 0.3s ease;
 }
 
 .donutHole {
-  width: 130px;
-  height: 130px;
+  width: 146px;
+  height: 146px;
   border-radius: 50%;
   background: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-shadow: inset 0 0 0 1px var(--emi-border);
   text-align: center;
   padding: 0 8px;
+  box-sizing: border-box;
 }
 
 .donutLabel {
@@ -234,7 +283,7 @@
 }
 
 .donutValue {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 800;
   color: var(--emi-ink);
   line-height: 1.1;
@@ -246,26 +295,32 @@
   margin-top: 2px;
 }
 
+/* Principal / Interest as two white tiles, total as a gold bar */
 .breakdown {
   list-style: none;
   margin: 0;
   padding: 0;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
 }
 
 .breakdown li {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: 10px;
-  font-size: 14px;
+  column-gap: 7px;
+  row-gap: 6px;
+  padding: 12px 14px;
+  background: #fff;
+  border-radius: 12px;
+  font-size: 12.5px;
 }
 
 .dot {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border-radius: 3px;
   flex-shrink: 0;
 }
@@ -279,24 +334,50 @@
 }
 
 .bLabel {
+  min-width: 0;
   color: var(--emi-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bPct {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--emi-accent-dark);
 }
 
 .bValue {
-  margin-left: auto;
+  grid-column: 1 / -1;
+  font-size: 16px;
   font-weight: 700;
   color: var(--emi-ink);
+  white-space: nowrap;
 }
 
-.totalRow {
-  border-top: 1px dashed var(--emi-border);
-  padding-top: 12px;
-  margin-top: 2px;
+.breakdown li.totalRow {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 16px;
+  background: linear-gradient(180deg, #e9bb63 0%, #dfa63c 100%);
+  box-shadow: 0 4px 12px rgba(214, 158, 52, 0.3);
+}
+
+.totalRow .bLabel,
+.totalRow .bValue {
+  color: #fff;
 }
 
 .totalRow .bLabel {
-  color: var(--emi-ink);
+  font-size: 13px;
   font-weight: 600;
+}
+
+.totalRow .bValue {
+  font-size: 17px;
 }
 
 /* ---------------- Charts ---------------- */
@@ -500,7 +581,7 @@
 /* ---------------- Responsive ---------------- */
 @media (max-width: 900px) {
   .emiBody {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 26px;
   }
   /* Show the EMI result (donut + calculation) first, sliders below */
@@ -508,13 +589,16 @@
     order: -1;
   }
   .charts {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
 @media (max-width: 600px) {
   .emiWrapper {
-    padding: 16px 14px;
+    margin: 0;
+    padding: 20px 16px;
+    max-width: 100%;
+    overflow: hidden; /* nothing inside can push past the screen edge */
   }
   .emiHeading {
     font-size: 16px;
@@ -541,26 +625,70 @@
     font-size: 13px;
     line-height: 1.3;
   }
+  /* Fixed-width value box: fits "20,00,00,000" without pushing the row wider
+     than the screen (a text input otherwise sizes itself to ~20 characters). */
   .amountBox {
-    min-width: 92px;
-    padding: 5px 8px;
+    height: 38px;
+    min-width: 84px;
+    padding: 0 10px;
   }
   .amountBox input {
     font-size: 14px;
-    min-width: 48px;
   }
 
-  /* Donut */
+  /* Bigger thumbs = easier to drag with a finger */
+  .slider {
+    height: 8px;
+  }
+  .slider::-webkit-slider-thumb {
+    width: 24px;
+    height: 24px;
+  }
+  .slider::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Result card: a little tighter */
+  .emiResult {
+    padding: 16px 14px;
+    gap: 14px;
+    border-radius: 16px;
+  }
+  .periodBtn {
+    padding: 6px 16px;
+    font-size: 12px;
+  }
+  .periodBtn svg {
+    display: none;
+  }
   .donut {
-    width: 172px;
-    height: 172px;
+    width: 156px;
+    height: 156px;
   }
   .donutHole {
     width: 120px;
     height: 120px;
   }
   .donutValue {
-    font-size: 18px;
+    font-size: clamp(15px, 4.6vw, 18px);
+  }
+  .breakdown {
+    gap: 8px;
+  }
+  .breakdown li {
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 12px;
+  }
+  .bValue {
+    font-size: 14px;
+  }
+  .breakdown li.totalRow {
+    padding: 12px 14px;
+  }
+  .totalRow .bValue {
+    font-size: 15px;
   }
 
   /* Charts stack with tighter spacing; stack the title above the legend */
@@ -578,7 +706,7 @@
     gap: 6px;
   }
   .tick {
-    font-size: 18px;
+    font-size: 16px;
   }
   .areaLine {
     stroke-width: 3;
@@ -594,5 +722,17 @@
   .scheduleTable td {
     padding: 8px 10px;
     font-size: 12px;
+  }
+  .tableScroll {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@media (max-width: 360px) {
+  .fieldTop {
+    flex-wrap: wrap;
+  }
+  .amountBox {
+    width: 100%;
   }
 }

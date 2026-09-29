@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
-import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, Tooltip, Polyline, useMap, useMapEvent } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
@@ -14,6 +14,7 @@ import {
   FaUniversity,
   FaIceCream,
   FaMapMarkerAlt,
+  FaHome,
 } from "react-icons/fa";
 import { MdSchool } from "react-icons/md";
 import { FaCartShopping } from "react-icons/fa6";
@@ -28,13 +29,38 @@ import { renderToStaticMarkup } from "react-dom/server";
 import mp from "./Map.module.css";
 
 /* ---------- FIT BOUNDS ---------- */
-const FitBounds = ({ coordinates }) => {
+// `bottomPad` keeps the fitted area clear of the info card at the bottom.
+const FitBounds = ({ coordinates, bottomPad = 40 }) => {
   const map = useMap();
   useEffect(() => {
     if (!coordinates.length) return;
-    map.fitBounds(L.latLngBounds(coordinates), { padding: [40, 40] });
-  }, [coordinates, map]);
+    map.fitBounds(L.latLngBounds(coordinates), {
+      paddingTopLeft: [40, 80], // room for the property name label above its pin
+      paddingBottomRight: [40, bottomPad],
+    });
+  }, [coordinates, bottomPad, map]);
   return null;
+};
+
+/* ---------- ROUTE LINE ----------
+   Google-Maps-style blue route whose thickness follows the zoom level: thin
+   when zoomed out (so it doesn't smother the map), thicker when zoomed in. */
+const RouteLine = ({ positions }) => {
+  const map = useMap();
+  const [zoom, setZoom] = useState(() => map.getZoom());
+  useMapEvent("zoomend", () => setZoom(map.getZoom()));
+
+  // ~1.5px at zoom 11, ~4.5px at zoom 14, capped at 7px from zoom 16 up
+  const weight = Math.min(7, Math.max(1.5, (zoom - 9.5) * 1.1));
+  const line = { lineCap: "round", lineJoin: "round" };
+
+  return (
+    <>
+      {/* darker casing under the bright line */}
+      <Polyline positions={positions} pathOptions={{ ...line, color: "#1a56c4", weight: weight + 3, opacity: 0.9 }} />
+      <Polyline positions={positions} pathOptions={{ ...line, color: "#4a8cff", weight, opacity: 1 }} />
+    </>
+  );
 };
 
 /* ---------- ICON MAP ---------- */
@@ -54,7 +80,9 @@ const ICON_MAP = {
   Connectivity: ImRoad,
 };
 
-/* ---------- CREATE CUSTOM MARKER ICON ---------- */
+/* ---------- CREATE CUSTOM MARKER ICON ----------
+   Landmark: gold disc with the category icon; a pulsing ring when selected.
+   Ripple keyframes live in Map.module.css. */
 export const createMarkerIcon = ({ selected = false, type }) => {
   const IconComponent = ICON_MAP[type] || FaMapMarkerAlt;
   const iconHTML = renderToStaticMarkup(<IconComponent />);
@@ -62,42 +90,41 @@ export const createMarkerIcon = ({ selected = false, type }) => {
   return L.divIcon({
     className: "",
     html: `
-      <div style="position:relative;width:36px;height:36px;display:flex;align-items:center;justify-content:center;">
-        ${selected ? `<span class="ripple"></span><span class="ripple delay"></span>` : ""}
-        <div style="
-          width:26px;height:26px;background:#e7b554;border-radius:50%;
-          display:flex;justify-content:center;align-items:center;
-          color:#000;font-size:17px;z-index:3;
-          box-shadow: 0 0 0 3px #fff, 0 6px 14px rgba(0,0,0,0.35);
-        ">
-          ${iconHTML}
-        </div>
+      <div class="lm-marker${selected ? " is-selected" : ""}">
+        ${selected ? `<span class="lm-ripple"></span><span class="lm-ripple lm-ripple-delay"></span>` : ""}
+        <div class="lm-marker-dot">${iconHTML}</div>
       </div>
-      <style>
-        .ripple {
-          position:absolute;width:26px;height:26px;border-radius:50%;
-          border:2px solid rgba(231,181,84,0.8);
-          animation:ripple 3s ease-out infinite;
-        }
-        .delay { animation-delay:1.5s; }
-        @keyframes ripple {
-          0% { transform:scale(1); opacity:0.9; }
-          60% { transform:scale(2.4); opacity:0.35; }
-          100% { transform:scale(3.2); opacity:0; }
-        }
-      </style>
     `,
     iconSize: [36, 36],
-    iconAnchor: [18, 36],
-    popupAnchor: [0, -36],
+    iconAnchor: [18, 18],
+    popupAnchor: [0, -18],
+  });
+};
+
+/* Property: larger dark pin with a gold house, so it never reads as just
+   another landmark. */
+const createPropertyIcon = () => {
+  const iconHTML = renderToStaticMarkup(<FaHome />);
+  return L.divIcon({
+    className: "",
+    html: `
+      <div class="lm-property-marker">
+        <span class="lm-ripple lm-ripple-gold"></span>
+        <div class="lm-property-pin">${iconHTML}</div>
+      </div>
+    `,
+    iconSize: [44, 52],
+    iconAnchor: [22, 50],
+    popupAnchor: [0, -50],
+    tooltipAnchor: [0, -52],
   });
 };
 
 /* ---------- MAIN COMPONENT ---------- */
 const LandmarkMap = ({ property, landmarks, selected, onSelect, type }) => {
+  const propertyIcon = useMemo(() => createPropertyIcon(), []);
   const [route, setRoute] = useState([]);
   const [searchMarker, setSearchMarker] = useState(null);
-  const [distance, setDistance] = useState(null);
   const [duration, setDuration] = useState(null);
   const selectedMarkerRef = useRef(null);
 
@@ -111,15 +138,14 @@ const LandmarkMap = ({ property, landmarks, selected, onSelect, type }) => {
 
   /* ---------- SAFE LANDMARKS ---------- */
   const safeLandmarks = useMemo(() => {
-    return (landmarks || []).filter(
-      (l) =>
-        typeof l?.lat === "number" && typeof l?.lng === "number" && !isNaN(l.lat) && !isNaN(l.lng)
-    );
+    return (landmarks || [])
+      .map((l) => ({ ...l, lat: Number(l?.lat), lng: Number(l?.lng) }))
+      .filter((l) => l.lat && l.lng && !isNaN(l.lat) && !isNaN(l.lng));
   }, [landmarks]);
 
   /* ---------- SAFE SELECTED ---------- */
   const safeSelected = useMemo(() => {
-    if (!selected) return null;
+    if (!selected || selected.lat == null || selected.lng == null) return null;
     const lat = Number(selected.lat);
     const lng = Number(selected.lng);
     return isNaN(lat) || isNaN(lng) ? null : { ...selected, lat, lng };
@@ -136,15 +162,18 @@ const LandmarkMap = ({ property, landmarks, selected, onSelect, type }) => {
 
   /* ---------- FETCH ROUTE ---------- */
   useEffect(() => {
-    if (!safeProperty || !routeTarget) return setRoute([]);
+    setRoute([]);
+    setDuration(null);
+    if (!safeProperty || !routeTarget) return;
+    let cancelled = false;
 
     const fetchRoute = async () => {
       try {
         const url = `https://router.project-osrm.org/route/v1/driving/${safeProperty.lng},${safeProperty.lat};${routeTarget.lng},${routeTarget.lat}?overview=full&geometries=geojson`;
         const res = await fetch(url);
         const data = await res.json();
+        if (cancelled || !data?.routes?.[0]) return;
 
-        setDistance((data.routes[0].distance / 1000).toFixed(2));
         setDuration((data.routes[0].duration / 60).toFixed(1));
 
         const coords = data.routes[0].geometry.coordinates.map(([lng, lat]) => [lat, lng]);
@@ -155,14 +184,16 @@ const LandmarkMap = ({ property, landmarks, selected, onSelect, type }) => {
     };
 
     fetchRoute();
+    return () => {
+      cancelled = true;
+    };
   }, [safeProperty, routeTarget]);
-
-  if (!safeProperty) return null;
 
   const showAllLandmarks = !safeSelected && !searchMarker;
   const showOnlySelectedLandmark = safeSelected && !searchMarker;
 
   const bounds = useMemo(() => {
+    if (!safeProperty) return [];
     const arr = [[safeProperty.lat, safeProperty.lng]];
     if (routeTarget) arr.push([routeTarget.lat, routeTarget.lng]);
     if (showAllLandmarks) safeLandmarks.forEach((l) => arr.push([l.lat, l.lng]));
@@ -170,20 +201,30 @@ const LandmarkMap = ({ property, landmarks, selected, onSelect, type }) => {
     return arr;
   }, [safeProperty, routeTarget, safeLandmarks, route, showAllLandmarks]);
 
+  if (!safeProperty) return null;
+
+  const SelectedIcon = ICON_MAP[type] || FaMapMarkerAlt;
+
   return (
-    <div style={{ position: "relative" }}>
-      <MapContainer center={[safeProperty.lat, safeProperty.lng]} zoom={14} style={{ height: 400 }}>
+    <div className={mp["lm-map-shell"]}>
+      <MapContainer
+        center={[safeProperty.lat, safeProperty.lng]}
+        zoom={14}
+        scrollWheelZoom={false} /* don't hijack page scrolling; use +/- or pinch */
+        style={{ height: "100%", width: "100%" }}
+      >
         <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
 
         {/* Labels (roads, places, locality names) */}
         <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}" />
 
         {/* PROPERTY */}
-        <Marker
-          position={[safeProperty.lat, safeProperty.lng]}
-          icon={createMarkerIcon({ selected: true, type: "Property" })}
-        >
-          <Popup>{safeProperty.name}</Popup>
+        <Marker position={[safeProperty.lat, safeProperty.lng]} icon={propertyIcon} zIndexOffset={1000}>
+          {safeProperty.name && (
+            <Tooltip permanent direction="top" className="lm-property-label">
+              {safeProperty.name}
+            </Tooltip>
+          )}
         </Marker>
 
         {/* LANDMARKS */}
@@ -216,21 +257,32 @@ const LandmarkMap = ({ property, landmarks, selected, onSelect, type }) => {
         )}
 
         {/* ROUTE */}
-        {route.length > 0 && (
-          <>
-            <Polyline positions={route} color="#000" weight={4} opacity={0.25} />
-            <Polyline positions={route} color="#000" weight={2} opacity={0.95} />
-          </>
-        )}
+        {route.length > 0 && <RouteLine positions={route} />}
 
-        <FitBounds coordinates={bounds} />
+        <FitBounds coordinates={bounds} bottomPad={safeSelected ? 100 : 40} />
       </MapContainer>
 
-      {distance && duration && safeSelected && (
-        <div className={mp["popUpMark"]}>
-          <strong>{safeSelected.name}</strong>
-          <div>Distance: {selected?.distance}</div>
-          <div>Time: ~{duration} min</div>
+      {safeSelected && (
+        <div className={mp["popUpMark"]} role="status">
+          <span className={mp["lm-card-icon"]}>
+            <SelectedIcon />
+          </span>
+          <div className={mp["lm-card-body"]}>
+            <strong>{safeSelected.name}</strong>
+            <span>
+              {selected?.distance}
+              {duration ? ` · ~${Math.max(1, Math.round(duration))} min drive` : " · finding route…"}
+            </span>
+          </div>
+          <button
+            type="button"
+            className={mp["lm-card-close"]}
+            onClick={() => onSelect(null)}
+            aria-label="Show all landmarks"
+            title="Show all"
+          >
+            ×
+          </button>
         </div>
       )}
     </div>

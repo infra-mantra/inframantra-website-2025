@@ -106,3 +106,124 @@
     font-size: 0.7rem;
   }
 }
+
+/* ======================================================================
+   Refreshed tiles (same grid). Selectors are qualified with the container so
+   they outrank the desktop sheet's `.propertyPageWrapper .amenity-item`.
+   ====================================================================== */
+.amenities-container .amenities-grid {
+  grid-auto-rows: 1fr; /* every tile in a row is the same height */
+}
+
+.amenities-container .amenities-grid .amenity-item {
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 10px 14px;
+  background: #fff;
+  border: 1px solid #f1e3bf;
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(17, 17, 17, 0.05);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.amenities-container .amenities-grid .amenity-item:hover {
+  transform: translateY(-3px);
+  border-color: #e7b554;
+  box-shadow: 0 10px 24px rgba(214, 158, 52, 0.18);
+}
+
+/* icon sits in a soft gold circle */
+.amenities-container .amenity-item :global(.amenity-icon) {
+  width: 64px;
+  height: 64px;
+  margin: 0;
+  padding: 12px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #fffaf0 0%, #fff1d2 100%);
+  object-fit: contain;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.amenities-container .amenity-item:hover :global(.amenity-icon) {
+  background: radial-gradient(circle at 30% 30%, #fff4dc 0%, #f8dfa6 100%);
+}
+
+.amenities-container .amenity-item :global(.amenity-label) {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #1a1a1a;
+}
+
+/* "+N more": gold tile that reads as a button */
+.amenities-container .amenities-grid .has-more-amenties {
+  flex-direction: column;
+  gap: 4px;
+  border: 1.5px dashed #e7b554;
+  background: linear-gradient(180deg, #fffaf0 0%, #fff1d2 100%);
+  box-shadow: none;
+}
+
+.amenities-container .amenities-grid .has-more-amenties:hover {
+  background: linear-gradient(180deg, #e9bb63 0%, #dfa63c 100%);
+  border-style: solid;
+}
+
+.more-count {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  color: #c9962f;
+  transition: color 0.25s ease;
+}
+
+.more-label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #8a6a24;
+  transition: color 0.25s ease;
+}
+
+.has-more-amenties:hover .more-count,
+.has-more-amenties:hover .more-label {
+  color: #fff;
+}
+
+.has-more-amenties:focus-visible {
+  outline: 3px solid rgba(231, 181, 84, 0.6);
+  outline-offset: 2px;
+}
+
+@media screen and (max-width: 768px) {
+  .amenities-container .amenities-grid {
+    gap: 10px;
+  }
+  .amenities-container .amenities-grid .amenity-item {
+    gap: 8px;
+    padding: 12px 6px 10px;
+    border-radius: 14px;
+  }
+  .amenities-container .amenity-item :global(.amenity-icon) {
+    width: 50px;
+    height: 50px;
+    padding: 9px;
+  }
+  /* was 0.6rem (~10px) — too small to read */
+  .amenities-container .amenity-item :global(.amenity-label) {
+    font-size: 11.5px;
+  }
+  .more-count {
+    font-size: 20px;
+  }
+  .more-label {
+    font-size: 11px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .amenities-container .amenities-grid .amenity-item,
+  .amenities-container .amenity-item :global(.amenity-icon) {
+    transition: none;
+  }
+}

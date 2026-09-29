@@ -2,6 +2,14 @@ import { useState, useEffect, Suspense } from "react";
 import { FaStar, FaTag } from "react-icons/fa";
 import { useRouter } from "next/router";
 import styles from "./PropertyListingCard.module.css";
+// Project status badge on the photo. CMS spellings vary ("UNDER CONSTRUCTION",
+// "Under Construction "), so show one form.
+const statusLabel = (s) =>
+  String(s || "")
+    .trim()
+    .toLowerCase()
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+
 import { Loader } from "../layout/CustomeLoader.jsx";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -38,25 +46,30 @@ const propertyListCardStyles = {
     alignItems: "center",
     justifyContent: "center",
   },
+  // Developer logo badge over the photo: a white rounded tile (white backing so
+  // light logos stay visible), sized by the logo's own proportions.
   chipImage: {
     position: "absolute",
-    width: "30%",
-    height: "auto",
-    borderRadius: "5px",
-    left: "-5px",
-    top: "1px",
-    color: "#fff",
-    fontSize: "15px",
-    fontWeight: "700",
-    padding: "5px",
+    left: "12px",
+    top: "12px",
+    height: "44px",
+    maxWidth: "45%",
+    padding: "6px 10px",
+    boxSizing: "border-box",
+    borderRadius: "10px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    background: "rgba(255, 255, 255, 0.92)", // white backing so light developer logos stay visible
+    background: "rgba(255, 255, 255, 0.95)",
+    boxShadow: "0 4px 14px rgba(0, 0, 0, 0.18)",
+    pointerEvents: "none",
   },
   dimension: {
-    width: "5rem",
-    objectFit: "scale-down",
+    display: "block",
+    height: "100%",
+    width: "auto",
+    maxWidth: "110px",
+    objectFit: "contain",
   },
   imageChip: {
     background: "#DCAA4C",
@@ -147,19 +160,25 @@ function PropertyListingCard({
                       alt="featured"
                     />
 
-                    <div
-                      style={{
-                        ...propertyListCardStyles.chipImage,
-                        // ...propertyListCardStyles.dimension
-                      }}
-                    >
-                      <img
-                        style={{
-                          ...propertyListCardStyles.dimension,
-                        }}
-                        src={prop.developer.developerImg}
-                      />
-                    </div>
+                    {prop.status && (
+                      <span
+                        className={`${styles.cardStatus} ${
+                          /ready/i.test(prop.status) ? styles.cardStatusReady : ""
+                        }`}
+                      >
+                        {statusLabel(prop.status)}
+                      </span>
+                    )}
+                    {prop.developer?.developerImg && (
+                      <div style={propertyListCardStyles.chipImage}>
+                        <img
+                          style={propertyListCardStyles.dimension}
+                          src={prop.developer.developerImg}
+                          alt={prop.developer.name ? `${prop.developer.name} logo` : "Developer logo"}
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
                   </div>
                   <div className={styles.propertyListingCardRightSection}>
                     <div className={styles.propertyListingCardHeaderFlex}>

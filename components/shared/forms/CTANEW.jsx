@@ -276,16 +276,20 @@ function App({
 
               <div style={{ display: "flex" }}>
                 <div className={ctaStyle.ctaText}>
-                  <p className={ctaStyle.numberFor}>
+                  {/* div, not p: this used to nest a <p> inside a <p>, which is
+                      invalid HTML (the browser splits them apart). */}
+                  <div className={ctaStyle.numberFor}>
                     <FaPhoneAlt
                       style={{
                         color: "green",
-                        marginRight: "1rem",
+                        flexShrink: 0,
                       }}
                     />
 
-                    <p>{phone ? phone : <>+91 86 9800 9900</>}</p>
-                  </p>
+                    <a className={ctaStyle.numberValue} href={`tel:${(phone || "+91 86 9800 9900").replace(/[^\d+]/g, "")}`}>
+                      {phone ? phone : <>+91 86 9800 9900</>}
+                    </a>
+                  </div>
 
                   <p className={ctaStyle.textForm}>Give us a call and book your visit now!</p>
                 </div>

@@ -1,0 +1,916 @@
+/* ==========================================================================
+   Property detail page (/property/[propertyId]) — desktop layout
+   --------------------------------------------------------------------------
+   The individual sheets for this page size things in vw (60vw cards, 62vw
+   about block, a 60/40 flex split) with no max-width, so on desktop the
+   columns drifted apart, the header row didn't line up with the body and
+   everything stretched on wide screens. This sheet puts the whole page on one
+   centred container and one two-column grid (content | sticky form).
+
+   Everything is scoped to .propertyPageWrapper and to min-width: 769px, so the
+   mobile layout (<= 768px, owned by the existing sheets) is untouched.
+   ========================================================================== */
+
+@media (min-width: 769px) {
+  .propertyPageWrapper {
+    --pp-max: 1320px;
+    --pp-gutter: 32px;
+    --pp-aside: 380px;
+    --pp-gap: 32px;
+    --pp-nav-h: 60px;
+    --pp-gold: #e7b554;
+    --pp-gold-dark: #c9962f;
+    --pp-ink: #1a1a1a;
+    --pp-muted: #5f5f5f;
+    --pp-line: #ececec;
+    --pp-radius: 16px;
+    --pp-shadow: 0 6px 24px rgba(17, 17, 17, 0.06);
+
+    font-family: "Lexend Deca", sans-serif;
+    color: var(--pp-ink);
+    overflow: visible !important;
+    background: #fff;
+  }
+
+  .propertyPageWrapper input,
+  .propertyPageWrapper button,
+  .propertyPageWrapper select,
+  .propertyPageWrapper textarea {
+    font-family: inherit;
+  }
+
+  /* ------------------------------------------------------ title + overview */
+  /* Original look (centred name + project logo + map arrow + developer logo),
+     held inside the page container so it never overflows. */
+  .propertyPageWrapper .property-header-high {
+    width: 100%;
+    max-width: var(--pp-max);
+    margin: 0 auto;
+    padding: 24px var(--pp-gutter) 20px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .propertyPageWrapper .property-header-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+    min-width: 0;
+  }
+
+  .propertyPageWrapper .propertyPageHeaderMobilePropertyTitle {
+    margin: 0;
+    font-size: clamp(26px, 2.4vw, 36px);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--pp-ink);
+    text-align: center;
+  }
+
+  .propertyPageWrapper .property-header-sub,
+  .propertyPageWrapper .property-map-btn-label {
+    display: none;
+  }
+
+  .propertyPageWrapper .property-header-images {
+    flex-shrink: 0;
+    gap: 12px;
+  }
+
+  /* Project + developer logos sit in matching white tiles */
+  .propertyPageWrapper .property-header-images .logo_individual_page,
+  .propertyPageWrapper .property-header-images .property-image {
+    height: 60px;
+    width: auto;
+    max-width: 150px;
+    padding: 6px 14px;
+    box-sizing: border-box;
+    object-fit: contain;
+    background: #fff;
+    border: 1px solid var(--pp-line);
+    border-radius: 14px;
+    box-shadow: var(--pp-shadow);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .propertyPageWrapper .property-header-images .logo_individual_page:hover,
+  .propertyPageWrapper .property-header-images .property-image:hover {
+    border-color: #f1e3bf;
+    box-shadow: 0 8px 20px rgba(17, 17, 17, 0.1);
+  }
+
+  /* Map arrow: round gold button */
+  .propertyPageWrapper .property-map-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    padding: 0;
+    border: 1px solid #f1e3bf;
+    border-radius: 50%;
+    background: #fff8e1;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .propertyPageWrapper .property-map-btn:hover {
+    border-color: var(--pp-gold);
+    background: #fdecc4;
+    box-shadow: 0 6px 16px rgba(214, 158, 52, 0.3);
+  }
+
+  .propertyPageWrapper .property-map-btn .arrow-logo {
+    width: 20px;
+    height: 20px;
+  }
+
+  .propertyPageWrapper .property-container {
+    max-width: var(--pp-max);
+    margin: 0 auto;
+    padding: 0 var(--pp-gutter) 8px;
+    box-sizing: border-box;
+  }
+
+  .propertyPageWrapper .card-container {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--pp-aside);
+    gap: var(--pp-gap);
+    align-items: start;
+  }
+
+  .propertyPageWrapper .card-container > section {
+    min-width: 0;
+  }
+
+  .propertyPageWrapper .card {
+    border: 1px solid var(--pp-line);
+    border-radius: var(--pp-radius);
+    box-shadow: var(--pp-shadow);
+  }
+
+  .propertyPageWrapper .card.card-width {
+    width: auto;
+    max-width: none;
+    padding: 24px 28px;
+    margin-bottom: 28px;
+    box-sizing: border-box;
+  }
+
+  .propertyPageWrapper .price-section {
+    margin-bottom: 0;
+  }
+
+  .propertyPageWrapper .price-text {
+    font-size: 26px;
+    font-weight: 700;
+  }
+
+  .propertyPageWrapper .price-text .font-clr {
+    color: var(--pp-gold-dark);
+  }
+
+  .propertyPageWrapper .boldline1 {
+    width: 100%;
+    height: 1px;
+    margin: 20px 0;
+    background: var(--pp-line);
+  }
+
+  .propertyPageWrapper .status-label,
+  .propertyPageWrapper .unit-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--pp-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+
+  .propertyPageWrapper .status-value,
+  .propertyPageWrapper .unit-config {
+    margin-top: 2px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--pp-ink);
+  }
+
+  .propertyPageWrapper .separator {
+    color: var(--pp-line);
+  }
+
+  .propertyPageWrapper .rera-btn {
+    padding: 10px 22px;
+    font-size: 14px;
+    color: #fff;
+    background: var(--pp-gold);
+    transition: background 0.2s ease;
+  }
+
+  .propertyPageWrapper .rera-btn:hover {
+    background: var(--pp-gold-dark);
+  }
+
+  .propertyPageWrapper .rera-btn .info-icon {
+    color: var(--pp-gold-dark);
+  }
+
+  .propertyPageWrapper .rera-hover-box {
+    left: auto;
+    right: 0;
+  }
+
+  .propertyPageWrapper .units-section {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .propertyPageWrapper .unit-separator {
+    display: none;
+  }
+
+  .propertyPageWrapper .unit-item {
+    min-width: 0;
+    gap: 10px;
+  }
+
+  .propertyPageWrapper .unit-item + .unit-item,
+  .propertyPageWrapper .unit-separator + .unit-item {
+    border-left: 1px solid var(--pp-line);
+    padding-left: 16px;
+  }
+
+  .propertyPageWrapper .about-container {
+    width: auto;
+  }
+
+  .propertyPageWrapper .about-wrapper {
+    width: 100%;
+  }
+
+  .propertyPageWrapper .about-preview {
+    font-size: 15px;
+    line-height: 1.75;
+    letter-spacing: 0;
+    color: #3d3d3d;
+  }
+
+  .propertyPageWrapper .about-preview .read-more-btn {
+    margin: 0 0 0 6px;
+    padding: 0;
+    font-size: 14px;
+  }
+
+  .propertyPageWrapper .container-card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .propertyPageWrapper .card.card-width-high {
+    width: auto;
+    margin: 0;
+    padding: 24px;
+    box-sizing: border-box;
+  }
+
+  .propertyPageWrapper .ul-highlight {
+    gap: 14px;
+    margin: 0;
+  }
+
+  .propertyPageWrapper .ul-highlight li {
+    font-size: 14.5px;
+    line-height: 1.6;
+    letter-spacing: 0;
+    color: #3d3d3d;
+  }
+
+  .propertyPageWrapper .projectHighlightListBullet {
+    flex-shrink: 0;
+    margin-top: 8px;
+  }
+
+  .propertyPageWrapper .container-card .read-more-btn {
+    margin-top: 16px;
+    padding: 0;
+  }
+
+  .propertyPageWrapper .highlight-wrappers.cta-w .card-ct-wt {
+    margin: 0;
+    padding: 15px 20px;
+    border-radius: 12px;
+    color: var(--pp-ink);
+    font-size: 15px;
+    box-shadow: 0 6px 18px rgba(231, 181, 84, 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .propertyPageWrapper .highlight-wrappers.cta-w .card-ct-wt:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(231, 181, 84, 0.45);
+  }
+
+  /* ------------------------------------------------------ section tab bar */
+  .propertyPageWrapper .section-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    width: 100%;
+    margin-top: 8px;
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: saturate(160%) blur(8px);
+    border-top: 1px solid var(--pp-line);
+    border-bottom: 1px solid var(--pp-line);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+  }
+
+  .propertyPageWrapper .section-tabs {
+    max-width: var(--pp-max);
+    min-height: var(--pp-nav-h);
+    margin: 0 auto;
+    padding: 0 var(--pp-gutter);
+    box-sizing: border-box;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+
+  .propertyPageWrapper .section-tabs li {
+    padding: 18px 14px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--pp-muted);
+    transform: none;
+  }
+
+  .propertyPageWrapper .section-tabs li:hover {
+    color: var(--pp-ink);
+  }
+
+  .propertyPageWrapper .section-tabs li.active {
+    color: var(--pp-ink);
+    font-weight: 600;
+    transform: none;
+  }
+
+  .propertyPageWrapper .section-tabs li::after {
+    height: 3px;
+    border-radius: 3px 3px 0 0;
+    background: var(--pp-gold);
+  }
+
+  .propertyPageWrapper .section-tabs li.active::after {
+    width: calc(100% - 28px);
+  }
+
+  /* ---------------------------------------------------- body: two columns */
+  .propertyPageWrapper .property-page {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--pp-aside);
+    gap: var(--pp-gap);
+    align-items: start;
+    width: 100%;
+    max-width: var(--pp-max);
+    margin: 0 auto;
+    padding: 40px var(--pp-gutter) 64px;
+    box-sizing: border-box;
+  }
+
+  .propertyPageWrapper .property-left {
+    width: auto;
+    min-width: 0;
+  }
+
+  .propertyPageWrapper .property-right {
+    width: auto;
+    min-width: 0;
+    position: sticky;
+    top: calc(var(--pp-nav-h) + 24px);
+    display: block;
+  }
+
+  /* Every section on one rhythm: same side edges, same spacing, a hairline
+     between them. */
+  .propertyPageWrapper .property-left > section {
+    padding: 0 0 44px;
+    margin: 0 0 44px;
+    border-bottom: 1px solid var(--pp-line);
+    scroll-margin-top: calc(var(--pp-nav-h) + 16px);
+  }
+
+  .propertyPageWrapper .property-left > section:last-child {
+    border-bottom: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .propertyPageWrapper .property-left > section:empty {
+    display: none;
+  }
+
+  .propertyPageWrapper .property-left .pd,
+  .propertyPageWrapper .property-left .Config-wrapper,
+  .propertyPageWrapper .property-left .amenities-container,
+  .propertyPageWrapper .property-left .emiWrapper,
+  .propertyPageWrapper .property-left .faqSection {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  /* One heading style for every section */
+  .propertyPageWrapper .Header,
+  .propertyPageWrapper .emiHeading,
+  .propertyPageWrapper .faqHeading {
+    margin: 0 0 20px;
+    font-family: "Lexend Deca", sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: var(--pp-gold-dark);
+  }
+
+  .propertyPageWrapper .emiSub {
+    margin: -12px 0 20px;
+  }
+
+  /* Walkthrough video */
+  .propertyPageWrapper .propertyVideoWrapper {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    padding: 0;
+    border-radius: var(--pp-radius);
+    overflow: hidden;
+    background: #111;
+    box-shadow: var(--pp-shadow);
+  }
+
+  /* Amenities */
+  .propertyPageWrapper .amenities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+    gap: 14px;
+  }
+
+  .propertyPageWrapper .amenity-item {
+    width: auto;
+    margin: 0;
+    border-radius: 14px;
+    box-sizing: border-box;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .propertyPageWrapper .amenity-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(231, 181, 84, 0.25);
+  }
+
+  /* Locality */
+  .propertyPageWrapper .location-map-section {
+    width: 100%;
+    margin: 0;
+    border-radius: var(--pp-radius);
+    box-sizing: border-box;
+  }
+
+  /* Floor plans */
+  .propertyPageWrapper .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+    align-items: start;
+  }
+
+  .propertyPageWrapper .property-card {
+    width: auto;
+    border-radius: var(--pp-radius);
+    border: 1px solid var(--pp-line);
+    box-shadow: var(--pp-shadow);
+    overflow: hidden;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+
+  .propertyPageWrapper .property-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(17, 17, 17, 0.1);
+  }
+
+  .propertyPageWrapper .property-card img {
+    display: block;
+    height: 240px;
+    padding: 16px;
+    object-fit: contain;
+    background: #faf9f6;
+    box-sizing: border-box;
+    cursor: zoom-in;
+  }
+
+  .propertyPageWrapper .property-card .card-content {
+    padding: 16px 18px 18px;
+  }
+
+  .propertyPageWrapper .property-card .card-content h3 {
+    font-size: 20px;
+    color: var(--pp-ink);
+  }
+
+  .propertyPageWrapper .property-card .card-content hr {
+    margin: 12px 0;
+    border: 0;
+    border-top: 1px solid var(--pp-line);
+  }
+
+  .propertyPageWrapper .property-card .row {
+    font-size: 14px;
+    color: var(--pp-muted);
+  }
+
+  .propertyPageWrapper .property-card .row span:last-child {
+    font-weight: 600;
+    color: var(--pp-ink);
+  }
+
+  .propertyPageWrapper .brochure-download-section {
+    grid-column: 1 / -1;
+    width: auto;
+    justify-content: flex-start;
+    padding: 4px 0 0;
+  }
+
+  .propertyPageWrapper .brochure-download-section button {
+    padding: 13px 26px;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: background 0.2s ease;
+  }
+
+  .propertyPageWrapper .brochure-download-section button:hover {
+    background: var(--pp-gold-dark);
+  }
+
+  /* Site-visit banner: keep it inside the column */
+  .propertyPageWrapper .site-visit-wrapper,
+  .propertyPageWrapper .site-visit-inner {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  .propertyPageWrapper .site-visit-inner {
+    border-radius: var(--pp-radius);
+    overflow: hidden;
+  }
+
+  .propertyPageWrapper .site-visit-left h3 {
+    font-size: 17px;
+  }
+
+  /* Developer */
+  .propertyPageWrapper .card.card-w {
+    width: auto;
+    margin: 0;
+    padding: 28px;
+    box-sizing: border-box;
+  }
+
+  .propertyPageWrapper .card.card-w .p-text {
+    font-size: 15px;
+    line-height: 1.75;
+    letter-spacing: 0;
+    color: #3d3d3d;
+  }
+
+  /* FAQ */
+  .propertyPageWrapper .faqContainer,
+  .propertyPageWrapper .faqCta {
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+  }
+
+  .propertyPageWrapper .faqItem {
+    border-radius: 12px;
+  }
+
+  .propertyPageWrapper .faqCta {
+    border-radius: var(--pp-radius);
+  }
+
+  /* Sticky enquiry form in the right column */
+  .propertyPageWrapper .property-right .homeApp,
+  .propertyPageWrapper .property-right .homeCtaMainWrapper {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .propertyPageWrapper .property-right .homeCtaInnerWrapper {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 28px;
+    box-sizing: border-box;
+    border: 1px solid var(--pp-line);
+    border-top: 4px solid var(--pp-gold);
+    border-radius: var(--pp-radius);
+    box-shadow: var(--pp-shadow);
+  }
+
+  .propertyPageWrapper .property-right form {
+    width: 100%;
+  }
+}
+
+/* Tablets and small laptops: a 380px sticky column leaves the content too
+   narrow, so stack the form under the content instead. */
+@media (min-width: 769px) and (max-width: 1100px) {
+  .propertyPageWrapper {
+    --pp-gutter: 24px;
+    --pp-aside: 320px;
+    --pp-gap: 24px;
+  }
+
+  .propertyPageWrapper .card-container,
+  .propertyPageWrapper .property-page {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .propertyPageWrapper .property-right {
+    position: static;
+  }
+
+  .propertyPageWrapper .units-section {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 20px;
+  }
+
+  .propertyPageWrapper .unit-item:nth-of-type(odd) {
+    border-left: 0;
+    padding-left: 0;
+  }
+}
+
+/* ==========================================================================
+   Motion + type polish (desktop). Nothing here changes size or position,
+   only opacity, transforms, colour and font rendering, so the layout above
+   and the original banner stay exactly as they are.
+   ========================================================================== */
+
+@media (min-width: 769px) {
+  .propertyPageWrapper {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Prices, areas, EMI figures: digits line up and stop jittering as the
+     calculator updates. */
+  .propertyPageWrapper .price-text,
+  .propertyPageWrapper .unit-config,
+  .propertyPageWrapper .status-value,
+  .propertyPageWrapper .property-card .card-content,
+  .propertyPageWrapper .emiWrapper {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Gold gradient on the headline price */
+  .propertyPageWrapper .price-text .font-clr {
+    background: linear-gradient(100deg, #b8841f 0%, #e7b554 45%, #c9962f 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Section headings get a short gold rule. It hangs in the heading's bottom
+     margin, so it takes no space. */
+  .propertyPageWrapper .property-left .Header,
+  .propertyPageWrapper .property-left .emiHeading,
+  .propertyPageWrapper .property-left .faqHeading,
+  .propertyPageWrapper .container-card .Header,
+  .propertyPageWrapper .about-wrapper .Header {
+    position: relative;
+  }
+
+  .propertyPageWrapper .property-left .Header::after,
+  .propertyPageWrapper .property-left .emiHeading::after,
+  .propertyPageWrapper .property-left .faqHeading::after,
+  .propertyPageWrapper .container-card .Header::after,
+  .propertyPageWrapper .about-wrapper .Header::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    width: 44px;
+    height: 3px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--pp-gold), rgba(231, 181, 84, 0.2));
+    transform-origin: left center;
+  }
+
+  /* Soft sheen that sweeps across the main CTAs on hover */
+  .propertyPageWrapper .highlight-wrappers .card-ct-wt,
+  .propertyPageWrapper .brochure-download-section button,
+  .propertyPageWrapper .rera-btn {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .propertyPageWrapper .highlight-wrappers .card-ct-wt::before,
+  .propertyPageWrapper .brochure-download-section button::before,
+  .propertyPageWrapper .rera-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -60%;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+    transform: skewX(-20deg);
+    pointer-events: none;
+  }
+}
+
+@media (min-width: 769px) and (prefers-reduced-motion: no-preference) {
+  @keyframes ppFadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: none; }
+  }
+  @keyframes ppFadeDown {
+    from { opacity: 0; transform: translateY(-12px); }
+    to   { opacity: 1; transform: none; }
+  }
+  @keyframes ppFadeLeft {
+    from { opacity: 0; transform: translateX(24px); }
+    to   { opacity: 1; transform: none; }
+  }
+  @keyframes ppFade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes ppPop {
+    from { opacity: 0; transform: translateY(12px) scale(0.96); }
+    to   { opacity: 1; transform: none; }
+  }
+  @keyframes ppKenBurns {
+    from { transform: scale(1.07); }
+    to   { transform: scale(1); }
+  }
+  @keyframes ppGrow {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+  @keyframes ppSheen {
+    from { left: -60%; }
+    to   { left: 130%; }
+  }
+  @keyframes ppPulse {
+    0%   { box-shadow: 0 0 0 0 rgba(231, 181, 84, 0.55); }
+    70%  { box-shadow: 0 0 0 12px rgba(231, 181, 84, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(231, 181, 84, 0); }
+  }
+
+  /* ---- banner: same layout, just animated in ---- */
+  .propertyPageWrapper .propertyPageHeaderImgSection .image-gallery-content:not(.fullscreen) .image-gallery-slide.image-gallery-center .image-gallery-image {
+    animation: ppKenBurns 3.6s ease-out both;
+  }
+  .propertyPageWrapper .propertyPageHeaderImgSection .orgbg {
+    animation: ppFadeDown 0.7s 0.25s ease-out backwards;
+  }
+  .propertyPageWrapper .propertyPageHeaderImgSection .collapsed-icons .icon-btn {
+    animation: ppFade 0.6s 0.45s ease-out backwards, ppPulse 2.4s 1.2s ease-out 2;
+  }
+  .propertyPageWrapper .propertyPageHeaderImgSection .property-side-form > * {
+    animation: ppFadeLeft 0.75s 0.15s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  }
+
+  /* ---- title + overview, on load ---- */
+  .propertyPageWrapper .propertyPageHeaderMobilePropertyTitle {
+    animation: ppFadeUp 0.6s 0.1s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  }
+  .propertyPageWrapper .property-header-sub {
+    animation: ppFadeUp 0.6s 0.2s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  }
+  .propertyPageWrapper .property-header-images {
+    animation: ppFadeUp 0.6s 0.3s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  }
+  .propertyPageWrapper .card.card-width {
+    animation: ppFadeUp 0.7s 0.35s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  }
+  .propertyPageWrapper .container-card {
+    animation: ppFadeUp 0.7s 0.45s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  }
+
+  .propertyPageWrapper .property-map-btn .arrow-logo {
+    transition: transform 0.3s ease;
+  }
+  .propertyPageWrapper .property-map-btn:hover .arrow-logo {
+    transform: translate(3px, -3px) rotate(8deg);
+  }
+
+  .propertyPageWrapper .unit-icon img,
+  .propertyPageWrapper .status-icon,
+  .propertyPageWrapper .price-tag-icon {
+    transition: transform 0.3s ease;
+  }
+  .propertyPageWrapper .unit-item:hover .unit-icon img,
+  .propertyPageWrapper .status-item:hover .status-icon,
+  .propertyPageWrapper .price-section:hover .price-tag-icon {
+    transform: scale(1.12) rotate(-4deg);
+  }
+
+  .propertyPageWrapper .ul-highlight li {
+    transition: transform 0.25s ease, color 0.25s ease;
+  }
+  .propertyPageWrapper .ul-highlight li:hover {
+    transform: translateX(4px);
+    color: var(--pp-ink);
+  }
+
+  .propertyPageWrapper .highlight-wrappers .card-ct-wt:hover::before,
+  .propertyPageWrapper .brochure-download-section button:hover::before,
+  .propertyPageWrapper .rera-btn:hover::before {
+    animation: ppSheen 0.8s ease;
+  }
+
+  .propertyPageWrapper .container-card .Header::after,
+  .propertyPageWrapper .about-wrapper .Header::after {
+    animation: ppGrow 0.7s 0.6s ease-out backwards;
+  }
+
+  /* ---- sections below the tab bar: revealed as they scroll into view.
+     The hidden state only exists once JS has added .pp-anim (see
+     [propertyId].js), so without JS nothing is ever hidden. The final state
+     is `transform: none` so no section becomes a containing block for the
+     fixed-position enquiry popups rendered inside it. ---- */
+  .propertyPageWrapper.pp-anim .property-left > section {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 0.7s ease-out,
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .propertyPageWrapper.pp-anim .property-left > section.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .propertyPageWrapper.pp-anim .property-left > section .Header::after,
+  .propertyPageWrapper.pp-anim .property-left > section .emiHeading::after,
+  .propertyPageWrapper.pp-anim .property-left > section .faqHeading::after {
+    transform: scaleX(0);
+    transition: transform 0.7s 0.25s ease-out;
+  }
+  .propertyPageWrapper.pp-anim .property-left > section.is-visible .Header::after,
+  .propertyPageWrapper.pp-anim .property-left > section.is-visible .emiHeading::after,
+  .propertyPageWrapper.pp-anim .property-left > section.is-visible .faqHeading::after {
+    transform: scaleX(1);
+  }
+
+  /* Staggered pop-in for amenity tiles, floor-plan cards and FAQ rows.
+     `backwards` fill so the hover lift still works after the animation. */
+  .propertyPageWrapper.pp-anim .is-visible .amenity-item,
+  .propertyPageWrapper.pp-anim .is-visible .property-card,
+  .propertyPageWrapper.pp-anim .is-visible .faqItem {
+    animation: ppPop 0.5s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  }
+  .propertyPageWrapper.pp-anim .is-visible :is(.amenity-item, .property-card, .faqItem):nth-child(2) { animation-delay: 0.05s; }
+  .propertyPageWrapper.pp-anim .is-visible :is(.amenity-item, .property-card, .faqItem):nth-child(3) { animation-delay: 0.1s; }
+  .propertyPageWrapper.pp-anim .is-visible :is(.amenity-item, .property-card, .faqItem):nth-child(4) { animation-delay: 0.15s; }
+  .propertyPageWrapper.pp-anim .is-visible :is(.amenity-item, .property-card, .faqItem):nth-child(5) { animation-delay: 0.2s; }
+  .propertyPageWrapper.pp-anim .is-visible :is(.amenity-item, .property-card, .faqItem):nth-child(6) { animation-delay: 0.25s; }
+  .propertyPageWrapper.pp-anim .is-visible :is(.amenity-item, .property-card, .faqItem):nth-child(7) { animation-delay: 0.3s; }
+  .propertyPageWrapper.pp-anim .is-visible :is(.amenity-item, .property-card, .faqItem):nth-child(8) { animation-delay: 0.35s; }
+  .propertyPageWrapper.pp-anim .is-visible :is(.amenity-item, .property-card, .faqItem):nth-child(n + 9) { animation-delay: 0.4s; }
+
+  .propertyPageWrapper .amenity-item img {
+    transition: transform 0.3s ease;
+  }
+  .propertyPageWrapper .amenity-item:hover img {
+    transform: scale(1.1) translateY(-2px);
+  }
+
+  .propertyPageWrapper .faqItem {
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+  }
+  .propertyPageWrapper .faqItem:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(231, 181, 84, 0.18);
+  }
+
+  /* Sticky form in the right column slides in once */
+  .propertyPageWrapper .property-right .homeCtaInnerWrapper {
+    animation: ppFadeLeft 0.8s 0.2s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  }
+}

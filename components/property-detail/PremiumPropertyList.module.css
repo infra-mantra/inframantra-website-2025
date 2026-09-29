@@ -1,0 +1,203 @@
+/* Similar Properties — refreshed cards. The card itself is shared with the
+   home page's Premium Picks (components/home/premium-picks/PropertyCard.jsx),
+   so every rule here is scoped to .similar and the home page is untouched.
+   Class names are unhashed (WANT_HASH = false), hence the :global() hooks. */
+
+.similar {
+  position: relative;
+}
+
+/* Room for the pagination dots and the card hover lift */
+.similar :global(.swiper) {
+  padding: 6px 4px 40px;
+}
+
+.similar :global(.swiper-slide) {
+  height: auto;
+}
+
+/* ---------- Card ---------- */
+.similar :global(.propertyCard) {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #efefef;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(17, 17, 17, 0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.similar :global(.propertyCard):hover {
+  transform: translateY(-4px);
+  border-color: #f1e3bf;
+  box-shadow: 0 14px 30px rgba(17, 17, 17, 0.12);
+}
+
+.similar :global(.propertyImageContainer) {
+  height: 180px;
+  border-radius: 16px 16px 0 0;
+}
+
+/* soft shade at the bottom of the photo */
+.similar :global(.propertyImageContainer)::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 45%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0));
+  pointer-events: none;
+}
+
+.similar :global(.propertyContent) {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 14px 16px 16px;
+}
+
+.similar :global(.propertyTitle) {
+  margin-bottom: 6px;
+  font-size: 16px;
+  color: #1a1a1a;
+  transition: color 0.2s ease;
+}
+
+.similar :global(.propertyCard):hover :global(.propertyTitle) {
+  color: #c9962f;
+}
+
+/* location with a small gold pin */
+.similar :global(.propertyLocation) {
+  position: relative;
+  margin-bottom: 12px;
+  padding-left: 18px;
+  font-size: 12.5px;
+  color: #6b7280;
+}
+
+.similar :global(.propertyLocation)::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 13px;
+  height: 13px;
+  background: #d9a23c;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z'/%3E%3C/svg%3E")
+    center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z'/%3E%3C/svg%3E")
+    center / contain no-repeat;
+}
+
+/* price: gold pill on its own line, with a "view" arrow on the right */
+.similar :global(.propertyPrice) {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px dashed #efe6d2;
+  font-size: 15px;
+  color: #8a6a24;
+}
+
+.similar :global(.propertyPrice)::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: calc(50% + 6px);
+  width: 30px;
+  height: 30px;
+  margin-top: -15px;
+  border-radius: 50%;
+  background: #fff8e1
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c9962f' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E")
+    center / 15px no-repeat;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.similar :global(.propertyCard):hover :global(.propertyPrice)::after {
+  background-color: #f6e4b8;
+  transform: translateX(3px);
+}
+
+/* ---------- Slider controls ---------- */
+.similar :global(.swiper-pagination-bullet) {
+  width: 8px;
+  height: 8px;
+  background: #e2d3ad;
+  opacity: 1;
+  transition: width 0.25s ease, background 0.25s ease;
+}
+
+.similar :global(.swiper-pagination-bullet-active) {
+  width: 22px;
+  border-radius: 999px;
+  background: #e7b554;
+}
+
+/* Arrows: the property gallery hides Swiper's arrow glyphs site-wide, so draw
+   our own round buttons here. */
+.similar :global(.swiper-button-prev),
+.similar :global(.swiper-button-next) {
+  top: calc(50% - 20px);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.16);
+  color: #c9962f;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.similar :global(.swiper-button-prev) {
+  left: 6px;
+}
+
+.similar :global(.swiper-button-next) {
+  right: 6px;
+}
+
+.similar :global(.swiper-button-prev):hover,
+.similar :global(.swiper-button-next):hover {
+  background: #fff8e1;
+  transform: scale(1.06);
+}
+
+.similar :global(.swiper-button-prev)::before,
+.similar :global(.swiper-button-next)::before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 6l-6 6 6 6'/%3E%3C/svg%3E")
+    center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 6l-6 6 6 6'/%3E%3C/svg%3E")
+    center / contain no-repeat;
+}
+
+.similar :global(.swiper-button-next)::before {
+  transform: rotate(180deg);
+}
+
+.similar :global(.swiper-button-disabled) {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .similar :global(.propertyImageContainer) {
+    height: 160px;
+  }
+  /* swipe on touch screens; arrows only get in the way */
+  .similar :global(.swiper-button-prev),
+  .similar :global(.swiper-button-next) {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .similar :global(.propertyCard),
+  .similar :global(.propertyPrice)::after {
+    transition: none;
+  }
+}

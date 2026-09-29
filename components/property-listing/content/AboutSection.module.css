@@ -119,3 +119,9 @@
     font-size: 13px;
   }
 }
+
+/* city names in the "Showing … properties in <cities>" line */
+.cityNote {
+  color: #0b6e21;
+  font-weight: 600;
+}

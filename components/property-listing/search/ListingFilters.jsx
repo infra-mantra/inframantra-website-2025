@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import style from "./ListingFilters.module.css";
 import { useRouter } from "next/router";
+import LocationFilter from "./LocationFilter.jsx";
 export default function ListingFilters({
   onFilterChange,
   openClosefilter,
@@ -9,6 +10,13 @@ export default function ListingFilters({
   // configuration, so its tick should show even though the URL carries no
   // ?config=. "2" for 2-bhk, "Penthouse" for penthouse; undefined elsewhere.
   defaultConfiguration,
+  // Cities in the current listing with counts ([{ name, count }]) — the "Cities"
+  // filter narrows the listing in place
+  cityOptions = [],
+  // When the page changes filters itself (applied-filter chips), it bumps
+  // syncKey and the sidebar re-reads its ticks from syncFilters.
+  syncFilters,
+  syncKey = 0,
 }) {
   // ---------------- STATES ----------------
   const [expanded, setExpanded] = useState({
@@ -64,8 +72,22 @@ export default function ListingFilters({
     setMinInput(q.min ? String(q.min) : "");
     setMaxInput(q.max ? String(q.max) : "");
     setInputError("");
-    setSelectedCities(type === "city" ? [name] : []);
+    setSelectedCities(csv(q.city));
   }, [name, defaultConfiguration, router.isReady]);
+
+  useEffect(() => {
+    if (!syncKey || !syncFilters) return;
+    setSelectedCities(syncFilters.city || []);
+    setSelectedUnitTypes(syncFilters.unitType || []);
+    setSelectedConfigurations(syncFilters.configuration || []);
+    setSelectedStatuses(syncFilters.status || []);
+    const [min, max] = syncFilters.priceRange || [null, null];
+    setPriceRange([min ?? null, max ?? null]);
+    setMinInput(min ? String(min) : "");
+    setMaxInput(max ? String(max) : "");
+    setInputError("");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [syncKey]);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -130,12 +152,9 @@ export default function ListingFilters({
 
   // 🔥 FIX: Ensures newValue is passed, not old state
   const updateAndMaybeNotify = (setter, newValue, type) => {
-    // A configuration page cannot have an empty selection. The path already scopes
-    // it to one configuration, and an empty list falls back to exactly that — so
-    // unticking the last one changed nothing but the tick. Keep the page's own.
-    if (type === "configuration" && newValue.length === 0 && defaultConfiguration) {
-      newValue = [defaultConfiguration];
-    }
+    // On a configuration page the page's own layout may be unticked: the listing
+    // page then moves to whatever is picked (another configuration page, or all
+    // properties), so the selection is passed through as-is.
     setter(newValue);
 
     if (!isMobile) {
@@ -303,6 +322,16 @@ export default function ListingFilters({
   )`;
   };
 
+  // Case-insensitive, so an older ?city=gurgaon URL still ticks "Gurgaon"
+  const isCityTicked = (c) => selectedCities.some((x) => x.toLowerCase() === c.toLowerCase());
+  const toggleCity = (c) => {
+    const updated = isCityTicked(c)
+      ? selectedCities.filter((x) => x.toLowerCase() !== c.toLowerCase())
+      : [...selectedCities, c];
+    updateAndMaybeNotify(setSelectedCities, updated, "city");
+  };
+  const showCities = cityOptions.length > 1 || selectedCities.length > 0;
+
   if (isMobile) {
     // ✅ Only show the mobile drawer if it's open
     if (!openClosefilter)
@@ -347,17 +376,41 @@ export default function ListingFilters({
           </svg>
           Location
         </div>
-        <div className={style.locationTags}>
-          {["Gurgaon", "Mohali", "Noida", "Pune", "Jaipur"].map((city) => (
-            <span
-              key={city}
-              className={`${style.tag} ${selectedCities.includes(city) ? style.active1 : ""}`}
-              onClick={() => handleTagClick(city, selectedCities, setSelectedCities, "city")}
-            >
-              {city}
-            </span>
-          ))}
-        </div>
+        <LocationFilter
+          refineCities={selectedCities}
+          onRefineCity={(city) => handleTagClick(city, selectedCities, setSelectedCities, "city")}
+          onNavigate={handleCloseFilterToggle}
+        />
+
+        {/* Cities in this listing */}
+        {showCities && (
+          <>
+            <div className={style.sectionHeader} onClick={() => toggleSection("city")}>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: "7px" }}>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M3 21V9l6-4v4l6-4v16H3zm14 0V3h4v18h-4zM6 12h2v2H6v-2zm0 4h2v2H6v-2zm4-4h2v2h-2v-2zm0 4h2v2h-2v-2z" />
+                </svg>
+                CITIES
+              </span>
+              <span className={`${style.arrowIcon} ${expanded.city ? style.rotateDown : style.rotateUp}`}>
+                ▼
+              </span>
+            </div>
+            {expanded.city && (
+              <div className={style.locationTags}>
+                {cityOptions.map((c) => (
+                  <span
+                    key={c.name}
+                    className={`${style.tag} ${isCityTicked(c.name) ? style.active1 : ""}`}
+                    onClick={() => toggleCity(c.name)}
+                  >
+                    {c.name} ({c.count})
+                  </span>
+                ))}
+              </div>
+            )}
+          </>
+        )}
 
         {/* Unit Type */}
         <div className={style.sectionHeader} onClick={() => toggleSection("unitType")}>
@@ -563,17 +616,42 @@ export default function ListingFilters({
           </svg>
           Location
         </div>
-        <div className={style.locationTags}>
-          {["Gurgaon", "Mohali", "Noida", "Pune", "Jaipur"].map((city) => (
-            <span
-              key={city}
-              className={`${style.tag} ${selectedCities.includes(city) ? style.active1 : ""}`}
-              onClick={() => handleTagClick(city, selectedCities, setSelectedCities, "city")}
-            >
-              {city}
-            </span>
-          ))}
-        </div>
+        <LocationFilter
+          refineCities={selectedCities}
+          onRefineCity={(city) => handleTagClick(city, selectedCities, setSelectedCities, "city")}
+        />
+
+        {/* Cities in this listing */}
+        {showCities && (
+          <>
+            <div className={style.sectionHeader} onClick={() => toggleSection("city")}>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: "7px" }}>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M3 21V9l6-4v4l6-4v16H3zm14 0V3h4v18h-4zM6 12h2v2H6v-2zm0 4h2v2H6v-2zm4-4h2v2h-2v-2zm0 4h2v2h-2v-2z" />
+                </svg>
+                CITIES
+              </span>
+              <span className={`${style.arrowIcon} ${expanded.city ? style.rotateDown : style.rotateUp}`}>
+                ▼
+              </span>
+            </div>
+            {expanded.city && (
+              <div className={style.checkboxGroup}>
+                {cityOptions.map((c) => (
+                  <label className={style.checkboxItem} key={c.name}>
+                    <input
+                      type="checkbox"
+                      checked={isCityTicked(c.name)}
+                      onChange={() => toggleCity(c.name)}
+                    />
+                    {c.name}
+                    <span className={style.optionCount}>{c.count}</span>
+                  </label>
+                ))}
+              </div>
+            )}
+          </>
+        )}
 
         {/* Unit Type */}
         <div className={style.sectionHeader} onClick={() => toggleSection("unitType")}>

@@ -298,7 +298,7 @@ function CustomizedHook({ onSearch }) {
 
   const handleSearchClick = () => {
     if (inputValue.trim()) {
-      router.push(`property-listing/search/${inputValue}`);
+      router.push(`/property-listing/search/${inputValue}`);
     }
   };
 
@@ -313,7 +313,7 @@ function CustomizedHook({ onSearch }) {
       case "subLocality":
       case "city":
       case "state":
-        router.push(`property-listing/${option.type}/${encodedTitle}`);
+        router.push(`/property-listing/${option.type}/${encodedTitle}`);
         break;
     }
 

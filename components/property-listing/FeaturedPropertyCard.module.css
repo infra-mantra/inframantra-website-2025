@@ -1,0 +1,254 @@
+/* Featured Properties card on the listing page. Prefixed fp- (CSS module names
+   are unhashed in this project). */
+.fp-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid #efefef;
+  border-radius: 16px;
+  background: #fff;
+  color: inherit;
+  text-decoration: none;
+  font-family: "Lexend Deca", sans-serif;
+  box-shadow: 0 6px 20px rgba(17, 17, 17, 0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.fp-card:hover {
+  transform: translateY(-4px);
+  border-color: #f1e3bf;
+  box-shadow: 0 14px 30px rgba(17, 17, 17, 0.12);
+}
+
+/* ---------- photo ---------- */
+.fp-media {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+  background: #eee;
+}
+
+.fp-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.fp-card:hover .fp-img {
+  transform: scale(1.06);
+}
+
+/* bottom shade so the configuration chip reads on light photos */
+.fp-media::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 50%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0));
+  pointer-events: none;
+}
+
+.fp-logo {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+  height: 36px;
+  max-width: 70%;
+  padding: 5px 9px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+}
+
+.fp-logo img {
+  display: block;
+  height: 100%;
+  width: auto;
+  max-width: 96px;
+  object-fit: contain;
+}
+
+.fp-config {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  z-index: 1;
+  max-width: calc(100% - 20px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #e7b554;
+  color: #fff;
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
+/* ---------- text ---------- */
+.fp-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 6px;
+  padding: 14px 16px 16px;
+}
+
+.fp-name {
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #1a1a1a;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.1px;
+  transition: color 0.2s ease;
+}
+
+.fp-card:hover .fp-name {
+  color: #c9962f;
+}
+
+/* status as a small coloured line under the name (on the photo it had to be
+   truncated at four cards per row) */
+.fp-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #b7791f;
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
+.fp-status::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.fp-status.is-ready {
+  color: #0b6e21;
+}
+
+.fp-loc {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 0;
+  color: #6b7280;
+  font-size: 12.5px;
+}
+
+.fp-loc svg {
+  flex-shrink: 0;
+  color: #d9a23c;
+}
+
+.fp-loc span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fp-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px dashed #efe6d2;
+}
+
+.fp-price {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.fp-price-label {
+  color: #8a8a8a;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.fp-price strong {
+  color: #8a6a24;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.fp-go {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #fff8e1;
+  color: #c9962f;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.fp-card:hover .fp-go {
+  background: #e7b554;
+  color: #fff;
+  transform: translateX(3px);
+}
+
+.fp-card:focus-visible {
+  outline: 3px solid rgba(231, 181, 84, 0.7);
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+  .fp-media {
+    height: 160px;
+  }
+  .fp-name {
+    font-size: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fp-card,
+  .fp-img,
+  .fp-go {
+    transition: none;
+  }
+}
+
+/* ---------- slider around the cards ---------- */
+.fp-slider :global(.swiper) {
+  padding: 6px 4px 38px; /* room for the hover lift and the dots */
+}
+
+.fp-slider :global(.swiper-slide) {
+  height: auto;
+}
+
+.fp-slider :global(.swiper-pagination-bullet) {
+  width: 8px;
+  height: 8px;
+  background: #e2d3ad;
+  opacity: 1;
+  transition: width 0.25s ease, background 0.25s ease;
+}
+
+.fp-slider :global(.swiper-pagination-bullet-active) {
+  width: 22px;
+  border-radius: 999px;
+  background: #e7b554;
+}

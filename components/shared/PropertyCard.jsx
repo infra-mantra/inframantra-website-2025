@@ -12,6 +12,13 @@ const PropertyPageFloatingContact = dynamic(
   { ssr: false }
 );
 
+// CMS status spellings vary ("UNDER CONSTRUCTION", "Under Construction ") — show one form
+const titleCase = (v) =>
+  String(v || "")
+    .trim()
+    .toLowerCase()
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+
 const FALLBACK =
   "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&h=300&fit=crop&auto=format";
 
@@ -25,6 +32,11 @@ export default function PropertyCard({ property }) {
   const [errored, setErrored] = React.useState(false);
   const [enquiryOpen, setEnquiryOpen] = React.useState(false);
   const router = useRouter();
+  const status = titleCase(property.status);
+  const location = [property.subLocality?.name, property.locality?.name]
+    .map((x) => (x || "").trim())
+    .filter(Boolean)
+    .join(", ");
   const src = errored ? FALLBACK : property.imageGallery?.url || FALLBACK;
 
   const goToProperty = () => {
@@ -46,30 +58,28 @@ export default function PropertyCard({ property }) {
             onError={() => setErrored(true)}
           />
 
-          {/* Developer logo overlay — lazy-loaded so it never blocks the card image / initial paint */}
+          {/* Developer logo — lazy-loaded so it never blocks the card image / initial paint */}
           {property.developer?.developerImg && (
-            <img
-              src={property.developer.developerImg}
-              alt={property.developer.name ? `${property.developer.name} logo` : "Developer logo"}
-              loading="lazy"
-              decoding="async"
-              width="56"
-              height="38"
-              style={{
-                position: "absolute",
-                top: "8px",
-                left: "8px",
-                width: "56px",
-                height: "auto",
-                maxHeight: "38px",
-                objectFit: "contain",
-                background: "rgba(255,255,255,0.92)",
-                borderRadius: "4px",
-                padding: "3px",
-                boxShadow: "0 1px 3px rgba(0,0,0,0.15)",
-                zIndex: 2,
-              }}
-            />
+            <span className={styles.pcLogo}>
+              <img
+                src={property.developer.developerImg}
+                alt={property.developer.name ? `${property.developer.name} logo` : "Developer logo"}
+                loading="lazy"
+                decoding="async"
+                width="64"
+                height="26"
+              />
+            </span>
+          )}
+
+          {status && (
+            <span className={`${styles.pcStatus} ${/ready/i.test(status) ? styles.pcStatusReady : ""}`}>
+              {status}
+            </span>
+          )}
+
+          {property.configuration && (
+            <span className={styles.pcConfig}>{property.configuration.trim()}</span>
           )}
         </div>
 
@@ -77,14 +87,29 @@ export default function PropertyCard({ property }) {
           <h3 className={styles.propertyTitle}>{property.name}</h3>
 
           <p className={styles.propertyLocation}>
-            {[property.subLocality?.name, property.locality?.name].filter(Boolean).join(", ")}
+            <svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true" className={styles.pcPin}>
+              <path
+                d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"
+                fill="currentColor"
+              />
+            </svg>
+            <span>{location}</span>
           </p>
 
           {property.configuration && (
             <p className={styles.propertyConfig}>{property.configuration}</p>
           )}
 
-          <p className={styles.propertyPrice}>Starting From Rs. {property.startingPrice}</p>
+          <p className={styles.propertyPrice}>
+            {property.startingPrice ? (
+              <>
+                <span className={styles.pcPriceLabel}>Starting from</span>
+                <strong className={styles.pcPriceValue}>₹ {property.startingPrice}</strong>
+              </>
+            ) : (
+              <span className={styles.pcPriceLabel}>Price on request</span>
+            )}
+          </p>
         </div>
       </a>
 
@@ -98,6 +123,9 @@ export default function PropertyCard({ property }) {
           className={`${styles.propCardBtn} ${styles.propCardBtnPrimary}`}
         >
           View More
+          <svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true" className={styles.propCardBtnIcon}>
+            <path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
         </button>
         <button
           type="button"

@@ -31,12 +31,14 @@
 
 .sharedPropCard:hover {
   transform: translateY(-4px);
+  border-color: #f1e3bf;
   box-shadow: 0 16px 34px rgba(0, 0, 0, 0.14);
 }
 
 /* the link fills the card so the button row sits at the bottom on equal-height cards */
 .sharedPropCard > a {
-  display: block;
+  display: flex;
+  flex-direction: column;
   flex: 1 1 auto;
   text-decoration: none;
   color: inherit;
@@ -59,8 +61,104 @@
   transform: scale(1.06);
 }
 
+/* bottom shade so the BHK chip reads on bright sky photos */
+.sharedPropCard .propertyImageContainer::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 55%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ---- overlays on the photo (logo top-left, status top-right, BHK bottom-left) */
+.sharedPropCard .pcLogo {
+  position: absolute;
+  top: 9px;
+  left: 9px;
+  z-index: 2;
+  height: 32px;
+  max-width: 45%;
+  padding: 4px 8px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.18);
+}
+
+.sharedPropCard .pcLogo img {
+  display: block;
+  width: auto;
+  height: 100%;
+  max-width: 72px;
+  object-fit: contain;
+}
+
+.sharedPropCard .pcStatus {
+  position: absolute;
+  top: 10px;
+  right: 9px;
+  z-index: 2;
+  max-width: 50%;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: rgba(20, 20, 20, 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #fff;
+  font-family: "Lexend Deca", sans-serif;
+  font-size: 10.5px;
+  font-weight: 600;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sharedPropCard .pcStatus::before {
+  content: "";
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #e7b554;
+}
+
+.sharedPropCard .pcStatusReady::before {
+  background: #3ddc84;
+}
+
+.sharedPropCard .pcConfig {
+  position: absolute;
+  left: 9px;
+  bottom: 9px;
+  z-index: 2;
+  max-width: calc(100% - 18px);
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #e7b554;
+  color: #fff;
+  font-family: "Lexend Deca", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
 /* Matches .blogPostBody. */
 .sharedPropCard .propertyContent {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
   padding: 14px 17px 0;
   font-family: "Lexend Deca", sans-serif;
 }
@@ -68,35 +166,55 @@
 /* Same metrics as the blog card's h3 — including the two-line clamp and the
    reserved min-height, which is what makes titles line up card-to-card. */
 .sharedPropCard .propertyTitle {
-  font-size: 15.5px;
-  font-weight: 600;
-  color: #dcaa4c;
+  font-size: 15px;
+  font-weight: 500;
+  color: #222;
   margin: 0;
   font-family: "Lexend Deca", sans-serif;
-  letter-spacing: -0.1px;
-  line-height: 1.3;
+  letter-spacing: 0;
+  line-height: 1.35;
 
   display: -webkit-box;
   -webkit-line-clamp: 2;
   line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  min-height: 40px;
+  transition: color 0.2s ease;
+}
+
+.sharedPropCard:hover .propertyTitle {
+  color: #c9962f;
 }
 
 /* Matches .blogPostDate. */
 .sharedPropCard .propertyLocation {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 400;
-  color: #707070;
+  color: #6b7280;
   margin: 5px 0 0 0;
   line-height: 1.4;
   font-family: "Lexend Deca", sans-serif;
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.sharedPropCard .propertyLocation > span {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.sharedPropCard .propertyLocation {
+  margin-bottom: 9px;
+}
+
+.sharedPropCard .pcPin {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #d9a23c;
 }
 
 .sharedPropCard .propertyConfig {
@@ -111,14 +229,31 @@
    price each carried their own border-top, which turned the body into a spec
    sheet next to the blog card's clean stack. */
 .sharedPropCard .propertyPrice {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px;
   font-size: 14px;
   font-weight: 400;
   color: #707070;
-  margin: 8px 0 0 0;
-  padding-top: 8px;
-  border-top: 1px solid #eef0f2;
+  margin: auto 0 0 0;
+  padding-top: 9px;
+  border-top: 1px dashed #efe6d2;
   font-family: "Lexend Deca", sans-serif;
   letter-spacing: 0.01em;
+}
+
+.sharedPropCard .pcPriceLabel {
+  color: #8d939b;
+  font-size: 12.5px;
+  font-weight: 400;
+}
+
+.sharedPropCard .pcPriceValue {
+  color: #a0741c;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0;
 }
 
 /* ------------------------------------------------------------------ actions
@@ -245,10 +380,7 @@
     them on a card only ~200px wide.
   */
   .sharedPropCard .propertyTitle {
-    font-size: 14.5px;
-    /* 15 x 1.3 x 2 lines. Was 41px, which reserved more than two lines occupy
-       and showed as dead space under a one-line name. */
-    min-height: 39px;
+    font-size: 14px;
   }
 
   .sharedPropCard .propertyLocation,
@@ -260,8 +392,31 @@
 
   .sharedPropCard .propertyPrice {
     font-size: 13.5px;
-    margin-top: 6px;
-    padding-top: 6px;
+    padding-top: 7px;
+    gap: 4px;
+  }
+
+  .sharedPropCard .pcPriceLabel {
+    font-size: 11px;
+  }
+
+  .sharedPropCard .pcPriceValue {
+    font-size: 14px;
+  }
+
+  .sharedPropCard .pcLogo {
+    height: 28px;
+    padding: 3px 6px;
+  }
+
+  .sharedPropCard .pcStatus {
+    font-size: 9.5px;
+    padding: 3px 7px;
+  }
+
+  .sharedPropCard .pcConfig {
+    font-size: 10px;
+    padding: 2px 8px;
   }
 }
 
@@ -294,6 +449,9 @@
   }
   .sharedPropCard:hover .propertyImage {
     transform: none;
+  }
+  .sharedPropCard .propertyTitle {
+    transition: none;
   }
 }
 

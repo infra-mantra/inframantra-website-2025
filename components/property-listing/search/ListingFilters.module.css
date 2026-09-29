@@ -719,3 +719,34 @@
     transform: translateX(100%);
   }
 }
+
+/* property count next to each city in the Cities filter */
+.optionCount {
+  margin-left: auto;
+  min-width: 22px;
+  padding: 1px 7px;
+  box-sizing: border-box;
+  border-radius: 999px;
+  background: #f0f0f0;
+  color: #666;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Mobile filter drawer: it is a full-screen panel, so it must sit above the
+   site's fixed bottom bar (WhatsApp / Call / Enquire, z-index 1100), the mobile
+   nav (1200) and the floating chat buttons. At z-index 1000 those covered the
+   drawer's last options and its Apply/Reset bar, so the list never scrolled
+   fully clear. dvh = the visible height, so the browser's address bar can't
+   push the bottom off-screen either. */
+@media (max-width: 768px) {
+  .mobileDrawer {
+    z-index: 10000;
+    height: 100vh;
+    height: 100dvh;
+    overscroll-behavior: contain;
+    /* the last section (Project Status) clears the phone's home-indicator area */
+    padding-bottom: calc(2.5rem + env(safe-area-inset-bottom, 0px));
+  }
+}

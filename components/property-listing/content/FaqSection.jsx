@@ -41,17 +41,17 @@ function FaqSection({
             {
               id: 1,
               question: `What is the total number of properties for sale in ${areaLabel}?`,
-              answer: `There are more than “${totalProperties}” properties for sale in “${areaLabel}”. These properties are developed by top real estate companies and offer excellent connectivity, modern amenities, and premium comfort.`,
+              answer: `There are more than ${totalProperties} properties for sale in ${areaLabel}. These properties are developed by top real estate companies and offer excellent connectivity, modern amenities, and premium comfort.`,
             },
             {
               id: 2,
               question: `How many ready-to-move properties are available in ${areaLabel}?`,
-              answer: `There are “${readyToMove}+” luxury ready-to-move properties available in ${areaLabel}. Limited inventory is available. Connect with an Inframantra property advisor to book a site visit today.`,
+              answer: `There are ${readyToMove}+ luxury ready-to-move properties available in ${areaLabel}. Limited inventory is available. Connect with an Inframantra property advisor to book a site visit today.`,
             },
             {
               id: 3,
               question: `How many high-rise apartments are available for sale in ${areaLabel}?`,
-              answer: `There are “${highRise}+” high-rise apartments for sale in ${areaLabel}. These properties offer spacious layouts, ample ventilation, world-class amenities, and multi-level security.`,
+              answer: `There are ${highRise}+ high-rise apartments for sale in ${areaLabel}. These properties offer spacious layouts, ample ventilation, world-class amenities, and multi-level security.`,
             },
             {
               id: 4,
@@ -90,26 +90,48 @@ function FaqSection({
     setActiveIndex(activeIndex === index ? null : index);
   };
 
+  // Class names are prefixed lfq- because this project's CSS module names are
+  // not hashed: the listing skeleton's ".faqHeading" (a grey 340x30 block) was
+  // leaking onto this heading.
   return (
-    <section className={styles.faqSection}>
-      <h2 className={styles.faqHeading}>FREQUENTLY ASKED QUESTIONS</h2>
+    <section className={styles["lfq-section"]}>
+      <h2 className={styles["lfq-title"]}>Frequently Asked Questions</h2>
 
-      <div className={styles.faqContainer}>
-        {faqData.map((item, index) => (
-          <div
-            key={item.id}
-            className={`${styles.faqItem} ${activeIndex === index ? styles.active : ""}`}
-            onClick={() => toggleFAQ(index)}
-          >
-            <div className={styles.faqQuestion}>
-              <span className={styles.faqNumber}>{item.id < 10 ? `0${item.id}` : item.id}</span>
-              <span className={styles.faqText}>{item.question}</span>
-              <span className={styles.icon}>{activeIndex === index ? "-" : "+"}</span>
+      <div className={styles["lfq-list"]}>
+        {faqData.map((item, index) => {
+          const open = activeIndex === index;
+          return (
+            <div key={item.id} className={`${styles["lfq-item"]} ${open ? styles["is-open"] : ""}`}>
+              <button
+                type="button"
+                className={styles["lfq-q"]}
+                onClick={() => toggleFAQ(index)}
+                aria-expanded={open}
+              >
+                <span className={styles["lfq-num"]}>{item.id < 10 ? `0${item.id}` : item.id}</span>
+                <span className={styles["lfq-text"]}>{item.question}</span>
+                <span className={styles["lfq-chev"]} aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="16" height="16">
+                    <path
+                      d="M6 9l6 6 6-6"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.4"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </span>
+              </button>
+              {/* grid 0fr -> 1fr animates the height without measuring it */}
+              <div className={styles["lfq-a-wrap"]}>
+                <div className={styles["lfq-a"]}>
+                  <p>{item.answer}</p>
+                </div>
+              </div>
             </div>
-
-            {activeIndex === index && <div className={styles.faqAnswer}>{item.answer}</div>}
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

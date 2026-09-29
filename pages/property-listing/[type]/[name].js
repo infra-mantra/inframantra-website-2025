@@ -10,6 +10,7 @@ import PropertyCardSkeleton, {
 } from "../../../components/property-listing/PropertyCardSkeleton.jsx";
 import pll from "../listingLayout.module.css";
 import { optimizedSrc } from "../../../components/lib/imageUrl.js";
+import AppliedFilters from "../../../components/property-listing/content/AppliedFilters.jsx";
 // import { cityNames } from '../../../components/property-listing/dropDownMenuConstants.js';
 // Lazy load components
 const PropertyListingCard = dynamic(
@@ -206,16 +207,20 @@ const applyConfigurationNet = (hits, typeVal, nameVal, selected) => {
   return hits.filter((h) => active.some((c) => matchesConfiguration(h?.configuration, c)));
 };
 
-const applyScope = (p, typeVal, nameVal, cityRefine) => {
+const applyScope = (p, typeVal, nameVal) => {
   const cfg = typeVal === "configuration" ? CONFIGURATIONS[nameVal] : null;
   if (cfg) {
-    // A configuration page searches the whole index by default. When a city is
-    // also selected it becomes the search term instead, so the two narrow
-    // together rather than the city replacing the page.
-    p.set("q", cityRefine ? cityRefine : "property-in-india");
+    // A configuration page searches the whole index. Cities picked in the
+    // sidebar narrow it through the ?city= filter (see buildSearchQuery), so
+    // several cities can be combined.
+    p.set("q", "property-in-india");
     p.set("configuration", cfg.filter);
   } else {
     p.set("q", nameVal);
+    // The search page matches place names AND project/developer names together;
+    // otherwise "vatika" found only the Jaipur sub-locality and missed the
+    // Vatika projects in Gurgaon. Location pages keep strict place matching.
+    if (typeVal === "search") p.set("mode", "search");
   }
 };
 
@@ -281,6 +286,12 @@ const PropertyListingPage = ({
   const [readyToMove, setReadyToMove] = useState(0);
   const [highRise, setHighRise] = useState(0);
 
+  // Cities in the current listing with counts — drives the sidebar city filter
+  const [cityOptions, setCityOptions] = useState([]);
+  // Bumped when filters change from outside the sidebar (the applied-filter
+  // chips), so the sidebar re-reads its ticks from `filters`.
+  const [filterSyncKey, setFilterSyncKey] = useState(0);
+
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
 
@@ -297,6 +308,9 @@ const PropertyListingPage = ({
   const filterRef = useRef(null);
   const divRef = useRef(null);
   const [height, setHeight] = useState(0);
+  // Desktop filter column scrolls on its own; show a "More filters" cue until the
+  // user reaches its end (people didn't realise there was more below).
+  const [filterMoreBelow, setFilterMoreBelow] = useState(false);
   const lastQueryRef = useRef(""); // guards against duplicate consecutive list fetches (double loading)
   const initKeyRef = useRef(""); // ensures the per-location initial load runs exactly once
 
@@ -327,6 +341,25 @@ const PropertyListingPage = ({
   // ✅ Sync listing content height with filters
 
   
+  // ✅ "More filters" cue for the scrollable desktop filter column
+  useEffect(() => {
+    if (!isDesktop) return;
+    const el = filterRef.current;
+    if (!el) return;
+    const update = () => setFilterMoreBelow(el.scrollHeight - el.scrollTop - el.clientHeight > 24);
+    update();
+    el.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    // content height changes as the location list loads / sections expand
+    const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(update) : null;
+    if (ro) Array.from(el.children).forEach((c) => ro.observe(c));
+    return () => {
+      el.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+      ro?.disconnect();
+    };
+  }, [isDesktop]);
+
   // ✅ Smooth scroll to top when filters/search change
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -347,7 +380,7 @@ const PropertyListingPage = ({
   // Build the /search query string (filters + pagination + sort) sent to the backend
   const buildSearchQuery = (nameVal, pageVal, f, sortVal) => {
     const p = new URLSearchParams();
-    applyScope(p, type, nameVal, f.city?.[0]);
+    applyScope(p, type, nameVal);
     p.set("page", pageVal);
     p.set("limit", PAGE_SIZE);
     // Project to the card fields; see the backend CARD_SOURCE list. Cuts each hit
@@ -358,6 +391,8 @@ const PropertyListingPage = ({
     if (f.status?.length) p.set("status", f.status.join(","));
     if (f.configuration?.length) p.set("configuration", f.configuration.join(","));
     if (f.unitType?.length) p.set("unitType", f.unitType.join(","));
+    // Cities narrow the current listing (sidebar "Cities" checkboxes)
+    if (f.city?.length) p.set("city", f.city.join(","));
     const [min, max] = f.priceRange || [];
     if (min) p.set("minPrice", Math.round(Number(min) * 1e7));
     if (max) p.set("maxPrice", Math.round(Number(max) * 1e7));
@@ -483,6 +518,7 @@ const PropertyListingPage = ({
         setMaxPrice(data.stats.maxPrice || "");
         setReadyToMove(data.stats.readyToMove || 0);
         setHighRise(data.stats.highRise || 0);
+        setCityOptions(Array.isArray(data.stats.cities) ? data.stats.cities : []);
       }
     } catch (err) {
       console.error("Failed to fetch stats:", err);
@@ -500,18 +536,9 @@ const PropertyListingPage = ({
       map[filterTypes] = values;
     }
 
-    // On a configuration page a city narrows the page instead of replacing it:
-    // picking Gurgaon on /configuration/2-bhk used to navigate to the Gurgaon
-    // listing and lose the 2 BHK scope. Elsewhere, picking a different city
-    // genuinely is a navigation.
-    if (type !== "configuration") {
-      // Selecting a different city navigates to that city's listing (lowercase URL)
-      const otherCity = (map.city || []).find((c) => c && c.toLowerCase() !== nameLc);
-      if (otherCity) {
-        router.push(`/property-listing/city/${otherCity.toLowerCase()}`);
-        return;
-      }
-    }
+    // Cities are a filter on the current listing (they used to navigate to that
+    // city's page and drop every other filter). Moving to another place is done
+    // from the location list, which carries the filters along.
 
     const nextFilters = {
       status: map.projectStatus ?? filters.status,
@@ -520,10 +547,64 @@ const PropertyListingPage = ({
       city: map.city ?? filters.city,
       priceRange: map.priceRange ?? filters.priceRange,
     };
+    applyFilters(nextFilters);
+  };
+
+  const applyFilters = (nextFilters) => {
+    // On a configuration page (footer "3 & 3.5 BHK" etc.) the page's own layout is
+    // ticked but can be changed: a selection that drops it moves to the page for
+    // what is now picked (another configuration page, or all properties with
+    // ?config=), carrying the other filters. Keeping it and adding more stays here.
+    const ownCfg = type === "configuration" ? CONFIGURATIONS[nameLc]?.filter : undefined;
+    const picked = nextFilters.configuration || [];
+    if (ownCfg && !picked.includes(ownCfg)) {
+      const q = {};
+      if (nextFilters.status?.length) q.status = nextFilters.status.join(",");
+      if (nextFilters.unitType?.length) q.unit = nextFilters.unitType.join(",");
+      if (nextFilters.city?.length) q.city = nextFilters.city.join(",");
+      const [min, max] = nextFilters.priceRange || [];
+      if (min) q.min = min;
+      if (max) q.max = max;
+      if (sort && sort !== "relevance") q.sort = sort;
+      const slug =
+        picked.length === 1 &&
+        Object.keys(CONFIGURATIONS).find((k) => CONFIGURATIONS[k].filter === picked[0]);
+      if (slug) {
+        router.push({ pathname: `/property-listing/configuration/${slug}`, query: q });
+      } else {
+        if (picked.length) q.config = picked.join(",");
+        router.push({ pathname: "/property-listing/search/property-in-india", query: q });
+      }
+      return;
+    }
     setFilters(nextFilters);
     setCurrentPage(1);
     syncUrl(nextFilters, sort, 1);
     fetchList(nameLc, 1, nextFilters, sort);
+  };
+
+  // ---- applied-filter chips ----
+  const pageConfiguration = type === "configuration" ? CONFIGURATIONS[nameLc]?.filter : undefined;
+  const removeFilter = (key, value) => {
+    const next = { ...filters };
+    if (key === "priceRange") next.priceRange = [null, null];
+    else next[key] = (filters[key] || []).filter((v) => v !== value);
+    // a configuration page always keeps its own layout
+    if (key === "configuration" && !next.configuration.length && pageConfiguration) {
+      next.configuration = [pageConfiguration];
+    }
+    applyFilters(next);
+    setFilterSyncKey((k) => k + 1);
+  };
+  const clearAllFilters = () => {
+    applyFilters({
+      status: [],
+      unitType: [],
+      configuration: pageConfiguration ? [pageConfiguration] : [],
+      city: [],
+      priceRange: [null, null],
+    });
+    setFilterSyncKey((k) => k + 1);
   };
 
   const handlePageChange = (pageVal) => {
@@ -693,7 +774,32 @@ const PropertyListingPage = ({
               type={type}
               name={name}
               defaultConfiguration={CONFIGURATIONS[nameLc]?.filter}
+              cityOptions={cityOptions}
+              syncFilters={filters}
+              syncKey={filterSyncKey}
             />
+            <div
+              className={`${pll.pllScrollHint} ${filterMoreBelow ? pll.pllScrollHintOn : ""}`}
+              aria-hidden={!filterMoreBelow}
+            >
+              <button
+                type="button"
+                tabIndex={filterMoreBelow ? 0 : -1}
+                onClick={() => filterRef.current?.scrollBy({ top: 260, behavior: "smooth" })}
+              >
+                More filters
+                <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+                  <path
+                    d="M6 9l6 6 6-6"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
 
           <div className={`listingScrollbar ${pll.pllResults}`} ref={contentRef}>
@@ -722,8 +828,16 @@ const PropertyListingPage = ({
                 city={city}
                 sublocality={sublocality}
                 locality={locality}
+                selectedCities={filters.city}
               />
             )}
+
+            <AppliedFilters
+              filters={filters}
+              pageConfiguration={pageConfiguration}
+              onRemove={removeFilter}
+              onClearAll={clearAllFilters}
+            />
 
             {loading ? (
               <PropertyCardSkeleton count={4} />
@@ -786,6 +900,9 @@ const PropertyListingPage = ({
             handleCloseFilterToggle={handleCloseFilterToggle}
             name={name}
             defaultConfiguration={CONFIGURATIONS[nameLc]?.filter}
+            cityOptions={cityOptions}
+            syncFilters={filters}
+            syncKey={filterSyncKey}
             type={name}
           />
 
@@ -807,8 +924,16 @@ const PropertyListingPage = ({
               sublocality={sublocality}
               isMobile={isMobile}
               onSortChange={handleSortChange}
+              selectedCities={filters.city}
             />
           )}
+
+          <AppliedFilters
+            filters={filters}
+            pageConfiguration={pageConfiguration}
+            onRemove={removeFilter}
+            onClearAll={clearAllFilters}
+          />
 
           {loading ? (
             <PropertyCardSkeleton count={4} />

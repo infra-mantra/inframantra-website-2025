@@ -53,6 +53,7 @@ import "../styles/globals.css";
 import "swiper/css/bundle";
 import "../styles/newHome.css";
 import "../styles/properyHeader.css";
+import "../styles/propertyDetailDesktop.css";
 
 import styles from "./_app.module.css";
 

@@ -10,6 +10,8 @@ import { Navigation, Pagination, Autoplay } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+// Card look for this section only; the card is shared with the home page.
+import sim from "./PremiumPropertyList.module.css";
 
 function PremiumProperty({ city }) {
   const [premiumProperties, setPremiumProperties] = useState([]);
@@ -51,7 +53,7 @@ function PremiumProperty({ city }) {
   if (!premiumProperties.length) return null;
 
   return (
-    <div className="slider-wrapper-similar">
+    <div className={`slider-wrapper-similar ${sim.similar}`}>
       <div className="slide-wrapper" style={{ padding: "20px", paddingBottom: "0px" }}>
         <h2 className="Header">Similar Properties</h2>
 

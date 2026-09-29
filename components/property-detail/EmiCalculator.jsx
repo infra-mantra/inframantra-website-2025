@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FiCalendar, FiPlus, FiMinus } from "react-icons/fi";
 import styles from "./EmiCalculator.module.css";
 import AnimatedNumber from "../calculators/AnimatedNumber.jsx";
@@ -19,6 +19,13 @@ function formatShort(value) {
   if (value >= 10000000) return `₹${(value / 10000000).toFixed(2)} Cr`;
   if (value >= 100000) return `₹${(value / 100000).toFixed(2)} Lakh`;
   return formatINR(value);
+}
+
+// CSS width that fits a formatted number: 1ch per digit, less for commas/dots.
+function fitWidth(text) {
+  const str = String(text);
+  const narrow = (str.match(/[,.]/g) || []).length;
+  return `calc(${Math.max(1, str.length - narrow)}ch + ${narrow * 0.35}ch + 2px)`;
 }
 
 // Gold-filled slider track that follows the thumb position.
@@ -53,6 +60,17 @@ function EmiCalculator({ price, name }) {
   const [tenure, setTenure] = useState(20); // years
   const [period, setPeriod] = useState("month"); // "month" | "year"
   const [showSchedule, setShowSchedule] = useState(false);
+
+  // Narrow screens get a narrower chart viewBox, so the charts keep a usable
+  // height and readable axis labels instead of shrinking to a thin strip.
+  const [isNarrow, setIsNarrow] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 600px)");
+    const update = () => setIsNarrow(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
 
   const { emi, totalInterest, totalPayable, interestPercent } = useMemo(() => {
     const principal = Number(loanAmount) || 0;
@@ -129,7 +147,7 @@ function EmiCalculator({ price, name }) {
   };
 
   /* ---------------- SVG chart geometry (no external lib) ---------------- */
-  const VBW = 640;
+  const VBW = isNarrow ? 380 : 640;
   const PAD_L = 48;
   const PAD_R = 12;
   const PAD_B = 26;
@@ -194,7 +212,10 @@ function EmiCalculator({ price, name }) {
           {/* Loan amount */}
           <div className={styles.field}>
             <div className={styles.fieldTop}>
-              <label htmlFor="emi-loan">Loan Amount</label>
+              <label htmlFor="emi-loan">
+                Loan Amount
+                <span className={styles.labelHint}>{formatShort(loanAmount)}</span>
+              </label>
               <div className={styles.amountBox}>
                 <span className={styles.rupee}>₹</span>
                 <input
@@ -203,6 +224,7 @@ function EmiCalculator({ price, name }) {
                   inputMode="numeric"
                   value={loanAmount.toLocaleString("en-IN")}
                   onChange={handleLoanInput}
+                  style={{ width: fitWidth(loanAmount.toLocaleString("en-IN")) }}
                 />
               </div>
             </div>
@@ -236,6 +258,7 @@ function EmiCalculator({ price, name }) {
                   step={0.05}
                   value={rate}
                   onChange={(e) => setRate(Number(e.target.value))}
+                  style={{ width: fitWidth(rate) }}
                 />
                 <span className={styles.unit}>%</span>
               </div>
@@ -270,6 +293,7 @@ function EmiCalculator({ price, name }) {
                   step={1}
                   value={tenure}
                   onChange={(e) => setTenure(Number(e.target.value))}
+                  style={{ width: fitWidth(tenure) }}
                 />
                 <span className={styles.unit}>Yr</span>
               </div>
@@ -331,14 +355,16 @@ function EmiCalculator({ price, name }) {
           <ul className={styles.breakdown}>
             <li>
               <span className={`${styles.dot} ${styles.dotPrincipal}`} />
-              <span className={styles.bLabel}>Principal Amount</span>
+              <span className={styles.bLabel}>Principal</span>
+              <span className={styles.bPct}>{Math.round(principalPercent)}%</span>
               <span className={styles.bValue}>
                 <AnimatedNumber value={loanAmount} format={formatINR} />
               </span>
             </li>
             <li>
               <span className={`${styles.dot} ${styles.dotInterest}`} />
-              <span className={styles.bLabel}>Total Interest</span>
+              <span className={styles.bLabel}>Interest</span>
+              <span className={styles.bPct}>{Math.round(interestPercent)}%</span>
               <span className={styles.bValue}>
                 <AnimatedNumber value={totalInterest} format={formatINR} />
               </span>

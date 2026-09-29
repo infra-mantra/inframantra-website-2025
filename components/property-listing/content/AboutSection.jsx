@@ -17,6 +17,7 @@ function AboutSection({
   customHeading, // optional: overrides the "Properties in <area>" H1 heading
   onSortChange, // mobile: renders the SORT BY dropdown next to the heading
   isMobile,
+  selectedCities = [], // cities ticked in the sidebar: named in the count line
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [displayArea, setDisplayArea] = useState("");
@@ -75,6 +76,16 @@ function AboutSection({
 
   const previewText = fullText.slice(0, 180);
 
+  // "vatika" from /property-listing/search/vatika (slugs use "-" for spaces)
+  const searchTerm = (() => {
+    try {
+      return decodeURIComponent(String(name || "")).replace(/-/g, " ");
+    } catch (e) {
+      return String(name || "").replace(/-/g, " ");
+    }
+  })();
+  const cityNote = (selectedCities || []).join(", ");
+
   // console.log('$$$$$$$$$$4'/,currentPage)
 
   return (
@@ -83,8 +94,10 @@ function AboutSection({
         <h1 className={styles.headerAbout}>
           {customHeading
             ? customHeading
-            : type === "search"
-              ? `Search result has ${totalProperties} properties`
+            : type === "search" && String(name).toLowerCase() === "property-in-india"
+              ? "All Properties" // the all-properties page (header menu, calculators)
+              : type === "search"
+              ? `Search results for “${searchTerm}”`
               : `Properties in ${displayArea}${parentArea ? `, ${parentArea}` : ""}`}
         </h1>
 
@@ -96,7 +109,13 @@ function AboutSection({
           "No properties found"
         ) : (
           <>
-            Showing {startIndex} - {endIndex} of {totalProperties} properties
+            Showing {startIndex} - {endIndex} of {totalProperties}{" "}
+            {totalProperties === 1 ? "property" : "properties"}
+            {cityNote && (
+              <>
+                {" "}in <strong className={styles.cityNote}>{cityNote}</strong>
+              </>
+            )}
           </>
         )}
       </p>

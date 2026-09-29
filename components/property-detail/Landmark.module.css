@@ -1,20 +1,13 @@
-/* Desktop and Base Styles (applies to both, with mobile overrides below) */
+/* Nearby Landmarks — original layout (map, category tabs under it, then the
+   list of places), with a refreshed look. */
 
 .white-box.location-map-section {
   background: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 20px;
-  padding-bottom: 0px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.white-box-heading {
-  font-size: 24px;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 20px;
-  display: block;
+  border: 1px solid #ececec;
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 6px 24px rgba(17, 17, 17, 0.06);
+  box-sizing: border-box;
 }
 
 .white-box-body {
@@ -22,70 +15,90 @@
 }
 
 .d-map-box {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .map {
   position: relative;
-  margin-bottom: 20px;
+  height: 420px;
+  margin-bottom: 16px;
 }
 
-.map img.img-responsive {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  display: block;
-}
-
-.btn.view-map {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #e7b554;
-  color: #fff;
-  padding: 12px 24px;
-  border-radius: 4px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-}
-
-.btn.view-map .icon-pin {
-  margin-right: 8px;
-}
-
+/* ---------- Category tabs (chips) ---------- */
 .near-location {
   list-style: none;
-  padding: 0;
   margin: 0;
+  padding: 0 60px 4px 0;
   display: flex;
+  gap: 8px;
   overflow-x: auto;
-  gap: 10px;
-  padding-bottom: 10px;
-  /* 🔥 key part */
-  padding-right: 80px; /* allows half item visibility */
-  mask-image: linear-gradient(to right, black 85%, transparent);
+  /* fade the right edge to hint that the row scrolls */
+  mask-image: linear-gradient(to right, #000 88%, transparent);
+  -webkit-mask-image: linear-gradient(to right, #000 88%, transparent);
 }
 
 .near-location li {
   flex: 0 0 auto;
-  padding: 10px 20px;
-  background: #fff8e1;
-  border-radius: 5px;
-  cursor: pointer;
-  white-space: nowrap;
-  font-size: 14px;
-  color: #000;
   display: flex;
   align-items: center;
   gap: 8px;
-  transition: all 0.3s;
+  padding: 8px 10px 8px 14px;
+  border: 1px solid #f1e3bf;
+  border-radius: 999px;
+  background: #fffaf0;
+  color: #333;
+  font-size: 13.5px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
-/* Hide scrollbar but keep scrolling */
+
+.near-location li:hover {
+  border-color: #e7b554;
+  background: #fff4dc;
+}
+
+.near-location li.active {
+  border-color: transparent;
+  background: linear-gradient(180deg, #e9bb63 0%, #dfa63c 100%);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(214, 158, 52, 0.35);
+}
+
+.near-location li :global(.tab-icon) {
+  display: inline-flex;
+  font-size: 15px;
+  color: #c9962f;
+}
+
+.near-location li.active :global(.tab-icon) {
+  color: #fff;
+}
+
+.lm-chip-count {
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: rgba(231, 181, 84, 0.18);
+  color: #8a6a24;
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
+.near-location li.active .lm-chip-count {
+  background: rgba(255, 255, 255, 0.28);
+  color: #fff;
+}
+
 .scrollbar-hide {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE & Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .scrollbar-hide::-webkit-scrollbar {
@@ -93,22 +106,7 @@
   height: 0;
 }
 
-.near-location li.active,
-.near-location li:hover {
-  background: #e7b554;
-  color: #fff;
-}
-
-.near-location li em[class^="icon-"] {
-  font-style: normal;
-  /* Assume icons are font-icons or SVG replaced via CSS */
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  background: url("https://www.squareyards.com/assets/images/map-new.png?aio=w-724;h-152;crop;")
-    no-repeat;
-}
-
+/* ---------- List of places ---------- */
 .near-distance-box {
   display: none;
 }
@@ -119,156 +117,139 @@
 
 .near-distance.table-responsive {
   width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-bottom: 4px;
+  border: 1px solid #f1e3bf;
+  border-radius: 14px;
+  overflow: hidden;
 }
 
 .near-distance th {
-  background: #fff8e1;
-  padding: 15px;
-  font-size: 18px;
+  padding: 14px 16px;
+  background: #fffaf0;
+  border-bottom: 1px solid #f1e3bf;
+  text-align: left;
+  font-size: 15px;
   font-weight: 600;
-  color: #333;
+  color: #1a1a1a;
+}
+
+.near-distance tbody tr {
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.near-distance tbody tr:hover {
+  background: #fffaf0;
+}
+
+.near-distance tbody tr.is-active {
+  background: #fff4dc;
+  box-shadow: inset 3px 0 0 #e7b554;
 }
 
 .near-distance td {
-  padding: 12px 15px;
-  border-bottom: 1px solid #eee;
-  font-weight: normal;
+  padding: 10px 16px;
+  border-bottom: 1px solid #f4efe3;
+  vertical-align: middle;
 }
 
-.distance-title {
-  font-size: 15px;
-  color: #000;
-  font-weight: inherit;
+.near-distance tbody tr:last-child td {
+  border-bottom: 0;
 }
 
-.distance {
+.near-distance td:first-child {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.near-distance td:last-child {
+  width: 1%;
   text-align: right;
-  color: #111;
+  white-space: nowrap;
+}
+
+.lm-item-icon {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #fff8e1;
+  color: #c9962f;
+  font-size: 15px;
+}
+
+.near-distance tbody tr.is-active .lm-item-icon {
+  background: #e7b554;
+  color: #fff;
+}
+
+.lm-item-name {
+  min-width: 0;
   font-size: 14px;
+  font-weight: 500;
+  color: #1a1a1a;
 }
 
-.distance .icon-pin-city-connection {
-  margin-right: 5px;
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  /* Icon style */
+.lm-item-dist {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #fff8e1;
+  color: #8a6a24;
+  font-size: 12px;
+  font-weight: 600;
 }
 
-.btn-box {
-  text-align: center;
+.lm-item-dist svg {
+  font-size: 11px;
+  color: #c9962f;
 }
 
-.btn.btn-default {
-  padding: 10px 30px;
-  background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.btn.btn-default:hover {
-  background: #f0f0f0;
-}
-
-.hiddenLandmark {
-  display: none; /* Toggled via JS on "View More" */
-}
-
-/* Mobile Styles (Responsive) */
-
+/* ---------- Mobile ---------- */
 @media (max-width: 768px) {
   .white-box.location-map-section {
-    padding: 10px;
-    border-radius: 6px;
-    margin-bottom: 0px;
-    width: auto;
+    padding: 12px;
+    border-radius: 14px;
   }
   .d-map-box {
-    margin-bottom: 0px;
+    margin-bottom: 14px;
   }
-
-  .white-box-heading {
-    font-size: 20px;
-    margin-bottom: 15px;
+  .map {
+    height: 320px;
+    margin-bottom: 12px;
   }
-
-  .map img.img-responsive {
-    border-radius: 6px;
-  }
-
-  .btn.view-map {
-    padding: 10px 20px;
-    font-size: 14px;
-  }
-
-  .near-location {
-    gap: 8px;
-    padding-bottom: 15px;
-  }
-
   .near-location li {
-    padding: 4px 8px;
-    font-size: 12px;
+    padding: 6px 8px 6px 12px;
+    font-size: 12.5px;
   }
-
-  .near-location li em[class^="icon-"] {
-    width: 18px;
-    height: 18px;
-  }
-
   .near-distance th {
-    font-size: 12px;
-    padding: 8px;
+    padding: 11px 12px;
+    font-size: 13px;
   }
-
   .near-distance td {
-    padding: 2px 2px;
-    display: block;
-    text-align: left !important;
-    font-size: 12px;
+    padding: 9px 12px;
   }
-
-  .near-distance tr {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    border: 1px solid #eee;
-    border-radius: 6px;
-    padding: 10px;
+  .near-distance td:first-child {
+    gap: 10px;
   }
-
-  .distance-title {
-    font-size: 14px;
-    margin-bottom: 5px;
-  }
-
-  .distance {
-    text-align: left !important;
+  .lm-item-icon {
+    width: 30px;
+    height: 30px;
     font-size: 13px;
   }
-
-  .btn.btn-default {
-    padding: 8px 25px;
+  .lm-item-name {
     font-size: 13px;
   }
-  .near-location li {
-    min-width: 80px;
-  }
-}
-
-@media (max-width: 480px) {
-  .near-location {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .near-location li {
-    min-width: 80px;
+  .lm-item-dist {
+    padding: 3px 8px;
+    font-size: 11.5px;
   }
 }
