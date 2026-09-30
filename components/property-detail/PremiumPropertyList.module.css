@@ -201,3 +201,32 @@
     transition: none;
   }
 }
+
+/* developer logo on the photo, top-left (same tile as the listing cards) */
+.similar :global(.propertyImageContainer) {
+  position: relative;
+}
+
+.similar :global(.sim-logo) {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  height: 32px;
+  max-width: 55%;
+  padding: 4px 8px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.18);
+}
+
+.similar :global(.sim-logo) img {
+  display: block;
+  width: auto;
+  height: 100%;
+  max-width: 76px;
+  object-fit: contain;
+}

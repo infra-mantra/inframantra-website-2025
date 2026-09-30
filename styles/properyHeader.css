@@ -160,8 +160,15 @@
   font-family: "Lexend Deca", sans-serif;
 }
 
-/* Show on hover */
-.rera-hover-container:hover .rera-hover-box {
+/* RERA-registered shield (replaces the bell) */
+.rera-hover-box .rera-shield {
+  flex-shrink: 0;
+  color: #c9962f;
+}
+
+/* Show on hover, and on tap / keyboard focus (touch screens have no hover) */
+.rera-hover-container:hover .rera-hover-box,
+.rera-hover-container:focus-within .rera-hover-box {
   display: block;
 }
 /* Heading */
@@ -623,4 +630,94 @@ ul {
     width: 18px;
     height: 18px;
   }
+}
+
+/* ==========================================================================
+   Mobile polish for the title + overview section. Same content, same order;
+   only type, spacing and surfaces change.
+   ========================================================================== */
+@media (max-width: 768px) {
+  /* ---- title: gold bar + normal-case name, logo in a white tile ---- */
+  .propertyPageWrapper .property-header-high .property-header-title {
+    position: relative;
+    padding-left: 12px;
+  }
+  .propertyPageWrapper .property-header-high .property-header-title::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 2px;
+    bottom: 2px;
+    width: 3px;
+    border-radius: 3px;
+    background: linear-gradient(180deg, #e7b554, #b8841f);
+  }
+  .propertyPageWrapper .property-header-high .propertyPageHeaderMobilePropertyTitle {
+    text-transform: none;
+    font-size: clamp(18px, 5.2vw, 21px);
+    font-weight: 700;
+    letter-spacing: -0.2px;
+    line-height: 1.22;
+    color: #141414;
+  }
+  .propertyPageWrapper .property-header-high .property-image {
+    height: 36px;
+    max-width: 92px;
+    padding: 5px 8px;
+    box-sizing: border-box;
+    background: #fff;
+    border: 1px solid #eef0f2;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(17, 17, 17, 0.06);
+  }
+
+  /* ---- About / Highlights: readable body text (was 1px letter-spacing) ---- */
+  .propertyPageWrapper .about-preview,
+  .propertyPageWrapper .ul-highlight li,
+  .propertyPageWrapper .ul-highlight .highlight-text {
+    letter-spacing: 0;
+    font-size: 14px;
+    line-height: 1.65;
+    color: #3f3f46;
+  }
+  .propertyPageWrapper .container-card .card-width-high {
+    padding: 18px 16px;
+    border-radius: 16px;
+    border: 1px solid #efefef;
+    box-shadow: 0 6px 20px rgba(17, 17, 17, 0.05);
+  }
+  .propertyPageWrapper .ul-highlight li + li {
+    margin-top: 8px;
+  }
+}
+
+/* Title row: no shadow or line of its own. The shadow is on the logo tiles
+   (project logo, map button, developer logo) only, and they have no border. */
+.propertyPageWrapper .property-header-images .logo_individual_page,
+.propertyPageWrapper .property-header-images .property-image {
+  border: 0 !important;
+  box-shadow: 0 6px 18px rgba(17, 17, 17, 0.1), 0 1px 3px rgba(17, 17, 17, 0.06) !important;
+}
+.propertyPageWrapper .property-header-images .logo_individual_page:hover,
+.propertyPageWrapper .property-header-images .property-image:hover {
+  box-shadow: 0 10px 24px rgba(17, 17, 17, 0.14), 0 2px 4px rgba(17, 17, 17, 0.06) !important;
+}
+.propertyPageWrapper .property-header-images .property-map-btn {
+  border: 0 !important;
+  box-shadow: 0 6px 16px rgba(214, 158, 52, 0.28);
+}
+@media (max-width: 768px) {
+  .propertyPageWrapper .property-header-high {
+    margin-bottom: 14px;
+  }
+}
+
+/* Title row background: warm gold at the top fading down to white. Shaped as a
+   wide glow so it also fades out at the sides, with a short fade-in at the very
+   top - no edge or line anywhere. */
+.propertyPageWrapper .property-header-high {
+  background:
+    linear-gradient(180deg, #fff 0, rgba(255, 255, 255, 0) 16px),
+    radial-gradient(120% 140% at 50% 0%, #fcefd2 0%, #fef8ec 38%, rgba(255, 255, 255, 0) 75%),
+    #fff;
 }

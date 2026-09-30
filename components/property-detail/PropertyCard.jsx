@@ -50,7 +50,10 @@ export default function PropertyPriceCard({ propertyData, area }) {
           { Key: "", value: `${area}`, image: "/propertyIndividualPage/icons/area.png" },
           {
             Key: "",
-            value: `₹ ${propertyData.squarePrice}/Sq.Ft`,
+            // the CMS value often already ends in "/Sq.Ft." — don't repeat it
+            value: /sq\.?\s*ft/i.test(String(propertyData.squarePrice))
+              ? `₹ ${propertyData.squarePrice}`
+              : `₹ ${propertyData.squarePrice}/Sq.Ft`,
             image: "/propertyIndividualPage/icons/pricePerSqt.png",
           },
           {

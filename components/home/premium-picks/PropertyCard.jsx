@@ -45,6 +45,18 @@ export default function PropertyCard({ property }) {
             onError={handleImageError}
             className={styles.propertyImage}
           />
+          {property.developer?.developerImg && (
+            <span className="sim-logo">
+              <img
+                src={property.developer.developerImg}
+                alt={`${property.developer.name || "Developer"} logo`}
+                width="64"
+                height="26"
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
+          )}
         </div>
 
         <div className={styles.propertyContent}>

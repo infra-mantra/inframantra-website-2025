@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBell } from "@fortawesome/free-solid-svg-icons";
 import ModalSlider from "./Modal.jsx";
 import Propertycard from "./PropertyCard.jsx";
 import PopUpForm from "../shared/forms/CTANEW.jsx";
@@ -16,6 +14,7 @@ function PropertyHeaderHigh({ propertyData, name }) {
 
   const highlightRef = useRef(null);
   const leftRef = useRef(null);
+  const rightRef = useRef(null);
 
   let areaText = propertyData.area || "";
   if (areaText && !/sq\.?\s*ft/i.test(areaText)) {
@@ -24,7 +23,9 @@ function PropertyHeaderHigh({ propertyData, name }) {
 
   const highlights = propertyData.keyHighlights;
 
-  const maxVisible = 5;
+  // 5 highlights by default; on wide screens the fit effect below may show fewer
+  // (never under 3) when the About text is too short to match their height.
+  const [maxVisible, setMaxVisible] = useState(5);
   const visibleHighlights = highlights.slice(0, maxVisible);
   const hiddenCount = highlights.length - maxVisible;
 
@@ -37,10 +38,59 @@ function PropertyHeaderHigh({ propertyData, name }) {
     .map((s) => s.trim())
     .filter(Boolean);
   const PREVIEW_SENTENCES = 3;
+  // On wide screens the Highlights column is often taller than the overview card
+  // + About, which left a large empty block under About. Show more of the About
+  // text until the two columns roughly line up (see the effect below).
+  const [previewFit, setPreviewFit] = useState({ count: PREVIEW_SENTENCES, done: false, gen: 0 });
   const aboutPreview =
-    sentences.length > PREVIEW_SENTENCES
-      ? sentences.slice(0, PREVIEW_SENTENCES).join(" ")
+    sentences.length > previewFit.count
+      ? sentences.slice(0, previewFit.count).join(" ")
       : aboutText;
+  const aboutTruncated = sentences.length > previewFit.count;
+
+  // Refit from scratch when the window size changes
+  useEffect(() => {
+    let t;
+    const onResize = () => {
+      clearTimeout(t);
+      t = setTimeout(() => {
+        setMaxVisible(5);
+        setPreviewFit((f) => ({ count: PREVIEW_SENTENCES, done: false, gen: f.gen + 1 }));
+      }, 250);
+    };
+    window.addEventListener("resize", onResize);
+    return () => {
+      clearTimeout(t);
+      window.removeEventListener("resize", onResize);
+    };
+  }, []);
+
+  // One sentence per pass: add while the left column is shorter than the
+  // highlights column; take the last one back if it made the left clearly taller.
+  useEffect(() => {
+    if (previewFit.done) return;
+    const left = leftRef.current;
+    const right = rightRef.current;
+    // two columns side by side only above 1100px (stacked below, see CSS)
+    if (!left || !right || window.innerWidth <= 1100) return;
+    const id = requestAnimationFrame(() => {
+      const gap = right.offsetHeight - left.offsetHeight;
+      if (gap < -24 && previewFit.count > PREVIEW_SENTENCES) {
+        setPreviewFit((f) => ({ ...f, count: f.count - 1, done: true }));
+      } else if (gap > 24 && previewFit.count < sentences.length) {
+        setPreviewFit((f) => ({ ...f, count: f.count + 1 }));
+      } else if (gap > 60 && maxVisible > 3) {
+        // About is fully shown and still short: show one highlight fewer
+        // (the rest stay behind "Read more (+N)"), then measure again
+        setMaxVisible((n) => n - 1);
+        setPreviewFit((f) => ({ ...f, gen: f.gen + 1 }));
+      } else {
+        setPreviewFit((f) => ({ ...f, done: true }));
+      }
+    });
+    return () => cancelAnimationFrame(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [previewFit, sentences.length]);
 
   const locationText = [
     propertyData?.subLocality?.name,
@@ -162,7 +212,28 @@ function PropertyHeaderHigh({ propertyData, name }) {
                     <div className="rera-hover-box">
                       <h3>RERA INFO</h3>
                       <p>
-                        <FontAwesomeIcon icon={faBell} className="bell-pendulum" /> Rera No.
+                        {/* RERA-registered shield */}
+                        <svg
+                          className="rera-shield"
+                          viewBox="0 0 24 24"
+                          width="18"
+                          height="18"
+                          aria-hidden="true"
+                        >
+                          <path
+                            d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3z"
+                            fill="currentColor"
+                          />
+                          <path
+                            d="m8.5 12 2.4 2.4 4.6-4.8"
+                            fill="none"
+                            stroke="#fff"
+                            strokeWidth="2.2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                        Rera No.
                       </p>
                       <p className="rera-number">{propertyData.rera}</p>
                     </div>
@@ -221,14 +292,14 @@ function PropertyHeaderHigh({ propertyData, name }) {
                     <div className="about-project">
                       <p className="about-preview p-text">
                         {aboutPreview}
-                        {
+                        {aboutTruncated && (
                           <button
                             className="read-more-btn"
                             onClick={() => setIsAboutModalOpen(true)}
                           >
                             Read more...
                           </button>
-                        }
+                        )}
                       </p>
                     </div>
                   </div>
@@ -237,7 +308,7 @@ function PropertyHeaderHigh({ propertyData, name }) {
             </div>
           </section>
           <section id="Highlights">
-            <div className="container-card">
+            <div className="container-card" ref={rightRef}>
               <div className="card card-width-high">
                 <div className="higlight-list ">
                   <h2 className=" Header">Project Highlights</h2>

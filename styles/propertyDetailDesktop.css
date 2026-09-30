@@ -218,9 +218,16 @@
     color: var(--pp-gold-dark);
   }
 
+  /* The RERA button always sits at the right end of its row (on the Location
+     row when it fits, alone on the next row when it wraps), and the box opens
+     leftwards from it into the card - so it never runs off either screen edge. */
+  .propertyPageWrapper .rera-hover-container {
+    margin-left: auto;
+  }
   .propertyPageWrapper .rera-hover-box {
     left: auto;
     right: 0;
+    max-width: min(460px, calc(100vw - 48px));
   }
 
   .propertyPageWrapper .units-section {
@@ -912,5 +919,181 @@
   /* Sticky form in the right column slides in once */
   .propertyPageWrapper .property-right .homeCtaInnerWrapper {
     animation: ppFadeLeft 0.8s 0.2s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  }
+}
+
+/* ==========================================================================
+   Overview card (price / status / RERA / units): compact + livelier type.
+   Same rows, same order, same positions as before - only spacing, sizes,
+   type and motion change.
+   ========================================================================== */
+@media (min-width: 769px) {
+  .propertyPageWrapper .card.card-width {
+    padding: 18px 22px;
+    margin-bottom: 22px;
+  }
+
+  .propertyPageWrapper .price-section {
+    gap: 10px;
+  }
+
+  .propertyPageWrapper .price-text {
+    font-size: 24px;
+    letter-spacing: -0.2px;
+    line-height: 1.2;
+  }
+
+  .propertyPageWrapper .boldline1 {
+    margin: 14px 0;
+  }
+
+  .propertyPageWrapper .price-tag-icon,
+  .propertyPageWrapper .status-icon,
+  .propertyPageWrapper .unit-icon img {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .propertyPageWrapper .unit-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .propertyPageWrapper .info-section {
+    gap: 12px 20px;
+  }
+
+  .propertyPageWrapper .status-group {
+    gap: 24px;
+  }
+
+  .propertyPageWrapper .status-item,
+  .propertyPageWrapper .unit-item {
+    gap: 10px;
+  }
+
+  /* small caps-style label over a firmer value */
+  .propertyPageWrapper .status-label,
+  .propertyPageWrapper .unit-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.9px;
+    line-height: 1.3;
+    color: #9a9fa6;
+    transition: color 0.25s ease;
+  }
+
+  .propertyPageWrapper .status-value,
+  .propertyPageWrapper .unit-config {
+    margin-top: 3px;
+    font-size: 14.5px;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.1px;
+  }
+
+  .propertyPageWrapper .rera-btn {
+    padding: 7px 16px;
+    font-size: 12.5px;
+    letter-spacing: 0.4px;
+  }
+
+  .propertyPageWrapper .units-section {
+    gap: 12px;
+  }
+
+  .propertyPageWrapper .unit-item + .unit-item,
+  .propertyPageWrapper .unit-separator + .unit-item {
+    padding-left: 12px;
+  }
+
+  /* hover: the label turns gold with the icon's existing tilt */
+  .propertyPageWrapper .status-item:hover .status-label,
+  .propertyPageWrapper .unit-item:hover .unit-label {
+    color: var(--pp-gold-dark);
+  }
+}
+
+@media (min-width: 769px) and (prefers-reduced-motion: no-preference) {
+  @keyframes ppPriceShine {
+    from { background-position: 100% 0; }
+    to   { background-position: 0 0; }
+  }
+
+  /* the gold price catches the light once as the card arrives */
+  .propertyPageWrapper .price-text .font-clr {
+    background-image: linear-gradient(100deg, #b8841f 0%, #e7b554 30%, #fff1c9 45%, #e7b554 60%, #c9962f 100%);
+    background-size: 250% 100%;
+    background-position: 0 0;
+    animation: ppPriceShine 1.4s 0.9s ease-out backwards;
+  }
+
+  /* the facts arrive one after another, after the card itself */
+  .propertyPageWrapper .card.card-width .status-item,
+  .propertyPageWrapper .card.card-width .rera-hover-container,
+  .propertyPageWrapper .card.card-width .unit-item {
+    animation: ppFadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  }
+  .propertyPageWrapper .card.card-width .status-group > .status-item:nth-child(1) { animation-delay: 0.55s; }
+  .propertyPageWrapper .card.card-width .status-group > :nth-child(3)             { animation-delay: 0.62s; }
+  .propertyPageWrapper .card.card-width .rera-hover-container                     { animation-delay: 0.69s; }
+  .propertyPageWrapper .card.card-width .unit-item:nth-of-type(1) { animation-delay: 0.76s; }
+  .propertyPageWrapper .card.card-width .unit-item:nth-of-type(2) { animation-delay: 0.83s; }
+  .propertyPageWrapper .card.card-width .unit-item:nth-of-type(3) { animation-delay: 0.9s; }
+  .propertyPageWrapper .card.card-width .unit-item:nth-of-type(4) { animation-delay: 0.97s; }
+
+  /* the divider lines draw in from the left */
+  .propertyPageWrapper .card.card-width .boldline1 {
+    transform-origin: left center;
+    animation: ppGrow 0.7s 0.5s ease-out backwards;
+  }
+}
+
+/* ==========================================================================
+   Project name: gold accent bar + refined name, in the same row as the
+   logos as before. (The location/developer line stays hidden.)
+   ========================================================================== */
+@media (min-width: 769px) {
+  .propertyPageWrapper .property-header-title {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding-left: 16px;
+    min-width: 0;
+  }
+
+  /* gold accent bar down the left of the name block */
+  .propertyPageWrapper .property-header-title::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 4px;
+    bottom: 4px;
+    width: 4px;
+    border-radius: 4px;
+    background: linear-gradient(180deg, #e7b554, #b8841f);
+  }
+
+  .propertyPageWrapper .propertyPageHeaderMobilePropertyTitle {
+    text-align: left;
+    font-size: clamp(26px, 2.2vw, 34px);
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    line-height: 1.12;
+    color: #141414;
+  }
+
+}
+
+@media (min-width: 769px) and (prefers-reduced-motion: no-preference) {
+  .propertyPageWrapper .property-header-title::before {
+    transform-origin: top center;
+    animation: ppGrowY 0.6s 0.1s ease-out backwards;
+  }
+  @keyframes ppGrowY {
+    from { transform: scaleY(0); }
+    to   { transform: scaleY(1); }
   }
 }
