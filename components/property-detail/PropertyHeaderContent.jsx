@@ -6,13 +6,12 @@ import PopUpForm from "../shared/forms/CTANEW.jsx";
 
 function PropertyHeaderHigh({ propertyData, name }) {
   const [isHighlightModalOpen, setIsHighlightModalOpen] = useState(false);
-  const [showAll, setShowAll] = useState(false);
+  const [showAll] = useState(false);
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
   const [popForm, setPopForm] = useState(false);
   const onClickOff = (val) => setPopForm(val);
   const handleform = () => setPopForm(true);
 
-  const highlightRef = useRef(null);
   const leftRef = useRef(null);
   const rightRef = useRef(null);
 
@@ -21,7 +20,8 @@ function PropertyHeaderHigh({ propertyData, name }) {
     areaText = `${areaText} Sq.Ft.`;
   }
 
-  const highlights = propertyData.keyHighlights;
+  const highlights = propertyData.keyHighlights || [];
+  const descriptions = propertyData.description || [];
 
   // 5 highlights by default; on wide screens the fit effect below may show fewer
   // (never under 3) when the About text is too short to match their height.
@@ -29,7 +29,7 @@ function PropertyHeaderHigh({ propertyData, name }) {
   const visibleHighlights = highlights.slice(0, maxVisible);
   const hiddenCount = highlights.length - maxVisible;
 
-  const aboutText = propertyData.description[0];
+  const aboutText = descriptions[0] || "";
 
   // Split only on a full stop followed by whitespace, so numbers like "3.5bhk"
   // or "1.5km" aren't broken into "3. 5bhk".
@@ -38,15 +38,23 @@ function PropertyHeaderHigh({ propertyData, name }) {
     .map((s) => s.trim())
     .filter(Boolean);
   const PREVIEW_SENTENCES = 3;
+
   // On wide screens the Highlights column is often taller than the overview card
-  // + About, which left a large empty block under About. Show more of the About
-  // text until the two columns roughly line up (see the effect below).
-  const [previewFit, setPreviewFit] = useState({ count: PREVIEW_SENTENCES, done: false, gen: 0 });
+  // + About. Show more of the About text until the two columns roughly line up.
+  const [previewFit, setPreviewFit] = useState({
+    count: PREVIEW_SENTENCES,
+    done: false,
+    gen: 0,
+  });
+
   const aboutPreview =
     sentences.length > previewFit.count
       ? sentences.slice(0, previewFit.count).join(" ")
       : aboutText;
-  const aboutTruncated = sentences.length > previewFit.count;
+
+  // Show "Read more" if the first paragraph is cut OR there are more paragraphs
+  const hasExtraParagraphs = descriptions.length > 1;
+  const aboutTruncated = sentences.length > previewFit.count || hasExtraParagraphs;
 
   // Refit from scratch when the window size changes
   useEffect(() => {
@@ -55,7 +63,11 @@ function PropertyHeaderHigh({ propertyData, name }) {
       clearTimeout(t);
       t = setTimeout(() => {
         setMaxVisible(5);
-        setPreviewFit((f) => ({ count: PREVIEW_SENTENCES, done: false, gen: f.gen + 1 }));
+        setPreviewFit((f) => ({
+          count: PREVIEW_SENTENCES,
+          done: false,
+          gen: f.gen + 1,
+        }));
       }, 250);
     };
     window.addEventListener("resize", onResize);
@@ -151,6 +163,7 @@ function PropertyHeaderHigh({ propertyData, name }) {
           </div>
         </div>
       </header>
+
       <div className="property-container">
         <div className="card-container">
           <section id="Overview">
@@ -190,7 +203,7 @@ function PropertyHeaderHigh({ propertyData, name }) {
                       <div className="status-group">
                         <img
                           src="/propertyIndividualPage/icons/locationPoint.png"
-                          alt="Under Construction"
+                          alt="Location"
                           className="status-icon"
                         />
                         <div>
@@ -247,7 +260,7 @@ function PropertyHeaderHigh({ propertyData, name }) {
                     {
                       Key: "Configuration",
                       value: `${propertyData.configuration}`,
-                      image: "/propertyIndividualPage/icons/configration.png ",
+                      image: "/propertyIndividualPage/icons/configration.png",
                     },
                     {
                       Key: "Area",
@@ -282,31 +295,34 @@ function PropertyHeaderHigh({ propertyData, name }) {
                   ))}
                 </div>
               </div>
+
               <div className="dis-none-desktop">
                 <Propertycard propertyData={propertyData} area={areaText} />
               </div>
+
               <section id="About Project">
                 <div className="about-container">
                   <div className="about-wrapper">
                     <h2 className="Header">About Project</h2>
                     <div className="about-project">
-                      <p className="about-preview p-text">
-                        {aboutPreview}
-                        {aboutTruncated && (
-                          <button
-                            className="read-more-btn"
-                            onClick={() => setIsAboutModalOpen(true)}
-                          >
-                            Read more...
-                          </button>
-                        )}
-                      </p>
+                      <p className="about-preview p-text">{aboutPreview}</p>
+                      {aboutTruncated && (
+                        <button
+                          type="button"
+                          className="read-more-btn"
+                          onClick={() => setIsAboutModalOpen(true)}
+                          aria-haspopup="dialog"
+                        >
+                          Read more...
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>
               </section>
             </div>
           </section>
+
           <section id="Highlights">
             <div className="container-card" ref={rightRef}>
               <div className="card card-width-high">
@@ -324,7 +340,12 @@ function PropertyHeaderHigh({ propertyData, name }) {
                   </ul>
 
                   {!showAll && hiddenCount > 0 && (
-                    <button className="read-more-btn" onClick={() => setIsHighlightModalOpen(true)}>
+                    <button
+                      type="button"
+                      className="read-more-btn"
+                      onClick={() => setIsHighlightModalOpen(true)}
+                      aria-haspopup="dialog"
+                    >
                       Read more (+{hiddenCount})
                     </button>
                   )}
@@ -361,6 +382,7 @@ function PropertyHeaderHigh({ propertyData, name }) {
             ))}
           </ul>
         </ModalSlider>
+
         <ModalSlider
           title="About Project"
           isOpen={isAboutModalOpen}
@@ -369,7 +391,7 @@ function PropertyHeaderHigh({ propertyData, name }) {
           id="propertyIndividualHigh"
         >
           <div className="about-full-text">
-            {propertyData?.description?.map((item, index) => (
+            {descriptions.map((item, index) => (
               <p key={index} className="about-project p-text">
                 {item}
               </p>
@@ -377,6 +399,7 @@ function PropertyHeaderHigh({ propertyData, name }) {
           </div>
         </ModalSlider>
       </div>
+
       <PopUpForm
         popUpenable={popForm}
         onClickOff={onClickOff}
