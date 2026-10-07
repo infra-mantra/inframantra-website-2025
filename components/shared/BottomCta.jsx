@@ -25,6 +25,11 @@ const WHATSAPP_URL = "https://wa.me/918698009900";
 
 export default function BottomCta({ name = "Form Submitted from Bottom Bar" }) {
   const [enquiryOpen, setEnquiryOpen] = useState(false);
+  // The lead carries the page it came from, e.g.
+  // "Form Submitted from Bottom Bar – https://inframantra.com/property/…".
+  // Read when the form opens, so it is always the page the visitor is on.
+  const leadName =
+    typeof window !== "undefined" ? `${name} – ${window.location.href.split("#")[0]}` : name;
 
   /*
     Rendered only once the width is actually known. useMediaQuery starts false on
@@ -73,7 +78,7 @@ export default function BottomCta({ name = "Form Submitted from Bottom Bar" }) {
         createPortal(
           <CustomBackdrop open onClose={() => setEnquiryOpen(false)}>
             <PropertyPageFloatingContact
-              name={name}
+              name={leadName}
               heroImage="/guruCollection/guru_call.png"
               onClose={() => setEnquiryOpen(false)}
             />

@@ -286,6 +286,12 @@ function Footer() {
             <MdEmail style={{ color: "#E7B554", fontSize: "20px", marginRight: "10px" }} />
             <p>marketing@inframantra.com </p>
           </div>
+          <p className={styles.footerDisclaimer}>
+            INFRAMANTRA INDIA PVT LTD is an authorized real estate channel partner and not a
+            direct project developer. All featured properties are RERA-verified, and all project
+            details, pricing, and images are for representation purposes based on
+            developer-provided data.
+          </p>
         </div>
 
         {isDesktop ? (
