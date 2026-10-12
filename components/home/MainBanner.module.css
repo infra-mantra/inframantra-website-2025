@@ -30,6 +30,16 @@
   }
 }
 
+/* Tablets: taller logo/text band (Banner.module.css uses the same 270px). */
+@media (min-width: 601px) and (max-width: 1180px) {
+  .homePageheaderContainer {
+    height: min(calc(270px + 83.4vw), 90svh);
+  }
+  .homePageheader {
+    height: calc(min(calc(270px + 83.4vw), 90svh) + 3svh);
+  }
+}
+
 /* Desktop: match the banner box to the wide (~3:1) banner image so the
    full image is visible — no cropping and no empty bars. */
 @media (min-width: 1181px) {

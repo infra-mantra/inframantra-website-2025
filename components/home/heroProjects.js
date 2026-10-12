@@ -37,6 +37,11 @@
       light      true = pale band, so navy text and colour logos
       logo       optional: a different project logo file (without .webp)
 */
+// Added to every banner photo URL. Bump it when any photo is regenerated under
+// the same file name, so browsers download the new file instead of a cached one.
+// (pages/_document.js uses it too, for the preload of the first photo.)
+export const PHOTO_VERSION = "?v=5";
+
 export const PROJECTS = [
   {
     key: "aura",

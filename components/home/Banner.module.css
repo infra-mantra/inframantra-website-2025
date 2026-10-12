@@ -441,8 +441,9 @@
   .heroImg {
     top: auto;
     bottom: 0;
-    height: auto;
-    aspect-ratio: 6 / 5;
+    /* 6:5 when there is room; trimmed on short (landscape) screens so it
+       never rises behind the text band. 190px = the band (see MainBanner.module.css) */
+    height: min(83.4vw, calc(100% - 190px));
     -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 30%);
     mask-image: linear-gradient(180deg, transparent 0%, #000 30%);
   }
@@ -467,10 +468,9 @@
     background: linear-gradient(0deg, rgba(8, 8, 10, 0.55) 0%, rgba(8, 8, 10, 0) 30%);
   }
 
-  /* arrows: the desktop glass button, smaller, centred on the photo
-     (the 6:5 photo is 83.4vw tall at the bottom, so its middle is 41.7vw up) */
+  /* arrows: the desktop glass button, smaller, centred on the photo */
   .heroArrow {
-    top: calc(100% - 41.7vw);
+    top: calc(100% - min(41.7vw, (100% - 190px) / 2));
     width: 32px;
     height: 32px;
     background: rgba(10, 10, 12, 0.3);
@@ -487,7 +487,7 @@
   .hp {
     position: absolute;
     z-index: 2;
-    top: 80px; /* below the site header */
+    top: max(80px, calc(8vh + 12px)); /* below the site header (8vh tall on phones) */
     left: 16px;
     right: 16px;
     display: grid;
@@ -614,6 +614,57 @@
 }
 
 /* tablets: the full desktop nav bar is taller than the phone header */
+/* tablets: a taller band and bigger logos/type (MainBanner.module.css uses the same 270px) */
+@media (min-width: 601px) and (max-width: 1180px) {
+  .heroImg {
+    height: min(83.4vw, calc(100% - 270px));
+  }
+
+  .heroArrow {
+    top: calc(100% - min(41.7vw, (100% - 270px) / 2));
+    width: 40px;
+    height: 40px;
+  }
+
+  .hp {
+    left: 8%;
+    right: 8%;
+    grid-template-columns: minmax(0, 36%) minmax(0, 1fr);
+    column-gap: 28px;
+  }
+
+  .hpBrand {
+    padding-right: 28px;
+  }
+
+  .hpLogo {
+    height: 84px;
+  }
+
+  .hpBy span {
+    font-size: 16px;
+  }
+
+  .hpBy img {
+    height: 30px;
+    max-width: 160px;
+  }
+
+  .hpHead {
+    font-size: 26px;
+  }
+
+  .hpLoc {
+    font-size: 12.5px;
+  }
+
+  .hpLoc svg {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+/* tablets 769px+: the full desktop nav bar is taller than the phone header */
 @media (min-width: 769px) and (max-width: 1180px) {
   .hp {
     top: 132px;
@@ -659,9 +710,30 @@
     right: 14px;
   }
 
-  /* the card is 100vw - 32px wide, so its photo is (100vw - 32px) * 0.834 tall */
+  /* the card is 100vw - 32px wide; 96px = its logo/text band (see AdsBanner.module.css) */
+  .inCard .heroImg {
+    height: min((100vw - 32px) * 0.834, calc(100% - 96px));
+  }
+
   .inCard .heroArrow {
-    top: calc(100% - (100vw - 32px) * 0.417);
+    top: calc(100% - min((100vw - 32px) * 0.417, (100% - 96px) / 2));
+  }
+}
+
+/* card on tablets: 150px band (see AdsBanner.module.css) */
+@media (min-width: 601px) and (max-width: 1180px) {
+  .inCard .hp {
+    top: 28px;
+    left: 6%;
+    right: 6%;
+  }
+
+  .inCard .heroImg {
+    height: min((100vw - 32px) * 0.834, calc(100% - 150px));
+  }
+
+  .inCard .heroArrow {
+    top: calc(100% - min((100vw - 32px) * 0.417, (100% - 150px) / 2));
   }
 }
 

@@ -1,4 +1,5 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
+import { PHOTO_VERSION } from "../components/home/heroProjects";
 
 /**
  * Custom document, added for one reason: to preload the home page hero as real
@@ -36,18 +37,20 @@ class MyDocument extends Document {
                 rel="preload"
                 as="image"
                 type="image/avif"
-                imageSrcSet="/banner/hero/aura-m780.avif 780w, /banner/hero/aura-m1170.avif 1170w"
+                imageSrcSet={`/banner/hero/aura-m780.avif${PHOTO_VERSION} 780w, /banner/hero/aura-m1170.avif${PHOTO_VERSION} 1170w`}
                 imageSizes="100vw"
-                media="(max-width: 768px)"
+                media="(max-width: 1180px)"
                 fetchpriority="high"
               />
               <link
                 rel="preload"
                 as="image"
                 type="image/avif"
-                imageSrcSet="/banner/hero/aura-d1440.avif 1440w, /banner/hero/aura-d1920.avif 1920w, /banner/hero/aura-d2560.avif 2560w, /banner/hero/aura-d3200.avif 3200w"
+                imageSrcSet={[1440, 1920, 2560, 3200]
+                  .map((w) => `/banner/hero/aura-d${w}.avif${PHOTO_VERSION} ${w}w`)
+                  .join(", ")}
                 imageSizes="100vw"
-                media="(min-width: 769px)"
+                media="(min-width: 1181px)"
                 fetchpriority="high"
               />
             </>

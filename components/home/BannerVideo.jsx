@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import styles from "./Banner.module.css";
-import { PROJECTS } from "./heroProjects";
+import { PROJECTS, PHOTO_VERSION } from "./heroProjects";
 
 /*
   Home hero banner: one slide per project (data in ./heroProjects.js).
@@ -18,10 +18,6 @@ import { PROJECTS } from "./heroProjects";
 
 const SLIDE_MS = 5000;
 const IMG = "/banner/hero";
-
-// Bump this when the phone photos are regenerated under the same names,
-// so browsers download the new files instead of showing cached ones.
-const PHONE_PHOTO_VERSION = "?v=4";
 
 const PinIcon = () => (
   <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
@@ -72,19 +68,23 @@ function HeroPicture({ p, priority }) {
       <source
         media="(max-width: 1180px)"
         type="image/avif"
-        srcSet={srcSet(base, "m", phone, "avif", PHONE_PHOTO_VERSION)}
+        srcSet={srcSet(base, "m", phone, "avif", PHOTO_VERSION)}
         sizes="100vw"
       />
       <source
         media="(max-width: 1180px)"
         type="image/webp"
-        srcSet={srcSet(base, "m", phone, "webp", PHONE_PHOTO_VERSION)}
+        srcSet={srcSet(base, "m", phone, "webp", PHOTO_VERSION)}
         sizes="100vw"
       />
-      <source type="image/avif" srcSet={srcSet(base, "d", desktop, "avif")} sizes="100vw" />
+      <source
+        type="image/avif"
+        srcSet={srcSet(base, "d", desktop, "avif", PHOTO_VERSION)}
+        sizes="100vw"
+      />
       <img
-        src={`${base}-d1920.webp`}
-        srcSet={srcSet(base, "d", desktop, "webp")}
+        src={`${base}-d1920.webp${PHOTO_VERSION}`}
+        srcSet={srcSet(base, "d", desktop, "webp", PHOTO_VERSION)}
         sizes="100vw"
         alt={priority ? "" : `${p.name}, ${p.location}`}
         className={styles.heroImg}
