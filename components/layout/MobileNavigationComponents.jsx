@@ -1,4 +1,5 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { IoMdMenu, IoMdCall, IoMdMail, IoMdPin } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { FaHome, FaBuilding } from "react-icons/fa";
@@ -25,6 +26,16 @@ const MobileMenu = () => {
     setOpen(openState);
   };
 
+  // Stop the page behind the drawer from scrolling while it is open.
+  useEffect(() => {
+    if (!open) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [open]);
+
   const isActive = (path) => {
     return router.pathname === `/${path}` ? "#E4A01D" : "#00000";
   };
@@ -47,8 +58,10 @@ const MobileMenu = () => {
   const DrawerList = (
     <div
       style={{
-        width: "100vw",
+        width: "100%",
         height: "100%",
+        boxSizing: "border-box",
+        overflowY: "auto",
         display: "flex",
         flexDirection: "column",
         backgroundColor: "#fff",
@@ -207,31 +220,39 @@ const MobileMenu = () => {
   return (
     <div>
       <IoMdMenu size={30} onClick={toggleDrawer(true)} style={{ cursor: "pointer" }} />
-      {open && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            backgroundColor: "rgba(0,0,0,0.5)",
-            zIndex: 1200,
-          }}
-        >
+      {/* The drawer is drawn straight into <body>: the header it is opened from
+          has a blur filter and clips its overflow, which trapped a drawer drawn
+          inside it to the header's own height (so on the home page on phones it
+          never appeared). */}
+      {open &&
+        createPortal(
           <div
+            onClick={toggleDrawer(false)}
             style={{
-              position: "relative",
-              width: "80%",
-              maxWidth: "400px",
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "100%",
               height: "100%",
-              backgroundColor: "#fff",
+              backgroundColor: "rgba(0,0,0,0.5)",
+              zIndex: 100000, // above the chat assistant (99999)
             }}
           >
-            {DrawerList}
-          </div>
-        </div>
-      )}
+            <div
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                position: "relative",
+                width: "80%",
+                maxWidth: "400px",
+                height: "100%",
+                backgroundColor: "#fff",
+              }}
+            >
+              {DrawerList}
+            </div>
+          </div>,
+          document.body
+        )}
     </div>
   );
 };
