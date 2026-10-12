@@ -195,12 +195,9 @@ const MobileMenu = () => {
       {/* Social Icons */}
       <p style={{ marginBottom: "10px", fontWeight: "bold" }}>Social Media Links</p>
       <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-        <SocialIcon url="https://x.com/INFRAMANTRA_" />
         <SocialIcon url="https://instagram.com/inframantraofficial" />
         <SocialIcon url="https://youtube.com/@inframantraofficial" />
         <SocialIcon url="https://facebook.com/inframantraofficial" />
-        <SocialIcon url="https://pinterest.com/inframantraofficial" />
-        <SocialIcon url="https://linkedin.com/company/inframantra" />
       </div>
 
       <Divider />
