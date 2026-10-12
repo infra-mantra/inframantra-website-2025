@@ -64,10 +64,10 @@
   }
 }
 
-/* tablets: taller band (150px, see Banner.module.css .inCard), capped so the
+/* tablets: logo/text band 26vw (see Banner.module.css .inCard), capped so the
    card never gets taller than most of the screen */
 @media (min-width: 601px) and (max-width: 1180px) {
   .adCard {
-    height: min(calc(150px + (100vw - 32px) * 0.834), 80svh);
+    height: min(calc(26vw + (100vw - 32px) * 0.834), 85svh);
   }
 }

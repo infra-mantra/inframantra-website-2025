@@ -614,60 +614,77 @@
 }
 
 /* tablets: the full desktop nav bar is taller than the phone header */
-/* tablets: a taller band and bigger logos/type (MainBanner.module.css uses the same 270px) */
+/* Tablets (601-1180px): everything scales with the screen width, so the band
+   looks the same on an iPad mini, an iPad Pro and a Surface.
+   --header = the site header's height (phone header 8vh, desktop nav bar 10vh)
+   --band   = header + the logo/text area; the photo fills the rest below it.
+   MainBanner.module.css sizes the banner with the same formula. */
 @media (min-width: 601px) and (max-width: 1180px) {
+  .demoBanner {
+    --header: 8vh;
+    --band: calc(var(--header) + 26vw);
+  }
+
   .heroImg {
-    height: min(83.4vw, calc(100% - 270px));
+    height: min(83.4vw, calc(100% - var(--band)));
   }
 
   .heroArrow {
-    top: calc(100% - min(41.7vw, (100% - 270px) / 2));
-    width: 40px;
-    height: 40px;
+    top: calc(100% - min(41.7vw, (100% - var(--band)) / 2));
+    width: clamp(40px, 5vw, 52px);
+    height: clamp(40px, 5vw, 52px);
   }
 
   .hp {
-    left: 8%;
-    right: 8%;
-    grid-template-columns: minmax(0, 36%) minmax(0, 1fr);
-    column-gap: 28px;
+    top: calc(var(--header) + 3vw);
+    left: 7%;
+    right: 7%;
+    grid-template-columns: minmax(0, 38%) minmax(0, 1fr);
+    column-gap: 4vw;
   }
 
   .hpBrand {
-    padding-right: 28px;
+    padding-right: 4vw;
   }
 
   .hpLogo {
-    height: 84px;
+    height: 10vw;
+    max-width: 100%;
+  }
+
+  .hpBy {
+    gap: 0.8vw;
+    margin-top: 1.4vw;
   }
 
   .hpBy span {
-    font-size: 16px;
+    font-size: 2.1vw;
   }
 
   .hpBy img {
-    height: 30px;
-    max-width: 160px;
+    height: 3.6vw;
+    max-width: 22vw;
   }
 
   .hpHead {
-    font-size: 26px;
+    font-size: 3.5vw;
   }
 
   .hpLoc {
-    font-size: 12.5px;
+    gap: 0.6vw;
+    margin-top: 1.6vw;
+    font-size: 1.6vw;
   }
 
   .hpLoc svg {
-    width: 15px;
-    height: 15px;
+    width: 2vw;
+    height: 2vw;
   }
 }
 
-/* tablets 769px+: the full desktop nav bar is taller than the phone header */
 @media (min-width: 769px) and (max-width: 1180px) {
-  .hp {
-    top: 132px;
+  .demoBanner {
+    --header: 10vh;
   }
 }
 
@@ -720,20 +737,25 @@
   }
 }
 
-/* card on tablets: 150px band (see AdsBanner.module.css) */
+/* card on tablets: same scaling as the hero; no site header inside the card */
 @media (min-width: 601px) and (max-width: 1180px) {
+  .inCard {
+    --header: 0px;
+    --band: 26vw;
+  }
+
   .inCard .hp {
-    top: 28px;
+    top: 3vw;
     left: 6%;
     right: 6%;
   }
 
   .inCard .heroImg {
-    height: min((100vw - 32px) * 0.834, calc(100% - 150px));
+    height: min((100vw - 32px) * 0.834, calc(100% - var(--band)));
   }
 
   .inCard .heroArrow {
-    top: calc(100% - min((100vw - 32px) * 0.417, (100% - 150px) / 2));
+    top: calc(100% - min((100vw - 32px) * 0.417, (100% - var(--band)) / 2));
   }
 }
 

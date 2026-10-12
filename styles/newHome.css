@@ -920,3 +920,27 @@ button {
     object-fit: contain;
   }
 }
+
+/* Phones / small tablets: logo exactly centred, menu icon pinned 16px from the
+   left edge and centred in the bar on every screen width (it used to follow
+   the desktop 40vw columns and ended up cut off or floating). */
+@media (max-width: 768px) {
+  .navBarWrapper {
+    gap: 0;
+    justify-content: center;
+  }
+  .navBarWrapper > .navBarTabsWrapper:first-child {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: auto;
+    margin: 0;
+  }
+  .navBarWrapper > .navBarTabsWrapper:first-child svg {
+    display: block; /* no inline-text gap under the icon */
+  }
+  .navBarWrapper > .navBarTabsWrapper:last-child {
+    display: none; /* holds only the hidden wishlist icon on phones */
+  }
+}

@@ -40,7 +40,7 @@
 // Added to every banner photo URL. Bump it when any photo is regenerated under
 // the same file name, so browsers download the new file instead of a cached one.
 // (pages/_document.js uses it too, for the preload of the first photo.)
-export const PHOTO_VERSION = "?v=5";
+export const PHOTO_VERSION = "?v=7";
 
 export const PROJECTS = [
   {
@@ -103,7 +103,7 @@ export const PROJECTS = [
       logo: { v: "w", w: 533, h: 200 },
       dev: { k: "whiteland", w: 551, h: 120 },
     },
-    mobile: { bg: "#4a4743", logo: "pl-westin-mw" },
+    mobile: { bg: "#211a14", logo: "pl-westin-mw" },
   },
   {
     key: "ambience",
@@ -142,7 +142,7 @@ export const PROJECTS = [
       logo: { v: "c", w: 186, h: 200 },
       dev: { k: "vatika", w: 182, h: 120 },
     },
-    mobile: { bg: "#e0ecf3", light: true },
+    mobile: { bg: "#b6dfee", light: true },
   },
   {
     key: "monsella",

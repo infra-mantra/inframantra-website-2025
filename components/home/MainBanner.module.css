@@ -30,13 +30,22 @@
   }
 }
 
-/* Tablets: taller logo/text band (Banner.module.css uses the same 270px). */
-@media (min-width: 601px) and (max-width: 1180px) {
+/* Tablets: header + logo/text band (26vw) + the photo (83.4vw), the same
+   formula as Banner.module.css. Phone header is 8vh, desktop nav bar 10vh. */
+@media (min-width: 601px) and (max-width: 768px) {
   .homePageheaderContainer {
-    height: min(calc(270px + 83.4vw), 90svh);
+    height: min(calc(8vh + 26vw + 83.4vw), 90svh);
   }
   .homePageheader {
-    height: calc(min(calc(270px + 83.4vw), 90svh) + 3svh);
+    height: calc(min(calc(8vh + 26vw + 83.4vw), 90svh) + 3svh);
+  }
+}
+@media (min-width: 769px) and (max-width: 1180px) {
+  .homePageheaderContainer {
+    height: min(calc(10vh + 26vw + 83.4vw), 90svh);
+  }
+  .homePageheader {
+    height: calc(min(calc(10vh + 26vw + 83.4vw), 90svh) + 3svh);
   }
 }
 
