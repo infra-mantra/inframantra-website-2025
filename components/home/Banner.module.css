@@ -498,7 +498,9 @@
     left: 16px;
     right: 16px;
     display: grid;
-    grid-template-columns: minmax(0, 40%) minmax(0, 1fr);
+    /* logos + text sized to their content, the pair centred in the band */
+    grid-template-columns: minmax(0, max-content) minmax(0, max-content);
+    justify-content: center;
     align-items: center;
     column-gap: 14px;
     color: #fff;
@@ -510,6 +512,7 @@
   /* left column: project logo + developer, with a gold divider */
   .hpBrand {
     display: flex;
+    max-width: 40vw;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -658,7 +661,7 @@
     top: calc(var(--header) + 3vw);
     left: 7%;
     right: 7%;
-    grid-template-columns: minmax(0, 38%) minmax(0, 1fr);
+    grid-template-columns: minmax(0, max-content) minmax(0, max-content);
     column-gap: 4vw;
   }
 
