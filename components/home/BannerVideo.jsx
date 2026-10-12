@@ -101,14 +101,14 @@ function HeroPicture({ p, priority }) {
 
 // Phones/tablets: logos on the left, BHK headline and location on the right.
 function HeroPoster({ p }) {
-  const { light, logo } = p.mobile;
+  const { light, logo, dev, chip } = p.mobile;
   const variant = light ? "c" : "w"; // colour logos on pale bands, white on dark
   const [logoW, logoH] = p.logo;
   return (
-    <div className={`${styles.hp} ${light ? styles.hpLight : ""}`}>
+    <div className={`${styles.hp} ${light ? styles.hpLight : ""} ${chip ? styles.hpChips : ""}`}>
       <div className={styles.hpBrand}>
         <img
-          className={styles.hpLogo}
+          className={`${styles.hpLogo} ${logoW / logoH > 2 ? styles.logoWide : ""}`}
           src={`${IMG}/${logo || `pl-${p.key}-${variant}`}.webp`}
           alt={`${p.name} logo`}
           width={logoW}
@@ -119,7 +119,7 @@ function HeroPoster({ p }) {
         <p className={styles.hpBy}>
           <span>by</span>
           <img
-            src={`${IMG}/dv-${p.place.dev.k}-${variant}.webp`}
+            src={`${IMG}/${dev || `dv-${p.place.dev.k}-${variant}`}.webp`}
             alt={p.developer}
             width={p.place.dev.w}
             height={p.place.dev.h}
@@ -160,7 +160,7 @@ function HeroOverlay({ p }) {
   const logos = (
     <>
       <img
-        className={styles.hxLogo}
+        className={`${styles.hxLogo} ${place.logo.w / place.logo.h > 2 ? styles.logoWide : ""}`}
         src={`${IMG}/pl-${p.key}-${place.logo.v}.webp`}
         alt={`${p.name} logo`}
         width={place.logo.w}

@@ -36,11 +36,14 @@
       bg         band colour behind the logos/text; matches the top of the photo
       light      true = pale band, so navy text and colour logos
       logo       optional: a different project logo file (without .webp)
+      dev        optional: a different developer logo file (without .webp)
+      chip       true = colour logos on a dark band (soft white glow, no background)
+
 */
 // Added to every banner photo URL. Bump it when any photo is regenerated under
 // the same file name, so browsers download the new file instead of a cached one.
 // (pages/_document.js uses it too, for the preload of the first photo.)
-export const PHOTO_VERSION = "?v=7";
+export const PHOTO_VERSION = "?v=8";
 
 export const PROJECTS = [
   {
@@ -50,17 +53,17 @@ export const PROJECTS = [
     developer: "Aura The World",
     location: "Sector 79, Southern Peripheral Road",
     price: "1.91 Cr.",
-    logo: [184, 120],
+    logo: [420, 272],
     place: {
       head: "2.5, 3 & 3.5 BHK",
       info: "right",
       top: "30%",
       theme: "light",
       brand: "tl",
-      logo: { v: "w", w: 330, h: 243 },
+      logo: { v: "hd", w: 420, h: 272 },
       dev: { k: "aura", w: 424, h: 120 },
     },
-    mobile: { bg: "#0b2c51" },
+    mobile: { bg: "#0b2c51", logo: "pl-aura-hd" },
   },
   {
     key: "satya",
@@ -82,7 +85,7 @@ export const PROJECTS = [
       logo: { v: "c", w: 351, h: 200 },
       dev: { k: "satya", v: "box", w: 450, h: 450 },
     },
-    mobile: { bg: "#0c326f" },
+    mobile: { bg: "#0c326f", logo: "pl-satya-mc", dev: "dv-satya-box" },
   },
   {
     key: "westin",
@@ -122,7 +125,7 @@ export const PROJECTS = [
       logo: { v: "w", w: 552, h: 200 },
       dev: { k: "ambience", v: "c", w: 219, h: 120 },
     },
-    mobile: { bg: "#4f5781" },
+    mobile: { bg: "#4f5781", logo: "pl-ambience-c", dev: "dv-ambience-c", chip: true },
   },
   {
     key: "vatika",
@@ -135,14 +138,14 @@ export const PROJECTS = [
     place: {
       head: "2, 3 & 4 BHK",
       sub: "Residences & Penthouses",
-      info: "left",
+      info: "right",
       top: "18%",
-      theme: "dark",
-      brand: "row",
+      theme: "light",
+      brand: "stack",
       logo: { v: "c", w: 186, h: 200 },
-      dev: { k: "vatika", w: 182, h: 120 },
+      dev: { k: "vatika", v: "c", w: 182, h: 120 },
     },
-    mobile: { bg: "#b6dfee", light: true },
+    mobile: { bg: "#bed4e3", light: true },
   },
   {
     key: "monsella",
@@ -170,7 +173,7 @@ export const PROJECTS = [
     name: "Tulip Crimson",
     developer: "Tulip Infratech",
     location: "Sector 70, Southern Peripheral Road",
-    price: "4.63 Cr.",
+    price: "4.78 Cr.",
     logo: [207, 180],
     place: {
       head: "4 BHK",
@@ -189,17 +192,17 @@ export const PROJECTS = [
     name: "Tulip Melrose",
     developer: "Tulip Infratech",
     location: "Sector 70, Southern Peripheral Road",
-    price: "4.66 Cr.",
-    logo: [299, 169],
+    price: "4.74 Cr.",
+    logo: [900, 280],
     place: {
       head: "5.5 BHK",
       info: "left",
       top: "22%",
       theme: "dark",
       brand: "tr",
-      logo: { v: "d", w: 234, h: 162 },
+      logo: { v: "hd", w: 900, h: 280 },
       dev: { k: "tulip", w: 323, h: 120 },
     },
-    mobile: { bg: "#77b5f5", light: true },
+    mobile: { bg: "#77b5f5", light: true, logo: "pl-melrose-hd" },
   },
 ];

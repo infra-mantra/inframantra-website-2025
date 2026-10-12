@@ -181,7 +181,7 @@ export const PROJECTS = [
     logo: "https://inframantra.blr1.digitaloceanspaces.com/propertyLogo/tulipmelrose/images%20(2).jpeg",
     size: "3216 sq.ft.",
     beds: "5 BHK",
-    priceInrCr: 4.66,
+    priceInrCr: 4.74,
     link: "https://inframantra.com/property/tulip-melrose-sector-70-gurgaon",
     images: [
       "https://inframantra.blr1.cdn.digitaloceanspaces.com/nri-page%20/Tulip%20Melrose/melrose%202.webp",
