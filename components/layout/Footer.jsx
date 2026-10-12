@@ -6,44 +6,23 @@ import Link from "next/link";
 import styles from "./Footer.module.css";
 
 // Quick Search — premium-pick projects per city, hardcoded (no API call).
+// Gurgaon mirrors the citywise API (Oct 2026); refresh it when that list changes.
 // Order: Gurgaon, Mohali, Noida, Pune. Each item is [name, slug].
 const QUICK_SEARCH = [
   {
     city: "Gurgaon",
     items: [
-      ["Whiteland The Westin Residences", "whiteland-the-westin-residences-sector-103-gurugram"],
-      ["Godrej Samaris", "godrej-samaris-sector-53-gurgaon"],
-      ["Tulip Monsella", "tulip-monsella-sector-53-gurgaon"],
-      ["Tulip Melrose", "tulip-melrose-sector-70-gurgaon"],
-      ["Tulip Crimson", "tulip-crimson-sector-70-gurgaon"],
-      ["Godrej Sora", "godrej-sora-sector-53-gurgaon"],
-      ["BPTP Downtown 66", "bptp-downtown-66-sector-66-gurgaon"],
+      // Same projects and order as /property/citywise/Gurgaon (premium picks)
+      ["Aura The Aerth", "aura-the-aerth-sector-79-gurugram"],
+      ["Spiti Homes", "spiti-homes-sector-99a-gurgaon"],
       ["Satya Levante Residences", "satya-levante-residences-sector-104-gurgaon"],
-      ["Whiteland The Aspen", "whiteland-the-aspen-sector-76-gurgaon"],
-      ["Vatika Seven Elements", "vatika-seven-elements-sector-89a-gurgaon"],
-      ["Vatika Sovereign Park", "vatika-sovereign-park-sector-99-gurgaon"],
+      ["Westin Residences Gurugram", "whiteland-the-westin-residences-sector-103-gurugram"],
       ["Ambience Creacions", "ambience-creacions-sector-22-gurugram"],
-      ["Saan Verdante", "saan-verdante-sector-95-gurgaon"],
-      ["Tulip Violet", "tulip-violet-sector-69-gurgaon"],
-      ["Experion The Trillion", "experion-the-trillion-sector-48-gurgaon"],
-      ["Shapoorji Pallonji The Dualis", "shapoorji-pallonji-the-daulis-sector-46-gurgaon"],
-      ["Hero Homes The Palatial", "hero-homes-the-palatial-sector-104-gurgaon"],
-      ["Birla Pravaah", "birla-pravaah-sector-71-gurgaon"],
-      [
-        "Signature Global Tonino Lamborghini Residences",
-        "signature-global-tonino-lamborghini-residencies-sector-71-gurgaon",
-      ],
-      ["Birla Arika", "birla-arika-sector-31-gurgaon"],
-      ["Trevoc Royal Residences", "trevoc-royal-residences-sector-56-gurgaon"],
-      ["Max Estates The Terraces", "max-estates-the-terraces-sector-36a-gurgaon"],
-      ["TARC Ishva", "tarc-ishva-sector-63a-gurgaon"],
-      ["Puri Diplomatic Residences", "puri-diplomatic-residences-sector-111-gurgaon"],
-      ["Godrej Miraya", "godrej-miraya-sector-43-gurgaon"],
-      ["Krisumi Waterside Residences", "krisumi-waterside-residences-sector-36A-gurgaon"],
-      ["BPTP GAIA Residences", "bptp-gaia-residences-sector-102-gurugram"],
-      ["Signature Global Daxin Vistas", "signature-global-daxin-vistas-sohna-south-gurgaon"],
-      ["Signature Global Cloverdale", "signature-global-cloverdale-sector-71-gurgaon"],
-      ["Signature Global Sarvam DXP", "signature-global-deluxe-dxp-sector-37d-gurgaon"],
+      ["Vatika Seven Elements", "vatika-seven-elements-sector-89a-gurgaon"],
+      ["Tulip Monsella", "tulip-monsella-sector-53-gurgaon"],
+      ["Tulip Crimson", "tulip-crimson-sector-70-gurgaon"],
+      ["Tulip Melrose", "tulip-melrose-sector-70-gurgaon"],
+      ["4S The Aurrum", "4s-the-aurrum-sector-59-gurgaon"],
     ],
   },
   {
@@ -287,10 +266,9 @@ function Footer() {
             <p>marketing@inframantra.com </p>
           </div>
           <p className={styles.footerDisclaimer}>
-            INFRAMANTRA INDIA PVT LTD is an authorized real estate channel partner and not a
-            direct project developer. All featured properties are RERA-verified, and all project
-            details, pricing, and images are for representation purposes based on
-            developer-provided data.
+            INFRAMANTRA INDIA PVT LTD is an authorized real estate channel partner and not a direct
+            project developer. All featured properties are RERA-verified, and all project details,
+            pricing, and images are for representation purposes based on developer-provided data.
           </p>
         </div>
 

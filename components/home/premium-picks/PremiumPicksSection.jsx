@@ -10,6 +10,7 @@ import CitySelector from "./CitySelector.jsx";
 import { PremiumCardsSkeleton } from "../HomeSkeletons.jsx";
 import styles from "./PremiumPicksSection.module.css";
 import { useRouter } from "next/router";
+import { useAutoplayWhenVisible } from "../../shared/useAutoplayWhenVisible";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -24,6 +25,7 @@ export default function PremiumPicksSection({
   locationStatus,
 }) {
   const router = useRouter();
+  const onSwiper = useAutoplayWhenVisible();
 
   const handleCityChange = (city) => {
     onUpdate(city);
@@ -81,6 +83,7 @@ export default function PremiumPicksSection({
 
               <Swiper
                 key={selectedCity}
+                onSwiper={onSwiper}
                 modules={[Navigation, Pagination, Autoplay]}
                 navigation={{
                   prevEl: `.${styles.prev}`,

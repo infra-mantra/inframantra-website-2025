@@ -2,6 +2,7 @@ import Head from "next/head";
 import Script from "next/script";
 import { useEffect, useMemo } from "react";
 import { useRouter } from "next/router";
+import { optimizedSrc } from "../lib/imageUrl.js";
 import dynamic from "next/dynamic";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -211,11 +212,22 @@ const Wrapper = ({
             when the parser finally reaches it. Only pages that pass the prop
             emit this, so nothing preloads an image it does not show. */}
         {preloadImage && (
+          // Same optimized URLs/srcset the gallery's first image uses, so the
+          // preload is the very file that gets painted (not a 450 KB original).
           <link
             key="preload-lcp"
             rel="preload"
             as="image"
-            href={preloadImage}
+            href={optimizedSrc(preloadImage, 1200, 70)}
+            {...(optimizedSrc(preloadImage) !== preloadImage
+              ? {
+                  // a raw CDN original (property page): preload the sizes the gallery uses
+                  imageSrcSet: [640, 1080, 1200, 1920]
+                    .map((w) => `${optimizedSrc(preloadImage, w, 70)} ${w}w`)
+                    .join(", "),
+                  imageSizes: "(max-width: 768px) 100vw, 75vw",
+                }
+              : {})}
             fetchpriority="high"
           />
         )}

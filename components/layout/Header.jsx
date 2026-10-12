@@ -84,14 +84,46 @@ function NavigationBar({ pageBgd, onlyLogo = false, logoUrl }) {
 
   const propertyTabStyle = router.pathname.includes("property") ? { color: "#e7b554" } : {};
 
-  const textColor = isMobile ? (scrolledPast90vh ? "black" : "white") : pageBgd ? "black" : "white";
+  // Home page: the bar is its OWN band above the banner (dark, brand-navy), not
+  // laid over the photo — the banner image starts below it, so nothing covers
+  // the towers. It stays pinned while the page scrolls, turning light once past
+  // the hero so it reads over the white sections.
+  const homeGlass = !pageBgd;
+  // Desktop home: the bar is pinned; once the page scrolls off the banner it
+  // turns light glass with dark text so it stays readable over white sections.
+  const [deskScrolled, setDeskScrolled] = useState(false);
+  useEffect(() => {
+    if (!homeGlass || isMobile) return;
+    const onScroll = () => setDeskScrolled(window.scrollY > 60);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [homeGlass, isMobile]);
+  const lightGlass = homeGlass && !isMobile && deskScrolled;
+  // Laid OVER the banner photo: frosted glass tinted dark, so the photo shows
+  // through it blurred and the white logo/menu stay readable on any image.
+  const glassStyle = {
+    background: "rgba(18, 18, 24, 0.28)",
+    backdropFilter: "blur(16px) saturate(150%)",
+    WebkitBackdropFilter: "blur(16px) saturate(150%)",
+    borderBottom: "1px solid rgba(255, 255, 255, 0.12)",
+  };
+  // over the photo: white text/logo; once scrolled past the hero on desktop the
+  // bar turns light, so it flips to dark
+  const textColor = lightGlass ? "#141414" : homeGlass ? "white" : pageBgd ? "black" : "white";
 
   const navBarStyles = {
     position: isMobile ? "fixed" : "relative",
     top: 0,
     width: "100%",
     zIndex: 1000,
+    // home keeps the dark glass band at every scroll position; other pages keep
+    // the old transparent -> white behaviour. The spread must come AFTER this
+    // line or `backgroundColor` wins and the band goes transparent.
     backgroundColor: isMobile ? (scrolledPast90vh ? "white" : "transparent") : "transparent",
+    ...(homeGlass && isMobile
+      ? { ...glassStyle, backgroundColor: glassStyle.background, height: "8vh", alignItems: "center" }
+      : {}),
   };
 
   // ONLY LOGO MODE
@@ -143,12 +175,25 @@ function NavigationBar({ pageBgd, onlyLogo = false, logoUrl }) {
             ? navBarStyles
             : {
                 height: pageBgd ? undefined : "10vh",
-                position: !pageBgd ? "absolute" : "relative",
+                // laid over the banner photo
+                position: homeGlass ? "fixed" : "relative",
+                top: 0,
+                left: 0,
+                zIndex: 1000,
+                transition: "background 0.3s ease, box-shadow 0.3s ease",
+                ...(homeGlass ? glassStyle : {}),
+                ...(lightGlass
+                  ? {
+                      background: "rgba(255, 255, 255, 0.86)",
+                      borderBottom: "1px solid rgba(17, 17, 17, 0.06)",
+                      boxShadow: "0 6px 22px rgba(17, 17, 17, 0.08)",
+                    }
+                  : {}),
               }
         }
       >
         {/* Left Side */}
-        <div className="navBarTabsWrapper" style={isDesktop ? { color: textColor } : {}}>
+        <div className="navBarTabsWrapper" style={{ color: textColor }}>
           {isDesktop && (
             <p
               className="navBarTabs"
@@ -188,7 +233,9 @@ function NavigationBar({ pageBgd, onlyLogo = false, logoUrl }) {
           width={310}
           height={62}
           src={
-            (isMobile && (scrolledPast90vh || pageBgd)) || (!isMobile && pageBgd)
+            lightGlass ||
+            (!homeGlass && isMobile && (scrolledPast90vh || pageBgd)) ||
+            (!isMobile && pageBgd)
               ? "/logos/nav-black.webp"
               : "/logos/nav-white.webp"
           }

@@ -34,15 +34,41 @@ const projectNameFromPath = (path = "") => {
 
 // Prefilled so the agent opens on the right project instead of asking. WhatsApp
 // drops this in the compose box, so the sender can still edit it before sending.
+// Only a property page names a project; the home page used to send "I am
+// interested in Home Page". Listing pages name the place or layout instead,
+// and every other page sends a general request.
+const waIntro = (projectName, path) => {
+  const parts = ((path || "").split(/[?#]/)[0] || "").split("/").filter(Boolean);
+  const general = [
+    "Hi Inframantra, I am looking for a property.",
+    "Please share your latest projects, price list and availability.",
+  ];
+  if (parts[0] === "property" && parts[1]) {
+    return [
+      `Hi Inframantra, I am interested in ${projectName}.`,
+      "Please share the price list, floor plans and availability.",
+    ];
+  }
+  if (parts[0] === "property-listing" && parts[2]) {
+    const type = parts[1];
+    if (type === "search" && parts[2] === "property-in-india") return general;
+    const ask = "Please share the available projects, price list and availability.";
+    if (type === "configuration") {
+      return [`Hi Inframantra, I am looking for ${projectName} properties.`, ask];
+    }
+    if (type === "search") {
+      return [`Hi Inframantra, I am interested in ${projectName}.`, ask];
+    }
+    return [`Hi Inframantra, I am looking for properties in ${projectName}.`, ask];
+  }
+  return general;
+};
+
 const waLink = (projectName, path) => {
-  const url = "https://inframantra.com" + (path === "/" ? "" : (path || "").split("?")[0]);
-  const text = [
-    `Hi Inframantra, I am interested in ${projectName}.`,
-    "",
-    "Please share the price list, floor plans and availability.",
-    "",
-    `Page: ${url}`,
-  ].join(String.fromCharCode(10));
+  const cleanPath = (path || "").split(/[?#]/)[0];
+  const url = "https://inframantra.com" + (cleanPath === "/" ? "" : cleanPath);
+  const [intro, ask] = waIntro(projectName, path);
+  const text = [intro, "", ask, "", `Page: ${url}`].join(String.fromCharCode(10));
   return `https://api.whatsapp.com/send?phone=8698009900&text=${encodeURIComponent(text)}`;
 };
 import "../styles/self-hosted-fonts.css";
@@ -56,6 +82,13 @@ import "../styles/properyHeader.css";
 import "../styles/propertyDetailDesktop.css";
 
 import styles from "./_app.module.css";
+// Desktop contact drawer: its own small chunk, mounted only once the page has
+// loaded and the browser is idle (see drawerReady), so it adds nothing to the
+// initial bundle or the first paint. It is position: fixed, so arriving late
+// shifts nothing.
+const ContactDrawer = dynamic(() => import("../components/shared/ContactDrawer.jsx"), {
+  ssr: false,
+});
 
 import ErrorStack from "./_error.js";
 
@@ -185,6 +218,25 @@ function MyApp({ Component, pageProps }) {
   const isHomePage = router.pathname === "/";
   const [isMobile, setIsMobile] = useState(false);
   const [showChat, setShowChat] = useState(false);
+  // bumped by the desktop contact drawer to open the assistant's chat window
+  const [chatOpenRequest, setChatOpenRequest] = useState(0);
+  const [drawerReady, setDrawerReady] = useState(false);
+  useEffect(() => {
+    let idleId;
+    let timer;
+    const mount = () => {
+      if ("requestIdleCallback" in window)
+        idleId = window.requestIdleCallback(() => setDrawerReady(true), { timeout: 2500 });
+      else timer = setTimeout(() => setDrawerReady(true), 600);
+    };
+    if (document.readyState === "complete") mount();
+    else window.addEventListener("load", mount, { once: true });
+    return () => {
+      window.removeEventListener("load", mount);
+      if (idleId && "cancelIdleCallback" in window) window.cancelIdleCallback(idleId);
+      clearTimeout(timer);
+    };
+  }, []);
 
   const checkScreenWidth = () => {
     const width = window.innerWidth;
@@ -269,11 +321,6 @@ function MyApp({ Component, pageProps }) {
     };
   }, [router]);
 
-  const mobileWrapperStyle = {
-    marginTop: isHomePage ? "auto" : "8vh",
-    marginBottom: "4vh",
-    overflow: "visible",
-  };
 
   return (
     <ErrorBoundary>
@@ -282,38 +329,28 @@ function MyApp({ Component, pageProps }) {
           wrapped and unwrapped <Component>, which made React unmount + remount the
           entire page after hydration on mobile — throwing away the server-rendered
           DOM and causing a layout shift. The style is applied conditionally instead. */}
-      <div style={isMobile ? mobileWrapperStyle : undefined}>
+      {/* Mobile spacing comes from CSS (a media query), so it is in the very
+          first paint; applying it from JS after hydration moved the whole
+          page down — Lighthouse measured a 0.56 layout shift on property pages. */}
+      <div className={isHomePage ? styles.pageWrapHome : styles.pageWrap}>
         <Component {...pageProps} />
       </div>
 
-      <div className={styles.cta_visible}>
-        <a href="tel:8698009900">
-          <button className={`${styles.btnfloating} ${styles.phone}`}>
-            <IconPhone size={18} />
-            <span>(+91) 86 9800 9900</span>
-          </button>
-        </a>
-
-        {/* Enquire joins the same fixed stack as Phone and WhatsApp, in the brand
-            gold (#e7b554) rather than their green, so it reads as the primary action
-            rather than a third contact channel. */}
-        <button
-          type="button"
-          onClick={() => setEnquireOpen(true)}
-          className={`${styles.btnfloating} ${styles.enquire}`}
-          aria-label="Request a callback"
-        >
-          <IconMessage size={18} />
-          <span>Request a Callback</span>
-        </button>
-
-        <a href={waLink(enquiryProject, router.asPath)} target="_blank" rel="noreferrer">
-          <button className={`${styles.btnfloating} ${styles.whatsapp}`}>
-            <IconWhatsApp size={20} />
-            <span>(+91) 86 9800 9900</span>
-          </button>
-        </a>
-      </div>
+      {/* Desktop: one contact drawer (assistant, callback, call, WhatsApp)
+          instead of four separate floating buttons. Hidden on mobile (CSS),
+          which keeps its bottom bar. */}
+      {drawerReady && !isMobile && (
+        <ContactDrawer
+          phoneLabel="+91 86 9800 9900"
+          telHref="tel:8698009900"
+          whatsappHref={waLink(enquiryProject, router.asPath)}
+          onCallback={() => setEnquireOpen(true)}
+          onAssistant={() => {
+            setShowChat(true);
+            setChatOpenRequest((n) => n + 1);
+          }}
+        />
+      )}
 
       <div className={styles.bottom_cta}>
         <div className={styles.left}>
@@ -348,7 +385,7 @@ function MyApp({ Component, pageProps }) {
         </div>
       </div>
 
-      {showChat && <PropertyChatbot />}
+      {showChat && <PropertyChatbot openRequest={chatOpenRequest} />}
 
       {enquireOpen && (
         <EnquiryPopUp

@@ -64,9 +64,11 @@
 .gallery-with-form .property-image-gallery .image-gallery-slide-wrapper {
   width: 100%;
 }
-.gallery-with-form .property-image-gallery .image-gallery-image {
-  width: 100%;
-  object-fit: cover; /* same full-bleed look as the thumbnail layout */
+@media (min-width: 769px) {
+  .gallery-with-form .property-image-gallery .image-gallery-image {
+    width: 100%;
+    object-fit: cover; /* same full-bleed look as the thumbnail layout */
+  }
 }
 
 /* sample form styling — drop if you bring your own */
@@ -119,4 +121,50 @@
 /* ---------- Mobile: unchanged, full-width photo with bottom thumbnails ---------- */
 .gallery-only .gallery-wrapper {
   width: 100%;
+}
+
+
+/* Responsive by CSS from the first paint (see PropertyHeaderImageGallery) */
+@media (min-width: 769px) {
+  .gallery-with-form :global(.image-gallery-thumbnails-wrapper) {
+    display: none;
+  }
+}
+@media (max-width: 768px) {
+  .gallery-with-form {
+    display: block;
+    max-height: none;
+  }
+  .gallery-with-form .gallery-wrapper {
+    width: 100%;
+  }
+  .gallery-with-form .property-side-form {
+    display: none;
+  }
+}
+
+/* Phones: every slide (photos and the video slide) has the same 15:8 frame,
+   so the gallery height never changes as it auto-plays and the page below
+   doesn't jump with each slide. */
+@media (max-width: 768px) {
+  .gallery-with-form :global(.image-gallery-content:not(.fullscreen) .image-gallery-slide) {
+    aspect-ratio: 15 / 8;
+    overflow: hidden;
+  }
+  .gallery-with-form :global(.image-gallery-content:not(.fullscreen) .image-gallery-slide .image-gallery-image),
+  .gallery-with-form :global(.image-gallery-content:not(.fullscreen) .image-gallery-slide > *) {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    object-fit: cover;
+  }
+}
+
+
+.gallery-with-form .gallery-wrapper {
+  position: relative;
+}
+.gallery-with-form .gallery-wrapper :global(.property-image-gallery) {
+  position: relative;
+  z-index: 1;
 }

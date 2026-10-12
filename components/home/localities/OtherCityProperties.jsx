@@ -7,6 +7,7 @@ import { fetchCityProperties } from "../../lib/propertyApi.js";
 import { cityEventManager } from "../../lib/cityEventManager.js";
 import PropertyCard from "../../shared/PropertyCard.jsx";
 import styles from "./LocalityPropertiesSection.module.css";
+import { useAutoplayWhenVisible } from "../../shared/useAutoplayWhenVisible";
 
 // Import Swiper styles
 import "swiper/css";
@@ -14,6 +15,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 export default function LocalityPropertiesSection({ data, loading, selectedCity }) {
+  const onSwiper = useAutoplayWhenVisible();
   if (loading) {
     return (
       <div className={styles.localityContainer}>
@@ -36,6 +38,7 @@ export default function LocalityPropertiesSection({ data, loading, selectedCity 
         <div className={styles.localityCarouselContainer}>
           <Swiper
             modules={[Navigation, Pagination, Autoplay]}
+            onSwiper={onSwiper}
             spaceBetween={20}
             navigation={{
               nextEl: `.locality-next`,

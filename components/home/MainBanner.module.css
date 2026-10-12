@@ -20,9 +20,19 @@
   overflow: visible;
 }
 
+/* Phones and tablets (up to 1180px): poster-like — logos and copy on a sky band, the building photo below. */
+@media (max-width: 1180px) {
+  .homePageheaderContainer {
+    height: min(calc(190px + 83.4vw), 90svh);
+  }
+  .homePageheader {
+    height: calc(min(calc(190px + 83.4vw), 90svh) + 3svh);
+  }
+}
+
 /* Desktop: match the banner box to the wide (~3:1) banner image so the
    full image is visible — no cropping and no empty bars. */
-@media (min-width: 769px) {
+@media (min-width: 1181px) {
   .homePageheaderContainer {
     height: auto;
     aspect-ratio: 3 / 1;
@@ -31,3 +41,5 @@
     height: 100%;
   }
 }
+
+/* The header is laid over the banner, so the photo starts at the very top. */

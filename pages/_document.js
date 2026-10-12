@@ -36,7 +36,8 @@ class MyDocument extends Document {
                 rel="preload"
                 as="image"
                 type="image/avif"
-                imageSrcSet="/banner/westin-mobile.avif"
+                imageSrcSet="/banner/hero/aura-m780.avif 780w, /banner/hero/aura-m1170.avif 1170w"
+                imageSizes="100vw"
                 media="(max-width: 768px)"
                 fetchpriority="high"
               />
@@ -44,7 +45,8 @@ class MyDocument extends Document {
                 rel="preload"
                 as="image"
                 type="image/avif"
-                imageSrcSet="/banner/whiteland-desktop.avif"
+                imageSrcSet="/banner/hero/aura-d1440.avif 1440w, /banner/hero/aura-d1920.avif 1920w, /banner/hero/aura-d2560.avif 2560w, /banner/hero/aura-d3200.avif 3200w"
+                imageSizes="100vw"
                 media="(min-width: 769px)"
                 fetchpriority="high"
               />

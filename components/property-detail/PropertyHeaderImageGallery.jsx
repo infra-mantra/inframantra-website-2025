@@ -6,6 +6,7 @@ import "react-image-gallery/styles/css/image-gallery.css";
 // chunk, and this component is on the property page's critical path.
 import debounce from "lodash/debounce";
 import Ajax1 from "../lib/ajax1.js";
+import { optimizedSrc } from "../lib/imageUrl.js";
 import { slugify } from "../../utils/slugify.js";
 import { useRouter } from "next/router";
 // Same outline icons as the home page search.
@@ -30,10 +31,15 @@ const getYouTubeId = (url) => {
   return match ? match[1] : null;
 };
 
+// Gallery photos go through Next's image optimizer at the size actually shown
+// (they are 300-450 KB originals; a phone needs ~640px, a laptop ~1200px).
+// srcSet lets the browser pick; full screen still gets up to 1920px.
 const toGalleryItems = (items, name) =>
   (items || []).map((img) => ({
-    original: img.url,
-    thumbnail: img.thumbnail || img.url,
+    original: optimizedSrc(img.url, 1200, 70),
+    srcSet: [640, 1080, 1200, 1920].map((w) => `${optimizedSrc(img.url, w, 70)} ${w}w`).join(", "),
+    sizes: "(max-width: 768px) 100vw, 75vw",
+    thumbnail: optimizedSrc(img.thumbnail || img.url, 256, 60),
     originalAlt: name,
     thumbnailAlt: name,
   }));
@@ -414,14 +420,35 @@ function PropertyHeaderImageGallery({
       )}
 
       {/* Desktop: gallery + form side by side. Mobile: gallery only (with bottom thumbnails) */}
-      <div className={isDesktop ? styles["gallery-with-form"] : styles["gallery-only"]}>
+      {/* Layout is chosen by CSS (media queries), not by JS after hydration:
+          the server can't know the screen size, so a JS switch drew the desktop
+          layout first on phones and then jumped (Lighthouse CLS ~0.5). */}
+      <div className={styles["gallery-with-form"]}>
         <div className={styles["gallery-wrapper"]}>
+          {/* First photo as plain server-rendered markup, painted with the page
+              (the gallery only draws its slides once its JavaScript has run —
+              ~8s on a slow phone). The gallery covers it as soon as it's ready;
+              same URLs as the preload and the gallery's first slide. */}
+          {imageGallery?.[0]?.url && (
+            <img
+              className={phg["pg-lcp-base"]}
+              src={optimizedSrc(imageGallery[0].url, 1200, 70)}
+              srcSet={[640, 1080, 1200, 1920]
+                .map((w) => `${optimizedSrc(imageGallery[0].url, w, 70)} ${w}w`)
+                .join(", ")}
+              sizes="(max-width: 768px) 100vw, 75vw"
+              alt=""
+              aria-hidden="true"
+              fetchpriority="high"
+              decoding="async"
+            />
+          )}
           <ImageGallery
             ref={galleryRef}
             key={galleryImages?.[0]?.original}
             items={mobileItems}
             thumbnailPosition="bottom"
-            showThumbnails={!isDesktop}
+            showThumbnails /* hidden on desktop by CSS */
             showPlayButton
             showFullscreenButton
             showNav
@@ -432,6 +459,34 @@ function PropertyHeaderImageGallery({
             slideDuration={450}
             infinite
             renderCustomControls={renderOverlays}
+            // Own prev/next buttons: the library's arrows are hidden site-wide by
+            // a global rule (styles/globals.css), so these use their own classes.
+            renderLeftNav={(onClick, disabled) => (
+              <button
+                type="button"
+                className={`${phg["pg-nav"]} ${phg["pg-nav-left"]}`}
+                onClick={onClick}
+                disabled={disabled}
+                aria-label="Previous image"
+              >
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                  <path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+            )}
+            renderRightNav={(onClick, disabled) => (
+              <button
+                type="button"
+                className={`${phg["pg-nav"]} ${phg["pg-nav-right"]}`}
+                onClick={onClick}
+                disabled={disabled}
+                aria-label="Next image"
+              >
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                  <path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+            )}
           />
         </div>
 
@@ -490,11 +545,9 @@ function PropertyHeaderImageGallery({
             document.body
         )}
 
-        {isDesktop && (
-          <aside className={styles["property-side-form"]}>
-            <Form name={propertyData.name} />
-          </aside>
-        )}
+        <aside className={styles["property-side-form"]}>
+          <Form name={propertyData.name} />
+        </aside>
       </div>
     </div>
   );

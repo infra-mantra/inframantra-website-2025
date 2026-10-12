@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper";
 import PropertyCard from "../../shared/PropertyCard.jsx";
 import styles from "./LocalityPropertiesSection.module.css";
+import { useAutoplayWhenVisible } from "../../shared/useAutoplayWhenVisible";
 
 // Import Swiper styles
 import "swiper/css";
@@ -13,6 +14,7 @@ import "swiper/css/pagination";
 
 export default function LocalityPropertiesSection({ data, loading, selectedCity }) {
   const [visibleLocalities, setVisibleLocalities] = useState(2); // Show 2 localities initially
+  const onSwiper = useAutoplayWhenVisible();
 
   // Reset visible localities when city changes
   useEffect(() => {
@@ -76,6 +78,7 @@ export default function LocalityPropertiesSection({ data, loading, selectedCity 
             <div className={styles.localityCarouselContainer}>
               <Swiper
                 modules={[Navigation, Pagination, Autoplay]}
+                onSwiper={onSwiper}
                 spaceBetween={20}
                 navigation={{
                   nextEl: `.locality-next-${index}`,

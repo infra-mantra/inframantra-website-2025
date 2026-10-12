@@ -292,9 +292,11 @@
 }
 
 /* Keep the built-in buttons only inside fullscreen (so it can still be exited) */
-.gallery-with-form .image-gallery-content:not(.fullscreen) .image-gallery-play-button,
-.gallery-with-form .image-gallery-content:not(.fullscreen) .image-gallery-fullscreen-button {
-  display: none;
+@media (min-width: 769px) {
+  .gallery-with-form .image-gallery-content:not(.fullscreen) .image-gallery-play-button,
+  .gallery-with-form .image-gallery-content:not(.fullscreen) .image-gallery-fullscreen-button {
+    display: none;
+  }
 }
 
 /* Stack tucked flush into the bottom-right corner of the photo: straight cards,
@@ -1020,4 +1022,86 @@
     height: 32px;
     font-size: 20px;
   }
+}
+
+
+/* Gallery prev/next buttons (rendered via renderLeftNav/renderRightNav; the
+   library's own arrows stay hidden by the global rule). Round glass buttons
+   centred on the left and right edges of the photo. */
+.pg-nav {
+  position: absolute;
+  top: 50%;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #1a1a1a;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
+  transform: translateY(-50%);
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pg-nav:hover {
+  background: #e7b554;
+  color: #1a1307;
+  transform: translateY(-50%) scale(1.06);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+}
+
+.pg-nav:focus-visible {
+  outline: 3px solid rgba(231, 181, 84, 0.8);
+  outline-offset: 2px;
+}
+
+.pg-nav:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.pg-nav-left {
+  left: 16px;
+}
+
+.pg-nav-right {
+  right: 16px;
+}
+
+@media (max-width: 768px) {
+  .pg-nav {
+    width: 38px;
+    height: 38px;
+  }
+  .pg-nav svg {
+    width: 17px;
+    height: 17px;
+  }
+  .pg-nav-left {
+    left: 10px;
+  }
+  .pg-nav-right {
+    right: 10px;
+  }
+}
+
+
+/* Static first photo under the gallery (fast first paint); the gallery's own
+   slides sit on top of it once they render. */
+.pg-lcp-base {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  aspect-ratio: 15 / 8;
+  object-fit: cover;
+  pointer-events: none;
 }

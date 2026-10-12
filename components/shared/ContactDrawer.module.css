@@ -1,0 +1,509 @@
+/* Desktop contact drawer. Prefixed cdw- (CSS-module names are unhashed). */
+.cdw-root {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 99990; /* under the assistant's chat window (99999) */
+  font-family: "Lexend Deca", sans-serif;
+}
+
+/* ---------------- launcher ---------------- */
+.cdw-launcher {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 25%, #f6d389 0%, #e7b554 45%, #c9962f 100%);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 10px 26px rgba(201, 150, 47, 0.45), 0 2px 6px rgba(0, 0, 0, 0.12);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.cdw-launcher:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(201, 150, 47, 0.55), 0 3px 8px rgba(0, 0, 0, 0.14);
+}
+
+.cdw-launcher:focus-visible {
+  outline: 3px solid rgba(231, 181, 84, 0.55);
+  outline-offset: 3px;
+}
+
+/* soft pulse ring while closed, so it reads as live */
+.cdw-launcher::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid rgba(231, 181, 84, 0.45);
+  animation: cdwPulse 2.6s ease-out infinite;
+  pointer-events: none;
+}
+
+.is-open .cdw-launcher::before {
+  animation: none;
+  opacity: 0;
+}
+
+/* headset <-> close icons cross-fade with a quarter turn */
+.cdw-launch-ico,
+.cdw-launch-x {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  transition: opacity 0.25s ease, transform 0.3s ease;
+}
+
+.cdw-launch-x {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.6);
+}
+
+.is-open .cdw-launch-ico {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.6);
+}
+
+.is-open .cdw-launch-x {
+  opacity: 1;
+  transform: none;
+}
+
+.cdw-online {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #22c55e;
+  border: 2px solid #fff;
+}
+
+/* "Talk to us" pill on hover, to the left of the launcher */
+.cdw-hint {
+  position: absolute;
+  right: calc(100% + 12px);
+  top: 50%;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: #1a1a1a;
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translate(6px, -50%);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+}
+
+.cdw-launcher:hover .cdw-hint {
+  opacity: 1;
+  transform: translate(0, -50%);
+}
+
+.is-open .cdw-hint {
+  display: none;
+}
+
+/* ---------------- radial menu ---------------- */
+.cdw-root {
+  width: 60px;
+  height: 60px;
+}
+
+.cdw-launcher {
+  z-index: 3;
+}
+
+/* Translucent quarter-circle fan behind the options, growing from the
+   launcher's centre (the part past the screen edge is simply off-screen). */
+.cdw-fan {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 340px;
+  height: 340px;
+  margin: -170px 0 0 -170px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center, rgba(255, 255, 255, 0) 0 30px, rgba(255, 248, 230, 0.92) 31px 100%);
+  box-shadow: 0 18px 50px rgba(17, 17, 17, 0.16), inset 0 0 0 1px rgba(231, 181, 84, 0.35);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transform: scale(0.15);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease;
+}
+
+.is-open .cdw-fan {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.cdw-orbit {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* every option starts hidden on top of the launcher's centre ... */
+.cdw-slot {
+  position: absolute;
+  left: 4px; /* (60 - 52) / 2 -> centred on the launcher */
+  top: 4px;
+  width: 52px;
+  height: 52px;
+  z-index: 2;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(0, 0) scale(0.3);
+  transition:
+    transform 0.25s ease,
+    opacity 0.2s ease,
+    visibility 0s linear 0.25s;
+}
+
+/* ... and springs out to its place on the arc, one after another */
+.is-open .cdw-slot {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(var(--cdw-x), var(--cdw-y)) scale(1);
+  transition:
+    transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) calc(var(--cdw-i, 0) * 0.05s),
+    opacity 0.25s ease calc(var(--cdw-i, 0) * 0.05s),
+    visibility 0s;
+}
+
+.cdw-orb {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 8px 20px rgba(17, 17, 17, 0.16), 0 0 0 3px #fff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cdw-orb:hover,
+.cdw-orb:focus-visible {
+  transform: scale(1.1);
+  box-shadow: 0 12px 26px rgba(17, 17, 17, 0.22), 0 0 0 3px #fff;
+  outline: none;
+}
+
+.cdw-orb:focus-visible {
+  box-shadow: 0 0 0 3px #fff, 0 0 0 6px rgba(231, 181, 84, 0.7);
+}
+
+.cdw-tone-gold {
+  background: radial-gradient(circle at 30% 25%, #f6d389, #e7b554 60%, #c9962f);
+  color: #fff;
+}
+
+.cdw-tone-amber {
+  background: #fff3d6;
+  color: #b8841f;
+}
+
+.cdw-tone-ink {
+  background: #1f2937;
+  color: #fff;
+}
+
+.cdw-tone-green {
+  background: #25d366;
+  color: #fff;
+}
+
+/* name pill to the left of the option, on hover / keyboard focus */
+.cdw-label {
+  position: absolute;
+  right: calc(100% + 10px);
+  top: 50%;
+  padding: 6px 11px;
+  border-radius: 999px;
+  background: #1a1a1a;
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translate(6px, -50%);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  pointer-events: none;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+}
+
+.cdw-orb:hover .cdw-label,
+.cdw-orb:focus-visible .cdw-label {
+  opacity: 1;
+  transform: translate(0, -50%);
+}
+
+@keyframes cdwPulse {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.9;
+  }
+  70% {
+    transform: scale(1.18);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Phones / tablets keep the bottom bar instead */
+@media (max-width: 768px) {
+  .cdw-root {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cdw-launcher::before {
+    animation: none;
+  }
+  .cdw-fan,
+  .cdw-slot,
+  .is-open .cdw-slot,
+  .cdw-orb,
+  .cdw-launcher,
+  .cdw-launch-ico,
+  .cdw-launch-x {
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   Refresh: brand-true colours, dark glass fan, red close state
+   ========================================================================== */
+.cdw-fan {
+  background:
+    radial-gradient(circle at center, rgba(0, 0, 0, 0) 0 32px, rgba(22, 20, 18, 0.78) 33px 100%);
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.35),
+    inset 0 0 0 1px rgba(231, 181, 84, 0.45),
+    inset 0 0 40px rgba(231, 181, 84, 0.12);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+}
+
+.cdw-orb {
+  width: 54px;
+  height: 54px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35), 0 0 0 3px rgba(255, 255, 255, 0.9);
+}
+.cdw-orb:hover,
+.cdw-orb:focus-visible {
+  transform: scale(1.12);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4), 0 0 0 3px #fff;
+}
+.cdw-orb svg {
+  width: 24px;
+  height: 24px;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.2));
+}
+
+/* AI assistant: brand gold */
+.cdw-tone-gold {
+  background: radial-gradient(circle at 30% 25%, #ffe2a1, #e7b554 55%, #b8841f);
+  color: #2a1d05;
+}
+/* Callback: warm orange */
+.cdw-tone-amber {
+  background: linear-gradient(145deg, #ff9f43, #f0661c);
+  color: #fff;
+}
+/* Call: phone blue */
+.cdw-tone-ink {
+  background: linear-gradient(145deg, #3b82f6, #1d4ed8);
+  color: #fff;
+}
+/* WhatsApp: official green */
+.cdw-tone-green {
+  background: linear-gradient(145deg, #2fe377, #1ebe57);
+  color: #fff;
+}
+
+/* label pills: gold-edged dark glass */
+.cdw-label {
+  border: 1px solid rgba(231, 181, 84, 0.45);
+  background: rgba(20, 18, 16, 0.9);
+  font-weight: 600;
+}
+
+/* Launcher turns red with a spinning ✕ when open */
+.cdw-launcher {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.35s ease;
+}
+.is-open .cdw-launcher {
+  background: radial-gradient(circle at 30% 25%, #ff7a7a 0%, #ef4444 50%, #b91c1c 100%);
+  box-shadow: 0 10px 26px rgba(220, 38, 38, 0.45), 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+.is-open .cdw-launch-x {
+  transform: rotate(180deg);
+  transition: opacity 0.25s ease, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.is-open .cdw-online {
+  opacity: 0;
+}
+.cdw-online {
+  transition: opacity 0.2s ease;
+}
+
+/* ==========================================================================
+   Simple speed-dial (final): white buttons, quiet icons, labels always shown
+   ========================================================================== */
+.cdw-fan {
+  display: none;
+}
+
+.cdw-orb {
+  width: 50px;
+  height: 50px;
+  border: 1px solid #ececec;
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(17, 17, 17, 0.12);
+}
+.cdw-orb:hover,
+.cdw-orb:focus-visible {
+  transform: none;
+  border-color: #e7b554;
+  box-shadow: 0 8px 22px rgba(17, 17, 17, 0.16);
+}
+.cdw-orb svg {
+  width: 22px;
+  height: 22px;
+  filter: none;
+}
+.cdw-slot {
+  left: 5px; /* (60 - 50) / 2 */
+  top: 5px;
+  width: 50px;
+  height: 50px;
+}
+
+/* one quiet colour per icon on the white button */
+.cdw-tone-gold,
+.cdw-tone-amber,
+.cdw-tone-ink,
+.cdw-tone-green {
+  background: #fff;
+}
+.cdw-tone-gold,
+.cdw-tone-amber {
+  color: #b8841f;
+}
+.cdw-tone-ink {
+  color: #1f2937;
+}
+.cdw-tone-green {
+  color: #25d366;
+}
+
+/* labels sit beside each button whenever the menu is open */
+.cdw-label {
+  right: calc(100% + 12px);
+  padding: 7px 12px;
+  border: 1px solid #ececec;
+  border-radius: 8px;
+  background: #fff;
+  color: #1f2937;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 6px 18px rgba(17, 17, 17, 0.1);
+  opacity: 1;
+  transform: translate(0, -50%);
+}
+.cdw-orb:hover .cdw-label {
+  color: #8a6410;
+}
+
+/* launcher: gold; open: flat soft red with ✕ */
+.cdw-launcher::before {
+  border-color: rgba(231, 181, 84, 0.35);
+}
+.is-open .cdw-launcher {
+  background: #e5484d;
+  box-shadow: 0 8px 22px rgba(229, 72, 77, 0.35);
+}
+.is-open .cdw-launch-x {
+  transform: rotate(90deg);
+  transition: opacity 0.2s ease, transform 0.3s ease;
+}
+
+/* Launcher: dark with a gold chat icon + gold ring, "Contact Us" label always
+   beside it (the label hides while the menu is open) */
+.cdw-launcher {
+  background: #141414;
+  color: #f0c76c;
+  box-shadow: 0 0 0 2px rgba(231, 181, 84, 0.75), 0 10px 24px rgba(0, 0, 0, 0.28);
+}
+.cdw-launcher:hover {
+  background: #1f1f1f;
+  box-shadow: 0 0 0 2px #e7b554, 0 12px 28px rgba(0, 0, 0, 0.32);
+}
+.cdw-launcher::before {
+  border-color: rgba(231, 181, 84, 0.4);
+}
+.cdw-hint {
+  opacity: 1;
+  transform: translate(0, -50%);
+  padding: 8px 14px;
+  border: 1px solid #ececec;
+  border-radius: 999px;
+  background: #fff;
+  color: #141414;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(17, 17, 17, 0.12);
+}
+.cdw-launcher:hover .cdw-hint {
+  color: #8a6410;
+}
+.is-open .cdw-launcher {
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(229, 72, 77, 0.35);
+}
+.is-open .cdw-launcher,
+.is-open .cdw-launcher:hover {
+  background: #e5484d;
+  box-shadow: 0 0 0 2px rgba(229, 72, 77, 0.35), 0 8px 22px rgba(229, 72, 77, 0.35);
+}
+
+/* Keep the launcher still: no pulsing ring, no hover lift */
+.cdw-launcher::before {
+  animation: none;
+  display: none;
+}
+.cdw-launcher:hover,
+.is-open .cdw-launcher:hover {
+  transform: none;
+}
+
+/* Labels are part of their button: clicking the text works too */
+.cdw-label,
+.cdw-hint {
+  pointer-events: auto;
+  cursor: pointer;
+}
+.is-open .cdw-hint {
+  pointer-events: none;
+}

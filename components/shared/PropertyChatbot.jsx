@@ -103,7 +103,7 @@ const SEARCH_CITIES = [
   { label: "Jaipur", value: "Jaipur" },
 ];
 
-export default function PropertyChatbot() {
+export default function PropertyChatbot({ openRequest = 0 }) {
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
@@ -747,6 +747,13 @@ export default function PropertyChatbot() {
       enterStep("greeting");
     }
   };
+
+  // Opened from the desktop contact drawer (also on first mount, when the
+  // drawer's click is what mounted this component)
+  useEffect(() => {
+    if (openRequest > 0) handleOpen();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [openRequest]);
 
   return (
     <>
@@ -1517,6 +1524,12 @@ export default function PropertyChatbot() {
           .imbot-launch-label {
             animation: none;
             opacity: 1;
+          }
+        }
+        /* Desktop: the contact drawer has the assistant, so no separate bubble */
+        @media (min-width: 769px) {
+          .imbot-launch-wrap {
+            display: none;
           }
         }
         @media (max-width: 480px) {

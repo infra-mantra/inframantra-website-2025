@@ -899,3 +899,24 @@ button {
   align-items: center;
   gap:20px;
 }
+
+/* Phones: the nav bar is fixed from the first paint (it used to become fixed
+   only after hydration, pushing the page down and then pulling it back up). */
+@media (max-width: 768px) {
+  .navBarWrapper {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+}
+
+/* Home header band on phones: fit the logo inside the 8vh bar */
+@media (max-width: 768px) {
+  .navBarWrapper .navBarLogo {
+    max-height: 6vh;
+    width: auto;
+    object-fit: contain;
+  }
+}

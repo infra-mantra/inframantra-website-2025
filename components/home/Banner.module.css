@@ -1,124 +1,693 @@
+/* ==========================================================================
+   Home hero banner (BannerVideo.jsx) — also reused by the Featured Project
+   card (premium-picks/AdsBanner.jsx, via .inCard at the end).
+
+   One breakpoint: 1180px.
+     wider than 1180px   desktop: 3:1 photo, copy on the photo   (.hx… classes)
+     1180px and below    phones/tablets: poster layout          (.hp… classes)
+
+   Sections
+     1. Frame            5. Desktop copy on the photo (.hx…)
+     2. Slides + fade    6. Phones/tablets: poster layout (.hp…)
+     3. Photo            7. Featured Project card (.inCard)
+     4. Arrows           8. Reduced motion
+   ========================================================================== */
+
+/* ---------- 1. Frame ---------- */
 .demoBanner {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   overflow: hidden;
   z-index: -1;
 }
 
-/* Slideshow container */
 .slideshow {
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
   position: relative;
-  cursor: pointer;
-  z-index: 1;
-  /* Grey skeleton placeholder shown until the hero image paints. It sits BEHIND
-     the image, so the image is still the LCP element and nothing is delayed. */
-  background: #e6e8ea;
-}
-
-.demoBannerWrapper video {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  overflow: hidden;
+  z-index: 1;
+  background: #e6e8ea; /* grey placeholder until the first photo paints */
 }
 
-/* Always-painted base layer (first slide's image). Gives Lighthouse a stable
-   LCP element from the first frame; the 5 rotating slides fade over it. It is
-   NOT a .slideImage, so the click-to-navigate detection is unaffected. */
-.slideBase {
+/* invisible tap/click area over the banner; stops above the search bar */
+.clickLayer {
   position: absolute;
   top: 0;
+  bottom: 8vh;
   left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
-  opacity: 1;
+  right: 0;
+  z-index: 2;
+  cursor: pointer;
+}
+
+/* ---------- 2. Slides + cross-fade ---------- */
+/* .slideBase = slide 1, always painted. .slide = the rotating slides on top.
+   The incoming slide (.isActive) fades in over the outgoing one (.isPrev). */
+.slideBase,
+.slide {
+  position: absolute;
+  inset: 0;
+}
+
+.slideBase {
   z-index: 0;
   pointer-events: none;
 }
 
-/* Common styles for images */
-.slideImage {
+.slide {
+  z-index: 1;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide.isActive {
+  z-index: 3;
+  opacity: 1;
+}
+
+.slide.isPrev {
+  z-index: 2;
+  opacity: 1;
+  transition: none;
+}
+
+/* the very first slide takes over from the identical .slideBase: no fade */
+.slide.isInstant,
+.slide.isInstant .hxCopy,
+.slide.isInstant .hxBrand,
+.slide.isInstant .hp {
+  transition: none;
+}
+
+/* soft shade on the photo so the copy reads */
+.slideBase::after,
+.slide::after {
+  content: "";
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(90deg, rgba(8, 8, 10, 0.25) 0%, rgba(8, 8, 10, 0) 38%);
+  pointer-events: none;
+}
+
+/* ---------- 3. Photo ---------- */
+.heroImg {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center center;
-  opacity: 0;
-  animation: fade 40s infinite linear;
-  z-index: 1;
+  object-position: center;
 }
 
-/* Animation delays — 5 images evenly spaced (1/5 of 40s cycle each) */
-
-.slideImage1 {
-  animation-delay: 0s;
-  opacity: 1;
-}
-
-.slideImage2 {
-  animation-delay: 8s;
-}
-
-.slideImage3 {
-  animation-delay: 16s;
-}
-
-.slideImage4 {
-  animation-delay: 24s;
-}
-
-.slideImage5 {
-  animation-delay: 32s;
-}
-
-/* Clickable overlay */
-.clickableSlide {
+/* ---------- 4. Arrows (desktop: round glass buttons at the sides) ---------- */
+.heroArrow {
   position: absolute;
-  inset: 0;
-  z-index: 5;
+  top: 50%;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #fff;
   cursor: pointer;
+  transform: translateY(-50%);
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
 }
 
-/* Animation */
-@keyframes fade {
-  0% {
-    opacity: 0;
-  }
-
-  5% {
-    opacity: 1;
-  }
-
-  20% {
-    opacity: 1;
-  }
-
-  25% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 0;
-  }
+.heroArrow:hover {
+  border-color: #e7b554;
+  background: #e7b554;
+  color: #1a1307;
 }
 
-.active {
+.heroArrow:focus-visible {
+  outline: 2px solid #f0c76c;
+  outline-offset: 3px;
+}
+
+.heroArrowLeft {
+  left: 20px;
+}
+
+.heroArrowRight {
+  right: 20px;
+}
+
+/* ---------- 5. Desktop copy on the photo (.hx…) ----------
+   Positions come from `place` in heroProjects.js:
+   --hx-top / --hx-x are set inline on .hxCopy. */
+.hxBrand,
+.hxCopy {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  font-family: "Lexend Deca", sans-serif;
+  text-shadow:
+    0 2px 16px rgba(0, 0, 0, 0.5),
+    0 1px 3px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+}
+
+/* copy block; never under the fixed header (~88px tall) */
+.hxCopy {
+  top: max(var(--hx-top, 22%), 104px);
+  left: var(--hx-x, max(5vw, 64px));
+  align-items: flex-start;
+  max-width: min(40vw, 560px);
+}
+
+.hxRight {
+  left: auto;
+  right: max(6.5vw, 92px); /* clear of the arrow */
+  align-items: flex-end;
+  text-align: right;
+}
+
+/* logos in a corner of the photo */
+.hxBrand {
+  top: max(17%, 104px);
+  left: max(5vw, 64px);
+  align-items: center;
+  text-align: center;
+}
+
+.hxBrandRight {
+  left: auto;
+  right: max(6.5vw, 92px);
+}
+
+/* logos above the copy */
+.hxStackBrand {
+  display: flex;
+  flex-direction: column;
+  align-items: inherit;
+  margin-bottom: clamp(12px, 1.2vw, 20px);
+}
+
+/* logos beside the copy */
+.hxRow {
+  flex-direction: row;
+  align-items: center;
+  gap: clamp(16px, 1.6vw, 26px);
+  max-width: none;
+}
+
+.hxRow .hxStackBrand {
+  margin-bottom: 0;
+  align-items: center;
+}
+
+.hxRow .hxText {
+  align-items: flex-start;
+}
+
+.hxText {
+  display: flex;
+  flex-direction: column;
+  align-items: inherit;
+}
+
+/* soft round shade behind the copy and the corner logos */
+.hxCopy::before,
+.hxBrand::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+}
+
+.hxCopy::before {
+  inset: -16% -18%;
+  background: radial-gradient(closest-side, rgba(6, 8, 14, 0.36), rgba(6, 8, 14, 0));
+}
+
+.hxBrand::before {
+  inset: -22% -26%;
+  background: radial-gradient(closest-side, rgba(6, 8, 14, 0.3), rgba(6, 8, 14, 0));
+}
+
+/* `strong`: busy photo, deeper shade behind the copy */
+.hxCopy.hxStrong::before {
+  inset: -20% -22%;
+  background: radial-gradient(closest-side, rgba(6, 8, 14, 0.62), rgba(6, 8, 14, 0));
+}
+
+/* `brandStrong`: no shade, outline the corner logos instead */
+.hxBrand.hxStrong::before {
+  display: none;
+}
+
+.hxBrand.hxStrong .hxLogo {
+  filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.7))
+    drop-shadow(0 2px 10px rgba(255, 255, 255, 0.45));
+}
+
+.hxBrand.hxStrong .hxDev img {
+  filter: drop-shadow(0 0 1.5px rgba(10, 20, 40, 0.55))
+    drop-shadow(0 2px 8px rgba(10, 20, 40, 0.45));
+}
+
+/* text */
+.hxHead {
+  margin: 0;
+  font-family: "DM Serif Display", Georgia, "Times New Roman", serif;
+  font-size: clamp(22px, 1.9vw, 34px);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.2px;
+}
+
+.hxHead span {
+  display: block;
+}
+
+.hxPrice {
+  margin: clamp(10px, 1vw, 16px) 0 0;
+  padding-top: clamp(8px, 0.8vw, 12px);
+  border-top: 1px solid rgba(255, 255, 255, 0.75);
+  font-family: "DM Serif Display", Georgia, "Times New Roman", serif;
+  font-size: clamp(14px, 1.15vw, 20px);
+  line-height: 1.1;
+}
+
+.hxPrice b {
+  font-size: 1.15em;
+  font-weight: 400;
+  color: #f6d58a;
+}
+
+.hxLoc {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: clamp(8px, 0.8vw, 12px) 0 0;
+  font-size: clamp(11px, 0.85vw, 14px);
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.hxLoc svg {
+  flex: none;
+  width: 1.25em;
+  height: 1.25em;
+  color: #ff3b3b;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.4));
+}
+
+/* logos */
+.hxLogo {
+  display: block;
+  width: auto;
+  height: clamp(56px, 5.2vw, 92px);
+  max-width: min(22vw, 300px);
+  object-fit: contain;
+  filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.3));
+}
+
+.hxBrand .hxLogo {
+  height: clamp(78px, 7.2vw, 132px);
+  max-width: min(24vw, 340px);
+}
+
+.hxDev {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0 0;
+  font-size: clamp(10px, 0.75vw, 12px);
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.hxDev span {
+  font-family: "DM Serif Display", Georgia, serif;
+  font-size: clamp(13px, 1vw, 16px);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  text-transform: none;
+  opacity: 0.85;
+}
+
+.hxDev img {
+  display: block;
+  width: auto;
+  height: clamp(24px, 2.1vw, 36px);
+  max-width: 150px;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 6px rgba(0, 0, 0, 0.3));
+}
+
+/* developer logo that is its own coloured tile (Satya) */
+.hxDev img.hxDevTile {
+  height: clamp(40px, 3.4vw, 58px);
+  border-radius: 9px;
+}
+
+/* colour developer logo on a dark photo: white glow behind it */
+.hxDev img.hxDevGlow {
+  height: clamp(34px, 2.9vw, 50px);
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.85))
+    drop-shadow(0 0 14px rgba(255, 255, 255, 0.55));
+}
+
+/* theme "dark": navy text for pale skies */
+.hxDark {
+  color: #13203b;
+  text-shadow: 0 1px 14px rgba(255, 255, 255, 0.75);
+}
+
+.hxCopy.hxDark::before {
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+}
+
+.hxBrand.hxDark::before {
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0));
+}
+
+.hxDark .hxLogo,
+.hxDark .hxDev img {
+  filter: drop-shadow(0 1px 8px rgba(255, 255, 255, 0.6));
+}
+
+.hxDark .hxPrice {
+  border-top-color: rgba(19, 32, 59, 0.6);
+}
+
+.hxDark .hxPrice b {
+  color: #9a6510;
+}
+
+.hxDark .hxLoc svg {
+  color: #e0262b;
+  filter: none;
+}
+
+/* the copy arrives just after its slide fades in */
+.slide .hxCopy,
+.slide .hxBrand {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.slide.isActive .hxCopy,
+.slide.isActive .hxBrand {
   opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.7s ease 0.6s,
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.6s;
 }
 
-@media screen and (max-width: 760px) {
-  .demoBannerWrapper + div {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+/* poster layout is phones/tablets only (section 6) */
+.hp {
+  display: none;
+}
+
+/* ---------- 6. Phones/tablets (1180px and below): poster layout ----------
+   A band in the project's colour (--mbg, set inline from `mobile.bg`) with
+   the logos on the left and the text on the right; the 6:5 photo fills the
+   bottom and fades up into the band. */
+@media (max-width: 1180px) {
+  .hxCopy,
+  .hxBrand {
+    display: none;
+  }
+
+  .slideBase,
+  .slide {
+    background: var(--mbg, #0b2c51);
+  }
+
+  /* photo: bottom of the frame, top edge fading into the band */
+  .heroImg {
+    top: auto;
+    bottom: 0;
+    height: auto;
+    aspect-ratio: 6 / 5;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 30%);
+    mask-image: linear-gradient(180deg, transparent 0%, #000 30%);
+  }
+
+  /* slow zoom while the slide is on screen */
+  .slide .heroImg {
+    transform-origin: 50% 0%;
+  }
+
+  .slide.isActive .heroImg,
+  .slide.isPrev .heroImg {
+    transform: scale(1.05);
+  }
+
+  .slide.isActive .heroImg {
+    transition: transform 7s linear;
+  }
+
+  /* shade at the foot, under the search bar */
+  .slideBase::after,
+  .slide::after {
+    background: linear-gradient(0deg, rgba(8, 8, 10, 0.55) 0%, rgba(8, 8, 10, 0) 30%);
+  }
+
+  /* arrows: plain gold chevrons in the band, beside the logos/text */
+  .heroArrow {
+    top: 124px;
+    width: 32px;
+    height: 32px;
+    border: 0;
+    background: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    color: #e7b554;
+  }
+
+  .heroArrow:hover {
+    background: none;
+    color: #f6d58a;
+  }
+
+  .heroArrowLeft {
+    left: 6px;
+  }
+
+  .heroArrowRight {
+    right: 6px;
+  }
+
+  .hp {
+    position: absolute;
+    z-index: 2;
+    top: 80px; /* below the site header */
+    left: 40px; /* room for the arrows */
+    right: 40px;
+    display: grid;
+    grid-template-columns: minmax(0, 40%) minmax(0, 1fr);
+    align-items: center;
+    column-gap: 14px;
+    color: #fff;
+    font-family: "Lexend Deca", sans-serif;
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.35);
+    pointer-events: none;
+  }
+
+  /* left column: project logo + developer, with a gold divider */
+  .hpBrand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    padding-right: 14px;
+    border-right: 1px solid rgba(227, 189, 110, 0.6);
+  }
+
+  .hpLogo {
+    display: block;
+    width: auto;
+    height: clamp(42px, 12.5vw, 58px);
+    max-width: 100%;
+    object-fit: contain;
+  }
+
+  .hpBy {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 8px 0 0;
+  }
+
+  .hpBy span {
+    font-family: "DM Serif Display", Georgia, serif;
+    font-size: 12px;
+    font-style: italic;
+    opacity: 0.85;
+  }
+
+  .hpBy img {
+    display: block;
+    width: auto;
+    height: 22px;
+    max-width: 104px;
+    object-fit: contain;
+  }
+
+  /* right column: BHK headline + location */
+  .hpInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+  }
+
+  .hpHead {
+    margin: 0;
+    font-family: "DM Serif Display", Georgia, "Times New Roman", serif;
+    font-size: clamp(15px, 4.5vw, 20px);
+    line-height: 1.12;
+  }
+
+  .hpHead span {
+    display: block;
+    font-size: 1.18em;
+  }
+
+  .hpLoc {
+    display: flex;
+    align-items: flex-start;
+    gap: 4px;
+    margin: 10px 0 0;
+    font-size: 9.5px;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .hpLoc svg {
+    flex: none;
+    width: 12px;
+    height: 12px;
+    margin-top: 1px;
+    color: #f0c76c;
+  }
+
+  /* `mobile.light`: pale band, navy text */
+  .hpLight {
+    color: #13203b;
+    text-shadow: none;
+  }
+
+  .hpLight .hpBrand {
+    border-right-color: rgba(19, 32, 59, 0.3);
+  }
+
+  .hpLight .hpLoc svg {
+    color: #b9801b;
+  }
+
+  /* the text arrives just after its slide fades in */
+  .slide .hp {
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  .slide.isActive .hp {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 0.7s ease 0.5s,
+      transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.5s;
+  }
+}
+
+/* tablets: the full desktop nav bar is taller than the phone header */
+@media (min-width: 769px) and (max-width: 1180px) {
+  .hp {
+    top: 132px;
+  }
+
+  .heroArrow {
+    top: 176px;
+  }
+}
+
+/* ---------- 7. Featured Project card (AdsBanner) ----------
+   Same slides inside a rounded card: there is no header to clear, the arrows
+   sit outside the card, and the visible slide is the link. */
+.inCard .slide {
+  color: inherit;
+  text-decoration: none;
+}
+
+.inCard .slide.isActive {
+  pointer-events: auto;
+}
+
+.inCard .hxCopy {
+  top: var(--hx-top, 22%);
+  left: var(--hx-x, 6%);
+}
+
+.inCard .hxCopy.hxRight {
+  left: auto;
+  right: 6%;
+}
+
+.inCard .hxBrand {
+  top: 12%;
+  left: 6%;
+}
+
+.inCard .hxBrand.hxBrandRight {
+  left: auto;
+  right: 6%;
+}
+
+@media (max-width: 1180px) {
+  .inCard .hp {
+    top: 18px;
+    left: 14px;
+    right: 14px;
+  }
+}
+
+/* ---------- 8. Reduced motion: no fades, zooms or slide-ins ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .slide,
+  .slide .hxCopy,
+  .slide .hxBrand,
+  .slide .hp,
+  .slide .heroImg,
+  .slide.isActive .hxCopy,
+  .slide.isActive .hxBrand,
+  .slide.isActive .hp,
+  .slide.isActive .heroImg {
+    transition: none;
+  }
+
+  .slide.isActive .heroImg,
+  .slide.isPrev .heroImg {
+    transform: none;
   }
 }

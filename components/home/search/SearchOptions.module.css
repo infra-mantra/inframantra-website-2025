@@ -212,3 +212,25 @@
     z-index: 60;
   }
 }
+
+/* Desktop: the bar straddles the banner's bottom edge — half on the photo's
+   lowest strip, half on the white page below — instead of sitting inside the
+   banner and covering the picture. Same look as the mobile bar. */
+@media (min-width: 769px) {
+  .searchOptionsWrapper {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: auto;
+    z-index: 60;
+  }
+
+  .searchOptionsFlexContainer {
+    width: min(70%, 980px);
+  }
+
+  .searchOptionsWrapper .inputWrapper {
+    box-shadow: 0 10px 28px rgba(17, 17, 17, 0.18);
+  }
+}
