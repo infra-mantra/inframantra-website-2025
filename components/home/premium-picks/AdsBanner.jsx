@@ -9,9 +9,12 @@ import { HeroSlide, SlideArrow, slideClasses } from "../BannerVideo.jsx";
 /*
   Home "Featured Project" card: the same slides as the hero banner (data in
   ../heroProjects.js, same order as the API), in a rounded card.
-  It never slides by itself — only the arrows (the hero's own buttons, same
-  positions) or a swipe change the slide.
+  Changes every 5s, but only while the card is on screen (it waits on the
+  first slide until the visitor scrolls to it). Hovering, or holding a finger
+  on it, pauses it. Arrows and swipe work too.
 */
+
+const SLIDE_MS = 5000;
 
 const StarIcon = () => (
   <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
@@ -28,6 +31,7 @@ function AdsBanner() {
 
   // Slides 2-8 mount only once the card is near the screen.
   const [allMounted, setAllMounted] = useState(false);
+  const [onScreen, setOnScreen] = useState(false);
   const cardRef = useRef(null);
   useEffect(() => {
     const card = cardRef.current;
@@ -42,7 +46,15 @@ function AdsBanner() {
       { rootMargin: "300px" }
     );
     observer.observe(card);
-    return () => observer.disconnect();
+    // "on screen" = at least a third of the card is visible
+    const visible = new IntersectionObserver(([e]) => setOnScreen(e.isIntersecting), {
+      threshold: 0.35,
+    });
+    visible.observe(card);
+    return () => {
+      observer.disconnect();
+      visible.disconnect();
+    };
   }, []);
 
   const goTo = (index) => {
@@ -53,10 +65,22 @@ function AdsBanner() {
     });
   };
 
+  // Auto-advance every 5s while on screen; paused while hovered or held.
+  const [paused, setPaused] = useState(false);
+  useEffect(() => {
+    if (!onScreen || paused) return;
+    const timer = setTimeout(() => {
+      if (!document.hidden) goTo(active + 1);
+    }, SLIDE_MS);
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onScreen, paused, active]);
+
   // Swipe left/right on touch screens. A swipe must not also open the project.
   const touch = useRef({ startX: 0, swiped: false });
   const onTouchStart = (e) => {
     touch.current = { startX: e.touches[0].clientX, swiped: false };
+    setPaused(true);
   };
   const onTouchEnd = (e) => {
     const dx = e.changedTouches[0].clientX - touch.current.startX;
@@ -64,6 +88,7 @@ function AdsBanner() {
       touch.current.swiped = true;
       goTo(active + (dx < 0 ? 1 : -1));
     }
+    setPaused(false);
   };
   const onSlideClick = (e) => {
     if (touch.current.swiped) {
@@ -79,6 +104,8 @@ function AdsBanner() {
         className={`${styles.adCard} ${hero.inCard}`}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
+        onPointerEnter={(e) => e.pointerType === "mouse" && setPaused(true)}
+        onPointerLeave={(e) => e.pointerType === "mouse" && setPaused(false)}
       >
         {PROJECTS.map((p, index) =>
           !allMounted && index > 0 ? null : (

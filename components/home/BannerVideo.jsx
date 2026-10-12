@@ -100,7 +100,39 @@ function HeroPicture({ p, priority }) {
 }
 
 // Phones/tablets: logos on the left, BHK headline and location on the right.
+// Wrapped text keeps its box at full width, so a centred block with a wrapped
+// location looks shifted left. This shrinks the text box to its widest visible
+// line (re-measured when the window is resized), so the pair truly centres.
+function useFitToText() {
+  const ref = useRef(null);
+  useEffect(() => {
+    const box = ref.current;
+    if (!box) return;
+    const fit = () => {
+      box.style.width = "";
+      // the text lines themselves (element boxes are always full width)
+      const lines = [];
+      const walker = document.createTreeWalker(box, NodeFilter.SHOW_TEXT);
+      while (walker.nextNode()) {
+        const range = document.createRange();
+        range.selectNodeContents(walker.currentNode);
+        lines.push(...range.getClientRects());
+      }
+      if (!lines.length) return;
+      const left = box.getBoundingClientRect().left;
+      const right = Math.max(...lines.map((r) => r.right));
+      box.style.width = `${Math.ceil(right - left)}px`;
+    };
+    fit();
+    document.fonts?.ready.then(fit); // re-measure once the web fonts are in
+    window.addEventListener("resize", fit);
+    return () => window.removeEventListener("resize", fit);
+  }, []);
+  return ref;
+}
+
 function HeroPoster({ p }) {
+  const infoRef = useFitToText();
   const { light, logo, dev, chip } = p.mobile;
   const variant = light ? "c" : "w"; // colour logos on pale bands, white on dark
   const [logoW, logoH] = p.logo;
@@ -128,7 +160,7 @@ function HeroPoster({ p }) {
           />
         </p>
       </div>
-      <div className={styles.hpInfo}>
+      <div className={styles.hpInfo} ref={infoRef}>
         <p className={styles.hpHead}>
           <span>{p.place.head}</span>
           {p.place.sub || "Luxury Residences"}

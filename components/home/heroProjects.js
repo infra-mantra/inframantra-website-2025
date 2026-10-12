@@ -139,7 +139,7 @@ export const PROJECTS = [
       head: "3 & 4 BHK",
       sub: "Residences & Penthouses",
       info: "right",
-      top: "18%",
+      top: "6%",
       theme: "light",
       brand: "stack",
       logo: { v: "c", w: 186, h: 200 },
