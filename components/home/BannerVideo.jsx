@@ -254,14 +254,23 @@ const BannerVideo = () => {
   // `active` = slide on screen, `prev` = slide fading out underneath it (-1 = none).
   const [{ active, prev }, setSlide] = useState({ active: 0, prev: -1 });
 
-  // Slides 2-8 mount on the visitor's first scroll/tap/mouse move, so their
-  // images never compete with the first photo while the page loads.
+  // Slides 2-8 mount 2s after the page has loaded (or on the first scroll/tap/
+  // mouse move, if sooner), so their images never compete with the first photo
+  // while the page loads, yet are ready before the first change at 5s.
   const [showSlides, setShowSlides] = useState(false);
   useEffect(() => {
     const reveal = () => setShowSlides(true);
     const events = ["scroll", "mousemove", "touchstart", "keydown", "click"];
     events.forEach((e) => window.addEventListener(e, reveal, { passive: true, once: true }));
-    return () => events.forEach((e) => window.removeEventListener(e, reveal));
+    let timer;
+    const afterLoad = () => (timer = setTimeout(reveal, 2000));
+    if (document.readyState === "complete") afterLoad();
+    else window.addEventListener("load", afterLoad, { once: true });
+    return () => {
+      events.forEach((e) => window.removeEventListener(e, reveal));
+      window.removeEventListener("load", afterLoad);
+      clearTimeout(timer);
+    };
   }, []);
 
   const goTo = (index) => {
@@ -272,18 +281,24 @@ const BannerVideo = () => {
     });
   };
 
-  // Auto-advance every 5s. Waits while the tab is hidden or a finger is held down.
+  // Every slide shows for a full 5s, from page load on. The clock stops while
+  // the tab is hidden or a finger is held on the banner, and restarts from 5s
+  // when the visitor comes back / lets go (changing `restart` re-runs the timer).
   const holding = useRef(false);
-  const [retry, setRetry] = useState(0);
+  const [restart, setRestart] = useState(0);
+  const restartClock = () => setRestart((n) => n + 1);
   useEffect(() => {
-    if (!showSlides) return;
     const timer = setTimeout(() => {
-      if (document.hidden || holding.current) setRetry((n) => n + 1);
-      else goTo(active + 1);
+      if (!document.hidden && !holding.current) goTo(active + 1);
     }, SLIDE_MS);
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showSlides, active, retry]);
+  }, [active, restart]);
+  useEffect(() => {
+    const onVisible = () => !document.hidden && restartClock();
+    document.addEventListener("visibilitychange", onVisible);
+    return () => document.removeEventListener("visibilitychange", onVisible);
+  }, []);
 
   // Swipe left/right on touch screens. A swipe must not also open the project.
   const touch = useRef({ startX: 0, swiped: false });
@@ -298,6 +313,7 @@ const BannerVideo = () => {
       goTo(active + (dx < 0 ? 1 : -1));
     }
     holding.current = false;
+    restartClock(); // a full 5s again after letting go
   };
   const openProject = () => {
     if (touch.current.swiped) {

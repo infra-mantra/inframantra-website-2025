@@ -1,9 +1,9 @@
 /* Featured Project card (AdsBanner.jsx). The slides themselves are styled in
-   ../Banner.module.css (shared with the hero); this file is the card, the
-   "Featured Project" tag and the arrows.
+   ../Banner.module.css (shared with the hero, arrows included); this file is
+   the card and the "Featured Project" tag.
    Breakpoint 1180px, same as the hero:
-     desktop             3:1 card, arrows in the margins either side of it
-     phones/tablets      poster card, arrows in a row under it */
+     desktop             3:1 card
+     phones/tablets      poster card */
 
 .imgContainer {
   width: 88%; /* lines up with the home sections around it */
@@ -11,11 +11,6 @@
   margin: 0 auto;
   padding: 50px 0;
   box-sizing: border-box;
-}
-
-/* card + arrows */
-.adFrame {
-  position: relative;
 }
 
 .adCard {
@@ -48,45 +43,6 @@
   pointer-events: none;
 }
 
-/* ---------- arrows: plain gold chevrons, never on the photo ---------- */
-.adNav {
-  display: contents; /* desktop: the arrows position against .adFrame */
-}
-
-.adArrow {
-  position: absolute;
-  top: 50%;
-  display: grid;
-  place-items: center;
-  width: 36px;
-  height: 36px;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: #d9a23c;
-  cursor: pointer;
-  transform: translateY(-50%);
-  transition: color 0.2s ease;
-}
-
-.adArrow:hover {
-  color: #b9801b;
-}
-
-.adArrow:focus-visible {
-  outline: 2px solid #f0c76c;
-  outline-offset: 2px;
-  border-radius: 6px;
-}
-
-.adArrowLeft {
-  left: -46px;
-}
-
-.adArrowRight {
-  right: -46px;
-}
-
 /* ---------- phones/tablets ---------- */
 @media (max-width: 1180px) {
   .imgContainer {
@@ -105,23 +61,5 @@
   .adTag {
     left: 10px;
     bottom: 10px;
-  }
-
-  .adNav {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    margin-top: 10px;
-  }
-
-  .adArrow {
-    position: static;
-    transform: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .adArrow {
-    transition: none;
   }
 }

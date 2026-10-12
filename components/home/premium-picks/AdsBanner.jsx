@@ -4,13 +4,13 @@ import React, { useState, useEffect, useRef } from "react";
 import styles from "./AdsBanner.module.css";
 import hero from "../Banner.module.css";
 import { PROJECTS } from "../heroProjects";
-import { HeroSlide, slideClasses } from "../BannerVideo.jsx";
+import { HeroSlide, SlideArrow, slideClasses } from "../BannerVideo.jsx";
 
 /*
   Home "Featured Project" card: the same slides as the hero banner (data in
   ../heroProjects.js, same order as the API), in a rounded card.
-  It never slides by itself — only the arrows (beside the card on desktop,
-  under it on phones/tablets) or a swipe change the slide.
+  It never slides by itself — only the arrows (the hero's own buttons, same
+  positions) or a swipe change the slide.
 */
 
 const StarIcon = () => (
@@ -18,19 +18,6 @@ const StarIcon = () => (
     <path
       d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 20.9l1.6-7L2 9.2l7.1-.6z"
       fill="currentColor"
-    />
-  </svg>
-);
-
-const Chevron = ({ direction }) => (
-  <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
-    <path
-      d={direction === "prev" ? "M15 6l-6 6 6 6" : "M9 6l6 6-6 6"}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.4"
-      strokeLinecap="round"
-      strokeLinejoin="round"
     />
   </svg>
 );
@@ -87,54 +74,46 @@ function AdsBanner() {
 
   return (
     <div className={styles.imgContainer}>
-      <div className={styles.adFrame}>
-        <div
-          ref={cardRef}
-          className={`${styles.adCard} ${hero.inCard}`}
-          onTouchStart={onTouchStart}
-          onTouchEnd={onTouchEnd}
-        >
-          {PROJECTS.map((p, index) =>
-            !allMounted && index > 0 ? null : (
-              <a
-                key={p.key}
-                href={`/property/${p.slug}`}
-                onClick={onSlideClick}
-                className={slideClasses(index, active, prev)}
-                style={{ "--mbg": p.mobile.bg }}
-                aria-hidden={index !== active}
-                tabIndex={index === active ? 0 : -1}
-                aria-label={`${p.name}, explore project`}
-              >
-                <HeroSlide p={p} />
-              </a>
-            )
-          )}
+      <div
+        ref={cardRef}
+        className={`${styles.adCard} ${hero.inCard}`}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+      >
+        {PROJECTS.map((p, index) =>
+          !allMounted && index > 0 ? null : (
+            <a
+              key={p.key}
+              href={`/property/${p.slug}`}
+              onClick={onSlideClick}
+              className={slideClasses(index, active, prev)}
+              style={{ "--mbg": p.mobile.bg }}
+              aria-hidden={index !== active}
+              tabIndex={index === active ? 0 : -1}
+              aria-label={`${p.name}, explore project`}
+            >
+              <HeroSlide p={p} />
+            </a>
+          )
+        )}
 
-          <span className={styles.adTag}>
-            <StarIcon />
-            Featured Project
-          </span>
-        </div>
+        <span className={styles.adTag}>
+          <StarIcon />
+          Featured Project
+        </span>
 
-        <div className={styles.adNav}>
-          <button
-            type="button"
-            className={`${styles.adArrow} ${styles.adArrowLeft}`}
-            aria-label="Previous featured project"
-            onClick={() => goTo(active - 1)}
-          >
-            <Chevron direction="prev" />
-          </button>
-          <button
-            type="button"
-            className={`${styles.adArrow} ${styles.adArrowRight}`}
-            aria-label="Next featured project"
-            onClick={() => goTo(active + 1)}
-          >
-            <Chevron direction="next" />
-          </button>
-        </div>
+        <SlideArrow
+          direction="prev"
+          label="Previous featured project"
+          className={hero.heroArrowLeft}
+          onClick={() => goTo(active - 1)}
+        />
+        <SlideArrow
+          direction="next"
+          label="Next featured project"
+          className={hero.heroArrowRight}
+          onClick={() => goTo(active + 1)}
+        />
       </div>
     </div>
   );

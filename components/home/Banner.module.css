@@ -467,37 +467,29 @@
     background: linear-gradient(0deg, rgba(8, 8, 10, 0.55) 0%, rgba(8, 8, 10, 0) 30%);
   }
 
-  /* arrows: plain gold chevrons in the band, beside the logos/text */
+  /* arrows: the desktop glass button, smaller, centred on the photo
+     (the 6:5 photo is 83.4vw tall at the bottom, so its middle is 41.7vw up) */
   .heroArrow {
-    top: 124px;
+    top: calc(100% - 41.7vw);
     width: 32px;
     height: 32px;
-    border: 0;
-    background: none;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    color: #e7b554;
-  }
-
-  .heroArrow:hover {
-    background: none;
-    color: #f6d58a;
+    background: rgba(10, 10, 12, 0.3);
   }
 
   .heroArrowLeft {
-    left: 6px;
+    left: 5px;
   }
 
   .heroArrowRight {
-    right: 6px;
+    right: 5px;
   }
 
   .hp {
     position: absolute;
     z-index: 2;
     top: 80px; /* below the site header */
-    left: 40px; /* room for the arrows */
-    right: 40px;
+    left: 16px;
+    right: 16px;
     display: grid;
     grid-template-columns: minmax(0, 40%) minmax(0, 1fr);
     align-items: center;
@@ -626,10 +618,6 @@
   .hp {
     top: 132px;
   }
-
-  .heroArrow {
-    top: 176px;
-  }
 }
 
 /* ---------- 7. Featured Project card (AdsBanner) ----------
@@ -669,6 +657,11 @@
     top: 18px;
     left: 14px;
     right: 14px;
+  }
+
+  /* the card is 100vw - 32px wide, so its photo is (100vw - 32px) * 0.834 tall */
+  .inCard .heroArrow {
+    top: calc(100% - (100vw - 32px) * 0.417);
   }
 }
 
