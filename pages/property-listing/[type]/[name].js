@@ -1,6 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, startTransition } from "react";
+// Developer logo coverflow. Imported normally (server-rendered shell with a fixed-height
+// stage = no layout shift); it fetches the logos itself only when scrolled near.
+import DeveloperShowcase from "../../../components/shared/DeveloperShowcase.jsx";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import axios from "axios";
 import PropertyCardSkeleton, {
   FeaturedSkeleton,
@@ -11,6 +15,10 @@ import PropertyCardSkeleton, {
 import pll from "../listingLayout.module.css";
 import { optimizedSrc } from "../../../components/lib/imageUrl.js";
 import AppliedFilters from "../../../components/property-listing/content/AppliedFilters.jsx";
+import ListingAd, {
+  ExpertStrip,
+  pickAdProjects,
+} from "../../../components/property-listing/ListingAd.jsx";
 // import { cityNames } from '../../../components/property-listing/dropDownMenuConstants.js';
 // Lazy load components
 const PropertyListingCard = dynamic(
@@ -36,11 +44,55 @@ const Content = dynamic(
 const PropertyPageFloatingContact = dynamic(
   () => import("../../../components/property-detail/PropertyPageFloatingContact.jsx")
 );
+// "Read more" dialog: only downloaded the first time someone opens it
+const ListingDetailsModal = dynamic(
+  () => import("../../../components/property-listing/ListingDetailsModal.jsx"),
+  { ssr: false }
+);
 const PremiumProperty = dynamic(
   () => import("../../../components/property-listing/PremiumProperty.jsx")
 );
 
 const PAGE_SIZE = 10; // results per page (kept in sync with the backend `limit`)
+
+/*
+  Multi-select places: ?cities=gurgaon,pune&localities=new-gurgaon,dwarka-expressway
+  on the current route. `cities` are whole cities, `localities` single localities
+  (a city with some localities picked is NOT also in `cities`).
+
+  API: /search accepts ?city=a,b (whole cities, one request). It ignores any
+  locality filter, so each locality is its own q=<slug> request; the results are
+  merged, de-duplicated by slug, sorted and paginated here. Capped at MULTI_CAP.
+*/
+const MULTI_CAP = 200;
+const csvParam = (v) =>
+  typeof v === "string" && v.trim()
+    ? v
+        .split(",")
+        .map((s) => s.trim().toLowerCase())
+        .filter(Boolean)
+    : [];
+const readSelection = (query) => ({
+  cities: csvParam(query.cities),
+  localities: csvParam(query.localities),
+});
+const placeName = (slug) =>
+  String(slug || "")
+    .split("-")
+    .filter(Boolean)
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+const joinNames = (names) =>
+  names.length <= 1
+    ? names[0] || ""
+    : `${names.slice(0, -1).join(", ")} & ${names[names.length - 1]}`;
+
+// Mid-list "Featured project" ad: after the 6th card on desktop / 4th on phones,
+// then every 12 cards after that on longer lists.
+const AD_FIRST = { desktop: 6, mobile: 4 };
+const AD_EVERY = 12;
+// "Talk to an expert" strip after this many cards (or at the end of a shorter page).
+const EXPERT_AFTER = 9;
 
 // Server-side twin of the component's buildSearchQuery for the default view
 // (unfiltered, page 1, relevance). getStaticProps cannot see query-string
@@ -241,6 +293,13 @@ const PropertyListingPage = ({
   initialTotal = 0,
   initialQuery = "",
   initialSeo = null,
+  // Server-fetched /search?stats=1 for this location (see getStaticProps). Seeding
+  // these stops the stat chips, price range and sidebar city list from popping in
+  // after hydration and pushing the cards / filter sections down (desktop CLS).
+  initialStats = null,
+  // /location-tree states, fetched server-side so the sidebar's Location section is
+  // in the HTML instead of a skeleton that collapses ~140px when the tree arrives.
+  initialTree = null,
 }) => {
   const router = useRouter();
   const { type, name } = router.query;
@@ -263,8 +322,25 @@ const PropertyListingPage = ({
   // Only start in the loading state when there is nothing to show yet, so the
   // seeded cards are never replaced by a skeleton on first paint.
   const [loading, setLoading] = useState(!initialHits);
+  // true while a filter click is moving to another listing URL (e.g. removing a
+  // city chip, Clear all) — shows "Updating results…" so the click feels instant
+  const [navigating, setNavigating] = useState(false);
+  useEffect(() => {
+    const start = (url) => url.startsWith("/property-listing") && setNavigating(true);
+    const done = () => setNavigating(false);
+    router.events.on("routeChangeStart", start);
+    router.events.on("routeChangeComplete", done);
+    router.events.on("routeChangeError", done);
+    return () => {
+      router.events.off("routeChangeStart", start);
+      router.events.off("routeChangeComplete", done);
+      router.events.off("routeChangeError", done);
+    };
+  }, [router.events]);
+  const updating = loading || navigating;
 
   const [backdropOpen, setBackdropOpen] = useState(false);
+  const [detailsProp, setDetailsProp] = useState(null); // card "Read more" dialog
   const [selectedPropertyName, setSelectedPropertyName] = useState("");
   // filters + sort + page now drive backend fetches (no client-side filtering/slicing)
   const [filters, setFilters] = useState({
@@ -279,21 +355,25 @@ const PropertyListingPage = ({
   const [sort, setSort] = useState("relevance");
   const [premiumProperties, setPremiumProperties] = useState([]);
   const [openClosefilter, setOpenCloseFilter] = useState(false);
-  const [city, setCity] = useState("");
-  const [locality, setLocality] = useState("");
-  const [sublocality, setSubLocality] = useState("");
-  const [state, setState] = useState("");
-  const [readyToMove, setReadyToMove] = useState(0);
-  const [highRise, setHighRise] = useState(0);
+  const [city, setCity] = useState(initialHits?.[0]?.city?.name || "");
+  const [locality, setLocality] = useState(initialHits?.[0]?.locality?.name || "");
+  const [sublocality, setSubLocality] = useState(initialHits?.[0]?.subLocality?.name || "");
+  // Seeded from the first server hit (same source fetchStats uses) so the H1 and
+  // breadcrumb are complete in the server HTML instead of growing after a fetch.
+  const [state, setState] = useState(initialHits?.[0]?.state?.name || "");
+  const [readyToMove, setReadyToMove] = useState(initialStats?.readyToMove || 0);
+  const [highRise, setHighRise] = useState(initialStats?.highRise || 0);
 
   // Cities in the current listing with counts — drives the sidebar city filter
-  const [cityOptions, setCityOptions] = useState([]);
+  const [cityOptions, setCityOptions] = useState(
+    Array.isArray(initialStats?.cities) ? initialStats.cities : []
+  );
   // Bumped when filters change from outside the sidebar (the applied-filter
   // chips), so the sidebar re-reads its ticks from `filters`.
   const [filterSyncKey, setFilterSyncKey] = useState(0);
 
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(0);
+  const [minPrice, setMinPrice] = useState(initialStats?.minPrice || 0);
+  const [maxPrice, setMaxPrice] = useState(initialStats?.maxPrice || 0);
 
   // Seeded from getStaticProps for configuration listings. The effect below only
   // runs on the client, so location listings ship <title></title> in their server
@@ -311,6 +391,12 @@ const PropertyListingPage = ({
   // Desktop filter column scrolls on its own; show a "More filters" cue until the
   // user reaches its end (people didn't realise there was more below).
   const [filterMoreBelow, setFilterMoreBelow] = useState(false);
+  // Multi-select places from the URL (empty on plain single-place pages)
+  const selection = readSelection(router.query);
+  const isMulti = selection.cities.length + selection.localities.length > 0;
+  const selKey = `${selection.cities.join(",")}|${selection.localities.join(",")}`;
+  const selectionRef = useRef(selection);
+  selectionRef.current = selection;
   const lastQueryRef = useRef(""); // guards against duplicate consecutive list fetches (double loading)
   const initKeyRef = useRef(""); // ensures the per-location initial load runs exactly once
 
@@ -321,7 +407,7 @@ const PropertyListingPage = ({
       setIsMobile(window.innerWidth <= 768);
     };
 
-    checkScreenWidth();
+    startTransition(checkScreenWidth);
     window.addEventListener("resize", checkScreenWidth);
     return () => window.removeEventListener("resize", checkScreenWidth);
   }, []);
@@ -340,7 +426,6 @@ const PropertyListingPage = ({
 
   // ✅ Sync listing content height with filters
 
-  
   // ✅ "More filters" cue for the scrollable desktop filter column
   useEffect(() => {
     if (!isDesktop) return;
@@ -439,6 +524,16 @@ const PropertyListingPage = ({
     if (max) q.max = max;
     if (sortVal && sortVal !== "relevance") q.sort = sortVal;
     if (pageVal && pageVal > 1) q.page = pageVal;
+    const curSel = selectionRef.current;
+    if (curSel.cities.length) q.cities = curSel.cities.join(",");
+    if (curSel.localities.length) q.localities = curSel.localities.join(",");
+    // Never rewrite the URL once the visitor has moved to another page: a late
+    // call (debounced price filter, slow fetch) would otherwise navigate back here.
+    if (
+      typeof window !== "undefined" &&
+      !window.location.pathname.toLowerCase().startsWith(`/property-listing/${type}/`.toLowerCase())
+    )
+      return;
     router.replace({ pathname: router.pathname, query: q }, undefined, {
       shallow: true,
       scroll: false,
@@ -448,6 +543,10 @@ const PropertyListingPage = ({
   // ✅ Fetch ONE page of results — filtering + pagination + sorting all happen on the backend
   const fetchList = async (nameVal, pageVal, f, sortVal) => {
     if (!nameVal) return;
+    const sel = selectionRef.current;
+    if (sel.cities.length + sel.localities.length > 0) {
+      return fetchMulti(sel, pageVal, f, sortVal);
+    }
     const qs = buildSearchQuery(nameVal, pageVal, f, sortVal);
     // Skip a duplicate identical fetch (e.g. ListingFilters' reset-on-mount firing right after the
     // initial load) so the UI doesn't flash Loading → results → Loading again.
@@ -486,6 +585,86 @@ const PropertyListingPage = ({
     }
   };
 
+  // Several places at once: one request for the whole cities (?city=a,b) plus one
+  // per locality, merged client-side. See MULTI_CAP above.
+  const fetchMulti = async (sel, pageVal, f, sortVal) => {
+    const units = [];
+    if (sel.cities.length) units.push({ q: "property-in-india", city: sel.cities.join(",") });
+    sel.localities.forEach((l) => units.push({ q: l }));
+    const build = (u) => {
+      const p = new URLSearchParams(buildSearchQuery(u.q, 1, { ...f, city: [] }, sortVal));
+      p.set("q", u.q);
+      p.delete("mode");
+      if (u.city) p.set("city", u.city);
+      p.set("limit", MULTI_CAP);
+      return p.toString();
+    };
+    const key = `multi:${units.map(build).join("||")}#${pageVal}`;
+    if (key === lastQueryRef.current) return;
+    lastQueryRef.current = key;
+    setLoading(true);
+    try {
+      const lists = await Promise.all(
+        units.map((u) =>
+          fetch(`${process.env.apiUrl1}/search?${build(u)}`)
+            .then((r) => r.json())
+            .then((d) => d.hits || [])
+            .catch(() => [])
+        )
+      );
+      const seen = new Set();
+      let merged = [];
+      lists.flat().forEach((h) => {
+        const k = h?.slug || h?.id;
+        if (!k || seen.has(k)) return;
+        seen.add(k);
+        merged.push(h);
+      });
+      merged = applyConfigurationNet(merged, type, nameLc, f.configuration);
+      const price = (h) => Number(h?.priceInFigure) || 0;
+      if (sortVal === "priceLowHigh") merged.sort((a, b) => price(a) - price(b));
+      else if (sortVal === "priceHighLow") merged.sort((a, b) => price(b) - price(a));
+      merged = merged.slice(0, MULTI_CAP);
+      setTotalProperties(merged.length);
+      setPropertyData(merged.slice((pageVal - 1) * PAGE_SIZE, pageVal * PAGE_SIZE));
+    } catch (err) {
+      console.error("Failed to fetch properties:", err);
+      setPropertyData([]);
+      setTotalProperties(0);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Sidebar place chips changed. One place → its own (indexable) page; several →
+  // ?cities=&localities= on this route (pushed, so Back steps through selections).
+  const handlePlacesChange = (next) => {
+    const q = {};
+    if (filters.status?.length) q.status = filters.status.join(",");
+    if (filters.unitType?.length) q.unit = filters.unitType.join(",");
+    if (filters.configuration?.length && type !== "configuration")
+      q.config = filters.configuration.join(",");
+    const [mn, mx] = filters.priceRange || [];
+    if (mn) q.min = mn;
+    if (mx) q.max = mx;
+    if (sort && sort !== "relevance") q.sort = sort;
+    const n = next.cities.length + next.localities.length;
+    if (n === 0) {
+      router.push({ pathname: "/property-listing/search/property-in-india", query: q });
+    } else if (n === 1) {
+      const t = next.cities.length ? "city" : "locality";
+      const slug = next.cities[0] || next.localities[0];
+      router.push({ pathname: `/property-listing/${t}/${slug}`, query: q });
+    } else {
+      if (next.cities.length) q.cities = next.cities.join(",");
+      if (next.localities.length) q.localities = next.localities.join(",");
+      router.push({ pathname: router.pathname, query: { type, name: nameLc, ...q } }, undefined, {
+        shallow: true,
+        scroll: false,
+      });
+    }
+  };
+
   // ✅ Area-level info (city/state names + price range + counts) — fetched once per location
   const fetchStats = async (nameVal) => {
     if (!nameVal) return;
@@ -505,21 +684,25 @@ const PropertyListingPage = ({
       );
       const data = await res.json();
       const first = data.hits?.[0];
-      if (first) {
-        const cityName = first.city?.name || "";
-        setCity(cityName);
-        setLocality(first.locality?.name || "");
-        setSubLocality(first.subLocality?.name || "");
-        setState(first.state?.name || "");
-        if (cityName) fetchCityData(cityName);
-      }
-      if (data.stats) {
-        setMinPrice(data.stats.minPrice || "");
-        setMaxPrice(data.stats.maxPrice || "");
-        setReadyToMove(data.stats.readyToMove || 0);
-        setHighRise(data.stats.highRise || 0);
-        setCityOptions(Array.isArray(data.stats.cities) ? data.stats.cities : []);
-      }
+      // Transitions: these land while lazy sections may still be hydrating, and an
+      // urgent update there makes React throw the server HTML away (layout shift).
+      startTransition(() => {
+        if (first) {
+          const cityName = first.city?.name || "";
+          setCity(cityName);
+          setLocality(first.locality?.name || "");
+          setSubLocality(first.subLocality?.name || "");
+          setState(first.state?.name || "");
+          if (cityName) fetchCityData(cityName);
+        }
+        if (data.stats) {
+          setMinPrice(data.stats.minPrice || "");
+          setMaxPrice(data.stats.maxPrice || "");
+          setReadyToMove(data.stats.readyToMove || 0);
+          setHighRise(data.stats.highRise || 0);
+          setCityOptions(Array.isArray(data.stats.cities) ? data.stats.cities : []);
+        }
+      });
     } catch (err) {
       console.error("Failed to fetch stats:", err);
     }
@@ -586,6 +769,13 @@ const PropertyListingPage = ({
   // ---- applied-filter chips ----
   const pageConfiguration = type === "configuration" ? CONFIGURATIONS[nameLc]?.filter : undefined;
   const removeFilter = (key, value) => {
+    if (key === "placeCity" || key === "placeLocality") {
+      const sel = selectionRef.current;
+      return handlePlacesChange({
+        cities: sel.cities.filter((c) => !(key === "placeCity" && c === value)),
+        localities: sel.localities.filter((l) => !(key === "placeLocality" && l === value)),
+      });
+    }
     const next = { ...filters };
     if (key === "priceRange") next.priceRange = [null, null];
     else next[key] = (filters[key] || []).filter((v) => v !== value);
@@ -597,6 +787,13 @@ const PropertyListingPage = ({
     setFilterSyncKey((k) => k + 1);
   };
   const clearAllFilters = () => {
+    // several cities/localities picked (?cities=/&localities=) → clear those too:
+    // back to all properties with no filters at all
+    const sel = selectionRef.current || { cities: [], localities: [] };
+    if (sel.cities.length + sel.localities.length > 1) {
+      router.push({ pathname: "/property-listing/search/property-in-india" });
+      return;
+    }
     applyFilters({
       status: [],
       unitType: [],
@@ -624,7 +821,7 @@ const PropertyListingPage = ({
   const fetchCityData = async (city) => {
     try {
       const response = await axios.get(`${process.env.apiUrl1}/property/premium/${city}`);
-      setPremiumProperties(response.data.data || []);
+      startTransition(() => setPremiumProperties(response.data.data || []));
     } catch (err) {
       console.error("Error fetching premium properties:", err);
     }
@@ -661,27 +858,46 @@ const PropertyListingPage = ({
     initKeyRef.current = key;
 
     const { filters: f, sort: s, page: pg } = parseUrlState(router.query);
-    setFilters(f);
-    setSort(s);
-    setCurrentPage(pg);
-    // Re-seed from the new props on every location change, not just the first
-    // mount. Navigating between two cities keeps the same route pattern, so React
-    // reuses this component and useState(initialHits) never runs again — the state
-    // still held the previous city while initialHits already described the new one.
-    // fetchList then built the same query string that was recorded below and its
-    // dedupe skipped the request, so the page kept showing the old city entirely.
-    setPropertyData(initialHits || []);
-    setTotalProperties(initialTotal || 0);
-    setLoading(!initialHits);
+    startTransition(() => {
+      setFilters(f);
+      setSort(s);
+      setCurrentPage(pg);
+      // Re-seed from the new props on every location change, not just the first
+      // mount. Navigating between two cities keeps the same route pattern, so React
+      // reuses this component and useState(initialHits) never runs again — the state
+      // still held the previous city while initialHits already described the new one.
+      // fetchList then built the same query string that was recorded below and its
+      // dedupe skipped the request, so the page kept showing the old city entirely.
+      setPropertyData(initialHits || []);
+      setTotalProperties(initialTotal || 0);
+      setLoading(!initialHits);
 
-    // Record the seeded query so fetchList skips the redundant first request. A
-    // filtered or paged URL builds a different string and still fetches, replacing
-    // the unfiltered seed above.
-    lastQueryRef.current = initialHits ? initialQuery : "";
-    fetchStats(nameLc);
-    fetchList(nameLc, pg, f, s);
+      // Record the seeded query so fetchList skips the redundant first request. A
+      // filtered or paged URL builds a different string and still fetches, replacing
+      // the unfiltered seed above.
+      lastQueryRef.current = initialHits ? initialQuery : "";
+      fetchStats(nameLc);
+      fetchList(nameLc, pg, f, s);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type, nameLc, router.isReady]);
+
+  // Shallow selection changes (chips, Back/Forward) don't re-run the per-location
+  // load above, so refetch here. fetchList dedupes, so the first run is free.
+  const prevSelRef = useRef(null);
+  useEffect(() => {
+    if (!router.isReady) return;
+    const where = `${type}|${nameLc}`;
+    const prev = prevSelRef.current;
+    prevSelRef.current = { where, selKey };
+    // First run, or a different route: the per-location load above handles it.
+    if (!prev || prev.where !== where || prev.selKey === selKey) return;
+    const { filters: f, sort: s, page: pg } = parseUrlState(router.query);
+    setCurrentPage(pg);
+    lastQueryRef.current = "";
+    fetchList(nameLc, pg, f, s);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selKey, type, nameLc, router.isReady]);
 
   useEffect(() => {
     if (!type || !name) return;
@@ -751,6 +967,91 @@ const PropertyListingPage = ({
 
   const handleCloseFilterToggle = () => setOpenCloseFilter((prev) => !prev);
 
+  // What the sidebar shows as picked: the URL selection, else the route's place.
+  const placeSelection = isMulti
+    ? selection
+    : {
+        cities: type === "city" ? [nameLc] : [],
+        localities: type === "locality" ? [nameLc] : [],
+      };
+
+  // ---- mid-list ad + expert strip ----
+  const visibleSlugs = (propertyData || []).map((p) => p?.slug).filter(Boolean);
+  const adCity = city || (type === "city" ? nameLc : "");
+  const renderAfterFor = (variant) => (index) => {
+    const n = index + 1; // cards shown so far
+    const first = AD_FIRST[variant];
+    const count = propertyData?.length || 0;
+    const nodes = [];
+    if (n >= first && (n - first) % AD_EVERY === 0 && count > n) {
+      const slot = (n - first) / AD_EVERY;
+      const [project] = pickAdProjects({
+        city: adCity,
+        excludeSlugs: visibleSlugs,
+        excludeNames: (propertyData || []).map((p) => p?.name),
+        softNames: (propertyData || []).slice(0, n).map((p) => p?.name),
+        minCr: filters.priceRange?.[0],
+        maxCr: filters.priceRange?.[1],
+        slot,
+        seed: (currentPage - 1) * 2 + slot,
+      });
+      nodes.push(
+        <ListingAd key={`ad-${n}`} project={project} onEnquire={(nm) => handleOpen(nm)} />
+      );
+    }
+    if (count >= 6 && n === Math.min(EXPERT_AFTER, count)) {
+      nodes.push(<ExpertStrip key="expert" onEnquire={() => handleOpen("")} />);
+    }
+    return nodes.length ? nodes : null;
+  };
+
+  const appliedCount =
+    filters.status.length +
+    filters.unitType.length +
+    filters.city.length +
+    filters.configuration.filter((c) => c !== pageConfiguration).length +
+    (filters.priceRange?.[0] || filters.priceRange?.[1] ? 1 : 0);
+
+  const hasActiveFilters =
+    filters.status.length ||
+    filters.unitType.length ||
+    filters.city.length ||
+    filters.configuration.filter((c) => c !== pageConfiguration).length ||
+    filters.priceRange?.[0] ||
+    filters.priceRange?.[1];
+
+  const emptyState = (
+    <div className={pll.pllEmpty}>
+      <svg viewBox="0 0 24 24" width="40" height="40" aria-hidden="true">
+        <path
+          d="M3 10.5L12 3l9 7.5V21a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinejoin="round"
+        />
+      </svg>
+      <h3>No properties match these filters</h3>
+      <p>Try widening the budget, removing a filter, or browse nearby areas.</p>
+      <div className={pll.pllEmptyActions}>
+        {hasActiveFilters ? (
+          <button type="button" className={pll.pllEmptyPrimary} onClick={clearAllFilters}>
+            Clear all filters
+          </button>
+        ) : null}
+        <Link href="/property-listing/city/gurgaon" passHref>
+          <a className={pll.pllEmptyLink}>Properties in Gurgaon</a>
+        </Link>
+        <Link href="/property-listing/search/property-in-india" passHref>
+          <a className={pll.pllEmptyLink}>All properties</a>
+        </Link>
+        <button type="button" className={pll.pllEmptyLink} onClick={() => handleOpen("")}>
+          Ask an expert
+        </button>
+      </div>
+    </div>
+  );
+
   return (
     <Wrapper
       title={title}
@@ -761,156 +1062,82 @@ const PropertyListingPage = ({
       // ~450 KB file the page never uses and still leave the real LCP image
       // undiscovered until the card mounts.
       preloadImage={optimizedSrc(initialHits?.[0]?.imageGallery?.[0]?.url, 384)}
-      {...(type === "search" ? { seo: "noindex, follow" } : {})}
+      {...(type === "search" || isMulti ? { seo: "noindex, follow" } : {})}
       type={type}
       name={name}
     >
-      {isDesktop ? (
-        <div className={`Wrapper ${pll.pllLayout}`}>
-          {/* LEFT FILTERS */}
-          <div className={`listingFilters ${pll.pllFilters}`} ref={filterRef}>
-            <ListingFilters
-              onFilterChange={handleFilterChange}
-              type={type}
-              name={name}
-              defaultConfiguration={CONFIGURATIONS[nameLc]?.filter}
-              cityOptions={cityOptions}
-              syncFilters={filters}
-              syncKey={filterSyncKey}
-            />
-            <div
-              className={`${pll.pllScrollHint} ${filterMoreBelow ? pll.pllScrollHintOn : ""}`}
-              aria-hidden={!filterMoreBelow}
-            >
-              <button
-                type="button"
-                tabIndex={filterMoreBelow ? 0 : -1}
-                onClick={() => filterRef.current?.scrollBy({ top: 260, behavior: "smooth" })}
-              >
-                More filters
-                <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
-                  <path
-                    d="M6 9l6 6 6-6"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
-
-          <div className={`listingScrollbar ${pll.pllResults}`} ref={contentRef}>
-            <SearchBar
-              onSearch={setPropertyData}
-              onSortChange={handleSortChange}
-              isDesktop={isDesktop}
-              isMobile={isMobile}
-              name={name}
-              type={type}
-            />
-
-            {loading ? (
-              <ContentSkeleton />
-            ) : (
-              <Content
-                customHeading={configurationCopy(nameLc, totalProperties)?.heading}
-                customContent={configurationCopy(nameLc, totalProperties)?.content}
-                totalProperties={totalProperties}
-                currentPage={currentPage}
-                maxPrice={maxPrice}
-                minPrice={minPrice}
-                type={type}
-                name={name}
-                state={state}
-                city={city}
-                sublocality={sublocality}
-                locality={locality}
-                selectedCities={filters.city}
-              />
-            )}
-
-            <AppliedFilters
-              filters={filters}
-              pageConfiguration={pageConfiguration}
-              onRemove={removeFilter}
-              onClearAll={clearAllFilters}
-            />
-
-            {loading ? (
-              <PropertyCardSkeleton count={4} />
-            ) : (
-              <PropertyListingCard
-                name={name ? decodeURIComponent(name) : ""}
-                type={type}
-                onOpenBackdrop={handleOpen}
-                propertyData={propertyData}
-                totalProperties={totalProperties}
-                currentPage={currentPage}
-                pageSize={PAGE_SIZE}
-                onPageChange={handlePageChange}
-                loading={loading}
-              />
-            )}
-
-            {loading ? (
-              <FeaturedSkeleton count={4} />
-            ) : (
-              <>
-                <h2 className={pll.pllSectionTitle}>Featured Properties</h2>
-                <PremiumProperty premiumProperties={premiumProperties} />
-              </>
-            )}
-
-            {loading ? (
-              <FaqSkeleton count={5} />
-            ) : (
-              <FaqSection
-                totalProperties={totalProperties}
-                type={type}
-                name={name}
-                state={state}
-                city={city}
-                locality={locality}
-                subLocality={sublocality}
-                highRise={highRise}
-                readyToMove={readyToMove}
-              />
-            )}
-          </div>
-        </div>
-      ) : (
-        /* ---------------- MOBILE VIEW ---------------- */
-        <>
-          <SearchBar
-            onSearch={setPropertyData}
-            onSortChange={handleSortChange}
-            isDesktop={isDesktop}
-            isMobile={isMobile}
-            handleCloseFilterToggle={handleCloseFilterToggle}
-            name={name}
-            type={name}
-          />
-
+      {/*
+        One tree for every viewport. Phone vs desktop differences are CSS media
+        queries (listingLayout.module.css), so the server HTML is already laid out
+        correctly on a phone. The old `isDesktop ? … : …` swap re-rendered the
+        whole page after hydration on phones (CLS ≈ 1.6).
+      */}
+      <div className={`Wrapper ${pll.pllLayout}`}>
+        {/* LEFT FILTERS (desktop sidebar; hidden on phones, which use the sheet below) */}
+        <div className={`listingFilters ${pll.pllFilters}`} ref={filterRef}>
           <ListingFilters
             onFilterChange={handleFilterChange}
-            openClosefilter={openClosefilter}
-            handleCloseFilterToggle={handleCloseFilterToggle}
+            type={type}
             name={name}
             defaultConfiguration={CONFIGURATIONS[nameLc]?.filter}
             cityOptions={cityOptions}
             syncFilters={filters}
             syncKey={filterSyncKey}
-            type={name}
+            placeSelection={placeSelection}
+            locationTree={initialTree}
+            onPlacesChange={handlePlacesChange}
+            totalProperties={totalProperties}
+          />
+          <div
+            className={`${pll.pllScrollHint} ${filterMoreBelow ? pll.pllScrollHintOn : ""}`}
+            aria-hidden={!filterMoreBelow}
+          >
+            <button
+              type="button"
+              tabIndex={filterMoreBelow ? 0 : -1}
+              onClick={() => filterRef.current?.scrollBy({ top: 260, behavior: "smooth" })}
+            >
+              More filters
+              <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+                <path
+                  d="M6 9l6 6 6-6"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div className={`listingScrollbar ${pll.pllResults}`} ref={contentRef}>
+          <SearchBar
+            onSearch={setPropertyData}
+            onSortChange={handleSortChange}
+            handleCloseFilterToggle={handleCloseFilterToggle}
+            filterCount={appliedCount}
+            name={name}
+            type={type}
           />
 
           {loading ? (
             <ContentSkeleton />
           ) : (
             <Content
-              customHeading={configurationCopy(nameLc, totalProperties)?.heading}
+              customHeading={
+                isMulti
+                  ? `Properties in ${joinNames(
+                      [...selection.cities, ...selection.localities].map(placeName)
+                    )}`
+                  : configurationCopy(nameLc, totalProperties)?.heading
+              }
+              crumbLabel={
+                isMulti
+                  ? joinNames([...selection.cities, ...selection.localities].map(placeName))
+                  : undefined
+              }
               customContent={configurationCopy(nameLc, totalProperties)?.content}
               totalProperties={totalProperties}
               currentPage={currentPage}
@@ -920,42 +1147,102 @@ const PropertyListingPage = ({
               name={name}
               state={state}
               city={city}
-              locality={locality}
               sublocality={sublocality}
-              isMobile={isMobile}
+              locality={locality}
               onSortChange={handleSortChange}
               selectedCities={filters.city}
+              // stats cover the whole place, so only show them on the unfiltered view
+              onEnquire={handleOpen}
+              readyToMove={appliedCount || isMulti ? 0 : readyToMove}
+              highRise={appliedCount || isMulti ? 0 : highRise}
             />
           )}
 
           <AppliedFilters
+            places={
+              isMulti
+                ? [
+                    ...selection.cities.map((c) => ({
+                      key: "placeCity",
+                      value: c,
+                      label: placeName(c),
+                      kind: "City",
+                    })),
+                    ...selection.localities.map((l) => ({
+                      key: "placeLocality",
+                      value: l,
+                      label: placeName(l),
+                      kind: "Locality",
+                    })),
+                  ]
+                : []
+            }
             filters={filters}
             pageConfiguration={pageConfiguration}
             onRemove={removeFilter}
             onClearAll={clearAllFilters}
           />
 
-          {loading ? (
+          {/* feedback while results update after a filter click */}
+          {updating && (
+            <>
+              <div className={pll.pllProgress} aria-hidden="true" />
+              <p className={pll.pllUpdating} role="status">
+                <span className={pll.pllSpinner} aria-hidden="true" />
+                Updating results…
+              </p>
+            </>
+          )}
+
+          {updating ? (
             <PropertyCardSkeleton count={4} />
           ) : (
-            <PropertyListingCardMobile
-              propertyData={propertyData}
-              onOpenBackdrop={handleOpen}
-              totalProperties={totalProperties}
-              currentPage={currentPage}
-              pageSize={PAGE_SIZE}
-              onPageChange={handlePageChange}
-            />
+            <>
+              {/* Desktop and phone cards are different components; both are in the
+                  HTML and CSS shows one. Hidden lazy images never download. */}
+              <div className={pll.pllDeskOnly}>
+                <PropertyListingCard
+                  name={name ? decodeURIComponent(name) : ""}
+                  type={type}
+                  onOpenBackdrop={handleOpen}
+                  propertyData={propertyData}
+                  totalProperties={totalProperties}
+                  currentPage={currentPage}
+                  pageSize={PAGE_SIZE}
+                  onPageChange={handlePageChange}
+                  loading={loading}
+                  onReadMore={setDetailsProp}
+                  renderAfter={renderAfterFor("desktop")}
+                  emptyState={emptyState}
+                />
+              </div>
+              <div className={pll.pllPhoneOnly}>
+                <PropertyListingCardMobile
+                  propertyData={propertyData}
+                  onOpenBackdrop={handleOpen}
+                  totalProperties={totalProperties}
+                  currentPage={currentPage}
+                  pageSize={PAGE_SIZE}
+                  onPageChange={handlePageChange}
+                  onReadMore={setDetailsProp}
+                  renderAfter={renderAfterFor("mobile")}
+                  emptyState={emptyState}
+                />
+              </div>
+            </>
           )}
 
           {loading ? (
             <FeaturedSkeleton count={4} />
-          ) : (
-            <>
+          ) : premiumProperties.length > 0 ? (
+            <section className={pll.pllBlock}>
               <h2 className={pll.pllSectionTitle}>Featured Properties</h2>
               <PremiumProperty premiumProperties={premiumProperties} />
-            </>
-          )}
+            </section>
+          ) : null}
+
+          {/* Developer logo coverflow, between the results and the FAQ */}
+          <DeveloperShowcase />
 
           {loading ? (
             <FaqSkeleton count={5} />
@@ -972,7 +1259,34 @@ const PropertyListingPage = ({
               readyToMove={readyToMove}
             />
           )}
-        </>
+        </div>
+      </div>
+
+      {/* Phone filter sheet (fixed overlay; renders nothing until opened) */}
+      {isMobile && (
+        <ListingFilters
+          onFilterChange={handleFilterChange}
+          openClosefilter={openClosefilter}
+          handleCloseFilterToggle={handleCloseFilterToggle}
+          name={name}
+          defaultConfiguration={CONFIGURATIONS[nameLc]?.filter}
+          cityOptions={cityOptions}
+          syncFilters={filters}
+          syncKey={filterSyncKey}
+          placeSelection={placeSelection}
+          locationTree={initialTree}
+          onPlacesChange={handlePlacesChange}
+          totalProperties={totalProperties}
+          type={type}
+        />
+      )}
+
+      {detailsProp && (
+        <ListingDetailsModal
+          property={detailsProp}
+          onClose={() => setDetailsProp(null)}
+          onEnquire={handleOpen}
+        />
       )}
 
       {/* BACKDROP ALWAYS OUTSIDE */}
@@ -999,7 +1313,22 @@ export async function getStaticProps({ params }) {
   const query = initialSearchQuery(typeVal, nameVal);
 
   try {
-    const res = await fetch(`${process.env.apiUrl1}/search?${query}`);
+    // Stats in parallel with the list — the same request fetchStats makes on the client.
+    const statsQs = new URLSearchParams();
+    applyScope(statsQs, typeVal, nameVal);
+    statsQs.set("stats", "1");
+    statsQs.set("limit", "1");
+    statsQs.set("fields", "card");
+    const [res, statsData, treeData] = await Promise.all([
+      fetch(`${process.env.apiUrl1}/search?${query}`),
+      fetch(`${process.env.apiUrl1}/search?${statsQs.toString()}`)
+        .then((r) => r.json())
+        .catch(() => null),
+      // ~4 KB; the same request LocationFilter makes on the client
+      fetch(`${process.env.apiUrl1}/location-tree`)
+        .then((r) => (r.ok ? r.json() : null))
+        .catch(() => null),
+    ]);
     const data = await res.json();
     let hits = data.hits || [];
     // Same safety net as fetchList: if the backend ignores pagination, trim.
@@ -1015,6 +1344,8 @@ export async function getStaticProps({ params }) {
         initialHits: hits,
         initialTotal: total,
         initialQuery: query,
+        initialStats: statsData?.stats || null,
+        initialTree: Array.isArray(treeData?.states) ? treeData.states : null,
         // Configuration pages resolve from the slug; location pages need the first
         // hit, which is where the city/locality/state names live.
         initialSeo: configurationCopy(nameVal, total) || locationCopy(typeVal, hits[0], total),

@@ -12,15 +12,15 @@
 /* LEFT */
 .heroLeft h1 {
   color: #000;
-  font-family: "Lexend Deca";
+  font-family: var(--font-body);
   font-size: 48px;
   font-weight: 400;
   margin-top: 0px;
 }
 
 .heroLeft h1 > span {
-  color: #e4a951;
-  font-family: "Lexend Deca";
+  color: var(--color-gold);
+  font-family: var(--font-body);
   font-weight: 500;
 }
 
@@ -50,7 +50,7 @@
 /* TEXT */
 .exlr {
   color: #000;
-  font-family: "Lexend Deca";
+  font-family: var(--font-body);
   font-size: 20px;
   font-weight: 400;
   white-space: nowrap; /* ✅ prevents text break */

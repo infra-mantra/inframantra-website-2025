@@ -1,0 +1,67 @@
+/* Shared listing-card bits (prefixed cx-). */
+.cxLoc {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  max-width: calc(100% - 70px); /* clear of the compare toggle (bottom-right) */
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(20, 20, 20, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: var(--fw-medium);
+  pointer-events: none;
+}
+
+.cxLoc svg {
+  flex-shrink: 0;
+  color: var(--color-gold);
+}
+
+.cxLocText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cxDesc {
+  min-width: 0;
+}
+
+.cxMore {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-gold-dark);
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.cxMore:hover {
+  color: var(--color-ink);
+}
+
+.cxMore:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px), (pointer: coarse) {
+  .cxMore {
+    min-height: 44px;
+  }
+}

@@ -1,0 +1,87 @@
+/* ------------------------------------------------------------------
+   Shared skeleton system — ONE shimmer for the whole site.
+
+   .bone is the grey shape. Its shimmer is a pseudo-element that slides
+   with `transform` (GPU-composited, no repaint per frame).
+   Colours: warm neutrals that sit well next to the brand gold.
+------------------------------------------------------------------ */
+
+.root {
+  --sk-base: #f1ede6; /* shape colour */
+  --sk-shine: #f8f5ef; /* moving highlight */
+  position: relative;
+}
+
+/* Dark sections (e.g. video / footer bands) */
+.dark {
+  --sk-base: #2a2a2a;
+  --sk-shine: #363636;
+}
+
+.bone {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  background: var(--sk-base, #f1ede6);
+  border-radius: 8px;
+}
+
+.bone::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--sk-shine, #f8f5ef) 50%,
+    transparent 100%
+  );
+  animation: skShimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes skShimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* Users who ask for less motion get static shapes. */
+@media (prefers-reduced-motion: reduce) {
+  .bone::after {
+    animation: none;
+    display: none;
+  }
+}
+
+.circle {
+  border-radius: 50%;
+}
+
+/* Text lines: height = one line of text, small gap between lines. */
+.lines {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Card: image + text, matches a typical property / blog card. */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+/* Screen-reader only "Loading…" label. */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

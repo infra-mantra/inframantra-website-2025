@@ -21,7 +21,12 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(100deg, #fdf0cc 0%, rgba(253, 240, 204, 0.92) 45%, rgba(255, 248, 230, 0) 75%);
+  background: linear-gradient(
+    100deg,
+    #fdf0cc 0%,
+    rgba(253, 240, 204, 0.92) 45%,
+    rgba(255, 248, 230, 0) 75%
+  );
   pointer-events: none;
 }
 
@@ -65,12 +70,15 @@
 
 /* Headline: dark for contrast, "Site Visit" in gold with an underline swash */
 .site-visit-left h2 {
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  text-transform: none;
+  color: var(--color-ink);
   margin: 14px 0 22px;
   padding: 0;
-  color: #1a1a1a;
-  font-size: 2rem;
-  font-weight: 700;
-  line-height: 1.22;
 }
 
 .sv-accent {
@@ -123,7 +131,10 @@
   font-weight: 600;
   cursor: pointer;
   box-shadow: 0 8px 20px rgba(214, 158, 52, 0.4);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
 }
 
 .site-visit-wrapper .sv-actions .cta-btn-w .cta-w button:hover {
@@ -180,7 +191,12 @@
   height: 280px;
   margin-left: -152px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(231, 181, 84, 0.45) 0%, rgba(231, 181, 84, 0.12) 55%, rgba(231, 181, 84, 0) 70%);
+  background: radial-gradient(
+    circle,
+    rgba(231, 181, 84, 0.45) 0%,
+    rgba(231, 181, 84, 0.12) 55%,
+    rgba(231, 181, 84, 0) 70%
+  );
 }
 
 .site-visit-right img {
@@ -192,7 +208,8 @@
 
 @media (max-width: 768px) {
   .site-visit-wrapper {
-    margin: 16px auto;
+    /* 16px gutter: the card ran edge to edge, its rounded corners cut off */
+    margin: 16px;
     border-radius: 16px;
   }
   .site-visit-inner {
@@ -204,12 +221,11 @@
   }
   .site-visit-left h3.sv-eyebrow {
     padding: 4px 9px;
-    font-size: 10.5px;
+    font-size: 12px;
     text-align: left;
   }
   .site-visit-left h2 {
     margin: 10px 0 14px;
-    font-size: 17px;
     text-align: left;
   }
   .sv-accent::after {
@@ -231,8 +247,9 @@
     height: 15px;
   }
   .sv-call {
-    font-size: 11.5px;
+    font-size: 12px;
     gap: 6px;
+    min-height: 44px;
   }
   .sv-call-icon {
     width: 24px;

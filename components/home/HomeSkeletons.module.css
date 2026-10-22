@@ -9,30 +9,10 @@
    shape changes. `.block` is the grey box that everything is built from.
 ------------------------------------------------------------------ */
 
-/* The grey box. Every grey shape uses this class. */
+/* The grey box. Colour + shimmer come from the shared .bone class
+   (components/shared/skeleton/Skeleton.module.css); this only sets the radius. */
 .block {
-  background: #e9ecef;
   border-radius: 10px;
-  /* Pulsing opacity is cheap (runs on the GPU compositor), so it does not
-     slow the page down like a moving-gradient shimmer can. */
-  animation: skPulse 1.4s ease-in-out infinite;
-}
-
-@keyframes skPulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-}
-
-/* Respect users who ask for less motion (also = less work for the device). */
-@media (prefers-reduced-motion: reduce) {
-  .block {
-    animation: none;
-  }
 }
 
 /* Section wrapper — centers the skeleton and matches the real sections' width. */
@@ -246,10 +226,9 @@
 
 /* ---- Home search bar -------------------------------------------------
    Mirrors the real bar so swapping the placeholder for it shifts nothing.
-   Desktop numbers come from SearchOptions.module.css (.searchOptionsFlexContainer:
-   75% wide, 55px tall, white, 10px radius, same shadow); mobile numbers from
-   SearchAutoComplete.module.css (.root is 90vw, .inputWrapper is a grey 10px-radius
-   field). Keep them in step if either of those changes. */
+   Widths/heights come from SearchOptions.module.css: desktop (≥1024px) pill is
+   min(94%, 1140px) x 55px; tablet compact bar min(92vw, 680px) x 55px; phone
+   90vw x 48px. Keep them in step if either of those changes. */
 .searchWrap {
   display: flex;
   width: 100%;
@@ -262,7 +241,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  width: 75%;
+  width: min(92vw, 680px);
   height: 55px;
   padding: 4px 4px 4px 20px;
   border-radius: 999px;
@@ -282,6 +261,12 @@
   height: 47px;
   border-radius: 999px;
   flex-shrink: 0;
+}
+
+@media (min-width: 1024px) {
+  .searchBar {
+    width: min(94%, 1140px);
+  }
 }
 
 @media (max-width: 768px) {

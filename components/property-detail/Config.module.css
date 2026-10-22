@@ -26,3 +26,15 @@
   margin: 0px;
   font-weight: bolder;
 }
+
+/* Phones: the 343px card must not be wider than the column (320px screens). */
+@media (max-width: 768px) {
+  .Config-wrapper {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .property-card {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+}

@@ -7,6 +7,7 @@ import { fetchCityProperties } from "../../lib/propertyApi.js";
 import { cityEventManager } from "../../lib/cityEventManager.js";
 import PropertyCard from "../../shared/PropertyCard.jsx";
 import styles from "./LocalityPropertiesSection.module.css";
+import { LocalityCardsSkeleton } from "../HomeSkeletons.jsx";
 import { useAutoplayWhenVisible } from "../../shared/useAutoplayWhenVisible";
 
 // Import Swiper styles
@@ -16,24 +17,21 @@ import "swiper/css/pagination";
 
 export default function LocalityPropertiesSection({ data, loading, selectedCity }) {
   const onSwiper = useAutoplayWhenVisible();
-  if (loading) {
-    return (
-      <div className={styles.localityContainer}>
-        <div className={styles.localityContentWrapper}>
-          <div className={styles.localityLoadingContainer}>
-            <div className={styles.localityLoadingSpinner}></div>
-            <p className={styles.localityLoadingText}>Loading {selectedCity} localities...</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // Skeleton cards (not a spinner) while the city data loads.
+  if (loading) return <LocalityCardsSkeleton />;
 
   return (
-    <div className={styles.localityContainer}>
+    <div className={`${styles.localityContainer} home-alt-bg`}>
       <div className={styles.localityContentWrapper}>
-        {/* Section Header */}
-        <h3 className={styles.localityTitle}>Discover Properties in Other Cities</h3>
+        {/* Section header: same pattern as the other home sections */}
+        <div className={styles.localitySectionHeader} data-reveal>
+          <h2 className={styles.localityMainTitle}>
+            Discover Properties in <span>Other Cities</span>
+          </h2>
+          {selectedCity && (
+            <p className={styles.localitySubtitle}>Premium homes beyond {selectedCity}</p>
+          )}
+        </div>
 
         <div className={styles.localityCarouselContainer}>
           <Swiper

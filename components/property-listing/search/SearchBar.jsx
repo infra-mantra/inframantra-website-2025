@@ -23,6 +23,7 @@ function SearchBar({
   isDesktop,
   isMobile,
   handleCloseFilterToggle,
+  filterCount = 0, // applied filters, shown as a badge on the phone Filters button
   type,
   name,
 }) {
@@ -216,15 +217,32 @@ function SearchBar({
         )}
       </div>
 
-      {isMobile && (
-        <button type="button" className={styles.ftr} onClick={handleCloseFilterToggle}>
-          <img src="/icons/fiterIconGreen.svg" className={styles.ftrIcon} alt="" />
-          <span>Filters</span>
-        </button>
-      )}
+      {/* Both are always rendered and shown per breakpoint in CSS, so the first
+          (server) paint already has the phone layout — no swap after hydration. */}
+      <button
+        type="button"
+        className={`${styles.ftr} ${styles.sbPhoneOnly}`}
+        onClick={handleCloseFilterToggle}
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
+          <circle cx="16" cy="6" r="2" fill="none" stroke="currentColor" strokeWidth="2" />
+          <circle cx="10" cy="12" r="2" fill="none" stroke="currentColor" strokeWidth="2" />
+          <circle cx="18" cy="18" r="2" fill="none" stroke="currentColor" strokeWidth="2" />
+        </svg>
+        <span>Filters</span>
+        {filterCount > 0 && <span className={styles.sbBadge}>{filterCount}</span>}
+      </button>
 
-      {/* On mobile the SORT BY sits next to the heading (see AboutSection); here it's desktop-only */}
-      {!isMobile && <SortDropdown onSortChange={handleSortChange} defaultValue={sortValue} />}
+      {/* On phones the SORT BY sits next to the heading (see AboutSection) */}
+      <div className={styles.sbDeskOnly}>
+        <SortDropdown onSortChange={handleSortChange} defaultValue={sortValue} />
+      </div>
     </div>
   );
 }

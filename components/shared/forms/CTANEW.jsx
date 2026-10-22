@@ -1,4 +1,5 @@
 import { RxCross2 } from "react-icons/rx";
+import { TEL_HREF, WHATSAPP_URL } from "../../lib/siteConfig.js";
 import React, { useEffect, useState, useRef } from "react";
 import { FaPhoneAlt, FaWhatsapp } from "react-icons/fa";
 import { toast } from "react-toastify";
@@ -133,16 +134,21 @@ function App({
             <div className={ctaStyle.imageContainer}>
               <img src="/logos/pop-up-logo.png" alt="Inframantra-logo" />
 
-              <div className={ctaStyle.crossBtn} onClick={handleClose}>
+              <button
+                type="button"
+                className={ctaStyle.crossBtn}
+                onClick={handleClose}
+                aria-label="Close"
+              >
                 <RxCross2 />
-              </div>
+              </button>
             </div>
 
             {/* Heading */}
             <div className={ctaStyle.headingForm}>
               <p className={ctaStyle.popUpHead}>Please share your contact details</p>
 
-              <p className={ctaStyle.popUpHead2}>{text ? text : "TO UNLOCK EXCLUSIVE DEALS"}</p>
+              <p className={ctaStyle.popUpHead2}>{text ? text : "To Unlock Exclusive Deals"}</p>
             </div>
 
             {/* Form */}
@@ -214,10 +220,10 @@ function App({
 
               {/* WhatsApp consent. Wording unchanged (it is a consent statement); only the
                   styling moved out of inline styles into the shared module. */}
-              <label className={fld.imFldConsent} htmlFor="whatsappConsent">
+              <label className={fld.imFldConsent} htmlFor={`${id}-whatsapp`}>
                 <input
                   type="checkbox"
-                  id="whatsappConsent"
+                  id={`${id}-whatsapp`}
                   checked={whatsappConsent}
                   onChange={(e) => setWhatsappConsent(e.target.checked)}
                 />
@@ -228,32 +234,23 @@ function App({
                 </span>
               </label>
 
-              {/* Submit Button */}
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                }}
+              {/* Submit — shared primitive; disabled doubles as the loading state */}
+              <button
+                type="submit"
+                disabled={loading}
+                aria-busy={loading}
+                className={fld.imFldSubmit}
               >
-                {/* Shared submit primitive — the inline styles here set a different radius,
-                    padding and gold (#E7B554 vs #b8860b) to the enquiry modal, which is exactly
-                    the drift the shared module exists to stop. */}
-                <button type="submit" disabled={loading} className={fld.imFldSubmit}>
-                  {loading ? "Submitting..." : "Submit"}
-                </button>
-              </div>
+                {loading ? "Submitting..." : "Submit"}
+              </button>
 
-              {/* Disclaimer */}
-              <p
-                className={ctaStyle.propertyPageHeaderContactUsDisclaimer}
-                style={{ padding: "10px" }}
-              >
+              {/* Disclaimer — link colours come from the module, not inline blue */}
+              <p className={ctaStyle.propertyPageHeaderContactUsDisclaimer}>
                 *By submitting, I accept Inframantra{" "}
                 <a
                   href="https://inframantra.com/page/terms-conditions"
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ color: "blue" }}
                 >
                   Terms & Conditions
                 </a>{" "}
@@ -262,7 +259,6 @@ function App({
                   href="https://inframantra.com/page/privacy-policy"
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ color: "blue" }}
                 >
                   Privacy Policy
                 </a>
@@ -270,32 +266,45 @@ function App({
               </p>
             </form>
 
-            {/* Bottom Contact Section */}
-            <div className={ctaStyle.propertyPageHeaderContactIconContainer2}>
-              <hr width="100%" color="#DCAA4C" size="1" />
-
-              <div style={{ display: "flex" }}>
-                <div className={ctaStyle.ctaText}>
-                  {/* div, not p: this used to nest a <p> inside a <p>, which is
-                      invalid HTML (the browser splits them apart). */}
-                  <div className={ctaStyle.numberFor}>
-                    <FaPhoneAlt
-                      style={{
-                        color: "green",
-                        flexShrink: 0,
-                      }}
-                    />
-
-                    <a className={ctaStyle.numberValue} href={`tel:${(phone || "+91 86 9800 9900").replace(/[^\d+]/g, "")}`}>
-                      {phone ? phone : <>+91 86 9800 9900</>}
-                    </a>
-                  </div>
-
-                  <p className={ctaStyle.textForm}>Give us a call and book your visit now!</p>
+            {/* Call card: number + caption on the left, ambassador on the right */}
+            <div className={ctaStyle.callCard}>
+              <div className={ctaStyle.callBody}>
+                <div className={ctaStyle.callRow}>
+                  <span className={ctaStyle.callIcon} aria-hidden="true">
+                    <FaPhoneAlt />
+                  </span>
+                  <a
+                    className={ctaStyle.callNumber}
+                    href={`tel:${(phone || "+91 86 9800 9900").replace(/[^\d+]/g, "")}`}
+                  >
+                    {phone ? phone : "+91 86 9800 9900"}
+                  </a>
                 </div>
 
-                <img src="/guruCollection/guru_call.png" alt="Call Icon" className="callImage" />
+                <p className={ctaStyle.callCaption}>Give us a call and book your visit now!</p>
+
+                {/* WhatsApp only for the main Inframantra line, so it never
+                    contradicts a project-specific phone number. */}
+                {!phone && (
+                  <a
+                    className={ctaStyle.callWhatsapp}
+                    href={WHATSAPP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaWhatsapp aria-hidden="true" />
+                    Chat on WhatsApp
+                  </a>
+                )}
               </div>
+
+              <img
+                src="/guruCollection/guru_call.png"
+                alt="Guru Randhawa, Inframantra brand ambassador"
+                className={ctaStyle.callImage}
+                width="146"
+                height="115"
+              />
             </div>
           </div>
         </div>

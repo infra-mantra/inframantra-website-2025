@@ -1,0 +1,193 @@
+/* Media row: videos, Shorts and Reels. Brand: gold #e7b554 / #d9a23c. */
+
+.pm-root {
+  --pm-gold: var(--color-gold, #e7b554);
+  --pm-gold-deep: var(--color-gold-deep, #d9a23c);
+  --pm-ink: var(--color-ink, #1d1d1f);
+  width: 100%;
+  max-width: 100%;
+  /* Content width never pushes the parent wider: the row scrolls instead. */
+  contain: inline-size;
+  min-width: 0;
+  padding: 8px 0 4px;
+}
+
+.pm-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.pm-eyebrow {
+  margin: 0 0 4px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--pm-gold-deep);
+}
+
+.pm-title {
+  margin: 0;
+}
+
+.pm-arrows {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.pm-arrow {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(217, 162, 60, 0.5);
+  background: #fff;
+  color: var(--pm-ink);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+
+.pm-arrow:hover:not(:disabled) {
+  background: var(--pm-gold);
+  color: #fff;
+}
+
+.pm-arrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.pm-track {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin: 0;
+  padding: 2px 2px 12px;
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: 2px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(217, 162, 60, 0.6) transparent;
+}
+
+.pm-card {
+  position: relative;
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #111;
+  box-shadow: 0 6px 18px rgba(20, 20, 20, 0.12);
+}
+
+/* Landscape keeps 16:9 and never exceeds the visible width on phones. */
+.pm-landscape {
+  width: min(86%, 480px);
+  aspect-ratio: 16 / 9;
+}
+
+/* Vertical (Shorts / Reels) keeps 9:16. */
+.pm-vertical {
+  width: clamp(170px, 42%, 230px);
+  aspect-ratio: 9 / 16;
+}
+
+.pm-facade,
+.pm-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.pm-facade {
+  position: relative;
+  padding: 0;
+  cursor: pointer;
+  background: #111;
+}
+
+.pm-facade img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.pm-insta-tile {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, #feda75 0%, #d62976 45%, #962fbf 75%, #4f5bd5 100%);
+}
+
+.pm-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+.pm-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.pm-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 58px;
+  height: 58px;
+  margin: -29px 0 0 -29px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: linear-gradient(135deg, var(--pm-gold), var(--pm-gold-deep));
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s;
+}
+
+.pm-facade:hover .pm-play,
+.pm-facade:focus-visible .pm-play {
+  transform: scale(1.08);
+}
+
+.pm-facade:focus-visible {
+  outline: 3px solid var(--pm-gold);
+  outline-offset: -3px;
+}
+
+/* Mobile: match the side padding of the neighbouring sections. */
+@media (max-width: 768px) {
+  .pm-root {
+    padding: 8px 16px 4px;
+  }
+  .pm-badge {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .pm-arrows {
+    display: none; /* swipe on touch screens */
+  }
+}

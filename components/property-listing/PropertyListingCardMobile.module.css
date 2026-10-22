@@ -17,7 +17,7 @@
   overflow: hidden;
 }
 .propertyImageChip {
-  font-family: "Lexend Deca", Roboto, Helvetica, Arial, sans-serif;
+  font-family: var(--font-body);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -135,7 +135,7 @@
   margin: 0px 0px;
 
   color: #000;
-  font-family: "Lexend Deca";
+  font-family: var(--font-body);
   font-size: 13px;
   font-style: normal;
   font-weight: 300;
@@ -160,7 +160,7 @@
   vertical-align: middle;
   gap: 3px;
   margin: 0 0 0 7px;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 9px;
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -466,14 +466,14 @@
   border: 1px solid #b8b8b8;
 }
 .pagination-button.active {
-  border: 1px solid #e7b554;
-  color: #e7b554;
+  border: 1px solid var(--color-gold);
+  color: var(--color-gold);
 }
 .pagination-buttons {
   width: 100%;
   height: 100%;
   margin: 0;
-  font-family: sans-serif;
+  font-family: var(--font-body);
   padding: 25px;
   background: #fff;
   color: #111;
@@ -711,7 +711,7 @@
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   color: #fff;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 11.5px;
   font-weight: 600;
   letter-spacing: 0.2px;
@@ -724,7 +724,7 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #e7b554;
+  background: var(--color-gold);
 }
 
 .cardStatusReady::before {
@@ -735,4 +735,32 @@
   left: 10px;
   bottom: 10px;
   font-size: 11px;
+}
+
+/* ---------- entrance + hover (listing polish) ---------- */
+@keyframes plcmRise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .propertyListingCardMobile:nth-child(n + 3) {
+    animation: plcmRise 0.45s ease backwards;
+    animation-delay: calc(var(--plc-i, 0) * 45ms);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .propertyListingCardMobile {
+    transition: none !important;
+  }
+  .propertyListingCardMobile:hover {
+    transform: none !important;
+  }
 }

@@ -17,6 +17,26 @@
   padding: 28px 6% 8px;
 }
 
+/* ------------------------------------------------------------- section header */
+
+.shrtHead {
+  margin-bottom: 18px;
+}
+
+.shrtHeading {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  color: var(--color-ink);
+}
+
+.shrtHeading span {
+  color: var(--color-gold-dark);
+}
+
 /* ---------------------------------------------------------------- filter chips */
 
 .shrtChips {
@@ -31,14 +51,15 @@
   /* Size is shared with .cityTab in premium-picks/PremiumPicks.module.css. The two
      pill rows sit a few hundred pixels apart on the same page, so they are kept
      identical deliberately — change one and change the other. */
-  border: 1px solid #e6e6e6;
-  background: #f5f5f6;
+  gap: 6px;
+  border: 1px solid #e8e1d3;
+  background: var(--color-surface);
   border-radius: 999px;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   padding: 8px 15px;
   font-size: 13px;
   font-weight: 500;
-  color: #444444;
+  color: var(--color-body);
   cursor: pointer;
   white-space: nowrap;
 
@@ -54,7 +75,7 @@
 }
 
 .shrtChip:hover {
-  background: #ececed;
+  border-color: var(--color-gold);
   transform: translateY(-1px);
 }
 
@@ -65,11 +86,27 @@
    because it is already (0,2,0); this now matches it.
 */
 .shrtChip.shrtChipOn {
-  background: #dcaa4c;
-  border-color: #dcaa4c;
+  background: linear-gradient(135deg, var(--color-gold-light), var(--color-gold-dark));
+  border-color: var(--color-gold);
   color: #ffffff;
   font-weight: 600;
   box-shadow: 0 3px 10px rgba(220, 170, 76, 0.35);
+}
+
+/* Small count bubble inside each chip */
+.shrtCount {
+  min-width: 20px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: #f4efe6;
+  font-size: 11px;
+  font-weight: var(--fw-semibold);
+  color: var(--color-ink-muted);
+}
+
+.shrtChipOn .shrtCount {
+  background: rgba(255, 255, 255, 0.28);
+  color: #ffffff;
 }
 
 .shrtChip:focus-visible {
@@ -92,14 +129,94 @@
   overscroll-behavior-x: contain;
 }
 
-/* A thin scrollbar, so the row reads as scrollable without a chunky native bar. */
-.shrtRow::-webkit-scrollbar {
-  height: 6px;
+/* No native scrollbar: arrows (desktop), swipe (touch) and the cut-off card are the cue. */
+.shrtRow {
+  scrollbar-width: none;
 }
 
-.shrtRow::-webkit-scrollbar-thumb {
-  background: #d8dde3;
-  border-radius: 999px;
+.shrtRow::-webkit-scrollbar {
+  display: none;
+}
+
+/* ------------------------------------------------- home rail: arrows + fade edge */
+
+.shrtRail {
+  position: relative;
+}
+
+/* Fade the right edge so the row reads as "more this way". The row remounts on a
+   filter change, so it also fades in again (opacity only). */
+.shrtRail .shrtRow {
+  padding-top: 6px;
+  -webkit-mask-image: linear-gradient(to right, #000 92%, transparent);
+  mask-image: linear-gradient(to right, #000 92%, transparent);
+  animation: shrtFadeIn 0.35s ease;
+}
+
+@keyframes shrtFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Glass circular arrows with a gold outline, centred on the cards */
+.shrtArrow {
+  position: absolute;
+  top: calc(50% - 6px);
+  z-index: 3;
+  width: 42px;
+  height: 42px;
+  margin-top: -21px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-gold);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 18px rgba(26, 26, 26, 0.12);
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+/* Chevron drawn from two borders */
+.shrtArrow::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  border-top: 2px solid var(--color-gold-dark);
+  border-right: 2px solid var(--color-gold-dark);
+}
+
+.shrtArrowPrev {
+  left: -21px;
+}
+
+.shrtArrowPrev::after {
+  transform: translate(-30%, -50%) rotate(-135deg);
+}
+
+.shrtArrowNext {
+  right: -21px;
+}
+
+.shrtArrowNext::after {
+  transform: translate(-70%, -50%) rotate(45deg);
+}
+
+.shrtArrow:hover {
+  transform: scale(1.08);
+  background: #ffffff;
+}
+
+.shrtArrow:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(220, 170, 76, 0.45);
 }
 
 /* --------------------------------------------------------------------- card */
@@ -116,21 +233,28 @@
   overflow: hidden;
   border: 0;
   padding: 0;
-  border-radius: 12px;
+  border-radius: 14px;
   background: #eef0f3;
   cursor: pointer;
   text-decoration: none;
+  box-shadow: 0 4px 14px rgba(26, 26, 26, 0.1);
 
-  transition: transform 0.16s ease;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
+/* Hover: lift + a thin gold ring */
 .shrtCard:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px);
+  box-shadow:
+    0 0 0 2px var(--color-gold),
+    0 12px 26px rgba(26, 26, 26, 0.18);
 }
 
 .shrtCard:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.35);
+  box-shadow: 0 0 0 3px var(--color-gold-light);
 }
 
 .shrtThumb {
@@ -147,7 +271,14 @@
 
   /* Faded in by .shrtReady below, so a half-painted thumbnail never shows. */
   opacity: 0;
-  transition: opacity 0.35s ease;
+  transition:
+    opacity 0.35s ease,
+    transform 0.5s ease;
+}
+
+/* Slight zoom of the frame on hover */
+.shrtCard:hover .shrtThumb {
+  transform: scale(1.05);
 }
 
 /* ----------------------------------------------------------- card skeleton
@@ -252,9 +383,12 @@
   z-index: 2;
 
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(2px);
-  transition: background 0.16s ease;
+  background: rgba(26, 26, 26, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(6px);
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease;
 }
 
 .shrtPlay::after {
@@ -265,11 +399,16 @@
   transform: translate(-50%, -50%);
   border-style: solid;
   border-width: 9px 0 9px 15px;
-  border-color: transparent transparent transparent #fff;
+  border-color: transparent transparent transparent var(--color-gold-light);
 }
 
 .shrtCard:hover .shrtPlay {
-  background: rgba(184, 134, 11, 0.92);
+  transform: scale(1.12);
+  background: var(--color-gold);
+}
+
+.shrtCard:hover .shrtPlay::after {
+  border-left-color: #ffffff;
 }
 
 .shrtTitle {
@@ -277,27 +416,45 @@
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 22px 10px 9px;
+  padding: 40px 12px 12px;
   z-index: 2;
 
-  font-size: 11.5px;
-  font-weight: 500;
-  line-height: 1.35;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-family: var(--font-body);
   color: #fff;
   text-align: left;
 
   /* Gradient rather than a solid bar, so the frame stays visible behind the text. */
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.88) 0%,
-    rgba(0, 0, 0, 0.55) 45%,
+    rgba(0, 0, 0, 0.92) 0%,
+    rgba(0, 0, 0, 0.65) 50%,
     rgba(0, 0, 0, 0) 100%
   );
+}
 
+/* Project name: 2 lines max */
+.shrtName {
+  font-size: 13px;
+  font-weight: var(--fw-semibold);
+  line-height: 1.3;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* Locality on its own muted line */
+.shrtPlace {
+  font-size: 11px;
+  font-weight: var(--fw-light);
+  color: rgba(255, 255, 255, 0.78);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @media (max-width: 768px) {
@@ -315,6 +472,15 @@
 
   .shrtCard {
     width: 148px;
+  }
+
+  /* Home rail on phones: about 1.6 cards visible; swipe instead of arrows */
+  .shrtRail .shrtCard {
+    width: min(calc((100vw - 16px - 12px) / 1.6), 230px);
+  }
+
+  .shrtArrow {
+    display: none;
   }
 
   /*
@@ -352,11 +518,18 @@
 @media (prefers-reduced-motion: reduce) {
   .shrtCard,
   .shrtChip,
-  .shrtPlay {
+  .shrtPlay,
+  .shrtArrow {
     transition: none;
   }
 
-  .shrtCard:hover {
+  .shrtRail .shrtRow {
+    animation: none;
+  }
+
+  .shrtCard:hover,
+  .shrtCard:hover .shrtThumb,
+  .shrtCard:hover .shrtPlay {
     transform: none;
   }
 }

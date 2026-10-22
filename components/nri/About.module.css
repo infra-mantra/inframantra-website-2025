@@ -40,18 +40,21 @@
 }
 
 .sectionHead h2 {
-  font-size: 1.8rem;
-  line-height: 1.08;
-  font-weight: 700;
-  color: #d4a64a;
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  text-transform: none;
+  color: var(--color-ink);
   margin: 0 0 32px 0;
 }
 
 .aboutDetails p {
   font-size: 1rem;
   line-height: 1.78;
-  color: #444444;
-  font-weight: 300;
+  color: var(--color-body);
+  font-weight: var(--fw-light);
   margin-bottom: 26px;
 }
 
@@ -124,7 +127,7 @@
 
 .aboutItem p {
   font-size: 13px;
-  color: #555555;
+  color: var(--color-body);
   margin: 0;
   line-height: 1.45;
 }
@@ -145,13 +148,6 @@
   .aboutContent {
     gap: 60px;
   }
-
-  .sectionHead h2 {
-    font-size: 42px;
-  }
-}
-
-@media (max-width: 992px) {
 }
 
 @media (max-width: 768px) {
@@ -198,10 +194,6 @@
 }
 
 @media (max-width: 576px) {
-  .sectionHead h2 {
-    font-size: 20px;
-  }
-
   .aboutRight {
     grid-template-columns: 1fr 1fr; /* Single column on very small screens */
     gap: 20px;

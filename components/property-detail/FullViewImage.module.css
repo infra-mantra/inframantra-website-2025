@@ -30,3 +30,17 @@
   font-size: 28px;
   cursor: pointer;
 }
+
+/* Phones: the black X was invisible on the dark backdrop and a ~20px target. */
+@media (max-width: 768px) {
+  .image-modal .close-btn {
+    top: max(12px, env(safe-area-inset-top));
+    right: 8px;
+    width: 44px;
+    height: 44px;
+    color: #fff;
+  }
+  .image-modal img {
+    max-width: calc(100% - 32px);
+  }
+}

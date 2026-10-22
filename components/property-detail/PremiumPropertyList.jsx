@@ -12,10 +12,12 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 // Card look for this section only; the card is shared with the home page.
 import sim from "./PremiumPropertyList.module.css";
+import { useAutoplayWhenVisible } from "../shared/useAutoplayWhenVisible";
 
 function PremiumProperty({ city }) {
   const [premiumProperties, setPremiumProperties] = useState([]);
   const [loading, setLoading] = useState(true); // true while similar properties fetch
+  const onSwiper = useAutoplayWhenVisible(); // autoplay only once the slider is on screen
 
   useEffect(() => {
     let alive = true;
@@ -60,6 +62,7 @@ function PremiumProperty({ city }) {
         <Swiper
           modules={[Navigation, Pagination, Autoplay]}
           spaceBetween={20}
+          onSwiper={onSwiper}
           autoplay={{
             delay: 5000,
             disableOnInteraction: false,

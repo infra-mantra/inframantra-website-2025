@@ -16,7 +16,11 @@ function FaqSection({ propertyData, name }) {
 
   return (
     <section className={styles.faqSection}>
-      {faqData.length > 0 && <h2 className={styles.faqHeading}>FREQUENTLY ASKED QUESTIONS</h2>}
+      {faqData.length > 0 && (
+        <h2 className={styles.faqHeading}>
+          Frequently Asked <span>Questions</span>
+        </h2>
+      )}
 
       <div className={styles.faqContainer}>
         {faqData.map((item, index) => (
@@ -43,7 +47,7 @@ function FaqSection({ propertyData, name }) {
           <div className={styles.faqCtaLeft}>
             <div className={styles.faqCtaIcon}>💬</div>
             <div>
-              <h3>Still Have a Question??</h3>
+              <h3>Still have a question?</h3>
               <p>Our Expert Team is here to help you with your additional question</p>
             </div>
           </div>

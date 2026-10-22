@@ -14,9 +14,13 @@
 /* Heading */
 
 .heading {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #d4a64a;
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  text-transform: none;
+  color: var(--color-ink);
   margin: 0;
 }
 
@@ -102,10 +106,6 @@
     padding: 24px 18px 50px;
   }
 
-  .heading {
-    font-size: 26px;
-  }
-
   .storyContent {
     grid-template-columns: 1fr;
     gap: 25px;
@@ -131,10 +131,6 @@
 /* Small Mobile */
 
 @media screen and (max-width: 480px) {
-  .heading {
-    font-size: 22px;
-  }
-
   .videoBox iframe {
     height: 280px;
   }

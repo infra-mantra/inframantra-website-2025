@@ -44,7 +44,8 @@
   display: flex;
   justify-content: center;
 
-  align-items: flex-start; /* ✅ IMPORTANT CHANGE */
+  /* Centred; the card scrolls internally when the screen is short. */
+  align-items: center;
 
   /* The overlay painted nothing, so the popup floated over a fully lit page with
      no separation from it — .mobilePopupOverlay already dims at .6, so this was an
@@ -76,26 +77,24 @@
 }
 
 .popupForm {
-  --cta-ink: #1c1f24;
-  --cta-muted: #6b7280;
-  --cta-gold: #9a6c14;
+  --cta-ink: var(--color-ink, #1a1a1a);
+  --cta-muted: var(--color-ink-muted, #707070);
+  --cta-gold: var(--color-gold-dark, #d9a23c);
 
   position: relative;
   width: 100%;
-  max-width: 420px;
+  max-width: 400px;
+  /* Never taller than the viewport: the card scrolls inside instead. */
+  max-height: calc(100dvh - 40px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
 
-  /* White, not the old #f1e2c2. That cream could not carry either the gold
-     heading (1.47:1) or the white fields (1.28:1) sitting on it — everything
-     floated. The gold now earns its place on the submit button and the accents
-     instead of as a background. */
   background: #fff;
-  border-radius: 14px;
-  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
-
-  padding: 26px 22px 20px;
-  /* Left-aligned: the old centre alignment centred the field labels too, which is
-     why the form read as a poster rather than something to fill in. */
+  border-radius: 20px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+  padding: 24px;
   text-align: left;
+  font-family: var(--font-body);
 
   transform: translateY(-30px);
   transition: transform 200ms ease-out;
@@ -105,59 +104,79 @@
   transform: translateY(0);
 }
 
+/* Logo row. Right padding keeps the logo clear of the close button. */
 .imageContainer {
   display: flex;
   justify-content: center;
+  padding: 0 32px;
 }
 
+/* Close button: 40px tap target in the corner. */
 .crossBtn {
-  /* Was position: relative with left: 28% — a percentage nudge, so it drifted with
-     the card width instead of staying in the corner. */
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 10px;
+  right: 10px;
   z-index: 2;
 
   display: grid;
   place-items: center;
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background: #f3f4f6;
-  border: 1px solid #e3e6ea;
-  color: #374151;
-  font-size: 17px;
+  background: #f6f3ee;
+  border: 0;
+  color: var(--color-ink);
+  font-size: 18px;
   cursor: pointer;
+  transition: background 0.15s ease;
 }
 
-.headingForm {
+.crossBtn:hover {
+  background: #ede6d9;
 }
 
-.popUpHead {
-  margin: 0 0 2px;
-  color: var(--cta-muted);
+.popupForm .headingForm,
+.stickyPropertyForm .headingForm {
+  margin: 14px 0 20px;
   text-align: center;
-  font-family: "Lexend Deca";
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.04em;
+}
+
+/* Eyebrow above the title. */
+.popUpHead {
+  margin: 0 0 6px;
+  color: var(--color-ink-muted);
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: var(--fs-eyebrow);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-eyebrow);
+  line-height: var(--lh-body);
   text-transform: uppercase;
+  text-wrap: balance;
 }
 
 .popUpHead2 {
-  margin: 0 0 20px;
-  /* #e4a951 on the old cream was 1.47:1. This deeper gold clears AA on white and
-     is the same one the enquiry modal titles with, so the two now read as siblings. */
-  color: var(--cta-gold);
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  text-transform: none;
+  color: var(--color-ink);
   text-align: center;
-  font-family: "Lexend Deca";
-  /* Was 19px/700 — it shouted over the fields it introduces. The eyebrow above
-     already carries the framing, so this only needs to name the offer. */
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 1.35;
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+/* Short gold rule under the title. */
+.popUpHead2::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 2px;
+  margin: 12px auto 0;
+  border-radius: 2px;
+  background: var(--color-gold);
 }
 
 .formGroup {
@@ -169,55 +188,133 @@
   outline: none;
   box-shadow: 0 2px 10px rgba(220, 170, 76, 0.22);
   border-radius: 10px;
-  border: 1px solid #e7b554;
+  border: 1px solid var(--color-gold);
   background: #fff;
 }
 
+/* Terms line under the submit button. */
 .propertyPageHeaderContactUsDisclaimer {
   margin: 12px 0 0;
-  color: var(--cta-muted);
+  color: var(--color-ink-muted);
   text-align: center;
-  font-family: "Lexend Deca";
-  /* Was 6px, which is not readable at any viewing distance. */
-  font-size: 11px;
-  font-weight: 400;
-  line-height: 1.5;
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-body);
 }
 
-.ctaText {
-  min-width: 0;
-}
-
-/* The number stays on one line; it shrinks a little on narrow popups
-   rather than wrapping "9900" onto a second line. */
-.numberValue {
-  color: inherit;
+.propertyPageHeaderContactUsDisclaimer a {
+  color: var(--color-gold-dark);
+  font-weight: var(--fw-medium);
   text-decoration: none;
-  white-space: nowrap;
-  font-size: clamp(14px, 3.8vw, 16px);
 }
 
-.numberFor {
-  margin: 18px 0 0;
+.propertyPageHeaderContactUsDisclaimer a:hover,
+.propertyPageHeaderContactUsDisclaimer a:focus-visible {
+  text-decoration: underline;
+}
+
+/* ---------------------------------------------------------- call card */
+
+/* "Give us a call" card: text on the left, ambassador cut-out on the right. */
+.callCard {
+  position: relative;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  align-items: stretch;
   gap: 8px;
-
-  color: var(--cta-ink);
-  font-family: "Lexend Deca";
-  font-size: 16px;
-  font-weight: 600;
+  margin-top: 20px;
+  padding: 16px 0 0 16px;
+  min-height: 112px;
+  border: 1px solid #efe4cc;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #fffaf0, #f8efdc);
+  overflow: hidden;
 }
 
-.textForm {
-  margin: 2px 0 0;
-  color: var(--cta-muted);
-  text-align: center;
-  font-family: "Lexend Deca";
-  font-size: 12px;
-  font-weight: 400;
+.callBody {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding-bottom: 16px;
 }
+
+.callRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.callIcon {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-gold), var(--color-gold-dark));
+  color: #fff;
+  font-size: 14px;
+}
+
+.callNumber {
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-h4);
+  font-weight: var(--fw-semibold);
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.callNumber:hover,
+.callNumber:focus-visible {
+  color: var(--color-gold-dark);
+}
+
+.callCaption {
+  margin: 6px 0 0;
+  color: var(--color-ink-muted);
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  line-height: var(--lh-body);
+}
+
+/* Small WhatsApp pill under the caption. */
+.callWhatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid #e5e0d6;
+  color: var(--color-body);
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  text-decoration: none;
+  transition: border-color 0.15s ease;
+}
+
+.callWhatsapp svg {
+  color: #25d366;
+  font-size: 14px;
+}
+
+.callWhatsapp:hover,
+.callWhatsapp:focus-visible {
+  border-color: var(--color-gold);
+}
+
+/* Ambassador image sits on the card's bottom edge, never over the text. */
+.callImage {
+  flex: 0 0 auto;
+  align-self: flex-end;
+  width: clamp(92px, 32%, 128px);
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
 .formGroup input,
 .formGroup textarea {
   width: 100%;
@@ -225,7 +322,7 @@
   padding: 12px 14px;
   border-radius: 10px;
   font-size: 15px;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   color: #1d1d1f;
   background: #fff;
   transition:
@@ -259,7 +356,7 @@
 }
 
 .selectField:focus {
-  border-color: #e7b554;
+  border-color: var(--color-gold);
 }
 
 .selectField:disabled {
@@ -271,24 +368,8 @@
   position: relative;
   margin: 22px 0;
 }
-.propertyPageHeaderContactIconContainer2 {
-  height: 20%;
-  width: 100%;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-@media only screen and (max-width: 768px) {
+@media (max-width: 400px) {
   .popupForm {
-    width: 90% !important;
-  }
-}
-@media only screen and (min-width: 1280px) {
-  .popupForm {
-    width: 26% !important;
+    padding: 20px;
   }
 }

@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper";
 import PropertyCard from "../../shared/PropertyCard.jsx";
 import styles from "./LocalityPropertiesSection.module.css";
+import { LocalityCardsSkeleton } from "../HomeSkeletons.jsx";
 import { useAutoplayWhenVisible } from "../../shared/useAutoplayWhenVisible";
 
 // Import Swiper styles
@@ -21,18 +22,8 @@ export default function LocalityPropertiesSection({ data, loading, selectedCity 
     setVisibleLocalities(2);
   }, [selectedCity]);
 
-  if (loading) {
-    return (
-      <div className={styles.localityContainer}>
-        <div className={styles.localityContentWrapper}>
-          <div className={styles.localityLoadingContainer}>
-            <div className={styles.localityLoadingSpinner}></div>
-            <p className={styles.localityLoadingText}>Loading {selectedCity} localities...</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // Skeleton cards (not a spinner) while the city data loads.
+  if (loading) return <LocalityCardsSkeleton />;
 
   // Filter out localities with no properties
   const localitiesWithProperties = data.filter(
@@ -57,7 +48,7 @@ export default function LocalityPropertiesSection({ data, loading, selectedCity 
     <div className={styles.localityContainer}>
       <div className={styles.localityContentWrapper}>
         {/* Section Header */}
-        <div className={styles.localitySectionHeader}>
+        <div className={styles.localitySectionHeader} data-reveal>
           <h2 className={styles.localityMainTitle}>
             Discover Your <span>Dream Home</span>
           </h2>

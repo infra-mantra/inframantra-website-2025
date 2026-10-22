@@ -1,0 +1,398 @@
+/* Filter tabs joined to the top of the search bar (FilterTabs.jsx).
+   Class names are global in this project, so they all start with "ft". */
+.ftWrap {
+  width: min(94%, 1140px);
+  margin-bottom: -6px; /* tucks under the bar's top edge: one unit with it */
+  padding-left: 22px; /* lines up with the bar's rounded corner */
+  box-sizing: border-box;
+  font-family: var(--font-body);
+}
+
+/* the glass bar */
+.ftList {
+  position: relative;
+  display: flex;
+  width: max-content;
+  max-width: 100%; /* never wider than the search bar */
+  box-sizing: border-box;
+  overflow-x: auto; /* if it still does not fit: swipe / shift-scroll, snapping to tabs */
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  align-items: center;
+  gap: 2px;
+  margin: 0;
+  padding: 6px 6px 12px;
+  border: 1px solid rgba(231, 181, 84, 0.32);
+  border-bottom: 0;
+  border-radius: 18px 18px 0 0;
+  background: linear-gradient(180deg, rgba(14, 18, 32, 0.78), rgba(8, 10, 20, 0.86));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 -8px 30px rgba(0, 0, 0, 0.25);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  backdrop-filter: blur(12px) saturate(140%);
+  list-style: none;
+}
+
+.ftList::-webkit-scrollbar {
+  display: none;
+}
+
+/* one tab = label button + go arrow; rises in once, one after another */
+.ftList li {
+  flex: none;
+  scroll-snap-align: start;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  border-radius: 12px;
+  transition:
+    transform 0.25s,
+    box-shadow 0.25s;
+  animation: ftIn 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(0.1s + var(--i) * 70ms);
+}
+
+.ftList li:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(231, 181, 84, 0.18);
+}
+
+.ftTab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 38px;
+  padding: 0 4px 0 8px;
+  border: 0;
+  background: none;
+  color: rgba(255, 255, 255, 0.88);
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: var(--fw-medium, 500);
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.25s;
+}
+
+/* icon in a small gold-tinted circle */
+.ftIcon {
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  flex: none;
+  border-radius: 50%;
+  background: rgba(231, 181, 84, 0.16);
+  color: var(--color-gold-light);
+  transition:
+    background 0.25s,
+    color 0.25s;
+}
+
+.ftIcon svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* the arrow: shows on hover (always on the active tab and on touch screens) */
+.ftGo {
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  margin-right: 6px;
+  border-radius: 50%;
+  color: var(--color-gold-light);
+  opacity: 0;
+  transform: translate(-4px, 4px);
+  transition:
+    opacity 0.25s,
+    transform 0.25s,
+    background 0.25s;
+}
+
+.ftList li:hover .ftGo,
+.ftGo:focus-visible,
+.ftOn .ftGo {
+  opacity: 1;
+  transform: none;
+}
+
+.ftList li .ftGo:hover {
+  background: rgba(231, 181, 84, 0.2);
+  transform: translate(2px, -2px);
+}
+
+/* active tab: gold gradient pill (below), dark text */
+.ftOn .ftTab,
+.ftOn .ftGo {
+  color: var(--color-ink);
+}
+
+.ftOn .ftIcon {
+  background: rgba(26, 26, 26, 0.12);
+  color: var(--color-ink);
+}
+
+.ftList li.ftOn .ftGo:hover {
+  background: rgba(26, 26, 26, 0.12);
+}
+
+/* the pill: 100px wide, scaled to the active tab and slid behind it */
+.ftPill {
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 100px;
+  height: 38px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f6d38a, var(--color-gold) 55%, #d9a23c);
+  box-shadow: 0 4px 14px rgba(231, 181, 84, 0.35);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.3, 0.7, 0.2, 1);
+  pointer-events: none;
+}
+
+@keyframes ftIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* touch screens: no hover, so the arrows are always there */
+@media (hover: none) {
+  .ftGo {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Phones/tablets: chips that scroll sideways, never wider than the screen */
+@media (max-width: 1180px) {
+  .ftWrap {
+    width: min(90vw, 680px); /* inside the phone search bar edges */
+    margin-bottom: 8px;
+    padding: 0;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+
+    scrollbar-width: none;
+    /* faded edges hint that the row scrolls */
+    -webkit-mask-image: linear-gradient(90deg, #000 90%, transparent);
+    mask-image: linear-gradient(90deg, #000 90%, transparent);
+  }
+
+  .ftWrap::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ftList {
+    gap: 8px;
+    padding: 0 10vw 0 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .ftList li {
+    scroll-snap-align: start;
+    border: 1px solid rgba(231, 181, 84, 0.35);
+    border-radius: 999px;
+    background: rgba(8, 10, 20, 0.62);
+  }
+
+  .ftList li.ftOn {
+    border-color: transparent;
+    background: linear-gradient(135deg, #f6d38a, var(--color-gold) 55%, #d9a23c);
+  }
+
+  .ftTab {
+    height: 34px;
+    padding: 0 2px 0 4px;
+    font-size: 12.5px;
+  }
+
+  .ftIcon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .ftGo {
+    width: 22px;
+    height: 22px;
+    margin-right: 4px;
+  }
+
+  .ftPill {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ftList li,
+  .ftGo,
+  .ftPill {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* counts on the dark bar (FilterPopover's Count, recoloured) */
+.ftTab .count {
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.ftTab .countLoading {
+  background: rgba(255, 255, 255, 0.14);
+  animation: none;
+}
+
+.ftOn .ftTab .count {
+  background: rgba(26, 26, 26, 0.14);
+  color: var(--color-ink);
+}
+
+/* ---------- refined look (all widths above 1180px) ---------- */
+@media (min-width: 1181px) {
+  .ftList {
+    gap: 0;
+    padding: 5px 5px 11px;
+    border: 0;
+    border-top: 1px solid rgba(231, 181, 84, 0.45);
+    background: rgba(10, 12, 22, 0.45);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      0 -10px 30px rgba(0, 0, 0, 0.18);
+    -webkit-backdrop-filter: blur(10px) saturate(140%);
+    backdrop-filter: blur(10px) saturate(140%);
+  }
+
+  .ftList li:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .ftTab {
+    gap: 6px;
+    height: 36px;
+    padding: 0 2px 0 clamp(8px, 0.8vw, 12px);
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 14px;
+    letter-spacing: 0.01em;
+  }
+
+  .ftList li:hover .ftTab {
+    color: #fff;
+  }
+
+  /* bare 16px icon, no circle */
+  .ftIcon,
+  .ftOn .ftIcon {
+    width: 16px;
+    height: 16px;
+    background: none;
+    color: var(--color-gold-light);
+  }
+
+  .ftIcon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* active: white text on a soft gold tint with a gold underline */
+  .ftOn .ftTab,
+  .ftOn .ftGo {
+    color: #fff;
+  }
+
+  .ftPill {
+    top: 5px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(231, 181, 84, 0.16);
+    box-shadow: inset 0 -2px 0 var(--color-gold);
+  }
+
+  /* hover: underline preview */
+  .ftList li::after {
+    content: "";
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    bottom: 0;
+    height: 2px;
+    border-radius: 2px;
+    background: rgba(231, 181, 84, 0.55);
+    transform: scaleX(0);
+    transition: transform 0.25s;
+  }
+
+  .ftList li:hover:not(.ftOn)::after {
+    transform: scaleX(1);
+  }
+
+  .ftGo {
+    width: 22px;
+    height: 22px;
+    margin-right: 4px;
+  }
+
+  .ftList li.ftOn .ftGo:hover {
+    background: rgba(231, 181, 84, 0.2);
+  }
+}
+
+/* a little tighter on medium desktops; icons stay */
+@media (min-width: 1181px) and (max-width: 1366px) {
+  .ftTab {
+    padding-left: 7px;
+    font-size: 13px;
+  }
+
+  .ftGo {
+    width: 18px;
+    margin-right: 2px;
+  }
+}
+
+/* counts: small gold badges */
+.ftTab .count,
+.ftOn .ftTab .count {
+  margin-left: 2px;
+  padding: 0 6px;
+  background: rgba(231, 181, 84, 0.15);
+  color: var(--color-gold-light);
+  font-size: 11px;
+  line-height: 17px;
+}
+
+/* phones: the active chip stays gold, so its count is dark */
+@media (max-width: 1180px) {
+  .ftOn .ftTab .count {
+    background: rgba(26, 26, 26, 0.14);
+    color: var(--color-ink);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ftList li::after {
+    transition: none;
+  }
+}
+
+/* tabs with no properties are not shown */
+.ftList li[hidden] {
+  display: none;
+}

@@ -43,7 +43,7 @@
 .notFoundPageDesktopLeftFlex > h2 {
   font-size: 80px;
   width: 70%;
-  color: #e4a951;
+  color: var(--color-gold);
   font-weight: 500;
   margin-bottom: 10px;
   margin-top: 10px;
@@ -77,7 +77,7 @@
   .notFoundPageDesktopContainer > h2 {
     font-size: 60px;
     margin-top: 0px;
-    color: #e4a951;
+    color: var(--color-gold);
     margin-bottom: 10px;
     font-weight: 500;
   }

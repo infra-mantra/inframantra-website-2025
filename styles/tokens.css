@@ -1,0 +1,63 @@
+/*
+  Design tokens — the ONE place for brand fonts, sizes, weights and colours.
+
+  How to use: in any CSS file write `var(--token-name)` instead of a raw value,
+  e.g. `color: var(--color-ink);` or `font-size: var(--fs-h2);`.
+  Changing a value here updates every page, so the site stays consistent.
+  Imported once in pages/_app.js (before globals.css).
+*/
+:root {
+  /* ---- Font families (both are self-hosted in self-hosted-fonts.css) ---- */
+  /* "Lexend Deca Fallback" = metric-matched Arial (self-hosted-fonts.css), no font-swap shift */
+  --font-body:
+    "Lexend Deca", "Lexend Deca Fallback", "Helvetica Neue", Arial, sans-serif; /* all UI + body text */
+  --font-display:
+    "DM Serif Display", Georgia, "Times New Roman", serif; /* big hero/display lines */
+
+  /* ---- Font weights ---- */
+  --fw-light: 300; /* paragraphs: Lexend reads heavy at 400 */
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600; /* section headings */
+  --fw-bold: 700;
+
+  /* ---- Font sizes ----
+     clamp(min, fluid, max): shrinks smoothly on phones, caps on desktop,
+     so we do not need a media query per heading. */
+  --fs-h1: clamp(1.75rem, 1.4rem + 1.5vw, 2.5rem); /* 28px -> 40px  page title */
+  --fs-h2: clamp(1.25rem, 1.15rem + 0.45vw, 1.5rem); /* 20px -> 24px  section title */
+  --fs-h3: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem); /* 17px -> 20px  card / sub-section title */
+  --fs-h4: 1rem; /* 16px  small heading / label */
+  --fs-subtitle: 0.875rem; /* 14px  line under a section title */
+  --fs-body: 0.9375rem; /* 15px  paragraphs */
+  --fs-small: 0.75rem; /* 12px  captions, meta */
+  --fs-card-title: 1rem; /* 16px  title on a property / blog / service card */
+  --fs-button: 0.875rem; /* 14px  button + CTA labels */
+  --fs-eyebrow: 0.75rem; /* 12px  small all-caps label above a title */
+
+  /* ---- Type roles (use these, in this order of size) ----
+     page hero title   : --font-display or body, --fs-h1, --fw-bold, ink
+     SECTION TITLE     : body, --fs-h2, --fw-semibold, ink, normal case,
+                         optional <span> in --color-gold-dark  (class .section-title)
+     sub-section title : body, --fs-h3, --fw-semibold, ink
+     card title        : body, --fs-card-title, --fw-semibold, ink
+     subtitle          : body, --fs-subtitle, --fw-regular, ink-muted
+     body              : body, --fs-body, --fw-light, --color-body
+     meta / caption    : body, --fs-small
+     button            : body, --fs-button, --fw-semibold */
+
+  /* ---- Line heights & letter spacing ---- */
+  --lh-tight: 1.2; /* headings */
+  --lh-body: 1.5; /* paragraphs */
+  --ls-heading: -0.4px; /* headings look tighter and more premium */
+  --ls-eyebrow: 2px; /* small all-caps labels */
+
+  /* ---- Brand colours ---- */
+  --color-gold: #e7b554; /* main brand gold: buttons, borders, icons */
+  --color-gold-dark: #d9a23c; /* gold TEXT on white (readable), accent span in titles */
+  --color-gold-light: #f0c76c; /* hover / gradients / gold on dark backgrounds */
+  --color-ink: #1a1a1a; /* headings and strong text */
+  --color-ink-muted: #707070; /* subtitles and secondary body text */
+  --color-body: #3f3f46; /* paragraph text, softer than ink */
+  --color-surface: #ffffff; /* page / card background */
+}

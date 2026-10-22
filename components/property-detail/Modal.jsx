@@ -39,7 +39,7 @@ const RightSlideModal = ({ isOpen, onClose, title, children, name, id = "defult"
       <PopUpForm
         popUpenable={popForm}
         onClickOff={onClickOff}
-        text="TO CONNECT WITH OUR PROPERTY ADVISOR "
+        text="To Connect With Our Property Advisor"
         name={name}
         id={id}
       />

@@ -8,11 +8,14 @@
 }
 
 .aboutVisionHeading {
-  font-size: 36px;
-  font-weight: 700;
-  color: #e7b554;
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  text-transform: none;
+  color: var(--color-ink);
   margin-bottom: 50px;
-
   position: relative;
   display: inline-block; /* important for underline width */
 }
@@ -26,7 +29,7 @@
   width: 64px;
   height: 4px;
   border-radius: 2px;
-  background-color: #e7b554;
+  background-color: var(--color-gold);
 
   transform: scaleX(1);
   transform-origin: left;
@@ -54,18 +57,18 @@
 }
 
 .aboutVisionText {
-  line-height: 1.4;
-  color: #000;
+  font-family: var(--font-body);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-body);
+  color: var(--color-ink);
   max-width: 100%;
-  font-size: 17px;
-  font-weight: 700;
 }
 
 /* ================= MOBILE ================= */
 
 @media (max-width: 768px) {
   .aboutVisionHeading {
-    font-size: 40px;
     text-align: center;
   }
   .aboutVisionWrapper {

@@ -131,10 +131,12 @@ export default function NRIPropertyExpoRegistration() {
           background: #c9a961;
         }
         .reg-title {
-          font-size: 1.8rem;
-          line-height: 1.08;
-          font-weight: 700;
-          color: #d4a64a;
+          font-family: var(--font-body);
+          font-size: var(--fs-h2);
+          line-height: var(--lh-tight);
+          letter-spacing: var(--ls-heading);
+          font-weight: var(--fw-semibold);
+          color: var(--color-ink);
           display: flex;
         }
         .reg-container {
@@ -170,7 +172,6 @@ export default function NRIPropertyExpoRegistration() {
             order: 1;
           }
           .reg-title {
-            font-size: 20px;
             padding: 0px 0px;
           }
           .reg-header {

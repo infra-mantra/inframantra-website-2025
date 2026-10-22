@@ -1,0 +1,245 @@
+/* Listing "Read more" dialog. Prefixed ldm-. */
+.ldmWrap {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000; /* above the site header and the floating chat widgets */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  font-family: var(--font-body);
+}
+
+.ldmScrim {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(10, 12, 18, 0.55);
+  cursor: pointer;
+  animation: ldmFade 0.2s ease;
+}
+
+.ldmPanel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: min(640px, 100%);
+  max-height: min(86vh, 760px);
+  background: var(--color-surface);
+  border-radius: 14px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+  animation: ldmRise 0.22s ease;
+}
+
+.ldmHead {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 20px 20px 12px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.ldmHeadText {
+  flex: 1;
+  min-width: 0;
+}
+
+.ldmTitle {
+  margin: 0;
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  color: var(--color-ink);
+}
+
+.ldmLoc {
+  margin: 4px 0 0;
+  font-size: var(--fs-subtitle);
+  color: var(--color-ink-muted);
+}
+
+.ldmClose {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: #f4f4f4;
+  color: var(--color-ink);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.ldmClose:focus-visible,
+.ldmPrimary:focus-visible,
+.ldmOutline:focus-visible,
+.ldmBrochure:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+.ldmBody {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 20px;
+  overscroll-behavior: contain;
+}
+
+.ldmFacts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 16px;
+  margin: 0 0 16px;
+  padding: 12px;
+  border: 1px solid #f1e3bf;
+  border-radius: 10px;
+  background: #fffaf0;
+}
+
+.ldmFact dt {
+  font-size: var(--fs-small);
+  color: var(--color-ink-muted);
+}
+
+.ldmFact dd {
+  margin: 2px 0 0;
+  font-size: var(--fs-subtitle);
+  font-weight: var(--fw-semibold);
+  color: var(--color-ink);
+  overflow-wrap: anywhere;
+}
+
+.ldmDesc {
+  margin: 0;
+  font-size: var(--fs-body);
+  font-weight: var(--fw-light);
+  line-height: var(--lh-body);
+  color: var(--color-body);
+}
+
+.ldmNote {
+  margin: 12px 0 0;
+  font-size: var(--fs-small);
+  color: var(--color-ink-muted);
+}
+
+.ldmActions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  padding: 12px 20px 6px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.ldmPrimary,
+.ldmOutline,
+.ldmBrochure {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 10px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: var(--fs-button);
+  font-weight: var(--fw-semibold);
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.ldmPrimary {
+  border: 1px solid var(--color-gold);
+  background: var(--color-gold);
+  color: var(--color-ink);
+}
+
+.ldmPrimary:hover {
+  background: var(--color-gold-light);
+}
+
+.ldmOutline {
+  border: 1px solid var(--color-ink);
+  background: var(--color-surface);
+  color: var(--color-ink);
+}
+
+.ldmBrochure {
+  border: 1px dashed var(--color-gold);
+  background: #fffaf0;
+  color: var(--color-gold-dark);
+}
+
+@keyframes ldmFade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes ldmRise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+/* phones: bottom sheet */
+@media (max-width: 600px) {
+  .ldmWrap {
+    align-items: flex-end;
+    padding: 0;
+  }
+  .ldmPanel {
+    width: 100%;
+    max-height: 90vh;
+    border-radius: 16px 16px 0 0;
+  }
+  .ldmFacts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .ldmActions {
+    grid-template-columns: 1fr 1fr;
+  }
+  .ldmBrochure {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ldmScrim,
+  .ldmPanel {
+    animation: none;
+  }
+}
+
+/* small brochure link under the two buttons */
+.ldmBrochureLink {
+  display: block;
+  margin: 0 auto;
+  min-height: 44px;
+  padding: 0 12px calc(4px + env(safe-area-inset-bottom));
+  border: 0;
+  background: none;
+  color: #8a6410;
+  font-family: inherit;
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.ldmBrochureLink:hover {
+  color: var(--color-ink);
+}
+
+.ldmBrochureLink:focus-visible {
+  outline: 2px solid var(--color-gold-dark);
+  outline-offset: 2px;
+}
+
+/* scrolling inside the dialog never chains to the page behind it */
+.ldmBody {
+  overscroll-behavior: contain;
+}

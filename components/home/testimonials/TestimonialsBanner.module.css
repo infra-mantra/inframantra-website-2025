@@ -1,290 +1,131 @@
-/* Testimonials Section */
+/* Page wrapper + card grid (used by pages/testimonials.js) */
 .testimonialsWrapper {
-  max-width: 1400px;
+  max-width: 1240px;
   margin: 0 auto;
-  padding: 0 0;
+  padding: 0 16px 64px;
+  font-family: var(--font-body);
 }
+
 .testimonialCardContainer {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  justify-items: center;
-  padding-left: 20px;
-  padding-right: 20px;
+  grid-template-columns: 1fr; /* phone: 1 column */
+  gap: 20px;
 }
 
-.testimonialCardData {
-  width: 50%;
-}
-
-@media (max-width: 768px) {
-  .testimonialCard {
-    width: 100%; /* Full width on mobile */
-  }
-}
-.testimonialCardNameContainer {
-  width: 100%;
-  height: auto;
-}
-.testimonialCardNameContainer h6 {
-  text-align: left;
-  margin-left: 10%;
-  font-size: 20px;
-  font-weight: 500;
-}
-.testimonialCardName {
-  margin: 0;
-}
-
-.testimonialCardRatingContainer {
-  margin-bottom: -10px;
-  width: 90%;
-  margin-left: 10%;
-}
-.testimonialCardRatingContainer span {
-  align-items: flex-start;
-}
-
-.testimonialCardTextContainer {
-  margin-top: 10px;
-  width: 100%;
-  display: flex;
-}
-
-.testimonialCardQuoteIcon {
-  font-family: Arial;
-  font-size: 63.068px;
-  color: #e4a951;
-  margin-bottom: 10px;
-}
-
-@media screen and (max-width: 768px) {
-  .testimonialCardNameContainer h6 {
-    color: #000;
-    font-family: "Lexend Deca";
-    font-size: 12.699px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-  }
-  .testimonialCardRatingContainer span {
-    margin-top: 3px;
-    font-size: 18px;
-  }
-  .testimonialCardTextContainer p {
-    font-size: 14px;
-    text-align: left;
-  }
-  .testimonialCardTextContainer {
-    gap: 3px;
-  }
-  .testimonialCardQuoteIcon {
-    margin-top: -5px;
-  }
-}
-
-.testimonialsContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  height: 50vh;
-  padding: 20px;
-  background-color: #fff;
-}
-
-.testimonialsHeader {
-  text-align: center;
-  margin-bottom: 50px;
-  position: relative;
-  width: 50%;
-}
-
-.quoteIcon {
-  position: absolute;
-  top: 0%;
-  left: 2%;
-  color: #e7b554;
-  font-family: Arial;
-  font-size: 110.25px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  text-transform: capitalize;
-}
-.testimonialsBannerContainerHeader {
-  width: 90%;
-  height: 143px;
-  margin-top: 15%;
-  margin-left: 15%;
-}
-.testimonialsBannerContainerHeader h1 {
-  font-size: 29px;
-  font-weight: 400;
-  margin: 0;
-  text-align: left;
-  font-family: "Lexend Deca";
-}
-
-.testimonialsBannerContainerHeader h2 {
-  font-size: 28px;
-  font-weight: 400;
-  font-style: normal;
-  color: #fdba30;
-  text-align: left;
-  font-family: "Lexend Deca";
-  margin: 0 auto;
-}
-
-.testimonialsDescription {
-  font-size: 16px;
-  color: #333;
-  text-align: left;
-  max-width: 85%;
-  margin-left: 15%;
-}
-
-.testimonialsImages {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  column-gap: 10px;
-  width: 50%;
-  max-width: 800px;
-  justify-content: center;
-}
-
-.imagePlaceholder {
-  width: 150px;
-  height: 159px;
-  background-color: #e0e0e0;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  box-shadow: 0px 6px 4.6px 1px rgba(0, 0, 0, 0.15);
-}
-.imagePlaceholder img {
-  height: 100%;
-  width: 100%;
-  border-radius: 8px;
-}
-.imageRow .imagePlaceholder:nth-child(1) {
-  width: 128px;
-  height: 129px;
-}
-
-.imageRow {
-  display: flex;
-  flex-direction: column;
-  gap: 35px;
-  justify-content: center;
-  /* width: 50%; */
-}
-
-.imageRow .imagePlaceholder {
-  margin: 0 10px;
-}
-.testimonialsContainerCard {
-  color: rgba(0, 0, 0, 0.87);
-  box-shadow:
-    rgba(0, 0, 0, 0.2) 0px 5px 5px -3px,
-    rgba(0, 0, 0, 0.14) 0px 8px 10px 1px,
-    rgba(0, 0, 0, 0.12) 0px 3px 14px 2px;
-  height: auto;
-  width: 85%;
-  margin-bottom: 5%;
-  display: flex;
-  flex-direction: column;
-  -webkit-box-align: center;
-  align-items: center;
-  justify-content: space-evenly;
-  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: 20px;
-  background: rgba(237, 192, 107, 0.26);
-  padding: 20px;
-}
-
-@media screen and (max-width: 900px) {
-  .testimonialsContainer {
-    height: auto;
-    flex-direction: column;
-  }
-  .testimonialsHeader {
-    height: auto;
-    width: 90%;
-  }
-  .testimonialsBannerContainerHeader {
-    margin-left: 10%;
-  }
-  .testimonialsBannerContainerHeader h1 {
-    font-size: 30px;
-  }
-  .testimonialsBannerContainerHeader h2 {
-    font-size: 28px;
-  }
-  .testimonialsDescription {
-    margin-left: 10%;
-    margin-top: -21px;
-  }
-  .quoteIcon {
-    top: 0%;
-    left: 0%;
-    font-size: 50px !important;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .testimonialsBannerContainerHeader h1 {
-    font-size: 25px;
-  }
-  .testimonialsDescription {
-    margin-top: 0;
-  }
-  .testimonialsImages {
-    width: 100%;
-  }
+@media (min-width: 640px) {
   .testimonialCardContainer {
-    display: flex !important;
-    flex-direction: column;
-    width: auto;
-    align-items: center;
-  }
-  .testimonialsContainerCard {
-    height: auto;
-  }
-  .testimonialCardTextContainer p {
-    text-align: left;
-    font-size: 14px;
-    font-weight: 350;
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* tablet: 2 columns */
   }
 }
 
-@media screen and (max-width: 420px) {
-  .testimonialsBannerContainerHeader h1 {
-    font-size: 5vw;
-  }
-  .testimonialsBannerContainerHeader h2 {
-    font-size: 20px;
-  }
-  .testimonialsDescription {
-    margin-top: -20px;
-  }
-  .imagePlaceholder {
-    height: 138px;
-    width: 137px;
+@media (min-width: 1024px) {
+  .testimonialCardContainer {
+    grid-template-columns: repeat(3, minmax(0, 1fr)); /* desktop: 3 columns */
+    gap: 24px;
   }
 }
-.testimonialsCardRatingSpan {
-  position: relative;
-  font-size: 1.5rem;
-  cursor: pointer;
-  text-align: left;
-  width: min-content;
-  -webkit-tap-highlight-color: transparent;
-  pointer-events: none;
-  display: flex;
-  -webkit-box-align: center;
+
+/* Hero */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
   align-items: center;
-  -webkit-box-pack: center;
-  justify-content: center;
-  color: rgb(228, 169, 81);
-  font-family: "Lexend Deca";
+  padding: 32px 0 40px;
+}
+
+@media (min-width: 900px) {
+  .hero {
+    grid-template-columns: 1.1fr 1fr;
+    gap: 56px;
+    padding: 56px 0 64px;
+  }
+}
+
+.eyebrow {
+  display: inline-block;
+  margin-bottom: 12px;
+  font-size: var(--fs-eyebrow);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-gold-dark);
+}
+
+.heroTitle {
+  margin: 0 0 16px;
+  font-size: var(--fs-h1);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  color: var(--color-ink);
+}
+
+.accent {
+  color: var(--color-gold-dark);
+}
+
+.heroSubtitle {
+  margin: 0;
+  max-width: 520px;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--color-ink-muted);
+}
+
+/* Small strip showing how many stories we have */
+.stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+  padding: 12px 18px;
+  border: 1px solid rgba(231, 181, 84, 0.45);
+  border-radius: 12px;
+  background: #fffaf0;
+}
+
+.statValue {
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-bold);
+  color: var(--color-gold-dark);
+}
+
+.statLabel {
+  font-size: var(--fs-subtitle);
+  color: var(--color-ink);
+}
+
+/* Image collage: one tall photo + two small ones */
+.collage {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 12px;
+  width: 100%;
+  max-width: 520px;
+  justify-self: center;
+}
+
+.collage img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.collageMain {
+  grid-row: 1 / 3;
+}
+
+.collageSmall {
+  aspect-ratio: 1 / 1;
+}
+
+/* Phone: keep the collage small so the cards appear sooner */
+@media (max-width: 639px) {
+  .collage {
+    max-width: 340px;
+  }
 }

@@ -2,10 +2,12 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import styles from "./Banner.module.css";
-import { PROJECTS, PHOTO_VERSION } from "./heroProjects";
+import { BRAND, PROJECTS, PHOTO_VERSION } from "./heroProjects";
+import { BrandScene, BrandCopy } from "./BrandSlide";
 
 /*
-  Home hero banner: one slide per project (data in ./heroProjects.js).
+  Home hero banner: an Inframantra brand slide first, then one slide per
+  project (data in ./heroProjects.js).
 
   Each slide renders two layouts; CSS shows the right one for the screen:
     - Desktop (wider than 1180px): the 3:1 photo with the copy on it   <HeroOverlay>
@@ -16,8 +18,12 @@ import { PROJECTS, PHOTO_VERSION } from "./heroProjects";
   Holding a finger on the banner pauses it.
 */
 
-const SLIDE_MS = 5000;
+const SLIDE_MS = 5000; // default time per slide (a slide can set its own `durationMs`)
 const IMG = "/banner/hero";
+const SLIDES = [BRAND, ...PROJECTS];
+
+// Where a click on the banner goes for a slide.
+const slideLink = (p) => p.href || `/property/${p.slug}`;
 
 const PinIcon = () => (
   <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
@@ -133,7 +139,7 @@ function useFitToText() {
 
 function HeroPoster({ p }) {
   const infoRef = useFitToText();
-  const { light, logo, dev, chip } = p.mobile;
+  const { light, logo, dev, chip, logoScale, devScale } = p.mobile;
   const variant = light ? "c" : "w"; // colour logos on pale bands, white on dark
   const [logoW, logoH] = p.logo;
   return (
@@ -142,6 +148,7 @@ function HeroPoster({ p }) {
         <img
           className={`${styles.hpLogo} ${logoW / logoH > 2 ? styles.logoWide : ""}`}
           src={`${IMG}/${logo || `pl-${p.key}-${variant}`}.webp`}
+          style={logoScale ? { height: `calc(var(--hp-logo-h) * ${logoScale})` } : undefined}
           alt={`${p.name} logo`}
           width={logoW}
           height={logoH}
@@ -152,6 +159,7 @@ function HeroPoster({ p }) {
           <span>by</span>
           <img
             src={`${IMG}/${dev || `dv-${p.place.dev.k}-${variant}`}.webp`}
+            style={devScale ? { height: `calc(22px * ${devScale})`, maxWidth: "none" } : undefined}
             alt={p.developer}
             width={p.place.dev.w}
             height={p.place.dev.h}
@@ -263,6 +271,14 @@ function HeroOverlay({ p }) {
 
 // Everything inside one slide. Also used by the Featured Project card.
 export function HeroSlide({ p, priority = false }) {
+  if (p.isBrand) {
+    return (
+      <>
+        <BrandScene priority={priority} />
+        <BrandCopy p={p} />
+      </>
+    );
+  }
   return (
     <>
       <HeroPicture p={p} priority={priority} />
@@ -279,6 +295,9 @@ export function slideClasses(index, active, prev) {
     index === active ? styles.isActive : "",
     index === prev ? styles.isPrev : "",
     index === active && prev === -1 ? styles.isInstant : "",
+    // global hook for the brand slide's build-up animation (BrandSlide.module.css);
+    // not on the instant take-over, which must match the finished base slide
+    index === active && prev !== -1 ? "bsLive" : "",
   ].join(" ");
 }
 
@@ -305,12 +324,37 @@ const BannerVideo = () => {
     };
   }, []);
 
+  // Which rotating slides are in the page. Only the one on screen and its two
+  // neighbours are needed (the next one so its photo is loaded before it fades
+  // in, the previous one for the "previous" arrow). Mounting all 8 at once cost
+  // a long main-thread task and 7 photo downloads while the page was still
+  // loading. A slide stays mounted once added, so fades never lose a slide.
+  const [mounted, setMounted] = useState(() => new Set([0, 1, SLIDES.length - 1]));
+  useEffect(() => {
+    const n = SLIDES.length;
+    const wanted = [active - 1, active, active + 1].map((i) => (i + n) % n);
+    setMounted((current) => {
+      if (wanted.every((i) => current.has(i))) return current; // nothing new
+      const next = new Set(current);
+      wanted.forEach((i) => next.add(i));
+      return next;
+    });
+  }, [active]);
+
   const goTo = (index) => {
     setShowSlides(true);
     setSlide(({ active: current }) => {
-      const next = (index + PROJECTS.length) % PROJECTS.length;
+      const next = (index + SLIDES.length) % SLIDES.length;
       return next === current ? { active: current, prev: -1 } : { active: next, prev: current };
     });
+  };
+
+  // Arrows and swipes: someone flicking through quickly can get ahead of the
+  // one-slide lookahead above, so from the first manual change every slide is
+  // mounted (and its photo starts loading), as all of them used to be.
+  const goToByHand = (index) => {
+    setMounted(new Set(SLIDES.map((p, i) => i)));
+    goTo(index);
   };
 
   // Every slide shows for a full 5s, from page load on. The clock stops while
@@ -322,7 +366,7 @@ const BannerVideo = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       if (!document.hidden && !holding.current) goTo(active + 1);
-    }, SLIDE_MS);
+    }, SLIDES[active].durationMs || SLIDE_MS);
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active, restart]);
@@ -342,7 +386,7 @@ const BannerVideo = () => {
     const dx = e.changedTouches[0].clientX - touch.current.startX;
     if (Math.abs(dx) > 40) {
       touch.current.swiped = true;
-      goTo(active + (dx < 0 ? 1 : -1));
+      goToByHand(active + (dx < 0 ? 1 : -1));
     }
     holding.current = false;
     restartClock(); // a full 5s again after letting go
@@ -352,7 +396,7 @@ const BannerVideo = () => {
       touch.current.swiped = false;
       return;
     }
-    window.location.href = `/property/${PROJECTS[active].slug}`;
+    window.location.href = slideLink(SLIDES[active]);
   };
 
   return (
@@ -360,21 +404,26 @@ const BannerVideo = () => {
       <div className={styles.demoBanner}>
         <div className={styles.slideshow}>
           {/* First slide, painted immediately (the page's main image). */}
-          <div className={styles.slideBase} style={{ "--mbg": PROJECTS[0].mobile.bg }}>
-            <HeroSlide p={PROJECTS[0]} priority />
+          <div
+            className={`${styles.slideBase} bsLive bsBase`}
+            style={{ "--mbg": SLIDES[0].mobile.bg }}
+          >
+            <HeroSlide p={SLIDES[0]} priority />
           </div>
 
           {showSlides &&
-            PROJECTS.map((p, index) => (
-              <div
-                key={p.key}
-                className={slideClasses(index, active, prev)}
-                style={{ "--mbg": p.mobile.bg }}
-                aria-hidden={index !== active}
-              >
-                <HeroSlide p={p} />
-              </div>
-            ))}
+            SLIDES.map((p, index) =>
+              mounted.has(index) ? (
+                <div
+                  key={p.key}
+                  className={slideClasses(index, active, prev)}
+                  style={{ "--mbg": p.mobile.bg }}
+                  aria-hidden={index !== active}
+                >
+                  <HeroSlide p={p} />
+                </div>
+              ) : null
+            )}
         </div>
       </div>
 
@@ -385,20 +434,20 @@ const BannerVideo = () => {
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
         role="link"
-        aria-label={`Open ${PROJECTS[active].name}`}
+        aria-label={`Open ${SLIDES[active].name}`}
       />
 
       <SlideArrow
         direction="prev"
-        label="Previous project"
+        label="Previous slide"
         className={styles.heroArrowLeft}
-        onClick={() => goTo(active - 1)}
+        onClick={() => goToByHand(active - 1)}
       />
       <SlideArrow
         direction="next"
-        label="Next project"
+        label="Next slide"
         className={styles.heroArrowRight}
-        onClick={() => goTo(active + 1)}
+        onClick={() => goToByHand(active + 1)}
       />
     </>
   );

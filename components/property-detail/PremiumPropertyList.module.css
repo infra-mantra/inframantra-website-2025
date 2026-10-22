@@ -185,6 +185,12 @@
 }
 
 @media (max-width: 768px) {
+  /* 16px side gutter like the other sections (the 20px comes from an inline
+     style in PremiumPropertyList.jsx, hence !important) */
+  .similar :global(.slide-wrapper) {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
   .similar :global(.propertyImageContainer) {
     height: 160px;
   }

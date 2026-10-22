@@ -55,7 +55,7 @@
   flex-wrap: wrap;
 }
 .sliderArrows > div {
-  background-color: #e7b554;
+  background-color: var(--color-gold);
   width: 70px;
   height: 40px;
   align-items: center;

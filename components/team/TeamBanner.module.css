@@ -67,7 +67,7 @@
 }
 .teamPageHeader p.position {
   font-size: 20px;
-  color: #e7b554;
+  color: var(--color-gold);
 }
 .teamPageHeader .teamMemberImg {
   position: absolute;

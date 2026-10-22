@@ -80,7 +80,11 @@ export default function PremiumPropertyMainComponent({ shorts }) {
           treatment as the sections below: it renders a facade (thumbnail + a CSS play
           button), so no YouTube JavaScript loads until a card is clicked. minHeight
           reserves the row so nothing below it shifts when the cards mount. */}
-      <LazyOnVisible minHeight={430} rootMargin="250px" placeholder={<ShortsSkeleton />}>
+      <LazyOnVisible
+        minHeight={[576, 467, 469]}
+        rootMargin="250px"
+        placeholder={<ShortsSkeleton />}
+      >
         <ShortsSection items={shorts} />
       </LazyOnVisible>
       {/* Only PremiumPicksSection above is near the fold. Everything below it
@@ -98,11 +102,11 @@ export default function PremiumPropertyMainComponent({ shorts }) {
           critical path. 250px clears that first-paint position while still giving
           real scrolling a comfortable head start. The sections below keep the 600px
           default — they already sit far enough down to defer correctly. */}
-      <LazyOnVisible minHeight={620} rootMargin="250px">
+      <LazyOnVisible minHeight={[552, 451, 283]} rootMargin="250px">
         <ServiceSection />
       </LazyOnVisible>
 
-      <LazyOnVisible minHeight={520}>
+      <LazyOnVisible minHeight={[1172, 1106, 1112]}>
         <LocalitySection
           data={localitiesPremiumProperties}
           loading={loading}
@@ -110,11 +114,11 @@ export default function PremiumPropertyMainComponent({ shorts }) {
         />
       </LazyOnVisible>
 
-      <LazyOnVisible minHeight={320}>
+      <LazyOnVisible minHeight={[465, 835, 522]}>
         <AdsBanner />
       </LazyOnVisible>
 
-      <LazyOnVisible minHeight={520}>
+      <LazyOnVisible minHeight={[606, 579, 628]}>
         <OtherCityPropertiesSection
           data={otherCityPremiumProperties}
           loading={loading}

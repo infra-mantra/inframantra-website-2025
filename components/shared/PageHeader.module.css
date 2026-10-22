@@ -72,7 +72,7 @@
 
 p.date {
   color: #000;
-  font-family: Lexend Deca;
+  font-family: var(--font-body);
   font-size: 19px;
   font-weight: 400;
   text-transform: capitalize;
@@ -80,7 +80,7 @@ p.date {
 
 .blogBannerContent .pageWidth h1 {
   color: #000;
-  font-family: Lexend Deca;
+  font-family: var(--font-body);
   font-size: 2rem;
   font-weight: 500;
   line-height: 1.3;

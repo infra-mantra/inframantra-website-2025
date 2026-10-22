@@ -155,8 +155,10 @@ function ReviewsWall({ current = [], videos }) {
     return cols;
   }, [all]);
 
-  const ratingValue = gMeta.rating || 4.4;
-  const ratingText = ratingValue.toFixed(1);
+  // Only the real Google rating from /api/google-reviews is shown — no made-up
+  // fallback number. Until (or unless) it arrives, the text simply omits it.
+  const ratingValue = gMeta.rating;
+  const ratingText = ratingValue ? ratingValue.toFixed(1) : null;
 
   // Same scroll-triggered entrance as the Frames of Excellence gallery: the
   // section reveals once, on first intersection, and the observer disconnects.
@@ -188,19 +190,26 @@ function ReviewsWall({ current = [], videos }) {
       <div className={styles.rwInner}>
         {/* Left info panel */}
         <div className={styles.rwLeft}>
-          <span className={styles.rwEyebrow}>Testimonials</span>
           <h2 className={styles.rwHeading}>
             3500+ Homebuyers Rely on <span>Inframantra</span>
           </h2>
           <div className={styles.rwRatingRow}>
-            <RatingStars value={ratingValue} />
+            {ratingValue && <RatingStars value={ratingValue} />}
             <span className={styles.rwRatingText}>
-              Rated <strong>{ratingText}</strong> by verified buyers
+              {ratingText ? (
+                <>
+                  Rated <strong>{ratingText}</strong> by verified buyers
+                </>
+              ) : (
+                "Rated by verified buyers"
+              )}
             </span>
           </div>
           <div className={styles.rwBadges}>
             <span className={styles.rwBadge}>
-              <span className={styles.rwGBadge}>G</span> {ratingText} on Google
+              <span className={styles.rwGBadge}>G</span>{" "}
+              {/* fallback is the same length as "4.4 on Google", so the badge row never re-wraps */}
+              {ratingText ? `${ratingText} on Google` : "Google rated"}
             </span>
             <span className={styles.rwBadge}>
               {gMeta.total ? `${gMeta.total}+ Google Reviews` : "Verified Google Reviews"}

@@ -1,120 +1,107 @@
-.testimonialCardNameContainer {
-  width: 100%;
-}
-.testimonialCardNameContainerh6 {
-  text-align: left;
-  margin-left: 10%;
-  font-size: 24px;
-  font-weight: 500;
-}
-
-.testimonialCardRatingContainer {
-  margin-bottom: -10px;
-  width: 90%;
-  margin-left: 10%;
-}
-.testimonialCardRatingContainer span {
-  align-items: flex-start;
-}
-
-.testimonialCardTextContainer {
-  margin-top: 10px;
-  width: 100%;
-  display: flex;
-}
-
-.testimonialCardQuoteIcon {
-  font-family: Arial;
-  font-size: 63.068px;
-  color: #e4a951;
-  margin-bottom: 10px;
-}
-.testimonialsContainerCard {
-  color: rgba(0, 0, 0, 0.87);
-  box-shadow:
-    rgba(0, 0, 0, 0.2) 0px 5px 5px -3px,
-    rgba(0, 0, 0, 0.14) 0px 8px 10px 1px,
-    rgba(0, 0, 0, 0.12) 0px 3px 14px 2px;
-  height: auto;
-  width: 85%;
-  margin-bottom: 5%;
+/* One testimonial card */
+.card {
   display: flex;
   flex-direction: column;
-  -webkit-box-align: center;
-  align-items: center;
-  justify-content: space-evenly;
-  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: 20px;
-  background: rgba(237, 192, 107, 0.26);
-  padding: 20px;
+  height: 100%;
+  min-width: 0;
+  padding: 24px;
+  border: 1px solid #f0e6d2;
+  border-radius: 16px;
+  background: var(--color-surface);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  font-family: var(--font-body);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
 }
 
-.testimonialsCardRatingSpan {
-  position: relative;
-  font-size: 1.5rem;
+.card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-gold-light);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.09);
+}
+
+/* Big gold quote mark */
+.quoteMark {
+  display: block;
+  height: 28px;
+  font-family: Georgia, serif; /* decorative glyph only */
+  font-size: 56px;
+  line-height: 1;
+  color: var(--color-gold);
+}
+
+.text {
+  margin: 8px 0 0;
+  font-size: var(--fs-body);
+  line-height: 1.65;
+  color: var(--color-ink);
+  opacity: 0.85;
+  white-space: pre-line; /* keep the line breaks from the API */
+  overflow-wrap: anywhere;
+}
+
+/* Show only the first 5 lines until "Read more" is clicked */
+.clamped {
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.readMore {
+  align-self: flex-start;
+  margin-top: 8px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: inherit;
+  font-size: var(--fs-subtitle);
+  font-weight: var(--fw-semibold);
+  color: var(--color-gold-dark);
   cursor: pointer;
-  text-align: left;
-  width: -moz-min-content;
-  width: min-content;
-  -webkit-tap-highlight-color: transparent;
-  pointer-events: none;
+}
+
+.readMore:hover {
+  text-decoration: underline;
+}
+
+.readMore:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Author row pinned to the bottom of the card */
+.author {
   display: flex;
   align-items: center;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 20px;
+}
+
+.avatar {
+  flex: 0 0 48px;
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
-  color: rgb(228, 169, 81);
-  font-family: "Lexend Deca";
+  width: 48px;
+  height: 48px;
+  border: 2px solid var(--color-gold-light);
+  border-radius: 50%;
+  object-fit: cover;
+  background: #fff6e3;
+  font-size: var(--fs-subtitle);
+  font-weight: var(--fw-semibold);
+  color: var(--color-gold-dark);
 }
 
-@media screen and (max-width: 768px) {
-  .testimonialCardNameContainerh6 {
-    color: #000;
-    font-family: "Lexend Deca";
-    font-size: 12.699px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-  }
-  .testimonialCardName {
-    margin: 0 0;
-  }
-  .testimonialCardRatingContainer span {
-    margin-top: 3px;
-    font-size: 18px;
-  }
-  .testimonialCardTextContainer p {
-    font-size: 14px;
-    text-align: left;
-  }
-  .testimonialCardTextContainer {
-    gap: 3px;
-  }
-  .testimonialCardQuoteIcon {
-    margin-top: -5px;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .testimonialsBannerContainerHeader h1 {
-    font-size: 25px;
-  }
-  .testimonialsDescription {
-    margin-top: 0;
-  }
-  .testimonialsImages {
-    width: 100%;
-  }
-  .testimonialCardContainer {
-    display: flex !important;
-    flex-direction: column;
-    width: auto;
-    align-items: center;
-  }
-  .testimonialsContainerCard {
-    height: auto;
-  }
-  .testimonialCardTextContainer p {
-    text-align: left;
-    font-size: 14px;
-    font-weight: 350;
-  }
+.name {
+  margin: 0;
+  font-size: var(--fs-card-title);
+  font-weight: var(--fw-semibold);
+  color: var(--color-ink);
+  text-transform: capitalize;
 }

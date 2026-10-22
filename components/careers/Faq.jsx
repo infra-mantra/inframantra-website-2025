@@ -12,7 +12,11 @@ function FaqSection({ faq }) {
 
   return (
     <section className={styles.faqSection}>
-      {faqData.length > 0 && <h2 className={styles.faqHeading}>FREQUENTLY ASKED QUESTIONS</h2>}
+      {faqData.length > 0 && (
+        <h2 className={styles.faqHeading}>
+          Frequently Asked <span>Questions</span>
+        </h2>
+      )}
 
       <div className={styles.faqContainer}>
         {faqData.map((item, index) => (

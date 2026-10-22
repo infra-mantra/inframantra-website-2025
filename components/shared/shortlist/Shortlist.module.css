@@ -1,0 +1,242 @@
+/* ♥ Shortlist heart button + toast. Tokens from styles/tokens.css. */
+
+.heart {
+  --heart-red: #e5484d;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-button);
+  font-weight: var(--fw-semibold);
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  transition:
+    transform 0.15s ease,
+    background-color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.heart:hover {
+  background: #fff;
+}
+
+.heart:active {
+  transform: scale(0.92);
+}
+
+.heart:focus-visible {
+  outline: 2px solid var(--color-gold-dark);
+  outline-offset: 2px;
+}
+
+.heartIcon {
+  position: relative;
+  display: inline-flex;
+}
+
+.heartIcon svg {
+  display: block;
+  fill: transparent;
+  stroke: currentColor;
+  transition:
+    fill 0.2s ease,
+    stroke 0.2s ease;
+}
+
+.heartOn .heartIcon svg {
+  fill: var(--heart-red);
+  stroke: var(--color-gold-dark);
+}
+
+/* Over a card photo: top-right corner. 34px visual, 44px tap target on phones. */
+.heart_overlay {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  z-index: 4;
+  width: 34px;
+  height: 34px;
+}
+
+.heart_overlay::after {
+  content: "";
+  position: absolute;
+  inset: -5px; /* 34 + 2*5 = 44px hit area without changing the look */
+  border-radius: 999px;
+}
+
+.heart_left {
+  right: auto;
+  left: 9px;
+}
+
+/* Property page header: a small pill next to the other header buttons */
+.heart_inline {
+  padding: 8px 14px 8px 10px;
+  min-height: 36px;
+  border-color: #f1e3bf;
+  background: #fff8e1;
+  box-shadow: none;
+}
+
+@media (max-width: 768px) {
+  .heart_inline {
+    min-height: 44px;
+  }
+}
+
+/* Like animation: pop + 6 particles flying out */
+.heartPop svg {
+  animation: heartPop 0.45s cubic-bezier(0.2, 1.6, 0.4, 1);
+}
+
+@keyframes heartPop {
+  0% {
+    transform: scale(0.6);
+  }
+  60% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.burst {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.burst i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  margin: -2.5px 0 0 -2.5px;
+  border-radius: 50%;
+  background: var(--color-gold);
+  opacity: 0;
+  animation: burst 0.55s ease-out forwards;
+}
+
+.burst i:nth-child(even) {
+  background: var(--heart-red);
+}
+
+@keyframes burst {
+  0% {
+    opacity: 1;
+    transform: rotate(var(--a)) translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(var(--a)) translateY(-17px) scale(0.4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heart,
+  .heartIcon svg {
+    transition: none;
+  }
+  .heart:active {
+    transform: none;
+  }
+  .heartPop svg {
+    animation: none;
+  }
+  .burst {
+    display: none;
+  }
+}
+
+/* ---- Toast ---- */
+.toastRegion {
+  position: fixed;
+  left: 50%;
+  bottom: 88px; /* clear of the mobile bottom CTA bar and the compare tray */
+  z-index: 10050;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: calc(100vw - 32px);
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 8px 10px 16px;
+  border-radius: 12px;
+  background: var(--color-ink);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: var(--fs-subtitle);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  pointer-events: auto;
+  animation: toastIn 0.22s ease-out;
+}
+
+.toastMsg {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.toastAction {
+  flex-shrink: 0;
+  padding: 6px 8px;
+  border: 0;
+  background: none;
+  color: var(--color-gold-light);
+  font: inherit;
+  font-weight: var(--fw-semibold);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.toastAction:hover {
+  text-decoration: underline;
+}
+
+.toastClose {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  color: #bbb;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast {
+    animation: none;
+  }
+}

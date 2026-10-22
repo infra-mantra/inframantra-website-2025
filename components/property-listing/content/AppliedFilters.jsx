@@ -16,14 +16,30 @@ const priceLabel = ([min, max]) => {
   return "";
 };
 
-export default function AppliedFilters({ filters, pageConfiguration, onRemove, onClearAll }) {
-  const chips = [];
-  (filters.city || []).forEach((v) => chips.push({ key: "city", value: v, label: v, kind: "City" }));
-  (filters.unitType || []).forEach((v) => chips.push({ key: "unitType", value: v, label: v, kind: "Type" }));
+export default function AppliedFilters({
+  places = [],
+  filters,
+  pageConfiguration,
+  onRemove,
+  onClearAll,
+}) {
+  const chips = [...places]; // multi-select cities/localities first
+  (filters.city || []).forEach((v) =>
+    chips.push({ key: "city", value: v, label: v, kind: "City" })
+  );
+  (filters.unitType || []).forEach((v) =>
+    chips.push({ key: "unitType", value: v, label: v, kind: "Type" })
+  );
   (filters.configuration || [])
-    .filter((v) => !(pageConfiguration && v === pageConfiguration && filters.configuration.length === 1))
-    .forEach((v) => chips.push({ key: "configuration", value: v, label: configLabel(v), kind: "Size" }));
-  (filters.status || []).forEach((v) => chips.push({ key: "status", value: v, label: v, kind: "Status" }));
+    .filter(
+      (v) => !(pageConfiguration && v === pageConfiguration && filters.configuration.length === 1)
+    )
+    .forEach((v) =>
+      chips.push({ key: "configuration", value: v, label: configLabel(v), kind: "Size" })
+    );
+  (filters.status || []).forEach((v) =>
+    chips.push({ key: "status", value: v, label: v, kind: "Status" })
+  );
   const price = priceLabel(filters.priceRange || []);
   if (price) chips.push({ key: "priceRange", value: null, label: price, kind: "Price" });
 

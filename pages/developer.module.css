@@ -23,11 +23,14 @@
   width: 100%;
 }
 .sectionHeadDeveloper h2 {
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: #e7b554;
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  text-transform: none;
+  color: var(--color-ink);
   margin: 0 0 6px;
-  font-family: "Lexend Deca", sans-serif;
 }
 .developerSubtitle {
   margin: 0;
@@ -35,7 +38,7 @@
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
 }
 
 /* ---- Responsive card grid (auto 3 -> 2 -> 1 columns) ---- */
@@ -95,7 +98,7 @@
 }
 
 .infoDeveloper h4 {
-  color: #e7b554;
+  color: var(--color-gold);
   text-align: center;
   font-size: 18px;
   font-weight: 600;
@@ -142,14 +145,14 @@
   margin-top: auto;
 }
 .developerButton {
-  background: #e7b554;
+  background: var(--color-gold);
   border: none;
   border-radius: 8px;
   cursor: pointer;
   padding: 11px 22px;
   min-width: 190px;
   color: #fff;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 14px;
   font-weight: 500;
   transition:
@@ -159,7 +162,7 @@
   box-shadow: 0 3px 10px rgba(231, 181, 84, 0.35);
 }
 .developerButton:hover {
-  background: #d9a23c;
+  background: var(--color-gold-dark);
   transform: translateY(-1px);
   box-shadow: 0 5px 14px rgba(231, 181, 84, 0.45);
 }
@@ -206,7 +209,6 @@
 /* ---- Responsive ---- */
 @media (max-width: 768px) {
   .sectionHeadDeveloper h2 {
-    font-size: 1.5rem;
     margin: 1.5rem auto 1.25rem;
   }
   .dWraps {

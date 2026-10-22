@@ -3,6 +3,8 @@ import React, { useState, useEffect, useRef } from "react";
 import ModalSlider from "./Modal.jsx";
 import Propertycard from "./PropertyCard.jsx";
 import PopUpForm from "../shared/forms/CTANEW.jsx";
+import CompareToggle from "../compare/CompareToggle.jsx";
+import HeartButton from "../shared/shortlist/HeartButton.jsx";
 
 function PropertyHeaderHigh({ propertyData, name }) {
   const [isHighlightModalOpen, setIsHighlightModalOpen] = useState(false);
@@ -154,6 +156,8 @@ function PropertyHeaderHigh({ propertyData, name }) {
               />
               <span className="property-map-btn-label">View on map</span>
             </button>
+            <CompareToggle property={propertyData} variant="inline" />
+            <HeartButton property={propertyData} variant="inline" />
 
             <img
               className="property-image"
@@ -403,7 +407,7 @@ function PropertyHeaderHigh({ propertyData, name }) {
       <PopUpForm
         popUpenable={popForm}
         onClickOff={onClickOff}
-        text="TO CONNECT WITH OUR PROPERTY ADVISOR "
+        text="To Connect With Our Property Advisor"
         name={name}
         id="propertyIndividualHighlight"
       />

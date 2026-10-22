@@ -1,0 +1,85 @@
+/* The three property-card buttons, shared by the listing cards so they match the
+   home cards (components/shared/PropertyCard.module.css):
+     cbView      gold "View More"          (main action)
+     cbEnquire   dark-outline "Enquire Now"
+     cbBrochure  quiet dashed "Brochure"
+   Prefixed names: CSS-module class names aren't hashed on this site. */
+.cbBtn {
+  flex: 1 1 0;
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  height: 40px;
+  padding: 0 8px;
+  border-radius: 10px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: var(--fw-semibold);
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.cbView {
+  background: linear-gradient(
+    135deg,
+    var(--color-gold-light),
+    var(--color-gold) 55%,
+    var(--color-gold-dark)
+  );
+  color: #1a1408;
+  border: 1px solid transparent;
+  box-shadow: 0 4px 12px rgba(217, 162, 60, 0.28);
+}
+
+.cbView:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(217, 162, 60, 0.38);
+}
+
+.cbEnquire {
+  background: #fff;
+  color: var(--color-ink);
+  border: 1px solid #d9d4ca;
+}
+
+.cbEnquire:hover {
+  background: #faf7f2;
+  border-color: var(--color-ink);
+}
+
+.cbBrochure {
+  background: #faf7f2;
+  color: #8a6410;
+  border: 1px dashed #e6d3a8;
+}
+
+.cbBrochure:hover {
+  background: #fbf3e2;
+  border-style: solid;
+  border-color: var(--color-gold);
+}
+
+.cbBtn:focus-visible {
+  outline: 2px solid var(--color-gold-dark);
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+  .cbBtn {
+    height: 40px;
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cbBtn:hover {
+    transform: none;
+  }
+}

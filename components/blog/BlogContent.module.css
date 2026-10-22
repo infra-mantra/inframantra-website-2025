@@ -88,7 +88,7 @@
 .tocIcon {
   width: 18px;
   height: 18px;
-  color: #e7b554;
+  color: var(--color-gold);
   flex-shrink: 0;
 }
 .tocChevron {
@@ -146,7 +146,7 @@
   font-size: 1.5rem;
   margin-bottom: 1rem;
   color: #000;
-  font-family: "Lexend Deca";
+  font-family: var(--font-body);
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -154,7 +154,7 @@
 }
 p.date {
   color: #000;
-  font-family: "Lexend Deca";
+  font-family: var(--font-body);
   font-size: 19.194px;
   font-style: normal;
   font-weight: 400;
@@ -202,7 +202,7 @@ p.date {
 }
 .recentBlogsTitle {
   color: #000;
-  font-family: "Lexend Deca";
+  font-family: var(--font-body);
   font-size: 14.872px;
   font-style: normal;
   text-align: left;
@@ -240,7 +240,7 @@ p.date {
   margin: 0px;
   font-weight: 600;
   font-size: 15px;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   line-height: 1.4;
   color: #1a1a1a;
   display: -webkit-box;
@@ -267,7 +267,7 @@ p.date {
   border-bottom: 1px solid #000;
   text-align: left;
   color: #000;
-  font-family: "Lexend Deca";
+  font-family: var(--font-body);
   font-size: 11.872px;
   font-style: normal;
   font-weight: 400;
@@ -345,7 +345,7 @@ p.date {
     max-height: none;
     overflow: visible;
     border: 1px solid #efe7d4;
-    border-left: 4px solid #e7b554;
+    border-left: 4px solid var(--color-gold);
     border-radius: 12px;
     padding: 14px 16px;
     margin-bottom: 18px;
@@ -368,7 +368,7 @@ p.date {
     height: 24px;
     border-radius: 50%;
     background: #f3e6c6;
-    color: #e7b554;
+    color: var(--color-gold);
     font-size: 0.9rem;
     transition: transform 0.25s ease;
   }
@@ -392,7 +392,7 @@ p.date {
     content: "\203A"; /* › */
     position: absolute;
     left: 4px;
-    color: #e7b554;
+    color: var(--color-gold);
     font-weight: 700;
     font-size: 1rem;
   }

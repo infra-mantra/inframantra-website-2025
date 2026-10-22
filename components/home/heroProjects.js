@@ -38,12 +38,61 @@
       logo       optional: a different project logo file (without .webp)
       dev        optional: a different developer logo file (without .webp)
       chip       true = colour logos on a dark band (soft white glow, no background)
+      logoScale  optional: make the phone/tablet project logo bigger, e.g. 1.3 = 30% larger
+      devScale   optional: same for the developer logo next to "by"
 
 */
 // Added to every banner photo URL. Bump it when any photo is regenerated under
 // the same file name, so browsers download the new file instead of a cached one.
 // (pages/_document.js uses it too, for the preload of the first photo.)
-export const PHOTO_VERSION = "?v=8";
+export const PHOTO_VERSION = "?v=14";
+
+/*
+  Slide 1 of the home banner: Inframantra itself (not a project), drawn by
+  BrandSlide.jsx from the photos brand-d<width> and brand-m<width> (Guru Randhawa
+  and the founders, cut out of "Guru with Directors backdrop.jpg", on a generated
+  dusk balcony; built by the scratchpad script photo.js).
+  `partners` = developer logos dv-<k>.webp (k, width).
+  Stats are the same figures as the About page (components/about/Achievement.jsx);
+  update both together.
+*/
+export const BRAND = {
+  key: "brand",
+  isBrand: true,
+  durationMs: 14000, // long enough to show every city once (5 cities × 2.8s, see BrandSlide.jsx)
+  name: "Inframantra",
+  href: "/about-us",
+  customers: 3500, // badge count-up; the Google rating comes live from /api/google-reviews
+  eyebrow: "Inframantra × Guru Randhawa",
+  head: "Find your home", // + "in <city>" on the next line
+  accent: "Gurgaon",
+  // the rotating word after the headline: our cities (CITIES in searchFilterConfig.js)
+  places: ["Gurgaon", "Mohali", "Noida", "Pune", "Jaipur"],
+  // the line under the headline, one at a time; {City} = the headline's city
+  lines: [
+    "Your trusted channel partner for premium homes in {City}",
+    "Handpicked projects from {City}'s top developers",
+    "Site visits, home loans and paperwork, handled end to end",
+    "Brand ambassador Guru Randhawa",
+  ],
+  partnersCount: 50,
+  partnersLabel: "developer partners",
+  partners: [
+    { k: "tulip-w", name: "Tulip", w: 322 },
+    { k: "satya-w", name: "Satya", w: 175 },
+    { k: "whiteland-w", name: "Whiteland", w: 550 },
+    { k: "ambience-w", name: "Ambience", w: 218 },
+    { k: "aura-w", name: "Aura", w: 423 },
+    { k: "vatika-c", name: "Vatika", w: 181 },
+  ],
+  stats: [
+    { value: "3,500+", label: "Happy customers" },
+    { value: "50+", label: "Developer partners" },
+    { value: "50+", label: "Awards" },
+    { value: "9+", label: "Years" },
+  ],
+  mobile: { bg: "#0b1222" },
+};
 
 export const PROJECTS = [
   {
@@ -85,7 +134,7 @@ export const PROJECTS = [
       logo: { v: "c", w: 351, h: 200 },
       dev: { k: "satya", v: "box", w: 450, h: 450 },
     },
-    mobile: { bg: "#0c326f", logo: "pl-satya-mc", dev: "dv-satya-box" },
+    mobile: { bg: "#0c326f", logo: "pl-satya-mc", dev: "dv-satya-box", logoScale: 1.3, devScale: 1.8 },
   },
   {
     key: "westin",

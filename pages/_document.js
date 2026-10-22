@@ -32,12 +32,13 @@ class MyDocument extends Document {
       <Html lang="en">
         <Head>
           {isHomePage && (
+            // Slide 1's photo (BrandSlide.jsx): 6:5 "m" files up to 1180px, 3:1 "d" above.
             <>
               <link
                 rel="preload"
                 as="image"
                 type="image/avif"
-                imageSrcSet={`/banner/hero/aura-m780.avif${PHOTO_VERSION} 780w, /banner/hero/aura-m1170.avif${PHOTO_VERSION} 1170w`}
+                imageSrcSet={`/banner/hero/brand-m780.avif${PHOTO_VERSION} 780w, /banner/hero/brand-m1170.avif${PHOTO_VERSION} 1170w`}
                 imageSizes="100vw"
                 media="(max-width: 1180px)"
                 fetchpriority="high"
@@ -46,8 +47,8 @@ class MyDocument extends Document {
                 rel="preload"
                 as="image"
                 type="image/avif"
-                imageSrcSet={[1440, 1920, 2560, 3200]
-                  .map((w) => `/banner/hero/aura-d${w}.avif${PHOTO_VERSION} ${w}w`)
+                imageSrcSet={[1440, 1920, 2560]
+                  .map((w) => `/banner/hero/brand-d${w}.avif${PHOTO_VERSION} ${w}w`)
                   .join(", ")}
                 imageSizes="100vw"
                 media="(min-width: 1181px)"

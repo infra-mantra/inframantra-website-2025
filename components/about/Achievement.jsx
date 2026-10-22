@@ -46,7 +46,7 @@ export default function HeroSection() {
             color: "#fff",
             display: "flex",
             justifyContent: "center",
-            fontSize: "1.2rem",
+            fontSize: "var(--fs-subtitle)",
             alignItems: "center",
           }}
         >

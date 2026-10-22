@@ -11,9 +11,9 @@
   background: linear-gradient(180deg, #e9bb63 0%, #dfa63c 100%);
   color: #ffffff;
 
-  font-family: "Lexend Deca", sans-serif;
-  font-size: 15px;
-  font-weight: 600;
+  font-family: var(--font-body);
+  font-size: var(--fs-button);
+  font-weight: var(--fw-semibold);
   letter-spacing: 0.01em;
   cursor: pointer;
 

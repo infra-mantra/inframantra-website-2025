@@ -22,12 +22,13 @@
 */
 
 .imFldStack {
-  --imFld-accent: #b8860b;
-  --imFld-accent-soft: rgba(184, 134, 11, 0.14);
-  --imFld-ink: #1c1f24;
-  --imFld-muted: #6b7280;
-  --imFld-line: #dfe3e8;
+  --imFld-accent: var(--color-gold, #e7b554);
+  --imFld-accent-soft: rgba(231, 181, 84, 0.28);
+  --imFld-ink: var(--color-ink, #1a1a1a);
+  --imFld-muted: var(--color-ink-muted, #707070);
+  --imFld-line: #e5e0d6;
   --imFld-surface: #fff;
+  --imFld-error: #c0392b;
 
   display: flex;
   flex-direction: column;
@@ -51,12 +52,12 @@
   /* Top padding leaves room for the label once it floats up into the field. */
   padding: 17px 13px 4px;
 
-  font-family: inherit;
-  font-size: 14.5px;
-  color: var(--imFld-ink, #1c1f24);
+  font-family: var(--font-body, inherit);
+  font-size: var(--fs-body, 15px);
+  color: var(--imFld-ink, #1a1a1a);
   background: var(--imFld-surface, #fff);
-  border: 1px solid var(--imFld-line, #e6e9ed);
-  border-radius: 10px;
+  border: 1px solid var(--imFld-line, #e5e0d6);
+  border-radius: 12px;
   outline: none;
 
   transition:
@@ -65,12 +66,28 @@
 }
 
 .imFldInput:hover {
-  border-color: #c8ced6;
+  border-color: #d6cfc0;
 }
 
-.imFldInput:focus {
-  border-color: var(--imFld-accent, #b8860b);
-  box-shadow: 0 0 0 3px var(--imFld-accent-soft, rgba(184, 134, 11, 0.14));
+/* Gold ring on focus; keyboard focus gets the same ring so it is always visible. */
+.imFldInput:focus,
+.imFldInput:focus-visible {
+  border-color: var(--imFld-accent, #e7b554);
+  box-shadow: 0 0 0 3px var(--imFld-accent-soft, rgba(231, 181, 84, 0.28));
+}
+
+/* Only after the user has interacted — never red on first paint. */
+.imFldInput:user-invalid {
+  border-color: var(--imFld-error, #c0392b);
+}
+
+/* Inline error text, for forms that render one under a field. */
+.imFldError {
+  display: block;
+  margin: 4px 2px 0;
+  font-size: var(--fs-small, 12px);
+  line-height: var(--lh-body, 1.5);
+  color: var(--imFld-error, #c0392b);
 }
 
 /*
@@ -87,9 +104,9 @@
   transform-origin: left top;
 
   pointer-events: none;
-  font-size: 14.5px;
-  font-weight: 400;
-  color: var(--imFld-muted, #6b7280);
+  font-size: var(--fs-body, 15px);
+  font-weight: var(--fw-regular, 400);
+  color: var(--imFld-muted, #707070);
 
   transition:
     transform 0.16s ease,
@@ -106,12 +123,12 @@
 }
 
 .imFldInput:focus + .imFldLabel {
-  color: var(--imFld-accent, #b8860b);
+  color: var(--color-gold-dark, #d9a23c);
 }
 
 /* The required marker should not shout; it is a hint, not an error. */
 .imFldLabel span {
-  color: #c0392b;
+  color: var(--color-gold-dark, #d9a23c);
   margin-left: 2px;
 }
 
@@ -143,20 +160,26 @@
   height: 48px;
   /* 52px clears the 38px flag button plus its arrow. */
   padding: 17px 13px 4px 52px;
-  font-family: inherit;
-  font-size: 14.5px;
-  color: var(--imFld-ink, #1c1f24);
+  font-family: var(--font-body, inherit);
+  font-size: var(--fs-body, 15px);
+  color: var(--imFld-ink, #1a1a1a);
   background: var(--imFld-surface, #fff);
-  border: 1px solid var(--imFld-line, #e6e9ed);
-  border-radius: 10px;
+  border: 1px solid var(--imFld-line, #e5e0d6);
+  border-radius: 12px;
   transition:
     border-color 0.15s ease,
     box-shadow 0.15s ease;
 }
 
 .imFldPhone :global(.react-tel-input .form-control:focus) {
-  border-color: var(--imFld-accent, #b8860b);
-  box-shadow: 0 0 0 3px var(--imFld-accent-soft, rgba(184, 134, 11, 0.14));
+  border-color: var(--imFld-accent, #e7b554);
+  box-shadow: 0 0 0 3px var(--imFld-accent-soft, rgba(231, 181, 84, 0.28));
+}
+
+/* The flag segment shares the field's full height so the two read as one control. */
+.imFldPhone :global(.react-tel-input .flag-dropdown) {
+  top: 0;
+  bottom: 0;
 }
 
 /*
@@ -166,20 +189,20 @@
   this palette, with the divider kept so the flag reads as separate from the number.
 */
 .imFldPhone :global(.react-tel-input .flag-dropdown) {
-  background: #f7f8fa;
-  border: 1px solid var(--imFld-line, #e6e9ed);
-  border-right: 1px solid var(--imFld-line, #e6e9ed);
-  border-radius: 10px 0 0 10px;
+  background: #faf7f1;
+  border: 1px solid var(--imFld-line, #e5e0d6);
+  border-right: 1px solid var(--imFld-line, #e5e0d6);
+  border-radius: 12px 0 0 12px;
 }
 
 .imFldPhone :global(.react-tel-input .selected-flag) {
-  border-radius: 10px 0 0 10px;
+  border-radius: 12px 0 0 12px;
 }
 
 .imFldPhone :global(.react-tel-input .selected-flag:hover),
 .imFldPhone :global(.react-tel-input .selected-flag:focus),
 .imFldPhone :global(.react-tel-input .flag-dropdown.open .selected-flag) {
-  background: #eef0f3;
+  background: #f3ede1;
 }
 
 /* The country list must sit above the field that follows it. */
@@ -234,14 +257,15 @@
     color 0.14s ease;
 }
 
+/* Chips keep the deeper gold: white text needs the contrast. */
 .imFldChip:hover .imFldChipText {
-  border-color: var(--imFld-accent, #b8860b);
-  color: var(--imFld-accent, #b8860b);
+  border-color: #b8860b;
+  color: #b8860b;
 }
 
 .imFldChip input:checked + .imFldChipText {
-  background: var(--imFld-accent, #b8860b);
-  border-color: var(--imFld-accent, #b8860b);
+  background: #b8860b;
+  border-color: #b8860b;
   color: #fff;
 }
 
@@ -256,32 +280,46 @@
   width: 100%;
   height: 48px;
   border: 0;
-  border-radius: 10px;
+  border-radius: 12px;
 
-  font-family: inherit;
-  font-size: 15.5px;
-  font-weight: 600;
+  font-family: var(--font-body, inherit);
+  font-size: var(--fs-h4, 16px);
+  font-weight: var(--fw-semibold, 600);
   letter-spacing: 0.01em;
   color: #fff;
-  background: var(--imFld-accent, #b8860b);
+  /* Gold gradient from the brand tokens; text-shadow keeps white legible on it. */
+  background: linear-gradient(135deg, var(--color-gold, #e7b554), var(--color-gold-dark, #d9a23c));
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 6px 16px rgba(217, 162, 60, 0.3);
   cursor: pointer;
 
   transition:
-    background 0.15s ease,
+    filter 0.15s ease,
+    box-shadow 0.15s ease,
     transform 0.06s ease;
 }
 
 .imFldSubmit:hover {
-  background: #9a6c14;
+  filter: brightness(0.95);
+  box-shadow: 0 8px 20px rgba(217, 162, 60, 0.38);
 }
 
 .imFldSubmit:active {
   transform: translateY(1px);
+  box-shadow: 0 3px 8px rgba(217, 162, 60, 0.3);
 }
 
+.imFldSubmit:focus-visible {
+  outline: 2px solid var(--color-ink, #1a1a1a);
+  outline-offset: 2px;
+}
+
+/* Disabled doubles as the loading state ("Submitting..."). */
 .imFldSubmit:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+  opacity: 0.65;
+  cursor: progress;
+  box-shadow: none;
+  filter: none;
 }
 
 /* --------------------------------------------------------------------- misc */
@@ -341,17 +379,17 @@
   width: 16px;
   height: 16px;
   margin: 2px 0 0;
-  accent-color: #25d366;
+  accent-color: var(--color-gold-dark, #d9a23c);
   cursor: pointer;
 }
 
 .imFldConsentText {
-  font-family: inherit;
+  font-family: var(--font-body, inherit);
   /* Legal small print, not body copy — it should sit quietly under the fields. */
-  font-size: 11.5px;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #6b7280;
+  font-size: var(--fs-small, 12px);
+  font-weight: var(--fw-regular, 400);
+  line-height: var(--lh-body, 1.5);
+  color: var(--color-body, #3f3f46);
   text-align: left;
 }
 

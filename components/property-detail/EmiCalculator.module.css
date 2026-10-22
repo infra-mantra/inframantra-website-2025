@@ -23,15 +23,18 @@
 }
 
 .emiHeading {
-  font-size: 20px;
-  color: var(--emi-accent);
-  font-weight: 600;
-  text-transform: uppercase;
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  text-transform: none;
+  color: var(--color-ink);
   margin: 0 0 6px;
 }
 
 .emiSub {
-  font-size: 14px;
+  font-size: var(--fs-subtitle);
   color: var(--emi-muted);
   margin: 0 0 22px;
 }
@@ -106,7 +109,9 @@
   background: #fff;
   border: 1px solid #eadfc4;
   border-radius: 10px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .amountBox:hover {
@@ -232,7 +237,9 @@
   font-weight: 600;
   white-space: nowrap;
   cursor: pointer;
-  transition: background 0.25s ease, color 0.25s ease;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease;
 }
 
 .periodBtn svg {
@@ -600,9 +607,6 @@
     max-width: 100%;
     overflow: hidden; /* nothing inside can push past the screen edge */
   }
-  .emiHeading {
-    font-size: 16px;
-  }
   .emiSub {
     font-size: 13px;
     margin-bottom: 18px;
@@ -725,6 +729,27 @@
   }
   .tableScroll {
     -webkit-overflow-scrolling: touch;
+  }
+
+  .periodBtn {
+    min-height: 44px;
+  }
+  .scheduleToggle {
+    min-height: 44px;
+  }
+  /* "Total Amount Payable" wraps instead of being cut to "Total Amount Pay…" */
+  .totalRow .bLabel {
+    white-space: normal;
+    line-height: 1.25;
+  }
+}
+
+/* 12px floor for text on phones and small tablets */
+@media (max-width: 768px) {
+  .donutPer,
+  .bPct,
+  .chartFoot {
+    font-size: 12px;
   }
 }
 

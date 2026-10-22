@@ -9,12 +9,14 @@
 
 /* Heading + animated gold underline */
 .heading {
-  font-size: 36px;
-  font-weight: 700;
-  color: #e7b554;
-  letter-spacing: 0.5px;
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  text-transform: none;
+  color: var(--color-ink);
   margin: 0 0 44px;
-  font-family: "Lexend Deca", sans-serif;
 }
 .heading::after {
   content: "";
@@ -22,7 +24,7 @@
   width: 70px;
   height: 4px;
   border-radius: 2px;
-  background: #e7b554;
+  background: var(--color-gold);
   margin: 14px auto 0;
 }
 
@@ -87,25 +89,27 @@
 }
 
 .cardTitle {
-  font-size: 19px;
-  font-weight: 700;
-  letter-spacing: 0.3px;
-  line-height: 1.35;
+  font-family: var(--font-body);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: normal;
+  text-transform: none;
   margin: 0 0 14px;
-  font-family: "Lexend Deca", sans-serif;
 }
 .cardText {
-  font-size: 15px;
-  line-height: 1.7;
+  font-size: var(--fs-body);
+  font-weight: var(--fw-light);
+  line-height: var(--lh-body);
   text-align: left;
   margin: 0;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
 }
 
 /* ---- Card colour variants ---- */
 /* Gold (filled) cards: dark text, white badge with gold icon. */
 .gold {
-  background: #e7b554;
+  background: var(--color-gold);
 }
 .gold .cardTitle {
   color: #1f1a0a;
@@ -115,7 +119,7 @@
 }
 .gold .iconBadge {
   background: #ffffff;
-  color: #e7b554;
+  color: var(--color-gold);
 }
 
 /* Light (white) cards: gold title, grey text, gold badge with white icon. */
@@ -123,13 +127,13 @@
   background: #ffffff;
 }
 .light .cardTitle {
-  color: #e7b554;
+  color: var(--color-gold-dark);
 }
 .light .cardText {
-  color: #555;
+  color: var(--color-body);
 }
 .light .iconBadge {
-  background: #e7b554;
+  background: var(--color-gold);
   color: #ffffff;
 }
 
@@ -155,7 +159,7 @@
   font-size: 1.05rem;
   cursor: pointer;
   border-radius: 50%;
-  color: #e7b554;
+  color: var(--color-gold);
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
   transition:
     background 0.2s ease,
@@ -164,7 +168,7 @@
 }
 .prevBtn:hover,
 .nextBtn:hover {
-  background: #e7b554;
+  background: var(--color-gold);
   color: #fff;
   transform: translateY(-2px);
 }
@@ -258,7 +262,6 @@
     margin: 0 8px;
   }
   .heading {
-    font-size: 28px;
     margin-bottom: 28px;
   }
   .cardCoreValue {

@@ -1,0 +1,767 @@
+/* ==========================================================================
+   Brand slide (BrandSlide.jsx). Class names are global in this project
+   (no hashing), so all of them start with "bs".
+   Motion runs only inside a slide with the global class `bsLive` (see
+   slideClasses in BannerVideo.jsx); otherwise everything is the still photo.
+   Only transform and opacity are animated.
+   ========================================================================== */
+
+/* ---------- 1. Photo ---------- */
+.bsScene {
+  overflow: hidden;
+  background: #1c2b4d; /* dusk blue until the photo paints */
+}
+
+.bsPhoto {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* desktop: darker left side for the copy */
+.bsScene::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(6, 10, 22, 0.88) 0%,
+    rgba(6, 10, 22, 0.62) 30%,
+    rgba(6, 10, 22, 0) 55%
+  );
+  pointer-events: none;
+}
+
+/* slow push-in while the slide is on screen (not on the first paint) */
+:global(.bsLive):not(:global(.bsBase)) .bsPhoto {
+  animation: bsPush 9s ease-out both;
+}
+
+@keyframes bsPush {
+  from {
+    transform: scale(1.06);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* ---------- 2. Lights on the photo ---------- */
+.bsLights {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.bsOnPhone {
+  display: none;
+}
+
+.bsBeacon,
+.bsWindow {
+  position: absolute;
+  display: block;
+  transform: translate(-50%, -50%);
+}
+
+/* aviation light: a red halo that breathes over the light in the photo */
+.bsBeacon {
+  width: 1.4%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 70, 50, 0.9) 0%, rgba(255, 40, 30, 0) 70%);
+  animation: bsBeacon 1.8s ease-in-out infinite;
+}
+
+/* a window switching on: warm glow */
+.bsWindow {
+  width: 0.35%;
+  aspect-ratio: 3 / 4;
+  background: #ffd98a;
+  box-shadow: 0 0 6px 1px rgba(255, 200, 110, 0.7);
+  opacity: 0.85;
+}
+
+:global(.bsLive) .bsWindow {
+  animation: bsWindowOn 0.5s steps(2, jump-none) calc(1.2s + var(--i) * 0.45s) both;
+}
+
+@keyframes bsBeacon {
+  0%,
+  100% {
+    opacity: 0.15;
+    transform: translate(-50%, -50%) scale(0.6);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.25);
+  }
+}
+
+@keyframes bsWindowOn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.85;
+  }
+}
+
+/* ---------- 3. Desktop copy ---------- */
+/* sits above the filter tabs and the search bar (see SearchOptions.module.css) */
+.bsDeskCopy {
+  top: auto;
+  bottom: calc(27.5px + 12px + 46px + 3%);
+  width: 42%;
+}
+
+.bsBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 clamp(10px, 1vw, 18px);
+  padding: 6px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: clamp(11px, 0.8vw, 14px);
+  font-weight: var(--fw-medium, 500);
+}
+
+.bsTitle {
+  font-size: clamp(30px, 3.3vw, 64px);
+  font-weight: var(--fw-bold, 700);
+  letter-spacing: -0.01em;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.35);
+}
+
+.bsTitle span {
+  display: inline;
+}
+
+.bsLine {
+  margin: clamp(8px, 0.8vw, 14px) 0 0;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: clamp(13px, 1vw, 18px);
+  font-weight: var(--fw-light, 300);
+}
+
+.bsLine b {
+  color: var(--color-gold-light);
+  font-weight: var(--fw-medium, 500);
+}
+
+/* partner developers */
+.bsPartners {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 1vw, 18px);
+  margin-top: clamp(12px, 1.2vw, 22px);
+}
+
+.bsPartners span {
+  flex: none;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: clamp(10px, 0.7vw, 13px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.bsPartners img {
+  display: block;
+  width: auto;
+  height: clamp(22px, 1.8vw, 34px);
+  opacity: 1;
+  filter: brightness(1.25);
+  transition: filter 0.3s;
+}
+
+/* copy arrives when the slide comes round again (not on the first paint) */
+:global(.bsLive):not(:global(.bsBase)) .bsReveal > * {
+  animation: bsUp 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+:global(.bsLive):not(:global(.bsBase)) .bsReveal > :nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+:global(.bsLive):not(:global(.bsBase)) .bsReveal > :nth-child(n + 3) {
+  animation-delay: 0.2s;
+}
+
+@keyframes bsUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- 4. Phones / tablets ---------- */
+@media (max-width: 1180px) {
+  .bsScene {
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 22%);
+    mask-image: linear-gradient(180deg, transparent 0%, #000 22%);
+  }
+
+  .bsScene::after {
+    display: none;
+  }
+
+  .bsOnDesk {
+    display: none;
+  }
+
+  .bsOnPhone {
+    display: block;
+  }
+
+  .bsBeacon {
+    width: 4%;
+  }
+
+  .bsBadge {
+    margin-bottom: 6px;
+    padding: 3px 12px;
+    font-size: clamp(10px, 2.6vw, 13px);
+  }
+
+  .bsTitle {
+    font-size: clamp(20px, 6vw, 30px);
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1180px) {
+  .bsBadge {
+    font-size: 1.7vw;
+  }
+
+  .bsTitle {
+    font-size: 4.6vw;
+  }
+}
+
+/* ---------- 5. Reduced motion: the still photo ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .bsScene *,
+  .bsReveal > * {
+    animation: none !important;
+  }
+}
+
+/* ---------- 6. Badge: Google rating | happy customers ---------- */
+.bsBadge {
+  position: relative;
+  overflow: hidden;
+  gap: 8px;
+  border-color: rgba(231, 181, 84, 0.45);
+  background: linear-gradient(180deg, rgba(20, 24, 40, 0.6), rgba(10, 12, 24, 0.55));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  font-variant-numeric: tabular-nums;
+}
+
+/* one shine sweep across the badge after load */
+.bsBadge::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(255, 236, 190, 0.35) 50%,
+    transparent 65%
+  );
+  transform: translateX(-120%);
+  animation: bsBadgeShine 1.4s ease-out 1.2s both;
+  pointer-events: none;
+}
+
+@keyframes bsBadgeShine {
+  to {
+    transform: translateX(120%);
+  }
+}
+
+.bsRated {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.bsBadge b {
+  color: #fff;
+  font-weight: var(--fw-semibold, 600);
+}
+
+.bsDivider {
+  width: 1px;
+  height: 14px;
+  background: rgba(231, 181, 84, 0.5);
+}
+
+.bsHappy {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.bsHappy svg {
+  color: #ff6b6b;
+}
+
+/* stars: a grey row, and a gold row on top cut to the rating */
+.bsStars {
+  position: relative;
+  display: inline-block;
+  color: rgba(255, 255, 255, 0.28);
+  letter-spacing: 1px;
+}
+
+.bsBadge .bsStars span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  overflow: hidden;
+  color: var(--color-gold);
+  white-space: nowrap;
+}
+
+/* ---------- 7. City line: rotating city + its project count ---------- */
+.bsTitle .bsCityLine {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+
+/* all words share one grid cell: the box is as wide as the longest city */
+.bsTitle .bsWords {
+  /* no shine on the box itself (Banner's .bsHead span rule) */
+  background: none;
+  animation: none;
+  -webkit-text-fill-color: currentColor;
+  display: inline-grid;
+  overflow: hidden;
+  color: var(--color-gold);
+}
+
+.bsTitle .bsWords > span {
+  grid-area: 1 / 1;
+  white-space: nowrap;
+}
+
+.bsTitle .bsWords > .bsWordGhost {
+  visibility: hidden;
+}
+
+/* the new city slides up into place */
+.bsTitle .bsWords > .bsWordIn {
+  animation: bsWordIn 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes bsWordIn {
+  from {
+    transform: translateY(80%);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* ---------- 8. Partner logos: right-to-left loop ---------- */
+.bsMarquee {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  padding-left: clamp(10px, 1vw, 18px);
+  border-left: 1px solid rgba(231, 181, 84, 0.5);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 88%, transparent);
+}
+
+/* two copies of the logos side by side; moving by half = one seamless loop */
+.bsTrack {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  animation: bsMarquee 30s linear infinite;
+}
+
+.bsTrack li {
+  padding-right: clamp(22px, 2.2vw, 40px);
+}
+
+.bsMarquee:hover .bsTrack,
+.bsMarquee:focus-within .bsTrack {
+  animation-play-state: paused;
+}
+
+@keyframes bsMarquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 1180px) {
+  .bsTitle .bsCityLine {
+    justify-content: center;
+  }
+}
+
+/* the developer logos keep sliding even with reduced motion (slow, linear) */
+@media (prefers-reduced-motion: reduce) {
+  .bsBadge::after,
+  .bsTitle .bsWords > .bsWordIn,
+  .bsTitle .bsWordText {
+    animation: none !important;
+  }
+}
+
+/* ---------- 9. Copy block: type scale and rhythm (8 / 12 / 16 / 24px) ---------- */
+.bsDeskCopy {
+  bottom: calc(27.5px + 56px + 2.4%); /* above the filter tabs + search bar */
+  width: 40%;
+}
+
+.bsDeskCopy > * {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.bsDeskCopy .bsBadge {
+  margin-bottom: 16px;
+}
+
+.bsTitle,
+.bsDeskCopy .bsTitle {
+  font-size: clamp(34px, 3.6vw, 60px);
+  font-weight: var(--fw-semibold, 600);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+/* "in Gurgaon" on its own line, the city in a reserved box */
+.bsTitle .bsCityLine {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25em;
+  justify-content: flex-start;
+}
+
+/* gold gradient fill + shine on the city */
+.bsTitle .bsWords > .bsWord {
+  background: none;
+  -webkit-text-fill-color: currentColor;
+}
+
+.bsTitle .bsWordText {
+  display: inline-block;
+  animation: bsShine 4.5s ease-in-out infinite;
+  background: linear-gradient(
+    100deg,
+    var(--color-gold-light) 0%,
+    var(--color-gold) 35%,
+    #fff1c9 50%,
+    var(--color-gold) 65%,
+    var(--color-gold-dark) 100%
+  );
+  background-size: 250% 100%;
+  background-position: 0 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* live count under the headline, same family as the badge */
+.bsCityCount {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px !important;
+  padding: 4px 12px;
+  border: 1px solid rgba(231, 181, 84, 0.35);
+  border-radius: 999px;
+  background: rgba(10, 12, 24, 0.45);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  animation: none;
+}
+
+.bsCityCount b {
+  color: #fff;
+  font-weight: var(--fw-semibold, 600);
+}
+
+.bsCityCount span {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* green "live" dot */
+.bsDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #3ddc84;
+  box-shadow: 0 0 0 3px rgba(61, 220, 132, 0.2);
+}
+
+.bsDeskCopy .bsLine {
+  max-width: 34em;
+  margin-top: 16px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: clamp(15px, 1.15vw, 18px);
+  line-height: 1.5;
+}
+
+.bsAmbassador {
+  margin-top: 8px !important;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+
+.bsAmbassador span {
+  color: var(--color-gold);
+}
+
+/* partners: small label, divider, uniform white logos */
+.bsDeskCopy .bsPartners {
+  margin-top: 24px;
+}
+
+.bsPartners {
+  align-items: center;
+}
+
+.bsPartners > span {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+
+.bsPartners img {
+  height: 24px;
+  max-width: 120px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  opacity: 0.7;
+  transition:
+    filter 0.3s,
+    opacity 0.3s;
+}
+
+.bsPartners li:hover img {
+  filter: none;
+  opacity: 1;
+}
+
+/* ---------- phones / tablets ---------- */
+@media (max-width: 1180px) {
+  .bsTitle,
+  .bsDeskCopy .bsTitle {
+    font-size: clamp(26px, 7.6vw, 34px);
+  }
+
+  .bsTitle .bsCityLine {
+    justify-content: center;
+  }
+
+  .bsPoster .bsBadge {
+    margin-bottom: 8px;
+  }
+
+  /* the partners loop across the band */
+  .bsPoster .bsPartners {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .bsPoster .bsPartners > span {
+    display: none;
+  }
+
+  .bsPoster .bsMarquee {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .bsPoster .bsPartners img {
+    height: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bsCityCount {
+    animation: none;
+  }
+}
+
+/* beat Banner.module.css .bsPoster .bsHead span rules (phones) */
+p.bsTitle > span.bsCityLine {
+  display: flex;
+  background: none;
+  animation: none;
+  color: #fff;
+  -webkit-text-fill-color: #fff;
+}
+
+/* the city sits at the start of its reserved box, right after "in" */
+p.bsTitle span.bsWords {
+  justify-items: start;
+}
+
+p.bsTitle span.bsWords {
+  display: inline-grid;
+}
+
+@media (max-width: 1180px) {
+  .bsPoster p.bsTitle {
+    font-size: clamp(26px, 7.6vw, 34px);
+    line-height: 1.05;
+  }
+}
+
+@media (min-width: 1181px) {
+  .bsDeskCopy .bsTitle {
+    font-size: clamp(34px, 3.4vw, 60px);
+  }
+}
+
+/* rotating line under the headline (RotatingLine) */
+.bsLines {
+  display: grid;
+  max-width: 34em;
+  margin-top: 16px !important;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: clamp(15px, 1.15vw, 18px);
+  font-weight: var(--fw-light, 300);
+  line-height: 1.5;
+}
+
+.bsLines > span {
+  grid-area: 1 / 1;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.bsLines > span.bsLineOn {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bsLines > span {
+    transition: none;
+  }
+}
+
+/* the city: solid gold with a soft glow. (A background-clip:text gradient
+   rendered dark on desktop Chrome, so it is not used here.) */
+p.bsTitle .bsWordText {
+  animation: none;
+  background: none;
+  color: var(--color-gold);
+  -webkit-text-fill-color: var(--color-gold);
+  text-shadow: 0 0 24px rgba(231, 181, 84, 0.35);
+}
+
+/* all cities in one grid cell (the visible one over the hidden ghosts) */
+p.bsTitle span.bsWords > span {
+  grid-area: 1 / 1;
+  white-space: nowrap;
+}
+
+p.bsTitle span.bsWords > span.bsWordGhost {
+  visibility: hidden;
+}
+
+/* the new city fades and rises in (its own keyframes; translate in px) */
+p.bsTitle span.bsWords > span.bsWordIn {
+  animation: bsCityIn 0.5s ease-out both;
+}
+
+@keyframes bsCityIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  p.bsTitle span.bsWords > span.bsWordIn {
+    animation: none;
+  }
+}
+
+/* the copy is its own layer, so its animated parts are painted above the
+   photo's dark gradient (they were composited underneath it in Chrome) */
+.bsDeskCopy,
+.bsPoster {
+  isolation: isolate;
+  transform: translateZ(0);
+}
+
+/* city words: all mounted, the shown one fades/rises in, the old one fades out */
+p.bsTitle span.bsWords > span.bsWordText {
+  opacity: 0;
+  transform: translateY(40%);
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+p.bsTitle span.bsWords > span.bsWordText.bsWordOn {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  p.bsTitle span.bsWords > span.bsWordText {
+    transition: none;
+  }
+}
+
+/* typewriter city: no slide/fade, just the typed letters and a blinking caret */
+p.bsTitle span.bsWords > span.bsWordText,
+p.bsTitle span.bsWords > span.bsWordText.bsWordOn {
+  opacity: 1;
+  transform: none;
+  transition: none;
+  justify-self: start;
+}
+
+.bsCaret {
+  display: inline-block;
+  width: 3px;
+  height: 0.9em;
+  margin-left: 4px;
+  vertical-align: -0.08em;
+  border-radius: 2px;
+  background: var(--color-gold);
+  animation: bsCaretBlink 0.8s steps(1) infinite;
+}
+
+@keyframes bsCaretBlink {
+  50% {
+    opacity: 0;
+  }
+}

@@ -20,12 +20,14 @@
   color: #313131;
 }
 .sectionHead > h2 {
-  color: #dcaa4c;
-  font-family: "Lexend Deca";
-  font-size: 27px;
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  text-transform: none;
+  color: var(--color-ink);
   font-style: normal;
-  font-weight: 600;
-  line-height: normal;
 }
 .servicesGridsRow .swiper {
   padding-left: 5rem;
@@ -57,7 +59,7 @@
 .serviceGrid .content p {
   font-size: 14px;
   margin-top: 0;
-  color: #000;
+  color: var(--color-body);
 }
 
 .service-grid {

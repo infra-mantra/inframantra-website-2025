@@ -1,6 +1,8 @@
 import styles from "./PremiumPicks.module.css";
 import { useRouter } from "next/router";
 import { optimizedSrc } from "../../lib/imageUrl.js";
+import CompareToggle from "../../compare/CompareToggle.jsx";
+import HeartButton from "../../shared/shortlist/HeartButton.jsx";
 
 export default function PropertyCard({ property }) {
   const imageUrl =
@@ -57,6 +59,8 @@ export default function PropertyCard({ property }) {
               />
             </span>
           )}
+          <CompareToggle property={property} />
+          <HeartButton property={property} />
         </div>
 
         <div className={styles.propertyContent}>

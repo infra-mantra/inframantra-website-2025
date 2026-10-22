@@ -1,0 +1,430 @@
+/* Mid-list "Featured project" ad + "talk to an expert" strip (listing pages). */
+
+.laAd {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 4px 0 24px;
+  /* reserve the photo's shape before it loads: 3:1 desktop photo, cropped a bit taller */
+  aspect-ratio: 16 / 6;
+  min-height: 260px;
+  overflow: hidden;
+  background: var(--color-ink);
+  color: var(--color-surface);
+  font-family: var(--font-body);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  isolation: isolate;
+}
+
+.laMedia {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.laImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s ease;
+}
+
+.laAd:hover .laImg {
+  transform: scale(1.03);
+}
+
+.laShade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(10, 14, 24, 0.9) 0%,
+    rgba(10, 14, 24, 0.72) 38%,
+    rgba(10, 14, 24, 0.12) 72%,
+    rgba(10, 14, 24, 0) 100%
+  );
+}
+
+.laBody {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 6px;
+  height: 100%;
+  max-width: 52%;
+  padding: 24px 28px;
+  box-sizing: border-box;
+}
+
+.laTag {
+  font-size: var(--fs-eyebrow);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  background: var(--color-gold);
+  padding: 3px 8px;
+}
+
+.laLogo {
+  display: block;
+  height: 40px;
+  width: auto;
+  max-width: 160px;
+  object-fit: contain;
+  margin-top: 6px;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
+}
+
+.laName {
+  margin: 4px 0 0;
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  color: var(--color-surface);
+}
+
+.laDev {
+  margin: 0;
+  font-size: var(--fs-small);
+  font-weight: var(--fw-light);
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.laLoc {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  font-size: var(--fs-small);
+  font-weight: var(--fw-light);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.laFacts {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.laBhk {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  padding: 4px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.laPrice {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+  color: var(--color-gold-light);
+}
+
+.laPrice small {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-light);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.laActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.laPrimary,
+.laSecondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 18px;
+  font-family: var(--font-body);
+  font-size: var(--fs-button);
+  font-weight: var(--fw-medium);
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.laPrimary {
+  border: 0;
+  background: var(--color-gold);
+  color: var(--color-ink);
+}
+
+.laPrimary:hover {
+  background: var(--color-gold-light);
+}
+
+.laSecondary {
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  color: var(--color-surface);
+  background: transparent;
+}
+
+.laSecondary:hover {
+  background: var(--color-surface);
+  color: var(--color-ink);
+}
+
+.laPrimary:focus-visible,
+.laSecondary:focus-visible {
+  outline: 2px solid var(--color-gold-light);
+  outline-offset: 2px;
+}
+
+/* ---------- talk to an expert ---------- */
+.laExpert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 4px 0 24px;
+  padding: 16px 20px;
+  background: #fbf6ea;
+  border: 1px solid rgba(231, 181, 84, 0.45);
+  border-left: 4px solid var(--color-gold);
+  font-family: var(--font-body);
+}
+
+.laExpertText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.laExpertText strong {
+  font-size: var(--fs-h4);
+  font-weight: var(--fw-semibold);
+  color: var(--color-ink);
+}
+
+.laExpertText span {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-light);
+  color: var(--color-body);
+}
+
+.laExpertActions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.laExpertCall,
+.laExpertWa,
+.laExpertBtn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 0 14px;
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid var(--color-ink);
+  color: var(--color-ink);
+  background: transparent;
+}
+
+.laExpertWa {
+  border-color: #1ea952;
+  color: #138a40;
+}
+
+.laExpertBtn {
+  border-color: var(--color-gold);
+  background: var(--color-gold);
+}
+
+@media (max-width: 768px) {
+  .laExpertActions {
+    width: 100%;
+  }
+  .laExpertCall,
+  .laExpertWa,
+  .laExpertBtn {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .laImg,
+  .laPrimary,
+  .laSecondary {
+    transition: none;
+  }
+  .laAd:hover .laImg {
+    transform: none;
+  }
+}
+
+/* ---------- phones + small tablets: photo on top, white content below ---------- */
+@media (max-width: 768px) {
+  .laAd,
+  .laExpert {
+    align-self: stretch;
+    box-sizing: border-box;
+    width: auto;
+    margin: 4px 16px 20px;
+  }
+  .laAd {
+    display: flex;
+    flex-direction: column;
+    aspect-ratio: auto;
+    min-height: 0;
+    background: var(--color-surface);
+    color: var(--color-ink);
+    border: 1px solid #f1e3bf;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  }
+  .laMedia {
+    position: relative;
+    inset: auto;
+    z-index: 0;
+    aspect-ratio: 16 / 10;
+    background: #1d2333;
+  }
+  .laShade {
+    background: linear-gradient(180deg, rgba(10, 14, 24, 0.45) 0%, rgba(10, 14, 24, 0) 40%);
+  }
+  .laBody {
+    position: static;
+    max-width: none;
+    height: auto;
+    gap: 6px;
+    padding: 14px 16px 16px;
+  }
+  /* tag top-left, logo top-right on the photo — never on top of each other */
+  .laTag {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1;
+  }
+  .laLogo {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 1;
+    height: 34px;
+    max-width: 40%;
+    margin: 0;
+    padding: 4px 8px;
+    background: rgba(10, 14, 24, 0.55);
+  }
+  .laName {
+    margin: 0;
+    color: var(--color-ink);
+  }
+  .laDev,
+  .laLoc {
+    color: var(--color-ink-muted);
+    font-size: var(--fs-small);
+  }
+  .laLoc svg {
+    color: var(--color-gold-dark);
+    flex-shrink: 0;
+  }
+  .laFacts {
+    gap: 8px 12px;
+  }
+  .laBhk {
+    border-color: #ecd9ac;
+    background: #fbf3e1;
+    color: var(--color-ink);
+  }
+  .laPrice {
+    color: var(--color-ink);
+    white-space: nowrap;
+  }
+  .laPrice small {
+    color: var(--color-ink-muted);
+  }
+  .laActions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    gap: 8px;
+  }
+  .laPrimary,
+  .laSecondary {
+    min-height: 44px;
+    padding: 0 8px;
+  }
+  .laSecondary {
+    border-color: var(--color-ink);
+    color: var(--color-ink);
+  }
+  .laAd:hover .laImg {
+    transform: none;
+  }
+}
+
+/* small tablets: image left, content right */
+@media (min-width: 560px) and (max-width: 768px) {
+  .laAd {
+    display: grid;
+    grid-template-columns: 46% 1fr;
+  }
+  .laMedia {
+    aspect-ratio: auto;
+    min-height: 100%;
+  }
+  .laMedia picture,
+  .laMedia img {
+    position: absolute;
+    inset: 0;
+  }
+  .laLogo {
+    right: auto;
+    left: 10px;
+    top: auto;
+    bottom: 10px;
+    max-width: 40%;
+  }
+  .laBody {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .laExpertCall,
+  .laExpertWa,
+  .laExpertBtn {
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* photo fills its 16:10 box (the phone file is 6:5) */
+  .laMedia picture,
+  .laMedia .laImg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  /* colour logos read on white, white logos on the dark chip */
+  .laLogoOnLight {
+    background: rgba(255, 255, 255, 0.94);
+    filter: none;
+  }
+}

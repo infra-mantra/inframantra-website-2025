@@ -7,16 +7,20 @@
 }
 
 .awardHeader {
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  text-transform: none;
+  color: var(--color-ink);
   display: flex;
   justify-content: center;
-  font-size: 36px;
-  font-weight: 700;
-  color: #1a1a1a;
 }
 
 .brand {
   margin-left: 6px;
-  color: #e7b554;
+  color: var(--color-gold);
 }
 
 .swiperContainer {
@@ -96,7 +100,6 @@
   }
 
   .awardHeader {
-    font-size: 1.2rem;
     margin: 2rem 0;
   }
 }

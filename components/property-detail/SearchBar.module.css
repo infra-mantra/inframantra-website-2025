@@ -168,3 +168,24 @@
   position: relative;
   z-index: 1;
 }
+
+/* Desktop: the first-photo placeholder (.pg-lcp-base, fixed 15:8) can be taller
+   than the gallery on short laptop screens; clip it so no strip of another
+   photo shows under the gallery. */
+@media (min-width: 769px) {
+  .gallery-with-form .gallery-wrapper {
+    overflow: hidden;
+  }
+}
+
+/* Tablets (769-1100px): the photo column is narrow, so a 15:8 photo was only
+   ~240px tall beside a ~560px form, leaving a large blank block under the
+   photo. Give the photo the height of the form column instead. 1101px and up
+   is unchanged. */
+@media (min-width: 769px) and (max-width: 1100px) {
+  .gallery-with-form :global(.image-gallery-content:not(.fullscreen) .image-gallery-slide .image-gallery-image),
+  .gallery-with-form :global(.image-gallery-content:not(.fullscreen) .image-gallery-slide > *) {
+    height: min(560px, 80vh);
+    object-fit: cover;
+  }
+}

@@ -29,7 +29,7 @@
 
 .bottom_cta a.whatsapp {
   color: #0b6e21;
-  font-family: "Lexend Deca";
+  font-family: var(--font-body);
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
@@ -38,7 +38,7 @@
 
 .bottom_cta a.contact {
   color: #fff;
-  font-family: "Lexend Deca";
+  font-family: var(--font-body);
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -69,7 +69,7 @@
   top: 46%;
   right: -30px;
   color: #fff;
-  /* background-color: #e7b554; */
+  /* background-color: var(--color-gold); */
   z-index: 99;
   /* transform: translateY(-50%) rotate(270deg); */
   padding: 12px 30px;
@@ -83,7 +83,7 @@
   top: 46%;
   right: -50px;
   color: #fff;
-  background-color: #e7b554;
+  background-color: var(--color-gold);
   z-index: 99;
   transform: translateY(-50%) rotate(270deg);
   padding: 12px 30px;
@@ -267,12 +267,12 @@
 }
 
 /* Enquire — the third floating button, stacked above Phone (85px) and WhatsApp
-   (25px). Brand gold #e7b554 rather than their #34af23 green, because it is the
+   (25px). Brand gold var(--color-gold) rather than their #34af23 green, because it is the
    primary action rather than another contact channel. Dark text: white on this
    gold is 1.89:1 and fails contrast, while #333 on it is 6.70:1. */
 .btnfloating.enquire {
   bottom: 85px;
-  background-color: #e7b554;
+  background-color: var(--color-gold);
   color: #fff;
   border: 0;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
@@ -285,7 +285,7 @@
   justify-content: space-evenly;
   align-items: center;
   padding: 10px 0;
-  background: #e7b554;
+  background: var(--color-gold);
 }
 
 .bottom_cta .left,
@@ -303,12 +303,11 @@
   cursor: pointer;
 
   color: #333;
-  font-family: "Lexend Deca";
+  font-family: var(--font-body);
   font-size: 14px;
   font-weight: 600;
   text-transform: uppercase;
 }
-
 
 /* Page wrapper spacing on phones (was an inline style set after hydration) */
 @media (max-width: 768px) {

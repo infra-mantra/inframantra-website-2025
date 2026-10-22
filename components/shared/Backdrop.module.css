@@ -14,7 +14,9 @@
 .imBdOverlay {
   position: fixed;
   inset: 0;
-  z-index: 1000;
+  /* Above the mobile bottom action bar (BottomCta, z-index 1100), which
+     otherwise covered the form's Submit button and consent line. */
+  z-index: 1200;
 
   display: flex;
   justify-content: center;

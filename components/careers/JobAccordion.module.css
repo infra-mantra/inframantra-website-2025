@@ -35,7 +35,7 @@
   justify-content: center;
   border-radius: 50%;
   border: 0px;
-  background: #e7b554;
+  background: var(--color-gold);
   color: #fff;
   opacity: 0.6;
   z-index: 99;
@@ -107,12 +107,14 @@
   color: #434343;
 }
 .jobsWrapper .accordionItem .jobTitle {
-  font-size: 20px;
+  font-family: var(--font-body);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: normal;
+  text-transform: none;
   color: #313131;
   width: 40%;
-  font-weight: 500;
-  text-transform: uppercase;
-  font-family: "Lexend Deca", sans-serif;
 }
 .jobsWrapper .accordionItem .jobLocation {
   width: 15%;
@@ -225,7 +227,7 @@
   margin-top: 1.5rem;
 }
 .themeBtn {
-  background-color: #e7b554;
+  background-color: var(--color-gold);
   border: none;
   padding: 10px 20px;
   color: #fff;

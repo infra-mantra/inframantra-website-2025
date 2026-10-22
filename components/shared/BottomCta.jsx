@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { PHONE_TEL as PHONE, WHATSAPP_URL } from "../lib/siteConfig.js";
 import dynamic from "next/dynamic";
 import { createPortal } from "react-dom";
 import styles from "./BottomCta.module.css";
@@ -19,9 +20,6 @@ const PropertyPageFloatingContact = dynamic(
   () => import("../property-detail/PropertyPageFloatingContact.jsx"),
   { ssr: false }
 );
-
-const PHONE = "+918698009900";
-const WHATSAPP_URL = "https://wa.me/918698009900";
 
 export default function BottomCta({ name = "Form Submitted from Bottom Bar" }) {
   const [enquiryOpen, setEnquiryOpen] = useState(false);
@@ -61,7 +59,11 @@ export default function BottomCta({ name = "Form Submitted from Bottom Bar" }) {
           </svg>
         </a>
 
-        <a className={`${styles.iconBtn} ${styles.call}`} href={`tel:${PHONE}`} aria-label="Call us">
+        <a
+          className={`${styles.iconBtn} ${styles.call}`}
+          href={`tel:${PHONE}`}
+          aria-label="Call us"
+        >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.3 21 3 13.7 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z" />
           </svg>

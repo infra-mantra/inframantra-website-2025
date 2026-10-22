@@ -15,8 +15,6 @@ body {
   scroll-behavior: smooth;
   max-width: 100vw;
 }
-html.has-scroll-smooth {
-}
 
 .image-gallery-slides {
   width: 75vw;
@@ -87,7 +85,7 @@ a {
 
 * {
   box-sizing: border-box;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
 }
 
 /* Clears the fixed mobile action bar (components/shared/BottomCta.jsx) so the
@@ -104,15 +102,15 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
 }
 .leaflet-control-attribution a {
   display: none;
 }
 
 .content h2 {
-  color: #e7b554;
-  font-family: "Lexend Deca";
+  color: var(--color-gold);
+  font-family: var(--font-body);
   font-size: 21px;
   font-style: normal;
   font-weight: 700;
@@ -122,8 +120,8 @@ h6 {
 /* Sub-headings (e.g. "Key highlights…", numbered points, FAQ questions) were
    unstyled — defaulting to pure black + bold 700 (heavy). Soften them. */
 .content h3 {
-  color: #e7b554;
-  font-family: "Lexend Deca";
+  color: var(--color-gold);
+  font-family: var(--font-body);
   font-size: 17px;
   font-weight: 500;
   line-height: 1.4;
@@ -131,7 +129,7 @@ h6 {
 }
 .content h4 {
   color: #555555;
-  font-family: "Lexend Deca";
+  font-family: var(--font-body);
   font-size: 16px;
   font-weight: 600;
   line-height: 1.4;
@@ -158,7 +156,7 @@ input.rangeControl[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none !important;
   width: 24px;
   height: 24px;
-  background: #e7b554;
+  background: var(--color-gold);
   border: 5px solid #fff;
   border-radius: 50%;
   cursor: pointer;
@@ -291,22 +289,33 @@ h2.wp-block-heading {
   width: 60%;
 }
 
+/* Site-wide section title (same look as the home page section titles).
+   .Header is the legacy name used on the property page. */
+.section-title,
 .Header {
-  font-size: 20px;
-  color: #e7b554;
-  font-weight: 600;
-  text-transform: uppercase;
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  text-transform: none;
+  color: var(--color-ink);
+}
+.section-title span,
+.Header span {
+  color: var(--color-gold-dark);
 }
 
 .p-text {
-  letter-spacing: 1px;
-  line-height: 20px;
-  font-size: 16px;
-  font-weight: 300;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-weight: var(--fw-light);
+  letter-spacing: normal;
+  color: var(--color-body);
 }
 
 .font-clr {
-  color: #e7b554;
+  color: var(--color-gold);
 }
 .swiper-button-prev:after,
 .swiper-rtl .swiper-button-next:after {
@@ -358,20 +367,8 @@ h2.wp-block-heading {
     text-align: center;
     margin: 20px 0 0;
   }
-  .p-text {
-    letter-spacing: 1px;
-    line-height: 20px;
-    font-size: 12px;
-    font-weight: 300;
-  }
   .slide-wrapper {
     width: 100%;
-  }
-  .Header {
-    color: #e7b554;
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 15px;
   }
 }
 
@@ -389,7 +386,7 @@ h2.wp-block-heading {
 }
 .aboutProjectHeader {
   font-size: 20px;
-  color: #e7b554;
+  color: var(--color-gold);
   font-weight: 500;
   text-transform: uppercase;
 }
@@ -453,11 +450,15 @@ h2.wp-block-heading {
   color: #a0d8ef;
 }
 .heading-developer-name {
+  font-family: var(--font-body);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--color-ink);
   /* Developer's name — kept black and smaller (it's a proper name, not a gold
       section label, and can be long). */
-  font-size: 18px;
-  font-weight: 600;
-  color: #1a1a1a;
 }
 
 .project-name {
@@ -796,4 +797,104 @@ h2.wp-block-heading {
 .faq-wrapper {
   max-width: 1403px;
   margin: 0px auto;
+}
+
+/* ---------- Scroll reveal (driven by components/shared/useScrollReveal.js) ----------
+   Only elements the script tagged "pending" start hidden, so without JS
+   everything is visible. Transform + opacity only: no layout shift. */
+[data-reveal] {
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+[data-reveal][data-reveal-pending]:not([data-reveal="stagger"]) {
+  opacity: 0;
+  transform: translateY(18px);
+}
+/* "stagger": the list's children rise in one after another */
+[data-reveal="stagger"] > * {
+  transition:
+    opacity 0.55s ease,
+    transform 0.55s ease;
+}
+[data-reveal="stagger"][data-reveal-pending] > * {
+  opacity: 0;
+  transform: translateY(18px);
+}
+[data-reveal="stagger"] > *:nth-child(2) {
+  transition-delay: 0.08s;
+}
+[data-reveal="stagger"] > *:nth-child(3) {
+  transition-delay: 0.16s;
+}
+[data-reveal="stagger"] > *:nth-child(4) {
+  transition-delay: 0.24s;
+}
+[data-reveal="stagger"] > *:nth-child(n + 5) {
+  transition-delay: 0.32s;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal] > * {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ---------- Home: space reserved for the Premium Picks block (pages/index.js) ----------
+   That block (Premium Picks, Shorts, Services, Localities, Ad, Other Cities) renders
+   client-side. Until its JS arrives, .premiumReserve holds the WHOLE block's height,
+   so the Blogs section below does not jump down by ~4000px when it mounts.
+   .premiumPicksContainer holds just Premium Picks' own height while its cards load.
+   Values = real heights measured with puppeteer, rounded DOWN so there is no gap. */
+.premiumReserve {
+  min-height: 3985px;
+}
+.premiumPicksContainer {
+  min-height: 649px;
+}
+@media (min-width: 390px) {
+  .premiumReserve {
+    min-height: 4020px;
+  }
+}
+@media (min-width: 768px) {
+  .premiumReserve {
+    min-height: 3939px;
+  }
+  .premiumPicksContainer {
+    min-height: 644px;
+  }
+}
+@media (min-width: 1024px) {
+  .premiumReserve {
+    min-height: 3845px;
+  }
+  .premiumPicksContainer {
+    min-height: 715px;
+  }
+}
+@media (min-width: 1200px) {
+  .premiumReserve {
+    min-height: 3662px;
+  }
+  .premiumPicksContainer {
+    min-height: 647px;
+  }
+}
+@media (min-width: 1600px) {
+  .premiumPicksContainer {
+    min-height: 624px;
+  }
+}
+
+/* ---------- Home: alternate section background ----------
+   Warm off-white band with hairline dividers, used on every other home section
+   so the long page reads in clear chapters. */
+.home-alt-bg {
+  background: #faf7f2;
+  border-top: 1px solid #efe9dd;
+  border-bottom: 1px solid #efe9dd;
+  padding-block: clamp(32px, 4vw, 56px);
 }

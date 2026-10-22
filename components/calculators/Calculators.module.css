@@ -1,5 +1,5 @@
 /* Shared calculator styling — mirrors the property-page EMI calculator
-   design system (gold accent #e7b554, white cards, rounded corners). */
+   design system (gold accent var(--color-gold), white cards, rounded corners). */
 
 /* Design tokens — declared on every top-level container so the gold
    variables resolve for the hero, the page shell (cards, charts, FAQ,
@@ -8,11 +8,11 @@
 .shell,
 .wrap,
 .related {
-  --c-accent: #e7b554;
-  --c-accent-dark: #d9a23c;
+  --c-accent: var(--color-gold);
+  --c-accent-dark: var(--color-gold-dark);
   --c-light: #fff8e1;
   --c-interest: #f0d9a6;
-  --c-ink: #333;
+  --c-ink: var(--color-ink);
   --c-muted: #6b7280;
   --c-border: #e0e0e0;
 }
@@ -30,9 +30,9 @@
 }
 
 .heading {
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 21px;
-  color: #e7b554;
+  color: var(--color-gold);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.6px;
@@ -221,7 +221,7 @@
 }
 
 .resultLeadValue {
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 32px;
   font-weight: 700;
   color: var(--c-accent-dark);
@@ -394,12 +394,14 @@
 }
 
 .faqHeading {
-  font-family: "Lexend Deca", sans-serif;
-  font-size: 26px;
-  font-weight: 700;
-  color: var(--c-ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  text-transform: none;
+  color: var(--color-ink);
   margin: 0 0 24px;
-  letter-spacing: -0.3px;
   padding-left: 14px;
   border-left: 4px solid var(--c-accent);
 }
@@ -420,6 +422,12 @@
 }
 
 .faqQ {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-tight);
+  text-transform: none;
+  color: var(--color-ink);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -429,10 +437,6 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  font-family: inherit;
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--c-ink);
   padding: 18px 20px;
   margin: 0;
   transition:
@@ -478,9 +482,11 @@
 }
 
 .faqA {
-  font-size: 14px;
-  color: var(--c-muted);
-  line-height: 1.6;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-light);
+  line-height: var(--lh-body);
+  color: var(--color-body);
   margin: 0;
 }
 
@@ -559,18 +565,19 @@
 }
 
 .cardTitle {
-  font-family: "Lexend Deca", sans-serif;
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--c-ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-card-title);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--color-ink);
   margin: 0;
-  letter-spacing: -0.2px;
-  line-height: 1.3;
 }
 
 .cardDesc {
   font-size: 14.5px;
-  color: var(--c-muted);
+  color: var(--color-body);
   line-height: 1.6;
   margin: 0 0 20px;
   flex: 1;
@@ -601,12 +608,14 @@
 }
 
 .relatedHeading {
-  font-family: "Lexend Deca", sans-serif;
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--c-ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  text-transform: none;
+  color: var(--color-ink);
   margin: 0 0 20px;
-  letter-spacing: -0.3px;
   padding-left: 14px;
   border-left: 4px solid var(--c-accent);
 }
@@ -691,7 +700,7 @@
   right: 0;
   bottom: 0;
   height: 4px;
-  background: linear-gradient(90deg, #f0c977, #d9a23c);
+  background: linear-gradient(90deg, #f0c977, var(--color-gold-dark));
 }
 
 /* Faint brand wordmark watermarked into the banner artwork */
@@ -699,7 +708,7 @@
   position: absolute;
   bottom: 16px;
   right: 5%;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 62px;
   font-weight: 800;
   letter-spacing: 10px;
@@ -1092,7 +1101,7 @@
 
 .heroEyebrow {
   display: inline-block;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
@@ -1102,7 +1111,7 @@
 }
 
 .heroTitle {
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 44px;
   font-weight: 700;
   margin: 0 0 18px;
@@ -1182,7 +1191,7 @@
 
 .statValue {
   display: block;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 30px;
   font-weight: 700;
   background: linear-gradient(135deg, var(--c-accent), var(--c-accent-dark));
@@ -1206,13 +1215,15 @@
 }
 
 .howHeading {
-  font-family: "Lexend Deca", sans-serif;
-  font-size: 26px;
-  font-weight: 700;
-  color: var(--c-ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  text-transform: none;
+  color: var(--color-ink);
   margin: 0 0 30px;
   text-align: center;
-  letter-spacing: -0.3px;
   position: relative;
   padding-bottom: 16px;
 }
@@ -1253,7 +1264,7 @@
   border-radius: 50%;
   background: linear-gradient(135deg, var(--c-accent), var(--c-accent-dark));
   color: #fff;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-weight: 700;
   font-size: 18px;
   margin-bottom: 18px;
@@ -1261,12 +1272,14 @@
 }
 
 .howStepTitle {
-  font-family: "Lexend Deca", sans-serif;
-  font-size: 17px;
-  font-weight: 600;
-  color: var(--c-ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--color-ink);
   margin: 0 0 9px;
-  letter-spacing: -0.2px;
 }
 
 .howStepText {
@@ -1293,7 +1306,7 @@
 }
 
 .chartTitle {
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 16px;
   font-weight: 600;
   color: var(--c-ink);
@@ -1381,7 +1394,7 @@
 }
 
 .tableTitle {
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 16px;
   font-weight: 600;
   color: var(--c-ink);
@@ -1434,23 +1447,27 @@
 }
 
 .seoContent h2 {
-  font-family: "Lexend Deca", sans-serif;
-  font-size: 26px;
-  font-weight: 700;
-  color: var(--c-ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  text-transform: none;
+  color: var(--color-ink);
   margin: 0 0 18px;
-  letter-spacing: -0.3px;
   padding-left: 14px;
   border-left: 4px solid var(--c-accent);
 }
 
 .seoContent h3 {
-  font-family: "Lexend Deca", sans-serif;
-  font-size: 19px;
-  font-weight: 600;
-  color: var(--c-ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--color-ink);
   margin: 26px 0 10px;
-  letter-spacing: -0.2px;
 }
 
 .seoContent a {
@@ -1462,7 +1479,7 @@
 .seoContent p {
   font-size: 15px;
   line-height: 1.7;
-  color: var(--c-muted);
+  color: var(--color-body);
   margin: 0 0 14px;
 }
 
@@ -1498,11 +1515,13 @@
 }
 
 .leadHeading {
-  font-family: "Lexend Deca", sans-serif;
-  font-size: 28px;
-  font-weight: 700;
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  text-transform: none;
   margin: 0 0 12px;
-  letter-spacing: -0.4px;
 }
 
 .leadHeading {
@@ -1755,14 +1774,9 @@
   }
 
   /* Section headings */
-  .howHeading {
-    font-size: 22px;
-  }
+
   .faqHeading,
   .relatedHeading,
-  .seoContent h2 {
-    font-size: 21px;
-  }
 
   /* How-it-works + cards padding */
   .howStep,
@@ -1784,16 +1798,12 @@
   .leadBand {
     padding: 22px 18px;
   }
-  .leadHeading {
-    font-size: 23px;
-  }
   .leadForm {
     padding: 18px;
   }
 
   /* FAQ */
   .faqQ {
-    font-size: 15px;
     padding: 16px;
   }
 }

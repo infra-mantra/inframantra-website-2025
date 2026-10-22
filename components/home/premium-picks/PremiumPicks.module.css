@@ -49,7 +49,7 @@
   border: 1px solid #e6e6e6;
   background: #f5f5f6;
   border-radius: 999px;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   padding: 8px 15px;
   font-weight: 500;
   font-size: 13px;
@@ -158,17 +158,18 @@
 
 .propertyContent {
   padding: 12px 16px 14px;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
 }
 
 .propertyTitle {
-  font-size: 15.5px;
-  font-weight: 700;
-  color: #dcaa4c;
+  font-family: var(--font-body);
+  font-size: var(--fs-card-title);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--color-ink);
   margin: 0 0 5px 0;
-  line-height: 1.25;
-  letter-spacing: -0.01em;
-  font-family: "Lexend Deca", sans-serif;
   display: -webkit-box;
   -webkit-line-clamp: 1;
   line-clamp: 1;
@@ -181,7 +182,7 @@
   color: #6b6b6b;
   margin: 0 0 7px 0;
   font-weight: 400;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   display: -webkit-box;
   -webkit-line-clamp: 1; /* number of lines before ... */
   line-clamp: 1;
@@ -195,7 +196,7 @@
   color: #1a1a1a;
   margin: 0;
   letter-spacing: 0.01em;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
 }
 
 /* Custom Swiper Navigation */
@@ -338,10 +339,6 @@
 
   .propertyImageContainer {
     height: 150px;
-  }
-
-  .propertyTitle {
-    font-size: 16px;
   }
 }
 

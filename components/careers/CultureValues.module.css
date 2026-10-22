@@ -11,10 +11,13 @@
 /* 🔥 BACKGROUND LAYER */
 
 .title2 {
-  font-family: "Lexend Deca";
-  font-size: 36px;
-  font-weight: 700;
-  color: #1a1a1a;
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  text-transform: none;
+  color: var(--color-ink);
   margin-bottom: 40px;
 }
 
@@ -77,7 +80,6 @@
     font-size: 28px;
   }
   .title2 {
-    font-size: 1.2rem;
     margin-bottom: 20px;
   }
 

@@ -1,23 +1,12 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import styles from "./AboutUs.module.css";
 import RightSlideModal from "../property-detail/Modal.jsx";
 
 const AboutUsPageHeader = () => {
-  const [isDesktop, setIsDesktop] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  useEffect(() => {
-    const checkScreenWidth = () => {
-      setIsDesktop(window.innerWidth >= 768);
-    };
-
-    checkScreenWidth();
-    window.addEventListener("resize", checkScreenWidth);
-    return () => window.removeEventListener("resize", checkScreenWidth);
-  }, []);
 
   const BannerImage =
     "https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/about%20us%20banner%20final.avif";
@@ -56,11 +45,27 @@ const AboutUsPageHeader = () => {
       <div className={styles.aboutUsPageWrapper}>
         {/* Banner */}
         <div className={styles.aboutUsPageHeaderImgContainer}>
-          <img
-            src={isDesktop ? BannerImage : MobileBannerImage}
-            alt="about banner"
-            className={styles.aboutUsPageHeaderImg}
-          />
+          {/* Perf: <picture> picks the phone/desktop file in the HTML itself. The old
+              JS swap (isDesktop) shipped the 400 KB desktop banner in the server HTML,
+              so phones downloaded it, then the 26 KB phone one after hydration, and the
+              size-less <img> shifted everything below it (CLS ~0.4). width/height give
+              the browser the aspect ratio up front; the source's own pair overrides it. */}
+          <picture>
+            <source
+              media="(max-width: 767px)"
+              srcSet={MobileBannerImage}
+              width="815"
+              height="475"
+            />
+            <img
+              src={BannerImage}
+              alt="about banner"
+              className={styles.aboutUsPageHeaderImg}
+              width="1650"
+              height="550"
+              fetchpriority="high"
+            />
+          </picture>
         </div>
 
         <div className={styles.aboutUsContainer}>

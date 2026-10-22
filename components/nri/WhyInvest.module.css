@@ -4,8 +4,6 @@
 
   margin: 0 auto;
 }
-.bgColor {
-}
 
 .label {
   font-size: 1rem;
@@ -63,8 +61,12 @@
 }
 
 .cardTitle {
-  font-size: 18px;
-  font-weight: 500;
+  font-family: var(--font-body);
+  font-size: var(--fs-card-title);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: normal;
+  text-transform: none;
   color: #d4a64a;
   margin: 0;
 }
@@ -72,8 +74,8 @@
 .cardDescription {
   font-size: 14px;
   line-height: 1.65;
-  color: #555;
-  font-weight: 400;
+  color: var(--color-body);
+  font-weight: var(--fw-light);
   margin: 0;
 }
 
@@ -84,10 +86,16 @@
   .cardsGrid {
     grid-template-columns: 1fr;
   }
-  .heading {
-    font-size: 20px;
-  }
   .cardDescription {
     font-size: 13px;
   }
+}
+
+.sectionWhy h2 {
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  color: var(--color-ink);
 }

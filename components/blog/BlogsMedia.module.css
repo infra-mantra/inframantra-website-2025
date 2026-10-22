@@ -1,400 +1,224 @@
+/* Home page "Media and Latest Updates".
+   Class names are prefixed "bm" because CSS-module names are NOT hashed on this
+   site: a plain ".card" here would clash with other components. */
+
+/* same width as the other home sections (88% wide, up to 1720px) so edges line up */
 .blogsMediaSectionWrapper {
-  padding: 28px 6%;
-  padding-top: 0px;
-}
-.blogPostCardWrapper {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  gap: 35px;
-}
-/* Equal-height cards across the carousel */
-.blogPostSwiper :global(.swiper-slide) {
-  height: auto;
-}
-.blogPostSwiper :global(.swiper-wrapper) {
-  align-items: stretch;
-}
-/* Scoped to the card's own link: .blogPostSwiper a would also catch the
-   View More button-anchor in the action row and stretch it to full height. */
-.blogPostCard > a {
-  display: block;
-  flex: 1 1 auto;
-  text-decoration: none;
-  color: inherit;
+  width: 88%;
+  max-width: 1720px;
+  margin: 0 auto;
+  padding: clamp(40px, 5vw, 72px) 0;
 }
 
-/* Full card: image on top + body (date / title / read article) below */
-.blogPostCard {
+/* ---------- Section header ---------- */
+.bmHead {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: clamp(20px, 2.5vw, 32px);
+}
+.bmTitle {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  color: var(--color-ink);
+}
+.bmTitle span {
+  color: var(--color-gold-dark);
+}
+.bmViewAll {
+  flex-shrink: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-button);
+  font-weight: var(--fw-semibold);
+  color: var(--color-gold-dark);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.bmViewAll span,
+.bmRead span {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+.bmViewAll:hover span {
+  transform: translateX(4px);
+}
+
+/* ---------- Card grid ---------- */
+.bmGrid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+}
+/* 8 posts are fetched; desktop shows one clean row of 4 */
+.bmItem:nth-child(n + 5) {
+  display: none;
+}
+
+.bmCard {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  background: #ffffff;
-  border: 1px solid #eef0f2;
+  height: 100%; /* equal heights in a row */
+  background: var(--color-surface);
+  border: 1px solid #efe9dd;
   border-radius: 16px;
   overflow: hidden;
-  cursor: pointer;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 4px 16px rgba(26, 26, 26, 0.06);
   transition:
-    transform 0.28s ease,
-    box-shadow 0.28s ease;
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
 }
-
-.blogPostCard:hover {
+.bmCard:hover {
   transform: translateY(-4px);
-  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.14);
+  border-color: var(--color-gold);
+  box-shadow: 0 14px 30px rgba(26, 26, 26, 0.12);
+}
+.bmCard:focus-visible {
+  outline: 3px solid var(--color-gold-light);
+  outline-offset: 2px;
 }
 
-/* Frame matches the source banners' EXACT ratio (1293x469) so object-fit: cover
-   fills the frame with zero cropping — no image text is cut, and no letterbox gap. */
-.blogPostImgWrap {
+/* 12:5 (2.4:1) image: close to the banners' own shape, so their baked-in text is not
+   clipped. The card's overflow:hidden rounds its top corners. */
+.bmImg {
   position: relative;
-  width: 100%;
-  aspect-ratio: 1293 / 469;
+  aspect-ratio: 12 / 5;
   overflow: hidden;
+  background: #f4efe6;
 }
-
-.blogPostImgWrap img,
-.blogPostCard img {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover;
-  object-position: center;
-  border-radius: 0;
-  display: block;
+.bmImg img {
   transition: transform 0.5s ease;
 }
-
-.blogPostCard:hover .blogPostImgWrap img {
-  transform: scale(1.06);
+.bmCard:hover .bmImg img {
+  transform: scale(1.05);
 }
 
-/* next/image can wrap the img in a span — don't let it add its own chrome */
-.blogPostImgWrap span {
-  box-shadow: none;
-  border-radius: 0;
+/* Small category chip on the image */
+.bmMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
 }
 
-/* Body */
-.blogPostBody {
+.bmChip {
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: #fbf3e2;
+  color: #8a6410 !important;
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  color: var(--color-ink);
+}
+
+.bmBody {
   display: flex;
   flex-direction: column;
-  flex: 1 1 auto;
-  padding: 15px 17px 0;
+  flex: 1;
+  gap: 8px;
+  padding: 16px 18px 18px;
 }
-
-/* Meta line, so it sits a full step below the headline rather than beside it —
-   14px against a 15.5px title left the card with no clear entry point. Colour is
-   the property card's #707070 either way. */
-.blogPostDate {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: "Lexend Deca", sans-serif;
-  font-size: 12.5px;
-  font-weight: 500;
-  color: #707070;
-  letter-spacing: 0.01em;
-  margin-bottom: 9px;
+.bmDate {
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  color: var(--color-ink-muted);
 }
-
-.blogPostDate svg {
-  color: #d9a23c;
-  flex-shrink: 0;
-}
-
-/* ------------------------------------------------------------------ actions
-
-   Same row as the property card's: same sizing, same soft tinted fills, so a
-   blog card and a property card carry identical-looking actions. Class names are
-   duplicated rather than shared because module names are not hashed in this
-   build — reusing .propCardBtn here would put two components on one global class.
-*/
-.blogPostActions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-  padding: 14px 17px 17px;
-  margin-top: auto;
-}
-
-.blogPostBtn {
-  flex: 1 1 auto;
-  min-width: 92px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-
-  padding: 9px 8px;
-  border-radius: 8px;
-  font-family: "Lexend Deca", sans-serif;
-  font-size: 12.5px;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  white-space: nowrap;
-  text-decoration: none;
-  cursor: pointer;
-  transition:
-    background 0.18s ease,
-    border-color 0.18s ease;
-}
-
-.blogPostBtnView {
-  background: #e8f6ec;
-  color: #14722e;
-  border: 1px solid #cfead8;
-}
-
-.blogPostBtnView:hover {
-  background: #dbefe2;
-  border-color: #14722e;
-}
-
-.blogPostBtnEnquire {
-  background: #fdf3e0;
-  color: #8a6410;
-  border: 1px solid #f0dfbc;
-}
-
-.blogPostBtnEnquire:hover {
-  background: #f9e9cd;
-  border-color: #e7b554;
-}
-
-.blogPostBtn:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(220, 170, 76, 0.5);
-}
-.blogPostCardWrapper img {
-  border-radius: 12px;
-  object-fit: cover;
-  object-position: left;
-}
-.blogPostCard h3 {
-  font-size: 14px;
-  font-weight: 500;
-  font-family: "Lexend Deca", sans-serif;
-  /* A step lighter than the property section grey. #7d7d7d holds ~4.5:1 on
-     white, which is the AA floor for text this size — going further would put
-     the headline below it. */
-  color: #7d7d7d;
-  line-height: 1.35;
-  letter-spacing: -0.1px;
+.bmCardTitle {
   margin: 0;
-  /* Clamp to 2 lines + reserve the height so titles line up card-to-card */
+  font-family: var(--font-body);
+  font-size: var(--fs-card-title);
+  font-weight: var(--fw-semibold);
+  line-height: 1.35;
+  color: var(--color-ink);
+  /* 2-line clamp, with the space reserved so rows line up */
   display: -webkit-box;
   -webkit-line-clamp: 2;
   line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  min-height: 38px;
-  transition: color 0.22s ease;
+  min-height: 2.7em;
+  transition: color 0.2s ease;
+}
+.bmCard:hover .bmCardTitle {
+  color: var(--color-gold-dark);
+}
+.bmRead {
+  margin-top: auto;
+  padding-top: 4px;
+  font-family: var(--font-body);
+  font-size: var(--fs-button);
+  font-weight: var(--fw-semibold);
+  color: var(--color-gold-dark);
+}
+.bmCard:hover .bmRead span {
+  transform: translateX(4px);
 }
 
-.blogPostCard:hover h3 {
-  color: #d9a23c;
-}
-.blogsMediaSectionWrapper > h3 {
-  font-size: 24px;
-  font-weight: 600;
-  font-family: "Lexend Deca", sans-serif;
-  color: #1a1a1a;
-  letter-spacing: -0.4px;
-  line-height: 1.2;
-  margin: 22px 0 26px;
-}
-.blogsMediaSectionWrapper > h3 span {
-  color: #d9a23c;
-}
-.blogPostCard div p {
-  font-size: 14px;
-  font-weight: light;
-  font-family: "Lexend Deca";
-}
-.blogPostCardWrapper a {
-  width: 31%;
-}
-/* Unified homepage primary button (matches Submit / Read all reviews).
-
-   This one still carried the pre-unification styling the comment describes:
-   a solid gold gradient slab with a heavy gold glow, while the equivalent
-   buttons in Premium Picks and Localities had already moved to the outlined
-   pill below. Same rules as .localityViewMoreButton now, arrow included. */
-.blogsMediaSectionWrapper > a {
-  /* Block-level flex, not inline-flex: `margin: 2% auto` below is what centres
-     this button, and auto margins do not centre an inline-level box. */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-
-  background: #ffffff;
-  color: #8a6410;
-  border: 1.5px solid #e7b554;
-  border-radius: 999px;
-  padding: 12px 30px;
-
-  font-family: "Lexend Deca", sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  text-decoration: none;
-  cursor: pointer;
-  width: fit-content;
-  margin: 20px auto 0;
-  box-shadow: 0 2px 10px rgba(120, 90, 20, 0.08);
-  transition:
-    transform 0.18s ease,
-    background 0.18s ease,
-    border-color 0.18s ease,
-    color 0.18s ease,
-    box-shadow 0.18s ease;
-}
-
-/* Arrow drawn from two borders — no icon import for a single glyph. */
-.blogsMediaSectionWrapper > a::after {
-  content: "";
-  width: 7px;
-  height: 7px;
-  border-top: 2px solid currentColor;
-  border-right: 2px solid currentColor;
-  transform: rotate(45deg);
-  transition: transform 0.18s ease;
-}
-
-.blogsMediaSectionWrapper > a:hover {
-  transform: translateY(-2px);
-  background: #e7b554;
-  border-color: #e7b554;
-  color: #ffffff;
-  box-shadow: 0 10px 22px rgba(217, 162, 60, 0.34);
-}
-
-.blogsMediaSectionWrapper > a:hover::after {
-  transform: rotate(45deg) translate(2px, -2px);
-}
-
-.blogsMediaSectionWrapper > a:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(220, 170, 76, 0.45);
-}
-@media (max-width: 768px) {
+/* ---------- Tablet + phone: one swipe row ----------
+   Tablet shows about 2.2 cards, phone about 1.15. The row bleeds to the
+   right screen edge (negative margin = the wrapper's side padding). */
+@media (max-width: 1199px) {
   .blogsMediaSectionWrapper {
-    padding-right: 0px !important;
+    width: auto; /* full width; the gutter below is the side space */
+    --bm-gutter: 24px;
+    padding-left: var(--bm-gutter);
+    padding-right: var(--bm-gutter);
   }
+  .bmGrid {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    margin-right: calc(-1 * var(--bm-gutter));
+    padding: 4px var(--bm-gutter) 12px 0;
+    scrollbar-width: none;
+  }
+  .bmGrid::-webkit-scrollbar {
+    display: none;
+  }
+  .bmItem {
+    flex: 0 0 43%;
+    scroll-snap-align: start;
+  }
+  /* show all 8 posts in the swipe row */
+  .bmItem:nth-child(n + 5) {
+    display: block;
+  }
+}
 
-  /* The wrapper drops its right padding so the card carousel can run off the
-     screen edge. The heading and subtitle are inside that wrapper and are not
-     carousels — without their own right padding they ran under the edge and
-     were clipped mid-word ("across premi…"). */
-  .blogsMediaSectionWrapper > h3 {
-    padding-right: 16px;
-  }
-  .blogsMediaSectionWrapper > h3 {
-    font-size: 22px;
-  }
-  .blogsMediaSectionWrapper > a {
-    font-size: 14px;
-  }
+@media (max-width: 767px) {
   .blogsMediaSectionWrapper {
-    padding-top: 20px;
-    padding-bottom: 28px;
+    --bm-gutter: 16px;
   }
-  /*
-    Taller image frame on phones.
-
-    The 1293/469 ratio is the source banners' exact ratio, so on desktop the
-    frame fills with no cropping at all. On a ~200px-wide card that same ratio is
-    only ~72px tall — a strip too thin to read, and it left the card looking top
-    heavy. 16/9 gives ~112px.
-
-    The cost is that cover now trims the banner's left and right edges here.
-    These banners put their title in the middle ("SECTOR 70 GURGAON"), so the
-    part that matters survives; object-position stays centred for that reason.
-  */
-  .blogPostImgWrap {
-    aspect-ratio: 16 / 9;
+  .bmGrid {
+    gap: 14px;
   }
-
-  .blogPostBody {
-    padding: 12px 13px 14px;
-  }
-  /*
-    These carried the weights from before the desktop type was settled: the title
-    was 600 here against 500 there, so the same card changed weight at the
-    breakpoint. Sizes come down proportionally from desktop instead of being set
-    independently — 14 -> 13.5 for the title, 12.5 -> 11.5 for the date — which
-    keeps the two a full step apart on a card only ~150px wide.
-  */
-  .blogPostDate {
-    font-size: 12.5px;
-    font-weight: 500;
-    margin-bottom: 7px;
-  }
-  .blogPostCard h3 {
-    font-size: 13.5px;
-    font-weight: 500;
-    line-height: 1.35;
-    letter-spacing: -0.1px;
-    margin: 0;
-    /* 13.5 x 1.35 x 2 lines */
-    min-height: 37px;
-  }
-  .blogPostCard div p {
-    font-size: 12px;
-    margin-top: 8px;
-  }
-  .blogsMediaSectionWrapper > h3 {
-    margin: 16px 0 20px;
+  .bmItem {
+    flex-basis: 82%;
   }
 }
 
-/* Same <=480px heading step as the other homepage sections. */
-@media (max-width: 480px) {
-  .blogsMediaSectionWrapper > h3 {
-    font-size: 20px;
+@media (prefers-reduced-motion: reduce) {
+  .bmCard,
+  .bmImg img,
+  .bmCardTitle,
+  .bmRead span,
+  .bmViewAll span {
+    transition: none;
   }
-}
-
-/*
-  Keep View More and Enquire Now on one line on phones.
-
-  They carry min-width: 92px so their labels never clip on a wide card. On a
-  1.5-slides-per-view phone the card is around 150px, so two of them plus the gap
-  could not fit and the row wrapped to two stacked buttons. Below 768px they
-  share the width equally instead (flex-basis 0), and the type comes down a step
-  so "Enquire Now" still fits on one line inside the narrower button.
-*/
-@media (max-width: 768px) {
-  .blogPostActions {
-    gap: 6px;
-    padding: 12px 14px 14px;
-  }
-
-  .blogPostBtn {
-    flex: 1 1 0;
-    min-width: 0;
-    padding: 8px 6px;
-    font-size: 11.5px;
-    letter-spacing: 0;
-  }
-}
-
-/* iPhone SE and narrower. */
-@media (max-width: 380px) {
-  .blogPostBody {
-    padding: 10px 11px 0;
-  }
-  .blogPostActions {
-    padding: 10px 11px 11px;
-    gap: 5px;
-  }
-  .blogPostBtn {
-    padding: 8px 4px;
-    font-size: 11px;
+  .bmCard:hover,
+  .bmCard:hover .bmImg img {
+    transform: none;
   }
 }

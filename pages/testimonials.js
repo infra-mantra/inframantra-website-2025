@@ -25,9 +25,9 @@ const TestiMonials = () => {
   return (
     <Wrapper>
       <div className={styles.testimonialsWrapper}>
-        <TestimonialsBanner />
+        <TestimonialsBanner count={testimonials.length} />
         <div className={styles.testimonialCardContainer}>
-          {testimonials.map((testimonial, index) => (
+          {testimonials.map((testimonial) => (
             <TestimonialCard key={testimonial._id} data={testimonial} />
           ))}
         </div>

@@ -17,7 +17,6 @@ const CR = 10000000;
 // Each chip's label IS its value and IS the BUDGET_RANGE key, so the
 // chip the user taps always maps to the right [min, max] sale-price window.
 export const BUDGET_OPTIONS = [
-  { label: "Under 1 Cr", value: "Under 1 Cr" },
   { label: "1 Cr – 2 Cr", value: "1 Cr – 2 Cr" },
   { label: "2 Cr – 4 Cr", value: "2 Cr – 4 Cr" },
   { label: "4 Cr – 6 Cr", value: "4 Cr – 6 Cr" },

@@ -1,4 +1,4 @@
-import { useState, useEffect, Suspense } from "react";
+import React, { useState, Suspense } from "react";
 import { FaStar, FaTag } from "react-icons/fa";
 import { useRouter } from "next/router";
 import styles from "./PropertyListingCard.module.css";
@@ -14,8 +14,12 @@ import { Loader } from "../layout/CustomeLoader.jsx";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import CompareToggle from "../compare/CompareToggle.jsx";
+import HeartButton from "../shared/shortlist/HeartButton.jsx";
 import { optimizedSrc } from "../lib/imageUrl.js";
 
+import { PhotoLocation, ClampedDescription } from "./CardExtras.jsx";
+import cb from "../shared/CardButtons.module.css";
 const propertyListCardStyles = {
   card: {
     height: "290px",
@@ -90,6 +94,9 @@ function PropertyListingCard({
   onPageChange,
   currentPageNumber,
   loading,
+  onReadMore, // (property) => opens the details modal
+  renderAfter, // (index) => node inserted after that card (mid-list ad slot)
+  emptyState, // node shown when there are no results
 }) {
   const [mapCenter, setMapCenter] = useState({ lat: 28.4595, lng: 77.0266 });
   const [currentZoom, setCurrentZoom] = useState(12);
@@ -139,202 +146,179 @@ function PropertyListingCard({
       <div className={styles.propertyListingCardWrapper}>
         <div className={styles.propertyListPageSectionFlex}>
           <div className={styles.propertyListPageLeftSection}>
-            {fetchedProperties.length > 0 ? (
-              fetchedProperties.map((prop) => (
-                <div
-                  className={styles.propertyCard}
-                  style={propertyListCardStyles.card}
-                  key={prop.id}
-                  onMouseEnter={() => {
-                    setMapCenter(prop.coordinates);
-                    setCurrentZoom(17);
-                  }}
-                >
-                  <div
-                    className={styles.propertyListingCardLeftSection}
-                    onClick={() => handleViewMorePropertyClick(prop.slug)}
-                  >
-                    <img
-                      className={styles.propertyListingCardLeftSectionImg}
-                      src={optimizedSrc(prop.imageGallery[0].url, 384)}
-                      alt="featured"
-                    />
-
-                    {prop.status && (
-                      <span
-                        className={`${styles.cardStatus} ${
-                          /ready/i.test(prop.status) ? styles.cardStatusReady : ""
-                        }`}
+            {fetchedProperties.length > 0
+              ? fetchedProperties.map((prop, index) => (
+                  <React.Fragment key={prop.id}>
+                    <div
+                      className={styles.propertyCard}
+                      style={{ ...propertyListCardStyles.card, "--plc-i": Math.min(index, 8) }}
+                      onMouseEnter={() => {
+                        setMapCenter(prop.coordinates);
+                        setCurrentZoom(17);
+                      }}
+                    >
+                      <div
+                        className={styles.propertyListingCardLeftSection}
+                        onClick={() => handleViewMorePropertyClick(prop.slug)}
                       >
-                        {statusLabel(prop.status)}
-                      </span>
-                    )}
-                    {prop.developer?.developerImg && (
-                      <div style={propertyListCardStyles.chipImage}>
                         <img
-                          style={propertyListCardStyles.dimension}
-                          src={prop.developer.developerImg}
-                          alt={prop.developer.name ? `${prop.developer.name} logo` : "Developer logo"}
-                          loading="lazy"
+                          className={styles.propertyListingCardLeftSectionImg}
+                          src={optimizedSrc(prop.imageGallery[0].url, 384)}
+                          loading={index === 0 ? "eager" : "lazy"}
+                          decoding="async"
+                          alt="featured"
                         />
+
+                        {prop.status && (
+                          <span
+                            className={`${styles.cardStatus} ${
+                              /ready/i.test(prop.status) ? styles.cardStatusReady : ""
+                            }`}
+                          >
+                            {statusLabel(prop.status)}
+                          </span>
+                        )}
+                        {prop.developer?.developerImg && (
+                          <div style={propertyListCardStyles.chipImage}>
+                            <img
+                              style={propertyListCardStyles.dimension}
+                              src={prop.developer.developerImg}
+                              alt={
+                                prop.developer.name
+                                  ? `${prop.developer.name} logo`
+                                  : "Developer logo"
+                              }
+                              loading="lazy"
+                            />
+                          </div>
+                        )}
+                        <PhotoLocation property={prop} />
+                        <CompareToggle property={prop} />
+                        <HeartButton property={prop} />
                       </div>
-                    )}
-                  </div>
-                  <div className={styles.propertyListingCardRightSection}>
-                    <div className={styles.propertyListingCardHeaderFlex}>
-                      <h4>{prop.name}</h4>
-                      {prop.exclusive && (
-                        <span className={styles.nameTagExclusive}>
-                          <FaTag />
-                          Exclusive
-                        </span>
-                      )}
-                      {prop.featured && (
-                        <span className={styles.nameTagFeatured}>
-                          <FaStar />
-                          Featured
-                        </span>
-                      )}
-                      {prop.rera && (
-                        <span className={styles.reraWrap}>
-                          <span className={styles.nameTagRera} aria-label={`RERA: ${prop.rera}`}>
+                      <div className={styles.propertyListingCardRightSection}>
+                        <div className={styles.propertyListingCardHeaderFlex}>
+                          <h4>{prop.name}</h4>
+                          {prop.exclusive && (
+                            <span className={styles.nameTagExclusive}>
+                              <FaTag />
+                              Exclusive
+                            </span>
+                          )}
+                          {prop.featured && (
+                            <span className={styles.nameTagFeatured}>
+                              <FaStar />
+                              Featured
+                            </span>
+                          )}
+                          {prop.rera && (
+                            <span className={styles.reraWrap}>
+                              <span
+                                className={styles.nameTagRera}
+                                aria-label={`RERA: ${prop.rera}`}
+                              >
+                                <svg
+                                  width="10"
+                                  height="10"
+                                  viewBox="0 0 24 24"
+                                  fill="currentColor"
+                                  aria-hidden="true"
+                                >
+                                  <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm-1.2 14.4L6.6 12.2l1.4-1.4 2.8 2.8 5.6-5.6 1.4 1.4-7 7z" />
+                                </svg>
+                                RERA
+                              </span>
+                              <span className={styles.reraTooltip} role="tooltip">
+                                <span className={styles.reraTooltipLabel}>RERA Registered</span>
+                                {prop.rera}
+                              </span>
+                            </span>
+                          )}
+                        </div>
+
+                        <div className={styles.propertyListingCardRightSectionGridContainer}>
+                          <p className={styles.listingDetailRow}>
+                            Price:
+                            <span
+                              className={styles.listingDetailValue}
+                              style={{ color: "#e7b554" }}
+                            >
+                              ₹ {prop.startingPrice}*
+                            </span>
+                          </p>
+                          <p className={styles.listingDetailRow}>
+                            Config:
+                            <span className={styles.listingDetailValue}>{prop.configuration}</span>
+                          </p>
+                          <p className={styles.listingDetailRow}>
+                            Area:
+                            <span className={styles.listingDetailValue}>
+                              {prop.area.slice(0, 18)}
+                            </span>
+                          </p>
+                          <p className={styles.listingDetailRow}>
+                            Possession:
+                            <span className={styles.listingDetailValue}>{prop.possesion}</span>
+                          </p>
+                        </div>
+
+                        <div className={styles.description}>
+                          <ClampedDescription
+                            text={prop.description}
+                            className={styles.clampTwoLines}
+                            onReadMore={() => onReadMore?.(prop)}
+                          />
+                        </div>
+                        <div
+                          className={styles.propertyListingCardRightSectionBtnContainer}
+                          style={{
+                            display: "flex",
+                            flexWrap: "nowrap",
+                            gap: "8px",
+                            width: "100%",
+                          }}
+                        >
+                          <button
+                            className={`${cb.cbBtn} ${cb.cbView}`}
+                            type="button"
+                            onClick={() => handleViewMorePropertyClick(prop.slug)}
+                          >
+                            View More
+                          </button>
+                          <button
+                            className={`${cb.cbBtn} ${cb.cbEnquire}`}
+                            type="button"
+                            onClick={() => onOpenBackdrop(prop.name)}
+                          >
+                            Enquire Now
+                          </button>
+                          <button
+                            className={`${cb.cbBtn} ${cb.cbBrochure}`}
+                            type="button"
+                            onClick={() => onOpenBackdrop(prop.name)}
+                            title="Download Brochure"
+                          >
                             <svg
-                              width="10"
-                              height="10"
+                              width="13"
+                              height="13"
                               viewBox="0 0 24 24"
                               fill="currentColor"
                               aria-hidden="true"
+                              style={{ flexShrink: 0 }}
                             >
-                              <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm-1.2 14.4L6.6 12.2l1.4-1.4 2.8 2.8 5.6-5.6 1.4 1.4-7 7z" />
+                              <path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5z" />
                             </svg>
-                            RERA
-                          </span>
-                          <span className={styles.reraTooltip} role="tooltip">
-                            <span className={styles.reraTooltipLabel}>RERA Registered</span>
-                            {prop.rera}
-                          </span>
-                        </span>
-                      )}
+                            Brochure
+                          </button>
+                        </div>
+                      </div>
                     </div>
-                    <p className={styles.propertyListingCardRightSectionLocation}>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="12"
-                        height="12"
-                        fill="rgba(0, 0, 0, 0.4)"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zM12 11.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z" />
-                      </svg>{" "}
-                      {`${prop.subLocality?.name}, ${prop.city.name}`}
-                    </p>
-                    <div className={styles.propertyListingCardRightSectionGridContainer}>
-                      <p className={styles.listingDetailRow}>
-                        Price:
-                        <span className={styles.listingDetailValue} style={{ color: "#e7b554" }}>
-                          ₹ {prop.startingPrice}
-                        </span>
-                      </p>
-                      <p className={styles.listingDetailRow}>
-                        Config:
-                        <span className={styles.listingDetailValue}>{prop.configuration}</span>
-                      </p>
-                      <p className={styles.listingDetailRow}>
-                        Area:
-                        <span className={styles.listingDetailValue}>{prop.area.slice(0, 18)}</span>
-                      </p>
-                      <p className={styles.listingDetailRow}>
-                        Posession:
-                        <span className={styles.listingDetailValue}>{prop.possesion}</span>
-                      </p>
-                    </div>
-
-                    <div className={styles.description}>
-                      <p className={styles.clampTwoLines}>{prop.description}</p>
-                    </div>
-                    <div
-                      className={styles.propertyListingCardRightSectionBtnContainer}
-                      style={{ display: "flex", flexWrap: "nowrap", gap: "8px", width: "100%" }}
-                    >
-                      <button
-                        type="button"
-                        onClick={() => handleViewMorePropertyClick(prop.slug)}
-                        style={{
-                          flex: "1 1 0",
-                          minWidth: 0,
-                          background: "#3cc76a",
-                          borderRadius: "5px",
-                          fontSize: "12px",
-                          fontWeight: 600,
-                          padding: "7px 8px",
-                          color: "#fff",
-                          border: "none",
-                          cursor: "pointer",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        View More
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => onOpenBackdrop(prop.name)}
-                        style={{
-                          flex: "1 1 0",
-                          minWidth: 0,
-                          background: "#e8c274",
-                          borderRadius: "5px",
-                          fontSize: "12px",
-                          fontWeight: 600,
-                          padding: "7px 8px",
-                          color: "#fff",
-                          border: "none",
-                          cursor: "pointer",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        Enquire Now
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => onOpenBackdrop(prop.name)}
-                        title="Download Brochure"
-                        style={{
-                          flex: "1 1 0",
-                          minWidth: 0,
-                          display: "inline-flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          gap: "5px",
-                          background: "#fff",
-                          borderRadius: "5px",
-                          fontSize: "12px",
-                          fontWeight: 600,
-                          padding: "7px 8px",
-                          color: "#3cc76a",
-                          border: "1px solid #3cc76a",
-                          cursor: "pointer",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        <svg
-                          width="13"
-                          height="13"
-                          viewBox="0 0 24 24"
-                          fill="currentColor"
-                          aria-hidden="true"
-                          style={{ flexShrink: 0 }}
-                        >
-                          <path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5z" />
-                        </svg>
-                        Brochure
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <h3 className={styles.noPropertiesSection}>No Properties Found</h3>
-            )}{" "}
+                    {renderAfter?.(index)}
+                  </React.Fragment>
+                ))
+              : emptyState || (
+                  <h3 className={styles.noPropertiesSection}>No Properties Found</h3>
+                )}{" "}
             <div className={styles.propertyPageListingPaginationWrapper}>
               {totalPages > 1 && (
                 <div className={styles.paginationContainer}>

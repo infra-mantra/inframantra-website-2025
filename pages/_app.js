@@ -9,6 +9,13 @@ const EnquiryPopUp = dynamic(() => import("../components/shared/forms/CTANEW.jsx
   ssr: false,
 });
 
+// Compare tray: its own chunk, fetched only once a property is added to compare.
+// The store hook is a few lines, so reading the list here costs next to nothing.
+import { useCompareList } from "../components/compare/compareStore.js";
+const CompareTray = dynamic(() => import("../components/compare/CompareTray.jsx"), {
+  ssr: false,
+});
+
 /*
   The projectName recorded against a lead from these buttons.
 
@@ -72,6 +79,8 @@ const waLink = (projectName, path) => {
   return `https://api.whatsapp.com/send?phone=8698009900&text=${encodeURIComponent(text)}`;
 };
 import "../styles/self-hosted-fonts.css";
+// Design tokens (fonts, sizes, brand colours) — must load before any other CSS uses them.
+import "../styles/tokens.css";
 import "../styles/globals.css";
 
 // swiper/css/bundle already contains swiper/css (core) plus every module's
@@ -216,6 +225,7 @@ function MyApp({ Component, pageProps }) {
   const [enquireOpen, setEnquireOpen] = useState(false);
   const enquiryProject = projectNameFromPath(router.asPath);
   const isHomePage = router.pathname === "/";
+  const compareCount = useCompareList().length;
   const [isMobile, setIsMobile] = useState(false);
   const [showChat, setShowChat] = useState(false);
   // bumped by the desktop contact drawer to open the assistant's chat window
@@ -321,7 +331,6 @@ function MyApp({ Component, pageProps }) {
     };
   }, [router]);
 
-
   return (
     <ErrorBoundary>
       {/* Always keep the same element here (a plain <div>) so toggling the mobile
@@ -392,11 +401,14 @@ function MyApp({ Component, pageProps }) {
           popUpenable={enquireOpen}
           onClickOff={setEnquireOpen}
           name={enquiryProject}
-          text="TO CONNECT WITH OUR PROPERTY ADVISOR"
+          text="To Connect With Our Property Advisor"
           phone="+91 86 9800 9900"
           id="floatingEnquiry"
         />
       )}
+
+      {/* not on /compare itself — that page has its own controls */}
+      {compareCount > 0 && router.pathname !== "/compare" && <CompareTray />}
     </ErrorBoundary>
   );
 }

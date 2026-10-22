@@ -75,7 +75,7 @@
   margin: auto;
 }
 .mainDot {
-  background: #e7b554;
+  background: var(--color-gold);
   width: 20px;
   height: 20px;
   position: sticky;
@@ -118,7 +118,7 @@
 }
 
 .memberTimeline .tmlDot {
-  border: 2px solid #e7b554;
+  border: 2px solid var(--color-gold);
   background-color: #fff;
 }
 .tmlDot {
@@ -134,7 +134,7 @@
   display: block;
   width: 20px;
   height: 20px;
-  background: #e7b554;
+  background: var(--color-gold);
   border-radius: 50%;
   margin: 3px;
   opacity: 0;

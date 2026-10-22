@@ -21,10 +21,13 @@
 }
 
 .heading {
-  font-size: 1.8rem;
-  line-height: 1.08;
-  font-weight: 700;
-  color: #d4a64a;
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  text-transform: none;
+  color: var(--color-ink);
   margin: 0 0 32px 0;
 }
 
@@ -139,11 +142,12 @@
 }
 
 .questionText {
-  font-size: 14px;
-  font-weight: 600;
-
-  text-transform: uppercase;
-  color: #555;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-tight);
+  text-transform: none;
+  color: var(--color-ink);
 }
 
 .plusIcon {
@@ -174,9 +178,11 @@
 }
 
 .answerText {
-  font-size: 14px;
-  line-height: 1.7;
-  color: #555;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-light);
+  line-height: var(--lh-body);
+  color: var(--color-body);
   margin: 0;
 }
 
@@ -187,17 +193,8 @@
   .topRow {
     grid-template-columns: 1fr;
   }
-  .heading {
-    font-size: 20px;
-  }
   .ctaButton {
     width: auto;
-  }
-  .questionText {
-    font-size: 13px;
-  }
-  .answerText {
-    font-size: 13px;
   }
   .question {
     padding: 12px 12px;

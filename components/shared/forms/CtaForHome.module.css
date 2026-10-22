@@ -11,19 +11,20 @@
 .homePopUpHead {
   color: #1d1d1f;
   text-align: left !important;
-  font-family: "Lexend Deca";
+  font-family: var(--font-body);
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 2px;
 }
 .homePopUpHead2 {
-  color: #d9a23c;
+  font-family: var(--font-body);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--color-gold-dark);
   text-align: left;
-  font-family: "Lexend Deca";
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
   margin: 0 0 6px;
 }
 
@@ -35,7 +36,7 @@
   color: #fff;
   border: none;
   border-radius: 999px;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 15px;
   font-weight: 600;
   /* Sentence case: SUBMIT in caps with 0.03em tracking read as a banner rather
@@ -84,7 +85,7 @@
 }
 .homePageContactUsLeftDetailSection > h1 {
   font-size: 50px;
-  color: #e7b554;
+  color: var(--color-gold);
 }
 .homePageContactUsLeftMapPhotoContainer {
   width: 100%;
@@ -142,7 +143,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #e7b554, #d9a23c);
+  background: linear-gradient(135deg, var(--color-gold), var(--color-gold-dark));
   color: #fff;
   font-size: 21px;
   box-shadow: 0 8px 18px rgba(217, 162, 60, 0.32);
@@ -159,7 +160,7 @@
   min-width: 0;
 }
 .homeCtaContactLabel {
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.05em;
@@ -168,7 +169,7 @@
   margin-bottom: 1px;
 }
 .homeCtaContactValue {
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 15.5px;
   font-weight: 500;
   color: #1d1d1f;
@@ -177,7 +178,7 @@
   transition: color 0.18s ease;
 }
 a.homeCtaContactValue:hover {
-  color: #d9a23c;
+  color: var(--color-gold-dark);
 }
 .homePageContactUsLeftDetailsContainer {
   display: flex;
@@ -201,7 +202,7 @@ a.homeCtaContactValue:hover {
   border-radius: 16px;
   box-shadow:
     0 6px 20px rgba(0, 0, 0, 0.07),
-    inset 0 4px 0 0 #e7b554;
+    inset 0 4px 0 0 var(--color-gold);
   padding: 30px 26px 0;
   justify-content: space-between;
 }
@@ -252,7 +253,6 @@ a.homeCtaContactValue:hover {
   }
 }
 
-
 /* ==================================================================
    Home CTA — stacked layout
    ==================================================================
@@ -283,7 +283,7 @@ a.homeCtaContactValue:hover {
 
 .homeCtaEyebrow {
   display: inline-block;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 2px;
@@ -294,7 +294,7 @@ a.homeCtaContactValue:hover {
 
 .homeCtaTitle {
   margin: 0 0 10px;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 24px;
   font-weight: 600;
   line-height: 1.2;
@@ -303,12 +303,12 @@ a.homeCtaContactValue:hover {
 }
 
 .homeCtaTitle span {
-  color: #d9a23c;
+  color: var(--color-gold-dark);
 }
 
 .homeCtaSubtitle {
   margin: 0;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 14px;
   font-weight: 400;
   line-height: 1.5;
@@ -510,7 +510,7 @@ a.homeCtaContactItem:hover .homeCtaContactValue {
 
 .hometextForm {
   margin: 0;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 13.5px;
   font-weight: 500;
   line-height: 1.4;
@@ -531,5 +531,293 @@ a.homeCtaContactItem:hover .homeCtaContactValue {
   }
   .hometextForm {
     font-size: 13px;
+  }
+}
+
+/* =====================================================================
+   "Talk to a Property Advisor" (CtaForHome.jsx) — current layout.
+   The rules above are kept because SinglePropertyCta.jsx still uses them.
+   Class names start with "cta" (names are global on this site).
+   ===================================================================== */
+
+/* Soft warm band. !important only because .homeApp above forces transparent. */
+.homeApp.ctaSection {
+  background: #faf7f2 !important;
+  border-top: 1px solid #efe9dd;
+  /* Lets the body switch to two columns based on its OWN width, so the same
+     component still stacks when it sits in a narrow property-page sidebar. */
+  container-type: inline-size;
+}
+
+.ctaInner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: clamp(40px, 5vw, 72px) 6%;
+}
+
+/* ---------- heading ---------- */
+.ctaHeader {
+  text-align: center;
+  margin-bottom: clamp(24px, 3vw, 40px);
+}
+.ctaTitle {
+  margin: 0 0 8px;
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  color: var(--color-ink);
+}
+.ctaTitle span {
+  color: var(--color-gold-dark);
+}
+.ctaSubtitle {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-subtitle);
+  color: var(--color-ink-muted);
+}
+
+/* ---------- body: stacked (form first), two equal columns when wide ---------- */
+.ctaBody {
+  display: grid;
+  gap: 24px;
+}
+@container (min-width: 700px) {
+  .ctaBody {
+    grid-template-columns: 1fr 1fr;
+    /* Cards keep their natural height (forcing equal heights left a gap in the
+       form card); the shorter card is centred against the taller one. */
+    align-items: center;
+  }
+  /* Map card on the left, form on the right */
+  .ctaInfoCard {
+    order: -1;
+  }
+}
+
+/* Shared card look */
+.ctaFormCard,
+.ctaInfoCard {
+  background: var(--color-surface);
+  border: 1px solid #efe9dd;
+  border-radius: 16px;
+  box-shadow: 0 6px 24px rgba(26, 26, 26, 0.06);
+}
+
+/* ---------- form card ---------- */
+.ctaFormCard {
+  display: flex;
+  flex-direction: column;
+  padding: 28px 28px 0;
+  border-top: 3px solid var(--color-gold);
+  overflow: hidden; /* clips the picture to the card's rounded corner */
+}
+.ctaFormHead {
+  margin-bottom: 18px;
+}
+.ctaFormTitle {
+  margin: 0 0 4px;
+  font-family: var(--font-body);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  color: var(--color-ink);
+}
+.ctaFormSub {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-subtitle);
+  color: var(--color-ink-muted);
+}
+
+/* Inputs: one consistent 48px height (scoped to this card only) */
+.ctaFormCard :global(.formGroup) {
+  margin: 0 0 14px;
+}
+.ctaFormCard :global(.formGroup) input[type="text"],
+.ctaFormCard :global(.formGroup) input[type="email"],
+.ctaFormCard :global(.formGroup) input[type="tel"] {
+  height: 48px;
+  box-sizing: border-box;
+}
+
+.ctaConsent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 4px 0 18px;
+}
+.ctaConsent input {
+  flex: 0 0 16px;
+  height: 16px;
+  margin-top: 3px;
+  accent-color: var(--color-gold-dark);
+  cursor: pointer;
+}
+.ctaConsent label {
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  line-height: var(--lh-body);
+  color: var(--color-body);
+  cursor: pointer;
+}
+.ctaConsentIcon {
+  margin-right: 6px;
+  font-size: 15px;
+  color: #25d366; /* WhatsApp green, as before */
+  vertical-align: -3px;
+}
+
+/* Trust line under the button */
+.ctaTrust {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 10px 0 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  color: var(--color-ink-muted);
+}
+.ctaTrust svg {
+  color: var(--color-gold-dark);
+}
+
+.ctaDisclaimer {
+  margin: 8px 0 0;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 11px;
+  line-height: var(--lh-body);
+  color: var(--color-ink-muted);
+}
+.ctaDisclaimer a {
+  color: var(--color-gold-dark);
+  font-weight: var(--fw-medium);
+  text-decoration: none;
+}
+.ctaDisclaimer a:hover {
+  text-decoration: underline;
+}
+
+/* Call row: picture stands on the card's bottom edge, shown in full */
+.ctaCallRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto; /* pushed to the bottom of an equal-height card */
+  padding-top: 16px;
+  border-top: 1px solid #efe9dd;
+}
+.ctaCallText {
+  margin: 0 0 20px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-semibold);
+  color: var(--color-ink);
+}
+.ctaCallImg {
+  display: block;
+  flex: 0 0 auto;
+  width: 146px;
+  height: auto;
+  aspect-ratio: 146 / 115;
+}
+
+/* ---------- map + contact card ---------- */
+.ctaInfoCard {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+.ctaMap {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(26, 26, 26, 0.08);
+}
+
+.ctaContactList {
+  list-style: none;
+  margin: 0;
+  padding: 0 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.ctaContactList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+/* 40px gold-tint circle (not solid gold) */
+.ctaIcon {
+  flex: 0 0 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fbf3e2;
+  color: var(--color-gold-dark);
+  font-size: 19px;
+}
+.ctaContactText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.ctaLabel {
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  color: var(--color-ink-muted);
+}
+.ctaValue {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-semibold);
+  color: var(--color-ink);
+  text-decoration: none;
+  overflow-wrap: break-word;
+}
+a.ctaValue:hover {
+  color: var(--color-gold-dark);
+}
+.ctaDirections {
+  margin-top: 2px;
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  color: var(--color-gold-dark);
+  text-decoration: none;
+}
+.ctaDirections span {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+.ctaDirections:hover span {
+  transform: translateX(3px);
+}
+
+@media (max-width: 480px) {
+  .ctaInner {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .ctaFormCard {
+    padding: 22px 18px 0;
+  }
+  .ctaCallImg {
+    width: 116px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ctaDirections span {
+    transition: none;
   }
 }

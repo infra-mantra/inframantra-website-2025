@@ -17,9 +17,16 @@ export default function ListingFilters({
   // syncKey and the sidebar re-reads its ticks from syncFilters.
   syncFilters,
   syncKey = 0,
+  // multi-select places (see LocationFilter) and the live result count
+  placeSelection,
+  onPlacesChange,
+  totalProperties,
+  // server-fetched /location-tree states, passed through to LocationFilter (CLS)
+  locationTree = null,
 }) {
   // ---------------- STATES ----------------
   const [expanded, setExpanded] = useState({
+    location: true,
     city: true,
     unitType: true,
     configuration: true,
@@ -332,499 +339,288 @@ export default function ListingFilters({
   };
   const showCities = cityOptions.length > 1 || selectedCities.length > 0;
 
-  if (isMobile) {
-    // ✅ Only show the mobile drawer if it's open
-    if (!openClosefilter)
-      return (
-        <div
-          className={`${style.containerWrapper} ${style.mobileDrawer} ${
-            openClosefilter ? style.open : style.cls
-          }`}
-          style={{ width: openClosefilter ? "100%" : "0" }}
-        ></div>
-      );
+  // ---------- at-a-glance sidebar ----------
+  const UNIT_TYPES = ["Low Rise Apartment", "High Rise Apartment", "Villa"];
+  const CONFIGS = [
+    ["1", "1 BHK"],
+    ["2", "2 BHK"],
+    ["3", "3 BHK"],
+    ["4", "4 BHK"],
+    ["5", "5 BHK"],
+    ["Penthouse", "Penthouse"],
+  ];
+  const STATUSES = ["New Launch", "Under Construction", "Near Possession", "Ready to Move In"];
+  const BUDGETS = [
+    ["1 – 2 Cr", 1, 2],
+    ["2 – 5 Cr", 2, 5],
+    ["5 – 10 Cr", 5, 10],
+    ["10 Cr +", 10, null],
+  ];
+  const [minP, maxP] = priceRange;
+  let priceText = "";
+  if (minP && maxP) priceText = `₹${minP} – ${maxP} Cr`;
+  else if (minP) priceText = `₹${minP} Cr +`;
+  else if (maxP) priceText = `Up to ₹${maxP} Cr`;
+  const isBudget = (lo, hi) => (minP ?? null) === lo && (maxP ?? null) === hi;
+  const setBudget = (next) => {
+    setPriceRange(next);
+    setMinInput(next[0] ? String(next[0]) : "");
+    setMaxInput(next[1] ? String(next[1]) : "");
+    if (!isMobile) notifyAllFilters({ priceRange: next });
+  };
+  const pickBudget = (lo, hi) => setBudget(isBudget(lo, hi) ? [null, null] : [lo, hi]);
+  const cfgLabel = (v) => CONFIGS.find((c) => c[0] === v)?.[1] || v;
 
-    return (
-      <div
-        className={`${style.containerWrapper} ${style.mobileDrawer} ${
-          openClosefilter ? style.open : style.cls
-        }`}
-        style={{ width: openClosefilter ? "100%" : "0" }}
+  // Applied chips at the top (a configuration page's own layout is not listed)
+  const applied = [
+    ...selectedCities.map((v) => ({ k: "city", v, label: v })),
+    ...selectedConfigurations
+      .filter((v) => v !== defaultConfiguration)
+      .map((v) => ({ k: "configuration", v, label: cfgLabel(v) })),
+    ...(priceText ? [{ k: "price", v: "price", label: priceText }] : []),
+    ...selectedStatuses.map((v) => ({ k: "projectStatus", v, label: v })),
+    ...selectedUnitTypes.map((v) => ({ k: "unitType", v, label: v })),
+  ];
+  const removeApplied = (a) => {
+    if (a.k === "price") return setBudget([null, null]);
+    const map = {
+      city: [selectedCities, setSelectedCities],
+      configuration: [selectedConfigurations, setSelectedConfigurations],
+      projectStatus: [selectedStatuses, setSelectedStatuses],
+      unitType: [selectedUnitTypes, setSelectedUnitTypes],
+    };
+    const [state, setter] = map[a.k];
+    return handleTagClick(a.v, state, setter, a.k);
+  };
+
+  // Plain render helper (not a component) so sections keep their DOM between renders
+  const section = (id, title, summary, children) => (
+    <section className={style.lfgSection} key={id}>
+      <button
+        type="button"
+        className={style.lfgHead}
+        aria-expanded={!!expanded[id]}
+        onClick={() => toggleSection(id)}
       >
-        {/* Header */}
-        <div className={style.mobileHeader}>
-          <button className={style.resetButton} onClick={resetFilters}>
-            Reset
-          </button>
-          <button className={style.resetButton} onClick={applyFilters}>
-            APPLY
-          </button>
-          <button className={style.closeBtn} onClick={handleCloseFilterToggle}>
-            ✖
-          </button>
-        </div>
-
-        <div className={style.hr}></div>
-
-        {/* Location */}
-        <div
-          className={style.sectionTitle}
-          style={{ display: "flex", alignItems: "center", gap: "7px" }}
+        <span className={style.lfgTitle}>{title}</span>
+        {!expanded[id] && summary ? <span className={style.lfgSummary}>{summary}</span> : null}
+        <svg
+          className={`${style.lfgChev} ${expanded[id] ? style.lfgChevOpen : ""}`}
+          viewBox="0 0 24 24"
+          width="14"
+          height="14"
+          aria-hidden="true"
         >
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="#0b6e21" aria-hidden="true">
-            <path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" />
-          </svg>
-          Location
+          <path
+            d="M6 9l6 6 6-6"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </button>
+      {expanded[id] && <div className={style.lfgBody}>{children}</div>}
+    </section>
+  );
+
+  const chip = (key, label, on, onClick, count, disabled) => (
+    <button
+      key={key}
+      type="button"
+      className={`${style.lfgChip} ${on ? style.lfgChipOn : ""}`}
+      aria-pressed={on}
+      disabled={disabled}
+      onClick={onClick}
+    >
+      {label}
+      {count !== undefined && <span className={style.lfgCount}>{count}</span>}
+    </button>
+  );
+
+  const body = (
+    <>
+      {applied.length > 0 && (
+        <div className={style.lfgApplied}>
+          {applied.map((a) => (
+            <button
+              key={`${a.k}-${a.v}`}
+              type="button"
+              className={style.lfgAppliedChip}
+              onClick={() => removeApplied(a)}
+              aria-label={`Remove ${a.label}`}
+            >
+              {a.label}
+              <span aria-hidden="true">×</span>
+            </button>
+          ))}
         </div>
+      )}
+
+      {section(
+        "location",
+        "Location",
+        "",
         <LocationFilter
           refineCities={selectedCities}
           onRefineCity={(city) => handleTagClick(city, selectedCities, setSelectedCities, "city")}
-          onNavigate={handleCloseFilterToggle}
+          onNavigate={isMobile ? handleCloseFilterToggle : undefined}
+          selection={placeSelection}
+          onSelectionChange={onPlacesChange}
+          initialStates={locationTree}
         />
+      )}
 
-        {/* Cities in this listing */}
-        {showCities && (
-          <>
-            <div className={style.sectionHeader} onClick={() => toggleSection("city")}>
-              <span style={{ display: "inline-flex", alignItems: "center", gap: "7px" }}>
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M3 21V9l6-4v4l6-4v16H3zm14 0V3h4v18h-4zM6 12h2v2H6v-2zm0 4h2v2H6v-2zm4-4h2v2h-2v-2zm0 4h2v2h-2v-2z" />
-                </svg>
-                CITIES
-              </span>
-              <span className={`${style.arrowIcon} ${expanded.city ? style.rotateDown : style.rotateUp}`}>
-                ▼
-              </span>
-            </div>
-            {expanded.city && (
-              <div className={style.locationTags}>
-                {cityOptions.map((c) => (
-                  <span
-                    key={c.name}
-                    className={`${style.tag} ${isCityTicked(c.name) ? style.active1 : ""}`}
-                    onClick={() => toggleCity(c.name)}
-                  >
-                    {c.name} ({c.count})
-                  </span>
-                ))}
-              </div>
-            )}
-          </>
-        )}
-
-        {/* Unit Type */}
-        <div className={style.sectionHeader} onClick={() => toggleSection("unitType")}>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: "7px" }}>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M4 21V10l8-6 8 6v11h-5v-6H9v6H4z" />
-            </svg>
-            UNIT TYPE
-          </span>
-          <span
-            className={`${style.arrowIcon} ${
-              expanded.unitType ? style.rotateDown : style.rotateUp
-            }`}
-          >
-            ▼
-          </span>
-        </div>
-        {expanded.unitType && (
-          <div className={style.locationTags}>
-            {["Low Rise Apartment", "High Rise Apartment", "Villa"].map((type) => (
-              <span
-                key={type}
-                className={`${style.tag} ${selectedUnitTypes.includes(type) ? style.active1 : ""}`}
-                onClick={() =>
-                  handleTagClick(type, selectedUnitTypes, setSelectedUnitTypes, "unitType")
-                }
-              >
-                {type}
-              </span>
-            ))}
-          </div>
-        )}
-
-        {/* Configuration */}
-        <div className={style.sectionHeader} onClick={() => toggleSection("configuration")}>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: "7px" }}>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M3 3h8v8H3V3zm10 0h8v5h-8V3zM3 13h8v8H3v-8zm10 3h8v5h-8v-5z" />
-            </svg>
-            CONFIGURATION
-          </span>
-          <span
-            className={`${style.arrowIcon} ${
-              expanded.configuration ? style.rotateDown : style.rotateUp
-            }`}
-          >
-            ▼
-          </span>
-        </div>
-        {expanded.configuration && (
-          <div className={style.locationTags}>
-            {["1 BHK", "2 BHK", "3 BHK", "4 BHK", "5 BHK", "Penthouse"].map((config) => {
-              const isBhk = config.includes("BHK");
-              const value = isBhk ? config.replace(" BHK", "") : config;
-              return (
-                <span
-                  key={config}
-                  className={`${style.tag} ${
-                    selectedConfigurations.includes(value) ? style.active1 : ""
-                  }`}
-                  onClick={() =>
-                    handleTagClick(
-                      value,
-                      selectedConfigurations,
-                      setSelectedConfigurations,
-                      "configuration"
-                    )
-                  }
-                >
-                  {config}
-                </span>
-              );
-            })}
-          </div>
-        )}
-
-        {/* Price Range */}
-        <div className={style.sectionHeader} onClick={() => toggleSection("priceRange")}>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: "7px" }}>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M21.4 11.6l-9-9A2 2 0 0 0 11 2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 .6 1.4l9 9a2 2 0 0 0 2.8 0l7-7a2 2 0 0 0 0-2.8zM6.5 8A1.5 1.5 0 1 1 6.5 5a1.5 1.5 0 0 1 0 3z" />
-            </svg>
-            PRICE RANGE
-          </span>
-          <span
-            className={`${style.arrowIcon} ${
-              expanded.priceRange ? style.rotateDown : style.rotateUp
-            }`}
-          >
-            ▼
-          </span>
-        </div>
-        {expanded.priceRange && (
-          <div className={style.priceRangeContainer}>
-            <div className={style.sliderWrapper}>
-              <input
-                type="range"
-                min="1"
-                max="6"
-                step="0.1"
-                value={priceRange[0] ?? 1}
-                onChange={(e) => handlePriceChange(0, e.target.value)}
-                className={style.thumb}
-              />
-              <input
-                type="range"
-                min="1"
-                max="6"
-                step="0.1"
-                value={priceRange[1] ?? 10}
-                onChange={(e) => handlePriceChange(1, e.target.value)}
-                className={style.thumb}
-              />
-              <div className={style.sliderTrack} style={{ background: getTrackBackground() }}></div>
-            </div>
-
-            <div className={style.priceLabels}>
-              <span>{(priceRange[0] ?? 1) + " Cr"}</span>
-              <span>{(priceRange[1] ?? 10) + " Cr"}</span>
-            </div>
-
-            <div className={style.priceInputs}>
-              <input
-                type="text"
-                placeholder="Min Amount in Cr.*"
-                value={minInput}
-                onChange={(e) => handlePriceInputChange(e, "min")}
-              />
-              <span className={style.dash}>—</span>
-              <input
-                type="text"
-                placeholder="Max Amount in Cr.*"
-                value={maxInput}
-                onChange={(e) => handlePriceInputChange(e, "max")}
-              />
-            </div>
-
-            {inputError && <span className={style.errorText}>{inputError}</span>}
-          </div>
-        )}
-
-        {/* Project Status */}
-        <div className={style.sectionHeader} onClick={() => toggleSection("projectStatus")}>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: "7px" }}>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 11h-4v-2h2V7h2v6z" />
-            </svg>
-            PROJECT STATUS
-          </span>
-          <span
-            className={`${style.arrowIcon} ${
-              expanded.projectStatus ? style.rotateDown : style.rotateUp
-            }`}
-          >
-            ▼
-          </span>
-        </div>
-        {expanded.projectStatus && (
-          <div className={style.locationTags}>
-            {["New Launch", "Under Construction", "Near Possession", "Ready to Move In"].map(
-              (status) => (
-                <span
-                  key={status}
-                  className={`${style.tag} ${
-                    selectedStatuses.includes(status) ? style.active1 : ""
-                  }`}
-                  onClick={() =>
-                    handleTagClick(status, selectedStatuses, setSelectedStatuses, "projectStatus")
-                  }
-                >
-                  {status}
-                </span>
+      {showCities &&
+        section(
+          "city",
+          "Cities in results",
+          selectedCities.join(", "),
+          <div className={style.lfgChips}>
+            {cityOptions.map((c) =>
+              chip(
+                c.name,
+                c.name,
+                isCityTicked(c.name),
+                () => toggleCity(c.name),
+                c.count,
+                !c.count
               )
             )}
           </div>
         )}
-      </div>
-    );
-  }
 
-  if (!isMobile) {
+      {section(
+        "configuration",
+        "BHK",
+        selectedConfigurations.map(cfgLabel).join(", "),
+        <div className={style.lfgChips}>
+          {CONFIGS.map(([value, label]) =>
+            chip(value, label, selectedConfigurations.includes(value), () =>
+              handleTagClick(
+                value,
+                selectedConfigurations,
+                setSelectedConfigurations,
+                "configuration"
+              )
+            )
+          )}
+        </div>
+      )}
+
+      {section(
+        "priceRange",
+        "Budget",
+        priceText,
+        <>
+          <div className={style.lfgChips}>
+            {BUDGETS.map(([label, lo, hi]) =>
+              chip(label, label, isBudget(lo, hi), () => pickBudget(lo, hi))
+            )}
+          </div>
+          <div className={style.lfgPrice}>
+            <input
+              type="text"
+              inputMode="decimal"
+              placeholder="Min ₹ Cr"
+              aria-label="Minimum price in crore"
+              value={minInput}
+              onChange={(e) => handlePriceInputChange(e, "min")}
+            />
+            <span aria-hidden="true">–</span>
+            <input
+              type="text"
+              inputMode="decimal"
+              placeholder="Max ₹ Cr"
+              aria-label="Maximum price in crore"
+              value={maxInput}
+              onChange={(e) => handlePriceInputChange(e, "max")}
+            />
+          </div>
+          {inputError && <span className={style.errorText}>{inputError}</span>}
+        </>
+      )}
+
+      {section(
+        "projectStatus",
+        "Status",
+        selectedStatuses.join(", "),
+        <div className={style.lfgChips}>
+          {STATUSES.map((st) =>
+            chip(st, st, selectedStatuses.includes(st), () =>
+              handleTagClick(st, selectedStatuses, setSelectedStatuses, "projectStatus")
+            )
+          )}
+        </div>
+      )}
+
+      {section(
+        "unitType",
+        "Property type",
+        selectedUnitTypes.join(", "),
+        <div className={style.lfgChips}>
+          {UNIT_TYPES.map((t) =>
+            chip(t, t, selectedUnitTypes.includes(t), () =>
+              handleTagClick(t, selectedUnitTypes, setSelectedUnitTypes, "unitType")
+            )
+          )}
+        </div>
+      )}
+    </>
+  );
+
+  if (isMobile) {
+    if (!openClosefilter) return null;
     return (
-      <div className={style.containerWrapper}>
-        <div className={style.buttonWrapper}>
-          <span className={style.filterbtn}>Filters</span>
-          <button className={`${style.resetButton}`} onClick={resetFilters}>
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M17.65 6.35A7.95 7.95 0 0 0 12 4a8 8 0 1 0 7.73 10.19h-2.08A6 6 0 1 1 12 6c1.57 0 2.99.62 4.05 1.6L13 11h7V4l-2.35 2.35z" />
-            </svg>
-            Reset
-          </button>
-        </div>
-
-        <div className={style.hr}></div>
-
-        {/* Location */}
-        <div
-          className={style.sectionTitle}
-          style={{ display: "flex", alignItems: "center", gap: "7px" }}
-        >
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="#0b6e21" aria-hidden="true">
-            <path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" />
-          </svg>
-          Location
-        </div>
-        <LocationFilter
-          refineCities={selectedCities}
-          onRefineCity={(city) => handleTagClick(city, selectedCities, setSelectedCities, "city")}
+      <div className={style.lfgSheetWrap} role="dialog" aria-modal="true" aria-label="Filters">
+        <button
+          type="button"
+          className={style.lfgScrim}
+          aria-label="Close filters"
+          onClick={handleCloseFilterToggle}
         />
-
-        {/* Cities in this listing */}
-        {showCities && (
-          <>
-            <div className={style.sectionHeader} onClick={() => toggleSection("city")}>
-              <span style={{ display: "inline-flex", alignItems: "center", gap: "7px" }}>
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M3 21V9l6-4v4l6-4v16H3zm14 0V3h4v18h-4zM6 12h2v2H6v-2zm0 4h2v2H6v-2zm4-4h2v2h-2v-2zm0 4h2v2h-2v-2z" />
-                </svg>
-                CITIES
-              </span>
-              <span className={`${style.arrowIcon} ${expanded.city ? style.rotateDown : style.rotateUp}`}>
-                ▼
-              </span>
-            </div>
-            {expanded.city && (
-              <div className={style.checkboxGroup}>
-                {cityOptions.map((c) => (
-                  <label className={style.checkboxItem} key={c.name}>
-                    <input
-                      type="checkbox"
-                      checked={isCityTicked(c.name)}
-                      onChange={() => toggleCity(c.name)}
-                    />
-                    {c.name}
-                    <span className={style.optionCount}>{c.count}</span>
-                  </label>
-                ))}
-              </div>
+        <div className={style.lfgSheet}>
+          <div className={style.lfgSheetHead}>
+            <span className={style.lfgHeading}>Filters</span>
+            {applied.length > 0 && (
+              <button type="button" className={style.lfgReset} onClick={resetFilters}>
+                Clear all
+              </button>
             )}
-          </>
-        )}
-
-        {/* Unit Type */}
-        <div className={style.sectionHeader} onClick={() => toggleSection("unitType")}>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: "7px" }}>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M4 21V10l8-6 8 6v11h-5v-6H9v6H4z" />
-            </svg>
-            UNIT TYPE
-          </span>
-          <span
-            className={`${style.arrowIcon} ${expanded.unitType ? style.rotateDown : style.rotateUp}`}
-          >
-            ▼
-          </span>
-        </div>
-        {expanded.unitType && (
-          <div className={style.checkboxGroup}>
-            {["Low Rise Apartment", "High Rise Apartment", "Villa"].map((type) => (
-              <label className={style.checkboxItem} key={type}>
-                <input
-                  type="checkbox"
-                  checked={selectedUnitTypes.includes(type)}
-                  onChange={() =>
-                    handleCheckboxChange(type, selectedUnitTypes, setSelectedUnitTypes, "unitType")
-                  }
-                />
-                {type}
-              </label>
-            ))}
+            <button
+              type="button"
+              className={style.lfgClose}
+              onClick={handleCloseFilterToggle}
+              aria-label="Close filters"
+            >
+              ×
+            </button>
           </div>
-        )}
-
-        {/* Configuration */}
-        <div className={style.sectionHeader} onClick={() => toggleSection("configuration")}>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: "7px" }}>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M3 3h8v8H3V3zm10 0h8v5h-8V3zM3 13h8v8H3v-8zm10 3h8v5h-8v-5z" />
-            </svg>
-            CONFIGURATION
-          </span>
-          <span
-            className={`${style.arrowIcon} ${expanded.configuration ? style.rotateDown : style.rotateUp}`}
-          >
-            ▼
-          </span>
-        </div>
-        {expanded.configuration && (
-          <div className={style.checkboxGroup}>
-            {["1 BHK", "2 BHK", "3 BHK", "4 BHK", "5 BHK", "Penthouse"].map((config) => {
-              const isBhk = config.includes("BHK");
-              const value = isBhk ? config.replace(" BHK", "") : config;
-              return (
-                <label className={style.checkboxItem} key={config}>
-                  <input
-                    type="checkbox"
-                    checked={selectedConfigurations.includes(value)}
-                    onChange={() =>
-                      handleCheckboxChange(
-                        value,
-                        selectedConfigurations,
-                        setSelectedConfigurations,
-                        "configuration"
-                      )
-                    }
-                  />
-                  {config}
-                </label>
-              );
-            })}
+          <div className={style.lfgSheetBody}>{body}</div>
+          <div className={style.lfgSheetFoot}>
+            <button type="button" className={style.lfgApply} onClick={applyFilters}>
+              {typeof totalProperties === "number"
+                ? `Show ${totalProperties} ${totalProperties === 1 ? "property" : "properties"}`
+                : "Show properties"}
+            </button>
           </div>
-        )}
-
-        {/* Price Range */}
-        <div className={style.sectionHeader} onClick={() => toggleSection("priceRange")}>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: "7px" }}>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M21.4 11.6l-9-9A2 2 0 0 0 11 2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 .6 1.4l9 9a2 2 0 0 0 2.8 0l7-7a2 2 0 0 0 0-2.8zM6.5 8A1.5 1.5 0 1 1 6.5 5a1.5 1.5 0 0 1 0 3z" />
-            </svg>
-            PRICE RANGE
-          </span>
-          <span
-            className={`${style.arrowIcon} ${expanded.priceRange ? style.rotateDown : style.rotateUp}`}
-          >
-            ▼
-          </span>
         </div>
-        {expanded.priceRange && (
-          <div className={style.priceRangeContainer}>
-            <div className={style.sliderWrapper}>
-              <input
-                type="range"
-                min="1"
-                max="6"
-                step="0.1"
-                value={priceRange[0] ?? 1}
-                onChange={(e) => handlePriceChange(0, e.target.value)}
-                className={style.thumb}
-              />
-              <input
-                type="range"
-                min="1"
-                max="6"
-                step="0.1"
-                value={priceRange[1] ?? 10}
-                onChange={(e) => handlePriceChange(1, e.target.value)}
-                className={style.thumb}
-              />
-              <div className={style.sliderTrack} style={{ background: getTrackBackground() }} />
-            </div>
-
-            <div className={style.priceLabels}>
-              <span>{(priceRange[0] ?? 1) + " Cr"}</span>
-              <span>{(priceRange[1] ?? 10) + " Cr"}</span>
-            </div>
-
-            <div className={style.priceInputs}>
-              <input
-                type="text"
-                placeholder="Min Amount in Cr.*"
-                value={minInput}
-                onChange={(e) => handlePriceInputChange(e, "min")}
-              />
-              <span className={style.dash}>—</span>
-              <input
-                type="text"
-                placeholder="Max Amount in Cr.*"
-                value={maxInput}
-                onChange={(e) => handlePriceInputChange(e, "max")}
-              />
-            </div>
-
-            {inputError && <span className={style.errorText}>{inputError}</span>}
-          </div>
-        )}
-
-        {/* Project Status */}
-        <div className={style.sectionHeader} onClick={() => toggleSection("projectStatus")}>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: "7px" }}>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 11h-4v-2h2V7h2v6z" />
-            </svg>
-            PROJECT STATUS
-          </span>
-          <span
-            className={`${style.arrowIcon} ${expanded.projectStatus ? style.rotateDown : style.rotateUp}`}
-          >
-            ▼
-          </span>
-        </div>
-        {expanded.projectStatus && (
-          <div className={style.checkboxGroup}>
-            {["New Launch", "Under Construction", "Near Possession", "Ready to Move In"].map(
-              (status) => (
-                <label className={style.checkboxItem} key={status}>
-                  <input
-                    type="checkbox"
-                    checked={selectedStatuses.includes(status)}
-                    onChange={() =>
-                      handleCheckboxChange(
-                        status,
-                        selectedStatuses,
-                        setSelectedStatuses,
-                        "projectStatus"
-                      )
-                    }
-                  />
-                  {status}
-                </label>
-              )
-            )}
-          </div>
-        )}
       </div>
     );
   }
+
+  return (
+    <div className={style.lfgRoot}>
+      <div className={style.lfgTop}>
+        <span className={style.lfgHeading}>Filters</span>
+        {applied.length > 0 && (
+          <button type="button" className={style.lfgReset} onClick={resetFilters}>
+            Clear all
+          </button>
+        )}
+      </div>
+      {body}
+    </div>
+  );
 }

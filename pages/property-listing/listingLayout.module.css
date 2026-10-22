@@ -79,11 +79,11 @@
   align-items: center;
   gap: 6px;
   padding: 6px 14px;
-  border: 1px solid #b8dcc1;
+  border: 1px solid #ecd9ac;
   border-radius: 999px;
   background: #fff;
-  color: #0b6e21;
-  font-family: "Lexend Deca", sans-serif;
+  color: var(--color-gold-dark);
+  font-family: var(--font-body);
   font-size: 12.5px;
   font-weight: 600;
   cursor: pointer;
@@ -132,14 +132,14 @@
 /* Section heading ("Featured Properties" etc.) — was an identical inline style
    object duplicated in both the desktop and mobile branches of the page. */
 .pllSectionTitle {
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  text-transform: none;
+  color: var(--color-ink);
   position: relative;
-  font-family: "Lexend Deca", sans-serif;
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  letter-spacing: 0.03em;
-  line-height: 1.3;
-  text-transform: uppercase;
   margin: 1.75rem 0 1.4rem;
   padding-bottom: 10px;
 }
@@ -153,5 +153,246 @@
   width: 44px;
   height: 3px;
   border-radius: 3px;
-  background: linear-gradient(90deg, #e7b554, rgba(231, 181, 84, 0.2));
+  background: linear-gradient(90deg, var(--color-gold), rgba(231, 181, 84, 0.2));
+}
+
+/* ---------- empty results ---------- */
+.pllEmpty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  margin: 8px 0 24px;
+  padding: 40px 20px;
+  border: 1px dashed rgba(231, 181, 84, 0.6);
+  background: #fffcf4;
+  color: var(--color-gold-dark);
+  font-family: var(--font-body);
+}
+
+.pllEmpty h3 {
+  margin: 6px 0 0;
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+  color: var(--color-ink);
+}
+
+.pllEmpty p {
+  margin: 0;
+  font-size: var(--fs-body);
+  font-weight: var(--fw-light);
+  color: var(--color-body);
+}
+
+.pllEmptyActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.pllEmptyPrimary,
+.pllEmptyLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 0 16px;
+  font-family: var(--font-body);
+  font-size: var(--fs-button);
+  font-weight: var(--fw-medium);
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid var(--color-ink);
+  background: var(--color-surface);
+  color: var(--color-ink);
+}
+
+.pllEmptyPrimary {
+  border-color: var(--color-gold);
+  background: var(--color-gold);
+}
+
+/* ---------- one tree, CSS picks the variant ---------- */
+.pllBlock {
+  margin-top: 8px;
+}
+
+@media (min-width: 769px) {
+  .pllPhoneOnly {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .pllDeskOnly {
+    display: none;
+  }
+  .pllFilters {
+    display: none;
+  }
+  .pllResults {
+    width: 100%;
+    margin-top: 0;
+  }
+  .pllLayout {
+    gap: 0;
+  }
+}
+
+/* ======================================================================
+   Phone / tablet audit fixes (≤ 768px): 44px tap targets, ≥ 12px text,
+   nothing wider than the column. Class names are unhashed project-wide, so
+   the card modules' classes can be addressed from here, scoped to the list.
+   ====================================================================== */
+@media (max-width: 768px) {
+  /* card overview row: long possession text ("Aug 2027 (OC Received Phase 1)") wraps */
+  .pllPhoneOnly :global(.propertyListPageMobileDetailOverview) {
+    flex-wrap: wrap;
+    row-gap: 6px;
+  }
+  .pllPhoneOnly :global(.propertyListPageMobileDetailOverviewValueFlex) {
+    min-width: 0;
+    flex-shrink: 1;
+  }
+  .pllPhoneOnly :global(.propertyListPageMobileDetailOverviewValueFlex) p {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  /* ≥ 12px text */
+  .pllPhoneOnly :global(.cardStatus),
+  .pllPhoneOnly :global(.mobileReraBadge) {
+    font-size: 12px !important;
+  }
+
+  /* 44px tap targets */
+  .pllPhoneOnly :global(.cbBtn) {
+    min-height: 44px;
+  }
+  .pllResults :global(.paginationArrow),
+  .pllResults :global(.paginationCircle) {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  /* heart / compare keep their look; an invisible ring widens the hit area */
+  .pllPhoneOnly :global(.heart)::after,
+  .pllPhoneOnly :global(.cmpt_toggle)::after {
+    content: "";
+    position: absolute;
+    inset: -6px;
+  }
+}
+
+/* touch tablets in the desktop layout (769–1024px): same tap / text minimums */
+@media (max-width: 1024px) and (pointer: coarse) {
+  .pllResults :global(.cbBtn),
+  .pllResults :global(.sortBtn),
+  .pllResults :global(.laPrimary),
+  .pllResults :global(.laSecondary),
+  .pllResults :global(.laExpertCall),
+  .pllResults :global(.laExpertWa),
+  .pllResults :global(.laExpertBtn) {
+    min-height: 44px;
+  }
+  .pllResults :global(.paginationArrow),
+  .pllResults :global(.paginationCircle) {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  .pllResults :global(.absMore),
+  .pllResults :global(.absCrumbs) a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    min-width: 44px;
+  }
+  .pllResults :global(.cmpt_toggle)::after {
+    content: "";
+    position: absolute;
+    inset: -6px;
+  }
+  .pllDeskOnly :global(.listingDetailRow),
+  .pllDeskOnly :global(.listingDetailValue),
+  .pllDeskOnly :global(.cardStatus),
+  .pllDeskOnly :global(.nameTagRera),
+  .pllDeskOnly :global(.nameTagExclusive),
+  .pllDeskOnly :global(.nameTagFeatured) {
+    font-size: 12px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  /* "Exclusive"/"Featured" chip sat under the ♥ (both top-left): move it clear */
+  .pllPhoneOnly :global(.propertyImageChip) {
+    left: 56px;
+    top: 14px;
+  }
+}
+
+/* phone cards: status chip sits above the photo's location chip (both bottom-left) */
+.pllPhoneOnly :global(.cardStatus) {
+  bottom: 46px !important;
+}
+
+/* ---- "Updating results…" feedback after a filter click ---- */
+/* thin gold bar running across the top of the window */
+.pllProgress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 3000;
+  width: 40%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--color-gold), var(--color-gold-dark));
+  animation: pllProgressRun 1.1s ease-in-out infinite;
+}
+
+@keyframes pllProgressRun {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(260%);
+  }
+}
+
+.pllUpdating {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 12px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: #fbf3e2;
+  color: #8a6410;
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+}
+
+.pllSpinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(138, 100, 16, 0.25);
+  border-top-color: #8a6410;
+  border-radius: 50%;
+  animation: pllSpin 0.7s linear infinite;
+}
+
+@keyframes pllSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pllProgress {
+    animation: none;
+    width: 100%;
+    opacity: 0.6;
+  }
+  .pllSpinner {
+    animation-duration: 1.6s;
+  }
 }

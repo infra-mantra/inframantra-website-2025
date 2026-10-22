@@ -66,8 +66,17 @@ const nextConfig = {
   // CSS (blank / Lighthouse NO_FCP). For a local production build on Windows,
   // disable it: `DISABLE_OPTIMIZE_CSS=1 npm run build` (then `npm run start`).
   // `next dev` never uses critters, so local dev is unaffected either way.
+  //
+  // NOW OFF BY DEFAULT (perf pass, measured on production builds): critters also
+  // runs at REQUEST time on ISR pages (/property-listing/*, /property/*). Its
+  // inlined "critical" CSS misses rules, the rest arrives via media="print"
+  // onload links, and the late CSS moved the whole listing layout: desktop CLS
+  // 0.12 with critters vs 0.002 without (Lighthouse 77 -> 88), with no measurable
+  // FCP loss — the site's CSS is small (~40 KB). Opt back in with
+  // ENABLE_OPTIMIZE_CSS=1 (DISABLE_OPTIMIZE_CSS=1 still forces it off).
   experimental: {
-    optimizeCss: process.env.DISABLE_OPTIMIZE_CSS !== '1',
+    optimizeCss:
+      process.env.ENABLE_OPTIMIZE_CSS === '1' && process.env.DISABLE_OPTIMIZE_CSS !== '1',
   },
 
   images: {
@@ -92,7 +101,7 @@ const nextConfig = {
 
   env: {
     apiUrl: 'https://api.inframantra.com/api',
-    apiUrl1: 'https://apitest.inframantra.com/api/v1',
+    apiUrl1: 'http://localhost:5001/api/v1',
     NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: 'AIzaSyDh6uhpwkkniyiztlDDWEHO7Ph_sBxuJFw',
   },
 

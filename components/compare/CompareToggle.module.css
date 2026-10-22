@@ -1,0 +1,101 @@
+/* "+ Compare" pill. Colours and type come from styles/tokens.css. */
+.cmpt_toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px 5px 6px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.16);
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.cmpt_toggle:hover {
+  border-color: var(--color-gold);
+}
+
+.cmpt_toggle:active {
+  transform: scale(0.96);
+}
+
+.cmpt_toggle:focus-visible {
+  outline: 2px solid var(--color-gold-dark);
+  outline-offset: 2px;
+}
+
+/* the little checkbox square */
+.cmpt_box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-gold-dark);
+  color: var(--color-gold-dark);
+  flex-shrink: 0;
+}
+
+.cmpt_on {
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+  color: #fff;
+}
+
+.cmpt_on .cmpt_box {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+  color: var(--color-ink);
+}
+
+/* Over a card photo: bottom-right corner, above the photo's shade gradient */
+.cmpt_overlay {
+  position: absolute;
+  right: 9px;
+  bottom: 9px;
+  z-index: 3;
+  /* on cards: icon only (the label stays for screen readers via aria-label) */
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+}
+
+.cmpt_overlay > span:last-child {
+  display: none;
+}
+
+/* Property page header: a plain button next to the map button */
+.cmpt_inline {
+  padding: 8px 14px 8px 9px;
+  border-color: #f1e3bf;
+  background: #fff8e1;
+  box-shadow: none;
+  font-size: var(--fs-button);
+}
+
+.cmpt_inline.cmpt_on {
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cmpt_toggle {
+    transition: none;
+  }
+  .cmpt_toggle:active {
+    transform: none;
+  }
+}

@@ -1,54 +1,159 @@
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
+import { IoSearchSharp } from "react-icons/io5";
 
 import CustomizedHook from "../../shared/search/SearchAutocomplete.jsx";
+import { useTypewriterHint } from "../../shared/search/useTypewriterHint";
 import { SearchBarSkeleton } from "../HomeSkeletons.jsx";
+import {
+  DEFAULT_CITY,
+  EMPTY_FILTERS,
+  POPULAR_SEARCHES,
+} from "../../shared/search/searchFilterConfig.js";
+import { Caret, FIELDS, FilterDropdown, PinIcon } from "./FilterDropdowns.jsx";
+import dd from "./FilterDropdowns.module.css";
+import styles from "./SearchOptions.module.css";
+import FilterTabs from "./FilterTabs.jsx";
 
-import styles from "./SearchOptions.module.css"; // Assuming you have a CSS module for styling
+/*
+  The home hero search bar (99acres / Square Yards style).
+
+  Desktop (≥1024px), one pill:
+    [City ▾] | search box (with suggestions) | Property type ▾ BHK ▾ Budget ▾ Status ▾ | mic | Search
+  Phone / tablet: a compact pill [City ▾ | "Search…" | 🔍] that opens a full-screen
+  search sheet (SearchSheet.jsx, loaded on first tap).
+
+  Every control writes to one `filters` object; the URL is built from it by
+  buildListingUrl() in searchFilterConfig.js.
+*/
+const loadSheet = () => import("./SearchSheet.jsx");
+const SearchSheet = dynamic(loadSheet, { ssr: false });
+const warmSheet = () => loadSheet().catch(() => {});
+
+const DESKTOP_QUERY = "(min-width: 1024px)";
 
 const SearchOptions = () => {
-  const [autocompleteSelections, setAutocompleteSelections] = useState([]);
+  const [filters, setFilters] = useState({ ...EMPTY_FILTERS, city: DEFAULT_CITY });
+  const [openMenu, setOpenMenu] = useState(null); // which dropdown is open ("city", "bhk", …)
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const hint = useTypewriterHint(sheetOpen); // rotating example in the phone bar
+  const closeSheet = useCallback(() => setSheetOpen(false), []);
 
-  // Dropped along with the `location` prop below: setLocation was never called,
-  // so location was permanently undefined and CustomizedHook never read it.
-  // `useRouter` and an `isMobile` state were also unused — isMobile was written
-  // on every resize but never read, so it only forced extra re-renders.
-  const [isDesktop, setIsDesktop] = useState(true);
-  // Which layout to draw depends on window.innerWidth, which does not exist during
-  // SSR. Rendering either branch on the server means half of all visitors watch it
-  // restyle itself on hydration, so a placeholder covers that single frame instead.
-  const [mounted, setMounted] = useState(false);
-
-  const checkScreenWidth = () => {
-    setIsDesktop(window.innerWidth >= 769); // You can adjust the threshold for desktop here
-  };
+  // When the visitor picks another city, the banner headline shows it
+  // (BrandSlide.jsx listens for "inframantra:city"). Only on a real change.
+  const lastCity = useRef(filters.city?.label);
   useEffect(() => {
-    checkScreenWidth();
-    setMounted(true);
-    window.addEventListener("resize", checkScreenWidth);
+    const label = filters.city?.label;
+    if (label === lastCity.current) return;
+    lastCity.current = label;
+    window.dispatchEvent(new CustomEvent("inframantra:city", { detail: label }));
+  }, [filters.city]);
 
-    return () => {
-      window.removeEventListener("resize", checkScreenWidth);
-    };
+  // Which layout to draw depends on the window width, which does not exist during
+  // SSR — so a same-size skeleton covers the first frame instead of a restyle.
+  const [isDesktop, setIsDesktop] = useState(true);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia(DESKTOP_QUERY);
+    const update = () => setIsDesktop(mq.matches);
+    update();
+    setMounted(true);
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
   }, []);
 
-  // Sized from the real bar's own CSS at both breakpoints, so this swap moves nothing.
   if (!mounted) return <SearchBarSkeleton />;
 
-  return (
+  // Opens one dropdown and closes the others.
+  const toggle = (name) => (open) => setOpenMenu(open ? name : null);
+
+  if (!isDesktop) {
+    return (
+      <div className={styles.searchOptionsWrapper}>
+        <FilterTabs
+          filters={filters}
+          onChange={(f) => {
+            setFilters(f);
+            setSheetOpen(true);
+          }}
+        />
+        <div className={styles.compactBar}>
+          <button
+            type="button"
+            className={dd.cityBtn}
+            aria-label={`City: ${filters.city?.label || "All"}. Open search`}
+            onPointerDown={warmSheet}
+            onClick={() => setSheetOpen(true)}
+          >
+            <PinIcon />
+            <span className={dd.triggerText}>{filters.city?.label || "City"}</span>
+            <Caret />
+          </button>
+          <span className={dd.cityDivider} aria-hidden="true" />
+          <button
+            type="button"
+            className={styles.fakeInput}
+            onPointerDown={warmSheet}
+            onClick={() => setSheetOpen(true)}
+          >
+            Search {hint}
+          </button>
+          <button
+            type="button"
+            className={styles.searchIconBtn}
+            aria-label="Search"
+            onPointerDown={warmSheet}
+            onClick={() => setSheetOpen(true)}
+          >
+            <IoSearchSharp size={20} />
+          </button>
+        </div>
+        {sheetOpen && <SearchSheet filters={filters} onChange={setFilters} onClose={closeSheet} />}
+      </div>
+    );
+  }
+
+  const cityPicker = (
     <>
-      {isDesktop ? (
-        <div className={styles.searchOptionsWrapper}>
-          <div className={styles.searchOptionsFlexContainer}>
-            <CustomizedHook onSearch={setAutocompleteSelections} />
-          </div>
-        </div>
-      ) : (
-        <div className={styles.searchOptionsWrapper}>
-          <CustomizedHook onSearch={setAutocompleteSelections} />
-          <div className={styles.searchOptionsMobileFlexContainer}></div>
-        </div>
-      )}
+      <FilterDropdown
+        field="city"
+        open={openMenu === "city"}
+        onToggle={toggle("city")}
+        filters={filters}
+        onChange={setFilters}
+      />
+      <span className={dd.cityDivider} aria-hidden="true" />
     </>
+  );
+
+  const filterDropdowns = (
+    <div className={styles.dropdownRow}>
+      {FIELDS.map((f) => (
+        <FilterDropdown
+          key={f.key}
+          field={f}
+          open={openMenu === f.key}
+          onToggle={toggle(f.key)}
+          filters={filters}
+          onChange={setFilters}
+        />
+      ))}
+    </div>
+  );
+
+  return (
+    <div className={styles.searchOptionsWrapper}>
+      <FilterTabs filters={filters} onChange={setFilters} />
+      <div className={styles.searchOptionsFlexContainer}>
+        <CustomizedHook
+          onSearch={() => setOpenMenu(null)}
+          filters={filters}
+          before={cityPicker}
+          addon={filterDropdowns}
+          quickSearches={POPULAR_SEARCHES}
+        />
+      </div>
+    </div>
   );
 };
 

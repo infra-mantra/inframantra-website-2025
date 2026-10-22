@@ -56,7 +56,9 @@
   background: #e7b554;
   color: #1a1a1a;
   font-size: 14px;
-  box-shadow: 0 0 0 3px #fff, 0 6px 14px rgba(0, 0, 0, 0.35);
+  box-shadow:
+    0 0 0 3px #fff,
+    0 6px 14px rgba(0, 0, 0, 0.35);
   transition: transform 0.2s ease;
 }
 
@@ -85,7 +87,9 @@
   border-radius: 50% 50% 50% 0;
   transform: rotate(-45deg);
   background: #1a1a1a;
-  box-shadow: 0 0 0 3px #e7b554, 0 8px 18px rgba(0, 0, 0, 0.45);
+  box-shadow:
+    0 0 0 3px #e7b554,
+    0 8px 18px rgba(0, 0, 0, 0.45);
 }
 
 .lm-property-pin svg {
@@ -101,7 +105,7 @@
   border-radius: 8px;
   background: #1a1a1a;
   color: #fff;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 12px;
   font-weight: 600;
   white-space: nowrap;
@@ -174,7 +178,7 @@
   background: #fff;
   border-radius: 14px;
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   animation: lmCardIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -246,6 +250,6 @@
     font-size: 13px;
   }
   .lm-property-label {
-    font-size: 11px;
+    font-size: 12px;
   }
 }

@@ -1,27 +1,27 @@
 import { RxCross2 } from "react-icons/rx";
-import React, { useEffect, useState, useRef } from 'react';
-import ReCAPTCHA from 'react-google-recaptcha';
-import { toast } from 'react-toastify';
-import Ajax1 from './Ajax1';
-import { useRouter } from 'next/router';
-import { downloadBrochure } from './downloadBrochurePdf';
+import React, { useEffect, useState, useRef } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
+import { toast } from "react-toastify";
+import Ajax1 from "./Ajax1";
+import { useRouter } from "next/router";
+import { downloadBrochure } from "./downloadBrochurePdf";
 import ctaStyle from "./cta.module.css";
-import PhoneInput from 'react-phone-input-2';
-import 'react-phone-input-2/lib/style.css';
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 import { FaWhatsapp } from "react-icons/fa";
 
 // Default = USA NRI Expo (used by /usa-nri, /usa-nri-event, /usa-nri-yupp).
 // Pass `locations` to re-use this popup for another event.
 const defaultLocations = [
   {
-    city: 'SEATTLE',
-    dates: ['30th May, 2026', '31st May, 2026'],
-    venue: 'InterContinental Seattle Bellevue by IHG',
+    city: "SEATTLE",
+    dates: ["30th May, 2026", "31st May, 2026"],
+    venue: "InterContinental Seattle Bellevue by IHG",
   },
   {
-    city: 'SAN JOSE',
-    dates: ['6th June, 2026', '7th June, 2026'],
-    venue: 'The Domain Hotel Sunnyvale',
+    city: "SAN JOSE",
+    dates: ["6th June, 2026", "7th June, 2026"],
+    venue: "The Domain Hotel Sunnyvale",
   },
 ];
 
@@ -34,117 +34,94 @@ function App({
   phone = "",
   id = "defaultId",
   countryCode = "in",
-  locations = defaultLocations
+  locations = defaultLocations,
 }) {
-
   const [isAnimating, setIsAnimating] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const [whatsappConsent, setWhatsappConsent] =
-    useState(true);
+  const [whatsappConsent, setWhatsappConsent] = useState(true);
 
   const router = useRouter();
 
-  const [availableDates, setAvailableDates] =
-    useState([]);
+  const [availableDates, setAvailableDates] = useState([]);
 
   const [formData, setFormData] = useState({
-    name: '',
-    phoneNumber: '',
-    email: '',
-    city: '',
-    eventDate: '',
-    venue: '',
+    name: "",
+    phoneNumber: "",
+    email: "",
+    city: "",
+    eventDate: "",
+    venue: "",
     projectName: name,
   });
 
   const recaptchaRef = useRef(null);
 
   useEffect(() => {
-
     if (popUpenable) {
       setIsAnimating(true);
     } else {
       setIsAnimating(false);
     }
-
   }, [popUpenable]);
 
   // INPUT CHANGE
   const handleChange = (e) => {
-
     setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
-
   };
 
   // CITY CHANGE
   const handleCityChange = (e) => {
-
     const city = e.target.value;
 
-    const selectedLocation =
-      locations.find(
-        (loc) => loc.city === city
-      );
+    const selectedLocation = locations.find((loc) => loc.city === city);
 
     if (selectedLocation) {
-
-      setAvailableDates(
-        selectedLocation.dates
-      );
+      setAvailableDates(selectedLocation.dates);
 
       setFormData((prev) => ({
         ...prev,
         city: selectedLocation.city,
         venue: selectedLocation.venue,
-        eventDate: '',
+        eventDate: "",
       }));
-
     } else {
-
       setAvailableDates([]);
 
       setFormData((prev) => ({
         ...prev,
-        city: '',
-        venue: '',
-        eventDate: '',
+        city: "",
+        venue: "",
+        eventDate: "",
       }));
-
     }
-
   };
 
   // DATE CHANGE
   const handleDateChange = (e) => {
-
     setFormData((prev) => ({
       ...prev,
       eventDate: e.target.value,
     }));
-
   };
 
   // SUBMIT
   const handleSubmit = async (e) => {
-
     e.preventDefault();
 
     if (loading) return;
 
     try {
-
       setLoading(true);
 
-      const toastId =
-        toast.loading("Submitting form...");
+      const toastId = toast.loading("Submitting form...");
 
       const action = {
-        method: 'POST',
-        url: '/enquiry/project',
+        method: "POST",
+        url: "/enquiry/project",
         data: {
           ...formData,
           message: `
@@ -159,13 +136,9 @@ whats app consent :${whatsappConsent}
 
       const response = await Ajax1(action);
 
-      if (
-        response?.data?.status === 'success'
-      ) {
-
+      if (response?.data?.status === "success") {
         toast.update(toastId, {
-          render:
-            "Form submitted successfully",
+          render: "Form submitted successfully",
           type: "success",
           isLoading: false,
           autoClose: 2000,
@@ -173,214 +146,118 @@ whats app consent :${whatsappConsent}
 
         // RESET FORM
         setFormData({
-          name: '',
-          phoneNumber: '',
-          email: '',
-          city: '',
-          eventDate: '',
-          venue: '',
+          name: "",
+          phoneNumber: "",
+          email: "",
+          city: "",
+          eventDate: "",
+          venue: "",
           projectName: name,
         });
 
         setAvailableDates([]);
 
         if (popUpenable && pdf) {
-
           downloadBrochure(pdf, name);
-
         }
 
         setTimeout(() => {
-
-          router.push('/thank-you');
-
+          router.push("/thank-you");
         }, 2000);
-
       } else {
-
         toast.update(toastId, {
-          render:
-            "Form submission failed",
+          render: "Form submission failed",
           type: "error",
           isLoading: false,
           autoClose: 2000,
         });
-
       }
-
     } catch (error) {
-
-      toast.error(
-        'Error submitting form'
-      );
+      toast.error("Error submitting form");
 
       console.error(error);
-
     } finally {
-
       setLoading(false);
-
     }
-
   };
 
   // CLOSE POPUP
   const handleClose = () => {
-
     setIsAnimating(false);
 
     if (onClickOff) {
       onClickOff(false);
     }
-
   };
 
   return (
-
     <div className={ctaStyle.app}>
-
       {popUpenable && (
-
         <div
           className={`${ctaStyle.popupOverlay} ${
-            isAnimating
-              ? ctaStyle.popupAnimating
-              : "popup-closing"
+            isAnimating ? ctaStyle.popupAnimating : "popup-closing"
           }`}
         >
-
           <div
-            className={`${ctaStyle.popupForm} ${
-              isAnimating
-                ? ctaStyle.popupAnimatingForm
-                : ""
-            }`}
+            className={`${ctaStyle.popupForm} ${isAnimating ? ctaStyle.popupAnimatingForm : ""}`}
           >
-
             {/* TOP */}
-            <div
-              className={
-                ctaStyle.imageContainer
-              }
-            >
+            <div className={ctaStyle.imageContainer}>
+              <img src="/logos/pop-up-logo.png" alt="Inframantra-logo" />
 
-              <img
-                src="/logos/pop-up-logo.png"
-                alt="Inframantra-logo"
-              />
-
-              <div
-                className={
-                  ctaStyle.crossBtn
-                }
-                onClick={handleClose}
-              >
+              <div className={ctaStyle.crossBtn} onClick={handleClose}>
                 <RxCross2 />
               </div>
-
             </div>
 
             {/* HEADING */}
-            <div
-              className={ctaStyle.headingForm}
-            >
+            <div className={ctaStyle.headingForm}>
+              <p className={ctaStyle.popUpHead}>Please share your contact details</p>
 
-              <p
-                className={
-                  ctaStyle.popUpHead
-                }
-              >
-                Please share your contact
-                details
-              </p>
-
-              <p
-                className={
-                  ctaStyle.popUpHead2
-                }
-              >
-                {text ||
-                  "TO UNLOCK EXCLUSIVE DEALS"}
-              </p>
-
+              <p className={ctaStyle.popUpHead2}>{text || "To Unlock Exclusive Deals"}</p>
             </div>
 
             {/* FORM */}
-            <form
-              onSubmit={handleSubmit}
-              id={id}
-            >
-
+            <form onSubmit={handleSubmit} id={id}>
               {/* NAME */}
-              <div
-                className={
-                  ctaStyle.formGroup
-                }
-              >
-
+              <div className={ctaStyle.formGroup}>
                 <input
                   type="text"
                   placeholder="Name"
                   value={formData.name}
                   onChange={(e) => {
-
-                    const value =
-                      e.target.value.replace(
-                        /[^a-zA-Z\s]/g,
-                        ''
-                      );
+                    const value = e.target.value.replace(/[^a-zA-Z\s]/g, "");
 
                     setFormData((prev) => ({
                       ...prev,
                       name: value,
                     }));
-
                   }}
                   required
                 />
-
               </div>
 
               {/* PHONE */}
-              <div
-                className={
-                  ctaStyle.formGroup
-                }
-              >
-
+              <div className={ctaStyle.formGroup}>
                 <PhoneInput
                   country={countryCode}
                   enableSearch={true}
-                  value={
-                    formData.phoneNumber
-                  }
+                  value={formData.phoneNumber}
                   onChange={(phone) =>
                     setFormData((prev) => ({
                       ...prev,
                       phoneNumber: phone,
                     }))
                   }
-                  inputClass={
-                    ctaStyle.input
-                  }
-                  containerClass={
-                    ctaStyle.phoneContainer
-                  }
-                  buttonClass={
-                    ctaStyle.flagDropdown
-                  }
+                  inputClass={ctaStyle.input}
+                  containerClass={ctaStyle.phoneContainer}
+                  buttonClass={ctaStyle.flagDropdown}
                   placeholder="Enter phone number"
                 />
-
               </div>
 
               {/* EMAIL */}
-              <div
-                className={
-                  ctaStyle.formGroup
-                }
-              >
-
+              <div className={ctaStyle.formGroup}>
                 <input
                   type="email"
                   name="email"
@@ -389,131 +266,66 @@ whats app consent :${whatsappConsent}
                   onChange={handleChange}
                   required
                 />
-
               </div>
 
               {/* CITY */}
-              <div
-                className={
-                  ctaStyle.formGroup
-                }
-              >
-
+              <div className={ctaStyle.formGroup}>
                 <select
                   name="city"
                   value={formData.city}
-                  onChange={
-                    handleCityChange
-                  }
+                  onChange={handleCityChange}
                   required
-                  className={
-                    ctaStyle.selectField
-                  }
+                  className={ctaStyle.selectField}
                 >
+                  <option value="">Select City</option>
 
-                  <option value="">
-                    Select City
-                  </option>
-
-                  {locations.map(
-                    (
-                      location,
-                      index
-                    ) => (
-
-                      <option
-                        key={index}
-                        value={
-                          location.city
-                        }
-                      >
-                        {location.city}
-                      </option>
-
-                    )
-                  )}
-
+                  {locations.map((location, index) => (
+                    <option key={index} value={location.city}>
+                      {location.city}
+                    </option>
+                  ))}
                 </select>
-
               </div>
 
               {/* EVENT DATE */}
-              <div
-                className={
-                  ctaStyle.formGroup
-                }
-              >
-
+              <div className={ctaStyle.formGroup}>
                 <select
                   name="eventDate"
-                  value={
-                    formData.eventDate
-                  }
-                  onChange={
-                    handleDateChange
-                  }
+                  value={formData.eventDate}
+                  onChange={handleDateChange}
                   required
-                  disabled={
-                    !formData.city
-                  }
-                  className={
-                    ctaStyle.selectField
-                  }
+                  disabled={!formData.city}
+                  className={ctaStyle.selectField}
                 >
+                  <option value="">Select Event Date</option>
 
-                  <option value="">
-                    Select Event Date
-                  </option>
-
-                  {availableDates.map(
-                    (
-                      date,
-                      index
-                    ) => (
-
-                      <option
-                        key={index}
-                        value={date}
-                      >
-                        {date}
-                      </option>
-
-                    )
-                  )}
-
+                  {availableDates.map((date, index) => (
+                    <option key={index} value={date}>
+                      {date}
+                    </option>
+                  ))}
                 </select>
-
               </div>
 
               {/* WHATSAPP CONSENT */}
               <div
                 style={{
                   display: "flex",
-                  alignItems:
-                    "flex-start",
+                  alignItems: "flex-start",
                   gap: "10px",
-                  marginBottom:
-                    "15px",
+                  marginBottom: "15px",
                   marginTop: "10px",
                 }}
               >
-
                 <input
                   type="checkbox"
                   id="whatsappConsent"
-                  checked={
-                    whatsappConsent
-                  }
-                  onChange={(e) =>
-                    setWhatsappConsent(
-                      e.target.checked
-                    )
-                  }
+                  checked={whatsappConsent}
+                  onChange={(e) => setWhatsappConsent(e.target.checked)}
                   style={{
                     marginTop: "4px",
                     cursor: "pointer",
-                    accentColor:
-                      "green",
+                    accentColor: "green",
                     minWidth: "16px",
                     height: "16px",
                   }}
@@ -528,115 +340,79 @@ whats app consent :${whatsappConsent}
                     cursor: "pointer",
                   }}
                 >
-
                   <FaWhatsapp
                     style={{
                       color: "green",
-                      marginRight:
-                        "6px",
-                      fontSize:
-                        "16px",
-                      verticalAlign:
-                        "middle",
+                      marginRight: "6px",
+                      fontSize: "16px",
+                      verticalAlign: "middle",
                     }}
                   />
-
-                  I consent/authorize
-                  Inframantra to send me
-                  updates and promotional
-                  messages on WhatsApp.
-
+                  I consent/authorize Inframantra to send me updates and promotional messages on
+                  WhatsApp.
                 </label>
-
               </div>
 
               {/* BUTTON */}
               <div
                 style={{
                   display: "flex",
-                  justifyContent:
-                    "center",
+                  justifyContent: "center",
                 }}
               >
-
                 <button
                   type="submit"
                   disabled={loading}
                   style={{
                     width: "100%",
                     padding: "12px",
-                    backgroundColor:
-                      loading
-                        ? "#ccc"
-                        : "#E7B554",
+                    backgroundColor: loading ? "#ccc" : "#E7B554",
                     color: "#fff",
                     border: "none",
-                    borderRadius:
-                      "4px",
-                    cursor: loading
-                      ? "not-allowed"
-                      : "pointer",
+                    borderRadius: "4px",
+                    cursor: loading ? "not-allowed" : "pointer",
                     fontWeight: "600",
                   }}
                 >
-
-                  {loading
-                    ? "Submitting..."
-                    : "Submit"}
-
+                  {loading ? "Submitting..." : "Submit"}
                 </button>
-
               </div>
 
               {/* DISCLAIMER */}
               <p
-                className={
-                  ctaStyle.propertyPageHeaderContactUsDisclaimer
-                }
+                className={ctaStyle.propertyPageHeaderContactUsDisclaimer}
                 style={{
-                  padding: "10px"
+                  padding: "10px",
                 }}
               >
-
-                *By submitting, I accept
-                Inframantra{" "}
-
+                *By submitting, I accept Inframantra{" "}
                 <a
                   href="https://inframantra.com/page/terms-conditions"
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
-                    color: "blue"
+                    color: "blue",
                   }}
                 >
                   Terms & Conditions
-                </a>
-
-                {" "}and{" "}
-
+                </a>{" "}
+                and{" "}
                 <a
                   href="https://inframantra.com/page/privacy-policy"
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
-                    color: "blue"
+                    color: "blue",
                   }}
                 >
                   Privacy Policy
                 </a>
-
               </p>
-
             </form>
-
           </div>
-
         </div>
-
       )}
-
     </div>
-
   );
 }
 

@@ -19,10 +19,13 @@
 }
 
 .title {
-  font-size: 1.8rem;
-  line-height: 1.08;
-  font-weight: 700;
-  color: #d4a64a;
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  text-transform: none;
+  color: var(--color-ink);
   margin: 0 0 32px 0;
 }
 
@@ -46,10 +49,6 @@
   .grid {
     grid-template-columns: 1fr;
     gap: 0;
-  }
-
-  .title {
-    font-size: 20px;
   }
 
   .section {
@@ -162,12 +161,14 @@
 }
 
 .projectName {
-  font-size: 20px;
-  font-weight: 700;
+  font-family: var(--font-body);
+  font-size: var(--fs-card-title);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: normal;
+  text-transform: none;
   color: #d4a64a;
   margin: 0 0 5px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
 }
 
 .projectName a {

@@ -48,6 +48,8 @@ const loadTree = () => {
   return treePromise;
 };
 
+const LOC_PREVIEW = 6; // localities visible before "+N more"
+
 const TYPE_LABEL = {
   state: "State",
   city: "City",
@@ -55,41 +57,35 @@ const TYPE_LABEL = {
   subLocality: "Sub-locality",
 };
 
-const Chevron = ({ open }) => (
-  <svg
-    className={`${lf["lf-chevron"]} ${open ? lf["is-open"] : ""}`}
-    viewBox="0 0 24 24"
-    width="14"
-    height="14"
-    aria-hidden="true"
-  >
-    <path
-      d="M9 6l6 6-6 6"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.4"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
 export default function LocationFilter({
   // configuration pages only: city chips narrow the page instead of navigating
   refineCities = [],
   onRefineCity,
   // called after navigating (the mobile drawer closes itself)
   onNavigate,
+  // Multi-select: { cities: [slug], localities: [slug] } and its setter. When
+  // given, city and locality chips toggle instead of navigating.
+  selection,
+  onSelectionChange,
+  // The tree from getStaticProps, when the page has it. Rendering from it on the
+  // server (and the first client render) puts the real chips in the HTML; the
+  // loading skeleton was ~140px taller and collapsed after hydration (CLS).
+  initialStates = null,
 }) {
+  const seed = Array.isArray(initialStates) ? initialStates : null;
+  // Share with the other filter instance — browser only, so the server process
+  // never pins a tree in module state across requests.
+  if (typeof window !== "undefined" && !treeCache && seed) treeCache = seed;
   const router = useRouter();
   const { type, name } = router.query;
   const current = { type, slug: String(name || "").toLowerCase() };
   const isConfigurationPage = type === "configuration";
 
-  const [states, setStates] = useState(treeCache);
+  const [states, setStates] = useState(seed || treeCache);
   const [failed, setFailed] = useState(false);
   const [query, setQuery] = useState("");
   const [openCities, setOpenCities] = useState({});
+  const [showAllLocs, setShowAllLocs] = useState({});
 
   useEffect(() => {
     let alive = true;
@@ -108,7 +104,8 @@ export default function LocationFilter({
         .filter((c) => !HIDDEN_CITIES.includes(c.name.toLowerCase()))
         // business order first (FALLBACK_CITIES); any new city follows by size
         .sort((a, b) => {
-          const ia = cityRank(a.name), ib = cityRank(b.name);
+          const ia = cityRank(a.name),
+            ib = cityRank(b.name);
           return ia !== ib ? ia - ib : b.count - a.count;
         }),
     [states]
@@ -135,6 +132,56 @@ export default function LocationFilter({
     if (currentPath.city) setOpenCities((o) => ({ ...o, [currentPath.city]: true }));
   }, [currentPath.city, currentPath.locality]);
 
+  // Localities shown under the city chips: the city this page sits in, or the
+  // one the visitor opened.
+  const openName = Object.keys(openCities).find((k) => openCities[k]);
+  const localityCity =
+    cities.find((c) => c.name === currentPath.city) || cities.find((c) => c.name === openName);
+
+  // ---------- multi-select ----------
+  const multiMode = !!onSelectionChange && !isConfigurationPage;
+  const selCities = selection?.cities || [];
+  const selLocs = selection?.localities || [];
+  // "whole" = the city itself is picked; "partial" = some of its localities are
+  const cityState = (c) =>
+    selCities.includes(slugify(c.name))
+      ? "whole"
+      : c.localities.some((l) => selLocs.includes(slugify(l.name)))
+        ? "partial"
+        : "none";
+  const pickedCities = multiMode ? cities.filter((c) => cityState(c) !== "none") : [];
+  const locGroups = pickedCities.length ? pickedCities : localityCity ? [localityCity] : [];
+
+  const emit = (next) => {
+    setQuery("");
+    onSelectionChange(next);
+  };
+  const toggleCityMulti = (c) => {
+    const cs = slugify(c.name);
+    const own = c.localities.map((l) => slugify(l.name));
+    if (cityState(c) !== "none") {
+      emit({
+        cities: selCities.filter((x) => x !== cs),
+        localities: selLocs.filter((x) => !own.includes(x)),
+      });
+    } else {
+      emit({ cities: [...selCities, cs], localities: selLocs });
+    }
+  };
+  const toggleLocMulti = (c, l) => {
+    const ls = slugify(l.name);
+    if (selLocs.includes(ls)) {
+      emit({ cities: selCities, localities: selLocs.filter((x) => x !== ls) });
+    } else {
+      // picking a locality narrows its city from "whole" to just the picked ones
+      emit({
+        cities: selCities.filter((x) => x !== slugify(c.name)),
+        localities: [...selLocs, ls],
+      });
+    }
+  };
+  const onLocalityClick = (c, l) => (multiMode ? toggleLocMulti(c, l) : go("locality", l.name));
+
   const isCurrent = (t, n) => current.type === t && slugify(n) === current.slug;
 
   // Carry the applied filters to the new place; page resets to 1.
@@ -146,9 +193,13 @@ export default function LocationFilter({
     // A configuration page's own layout lives in its path; keep it as a filter.
     if (isConfigurationPage && !keep.config && onRefineCity) {
       const own = router.query.name;
-      const cfg = { "2-bhk": "2", "3-bhk": "3", "4-bhk": "4", "5-bhk": "5", penthouse: "Penthouse" }[
-        String(own || "").toLowerCase()
-      ];
+      const cfg = {
+        "2-bhk": "2",
+        "3-bhk": "3",
+        "4-bhk": "4",
+        "5-bhk": "5",
+        penthouse: "Penthouse",
+      }[String(own || "").toLowerCase()];
       if (cfg) keep.config = cfg;
     }
     return { pathname: `/property-listing/${t}/${slugify(n)}`, query: keep };
@@ -162,6 +213,7 @@ export default function LocationFilter({
   };
 
   const onCityClick = (c) => {
+    if (multiMode) return toggleCityMulti(c);
     if (isConfigurationPage && onRefineCity) {
       onRefineCity(c.name);
       return;
@@ -189,7 +241,8 @@ export default function LocationFilter({
         push("city", c.name, c.count, s.name !== "Other" ? s.name : "");
         for (const l of c.localities) {
           push("locality", l.name, l.count, c.name);
-          for (const sub of l.subLocalities) push("subLocality", sub.name, sub.count, `${l.name}, ${c.name}`);
+          for (const sub of l.subLocalities)
+            push("subLocality", sub.name, sub.count, `${l.name}, ${c.name}`);
         }
       }
     }
@@ -226,7 +279,12 @@ export default function LocationFilter({
           disabled={failed}
         />
         {query && (
-          <button type="button" className={lf["lf-clear"]} onClick={() => setQuery("")} aria-label="Clear search">
+          <button
+            type="button"
+            className={lf["lf-clear"]}
+            onClick={() => setQuery("")}
+            aria-label="Clear search"
+          >
             ×
           </button>
         )}
@@ -284,56 +342,100 @@ export default function LocationFilter({
       )}
 
       {!loading && !failed && (
-        <ul className={lf["lf-tree"]}>
-          {cities.map((c) => {
-            const open = !!openCities[c.name];
-            const cityActive = isCurrent("city", c.name) || refineCities.includes(c.name);
-            const inCity = currentPath.city === c.name;
-            return (
-              <li key={c.name} className={lf["lf-city"]}>
-                <div className={`${lf["lf-row"]} ${cityActive ? lf["is-current"] : ""} ${inCity ? lf["is-within"] : ""}`}>
-                  <button type="button" className={lf["lf-name"]} onClick={() => onCityClick(c)}>
-                    {c.name}
-                    <span className={lf["lf-count"]}>{c.count}</span>
-                  </button>
-                  {c.localities.length > 0 && (
-                    <button
-                      type="button"
-                      className={lf["lf-toggle"]}
-                      onClick={() => setOpenCities((o) => ({ ...o, [c.name]: !o[c.name] }))}
-                      aria-expanded={open}
-                      aria-label={`${open ? "Hide" : "Show"} localities in ${c.name}`}
-                    >
-                      <Chevron open={open} />
-                    </button>
+        <>
+          {/* Cities: multi-select chips (✓ when picked, whole or in part) */}
+          <div className={lf["lf-cities"]} role="group" aria-label="Cities">
+            {cities.map((c) => {
+              const picked = multiMode
+                ? cityState(c) !== "none"
+                : isCurrent("city", c.name) || refineCities.includes(c.name);
+              const partial = multiMode && cityState(c) === "partial";
+              return (
+                <button
+                  key={c.name}
+                  type="button"
+                  className={`${lf["lf-chip"]} ${picked && !partial ? lf["is-current"] : ""} ${
+                    partial || (!multiMode && currentPath.city === c.name && !picked)
+                      ? lf["is-within"]
+                      : ""
+                  }`}
+                  aria-pressed={picked}
+                  disabled={!c.count}
+                  onClick={() => onCityClick(c)}
+                >
+                  {picked && (
+                    <span className={lf["lf-tick"]} aria-hidden="true">
+                      ✓
+                    </span>
                   )}
-                </div>
+                  {c.name}
+                  <span className={lf["lf-count"]}>{c.count}</span>
+                </button>
+              );
+            })}
+          </div>
 
-                {open && (
-                  <ul className={lf["lf-localities"]}>
-                    {c.localities.map((l) => {
-                      const key = `${c.name}|${l.name}`;
-                      return (
-                        <li key={key}>
-                          <div
-                            className={`${lf["lf-row"]} ${lf["lf-row-sm"]} ${
-                              isCurrent("locality", l.name) ? lf["is-current"] : ""
-                            } ${currentPath.locality === key ? lf["is-within"] : ""}`}
+          {/* Localities of every picked city, grouped by city */}
+          {locGroups.length > 0 && (
+            <div className={lf["lf-locs"]}>
+              <span className={lf["lf-locs-label"]}>
+                Localities in {locGroups.map((g) => g.name).join(", ")}
+              </span>
+              {locGroups.map((g) => {
+                const all = !!showAllLocs[g.name];
+                const list = all ? g.localities : g.localities.slice(0, LOC_PREVIEW);
+                return (
+                  <div key={g.name} className={lf["lf-locgroup"]}>
+                    {locGroups.length > 1 && (
+                      <span className={lf["lf-locgroup-name"]}>{g.name}</span>
+                    )}
+                    <div
+                      className={lf["lf-chips"]}
+                      role="group"
+                      aria-label={`Localities in ${g.name}`}
+                    >
+                      {list.map((l) => {
+                        const on = multiMode
+                          ? selLocs.includes(slugify(l.name))
+                          : isCurrent("locality", l.name);
+                        return (
+                          <button
+                            key={l.name}
+                            type="button"
+                            className={`${lf["lf-chip"]} ${lf["lf-chip-sm"]} ${
+                              on ? lf["is-current"] : ""
+                            }`}
+                            aria-pressed={on}
+                            disabled={!l.count}
+                            onClick={() => onLocalityClick(g, l)}
                           >
-                            <button type="button" className={lf["lf-name"]} onClick={() => go("locality", l.name)}>
-                              {l.name}
-                              <span className={lf["lf-count"]}>{l.count}</span>
-                            </button>
-                          </div>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                )}
-              </li>
-            );
-          })}
-        </ul>
+                            {on && (
+                              <span className={lf["lf-tick"]} aria-hidden="true">
+                                ✓
+                              </span>
+                            )}
+                            {l.name}
+                            <span className={lf["lf-count"]}>{l.count}</span>
+                          </button>
+                        );
+                      })}
+                      {g.localities.length > LOC_PREVIEW && (
+                        <button
+                          type="button"
+                          className={lf["lf-more"]}
+                          aria-expanded={all}
+                          onClick={() => setShowAllLocs((s) => ({ ...s, [g.name]: !all }))}
+                        >
+                          {all ? "Show less" : `+${g.localities.length - LOC_PREVIEW} more`}
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </>
       )}
     </div>
   );

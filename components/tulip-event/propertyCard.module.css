@@ -5,7 +5,9 @@
 .r_sectionSlider {
   background: #fff;
   padding: 40px 20px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 4px 16px rgba(0, 0, 0, 0.06);
 }
 
 .r_grid {
@@ -17,19 +19,16 @@
   gap: 18px;
 }
 
-
-
 /* =========================
    CARD
 ========================= */
 
 .r_card_pro {
-
   border-radius: 10px;
   overflow: hidden;
   position: relative;
   transition: transform 0.3s ease;
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .r_card_pro:hover {
@@ -118,7 +117,7 @@
   border: none;
   border-radius: 50%;
 
-  background: rgba(255,255,255,0.9);
+  background: rgba(255, 255, 255, 0.9);
 
   display: flex;
   align-items: center;
@@ -140,8 +139,6 @@
 /* =========================
    CARD BODY
 ========================= */
-
-
 
 .r_projectName {
   font-size: 15px;
@@ -175,7 +172,7 @@
 .r_metaDivider {
   width: 1px;
   height: 12px;
-  background: rgba(255,255,255,0.3);
+  background: rgba(255, 255, 255, 0.3);
 }
 
 /* =========================
@@ -208,16 +205,16 @@
   .r_grid {
     grid-template-columns: 1fr 1fr;
   }
-  .r_sectionSlider{
+  .r_sectionSlider {
     padding: 10px 10px;
   }
   .r_projectName {
     font-size: 12px;
   }
-  .r_badgeContainerLogo img{
+  .r_badgeContainerLogo img {
     height: 18px;
   }
-  .r_badge{
+  .r_badge {
     font-size: 5px;
   }
 }
@@ -244,15 +241,19 @@
   background: #fff;
   border: 1px solid #ece7dd;
   border-radius: 14px;
-  box-shadow: 0 1px 2px rgba(24, 22, 18, 0.04),
-              0 10px 28px rgba(24, 22, 18, 0.07);
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  box-shadow:
+    0 1px 2px rgba(24, 22, 18, 0.04),
+    0 10px 28px rgba(24, 22, 18, 0.07);
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
 }
 
 .r_card_proRich:hover {
   transform: translateY(-6px);
-  box-shadow: 0 2px 4px rgba(24, 22, 18, 0.05),
-              0 18px 40px rgba(24, 22, 18, 0.12);
+  box-shadow:
+    0 2px 4px rgba(24, 22, 18, 0.05),
+    0 18px 40px rgba(24, 22, 18, 0.12);
 }
 
 .r_imageSliderTall {
@@ -507,7 +508,9 @@
 
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.18s ease, visibility 0.18s ease;
+  transition:
+    opacity 0.18s ease,
+    visibility 0.18s ease;
 }
 
 .r_reraTooltipText::after {
@@ -546,8 +549,11 @@
   text-align: center;
 
   cursor: pointer;
-  transition: background 0.22s ease, color 0.22s ease,
-              border-color 0.22s ease, transform 0.15s ease;
+  transition:
+    background 0.22s ease,
+    color 0.22s ease,
+    border-color 0.22s ease,
+    transform 0.15s ease;
 }
 
 .r_btnPrimary {
@@ -645,17 +651,19 @@
   border-radius: 10px;
   background: #fff;
   color: rgba(0, 0, 0, 0.87);
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 5px -3px,
-              rgba(0, 0, 0, 0.14) 0px 8px 10px 1px,
-              rgba(0, 0, 0, 0.12) 0px 3px 14px 2px;
+  box-shadow:
+    rgba(0, 0, 0, 0.2) 0px 5px 5px -3px,
+    rgba(0, 0, 0, 0.14) 0px 8px 10px 1px,
+    rgba(0, 0, 0, 0.12) 0px 3px 14px 2px;
   transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .r_card_proRich:hover {
   transform: none;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 8px 9px -4px,
-              rgba(0, 0, 0, 0.18) 0px 12px 16px 1px,
-              rgba(0, 0, 0, 0.14) 0px 5px 20px 3px;
+  box-shadow:
+    rgba(0, 0, 0, 0.24) 0px 8px 9px -4px,
+    rgba(0, 0, 0, 0.18) 0px 12px 16px 1px,
+    rgba(0, 0, 0, 0.14) 0px 5px 20px 3px;
 }
 
 .r_cardBodyRich {
@@ -678,12 +686,14 @@
 }
 
 .r_lName {
-  margin: 0 0 4px;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 1.25;
-  color: #1a1a1a;
+  font-family: var(--font-body);
+  font-size: var(--fs-card-title);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: normal;
   text-transform: none;
+  color: var(--color-ink);
+  margin: 0 0 4px;
 }
 
 .r_lLocation {
@@ -748,7 +758,7 @@
 
 .r_lOverviewItem p {
   margin: 0;
-  color: #2b2b2b;
+  color: var(--color-body);
 }
 
 .r_lIcon {
@@ -767,7 +777,7 @@
 
   margin: 0;
   color: #000;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 13px;
   font-weight: 300;
   line-height: normal;
@@ -873,16 +883,18 @@
 
 .r_card_proRich {
   border-radius: 14px;
-  box-shadow: 0 1px 2px rgba(28, 25, 20, 0.05),
-              0 8px 24px rgba(28, 25, 20, 0.09),
-              0 24px 48px rgba(28, 25, 20, 0.06);
+  box-shadow:
+    0 1px 2px rgba(28, 25, 20, 0.05),
+    0 8px 24px rgba(28, 25, 20, 0.09),
+    0 24px 48px rgba(28, 25, 20, 0.06);
 }
 
 .r_card_proRich:hover {
   transform: translateY(-3px);
-  box-shadow: 0 2px 4px rgba(28, 25, 20, 0.06),
-              0 14px 34px rgba(28, 25, 20, 0.13),
-              0 30px 60px rgba(28, 25, 20, 0.09);
+  box-shadow:
+    0 2px 4px rgba(28, 25, 20, 0.06),
+    0 14px 34px rgba(28, 25, 20, 0.13),
+    0 30px 60px rgba(28, 25, 20, 0.09);
 }
 
 .r_cardBodyRich {
@@ -893,9 +905,6 @@
 /* --- header --- */
 .r_lName {
   margin: 0 0 6px;
-  font-size: 21px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
   color: #171412;
 }
 
@@ -943,7 +952,7 @@
 
 .r_lOverviewItem p {
   color: #3d3833;
-  font-weight: 500;
+  font-weight: var(--fw-light);
 }
 
 .r_lIcon {
@@ -983,8 +992,11 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
 
-  transition: background 0.22s ease, box-shadow 0.22s ease,
-              transform 0.15s ease, color 0.22s ease;
+  transition:
+    background 0.22s ease,
+    box-shadow 0.22s ease,
+    transform 0.15s ease,
+    color 0.22s ease;
 }
 
 .r_lBtn:hover {
@@ -1045,10 +1057,6 @@
   .r_cardBodyRich {
     padding: 18px 16px 18px;
     gap: 13px;
-  }
-
-  .r_lName {
-    font-size: 18px;
   }
 
   .r_lPrice {
@@ -1204,7 +1212,7 @@
 /* Card description matched to the "Our Story" body text
    (NRIHomeFest.module.css .storyText): 15px / 1.9 / #555 */
 .r_lClampTwo {
-  font-family: 'Lexend Deca', sans-serif;
+  font-family: var(--font-body);
   font-size: 15px;
   line-height: 1.9;
   font-weight: 400;
@@ -1262,7 +1270,6 @@
    wrapped into a ragged stack.
 ========================================================= */
 @media (max-width: 600px) {
-
   /* --- overview: tidy stacked rows with hairline separators --- */
   .r_lOverview {
     flex-direction: column;

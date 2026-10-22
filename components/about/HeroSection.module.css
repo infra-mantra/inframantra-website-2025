@@ -25,29 +25,32 @@
 }
 
 .mainTitle {
-  font-size: 60px;
-  font-weight: 700;
-  color: #e7b554;
-  letter-spacing: 0.8px;
-  line-height: 1.2;
+  font-family: var(--font-body);
+  font-size: var(--fs-h1);
+  font-weight: var(--fw-bold);
+  color: var(--color-gold);
+  letter-spacing: var(--ls-heading);
+  line-height: var(--lh-tight);
   margin-bottom: 15px;
 }
 
 .since {
-  font-size: 4rem;
-  font-weight: 700;
-  color: #e7b554;
-  letter-spacing: 0.8px;
-  line-height: 1.2;
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  color: var(--color-gold);
+  letter-spacing: var(--ls-heading);
+  line-height: var(--lh-tight);
 }
 
 .description {
   max-width: 900px;
   margin: 25px auto 50px;
-  font-size: 28px;
-  line-height: 1.6;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-light);
+  line-height: var(--lh-body);
   color: #e0e0e0;
-  font-family: "Lexend Deca", "Helvetica Neue", Arial, sans-serif;
 }
 
 /* STATS GRID */
@@ -76,16 +79,20 @@
 }
 
 .statBox h2 {
-  font-size: 32px;
-  font-weight: 700;
+  font-family: var(--font-body);
+  font-size: var(--fs-h1);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
   margin-bottom: 8px;
   color: #ffffff;
 }
 
 .statBox p {
-  font-size: 14px;
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-regular);
   color: #eaeaea;
-  line-height: 1.4;
+  line-height: var(--lh-body);
 }
 @media (max-width: 768px) {
   .hero {
@@ -95,22 +102,12 @@
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
-  .mainTitle {
-    font-size: 38px;
-  }
   .hero {
     padding: 10px 20px !important;
     height: auto;
   }
 
-  .description {
-    font-size: 16px;
-  }
-
   .statBox {
     width: 140px;
-  }
-  .since {
-    font-size: 2.5rem;
   }
 }

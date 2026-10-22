@@ -1,0 +1,163 @@
+/* Developer partners marquee in 3D (DeveloperShowcase.jsx).
+   Class names start with "dsx" because module names are not hashed on this site. */
+
+.dsxSection {
+  --dsx-tile-w: 190px;
+  --dsx-tile-h: 104px;
+
+  position: relative;
+  padding: clamp(32px, 4vw, 48px) 0 clamp(12px, 1.5vw, 20px); /* tight below: the stage already holds the shadow */
+  overflow: hidden; /* tiles never cause horizontal scroll */
+}
+
+/* ---------- heading ---------- */
+.dsxHead {
+  max-width: 720px;
+  margin: 0 auto 8px; /* tiles start ~24px below (plane padding) */
+  padding: 0 16px;
+  text-align: center;
+}
+.dsxTitle {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  color: var(--color-ink);
+}
+.dsxTitle span {
+  color: var(--color-gold-dark);
+}
+
+/* ---------- 3D stage: fixed height = no layout shift when logos arrive ---------- */
+.dsxStage {
+  height: calc(var(--dsx-tile-h) + 34px); /* tile + room for the 3D depth and shadow */
+  perspective: 900px;
+  perspective-origin: 50% 20%;
+  /* fade the row out at both edges, like the banner marquee */
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+
+/* The plane the row slides on, tilted back */
+.dsxPlane {
+  height: 100%;
+  padding-top: 16px;
+  box-sizing: border-box;
+  transform: rotateX(14deg);
+  transform-style: preserve-3d;
+}
+
+.dsxTrack {
+  display: flex;
+  gap: 26px;
+  width: max-content;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Each <li> is moved / scaled by the JS loop (transform + opacity only) */
+.dsxTrack li {
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+
+/* Raised logo tile: layered soft shadows + a top highlight (bevel) */
+.dsxTile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--dsx-tile-w);
+  height: var(--dsx-tile-h);
+  padding: 18px 22px;
+  box-sizing: border-box;
+  border-radius: 12px;
+  background: #ffffff; /* pure white so logos with their own white box blend in */
+  border: 1px solid #efe9dd;
+  box-shadow:
+    inset 0 1px 0 #ffffff,
+    inset 0 -2px 0 rgba(169, 120, 30, 0.12),
+    0 2px 4px rgba(26, 26, 26, 0.08),
+    0 12px 24px rgba(26, 26, 26, 0.12);
+  text-decoration: none;
+  transition: border-color 0.25s ease;
+}
+.dsxTile:hover,
+.dsxTile:focus-visible {
+  border-color: var(--color-gold);
+  outline: none;
+}
+.dsxTile img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* ---------- tablet / phone: smaller tiles ---------- */
+@media (max-width: 1199px) {
+  .dsxSection {
+    --dsx-tile-w: 160px;
+    --dsx-tile-h: 90px;
+  }
+}
+@media (max-width: 600px) {
+  .dsxSection {
+    --dsx-tile-w: 132px;
+    --dsx-tile-h: 76px;
+  }
+  .dsxTrack {
+    gap: 16px;
+  }
+}
+
+/* ---- no tile background: just the logos, floating in 3D ----
+   The tile box stays (it is what the JS moves), but it is invisible.
+   multiply blends away the white/off-white boxes some logo files have,
+   and a soft oval floor shadow under each logo gives the 3D lift. */
+.dsxTile {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  padding: 10px 14px;
+  position: relative;
+}
+/* soft oval "floor" shadow under each floating logo */
+.dsxTile::after {
+  content: "";
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  bottom: -6px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(26, 26, 26, 0.22), rgba(26, 26, 26, 0));
+  pointer-events: none;
+}
+.dsxTile:hover,
+.dsxTile:focus-visible {
+  border-color: transparent;
+}
+.dsxTile img {
+  mix-blend-mode: multiply;
+  /* lifts near-white logo boxes (e.g. Tulip's light grey) to pure white so multiply hides them */
+  filter: brightness(1.07) contrast(1.04);
+  transition: transform 0.25s ease;
+}
+.dsxTile:hover img,
+.dsxTile:focus-visible img {
+  transform: translateY(-3px) scale(1.04);
+}
+.dsxTile:focus-visible {
+  outline: 2px solid var(--color-gold-dark);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .dsxTile img {
+    transition: none;
+  }
+}

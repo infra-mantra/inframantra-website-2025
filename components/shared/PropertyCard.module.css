@@ -112,7 +112,7 @@
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   color: #fff;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 10.5px;
   font-weight: 600;
   line-height: 1.3;
@@ -144,7 +144,7 @@
   border-radius: 999px;
   background: #e7b554;
   color: #fff;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 11px;
   font-weight: 600;
   line-height: 1.5;
@@ -160,7 +160,7 @@
   flex-direction: column;
   flex: 1 1 auto;
   padding: 14px 17px 0;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
 }
 
 /* Same metrics as the blog card's h3 — including the two-line clamp and the
@@ -170,7 +170,7 @@
   font-weight: 500;
   color: #222;
   margin: 0;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   letter-spacing: 0;
   line-height: 1.35;
 
@@ -193,7 +193,7 @@
   color: #6b7280;
   margin: 5px 0 0 0;
   line-height: 1.4;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   display: flex;
   align-items: flex-start;
   gap: 5px;
@@ -222,7 +222,7 @@
   font-weight: 500;
   color: #dcaa4c;
   margin: 5px 0 0 0;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
 }
 
 /* One divider, above the price. There used to be three — location, config and
@@ -239,7 +239,7 @@
   margin: auto 0 0 0;
   padding-top: 9px;
   border-top: 1px dashed #efe6d2;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   letter-spacing: 0.01em;
 }
 
@@ -285,7 +285,7 @@
   padding: 9px 8px;
   border: none;
   border-radius: 8px;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 12.5px;
   font-weight: 600;
   letter-spacing: 0.01em;
@@ -518,4 +518,224 @@
     padding: 8px 4px;
     font-size: 11px;
   }
+}
+
+/* ---- ♥ heart (top-right) and Compare pill (bottom-right of the photo) ----
+   Both sit outside the card link and are placed over the photo here. */
+.sharedPropCard {
+  position: relative;
+}
+
+.sharedPropCard .pcStatus {
+  right: 54px; /* leave the top-right corner to the heart */
+}
+
+.sharedPropCard .pcCompare {
+  position: absolute;
+  z-index: 3;
+  top: calc(150px - 40px);
+  right: 9px;
+  bottom: auto;
+}
+
+@media (max-width: 768px) {
+  .sharedPropCard .pcCompare {
+    top: calc(180px - 40px);
+  }
+}
+
+@media (max-width: 480px) {
+  .sharedPropCard .pcCompare {
+    top: calc(160px - 40px);
+  }
+}
+
+@media (max-width: 320px) {
+  .sharedPropCard .pcCompare {
+    top: calc(140px - 40px);
+  }
+}
+
+/* ---------------------------------------------------------------- polish
+   Same layout and three buttons as before; brand colours instead of the
+   green/beige pair, one button height, cleaner type. Later rules win over the
+   older ones above (same selectors). */
+.sharedPropCard .propertyTitle {
+  font-size: var(--fs-card-title);
+  font-weight: var(--fw-semibold);
+  color: var(--color-ink);
+  line-height: var(--lh-tight);
+}
+
+.sharedPropCard:hover .propertyTitle {
+  color: var(--color-gold-dark);
+}
+
+.sharedPropCard .propertyLocation {
+  font-size: var(--fs-small);
+  color: var(--color-ink-muted);
+  margin: 6px 0 10px;
+}
+
+/* BHK as a small gold-tinted tag */
+.sharedPropCard .propertyConfig {
+  align-self: flex-start;
+  margin: 0 0 10px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #fbf3e2;
+  color: #8a6410;
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+}
+
+.sharedPropCard .propertyPrice {
+  align-items: baseline;
+  padding-top: 10px;
+  border-top: 1px solid #f1ebdf;
+}
+
+.sharedPropCard .pcPriceLabel {
+  font-size: var(--fs-small);
+  color: var(--color-ink-muted);
+}
+
+.sharedPropCard .pcPriceValue {
+  font-size: 17px;
+  font-weight: var(--fw-bold);
+  color: var(--color-ink);
+}
+
+.sharedPropCard .propCardActions {
+  gap: 8px;
+  padding: 12px 17px 16px;
+}
+
+.sharedPropCard .propCardBtn,
+.sharedPropCard .propCardBtnGhost {
+  height: 40px;
+  padding: 0 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: var(--fw-semibold);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease;
+}
+
+/* View More: the main action, gold */
+.sharedPropCard .propCardBtnPrimary {
+  background: linear-gradient(
+    135deg,
+    var(--color-gold-light),
+    var(--color-gold) 55%,
+    var(--color-gold-dark)
+  );
+  color: #1a1408;
+  border: 1px solid transparent;
+  box-shadow: 0 4px 12px rgba(217, 162, 60, 0.28);
+}
+
+.sharedPropCard .propCardBtnPrimary:hover {
+  background: linear-gradient(135deg, var(--color-gold-light), var(--color-gold-dark));
+  border-color: transparent;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(217, 162, 60, 0.38);
+}
+
+/* Enquire Now: dark outline */
+.sharedPropCard .propCardBtnSecondary {
+  background: #fff;
+  color: var(--color-ink);
+  border: 1px solid #d9d4ca;
+}
+
+.sharedPropCard .propCardBtnSecondary:hover {
+  background: #faf7f2;
+  color: var(--color-ink);
+  border-color: var(--color-ink);
+}
+
+/* Brochure: quiet full-width link-style button */
+.sharedPropCard .propCardBtnGhost {
+  height: 36px;
+  background: #faf7f2;
+  color: #8a6410;
+  border: 1px dashed #e6d3a8;
+}
+
+.sharedPropCard .propCardBtnGhost:hover {
+  background: #fbf3e2;
+  border-style: solid;
+  border-color: var(--color-gold);
+}
+
+/* phones: keep the same colours (the older rules switched to solid green/brown) */
+@media (max-width: 768px) {
+  .sharedPropCard .propCardBtn {
+    height: 42px;
+    font-size: 12.5px;
+  }
+  .sharedPropCard .propCardBtnPrimary {
+    background: linear-gradient(
+      135deg,
+      var(--color-gold-light),
+      var(--color-gold) 55%,
+      var(--color-gold-dark)
+    );
+    color: #1a1408;
+    border-color: transparent;
+  }
+  .sharedPropCard .propCardBtnSecondary {
+    background: #fff;
+    color: var(--color-ink);
+    border-color: #d9d4ca;
+  }
+  .sharedPropCard .propCardBtnGhost {
+    height: 38px;
+    background: #faf7f2;
+    color: #8a6410;
+    border-color: #e6d3a8;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sharedPropCard .propCardBtn:hover {
+    transform: none;
+  }
+}
+
+/* status chip right after the price (moved off the photo) */
+.sharedPropCard .pcStatusInline {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: auto;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: #fbf3e2;
+  color: #8a6410;
+  font-size: 11px;
+  font-weight: var(--fw-semibold);
+  white-space: nowrap;
+}
+
+.sharedPropCard .pcStatusInline::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #e0a03a;
+}
+
+.sharedPropCard .pcStatusInlineReady {
+  background: #e9f7ee;
+  color: #1c7a3c;
+}
+
+.sharedPropCard .pcStatusInlineReady::before {
+  background: #22a356;
 }

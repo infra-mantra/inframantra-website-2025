@@ -1,4 +1,5 @@
-  import s from "./HomeSkeletons.module.css";
+import s from "./HomeSkeletons.module.css";
+import { boneClass } from "../shared/skeleton/Skeleton.jsx";
 
 /*
   Loading skeletons for each home-page section. Each export mirrors the shape
@@ -10,7 +11,8 @@
 
 // One grey box. `className` picks its size/shape; `style` allows small tweaks.
 function Block({ className = "", style }) {
-  return <div className={`${s.block} ${className}`} style={style} />;
+  // boneClass = the shared site-wide shimmer (components/shared/skeleton).
+  return <div className={`${boneClass} ${s.block} ${className}`} style={style} />;
 }
 
 // Card with an image on top and two text lines (Premium, generic cards).
@@ -36,7 +38,7 @@ function CardBlock() {
 */
 export function SearchBarSkeleton() {
   return (
-    <div className={s.searchWrap} aria-hidden="true">
+    <div className={s.searchWrap} aria-hidden="true" data-skeleton>
       <div className={s.searchBar}>
         <Block className={s.searchInput} />
         <Block className={s.searchBtn} />
@@ -48,7 +50,7 @@ export function SearchBarSkeleton() {
 // ---- Premium Picks: heading + subtitle + city pills + a row of cards ----
 export function PremiumSkeleton() {
   return (
-    <div className={s.section} aria-hidden="true">
+    <div className={s.section} aria-hidden="true" data-skeleton>
       <Block className={s.heading} />
       <Block className={s.sub} />
       <div className={s.pills}>
@@ -69,7 +71,7 @@ export function PremiumSkeleton() {
 // so the heading and city tabs stay visible while only the cards reload.
 export function PremiumCardsSkeleton() {
   return (
-    <div className={s.row} aria-hidden="true">
+    <div className={s.row} aria-hidden="true" data-skeleton>
       {[0, 1, 2, 3].map((i) => (
         <CardBlock key={i} />
       ))}
@@ -80,7 +82,7 @@ export function PremiumCardsSkeleton() {
 // ---- Blogs / Media: heading + a row of 3 cards (image + title) ----
 export function BlogsSkeleton() {
   return (
-    <div className={s.section} aria-hidden="true">
+    <div className={s.section} aria-hidden="true" data-skeleton>
       <Block className={s.heading} />
       <div className={s.row}>
         {[0, 1, 2].map((i) => (
@@ -97,7 +99,7 @@ export function BlogsSkeleton() {
 // ---- Statistics: 4 items, each icon + big number + label (no heading) ----
 export function StatsSkeleton() {
   return (
-    <div className={s.section} aria-hidden="true">
+    <div className={s.section} aria-hidden="true" data-skeleton>
       <div className={s.statsGrid}>
         {[0, 1, 2, 3].map((i) => (
           <div className={s.statItem} key={i}>
@@ -114,9 +116,8 @@ export function StatsSkeleton() {
 // ---- Image gallery: centered header + a horizontal accordion of panels ----
 export function GallerySkeleton() {
   return (
-    <div className={s.section} aria-hidden="true">
+    <div className={s.section} aria-hidden="true" data-skeleton>
       <div className={s.center}>
-        <Block className={`${s.eyebrow} ${s.mxAuto}`} />
         <Block className={`${s.heading} ${s.mxAuto}`} />
         <Block className={`${s.sub} ${s.mxAuto}`} />
       </div>
@@ -146,10 +147,9 @@ function ReviewCard() {
 
 export function ReviewsSkeleton() {
   return (
-    <div className={s.section} aria-hidden="true">
+    <div className={s.section} aria-hidden="true" data-skeleton>
       <div className={s.reviewsWrap}>
         <div className={s.reviewsLeft}>
-          <Block className={s.eyebrow} />
           <Block className={s.heading} style={{ marginTop: 16 }} />
           <Block className={s.heading} />
           <Block className={s.sub} style={{ marginTop: 16 }} />
@@ -176,7 +176,7 @@ export function ReviewsSkeleton() {
 // ---- Home CTA: image on one side + a contact form on the other ----
 export function CtaSkeleton() {
   return (
-    <div className={s.section} aria-hidden="true">
+    <div className={s.section} aria-hidden="true" data-skeleton>
       <div className={s.ctaWrap}>
         <Block className={s.ctaImage} />
         <div className={s.ctaForm}>
@@ -200,7 +200,7 @@ export function CtaSkeleton() {
 */
 export function ShortsSkeleton() {
   return (
-    <div className={s.shortsSection} aria-hidden="true">
+    <div className={s.shortsSection} aria-hidden="true" data-skeleton>
       <div className={s.shortsPills}>
         {[0, 1, 2, 3].map((i) => (
           <Block className={s.shortsPill} key={i} />
@@ -209,6 +209,24 @@ export function ShortsSkeleton() {
       <div className={s.shortsRow}>
         {[0, 1, 2, 3, 4, 5].map((i) => (
           <Block className={s.shortsCard} key={i} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/*
+  Localities / Other-cities carousel while the city API loads.
+  Heading + a row of property cards. The parent LazyOnVisible reserves the
+  section's real height, so this only has to look right, not set the height.
+*/
+export function LocalityCardsSkeleton() {
+  return (
+    <div className={s.section} aria-hidden="true" data-skeleton>
+      <Block className={s.heading} />
+      <div className={s.row}>
+        {[0, 1, 2, 3].map((i) => (
+          <CardBlock key={i} />
         ))}
       </div>
     </div>

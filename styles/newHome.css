@@ -1,6 +1,7 @@
 /* Tool tip  */
-a:link{text-decoration:none}
-
+a:link {
+  text-decoration: none;
+}
 
 .homePremiumPlaceholder {
   min-height: 628px;
@@ -8,271 +9,274 @@ a:link{text-decoration:none}
 @media (max-width: 768px) {
   .homePremiumPlaceholder {
     min-height: 578px;
-  }}
+  }
+}
 
 .navBarWrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    overflow: hidden;
-    z-index: 100;
-    gap: 3rem;
-  }
-  
-  .navBarTabsWrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 2.4rem;
-    font-size: 15px;
-    width: 40vw;
-    margin: 10px 10px;
-  }
-  /* Group the links close to the centre logo (balanced) instead of spreading
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  overflow: hidden;
+  z-index: 100;
+  gap: 3rem;
+}
+
+.navBarTabsWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2.4rem;
+  font-size: 15px;
+  width: 40vw;
+  margin: 10px 10px;
+}
+/* Group the links close to the centre logo (balanced) instead of spreading
      them to the screen edges and leaving the logo stranded in empty space. */
-  .navBarWrapper > .navBarTabsWrapper:first-child {
-    justify-content: flex-end;
-  }
-  .navBarWrapper > .navBarTabsWrapper:last-child {
-    justify-content: flex-start;
-  }
+.navBarWrapper > .navBarTabsWrapper:first-child {
+  justify-content: flex-end;
+}
+.navBarWrapper > .navBarTabsWrapper:last-child {
+  justify-content: flex-start;
+}
 
-  .navBarTabs {
-    position: relative;
-    color: #fff;
-    cursor: pointer;
-    margin: 0;
-    font-weight: 500;
-    letter-spacing: 0.3px;
-    padding-bottom: 5px;
-    transition: color 0.25s ease;
-  }
-  /* Animated gold underline — grows on hover and stays on the active tab */
-  .navBarTabs::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    height: 2px;
-    width: 0;
-    background: #e7b554;
-    border-radius: 2px;
-    transition: width 0.28s ease;
-  }
+.navBarTabs {
+  position: relative;
+  color: #fff;
+  cursor: pointer;
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  padding-bottom: 5px;
+  transition: color 0.25s ease;
+}
+/* Animated gold underline — grows on hover and stays on the active tab */
+.navBarTabs::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  background: var(--color-gold);
+  border-radius: 2px;
+  transition: width 0.28s ease;
+}
 
-  .navBarTabs:hover {
-    color: #e7b554;
-  }
-  .navBarTabs:hover::after {
-    width: 100%;
-  }
-  
-  /* The logo file is 5:1 (900x180). Sizing it by height (9vh) while the <img>
+.navBarTabs:hover {
+  color: var(--color-gold);
+}
+.navBarTabs:hover::after {
+  width: 100%;
+}
+
+/* The logo file is 5:1 (900x180). Sizing it by height (9vh) while the <img>
      carries width="310" squashed it into a tall, narrow wordmark. Size by width
      and let the height follow the real aspect ratio. */
-  .navBarLogo {
-    cursor: pointer;
-    width: clamp(190px, 17vw, 260px);
-    height: auto;
-    aspect-ratio: 5 / 1;
-    object-fit: contain;
-    margin-top: 0.5rem;
-  }
-  
-  .navBarLink {
-    text-decoration: none;
-    text-transform: none;
-  }
-  
-  .selectedTab {
-    color: #e7b554;
-  }
-  
-  .navBarLink.selected .navBarTabs {
-    color: #e7b554;
-  }
-  .navBarLink.selected .navBarTabs::after {
-    width: 100%;
-  }
-  
-  .navBarWishlistIcon {
-    color: #ffff;
-    cursor: pointer;
-    display: none;
-  }
-  
-  @media (max-width: 768px) {
-    .navBarLogo {
-      width: 43vw;
-      height: auto;
-    }}
-
-  .searchIcon {
-    position: absolute;
-    right: 25px;
-    color: rgb(218, 158, 39);
-    cursor: pointer;
-    /* display: none; */
-    width: 1.4rem;
-    height: 1.4rem;
+.navBarLogo {
+  cursor: pointer;
+  width: clamp(190px, 17vw, 260px);
+  height: auto;
+  aspect-ratio: 5 / 1;
+  object-fit: contain;
+  margin-top: 0.5rem;
 }
-    
-  .homePageheaderContainer {
-    height: 100vh;
-    width: 100vw;
-    position: relative;
-    overflow: hidden;
+
+.navBarLink {
+  text-decoration: none;
+  text-transform: none;
+}
+
+.selectedTab {
+  color: var(--color-gold);
+}
+
+.navBarLink.selected .navBarTabs {
+  color: var(--color-gold);
+}
+.navBarLink.selected .navBarTabs::after {
+  width: 100%;
+}
+
+.navBarWishlistIcon {
+  color: #ffff;
+  cursor: pointer;
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .navBarLogo {
+    width: 43vw;
+    height: auto;
   }
-  
-  @media (max-width: 768px) {
-    .homePageheader {
-      height: 90vh;
-    }}
+}
+
+.searchIcon {
+  position: absolute;
+  right: 25px;
+  color: rgb(218, 158, 39);
+  cursor: pointer;
+  /* display: none; */
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.homePageheaderContainer {
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .homePageheader {
+    height: 90vh;
+  }
+}
+.searchOptionsWrapper {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end;
+  height: 100%;
+}
+
+.searchOptionsFlexContainer {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background: #ffffff;
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 75%;
+  position: relative;
+  height: 55px;
+}
+
+.search-field {
+  display: flex;
+  align-items: center;
+  background: #f0f0f0;
+  border: none;
+  border-radius: 8px;
+  padding: 5px 10px;
+  width: 120px;
+}
+
+.searchInput {
+  width: 300px;
+}
+
+.search-field input {
+  border: none;
+  background: transparent;
+  margin-left: 5px;
+  font-size: 16px;
+}
+
+.search-field input:focus {
+  outline: none;
+}
+
+.icon {
+  color: #707070;
+}
+
+.select-container {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #e6e6e6;
+}
+
+.location-icon {
+  fill: #ffa500; /* or the color of your icon */
+  margin-right: 4px;
+}
+
+.location-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  background: #e6e6e6;
+  padding: 4px;
+  margin-right: 8px;
+  font-size: 18px;
+  color: #000;
+  cursor: pointer;
+}
+
+.location-select:focus {
+  outline: none;
+}
+
+/* Hide the native dropdown arrow on all browsers */
+.location-select::-ms-expand {
+  display: none; /* for IE11 */
+}
+
+/* For Webkit browsers like Chrome and Safari */
+.select-container select::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+/* For Firefox */
+.select-container > select[list] {
+  background: none;
+  color: transparent;
+  text-shadow: 0 0 0 #000;
+}
+
+.select-container select::-moz-focus-inner {
+  /* For Firefox */
+  border: 0;
+}
+
+@media (max-width: 768px) {
   .searchOptionsWrapper {
     display: flex;
     width: 100%;
-    flex-direction: row;
-    justify-content: center;
-    align-items: flex-end;
-    height: 100%;
-  }
-  
-  .searchOptionsFlexContainer {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    background: #ffffff;
-    padding: 10px;
-    border-radius: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 75%;
-    position: relative;
-    height: 55px;
-  }
-  
-  .search-field {
-    display: flex;
-    align-items: center;
-    background: #f0f0f0;
-    border: none;
-    border-radius: 8px;
-    padding: 5px 10px;
-    width: 120px;
-  }
-  
-  .searchInput {
-    width: 300px;
-  }
-  
-  .search-field input {
-    border: none;
-    background: transparent;
-    margin-left: 5px;
-    font-size: 16px;
-  }
-  
-  .search-field input:focus {
-    outline: none;
-  }
-  
-  .icon {
-    color: #707070;
-  }
-  
-  .select-container {
-    display: inline-flex;
-    align-items: center;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    overflow: hidden;
-    background: #e6e6e6;
-  }
-  
-  .location-icon {
-    fill: #ffa500; /* or the color of your icon */
-    margin-right: 4px;
-  }
-  
-  .location-select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    border: none;
-    background: #e6e6e6;
-    padding: 4px;
-    margin-right: 8px;
-    font-size: 18px;
-    color: #000;
-    cursor: pointer;
-  }
-  
-  .location-select:focus {
-    outline: none;
-  }
-  
-  /* Hide the native dropdown arrow on all browsers */
-  .location-select::-ms-expand {
-    display: none; /* for IE11 */
-  }
-  
-  /* For Webkit browsers like Chrome and Safari */
-  .select-container select::-webkit-calendar-picker-indicator {
-    display: none;
-  }
-  
-  /* For Firefox */
-  .select-container > select[list] {
-    background: none;
-    color: transparent;
-    text-shadow: 0 0 0 #000;
-  }
-  
-  .select-container select::-moz-focus-inner {
-    /* For Firefox */
-    border: 0;
-  }
-  
-  @media (max-width: 768px) {
-    .searchOptionsWrapper {
-      display: flex;
-      width: 100%;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      position: absolute;
-      top: 60%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-  
-    .searchOptionsMobileFlexContainer {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      margin-top: 15px;
-    }}
- 
-  .search-button {
-    background: #E7b554;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    font-size: 10px;
-    cursor: pointer;
-    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-  }
-  
-  .search-button:hover {
-    background: #e0a800;
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
+  .searchOptionsMobileFlexContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 15px;
+  }
+}
+
+.search-button {
+  background: var(--color-gold);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-size: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-button:hover {
+  background: #e0a800;
+}
 
 /* Property Page ALL CSS  */
 
@@ -285,7 +289,7 @@ a:link{text-decoration:none}
   height: auto;
   overflow-x: hidden;
 }
-.propertyPageHeaderContactUs form{
+.propertyPageHeaderContactUs form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -300,11 +304,11 @@ a:link{text-decoration:none}
 }
 
 .thumbnail:hover {
-  border: 2px solid #e7b554;
+  border: 2px solid var(--color-gold);
 }
-.line{
+.line {
   height: 1px;
-  border-bottom: 1px solid #DCAA4C;
+  border-bottom: 1px solid #dcaa4c;
 }
 
 .carouselContainer {
@@ -327,38 +331,37 @@ a:link{text-decoration:none}
   margin-left: 2%;
   display: flex;
   flex-direction: column;
-overflow-y: hidden;
-gap: .5rem;
-align-items: center;
-background: #DCAA4C26;
+  overflow-y: hidden;
+  gap: 0.5rem;
+  align-items: center;
+  background: #dcaa4c26;
 }
 
 .propertyPageHeaderContactUs > h4 {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: Lexend Deca;
+  font-family: var(--font-body);
   font-weight: 500;
   font-size: 16px;
   line-height: 22px;
   letter-spacing: 0%;
   text-align: center;
   color: #000000;
-
 }
-  .propertyTopForm {
-   gap: 1rem;
-  }
-  .propertyTopForm > input[type="text"], 
-  .propertyTopForm > input[type="email"] {
-    width: 20vw !important; 
-    height: 6vh !important; 
-    border: 0.12rem solid #e7b554 !important; 
-    padding: 0.3em; 
-    box-shadow: 0px 0.1em 0.2em 0px rgba(0, 0, 0, 0.18) !important;
-    background: rgba(220, 170, 76, 0.0) !important; 
-    border-radius: 0.2em !important;
-  }
+.propertyTopForm {
+  gap: 1rem;
+}
+.propertyTopForm > input[type="text"],
+.propertyTopForm > input[type="email"] {
+  width: 20vw !important;
+  height: 6vh !important;
+  border: 0.12rem solid var(--color-gold) !important;
+  padding: 0.3em;
+  box-shadow: 0px 0.1em 0.2em 0px rgba(0, 0, 0, 0.18) !important;
+  background: rgba(220, 170, 76, 0) !important;
+  border-radius: 0.2em !important;
+}
 .propertyPageHeaderContactIconContainer {
   height: 20%;
   width: 100%;
@@ -376,13 +379,12 @@ background: #DCAA4C26;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: Lexend Deca;
-font-weight: 500;
-font-size: 20px;
-line-height: 18.75px;
-letter-spacing: 0%;
-text-align: center;
-
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 18.75px;
+  letter-spacing: 0%;
+  text-align: center;
 }
 
 .propertyPageHeaderContactIcon {
@@ -439,7 +441,6 @@ text-align: center;
     width: 100vw;
     height: 95vh;
   }
- 
 
   .propertyPageHeaderMobilePropertyTitle {
     margin: 0;
@@ -453,7 +454,8 @@ text-align: center;
   .propertyPageLeftSectionContainer {
     width: 100vw;
     margin-bottom: 50px;
-  }}
+  }
+}
 
 .propertyPageNavigationWrapper.sticky {
   position: fixed;
@@ -464,9 +466,6 @@ text-align: center;
   color: #ffc107;
   border-bottom: 2px solid #ffc107;
 }
-
-
-
 
 /*
 
@@ -485,7 +484,7 @@ About Projects CSS
 
 .aboutProjectHeader {
   font-size: 20px;
-  color: #e7b554;
+  color: var(--color-gold);
   font-weight: 500;
   text-transform: uppercase;
 }
@@ -506,7 +505,7 @@ Projects Highlight CSS
 }
 
 .projectHighlightListBullet {
-  color: #e7b554;
+  color: var(--color-gold);
   font-size: 25px;
   font-weight: 700;
 }
@@ -530,12 +529,17 @@ Projects Highlight CSS
   top: 0;
   width: 100vw; /* Full viewport width */
   height: 100vh; /* Full viewport height */
-  background-color: rgba(0,0,0,0.8); /* Black overlay with transparency */
+  background-color: rgba(0, 0, 0, 0.8); /* Black overlay with transparency */
 }
 
 @keyframes zoom {
-  from {transform: scale(0.1)} 
-  to {transform: scale(1)}}
+  from {
+    transform: scale(0.1);
+  }
+  to {
+    transform: scale(1);
+  }
+}
 
 /* The Close Button */
 .close {
@@ -559,7 +563,6 @@ Projects Highlight CSS
   max-height: 100vh;
 }
 
-
 .aboutProjectWrapper {
   display: flex;
   height: 100%;
@@ -567,15 +570,14 @@ Projects Highlight CSS
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-
 }
-.pd{
-    padding: 20px;
-    padding-bottom: 0px;
+.pd {
+  padding: 20px;
+  padding-bottom: 0px;
 }
 .aboutProjectHeader {
   font-size: 20px;
-  color: #e7b554;
+  color: var(--color-gold);
   font-weight: 500;
   text-transform: uppercase;
 }
@@ -623,36 +625,38 @@ Projects Highlight CSS
     max-height: 100vh;
   }
 
-
-
   .fullscreen-gallery-content {
     top: 20% !important;
-  }}
-.propertyWrapper{
-  background-color: rgb(255, 255, 255);
-    color: rgba(0, 0, 0, 0.87);
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 5px -3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px, rgba(0, 0, 0, 0.12) 0px 3px 14px 2px;
-    height: max-content;
-    width: 100%;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
-    border-radius: 10px;
-    padding: 0px 20px;
+  }
 }
-.loader .lds-ripple{
+.propertyWrapper {
+  background-color: rgb(255, 255, 255);
+  color: rgba(0, 0, 0, 0.87);
+  box-shadow:
+    rgba(0, 0, 0, 0.2) 0px 5px 5px -3px,
+    rgba(0, 0, 0, 0.14) 0px 8px 10px 1px,
+    rgba(0, 0, 0, 0.12) 0px 3px 14px 2px;
+  height: max-content;
+  width: 100%;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 10px;
+  padding: 0px 20px;
+}
+.loader .lds-ripple {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
-
 @media screen and (max-width: 768px) {
-  .loader{
-      height: 100%;
-      width: 100%;
-  }}
+  .loader {
+    height: 100%;
+    width: 100%;
+  }
+}
 
 .tab-button.active {
   color: #1976d2;
@@ -662,30 +666,23 @@ Projects Highlight CSS
   display: block;
 }
 
-.propertyLine{
+.propertyLine {
   display: flex;
   gap: 5px;
 }
-
-
-
-
-
-
-
-
-
 
 /* The .custom-backdrop rules that were here now live in
    components/shared/Backdrop.module.css, alongside the component that uses them,
    with the padding, height cap and overflow they were missing. */
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }}
-
-
-
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
 .loader-container {
   height: 100vh;
@@ -701,22 +698,15 @@ Projects Highlight CSS
 }
 
 @media (min-width: 1024px) and (max-width: 1440px) {
- 
-  
   .image-gallery-slide img {
     max-height: 90vh !important; /* Prevents overflow */
     /* max-width: 90vw !important; Limits width */
     /* object-fit: contain !important; Ensures proper image scaling */
-  }}
- 
- 
- 
+  }
+}
 
-
-
-
- /*----------------------------------------------------------DEVELOPER HEAD SECTION ---------------------------------------------------------------*/
- .page-header {
+/*----------------------------------------------------------DEVELOPER HEAD SECTION ---------------------------------------------------------------*/
+.page-header {
   position: relative;
 }
 .page-header .page-banner-content {
@@ -735,7 +725,9 @@ Projects Highlight CSS
   letter-spacing: 1px;
   margin-bottom: 30px;
   /* Readable over a bright photo */
-  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.55), 0 2px 6px rgba(0, 0, 0, 0.4);
+  text-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.55),
+    0 2px 6px rgba(0, 0, 0, 0.4);
   /* Entrance animation on load */
   animation: bannerTitleIn 1s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -747,21 +739,38 @@ Projects Highlight CSS
   height: 4px;
   border-radius: 2px;
   margin: 16px auto 0;
-  background: #e7b554;
+  background: var(--color-gold);
   transform-origin: center;
   animation: bannerUnderlineIn 0.8s ease-out 0.55s both;
 }
 @keyframes bannerTitleIn {
-  from { opacity: 0; transform: translateY(40px) scale(0.96); letter-spacing: 10px; }
-  to { opacity: 1; transform: translateY(0) scale(1); letter-spacing: 1px; }}
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.96);
+    letter-spacing: 10px;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    letter-spacing: 1px;
+  }
+}
 @keyframes bannerUnderlineIn {
-  from { transform: scaleX(0); opacity: 0; }
-  to { transform: scaleX(1); opacity: 1; }}
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   .page-header .page-banner-content h1,
   .page-header .page-banner-content h1::after {
     animation: none;
-  }}
+  }
+}
 .page-header .overlay {
   position: absolute;
   height: 100%;
@@ -769,23 +778,20 @@ Projects Highlight CSS
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.7) 100%);
 }
 
-
 /*---------------------------------------------------------------------------------------------- Below the Banner Image Blog Section -------------------------------------*/
 
-.sec-p{
+.sec-p {
   padding: 60px 0px;
 }
-.pt-0{
+.pt-0 {
   padding-top: 0px !important;
 }
 
-
-
-.pagination-buttons{
+.pagination-buttons {
   width: 100%;
   height: 100%;
   margin: 0;
-  font-family: sans-serif;
+  font-family: var(--font-body);
   padding: 25px;
   background: #fff;
   color: #111;
@@ -794,7 +800,9 @@ Projects Highlight CSS
   align-items: center;
 }
 
-*, *::after, *::before {
+*,
+*::after,
+*::before {
   box-sizing: border-box;
 }
 
@@ -817,7 +825,7 @@ button {
   text-transform: uppercase;
   letter-spacing: 0.1em;
   transition: background 0.3s ease;
-  margin: 0 2px
+  margin: 0 2px;
 }
 
 .page-btn:first-of-type {
@@ -849,17 +857,16 @@ button {
 }
 
 .page-btn[disabled] {
-  opacity: 0.3; 
+  opacity: 0.3;
 }
-.page-header>div img {
-    height: 500px;
-    width: 91%;
-    -o-object-fit: cover;
-    object-fit: cover;
-    display: flex
-;
-    margin: 2rem auto auto;
-    border-radius: 20px;
+.page-header > div img {
+  height: 500px;
+  width: 91%;
+  -o-object-fit: cover;
+  object-fit: cover;
+  display: flex;
+  margin: 2rem auto auto;
+  border-radius: 20px;
 }
 
 /* Mobile: shorter banner that fills nicely (the image is a plain building now). */
@@ -875,29 +882,31 @@ button {
   .page-header .page-banner-content h1 {
     font-size: 34px;
     margin-bottom: 14px;
-  }}
+  }
+}
 
 .container {
-    padding: 0 15px;
-    margin: 0 auto;
-    width: 100%;
+  padding: 0 15px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .page-width {
-    padding-left: 2rem;
-    padding-right: 2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 /* On mobile, trim the blog page's side padding so the hero, Featured Media and
    blog cards all line up at the same tighter margin. */
 @media (max-width: 768px) {
-    .featured-blog .page-width {
-        padding-left: 14px;
-        padding-right: 14px;
-    }}
-.share{
+  .featured-blog .page-width {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+}
+.share {
   display: flex;
   align-items: center;
-  gap:20px;
+  gap: 20px;
 }
 
 /* Phones: the nav bar is fixed from the first paint (it used to become fixed
@@ -914,8 +923,10 @@ button {
 
 /* Home header band on phones: fit the logo inside the 8vh bar */
 @media (max-width: 768px) {
+  /* fixed height (the width follows the 5:1 logo): 6vh made it ~250px wide,
+     almost two-thirds of a phone screen; 32px tall = ~160px wide */
   .navBarWrapper .navBarLogo {
-    max-height: 6vh;
+    height: clamp(28px, 3.8vh, 34px);
     width: auto;
     object-fit: contain;
   }
@@ -940,7 +951,83 @@ button {
   .navBarWrapper > .navBarTabsWrapper:first-child svg {
     display: block; /* no inline-text gap under the icon */
   }
+  /* right side on phones: only the ♥ shortlist link, pinned to the right edge */
   .navBarWrapper > .navBarTabsWrapper:last-child {
-    display: none; /* holds only the hidden wishlist icon on phones */
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: auto;
+    margin: 0;
   }
+  .navBarShortlist {
+    margin-left: 0;
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Phones, BEFORE the page's JavaScript has run. Header.jsx only learns the
+   screen width after hydration, so the server HTML is always the desktop bar:
+   10vh tall, with the text tabs (overlapping the logo on a phone). A moment
+   later it switches to the 8vh phone bar, and the logo and heart jump up —
+   Lighthouse counted that as layout shift. These rules make the server HTML
+   already look like the phone bar. They only match the desktop markup
+   (#property-listing-tab is rendered only there) on the home-style bar
+   (inline height 10vh), so after hydration nothing here applies. */
+@media (max-width: 768px) {
+  .navBarWrapper[style*="height:10vh"]:has(#property-listing-tab) {
+    height: 8vh !important;
+  }
+  /* the desktop text tabs (only the ♥ link stays, as on the phone bar) */
+  .navBarWrapper:has(#property-listing-tab) .navBarTabs {
+    display: none;
+  }
+  /* keeps the place of the menu icon (30x30) that replaces the tabs */
+  .navBarWrapper:has(#property-listing-tab) > .navBarTabsWrapper:first-child {
+    min-width: 30px;
+    min-height: 30px;
+  }
+}
+
+/* ♥ shortlist link, right-most in the desktop header (Header.jsx) */
+.navBarShortlist {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  margin-left: 8px;
+  border-radius: 50%;
+  font-size: 22px;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.navBarShortlist:hover {
+  background: rgba(231, 181, 84, 0.18);
+  transform: scale(1.06);
+}
+.navBarShortlist:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+.navBarShortlist svg {
+  color: inherit;
+}
+.navBarShortlistCount {
+  position: absolute;
+  top: 2px;
+  right: 0;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: #e5484d;
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: var(--fw-semibold);
+  line-height: 17px;
+  text-align: center;
 }

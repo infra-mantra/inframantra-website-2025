@@ -1,0 +1,327 @@
+/*
+  Home search bar dropdowns: the buttons inside the pill (City, Property type, BHK,
+  Budget, Status) and the small popover each one opens.
+*/
+.dd {
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* ---- Buttons ---- */
+.trigger,
+.cityBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 38px;
+  padding: 0 12px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-subtitle);
+  font-weight: var(--fw-medium);
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease;
+}
+.trigger:hover,
+.cityBtn:hover,
+.trigger[aria-expanded="true"],
+.cityBtn[aria-expanded="true"] {
+  background: rgba(231, 181, 84, 0.12);
+}
+.trigger:focus-visible,
+.cityBtn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(231, 181, 84, 0.45);
+}
+/* Something picked: gold outline so it reads as "active". */
+.on {
+  border-color: var(--color-gold);
+  background: rgba(231, 181, 84, 0.1);
+}
+
+/* City sits first in the pill, with a hairline after it. */
+.cityBtn {
+  height: 45px;
+  padding: 0 14px 0 16px;
+  font-weight: var(--fw-semibold);
+}
+.cityBtn svg:first-child {
+  color: var(--color-gold-dark);
+}
+.cityDivider {
+  flex-shrink: 0;
+  width: 1px;
+  height: 24px;
+  margin: 0 8px 0 4px;
+  background: rgba(26, 26, 26, 0.12);
+}
+
+.triggerText {
+  max-width: 130px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.caret {
+  flex-shrink: 0;
+  color: var(--color-ink-muted);
+  transition: transform 0.18s ease;
+}
+[aria-expanded="true"] > .caret {
+  transform: rotate(180deg);
+}
+
+/* Full label on wide screens, short one ("Type") when the pill gets tight. */
+.short {
+  display: none;
+}
+@media (max-width: 1279px) {
+  .long {
+    display: none;
+  }
+  .short {
+    display: inline;
+  }
+  .trigger {
+    padding: 0 10px;
+  }
+  .triggerText {
+    max-width: 96px;
+  }
+}
+
+/* ---- Popover ---- */
+.pop {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 0;
+  width: 300px;
+  box-sizing: border-box;
+  padding: 14px;
+  background: var(--color-surface);
+  border: 1px solid rgba(26, 26, 26, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 14px 36px rgba(17, 17, 17, 0.16);
+  z-index: 10001;
+  font-family: var(--font-body);
+  cursor: default;
+}
+.right {
+  left: auto;
+  right: 0;
+}
+/* Inside the phone search sheet: plain block, no floating box. */
+.sheetBox {
+  padding: 4px 0 8px;
+  font-family: var(--font-body);
+}
+
+.popTitle {
+  margin: 0 0 10px;
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.opt {
+  padding: 7px 12px;
+  border: 1px solid rgba(26, 26, 26, 0.14);
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-subtitle);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.opt:hover {
+  border-color: var(--color-gold);
+}
+.opt:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(231, 181, 84, 0.45);
+}
+.optOn {
+  border-color: var(--color-gold-dark);
+  background: rgba(231, 181, 84, 0.16);
+  font-weight: var(--fw-medium);
+}
+
+/* Budget: Min – Max selects under the presets. */
+.minMax {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+}
+.selectWrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: var(--fs-small);
+  color: var(--color-ink-muted);
+}
+.selectWrap select {
+  height: 38px;
+  padding: 0 8px;
+  border: 1px solid rgba(26, 26, 26, 0.18);
+  border-radius: 10px;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-subtitle);
+}
+.dash {
+  padding-bottom: 9px;
+  color: var(--color-ink-muted);
+}
+
+.popFoot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(26, 26, 26, 0.08);
+}
+.clear {
+  border: 0;
+  background: none;
+  padding: 6px 4px;
+  color: var(--color-ink-muted);
+  font-family: var(--font-body);
+  font-size: var(--fs-button);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.apply {
+  height: 36px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--color-gold-light) 0%, var(--color-gold-dark) 100%);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-button);
+  font-weight: var(--fw-semibold);
+  cursor: pointer;
+}
+.clear:focus-visible,
+.apply:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(231, 181, 84, 0.45);
+}
+
+/* 16px fields on phones stop iOS zooming in. */
+@media (max-width: 768px) {
+  .selectWrap select {
+    font-size: 16px;
+  }
+}
+
+/* how many properties an option has (FilterPopover Count) */
+.count,
+.countLoading {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: rgba(26, 26, 26, 0.07);
+  color: var(--color-ink-muted);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  line-height: 16px;
+  vertical-align: 1px;
+}
+
+.countLoading {
+  width: 18px;
+  height: 16px;
+  padding: 0;
+  background: linear-gradient(90deg, #eee 25%, #f7f7f7 50%, #eee 75%) 0 0 / 200% 100%;
+  animation: countShimmer 1s linear infinite;
+}
+
+.optOn .count {
+  background: rgba(255, 255, 255, 0.25);
+  color: inherit;
+}
+
+.opt:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+@keyframes countShimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .countLoading {
+    animation: none;
+  }
+}
+
+/* option + its go-arrow (FilterPopover GoTo) */
+.optRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.optGo {
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  flex: none;
+  border-radius: 50%;
+  color: var(--color-ink-muted);
+  opacity: 0;
+  transform: translate(-3px, 3px);
+  transition:
+    opacity 0.2s,
+    transform 0.2s,
+    color 0.2s,
+    background 0.2s;
+}
+
+.optRow:hover .optGo,
+.optGo:focus-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.optRow .optGo:hover {
+  background: rgba(231, 181, 84, 0.18);
+  color: var(--color-gold-dark);
+  transform: translate(2px, -2px);
+}
+
+/* touch screens (and the phone sheet): arrows always shown */
+@media (hover: none) {
+  .optGo {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .optGo {
+    transition: none;
+  }
+}

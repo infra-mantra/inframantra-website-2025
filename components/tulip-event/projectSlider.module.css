@@ -19,10 +19,13 @@
 }
 
 .title {
-  font-size: 1.8rem;
-  line-height: 1.08;
-  font-weight: 700;
-  color: #d4a64a;
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  text-transform: none;
+  color: var(--color-ink);
   margin: 0 0 32px 0;
 }
 
@@ -48,10 +51,6 @@
     gap: 0;
   }
 
-  .title {
-    font-size: 20px;
-  }
-
   .section {
     padding: 48px 20px 60px;
   }
@@ -63,7 +62,6 @@
 
 /* Card */
 .card_pro {
- 
   border-radius: 4px;
   overflow: hidden;
   position: relative;
@@ -138,7 +136,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
- 
+
   transition: opacity 0.2s ease;
   font-size: 14px;
   color: #1a1a1a;
@@ -163,12 +161,14 @@
 }
 
 .projectName {
-  font-size: 20px;
-  font-weight: 700;
+  font-family: var(--font-body);
+  font-size: var(--fs-card-title);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: normal;
+  text-transform: none;
   color: #d4a64a;
   margin: 0 0 5px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
 }
 
 .projectName a {
@@ -189,7 +189,7 @@
   align-items: center;
   flex-wrap: wrap;
   margin-bottom: 13px;
-   color: #fff;
+  color: #fff;
 }
 
 .metaItem {
@@ -222,19 +222,21 @@
   width: 100%;
   padding: 14px 0;
   border: 1px solid #1a1a1a;
-   background: #dcaa4c!important;
+  background: #dcaa4c !important;
   font-size: 14px;
   font-weight: 600;
-   color: #fff;
+  color: #fff;
   text-decoration: none;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   box-sizing: border-box;
-  transition: background 0.2s, color 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s;
 }
 
 .downloadBtn:hover {
-  background: #dcaa4c!important;
+  background: #dcaa4c !important;
   color: #fff;
 }
 
@@ -263,24 +265,26 @@
   border: 1px solid #1a1a1a;
   padding: 13px 32px;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s;
 }
 
 .loadMoreBtn:hover {
-  background: #dcaa4c!important;
+  background: #dcaa4c !important;
   color: #fff;
 }
-.badgeContainerLogo{
-   position: absolute;
+.badgeContainerLogo {
+  position: absolute;
   top: 16px;
   right: 16px;
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-  z-index: 2
+  z-index: 2;
 }
 @media (max-width: 768px) {
   .cardBody {
     padding: 7px 0px 20px;
-}
+  }
 }

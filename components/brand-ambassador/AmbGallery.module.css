@@ -11,8 +11,13 @@
   text-align: center;
 }
 .ambGalleryHeader > h2 {
-  color: #daa520;
-  font-size: 25px;
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  text-transform: none;
+  color: var(--color-ink);
   border-radius: 10px;
 }
 .ambGalleryContainer {

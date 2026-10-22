@@ -9,7 +9,7 @@
 .mobilePopupOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0, 0, 0, 0.6);
   z-index: 9999;
   display: flex;
   justify-content: center;
@@ -34,7 +34,6 @@
   cursor: pointer;
 }
 
-
 .popupOverlay {
   position: fixed;
   top: 0;
@@ -45,7 +44,7 @@
   display: flex;
   justify-content: center;
 
-  align-items: flex-start;   /* ✅ IMPORTANT CHANGE */
+  align-items: flex-start; /* ✅ IMPORTANT CHANGE */
 
   padding: 20px 0;
 
@@ -55,9 +54,11 @@
   transform: scale(0.9);
   pointer-events: none;
 
-  transition: opacity 1000ms ease-out, transform 1000ms ease-out;
+  transition:
+    opacity 1000ms ease-out,
+    transform 1000ms ease-out;
 
-  overflow-y: auto;   /* ✅ ENABLE SCROLL */
+  overflow-y: auto; /* ✅ ENABLE SCROLL */
 }
 
 .popupAnimating {
@@ -67,10 +68,10 @@
 }
 
 .popupForm {
-  background: #F1E2C2;
+  background: #f1e2c2;
   padding: 3px 20px;
   border-radius: 10px;
-  width:auto ;
+  width: auto;
   max-width: 100%;
   transform: translateY(-30px);
   transition: transform 1000ms ease-out;
@@ -93,23 +94,23 @@
   top: 16px;
 }
 
-.headingForm {}
-
 .popUpHead {
   color: #000;
   text-align: center;
-  font-family: "Lexend Deca";
+  font-family: var(--font-body);
   font-size: 14px;
   font-weight: 400;
 }
 
 .popUpHead2 {
-  color: #E4A951;
+  font-family: var(--font-body);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--color-gold);
   text-align: center;
-  font-family: "Lexend Deca";
-  font-size: 18px;
-  font-weight: 600;
-  text-transform: uppercase;
   margin: 0;
 }
 
@@ -122,34 +123,32 @@
   outline: none;
   box-shadow: 0px 1px 2.9px 0px rgba(0, 0, 0, 0.18);
   border-radius: 3px;
-  border: 0.5px solid #EEA924;
-  background: #FFF;
+  border: 0.5px solid #eea924;
+  background: #fff;
 }
 
 .propertyPageHeaderContactUsDisclaimer {
   color: #000;
   text-align: center;
-  font-family: "Lexend Deca";
+  font-family: var(--font-body);
   font-size: 6px;
   font-weight: 300;
 }
 
-.ctaText {}
-
 .numberFor {
   color: #000;
-  font-family: "Lexend Deca";
+  font-family: var(--font-body);
   font-size: 16px;
   font-weight: 400;
   margin: 2rem 0 0;
   display: flex;
-    justify-content: center;
-    align-items: center;
+  justify-content: center;
+  align-items: center;
 }
 
 .textForm {
   color: #000;
-  font-family: "Lexend Deca";
+  font-family: var(--font-body);
   font-size: 11px;
   font-weight: 400;
 }
@@ -162,13 +161,13 @@
   font-size: 15px;
 }
 .formGroup {
-    margin-bottom: 15px;
-    border-radius: 3px;
-    /* display: flex */
-/* ; */
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  margin-bottom: 15px;
+  border-radius: 3px;
+  /* display: flex */
+  /* ; */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .selectField {
   width: 100%;
@@ -185,7 +184,7 @@
 }
 
 .selectField:focus {
-  border-color: #E7B554;
+  border-color: var(--color-gold);
 }
 
 .selectField:disabled {
@@ -194,10 +193,10 @@
 }
 
 .formGroup {
-    position: relative;
-    margin: 22px 0;
+  position: relative;
+  margin: 22px 0;
 }
-.propertyPageHeaderContactIconContainer2{
+.propertyPageHeaderContactIconContainer2 {
   height: 20%;
   width: 100%;
   border-top-left-radius: 20px;

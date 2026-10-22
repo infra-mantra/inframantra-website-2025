@@ -7,7 +7,7 @@
   border: 1px solid #eef0f2;
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.07);
   padding: 1.75rem;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   margin-bottom: 2rem;
 }
 .mobileActionBar {
@@ -62,7 +62,7 @@
 
 .resetbtn {
   color: #000;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 12px;
   font-weight: 400;
   background: none;
@@ -115,7 +115,7 @@
   background: #f6f7f8;
   border: 1px solid #e6e8eb;
   color: #444;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 13px;
   font-style: normal;
   font-weight: 500;
@@ -392,7 +392,7 @@
     border: 1px solid #eef0f2;
     box-shadow: 0 6px 24px rgba(0, 0, 0, 0.07);
     padding: 1.75rem;
-    font-family: "Lexend Deca", sans-serif;
+    font-family: var(--font-body);
     margin-bottom: 2rem;
   }
 
@@ -416,7 +416,7 @@
 
   .resetbtn {
     color: #000;
-    font-family: "Lexend Deca", sans-serif;
+    font-family: var(--font-body);
     font-size: 12px;
     font-weight: 400;
     background: none;
@@ -469,7 +469,7 @@
     background: #f6f7f8;
     border: 1px solid #e6e8eb;
     color: #444;
-    font-family: "Lexend Deca", sans-serif;
+    font-family: var(--font-body);
     font-size: 13px;
     font-style: normal;
     font-weight: 500;
@@ -748,5 +748,295 @@
     overscroll-behavior: contain;
     /* the last section (Project Status) clears the phone's home-indicator area */
     padding-bottom: calc(2.5rem + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* ======================================================================
+   At-a-glance sidebar (prefixed lfg-). Brand gold, chip groups, compact.
+   ====================================================================== */
+.lfgRoot {
+  font-family: var(--font-body);
+  background: var(--color-surface);
+  border: 1px solid #eee;
+  padding: 14px 14px 6px;
+}
+
+.lfgTop,
+.lfgSheetHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.lfgHeading {
+  flex: 1;
+  font-size: var(--fs-h4);
+  font-weight: var(--fw-semibold);
+  color: var(--color-ink);
+}
+
+.lfgReset {
+  border: 0;
+  background: transparent;
+  padding: 2px 0;
+  color: var(--color-gold-dark);
+  font-family: inherit;
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  cursor: pointer;
+}
+
+.lfgReset:hover {
+  text-decoration: underline;
+}
+
+.lfgApplied {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.lfgAppliedChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px 4px 10px;
+  border: 1px solid var(--color-gold);
+  background: #fbf3e1;
+  color: var(--color-ink);
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.lfgAppliedChip span {
+  font-size: 14px;
+  line-height: 1;
+  color: var(--color-gold-dark);
+}
+
+.lfgSection {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.lfgSection:last-child {
+  border-bottom: 0;
+}
+
+.lfgHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 11px 0;
+  border: 0;
+  background: transparent;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.lfgTitle {
+  flex-shrink: 0;
+  font-size: var(--fs-eyebrow);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+
+.lfgSummary {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  color: var(--color-gold-dark);
+}
+
+.lfgChev {
+  margin-left: auto;
+  flex-shrink: 0;
+  color: var(--color-ink-muted);
+  transition: transform 0.2s ease;
+}
+
+.lfgChevOpen {
+  transform: rotate(180deg);
+}
+
+.lfgBody {
+  padding: 0 0 12px;
+}
+
+.lfgChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.lfgChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border: 1px solid #e4e4e4;
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-body);
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+.lfgChip:hover {
+  border-color: var(--color-gold);
+}
+
+.lfgChipOn {
+  border-color: var(--color-gold);
+  background: var(--color-gold);
+  color: var(--color-ink);
+  font-weight: var(--fw-medium);
+}
+
+.lfgChip:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.lfgChip:focus-visible,
+.lfgHead:focus-visible,
+.lfgAppliedChip:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+.lfgCount {
+  font-size: 11px;
+  color: var(--color-ink-muted);
+}
+
+.lfgChipOn .lfgCount {
+  color: var(--color-ink);
+}
+
+.lfgPrice {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  color: var(--color-ink-muted);
+}
+
+.lfgPrice input {
+  flex: 1;
+  min-width: 0;
+  height: 34px;
+  padding: 0 10px;
+  border: 1px solid #e4e4e4;
+  font-family: inherit;
+  font-size: 12px;
+}
+
+.lfgPrice input:focus {
+  outline: none;
+  border-color: var(--color-gold);
+}
+
+/* ---------- phones: bottom sheet ---------- */
+.lfgSheetWrap {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  font-family: var(--font-body);
+}
+
+.lfgScrim {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+}
+
+.lfgSheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  max-height: 88vh;
+  background: var(--color-surface);
+  border-radius: 16px 16px 0 0;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.18);
+  animation: lfgUp 0.25s ease;
+}
+
+@keyframes lfgUp {
+  from {
+    transform: translateY(40px);
+    opacity: 0.4;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+.lfgSheetHead {
+  padding: 14px 16px 10px;
+}
+
+.lfgClose {
+  width: 32px;
+  height: 32px;
+  border: 0;
+  background: #f4f4f4;
+  border-radius: 50%;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.lfgSheetBody {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 16px;
+  overscroll-behavior: contain;
+}
+
+.lfgSheetFoot {
+  padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+  border-top: 1px solid #f0f0f0;
+}
+
+.lfgApply {
+  width: 100%;
+  min-height: 46px;
+  border: 0;
+  background: var(--color-gold);
+  color: var(--color-ink);
+  font-family: inherit;
+  font-size: var(--fs-button);
+  font-weight: var(--fw-semibold);
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lfgSheet {
+    animation: none;
+  }
+  .lfgChev {
+    transition: none;
   }
 }

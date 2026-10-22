@@ -5,6 +5,8 @@ import { createPortal } from "react-dom";
 import dynamic from "next/dynamic";
 import styles from "./PropertyCard.module.css";
 import CustomBackdrop from "./Backdrop.jsx";
+import CompareToggle from "../compare/CompareToggle.jsx";
+import HeartButton from "./shortlist/HeartButton.jsx";
 
 // Loaded only when a card's enquiry form is opened — no cost to the initial home-page load.
 const PropertyPageFloatingContact = dynamic(
@@ -72,12 +74,6 @@ export default function PropertyCard({ property }) {
             </span>
           )}
 
-          {status && (
-            <span className={`${styles.pcStatus} ${/ready/i.test(status) ? styles.pcStatusReady : ""}`}>
-              {status}
-            </span>
-          )}
-
           {property.configuration && (
             <span className={styles.pcConfig}>{property.configuration.trim()}</span>
           )}
@@ -87,7 +83,13 @@ export default function PropertyCard({ property }) {
           <h3 className={styles.propertyTitle}>{property.name}</h3>
 
           <p className={styles.propertyLocation}>
-            <svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true" className={styles.pcPin}>
+            <svg
+              viewBox="0 0 24 24"
+              width="13"
+              height="13"
+              aria-hidden="true"
+              className={styles.pcPin}
+            >
               <path
                 d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"
                 fill="currentColor"
@@ -104,14 +106,26 @@ export default function PropertyCard({ property }) {
             {property.startingPrice ? (
               <>
                 <span className={styles.pcPriceLabel}>Starting from</span>
-                <strong className={styles.pcPriceValue}>₹ {property.startingPrice}</strong>
+                <strong className={styles.pcPriceValue}>₹ {property.startingPrice}*</strong>
               </>
             ) : (
               <span className={styles.pcPriceLabel}>Price on request</span>
             )}
+            {/* status sits right after the price (green dot when ready to move) */}
+            {status && (
+              <span
+                className={`${styles.pcStatusInline} ${/ready/i.test(status) ? styles.pcStatusInlineReady : ""}`}
+              >
+                {status}
+              </span>
+            )}
           </p>
         </div>
       </a>
+
+      {/* Outside the <a> (no button inside a link), placed over the photo by CSS */}
+      <CompareToggle property={property} className={styles.pcCompare} />
+      <HeartButton property={property} />
 
       {/* Three actions, outside the <a> — Enquire Now & Brochure open the same enquiry
           form. Sizing and wrapping now live in PropertyCard.module.css alongside the rest
@@ -123,8 +137,21 @@ export default function PropertyCard({ property }) {
           className={`${styles.propCardBtn} ${styles.propCardBtnPrimary}`}
         >
           View More
-          <svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true" className={styles.propCardBtnIcon}>
-            <path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+          <svg
+            width="13"
+            height="13"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            className={styles.propCardBtnIcon}
+          >
+            <path
+              d="M5 12h14M13 6l6 6-6 6"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         </button>
         <button

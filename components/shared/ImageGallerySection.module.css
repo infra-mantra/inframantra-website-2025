@@ -63,7 +63,7 @@
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 2.5px;
@@ -80,7 +80,7 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #e7b554;
+  background: var(--color-gold);
   box-shadow: 0 0 8px 1px rgba(231, 181, 84, 0.7);
   animation: pulse 2.4s ease-in-out infinite;
 }
@@ -98,7 +98,7 @@
 }
 
 .igTitle {
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 24px;
   font-weight: 600;
   letter-spacing: -0.4px;
@@ -108,7 +108,7 @@
 }
 
 .igTitle span {
-  color: #d9a23c;
+  color: var(--color-gold-dark);
 }
 
 .igSubtitle {
@@ -212,7 +212,6 @@
   opacity: 1;
 }
 
-
 /* Legibility scrim */
 .igScrim {
   position: absolute;
@@ -271,7 +270,7 @@
   width: 100%;
   transform-origin: left;
   transform: scaleX(0);
-  background: linear-gradient(90deg, #f6d894, #e7b554, #c98f2b);
+  background: linear-gradient(90deg, #f6d894, var(--color-gold), #c98f2b);
   box-shadow: 0 0 12px rgba(231, 181, 84, 0.75);
   border-radius: 0 4px 4px 0;
   pointer-events: none;
@@ -301,7 +300,7 @@
   transform: rotate(180deg);
   white-space: nowrap;
   color: #fff;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 12.5px;
   font-weight: 600;
   letter-spacing: 0.5px;
@@ -344,11 +343,11 @@
 
 .igIndex {
   flex-shrink: 0;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 13px;
   font-weight: 800;
   color: #1d1d1f;
-  background: linear-gradient(135deg, #f6d894, #e7b554);
+  background: linear-gradient(135deg, #f6d894, var(--color-gold));
   padding: 5px 9px;
   border-radius: 8px;
   line-height: 1;
@@ -360,7 +359,7 @@
 
 .igLabelText {
   color: #fff;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 16px;
   font-weight: 600;
   letter-spacing: 0.2px;
@@ -383,16 +382,18 @@
   }
 }
 
+/* Moved with transform, not `left`: animating `left` counted as layout shift (CLS).
+   436% of the shine's own width (55% of the panel) = the old -90% -> 150% travel. */
 @keyframes sweep {
   0% {
-    left: -90%;
+    transform: translateX(0) skewX(-18deg);
     opacity: 0;
   }
   25% {
     opacity: 1;
   }
   100% {
-    left: 150%;
+    transform: translateX(436%) skewX(-18deg);
     opacity: 0;
   }
 }

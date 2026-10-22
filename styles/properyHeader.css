@@ -37,7 +37,7 @@
   width: 1em;
   height: 1em;
   flex-shrink: 0;
-  color: #e7b554;
+  color: var(--color-gold);
   display: inline-block;
   margin-right: 6px;
   transform-origin: top center;
@@ -101,7 +101,7 @@
   align-items: center;
   padding: 20px;
   padding-bottom: 0px;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
 }
 .mainLayout,
 .pageWrapper,
@@ -120,7 +120,7 @@
   margin-top: 12px;
   background: none;
   border: none;
-  color: #e7b554;
+  color: var(--color-gold);
   font-weight: 700;
   cursor: pointer;
   font-size: 14px;
@@ -155,9 +155,9 @@
   font-size: 14px;
   color: #333;
   line-height: 1.6;
-  border-left: 4px solid #e7b554;
-  border-right: 4px solid #e7b554;
-  font-family: "Lexend Deca", sans-serif;
+  border-left: 4px solid var(--color-gold);
+  border-right: 4px solid var(--color-gold);
+  font-family: var(--font-body);
 }
 
 /* RERA-registered shield (replaces the bell) */
@@ -173,7 +173,7 @@
 }
 /* Heading */
 .rera-hover-box h3 {
-  color: #e7b554;
+  color: var(--color-gold);
   font-size: 16px;
   font-weight: 700;
   margin-bottom: 12px;
@@ -240,7 +240,7 @@ ul {
 }
 
 .card-bg {
-  background: #e7b554;
+  background: var(--color-gold);
 }
 
 .about-container {
@@ -251,7 +251,7 @@ ul {
 }
 
 .projectHighlightListBullet {
-  color: #e7b554;
+  color: var(--color-gold);
   font-size: 25px;
   font-weight: 700;
 }
@@ -262,7 +262,7 @@ ul {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #e7b554;
+  background: var(--color-gold);
   color: #333;
   border: none;
   padding: 12px 28px;
@@ -383,7 +383,7 @@ ul {
 }
 
 .rera-btn {
-  background: #e7b554;
+  background: var(--color-gold);
   color: #333;
   border: none;
   padding: 12px 28px;
@@ -572,7 +572,7 @@ ul {
   align-items: center;
   width: 8px;
   height: 8px;
-  background-color: #e7b554; /* change color if needed */
+  background-color: var(--color-gold); /* change color if needed */
   border-radius: 50%;
   margin-right: 10px;
 
@@ -650,7 +650,7 @@ ul {
     bottom: 2px;
     width: 3px;
     border-radius: 3px;
-    background: linear-gradient(180deg, #e7b554, #b8841f);
+    background: linear-gradient(180deg, var(--color-gold), #b8841f);
   }
   .propertyPageWrapper .property-header-high .propertyPageHeaderMobilePropertyTitle {
     text-transform: none;
@@ -696,11 +696,15 @@ ul {
 .propertyPageWrapper .property-header-images .logo_individual_page,
 .propertyPageWrapper .property-header-images .property-image {
   border: 0 !important;
-  box-shadow: 0 6px 18px rgba(17, 17, 17, 0.1), 0 1px 3px rgba(17, 17, 17, 0.06) !important;
+  box-shadow:
+    0 6px 18px rgba(17, 17, 17, 0.1),
+    0 1px 3px rgba(17, 17, 17, 0.06) !important;
 }
 .propertyPageWrapper .property-header-images .logo_individual_page:hover,
 .propertyPageWrapper .property-header-images .property-image:hover {
-  box-shadow: 0 10px 24px rgba(17, 17, 17, 0.14), 0 2px 4px rgba(17, 17, 17, 0.06) !important;
+  box-shadow:
+    0 10px 24px rgba(17, 17, 17, 0.14),
+    0 2px 4px rgba(17, 17, 17, 0.06) !important;
 }
 .propertyPageWrapper .property-header-images .property-map-btn {
   border: 0 !important;
@@ -718,6 +722,120 @@ ul {
 .propertyPageWrapper .property-header-high {
   background:
     linear-gradient(180deg, #fff 0, rgba(255, 255, 255, 0) 16px),
-    radial-gradient(120% 140% at 50% 0%, #fcefd2 0%, #fef8ec 38%, rgba(255, 255, 255, 0) 75%),
-    #fff;
+    radial-gradient(120% 140% at 50% 0%, #fcefd2 0%, #fef8ec 38%, rgba(255, 255, 255, 0) 75%), #fff;
+}
+
+/* ==========================================================================
+   Mobile responsiveness (<= 768px). Desktop (>= 769px) is untouched.
+   .propertyPageWrapper is a centred flex column, so a child with width:auto
+   shrink-wraps to its max-content width (the header block measured 892px on a
+   375px phone and was clipped on both sides). Pin every direct child to the
+   viewport width and let flex/grid children shrink.
+   ========================================================================== */
+@media (max-width: 768px) {
+  .propertyPageWrapper > * {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Title row: the name keeps at least ~200px; when the logo/map/compare/save
+     cluster does not fit beside it (phones), the cluster wraps onto its own
+     line under the name instead of squeezing the name to 0px. */
+  .propertyPageWrapper .property-header-high {
+    flex-wrap: wrap;
+    row-gap: 10px;
+  }
+  .propertyPageWrapper .property-header-high .property-header-title {
+    flex: 1 1 200px;
+  }
+  .propertyPageWrapper .property-header-high .property-header-images {
+    flex: 0 1 auto;
+    flex-wrap: wrap;
+    row-gap: 8px;
+    max-width: 100%;
+  }
+  /* Once wrapped under the name, the cluster spans the row: developer logo
+     on the left, the action buttons on the right (row-reverse order). */
+  .propertyPageWrapper .property-header-high .property-header-images .property-image {
+    margin-right: auto;
+  }
+  .propertyPageWrapper .property-header-high .property-map-btn {
+    width: 44px;
+    height: 44px;
+  }
+  .propertyPageWrapper .property-header-images .cmpt_inline,
+  .propertyPageWrapper .property-header-images .heart_inline {
+    min-height: 44px;
+  }
+
+  /* The desktop overview card is replaced by the compact mobile card below
+     it. A leaked global `.card { display: flex }` (unhashed CSS-module class
+     from the skeleton sheet) was overriding the original display:none, so
+     both rendered and the desktop one ran 200px+ off the screen. */
+  .propertyPageWrapper .card.card-width {
+    display: none;
+  }
+
+  /* Mobile price card: icons are not square, keep their aspect ratio. */
+  .propertyPageWrapper .property-card-h .icon img {
+    object-fit: contain;
+  }
+  .propertyPageWrapper .property-card-h .details li > span:last-child {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+}
+
+/* Narrow phones: Save / Compare become 44px icon buttons (their aria-labels
+   still name them) so logo + map + compare + save fit on one row. */
+@media (max-width: 400px) {
+  .propertyPageWrapper .property-header-images .cmpt_inline,
+  .propertyPageWrapper .property-header-images .heart_inline {
+    width: 44px;
+    padding: 0;
+    justify-content: center;
+    gap: 0;
+  }
+  .propertyPageWrapper .property-header-images .cmpt_inline > span:last-child,
+  .propertyPageWrapper .property-header-images .heart_inline > span:last-child {
+    display: none;
+  }
+}
+
+/* Consistent 16px side gutter for the overview block and the .pd sections
+   (Nearby Landmarks, About Developer); "Read more" links get a 44px row. */
+@media (max-width: 768px) {
+  .propertyPageWrapper .property-container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .propertyPageWrapper .property-left .pd {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .propertyPageWrapper .read-more-btn {
+    min-height: 44px;
+    margin-top: 2px;
+    padding: 0;
+  }
+}
+
+/* Enquiry form under the details: the 9px consent line is unreadable on a phone. */
+@media (max-width: 768px) {
+  .propertyPageWrapper .property-right .homePropertyPageHeaderContactUsDisclaimer {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+}
+
+/* The AI-assistant launcher (z-index 99998) floats over every modal and hid
+   their bottom-right corner (Submit, text). Hide it while one is open. */
+body:has(.slide-modal.open) .imbot-launch-wrap,
+body:has(.imBdOverlay) .imbot-launch-wrap,
+body:has(.image-modal) .imbot-launch-wrap {
+  display: none;
 }

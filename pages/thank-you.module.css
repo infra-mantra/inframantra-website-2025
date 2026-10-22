@@ -37,7 +37,7 @@
   margin-bottom: 15px;
   color: #000;
   text-align: center;
-  font-family: "Lexend Deca";
+  font-family: var(--font-body);
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -45,15 +45,15 @@
 
 .thankyouoverlay p {
   font-size: 1.2rem;
-  color: #000;
+  color: var(--color-body);
 
   text-align: center;
-  font-family: "Lexend Deca";
+  font-family: var(--font-body);
   /* font-size: 17.548px; */
   font-style: normal;
-  font-weight: 300;
+  font-weight: var(--fw-light);
   line-height: normal;
-  /* color: #555; */
+  /* color: var(--color-body); */
   margin-bottom: 35px;
 }
 
@@ -91,7 +91,7 @@
 
 .thankyouheader {
   background-color: transparent; /* Transparent background for Thank You page */
-  color: #e7b554; /* Text color for Thank You page */
+  color: var(--color-gold); /* Text color for Thank You page */
   position: relative;
   z-index: 100;
 }

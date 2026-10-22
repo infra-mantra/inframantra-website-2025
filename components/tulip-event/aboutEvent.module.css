@@ -1,23 +1,25 @@
-
-.eventContainer{
-    padding: 0px 70px;
-    background: #fff;
-    padding-top: 30px;
-    max-width: 1403px;
-    margin: 0 auto;
+.eventContainer {
+  padding: 0px 70px;
+  background: #fff;
+  padding-top: 30px;
+  max-width: 1403px;
+  margin: 0 auto;
 }
 /* Renamed off the bare `.heading`: this project builds CSS modules with
    localIdentName '[local]', so `.heading` is a GLOBAL name and collided
    with NRIHomeFest.module.css on the same page. */
 .aboutEventHeading {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #d4a64a;
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  text-transform: none;
+  color: var(--color-ink);
 }
 
 /* Compact variant - opt in via the `compact` prop */
 .aboutEventHeadingCompact {
-  font-size: 1.35rem;
   line-height: 1.25;
 }
 
@@ -73,15 +75,15 @@
 .highlightName:hover::after {
   transform: scaleX(1);
 }
- .videoBox1{
-    order:-1
-  }
-   .videoBox2{
-    order:-2
-  }
+.videoBox1 {
+  order: -1;
+}
+.videoBox2 {
+  order: -2;
+}
 
 /* Tablet */
-.displayMobile{
+.displayMobile {
   display: none;
 }
 
@@ -105,9 +107,9 @@
   .section1 {
     padding: 24px 18px 50px;
   }
-  .displayMobile{
-  display: block;
-}
+  .displayMobile {
+    display: block;
+  }
 
   .heading {
     font-size: 26px;
@@ -121,31 +123,29 @@
   .videoBox iframe {
     height: 350px;
   }
-  .eventContainer{
-        /* padding: 11px 2rem; */
-        padding: 2px 1rem;
-}
+  .eventContainer {
+    /* padding: 11px 2rem; */
+    padding: 2px 1rem;
+  }
 
   .storyText {
     font-size: 14px;
     line-height: 1.8;
     text-align: left;
   }
-  .videoBox1{
-    order:2
+  .videoBox1 {
+    order: 2;
   }
-   .videoBox2{
-    order:1
+  .videoBox2 {
+    order: 1;
   }
 }
-
 
 /* Small Mobile */
 
 @media screen and (max-width: 480px) {
-
- .heading {
-    padding: 20px 0px; 
+  .heading {
+    padding: 20px 0px;
     font-size: 22px;
     margin: 0px;
   }

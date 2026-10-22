@@ -127,13 +127,13 @@
 }
 
 .heroArrow:hover {
-  border-color: #e7b554;
-  background: #e7b554;
+  border-color: var(--color-gold);
+  background: var(--color-gold);
   color: #1a1307;
 }
 
 .heroArrow:focus-visible {
-  outline: 2px solid #f0c76c;
+  outline: 2px solid var(--color-gold-light);
   outline-offset: 3px;
 }
 
@@ -155,7 +155,7 @@
   display: flex;
   flex-direction: column;
   color: #fff;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   text-shadow:
     0 2px 16px rgba(0, 0, 0, 0.5),
     0 1px 3px rgba(0, 0, 0, 0.3);
@@ -241,8 +241,22 @@
 
 /* `strong`: busy photo, deeper shade behind the copy */
 .hxCopy.hxStrong::before {
-  inset: -20% -22%;
-  background: radial-gradient(closest-side, rgba(6, 8, 14, 0.62), rgba(6, 8, 14, 0));
+  /* a soft-edged dark panel behind the whole block (logo to location line);
+     a round gradient fades out before it reaches the top and bottom lines */
+  inset: -4% -5%;
+  border-radius: 48px;
+  background: rgba(6, 8, 14, 0.66);
+  /* the wide shadow in the same colour feathers the edges into the photo */
+  box-shadow: 0 0 56px 40px rgba(6, 8, 14, 0.66);
+}
+.hxCopy.hxStrong {
+  text-shadow:
+    0 2px 14px rgba(0, 0, 0, 0.7),
+    0 1px 3px rgba(0, 0, 0, 0.55);
+}
+.hxCopy.hxStrong .hxLogo,
+.hxCopy.hxStrong .hxDev img {
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.55));
 }
 
 /* `brandStrong`: no shade, outline the corner logos instead */
@@ -263,7 +277,7 @@
 /* text */
 .hxHead {
   margin: 0;
-  font-family: "DM Serif Display", Georgia, "Times New Roman", serif;
+  font-family: var(--font-display);
   font-size: clamp(22px, 1.9vw, 34px);
   font-weight: 400;
   line-height: 1.12;
@@ -278,7 +292,7 @@
   margin: clamp(10px, 1vw, 16px) 0 0;
   padding-top: clamp(8px, 0.8vw, 12px);
   border-top: 1px solid rgba(255, 255, 255, 0.75);
-  font-family: "DM Serif Display", Georgia, "Times New Roman", serif;
+  font-family: var(--font-display);
   font-size: clamp(14px, 1.15vw, 20px);
   line-height: 1.1;
 }
@@ -335,7 +349,7 @@
 }
 
 .hxDev span {
-  font-family: "DM Serif Display", Georgia, serif;
+  font-family: var(--font-display);
   font-size: clamp(13px, 1vw, 16px);
   font-style: italic;
   font-weight: 400;
@@ -504,7 +518,7 @@
     align-items: center;
     column-gap: 14px;
     color: #fff;
-    font-family: "Lexend Deca", sans-serif;
+    font-family: var(--font-body);
     text-shadow: 0 1px 10px rgba(0, 0, 0, 0.35);
     pointer-events: none;
   }
@@ -541,7 +555,7 @@
   }
 
   .hpBy span {
-    font-family: "DM Serif Display", Georgia, serif;
+    font-family: var(--font-display);
     font-size: 12px;
     font-style: italic;
     opacity: 0.85;
@@ -566,7 +580,7 @@
 
   .hpHead {
     margin: 0;
-    font-family: "DM Serif Display", Georgia, "Times New Roman", serif;
+    font-family: var(--font-display);
     font-size: clamp(15px, 4.5vw, 20px);
     line-height: 1.12;
   }
@@ -594,7 +608,7 @@
     width: 12px;
     height: 12px;
     margin-top: 1px;
-    color: #f0c76c;
+    color: var(--color-gold-light);
   }
 
   /* `mobile.chip`: colour logos on a dark band, no background; a soft white
@@ -616,7 +630,7 @@
   }
 
   .hpLight .hpLoc svg {
-    color: #b9801b;
+    color: var(--color-gold-dark);
   }
 
   /* the text arrives just after its slide fades in */
@@ -804,5 +818,208 @@
   .slide.isActive .heroImg,
   .slide.isPrev .heroImg {
     transform: none;
+  }
+}
+
+/* ---------- 9. Inframantra brand slide (BrandCopy in BannerVideo.jsx) ----------
+   Desktop: copy on the dark left side of the photo.
+   Phones/tablets: centred copy in the dark band above the photo. */
+.bsCopy {
+  position: absolute;
+  z-index: 2;
+  left: 6%;
+  top: 24%;
+  width: 40%;
+  color: #fff;
+  font-family: var(--font-body);
+  pointer-events: none;
+}
+
+.bsLogo {
+  display: block;
+  width: auto;
+  height: clamp(30px, 2.6vw, 52px);
+  margin-bottom: clamp(10px, 1.1vw, 20px);
+}
+
+.bsEyebrow {
+  margin: 0 0 8px;
+  color: var(--color-gold-light);
+  font-size: clamp(11px, 0.85vw, 15px);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-eyebrow, 0.14em);
+  text-transform: uppercase;
+}
+
+.bsHead {
+  margin: 0;
+  font-size: clamp(24px, 2.6vw, 50px);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+}
+
+.bsHead span {
+  display: block;
+  color: var(--color-gold);
+}
+
+.bsSub {
+  margin: clamp(8px, 0.8vw, 14px) 0 0;
+  max-width: 34em;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: clamp(13px, 1vw, 18px);
+  font-weight: var(--fw-light);
+  line-height: var(--lh-body);
+}
+
+.bsStats {
+  display: flex;
+  gap: clamp(14px, 2vw, 40px);
+  margin: clamp(14px, 1.6vw, 30px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bsStats li {
+  display: flex;
+  flex-direction: column;
+  padding-left: clamp(10px, 0.9vw, 16px);
+  border-left: 2px solid var(--color-gold);
+}
+
+.bsStats b {
+  font-size: clamp(18px, 1.8vw, 34px);
+  font-weight: var(--fw-semibold);
+  line-height: 1.1;
+}
+
+.bsStats span {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: clamp(11px, 0.8vw, 14px);
+}
+
+/* poster version is phones/tablets only */
+.bsPoster {
+  display: none;
+}
+
+@media (max-width: 1180px) {
+  .bsCopy {
+    display: none;
+  }
+
+  /* the band: one centred column instead of the logos | text pair */
+  .hp.bsPoster {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .bsPoster .bsEyebrow {
+    margin-bottom: 4px;
+    font-size: clamp(10px, 2.6vw, 13px);
+  }
+
+  .bsPoster .bsHead {
+    font-size: clamp(17px, 4.8vw, 28px);
+    text-wrap: balance;
+  }
+
+  .bsPoster .bsHead span {
+    display: inline;
+  }
+
+  .bsPoster .bsStats {
+    gap: 12px;
+    margin-top: 10px;
+  }
+
+  .bsPoster .bsStats li {
+    align-items: flex-start;
+    padding-left: 8px;
+    text-align: left;
+  }
+
+  .bsPoster .bsStats b {
+    font-size: clamp(14px, 3.8vw, 20px);
+  }
+
+  .bsPoster .bsStats span {
+    font-size: clamp(9px, 2.4vw, 12px);
+  }
+}
+
+/* tablets: the band is taller (26vw), so the brand copy is larger and centred in it */
+@media (min-width: 601px) and (max-width: 1180px) {
+  .hp.bsPoster {
+    top: calc(var(--header) + 4vw);
+  }
+
+  .bsPoster .bsEyebrow {
+    font-size: 1.7vw;
+  }
+
+  .bsPoster .bsHead {
+    font-size: 4.2vw;
+  }
+
+  .bsPoster .bsStats {
+    gap: 3vw;
+    margin-top: 2.4vw;
+  }
+
+  .bsPoster .bsStats b {
+    font-size: 3.4vw;
+  }
+
+  .bsPoster .bsStats span {
+    font-size: 1.7vw;
+  }
+}
+
+/* brand slide: a slow gold shine across "trust & transparency" */
+.bsHead span {
+  background: linear-gradient(
+    100deg,
+    var(--color-gold) 0%,
+    var(--color-gold) 40%,
+    #fff3d1 50%,
+    var(--color-gold) 60%,
+    var(--color-gold) 100%
+  );
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: bsShine 4.5s ease-in-out infinite;
+}
+
+@keyframes bsShine {
+  0% {
+    background-position: 100% 0;
+  }
+  60%,
+  100% {
+    background-position: 0% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bsHead span {
+    animation: none;
+  }
+}
+
+/* project logo height on phones/tablets, as a variable so one project can be
+   scaled up from heroProjects.js (mobile.logoScale) */
+@media (max-width: 1180px) {
+  .hpLogo {
+    --hp-logo-h: clamp(42px, 12.5vw, 58px);
+  }
+}
+@media (min-width: 601px) and (max-width: 1180px) {
+  .hpLogo {
+    --hp-logo-h: 10vw;
   }
 }

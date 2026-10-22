@@ -141,7 +141,7 @@ function App({ name, id = "defaultId", countryCode = "in" }) {
                 Please share your contact details
               </p>
 
-              <p className={style.homePopUpHead2}>TO UNLOCK EXCLUSIVE DEALS</p>
+              <p className={style.homePopUpHead2}>To Unlock Exclusive Deals</p>
             </div>
 
             {/* NAME */}

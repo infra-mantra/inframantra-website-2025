@@ -13,11 +13,14 @@
 }
 
 .headingTitle {
-  font-size: 36px;
-  font-weight: 700;
-  color: #e7b554;
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  text-transform: none;
+  color: var(--color-ink);
   margin-bottom: 2rem;
-  text-transform: uppercase;
 }
 .headingTitle::after {
   content: "";
@@ -25,7 +28,7 @@
   width: 64px;
   height: 4px;
   border-radius: 2px;
-  background: #e7b554;
+  background: var(--color-gold);
   margin: 12px auto 0;
 }
 .swiperContainer {
@@ -126,13 +129,7 @@
   .awardContainer {
     padding: 1rem 0;
   }
-  .developerSlideHeading {
-    font-size: 20px;
-  }
   .developerSlideSubtext {
     margin-bottom: 0px;
-  }
-  .headingTitle {
-    font-size: 24px;
   }
 }

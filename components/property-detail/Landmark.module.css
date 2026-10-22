@@ -250,6 +250,26 @@
   }
   .lm-item-dist {
     padding: 3px 8px;
-    font-size: 11.5px;
+    font-size: 12px;
+  }
+  .lm-item-name {
+    overflow-wrap: anywhere;
+  }
+}
+
+/* Small phones: the card padding + table cell padding left the place names
+   ~110px wide (4-5 lines each at 320px). */
+@media (max-width: 420px) {
+  .white-box.location-map-section {
+    padding: 10px;
+  }
+  .near-distance th {
+    padding: 10px;
+  }
+  .near-distance td {
+    padding: 9px 8px;
+  }
+  .near-distance td:first-child {
+    gap: 8px;
   }
 }

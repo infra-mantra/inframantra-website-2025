@@ -21,8 +21,13 @@
   min-height: 300px;
 }
 .homeHero .container .homeContainer h1 {
-  font-size: 28px;
-  color: #daa520;
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  text-transform: none;
+  color: var(--color-ink);
 }
 .homeHero .container .homeContainer p {
   font-size: 17px;

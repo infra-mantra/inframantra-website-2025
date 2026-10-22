@@ -18,7 +18,7 @@
     --pp-aside: 380px;
     --pp-gap: 32px;
     --pp-nav-h: 60px;
-    --pp-gold: #e7b554;
+    --pp-gold: var(--color-gold);
     --pp-gold-dark: #c9962f;
     --pp-ink: #1a1a1a;
     --pp-muted: #5f5f5f;
@@ -26,7 +26,7 @@
     --pp-radius: 16px;
     --pp-shadow: 0 6px 24px rgba(17, 17, 17, 0.06);
 
-    font-family: "Lexend Deca", sans-serif;
+    font-family: var(--font-body);
     color: var(--pp-ink);
     overflow: visible !important;
     background: #fff;
@@ -94,7 +94,9 @@
     border: 1px solid var(--pp-line);
     border-radius: 14px;
     box-shadow: var(--pp-shadow);
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
   }
 
   .propertyPageWrapper .property-header-images .logo_individual_page:hover,
@@ -115,7 +117,10 @@
     border-radius: 50%;
     background: #fff8e1;
     cursor: pointer;
-    transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
   }
 
   .propertyPageWrapper .property-map-btn:hover {
@@ -260,10 +265,11 @@
   }
 
   .propertyPageWrapper .about-preview {
-    font-size: 15px;
-    line-height: 1.75;
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+    font-weight: var(--fw-light);
     letter-spacing: 0;
-    color: #3d3d3d;
+    color: var(--color-body);
   }
 
   .propertyPageWrapper .about-preview .read-more-btn {
@@ -314,7 +320,9 @@
     color: var(--pp-ink);
     font-size: 15px;
     box-shadow: 0 6px 18px rgba(231, 181, 84, 0.35);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
   }
 
   .propertyPageWrapper .highlight-wrappers.cta-w .card-ct-wt:hover {
@@ -436,13 +444,13 @@
   .propertyPageWrapper .emiHeading,
   .propertyPageWrapper .faqHeading {
     margin: 0 0 20px;
-    font-family: "Lexend Deca", sans-serif;
-    font-size: 22px;
-    font-weight: 700;
-    line-height: 1.3;
-    letter-spacing: 0.4px;
-    text-transform: uppercase;
-    color: var(--pp-gold-dark);
+    font-family: var(--font-body);
+    font-size: var(--fs-h2);
+    font-weight: var(--fw-semibold);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--ls-heading);
+    text-transform: none;
+    color: var(--color-ink);
   }
 
   .propertyPageWrapper .emiSub {
@@ -473,7 +481,9 @@
     margin: 0;
     border-radius: 14px;
     box-sizing: border-box;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
   }
 
   .propertyPageWrapper .amenity-item:hover {
@@ -503,7 +513,9 @@
     border: 1px solid var(--pp-line);
     box-shadow: var(--pp-shadow);
     overflow: hidden;
-    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    transition:
+      box-shadow 0.2s ease,
+      transform 0.2s ease;
   }
 
   .propertyPageWrapper .property-card:hover {
@@ -591,10 +603,11 @@
   }
 
   .propertyPageWrapper .card.card-w .p-text {
-    font-size: 15px;
-    line-height: 1.75;
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+    font-weight: var(--fw-light);
     letter-spacing: 0;
-    color: #3d3d3d;
+    color: var(--color-body);
   }
 
   /* FAQ */
@@ -694,7 +707,7 @@
 
   /* Gold gradient on the headline price */
   .propertyPageWrapper .price-text .font-clr {
-    background: linear-gradient(100deg, #b8841f 0%, #e7b554 45%, #c9962f 100%);
+    background: linear-gradient(100deg, #b8841f 0%, var(--color-gold) 45%, #c9962f 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -751,52 +764,104 @@
 
 @media (min-width: 769px) and (prefers-reduced-motion: no-preference) {
   @keyframes ppFadeUp {
-    from { opacity: 0; transform: translateY(18px); }
-    to   { opacity: 1; transform: none; }
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
   }
   @keyframes ppFadeDown {
-    from { opacity: 0; transform: translateY(-12px); }
-    to   { opacity: 1; transform: none; }
+    from {
+      opacity: 0;
+      transform: translateY(-12px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
   }
   @keyframes ppFadeLeft {
-    from { opacity: 0; transform: translateX(24px); }
-    to   { opacity: 1; transform: none; }
+    from {
+      opacity: 0;
+      transform: translateX(24px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
   }
   @keyframes ppFade {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
   @keyframes ppPop {
-    from { opacity: 0; transform: translateY(12px) scale(0.96); }
-    to   { opacity: 1; transform: none; }
+    from {
+      opacity: 0;
+      transform: translateY(12px) scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
   }
   @keyframes ppKenBurns {
-    from { transform: scale(1.07); }
-    to   { transform: scale(1); }
+    from {
+      transform: scale(1.07);
+    }
+    to {
+      transform: scale(1);
+    }
   }
   @keyframes ppGrow {
-    from { transform: scaleX(0); }
-    to   { transform: scaleX(1); }
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
   }
   @keyframes ppSheen {
-    from { left: -60%; }
-    to   { left: 130%; }
+    from {
+      left: -60%;
+    }
+    to {
+      left: 130%;
+    }
   }
   @keyframes ppPulse {
-    0%   { box-shadow: 0 0 0 0 rgba(231, 181, 84, 0.55); }
-    70%  { box-shadow: 0 0 0 12px rgba(231, 181, 84, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(231, 181, 84, 0); }
+    0% {
+      box-shadow: 0 0 0 0 rgba(231, 181, 84, 0.55);
+    }
+    70% {
+      box-shadow: 0 0 0 12px rgba(231, 181, 84, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(231, 181, 84, 0);
+    }
   }
 
   /* ---- banner: same layout, just animated in ---- */
-  .propertyPageWrapper .propertyPageHeaderImgSection .image-gallery-content:not(.fullscreen) .image-gallery-slide.image-gallery-center .image-gallery-image {
+  .propertyPageWrapper
+    .propertyPageHeaderImgSection
+    .image-gallery-content:not(.fullscreen)
+    .image-gallery-slide.image-gallery-center
+    .image-gallery-image {
     animation: ppKenBurns 3.6s ease-out both;
   }
   .propertyPageWrapper .propertyPageHeaderImgSection .orgbg {
     animation: ppFadeDown 0.7s 0.25s ease-out backwards;
   }
   .propertyPageWrapper .propertyPageHeaderImgSection .collapsed-icons .icon-btn {
-    animation: ppFade 0.6s 0.45s ease-out backwards, ppPulse 2.4s 1.2s ease-out 2;
+    animation:
+      ppFade 0.6s 0.45s ease-out backwards,
+      ppPulse 2.4s 1.2s ease-out 2;
   }
   .propertyPageWrapper .propertyPageHeaderImgSection .property-side-form > * {
     animation: ppFadeLeft 0.75s 0.15s cubic-bezier(0.22, 1, 0.36, 1) backwards;
@@ -838,7 +903,9 @@
   }
 
   .propertyPageWrapper .ul-highlight li {
-    transition: transform 0.25s ease, color 0.25s ease;
+    transition:
+      transform 0.25s ease,
+      color 0.25s ease;
   }
   .propertyPageWrapper .ul-highlight li:hover {
     transform: translateX(4px);
@@ -892,14 +959,46 @@
   .propertyPageWrapper.pp-anim .is-visible .faqItem {
     animation: ppPop 0.5s cubic-bezier(0.22, 1, 0.36, 1) backwards;
   }
-  .propertyPageWrapper.pp-anim .is-visible :is(.amenity-item, .property-card, .faqItem):nth-child(2) { animation-delay: 0.05s; }
-  .propertyPageWrapper.pp-anim .is-visible :is(.amenity-item, .property-card, .faqItem):nth-child(3) { animation-delay: 0.1s; }
-  .propertyPageWrapper.pp-anim .is-visible :is(.amenity-item, .property-card, .faqItem):nth-child(4) { animation-delay: 0.15s; }
-  .propertyPageWrapper.pp-anim .is-visible :is(.amenity-item, .property-card, .faqItem):nth-child(5) { animation-delay: 0.2s; }
-  .propertyPageWrapper.pp-anim .is-visible :is(.amenity-item, .property-card, .faqItem):nth-child(6) { animation-delay: 0.25s; }
-  .propertyPageWrapper.pp-anim .is-visible :is(.amenity-item, .property-card, .faqItem):nth-child(7) { animation-delay: 0.3s; }
-  .propertyPageWrapper.pp-anim .is-visible :is(.amenity-item, .property-card, .faqItem):nth-child(8) { animation-delay: 0.35s; }
-  .propertyPageWrapper.pp-anim .is-visible :is(.amenity-item, .property-card, .faqItem):nth-child(n + 9) { animation-delay: 0.4s; }
+  .propertyPageWrapper.pp-anim
+    .is-visible
+    :is(.amenity-item, .property-card, .faqItem):nth-child(2) {
+    animation-delay: 0.05s;
+  }
+  .propertyPageWrapper.pp-anim
+    .is-visible
+    :is(.amenity-item, .property-card, .faqItem):nth-child(3) {
+    animation-delay: 0.1s;
+  }
+  .propertyPageWrapper.pp-anim
+    .is-visible
+    :is(.amenity-item, .property-card, .faqItem):nth-child(4) {
+    animation-delay: 0.15s;
+  }
+  .propertyPageWrapper.pp-anim
+    .is-visible
+    :is(.amenity-item, .property-card, .faqItem):nth-child(5) {
+    animation-delay: 0.2s;
+  }
+  .propertyPageWrapper.pp-anim
+    .is-visible
+    :is(.amenity-item, .property-card, .faqItem):nth-child(6) {
+    animation-delay: 0.25s;
+  }
+  .propertyPageWrapper.pp-anim
+    .is-visible
+    :is(.amenity-item, .property-card, .faqItem):nth-child(7) {
+    animation-delay: 0.3s;
+  }
+  .propertyPageWrapper.pp-anim
+    .is-visible
+    :is(.amenity-item, .property-card, .faqItem):nth-child(8) {
+    animation-delay: 0.35s;
+  }
+  .propertyPageWrapper.pp-anim
+    .is-visible
+    :is(.amenity-item, .property-card, .faqItem):nth-child(n + 9) {
+    animation-delay: 0.4s;
+  }
 
   .propertyPageWrapper .amenity-item img {
     transition: transform 0.3s ease;
@@ -909,7 +1008,9 @@
   }
 
   .propertyPageWrapper .faqItem {
-    transition: box-shadow 0.25s ease, transform 0.25s ease;
+    transition:
+      box-shadow 0.25s ease,
+      transform 0.25s ease;
   }
   .propertyPageWrapper .faqItem:hover {
     transform: translateY(-1px);
@@ -1016,13 +1117,24 @@
 
 @media (min-width: 769px) and (prefers-reduced-motion: no-preference) {
   @keyframes ppPriceShine {
-    from { background-position: 100% 0; }
-    to   { background-position: 0 0; }
+    from {
+      background-position: 100% 0;
+    }
+    to {
+      background-position: 0 0;
+    }
   }
 
   /* the gold price catches the light once as the card arrives */
   .propertyPageWrapper .price-text .font-clr {
-    background-image: linear-gradient(100deg, #b8841f 0%, #e7b554 30%, #fff1c9 45%, #e7b554 60%, #c9962f 100%);
+    background-image: linear-gradient(
+      100deg,
+      #b8841f 0%,
+      var(--color-gold) 30%,
+      #fff1c9 45%,
+      var(--color-gold) 60%,
+      #c9962f 100%
+    );
     background-size: 250% 100%;
     background-position: 0 0;
     animation: ppPriceShine 1.4s 0.9s ease-out backwards;
@@ -1034,13 +1146,27 @@
   .propertyPageWrapper .card.card-width .unit-item {
     animation: ppFadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) backwards;
   }
-  .propertyPageWrapper .card.card-width .status-group > .status-item:nth-child(1) { animation-delay: 0.55s; }
-  .propertyPageWrapper .card.card-width .status-group > :nth-child(3)             { animation-delay: 0.62s; }
-  .propertyPageWrapper .card.card-width .rera-hover-container                     { animation-delay: 0.69s; }
-  .propertyPageWrapper .card.card-width .unit-item:nth-of-type(1) { animation-delay: 0.76s; }
-  .propertyPageWrapper .card.card-width .unit-item:nth-of-type(2) { animation-delay: 0.83s; }
-  .propertyPageWrapper .card.card-width .unit-item:nth-of-type(3) { animation-delay: 0.9s; }
-  .propertyPageWrapper .card.card-width .unit-item:nth-of-type(4) { animation-delay: 0.97s; }
+  .propertyPageWrapper .card.card-width .status-group > .status-item:nth-child(1) {
+    animation-delay: 0.55s;
+  }
+  .propertyPageWrapper .card.card-width .status-group > :nth-child(3) {
+    animation-delay: 0.62s;
+  }
+  .propertyPageWrapper .card.card-width .rera-hover-container {
+    animation-delay: 0.69s;
+  }
+  .propertyPageWrapper .card.card-width .unit-item:nth-of-type(1) {
+    animation-delay: 0.76s;
+  }
+  .propertyPageWrapper .card.card-width .unit-item:nth-of-type(2) {
+    animation-delay: 0.83s;
+  }
+  .propertyPageWrapper .card.card-width .unit-item:nth-of-type(3) {
+    animation-delay: 0.9s;
+  }
+  .propertyPageWrapper .card.card-width .unit-item:nth-of-type(4) {
+    animation-delay: 0.97s;
+  }
 
   /* the divider lines draw in from the left */
   .propertyPageWrapper .card.card-width .boldline1 {
@@ -1073,7 +1199,7 @@
     bottom: 4px;
     width: 4px;
     border-radius: 4px;
-    background: linear-gradient(180deg, #e7b554, #b8841f);
+    background: linear-gradient(180deg, var(--color-gold), #b8841f);
   }
 
   .propertyPageWrapper .propertyPageHeaderMobilePropertyTitle {
@@ -1084,7 +1210,6 @@
     line-height: 1.12;
     color: #141414;
   }
-
 }
 
 @media (min-width: 769px) and (prefers-reduced-motion: no-preference) {
@@ -1093,7 +1218,11 @@
     animation: ppGrowY 0.6s 0.1s ease-out backwards;
   }
   @keyframes ppGrowY {
-    from { transform: scaleY(0); }
-    to   { transform: scaleY(1); }
+    from {
+      transform: scaleY(0);
+    }
+    to {
+      transform: scaleY(1);
+    }
   }
 }

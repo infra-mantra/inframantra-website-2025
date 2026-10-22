@@ -10,12 +10,13 @@ const Wrapper = dynamic(() => import("../../components/shared/Wrapper.jsx"));
 
 import PropertyHeaderImageGallery from "../../components/property-detail/PropertyHeaderImageGallery.jsx";
 import PropertyHeader from "../../components/property-detail/PropertyHeaderContent.jsx";
-// ReactPlayer (~68 KB) backs this and the video is below the fold — keep it off
-// the critical path.
-const PropertyVideoYoutube = dynamic(
-  () => import("../../components/property-detail/PropertyVideo.jsx"),
+// Videos / Shorts / Reels row. Below the fold, so it is code-split; each card
+// is a click-to-play facade, so no YouTube/Instagram script loads up front.
+const PropertyMediaGallery = dynamic(
+  () => import("../../components/property-detail/PropertyMediaGallery.jsx"),
   { ssr: false }
 );
+import { getPropertyVideos } from "../../components/property-detail/videoMedia.js";
 import PropertySectionNavbar from "../../components/property-detail/NavBar.jsx";
 import Amenities from "../../components/property-detail/Amenities.jsx";
 import LandMark from "../../components/property-detail/Landmark.jsx";
@@ -26,6 +27,9 @@ import Sitevisit from "../../components/property-detail/SiteVisitBanner.jsx";
 import Developer from "../../components/property-detail/Developer.jsx";
 import FaqSection from "../../components/property-detail/Faq.jsx";
 import CtaForHome from "../../components/shared/forms/SinglePropertyCta.jsx";
+// Developer logo coverflow. Imported normally (server-rendered shell with a fixed-height
+// stage = no layout shift); it fetches the logos itself only when scrolled near.
+import DeveloperShowcase from "../../components/shared/DeveloperShowcase.jsx";
 // Only mounts after 50% scroll, so it is never part of the initial render.
 const PopUpForm = dynamic(() => import("../../components/shared/forms/CTANEW.jsx"), { ssr: false });
 
@@ -171,6 +175,8 @@ const PropertyDetail = ({ allData }) => {
     name: propertyData?.name,
   };
 
+  const videos = getPropertyVideos(propertyData);
+
   return (
     <Wrapper
       title={`${propertyData.metaTitle} | Infra Mantra`}
@@ -199,9 +205,12 @@ const PropertyDetail = ({ allData }) => {
 
         <div className="property-page">
           <div className="property-left">
-            <section>
-              <PropertyVideoYoutube videoUrl={propertyData?.videoUrl?.[0]} />
-            </section>
+            {/* Hidden entirely when the property has no usable video links. */}
+            {videos.length > 0 && (
+              <section id="Videos">
+                <PropertyMediaGallery videos={videos} projectName={propertyData.name} />
+              </section>
+            )}
 
             <section id="Amenities">
               <Amenities propertyData={propertyData} />
@@ -249,10 +258,13 @@ const PropertyDetail = ({ allData }) => {
           </div>
         </div>
 
+        {/* Developer logo coverflow, full width under the property details */}
+        <DeveloperShowcase />
+
         <PopUpForm
           popUpenable={popForm}
           onClickOff={onClickOff}
-          text="TO CONNECT WITH OUR PROPERTY ADVISOR"
+          text="To Connect With Our Property Advisor"
           name={schemaInfo.name}
           id="propertyIndividualPopUp"
         />

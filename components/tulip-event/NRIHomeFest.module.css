@@ -8,25 +8,26 @@
   margin: 0px auto;
 }
 
-.yt-icon-shape .ytSpecIconShapeHost{
+.yt-icon-shape .ytSpecIconShapeHost {
   width: 50% !important;
 }
 /* Heading */
 
-
-
 /* Renamed off the bare `.heading`: with localIdentName '[local]' that name
    is GLOBAL and collided with aboutEvent.module.css on the same page. */
 .nriStoryHeading {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #d4a64a;
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  text-transform: none;
+  color: var(--color-ink);
   margin: 0;
 }
 
 /* Compact variant - opt in via the `compact` prop */
 .nriStoryHeadingCompact {
-  font-size: 1.35rem;
   line-height: 1.25;
 }
 
@@ -82,12 +83,12 @@
 .highlightName:hover::after {
   transform: scaleX(1);
 }
- .videoBox1{
-    order:-1
-  }
-   .videoBox2{
-    order:-2
-  }
+.videoBox1 {
+  order: -1;
+}
+.videoBox2 {
+  order: -2;
+}
 
 /* Tablet */
 
@@ -130,14 +131,13 @@
     line-height: 1.8;
     text-align: left;
   }
-  .videoBox1{
-    order:2
+  .videoBox1 {
+    order: 2;
   }
-   .videoBox2{
-    order:1
+  .videoBox2 {
+    order: 1;
   }
 }
-
 
 /* Small Mobile */
 
@@ -177,7 +177,7 @@
 
 @media screen and (max-width: 992px) {
   .storyContentPortrait {
-  /* layout left as-is: grid-template-columns: 1fr 1fr; */
+    /* layout left as-is: grid-template-columns: 1fr 1fr; */
   }
 
   .videoBoxPortrait iframe {
@@ -187,7 +187,7 @@
 
 @media screen and (max-width: 768px) {
   .storyContentPortrait {
-  /* layout left as-is: grid-template-columns: 1fr; */
+    /* layout left as-is: grid-template-columns: 1fr; */
   }
 
   .videoBoxPortrait iframe {
@@ -207,7 +207,7 @@
 --------------------------------------------------------------- */
 @media screen and (min-width: 1201px) {
   .storyContentPortrait {
-  /* layout left as-is: grid-template-columns: minmax(340px, 0.8fr) minmax(340px, 0.8fr) 1.3fr; */
+    /* layout left as-is: grid-template-columns: minmax(340px, 0.8fr) minmax(340px, 0.8fr) 1.3fr; */
   }
 
   .videoBoxPortrait iframe {
@@ -217,12 +217,12 @@
 
 @media screen and (min-width: 993px) and (max-width: 1200px) {
   .storyContentPortrait {
-  /* layout left as-is: grid-template-columns: minmax(330px, 1fr) minmax(330px, 1fr); */
+    /* layout left as-is: grid-template-columns: minmax(330px, 1fr) minmax(330px, 1fr); */
   }
 
   /* text spans the full row beneath the two reels */
   .storyContentPortrait > .storyText {
-  /* layout left as-is: grid-column: 1 / -1; */
+    /* layout left as-is: grid-column: 1 / -1; */
   }
 
   .videoBoxPortrait iframe {
@@ -232,7 +232,7 @@
 
 @media screen and (max-width: 992px) and (min-width: 769px) {
   .storyContentPortrait {
-  /* layout left as-is: grid-template-columns: minmax(330px, 1fr) minmax(330px, 1fr); */
+    /* layout left as-is: grid-template-columns: minmax(330px, 1fr) minmax(330px, 1fr); */
   }
 
   .videoBoxPortrait iframe {
@@ -342,28 +342,28 @@
    ===================================================================== */
 @media screen and (min-width: 993px) {
   .storyContent.storyContentPortrait {
-  /* layout left as-is: grid-template-columns: minmax(340px, 1fr) minmax(340px, 1fr); */
+    /* layout left as-is: grid-template-columns: minmax(340px, 1fr) minmax(340px, 1fr); */
     column-gap: 30px;
   }
 
   .storyContent.storyContentPortrait > .storyText {
-  /* layout left as-is: grid-column: 1 / -1; */
+    /* layout left as-is: grid-column: 1 / -1; */
   }
 }
 
 @media screen and (min-width: 769px) and (max-width: 992px) {
   .storyContent.storyContentPortrait {
-  /* layout left as-is: grid-template-columns: minmax(330px, 1fr) minmax(330px, 1fr); */
+    /* layout left as-is: grid-template-columns: minmax(330px, 1fr) minmax(330px, 1fr); */
   }
 
   .storyContent.storyContentPortrait > .storyText {
-  /* layout left as-is: grid-column: 1 / -1; */
+    /* layout left as-is: grid-column: 1 / -1; */
   }
 }
 
 @media screen and (max-width: 768px) {
   .storyContent.storyContentPortrait {
-  /* layout left as-is: grid-template-columns: 1fr; */
+    /* layout left as-is: grid-template-columns: 1fr; */
   }
 }
 
@@ -371,17 +371,22 @@
    These only apply until Instagram posts its exact height, so they are
    deliberately generous - extra space is invisible, a shortfall trims. */
 @media screen and (min-width: 993px) {
-  .videoBox.videoBoxPortrait iframe { height: 860px; }
+  .videoBox.videoBoxPortrait iframe {
+    height: 860px;
+  }
 }
 
 @media screen and (min-width: 769px) and (max-width: 992px) {
-  .videoBox.videoBoxPortrait iframe { height: 780px; }
+  .videoBox.videoBoxPortrait iframe {
+    height: 780px;
+  }
 }
 
 @media screen and (max-width: 768px) {
-  .videoBox.videoBoxPortrait iframe { height: 730px; }
+  .videoBox.videoBoxPortrait iframe {
+    height: 730px;
+  }
 }
-
 
 /* =====================================================================
    ANIMATED BORDER - Instagram reels

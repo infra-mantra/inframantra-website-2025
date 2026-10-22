@@ -104,7 +104,7 @@ const FAQ = ({ name }) => {
       <PopUpForm
         popUpenable={popForm}
         onClickOff={onClickOff}
-        text="TO UNLOCK EXCLUSIVE DEALS"
+        text="To Unlock Exclusive Deals"
         name={name}
         phone="+91 86 9800 9900"
         id="nriFaq"

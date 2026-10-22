@@ -1,0 +1,53 @@
+/* MapFacade.jsx — saved map picture first, live Google map after a click.
+   Class names are prefixed (mf) because CSS-module names aren't hashed on this site. */
+.mfMap {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+  background: #eef0f2;
+}
+
+.mfFrame,
+.mfPreview,
+.mfPreview img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.mfPreview {
+  position: relative;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.mfPreview img {
+  object-fit: cover;
+}
+
+.mfHint {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(20, 20, 24, 0.75);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  transition: background 0.2s ease;
+}
+
+.mfPreview:hover .mfHint,
+.mfPreview:focus-visible .mfHint {
+  background: var(--color-gold-dark);
+}
+
+.mfPreview:focus-visible {
+  outline: 2px solid var(--color-gold-dark);
+  outline-offset: 2px;
+}

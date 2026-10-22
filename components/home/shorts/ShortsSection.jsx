@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import SHORTS, { CATEGORIES } from "./shortsData.js";
 import styles from "./Shorts.module.css";
 
@@ -27,6 +27,12 @@ const ytThumb = (item) =>
 const ytEmbed = (id) =>
   `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
 
+// Split a title at its first comma: "Project, Locality" -> ["Project", "Locality"].
+const splitTitle = (title = "") => {
+  const i = title.indexOf(",");
+  return i === -1 ? [title, ""] : [title.slice(0, i).trim(), title.slice(i + 1).trim()];
+};
+
 const ShortCard = ({ item, playing, onPlay }) => {
   const isYouTube = item.platform === "youtube";
   // Until the thumbnail has decoded the card shows a pulsing skeleton instead of
@@ -53,6 +59,9 @@ const ShortCard = ({ item, playing, onPlay }) => {
   // Instagram blocks iframe embedding of reels, so those open on Instagram instead
   // of playing here. YouTube plays inline once clicked.
   const playsInline = isYouTube;
+
+  // "Aura The Aerth, Southern Peripheral Road" -> name + locality on its own line.
+  const [name, place] = splitTitle(item.title);
 
   if (playing && playsInline) {
     return (
@@ -112,7 +121,10 @@ const ShortCard = ({ item, playing, onPlay }) => {
         onError={() => setLoaded(true)}
       />
       <span className={styles.shrtPlay} aria-hidden="true" />
-      <span className={styles.shrtTitle}>{item.title}</span>
+      <span className={styles.shrtTitle}>
+        <span className={styles.shrtName}>{name}</span>
+        {place && <span className={styles.shrtPlace}>{place}</span>}
+      </span>
     </Tag>
   );
 };
@@ -154,11 +166,29 @@ const ShortsSection = ({ items }) => {
     [active, shorts]
   );
 
+  // Number of videos behind each chip.
+  const countOf = (id) =>
+    id === "all" ? shorts.length : shorts.filter((s) => s.category === id).length;
+
+  // Arrow buttons scroll the row by most of its visible width.
+  const rowRef = useRef(null);
+  const scrollRow = (dir) => {
+    const row = rowRef.current;
+    if (row) row.scrollBy({ left: dir * row.clientWidth * 0.8, behavior: "smooth" });
+  };
+
   // Only offer a chip that actually has videos behind it.
   const chips = CATEGORIES.filter((c) => c.id === "all" || shorts.some((s) => s.category === c.id));
 
   return (
-    <section className={styles.shrtSection} aria-label="Inframantra video shorts">
+    <section className={styles.shrtSection} aria-labelledby="home-shorts-title">
+      {/* Section header (same pattern as the other home sections) */}
+      <div className={styles.shrtHead} data-reveal>
+        <h2 id="home-shorts-title" className={styles.shrtHeading}>
+          Video <span>Shorts</span>
+        </h2>
+      </div>
+
       <div className={styles.shrtChips} role="tablist" aria-label="Filter videos by topic">
         {chips.map((c) => (
           <button
@@ -171,22 +201,40 @@ const ShortsSection = ({ items }) => {
               setActive(c.id);
               // Stop whatever is playing: after filtering it may no longer be on screen.
               setPlaying(null);
+              if (rowRef.current) rowRef.current.scrollLeft = 0;
             }}
           >
             {c.label}
+            <span className={styles.shrtCount}>{countOf(c.id)}</span>
           </button>
         ))}
       </div>
 
-      <div className={styles.shrtRow}>
-        {visible.map((item) => (
-          <ShortCard
-            key={item.id || item.url}
-            item={item}
-            playing={playing === (item.id || item.url)}
-            onPlay={setPlaying}
-          />
-        ))}
+      {/* Row + desktop arrows. The row's edges fade out (CSS mask) to hint at more. */}
+      <div className={styles.shrtRail}>
+        <button
+          type="button"
+          className={`${styles.shrtArrow} ${styles.shrtArrowPrev}`}
+          aria-label="Previous videos"
+          onClick={() => scrollRow(-1)}
+        />
+        {/* key={active} remounts the row on filter change so it fades in again */}
+        <div className={styles.shrtRow} ref={rowRef} key={active}>
+          {visible.map((item) => (
+            <ShortCard
+              key={item.id || item.url}
+              item={item}
+              playing={playing === (item.id || item.url)}
+              onPlay={setPlaying}
+            />
+          ))}
+        </div>
+        <button
+          type="button"
+          className={`${styles.shrtArrow} ${styles.shrtArrowNext}`}
+          aria-label="Next videos"
+          onClick={() => scrollRow(1)}
+        />
       </div>
     </section>
   );

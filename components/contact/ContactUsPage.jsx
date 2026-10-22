@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 
 import styles from "./ContactUsPage.module.css";
 
+import MapFacade from "../shared/MapFacade.jsx";
 const formPaperStyles = {
   width: "40vw",
   height: "100%",
@@ -244,15 +245,7 @@ export default function ContactUsPage() {
           {/* LOCATION SECTION */}
           <div className={styles.contactUsPageLocationSectionContainer}>
             <div className={styles.contactUsPageLocationSectionMapContainer}>
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14032.085916196966!2d77.0413113!3d28.4487689!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d193e2433c0cf%3A0xef40ba926f65e0ec!2sINFRAMANTRA!5e0!3m2!1sen!2sin!4v1731478063313!5m2!1sen!2sin"
-                width="500"
-                height="300"
-                allowFullScreen=""
-                loading="lazy"
-                style={{ border: "0px" }}
-                referrerPolicy="no-referrer-when-downgrade"
-              ></iframe>
+              <MapFacade width={500} height={300} />
             </div>
 
             <div className={styles.contactUsPageLocationSectionAddressContainer}>

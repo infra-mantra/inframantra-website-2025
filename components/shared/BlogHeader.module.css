@@ -24,7 +24,7 @@
 }
 .blogBannerContent .pageWidth h1 {
   color: #000;
-  font-family: "Lexend Deca";
+  font-family: var(--font-body);
   font-size: 1.6rem;
   font-style: normal;
   font-weight: 500;

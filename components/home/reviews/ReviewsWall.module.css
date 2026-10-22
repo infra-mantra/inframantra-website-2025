@@ -79,30 +79,31 @@
 
 .rwEyebrow {
   display: inline-block;
-  font-family: "Lexend Deca", sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 2px;
+  font-family: var(--font-body);
+  font-size: var(--fs-eyebrow);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-eyebrow);
   text-transform: uppercase;
-  color: #d9a23c;
+  color: var(--color-gold-dark);
   margin-bottom: 14px;
 }
 
 .rwHeading {
-  font-family: "Lexend Deca", sans-serif;
-  font-size: 24px;
-  line-height: 1.2;
-  font-weight: 600;
-  letter-spacing: -0.4px;
-  color: #1a1a1a;
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-tight);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-heading);
+  color: var(--color-ink);
   margin: 0 0 16px;
 }
 
 .rwHeading span {
-  color: #d9a23c;
+  color: var(--color-gold-dark);
 }
 
 .rwRatingRow {
+  min-height: 22px; /* same height before and after the live rating arrives */
   display: flex;
   align-items: center;
   gap: 12px;
@@ -126,7 +127,7 @@
 }
 
 .rwStarOn {
-  color: #e7b554;
+  color: var(--color-gold);
 }
 
 .rwStarOff {
@@ -157,7 +158,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  color: #e7b554;
+  color: var(--color-gold);
   overflow: hidden;
   white-space: nowrap;
 }
@@ -196,7 +197,7 @@
   border: 1px solid rgba(231, 181, 84, 0.32);
   border-radius: 999px;
   padding: 7px 14px;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 12.5px;
   font-weight: 500;
   letter-spacing: 0.01em;
@@ -218,7 +219,7 @@
   font-weight: 700;
   font-size: 11px;
   line-height: 1;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
 }
 
 /* Unified homepage primary button (matches Submit / View All) */
@@ -302,7 +303,7 @@
 
 .rwQuote {
   display: block;
-  font-family: Georgia, serif;
+  font-family: var(--font-display); /* decorative quote glyph */
   font-size: 44px;
   line-height: 0.6;
   color: #ecd29a;
@@ -335,7 +336,7 @@
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #e7b554, #d9a23c);
+  background: linear-gradient(135deg, var(--color-gold), var(--color-gold-dark));
   color: #fff;
   font-weight: 700;
   font-size: 14px;
@@ -388,10 +389,6 @@
     padding: 32px 16px 36px;
   }
 
-  .rwHeading {
-    font-size: 22px;
-  }
-
   /* Keep two scrolling card columns, just shorter + tighter */
   .rwColumns {
     gap: 12px;
@@ -431,11 +428,6 @@
 }
 
 @media (max-width: 480px) {
-  .rwHeading {
-    font-size: 20px;
-  }
-
-
   .rwColumns {
     gap: 10px;
     height: 470px;

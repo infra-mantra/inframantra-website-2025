@@ -171,9 +171,14 @@ function StickyProperty({
         <img src="/logos/pop-up-logo.png" alt="Inframantra-logo" />
 
         {onClickOff && (
-          <div className={ctaStyle.crossBtn} onClick={handleClose}>
+          <button
+            type="button"
+            className={ctaStyle.crossBtn}
+            onClick={handleClose}
+            aria-label="Close"
+          >
             <RxCross2 />
-          </div>
+          </button>
         )}
       </div>
 
@@ -181,135 +186,99 @@ function StickyProperty({
       <div className={ctaStyle.headingForm}>
         <p className={ctaStyle.popUpHead}>Please share your contact details</p>
 
-        <p className={ctaStyle.popUpHead2}>{text || "TO UNLOCK EXCLUSIVE DEALS"}</p>
+        <p className={ctaStyle.popUpHead2}>{text || "To Unlock Exclusive Deals"}</p>
       </div>
 
       {/* FORM */}
       <form onSubmit={handleSubmit} id={id}>
-        {/* NAME */}
-        <div className={ctaStyle.formGroup}>
-          <input
-            type="text"
-            placeholder="Name"
-            value={formData.name}
-            onChange={(e) => {
-              const value = e.target.value.replace(/[^a-zA-Z\s]/g, "");
+        {/* Same floating-label field primitives as the enquiry popup (CTANEW). */}
+        <div className={fld.imFldStack}>
+          {/* NAME */}
+          <div className={fld.imFldGroup}>
+            <input
+              className={fld.imFldInput}
+              type="text"
+              id={`${id}-name`}
+              placeholder=" "
+              value={formData.name}
+              onChange={(e) => {
+                const value = e.target.value.replace(/[^a-zA-Z\s]/g, "");
 
-              setFormData((prev) => ({
-                ...prev,
-                name: value,
-              }));
-            }}
-            required
-          />
+                setFormData((prev) => ({
+                  ...prev,
+                  name: value,
+                }));
+              }}
+              required
+            />
+            <label className={fld.imFldLabel} htmlFor={`${id}-name`}>
+              Name<span aria-hidden="true">*</span>
+            </label>
+          </div>
+
+          {/* PHONE */}
+          <div className={`${fld.imFldGroup} ${fld.imFldPhone}`}>
+            <PhoneInput
+              country={countryCode}
+              enableSearch={true}
+              value={formData.phoneNumber}
+              onChange={(phone) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  phoneNumber: phone,
+                }))
+              }
+              placeholder="00000 00000"
+              inputProps={{ id: `${id}-phone`, name: "phone", autoComplete: "tel" }}
+            />
+            <label className={fld.imFldLabel} htmlFor={`${id}-phone`}>
+              Phone number<span aria-hidden="true">*</span>
+            </label>
+          </div>
+
+          {/* EMAIL */}
+          <div className={fld.imFldGroup}>
+            <input
+              className={fld.imFldInput}
+              type="email"
+              name="email"
+              id={`${id}-email`}
+              placeholder=" "
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+            <label className={fld.imFldLabel} htmlFor={`${id}-email`}>
+              Email address<span aria-hidden="true">*</span>
+            </label>
+          </div>
         </div>
 
-        {/* PHONE */}
-        <div className={ctaStyle.formGroup}>
-          <PhoneInput
-            country={countryCode}
-            enableSearch={true}
-            value={formData.phoneNumber}
-            onChange={(phone) =>
-              setFormData((prev) => ({
-                ...prev,
-                phoneNumber: phone,
-              }))
-            }
-            inputClass={ctaStyle.input}
-            containerClass={ctaStyle.phoneContainer}
-            buttonClass={ctaStyle.flagDropdown}
-            placeholder="Enter phone number"
-          />
-        </div>
-
-        {/* EMAIL */}
-        <div className={ctaStyle.formGroup}>
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        {/* WHATSAPP CONSENT */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "flex-start",
-            gap: "10px",
-            marginBottom: "15px",
-            marginTop: "10px",
-          }}
-        >
+        {/* WHATSAPP CONSENT — wording unchanged */}
+        <label className={fld.imFldConsent} htmlFor={`${id}-whatsapp`}>
           <input
             type="checkbox"
-            id="whatsappConsent"
+            id={`${id}-whatsapp`}
             checked={whatsappConsent}
             onChange={(e) => setWhatsappConsent(e.target.checked)}
-            style={{
-              marginTop: "4px",
-              cursor: "pointer",
-              accentColor: "green",
-              minWidth: "16px",
-              height: "16px",
-            }}
           />
+          <span className={fld.imFldConsentText}>
+            <FaWhatsapp className={fld.imFldConsentIcon} aria-hidden="true" />I consent/authorize
+            Inframantra to send me updates and promotional messages on WhatsApp.
+          </span>
+        </label>
 
-          <label
-            htmlFor="whatsappConsent"
-            style={{
-              fontSize: "13px",
-              lineHeight: "1.5",
-              color: "#444",
-              cursor: "pointer",
-            }}
-          >
-            <FaWhatsapp
-              style={{
-                color: "green",
-                marginRight: "6px",
-                fontSize: "16px",
-                verticalAlign: "middle",
-              }}
-            />
-            I consent/authorize Inframantra to send me updates and promotional messages on WhatsApp.
-          </label>
-        </div>
-
-        {/* BUTTON */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          {/* Shared submit primitive. This was an inline style block using #E7B554 at
-              4px radius, against the enquiry modal's #b8860b at 12px — the same button
-              written once per form, drifting a little each time. */}
-          <button type="submit" disabled={loading} className={fld.imFldSubmit}>
-            {loading ? "Submitting..." : "Submit"}
-          </button>
-        </div>
+        <button type="submit" disabled={loading} aria-busy={loading} className={fld.imFldSubmit}>
+          {loading ? "Submitting..." : "Submit"}
+        </button>
 
         {/* DISCLAIMER */}
-        <p
-          className={ctaStyle.propertyPageHeaderContactUsDisclaimer}
-          style={{
-            padding: "10px",
-          }}
-        >
+        <p className={ctaStyle.propertyPageHeaderContactUsDisclaimer}>
           *By submitting, I accept Inframantra{" "}
           <a
             href="https://inframantra.com/page/terms-conditions"
             target="_blank"
             rel="noopener noreferrer"
-            style={{
-              color: "blue",
-            }}
           >
             Terms & Conditions
           </a>{" "}
@@ -318,9 +287,6 @@ function StickyProperty({
             href="https://inframantra.com/page/privacy-policy"
             target="_blank"
             rel="noopener noreferrer"
-            style={{
-              color: "blue",
-            }}
           >
             Privacy Policy
           </a>

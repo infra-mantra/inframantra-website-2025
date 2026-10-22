@@ -11,28 +11,33 @@
   position: relative;
 }
 
-/* Arrows */
+/* Arrows: glass circle with a gold outline (same look on every home slider) */
 .arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   z-index: 10;
-  width: 45px;
-  height: 45px;
-  background-color: #ffffffde;
-  color: #dcaa4c;
-  font-size: 2rem;
+  width: 44px;
+  height: 44px;
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(6px);
+  border: 1.5px solid var(--color-gold);
+  color: var(--color-gold-dark);
+  font-size: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   cursor: pointer;
-  transition: all 0.3s ease;
+  box-shadow: 0 6px 18px rgba(26, 26, 26, 0.12);
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
 }
 
 .arrow:hover {
-  color: #ebad3b;
-  background-color: #fffffffa;
+  background-color: #ffffff;
+  transform: translateY(-50%) scale(1.08);
 }
 
 .prev {
@@ -77,11 +82,11 @@
      heavy gold glow went with it. */
   background: #ffffff;
   color: #8a6410;
-  border: 1.5px solid #e7b554;
+  border: 1.5px solid var(--color-gold);
   border-radius: 999px;
   padding: 12px 30px;
 
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.01em;
@@ -109,8 +114,8 @@
 
 .localityViewMoreButton:hover {
   transform: translateY(-2px);
-  background: #e7b554;
-  border-color: #e7b554;
+  background: var(--color-gold);
+  border-color: var(--color-gold);
   color: #ffffff;
   box-shadow: 0 10px 22px rgba(217, 162, 60, 0.34);
 }
@@ -125,28 +130,28 @@
 }
 
 .premiumMainTitle {
-  color: #1a1a1a;
-  font-family: "Lexend Deca", sans-serif;
-  font-size: 24px;
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
   font-style: normal;
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: -0.4px;
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
   align-self: stretch;
   margin: 0px;
 }
 .premiumMainTitle span {
-  color: #d9a23c;
+  color: var(--color-gold-dark);
 }
 
 .premiumSubtitle {
   align-self: stretch;
-  color: #707070;
-  font-family: "Lexend Deca", sans-serif;
-  font-size: 14px;
+  color: var(--color-ink-muted);
+  font-family: var(--font-body);
+  font-size: var(--fs-subtitle);
   font-style: normal;
-  font-weight: 400;
-  line-height: 1.5;
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-body);
   margin: 0;
 }
 
@@ -297,10 +302,6 @@
 
 /* Premium Picks Responsive Design */
 @media (max-width: 768px) {
-  .premiumMainTitle {
-    font-size: 22px;
-  }
-
   .premiumContentWrapper {
     padding: 0 16px;
     padding-right: 0px !important;
@@ -335,9 +336,6 @@
 }
 
 @media (max-width: 480px) {
-  .premiumMainTitle {
-    font-size: 20px;
-  }
   .premiumSectionHeader {
     gap: 6px;
     padding-bottom: 12px;
@@ -366,5 +364,26 @@
 
   .premiumErrorButton {
     border: 2px solid #000;
+  }
+}
+
+/* While the cards load, the skeleton row holds the real carousel's height
+   (measured at each width), so the "View All" button below does not jump. */
+.premiumContentWrapper > [data-skeleton] {
+  min-height: 412px;
+}
+@media (min-width: 768px) {
+  .premiumContentWrapper > [data-skeleton] {
+    min-height: 388px;
+  }
+}
+@media (min-width: 1024px) {
+  .premiumContentWrapper > [data-skeleton] {
+    min-height: 472px;
+  }
+}
+@media (min-width: 1200px) {
+  .premiumContentWrapper > [data-skeleton] {
+    min-height: 388px;
   }
 }

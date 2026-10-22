@@ -8,7 +8,7 @@
 }
 
 .perkYl {
-  color: #e7b554;
+  color: var(--color-gold);
 }
 
 /* GRID */
@@ -18,13 +18,14 @@
   gap: 2rem;
 }
 .perkHeading {
-  color: #1a1a1a;
-  font-family: "Lexend Deca";
-  font-size: 36px;
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  text-transform: none;
+  color: var(--color-ink);
   font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  text-transform: capitalize;
 }
 
 /* CARD */
@@ -58,8 +59,13 @@
 
 /* TITLE */
 .perkTitle {
-  font-size: 18px;
-  font-weight: 600;
+  font-family: var(--font-body);
+  font-size: var(--fs-card-title);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--color-ink);
   margin: 0;
 }
 
@@ -77,9 +83,6 @@
     grid-template-columns: 1fr;
     gap: 1rem;
   }
-  .perkTitle {
-    font-size: 14px;
-  }
   .perkContent {
     font-size: 12px;
   }
@@ -92,6 +95,5 @@
   }
   .perkHeading {
     white-space: nowrap;
-    font-size: 1.2rem;
   }
 }

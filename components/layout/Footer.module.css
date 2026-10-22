@@ -3,13 +3,13 @@
   width: 100%;
   height: 75vh;
   background: linear-gradient(180deg, #131317 0%, #08080a 100%);
-  border-top: 3px solid #e7b554;
+  border-top: 3px solid var(--color-gold);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   overflow: hidden;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   /* z-index: 1000; */
 }
 
@@ -20,10 +20,14 @@
   transition: color 0.2s ease;
 }
 .footerWrapper a:hover {
-  color: #e7b554;
+  color: var(--color-gold);
 }
 .footerWrapper h4 {
-  color: #e7b554 !important;
+  font-family: var(--font-body);
+  font-size: var(--fs-h4) !important;
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  color: var(--color-gold) !important; /* gold on the dark footer */
   letter-spacing: 0.06em;
 }
 /* Section headings get a short gold underline accent */
@@ -43,7 +47,7 @@
   bottom: 0;
   width: 34px;
   height: 2px;
-  background: #e7b554;
+  background: var(--color-gold);
   border-radius: 2px;
 }
 /* The clickable Quick-Search rows */
@@ -54,7 +58,7 @@
 }
 .footerThirdSectionDropdownHeaderFlex:hover > p,
 .footerThirdSectionDropdownHeaderFlex:hover > svg {
-  color: #e7b554;
+  color: var(--color-gold);
 }
 .footerFirstSectionCompanyDetailsFlex > p {
   color: #d6d6d6;
@@ -322,7 +326,7 @@
 .citiesWrapperTextSub {
   position: relative;
   color: #fff;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 40px;
   font-weight: 600;
   text-align: left;
@@ -411,6 +415,8 @@
   .footerFirstSectionCompanyDetailsWrapper > img {
     width: 85%;
     margin-bottom: 2%;
+    object-fit: contain; /* was squashed horizontally on phones */
+    object-position: center;
   }
   .footerFirstSectionCompanyDetailsFlex > p {
     font-size: 12px;
@@ -741,5 +747,53 @@
     margin: 12px 0 0;
     max-width: none;
     font-size: 11.5px;
+  }
+}
+
+/* Social icons: small lift + gold ring on hover / keyboard focus */
+.footerForthSectionIconWrapper a {
+  border-radius: 50%;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.footerForthSectionIconWrapper a:hover,
+.footerForthSectionIconWrapper a:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 0 0 2px var(--color-gold);
+  outline: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .footerForthSectionIconWrapper a {
+    transition: none;
+  }
+  .footerForthSectionIconWrapper a:hover {
+    transform: none;
+  }
+}
+
+/* 320px phones: two 48% columns plus the 20px gap were wider than the row, so
+   "INFRAMANTRA" ran into "QUICK SEARCH" and the BHK links were clipped. Let the
+   columns share the row and put one configuration link per line. */
+@media (max-width: 359px) {
+  .footerSecondSectionCompanyDetailsWrapper,
+  .footerThirdSectionCompanyDetailsWrapper {
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
+  }
+  .footerSecondSectionMobileContainer {
+    gap: 14px;
+  }
+  .footerSecondSectionCompanyDetailsWrapper > h4,
+  .footerThirdSectionCompanyDetailsWrapper > h4 {
+    font-size: 14px;
+    letter-spacing: 0.04em;
+  }
+  .footerConfigGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .footerConfigLabel {
+    white-space: normal;
   }
 }

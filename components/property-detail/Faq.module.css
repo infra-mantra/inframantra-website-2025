@@ -5,12 +5,14 @@
 }
 
 .faqHeading {
-  /* Match the page's standard section heading (.Header / .emiHeading):
-     20px, uppercase, brand gold #e7b554. */
-  font-size: 20px;
-  font-weight: 600;
-  text-transform: uppercase;
-  color: #e7b554;
+  /* Same as the site-wide .section-title */
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  text-transform: none;
+  color: var(--color-ink);
   padding-bottom: 0.5rem;
   margin: 1rem 0px;
 }
@@ -44,9 +46,13 @@
 }
 
 .faqText {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-tight);
+  text-transform: none;
+  color: var(--color-ink);
   flex-grow: 1;
-  font-size: 1rem;
-  color: #333;
 }
 
 .icon {
@@ -57,10 +63,12 @@
 }
 
 .faqAnswer {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-light);
+  line-height: var(--lh-body);
+  color: var(--color-body);
   margin-top: 0.8rem;
-  font-size: 0.95rem;
-  color: #555;
-  line-height: 1.5;
 }
 /* ---- CTA SECTION ---- */
 .faqCta {
@@ -92,14 +100,17 @@
 
 .faqCtaLeft h3 {
   margin: 0;
-  font-size: 18px;
-  font-weight: 700;
+  font-size: var(--fs-card-title);
+  font-weight: var(--fw-semibold);
+  color: var(--color-ink);
 }
 
 .faqCtaLeft p {
   margin: 4px 0 0;
-  font-size: 14px;
-  color: #555;
+  font-size: var(--fs-body);
+  font-weight: var(--fw-light);
+  line-height: var(--lh-body);
+  color: var(--color-body);
 }
 
 .faqCtaButton {
@@ -107,7 +118,10 @@
   border: none;
   padding: 10px 16px;
   border-radius: 10px;
-  font-weight: 600;
+  font-family: var(--font-body);
+  font-size: var(--fs-button);
+  font-weight: var(--fw-semibold);
+  color: var(--color-ink);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -115,9 +129,6 @@
 }
 
 @media screen and (max-width: 768px) {
-  .faqHeading {
-    font-size: 16px;
-  }
   .faqCta {
     flex-wrap: wrap;
     flex-wrap: wrap;
@@ -125,25 +136,22 @@
     gap: 1rem;
   }
   .faqCtaButton {
-    padding: 8px 8px;
+    padding: 8px 14px;
+    min-height: 44px;
   }
   .faqCtaIcon {
     width: 30px;
     height: 30px;
-    font-size: 400;
+    font-size: 16px;
   }
   .faqText {
     flex-grow: 1;
-    font-size: 12px;
-    color: #333;
-  }
-  .faqAnswer {
-    font-size: 12px;
   }
   .faqSection {
     margin-bottom: 1rem;
   }
-  .faqCtaLeft p {
-    font-size: 12px;
-  }
+}
+
+.faqHeading span {
+  color: var(--color-gold-dark);
 }

@@ -47,7 +47,9 @@
 
   opacity: 0;
   transform: translateY(18px) scale(0.985);
-  transition: opacity 0.24s ease, transform 0.24s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition:
+    opacity 0.24s ease,
+    transform 0.24s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .tm_modalOpen {
@@ -78,7 +80,9 @@
   font-size: 17px;
   cursor: pointer;
 
-  transition: background 0.2s ease, transform 0.2s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 
 .tm_closeBtn:hover {
@@ -100,7 +104,12 @@
   /* Brand ambassador panel - same asset the About Us page uses.
      Gradient keeps the copy readable over the photo. */
   background:
-    linear-gradient(165deg, rgba(24, 21, 18, 0.86) 0%, rgba(24, 21, 18, 0.72) 45%, rgba(24, 21, 18, 0.92) 100%),
+    linear-gradient(
+      165deg,
+      rgba(24, 21, 18, 0.86) 0%,
+      rgba(24, 21, 18, 0.72) 45%,
+      rgba(24, 21, 18, 0.92) 100%
+    ),
     url("https://inframantra.blr1.cdn.digitaloceanspaces.com/brandAmbassador/Untitled-1,1.jpg");
   background-size: cover;
   background-position: center top;
@@ -119,11 +128,13 @@
 }
 
 .tm_asideTitle {
+  font-family: var(--font-body);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: normal;
+  text-transform: none;
   margin: 0 0 18px;
-
-  font-size: 25px;
-  line-height: 1.28;
-  font-weight: 600;
   color: #fff;
 }
 
@@ -194,11 +205,14 @@
 }
 
 .tm_formTitle {
+  font-family: var(--font-body);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--color-ink);
   margin: 0 0 8px;
-
-  font-size: 21px;
-  font-weight: 700;
-  color: #1f1c18;
 }
 
 .tm_formSub {
@@ -239,7 +253,10 @@
   font-size: 14px;
   color: #1f1c18;
 
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
 }
 
 .tm_input:focus {
@@ -347,7 +364,9 @@
   text-transform: uppercase;
 
   cursor: pointer;
-  transition: background 0.22s ease, transform 0.15s ease;
+  transition:
+    background 0.22s ease,
+    transform 0.15s ease;
 }
 
 .tm_submitBtn:hover:not(:disabled) {
@@ -430,10 +449,6 @@
     padding: 26px 24px 22px;
   }
 
-  .tm_asideTitle {
-    font-size: 20px;
-  }
-
   .tm_factList {
     margin-bottom: 6px;
   }
@@ -450,10 +465,6 @@
 @media (max-width: 420px) {
   .tm_overlay {
     padding: 12px;
-  }
-
-  .tm_formTitle {
-    font-size: 18px;
   }
 }
 
@@ -525,8 +536,6 @@
 
   .tm_asideTitle {
     margin-bottom: 12px;
-    font-size: 18px;
-    line-height: 1.25;
   }
 
   .tm_asideRule {
@@ -591,10 +600,6 @@
 
   .tm_aside {
     padding: 28px 24px;
-  }
-
-  .tm_asideTitle {
-    font-size: 21px;
   }
 
   .tm_formPanel {

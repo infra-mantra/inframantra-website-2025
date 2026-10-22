@@ -6,9 +6,13 @@
 }
 /* Blogs Section */
 .blogstitle {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #e7b554;
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  text-transform: none;
+  color: var(--color-ink);
   margin-bottom: 1.5rem;
 }
 .fblogitemlist {
@@ -94,7 +98,7 @@
   transition: color 0.25s ease;
 }
 .fblogitem:hover .info h4 {
-  color: #e7b554;
+  color: var(--color-gold);
 }
 .twolinetext {
   display: -webkit-box;
@@ -119,14 +123,14 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #e7b554;
+  background: var(--color-gold);
   flex-shrink: 0;
 }
 /* "Read Article →" link that nudges right on hover */
 .readmore {
   display: inline-block;
   margin-top: 0.85rem;
-  color: #e7b554;
+  color: var(--color-gold);
   font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 0.3px;
@@ -138,17 +142,17 @@
 .fblogitem .info p {
   font-size: 0.875rem;
   text-align: left;
-  color: #555;
+  color: var(--color-body);
 }
 
 .info p {
   font-size: 0.9rem;
-  color: #666;
+  color: var(--color-body);
   margin-bottom: 1rem;
   line-height: 1.4;
 }
 .themebtn {
-  background-color: #e7b554;
+  background-color: var(--color-gold);
   border: none;
   padding: 10px 20px;
   color: #fff;
@@ -192,9 +196,13 @@
 }
 .trendingtitle,
 .newsheading {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #e7b554;
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  text-transform: none;
+  color: var(--color-ink);
   margin-bottom: 1rem;
 }
 .newssection {
@@ -202,9 +210,13 @@
   position: relative;
 }
 .newsheading {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #e7b554;
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  text-transform: none;
+  color: var(--color-ink);
   margin-bottom: 1rem;
 }
 .newslist {
@@ -235,7 +247,7 @@
 .newscard:hover {
   transform: translateY(-3px);
   box-shadow: 0 10px 22px rgba(0, 0, 0, 0.1);
-  border-color: #e7b554;
+  border-color: var(--color-gold);
 }
 @keyframes newsCardIn {
   from {
@@ -247,7 +259,7 @@
 }
 .newsrank {
   font-size: 1.7rem;
-  color: #e7b554;
+  color: var(--color-gold);
   font-weight: 700;
   flex-shrink: 0;
   text-align: center;
@@ -299,7 +311,7 @@
 .trendingcard:hover {
   transform: translateY(-3px);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-  border-color: #e7b554;
+  border-color: var(--color-gold);
 }
 .customprev,
 .customnext {
@@ -308,7 +320,7 @@
   transform: translateY(-50%);
   width: 34px;
   height: 34px;
-  color: #e7b554;
+  color: var(--color-gold);
   background: #ffffff;
   border: 1px solid #eadfc4;
   border-radius: 50%;
@@ -328,7 +340,7 @@
 }
 .customprev:hover,
 .customnext:hover {
-  background: #e7b554;
+  background: var(--color-gold);
   color: #ffffff;
 }
 .customprev {
@@ -340,7 +352,7 @@
 
 .trendingheading {
   color: #1a1a1a;
-  font-family: "Lexend Deca";
+  font-family: var(--font-body);
   font-size: 15px;
   text-align: left;
   font-weight: 600;
@@ -355,10 +367,10 @@
 }
 .trendingdescription {
   text-align: left;
-  color: #555;
-  font-family: "Lexend Deca";
+  color: var(--color-body);
+  font-family: var(--font-body);
   font-size: 13px;
-  font-weight: 400;
+  font-weight: var(--fw-light);
   line-height: 1.6;
   text-transform: none;
   margin-bottom: 0.75rem;
@@ -531,7 +543,7 @@
     box-shadow 0.25s ease;
 }
 .tabActive {
-  background: #e7b554;
+  background: var(--color-gold);
   color: #ffffff;
   box-shadow: 0 4px 12px rgba(231, 181, 84, 0.45);
 }

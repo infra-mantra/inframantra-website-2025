@@ -14,28 +14,28 @@
 }
 
 .localityMainTitle {
-  color: #1a1a1a;
-  font-family: "Lexend Deca", sans-serif;
-  font-size: 24px;
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
   font-style: normal;
-  font-weight: 600;
-  letter-spacing: -0.4px;
-  line-height: 1.2;
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-heading);
+  line-height: var(--lh-tight);
   align-self: stretch;
   margin: 0px;
 }
 .localityMainTitle span {
-  color: #d9a23c;
+  color: var(--color-gold-dark);
 }
 
 .localitySubtitle {
   align-self: stretch;
-  color: #707070;
-  font-family: "Lexend Deca", sans-serif;
-  font-size: 14px;
+  color: var(--color-ink-muted);
+  font-family: var(--font-body);
+  font-size: var(--fs-subtitle);
   font-style: normal;
-  font-weight: 400;
-  line-height: 1.5;
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-body);
   margin: 0;
 }
 
@@ -44,10 +44,12 @@
   margin-bottom: 25px;
 }
 
+/* Sub-section title ("Properties in Dwarka Expressway"): token h3 size */
 .localityTitle {
-  font-size: 21px;
-  font-weight: 600;
-  color: #1a1a1a;
+  font-family: var(--font-body);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+  color: var(--color-ink);
   letter-spacing: -0.2px;
   margin-top: 3px;
   margin-bottom: 16px;
@@ -58,10 +60,10 @@
 
 .localityTitle::before {
   content: "";
-  width: 5px;
-  height: 24px;
+  width: 4px;
+  height: 22px;
   border-radius: 4px;
-  background: linear-gradient(180deg, #dcaa4c, #e7b554);
+  background: linear-gradient(180deg, var(--color-gold-light), var(--color-gold-dark));
   flex-shrink: 0;
 }
 
@@ -77,30 +79,35 @@
   border-radius: 50%;
   justify-content: center;
   align-items: center;
-  background-color: #ffffff;
-  color: #dcaa4c;
+  /* Glass circle with a gold outline (same look on every home slider) */
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(6px);
+  border: 1.5px solid var(--color-gold);
+  color: var(--color-gold-dark);
   height: 44px;
   width: 44px;
   cursor: pointer;
   top: 45%;
   z-index: 999;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 18px rgba(26, 26, 26, 0.12);
   transition:
-    transform 0.25s ease,
-    background-color 0.25s ease,
-    color 0.25s ease;
+    transform 0.2s ease,
+    background-color 0.2s ease;
 }
 
 .localityNavButton:hover {
-  background-color: #dcaa4c;
-  color: #ffffff;
-  transform: scale(1.1);
+  background-color: #ffffff;
+  transform: scale(1.08);
 }
+/* Chevron drawn from two borders (points right) */
 .localityNavButton:after {
-  content: ">";
-  font-size: 35px;
-  font-weight: 900;
-  font-family: monospace;
+  content: "";
+  width: 9px;
+  height: 9px;
+  margin-left: -4px;
+  border-top: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+  transform: rotate(45deg);
 }
 
 .localityNavButtonPrev {
@@ -154,11 +161,11 @@
      heavy gold glow went with it. */
   background: #ffffff;
   color: #8a6410;
-  border: 1.5px solid #e7b554;
+  border: 1.5px solid var(--color-gold);
   border-radius: 999px;
   padding: 12px 30px;
 
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.01em;
@@ -186,8 +193,8 @@
 
 .localityViewMoreButton:hover {
   transform: translateY(-2px);
-  background: #e7b554;
-  border-color: #e7b554;
+  background: var(--color-gold);
+  border-color: var(--color-gold);
   color: #ffffff;
   box-shadow: 0 10px 22px rgba(217, 162, 60, 0.34);
 }
@@ -212,10 +219,6 @@
 }
 
 @media (max-width: 768px) {
-  .localityMainTitle {
-    font-size: 22px;
-  }
-
   .localityTitle {
     font-size: 16.5px;
     margin-bottom: 12px;
@@ -247,9 +250,6 @@
 }
 
 @media (max-width: 480px) {
-  .localityMainTitle {
-    font-size: 20px;
-  }
   .localityTitle {
     /* 600, not 500 — it is still a heading. The step below the section title is
        carried by size, which is what keeps the two apart without making this
@@ -277,7 +277,6 @@
   .localitySection {
     margin-bottom: 30px;
   }
-
 
   .localityViewMoreButton {
     font-size: 14px;

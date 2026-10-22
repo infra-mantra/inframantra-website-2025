@@ -94,7 +94,7 @@ function PropertyHeaderContact({ name }) {
       <h4 className="">
         Please share your contact details
         <br />
-        TO UNLOCK EXCLUSIVE DEALS
+        To Unlock Exclusive Deals
       </h4>
 
       <form onSubmit={handleSubmit} className="propertyTopFormContact">

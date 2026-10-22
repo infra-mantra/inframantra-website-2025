@@ -1,0 +1,163 @@
+/* Full-screen search sheet for phones / tablets (see SearchSheet.jsx). */
+.sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000; /* above the floating chat / contact widgets */
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+  font-family: var(--font-body);
+  animation: sheetIn 0.2s ease-out;
+}
+@keyframes sheetIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sheet {
+    animation: none;
+  }
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 56px;
+  padding: 0 12px 0 6px;
+  border-bottom: 1px solid rgba(26, 26, 26, 0.08);
+  flex-shrink: 0;
+}
+.back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--color-ink);
+  cursor: pointer;
+}
+.title {
+  font-size: var(--fs-h4);
+  font-weight: var(--fw-semibold);
+  color: var(--color-ink);
+}
+
+/* The scrolling middle part. min-width:0 + overflow-x hidden keep the page from
+   ever scrolling sideways; the chip rows scroll on their own. */
+.body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 14px 16px 16px;
+}
+
+/* Rows of chips that scroll sideways (city, filters). */
+.cityRow,
+.chipRow {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  margin: 0 -16px;
+  padding: 0 16px;
+}
+.cityRow::-webkit-scrollbar,
+.chipRow::-webkit-scrollbar {
+  display: none;
+}
+.cityRow {
+  margin-bottom: 12px;
+}
+.chipRow {
+  margin-top: 12px;
+  margin-bottom: 8px;
+  padding-bottom: 2px;
+}
+
+.city,
+.chip,
+.resetChip {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid rgba(26, 26, 26, 0.14);
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-subtitle);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.cityOn {
+  border-color: var(--color-gold-dark);
+  background: rgba(231, 181, 84, 0.16);
+  font-weight: var(--fw-semibold);
+}
+.chipOn {
+  border-color: var(--color-gold-dark);
+  background: rgba(231, 181, 84, 0.1);
+}
+.chipOpen {
+  border-color: var(--color-gold-dark);
+}
+.chipOpen svg {
+  transform: rotate(180deg);
+}
+.chipText {
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.resetChip {
+  border: 0;
+  background: none;
+  color: var(--color-gold-dark);
+  text-decoration: underline;
+}
+
+.foot {
+  flex-shrink: 0;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  border-top: 1px solid rgba(26, 26, 26, 0.08);
+  background: var(--color-surface);
+}
+.show {
+  width: 100%;
+  height: 48px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--color-gold-light) 0%, var(--color-gold-dark) 100%);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-h4);
+  font-weight: var(--fw-semibold);
+  cursor: pointer;
+}
+.back:focus-visible,
+.city:focus-visible,
+.chip:focus-visible,
+.show:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(231, 181, 84, 0.45);
+}
+
+/* Tablets: keep the content in a readable centre column. */
+@media (min-width: 769px) {
+  .head,
+  .body,
+  .foot {
+    padding-left: max(16px, calc((100% - 720px) / 2));
+    padding-right: max(16px, calc((100% - 720px) / 2));
+  }
+}

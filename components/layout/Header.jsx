@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { MdFavoriteBorder } from "react-icons/md";
+import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
+import { useShortlist } from "../shared/shortlist/shortlistStore";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import MobileMenu from "./MobileNavigationComponents.jsx";
@@ -19,6 +20,7 @@ const rightSideTabs = [
 function NavigationBar({ pageBgd, onlyLogo = false, logoUrl }) {
   const [selectedTab, setSelectedTab] = useState(null);
   const [isDesktop, setIsDesktop] = useState(true);
+  const likedCount = useShortlist().length; // ♥ count in the header
   const [isMobile, setIsMobile] = useState(false);
   const [scrolledPast90vh, setScrolledPast90vh] = useState(false);
 
@@ -100,14 +102,13 @@ function NavigationBar({ pageBgd, onlyLogo = false, logoUrl }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, [homeGlass, isMobile]);
   const lightGlass = homeGlass && !isMobile && deskScrolled;
-  // Laid OVER the banner photo: frosted glass tinted dark, so the photo shows
-  // through it blurred and the white logo/menu stay readable on any image.
+  // Laid OVER the banner photo: fully transparent (no blur, no tint), with only
+  // a soft dark shade at the very top so the white logo/menu stay readable.
   const glassStyle = {
-    background: "rgba(18, 18, 24, 0.28)",
-    backdropFilter: "blur(16px) saturate(150%)",
-    WebkitBackdropFilter: "blur(16px) saturate(150%)",
-    borderBottom: "1px solid rgba(255, 255, 255, 0.12)",
+    background: "linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0) 100%)",
   };
+  // phones, once scrolled past the banner: a solid dark bar so the menu stays readable
+  const mobileScrolledStyle = { background: "rgba(14, 14, 18, 0.94)" };
   // over the photo: white text/logo; once scrolled past the hero on desktop the
   // bar turns light, so it flips to dark
   const textColor = lightGlass ? "#141414" : homeGlass ? "white" : pageBgd ? "black" : "white";
@@ -122,7 +123,11 @@ function NavigationBar({ pageBgd, onlyLogo = false, logoUrl }) {
     // line or `backgroundColor` wins and the band goes transparent.
     backgroundColor: isMobile ? (scrolledPast90vh ? "white" : "transparent") : "transparent",
     ...(homeGlass && isMobile
-      ? { ...glassStyle, backgroundColor: glassStyle.background, height: "8vh", alignItems: "center" }
+      ? {
+          ...(scrolledPast90vh ? mobileScrolledStyle : glassStyle),
+          height: "8vh",
+          alignItems: "center",
+        }
       : {}),
   };
 
@@ -269,16 +274,24 @@ function NavigationBar({ pageBgd, onlyLogo = false, logoUrl }) {
               );
             })}
 
-          <div className="navBarWishlistIcon">
-            <div
-              style={{
-                position: "relative",
-                display: "inline-block",
-              }}
-            >
-              <MdFavoriteBorder style={{ color: "#DA0707" }} />
-            </div>
-          </div>
+          {/* ♥ Shortlist: right-most, opens the liked properties (count badge when any) */}
+          {
+            <Link href="/shortlist" passHref legacyBehavior>
+              <a
+                className="navBarShortlist"
+                aria-label={`Shortlist${likedCount ? ` (${likedCount} saved)` : ""}`}
+                title="Your shortlist"
+                style={{ color: textColor }}
+              >
+                {likedCount ? (
+                  <MdFavorite aria-hidden="true" />
+                ) : (
+                  <MdFavoriteBorder aria-hidden="true" />
+                )}
+                {likedCount > 0 && <span className="navBarShortlistCount">{likedCount}</span>}
+              </a>
+            </Link>
+          }
         </div>
       </div>
     );

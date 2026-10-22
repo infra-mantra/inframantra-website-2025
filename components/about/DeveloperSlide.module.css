@@ -11,9 +11,13 @@
 }
 
 .developerSlideHeading {
-  font-size: 36px;
-  font-weight: 700;
-  color: #e7b554;
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  text-transform: none;
+  color: var(--color-ink);
   margin-bottom: 15px;
 }
 .developerSlideHeading::after {
@@ -22,19 +26,23 @@
   width: 64px;
   height: 4px;
   border-radius: 2px;
-  background: #e7b554;
+  background: var(--color-gold);
   margin: 12px auto 0;
 }
 
 .developerSlideSubtext {
-  font-size: 18px;
-  color: #666;
+  font-family: var(--font-body);
+  font-size: var(--fs-subtitle);
+  font-weight: var(--fw-light);
+  line-height: var(--lh-body);
+  color: var(--color-ink-muted);
   margin-bottom: 60px;
 }
 
 .developerSlideLoading {
-  font-size: 18px;
-  color: #888;
+  font-size: var(--fs-body);
+  font-weight: var(--fw-light);
+  color: var(--color-ink-muted);
 }
 
 /* GRID */
@@ -66,12 +74,14 @@
   object-fit: contain;
 }
 .loadMoreBtn {
-  color: #d4a64a;
-  font-weight: 600;
+  color: var(--color-gold-dark);
+  font-family: var(--font-body);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-body);
   cursor: pointer;
   margin-left: 6px;
   display: inline;
-  font-size: 1.2rem;
+  font-size: var(--fs-button);
   margin-top: 1rem;
 }
 .loadMoreBtn:hover {
@@ -90,14 +100,6 @@
   .developerSlideGrid {
     grid-template-columns: repeat(2, 1fr);
     margin: 2rem 0rem;
-  }
-
-  .developerSlideHeading {
-    font-size: 24px;
-  }
-
-  .developerSlideSubtext {
-    font-size: 16px;
   }
 }
 

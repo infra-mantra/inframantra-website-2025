@@ -6,6 +6,22 @@
    1-year cache, so no render-blocking third-party Google Fonts request and
    instant reuse on repeat visits. Generated from the Google Fonts CSS. */
 
+/* Metric-matched fallback for Lexend Deca (CLS). With font-display: swap the page
+   first paints in Arial, which is ~7% narrower and has a shorter line box than
+   Lexend (1.15em vs 1.25em), so every text block grew when Lexend arrived and
+   pushed the layout down (listing desktop CLS ~0.12). Scaling a local Arial to
+   Lexend's width and line metrics makes that swap shift-free. Values measured in
+   the browser: Lexend/Arial width ratio 1.085 (400) / 1.056 (600) -> 107%;
+   Lexend ascent 1.0em, descent 0.25em, divided by the 1.07 size-adjust. */
+@font-face {
+  font-family: "Lexend Deca Fallback";
+  src: local("Arial"), local("Helvetica Neue"), local("Helvetica"), local("Roboto");
+  size-adjust: 107%;
+  ascent-override: 93.46%;
+  descent-override: 23.36%;
+  line-gap-override: 0%;
+}
+
 @font-face {
   font-family: "DM Sans";
   font-style: normal;

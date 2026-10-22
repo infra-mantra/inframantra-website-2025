@@ -1,0 +1,20 @@
+/* Reserved space while a lazy section (or its skeleton) is showing.
+   A fixed height (not min-height) + overflow:hidden, so a skeleton that is taller
+   than the real section is clipped instead of growing the box and then shrinking
+   when the real section arrives (that shrink was a layout shift). */
+.reserve {
+  height: var(--lov-m);
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .reserve {
+    height: var(--lov-t);
+  }
+}
+
+@media (min-width: 1200px) {
+  .reserve {
+    height: var(--lov-d);
+  }
+}

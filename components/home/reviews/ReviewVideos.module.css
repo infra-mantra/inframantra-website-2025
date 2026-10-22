@@ -38,7 +38,7 @@
 */
 .rvidTitle {
   margin: 0;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
   font-size: 16px;
   font-weight: 600;
   letter-spacing: -0.2px;

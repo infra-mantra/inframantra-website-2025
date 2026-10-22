@@ -17,7 +17,7 @@
   position: relative;
   aspect-ratio: 3 / 1; /* same frame as the hero, so the copy sits the same */
   overflow: hidden;
-  border-radius: 20px;
+  border-radius: 0;
   background: #15171c;
   box-shadow: 0 14px 36px rgba(17, 17, 17, 0.16);
   font-family: "Lexend Deca", sans-serif;
@@ -55,7 +55,7 @@
   .adCard {
     aspect-ratio: auto;
     height: calc(96px + (100vw - 32px) * 0.834);
-    border-radius: 16px;
+    border-radius: 0;
   }
 
   .adTag {

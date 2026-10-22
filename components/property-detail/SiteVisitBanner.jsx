@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { TEL_HREF } from "../lib/siteConfig.js";
 import PopUpForm from "../shared/forms/CTANEW.jsx";
 // CSS module so this sheet ships with the pages that need it instead of with
 // every page via _app.js. The `sv` binding must stay used: Next tree-shakes a
@@ -35,14 +36,28 @@ function Sitevisit({ name }) {
                   onClick={handleform}
                 >
                   <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-                    <rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" strokeWidth="2" />
-                    <path d="M3 10h18M8 3v4M16 3v4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                    <rect
+                      x="3"
+                      y="5"
+                      width="18"
+                      height="16"
+                      rx="3"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    />
+                    <path
+                      d="M3 10h18M8 3v4M16 3v4"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
                   </svg>
                   Schedule a Site Visit
                 </button>
               </div>
             </div>
-            <a className={sv["sv-call"]} href="tel:+918698009900">
+            <a className={sv["sv-call"]} href={TEL_HREF}>
               <span className={sv["sv-call-icon"]} aria-hidden="true">
                 <svg viewBox="0 0 24 24" width="14" height="14">
                   <path

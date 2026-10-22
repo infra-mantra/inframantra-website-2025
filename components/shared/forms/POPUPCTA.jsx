@@ -209,7 +209,7 @@ whats app consent :${whatsappConsent}
             <div className={ctaStyle.headingForm}>
               <p className={ctaStyle.popUpHead}>Please share your contact details</p>
 
-              <p className={ctaStyle.popUpHead2}>{text || "TO UNLOCK EXCLUSIVE DEALS"}</p>
+              <p className={ctaStyle.popUpHead2}>{text || "To Unlock Exclusive Deals"}</p>
             </div>
 
             {/* FORM */}

@@ -131,5 +131,12 @@
   }
   .dev-more {
     font-size: 13px;
+    min-height: 44px;
+  }
+  .dev-eyebrow {
+    font-size: 12px;
+  }
+  .dev-title h2 {
+    overflow-wrap: anywhere;
   }
 }

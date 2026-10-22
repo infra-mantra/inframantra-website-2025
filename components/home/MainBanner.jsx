@@ -15,8 +15,15 @@ import { SearchBarSkeleton } from "./HomeSkeletons.jsx";
   It keeps its place in the layout the whole time: SearchOptions already renders
   SearchBarSkeleton until it knows the viewport, so the same placeholder now also
   covers the chunk load. Nothing moves when the real bar arrives.
+
+  ssr: false — on the server SearchOptions only ever renders SearchBarSkeleton
+  (it waits to know the viewport), which is exactly what `loading` renders, so
+  the HTML is the same. What changes: with SSR on, Next added the search bar's
+  three chunks as <script> tags in the page head, so they downloaded before the
+  first paint. Now they load right after hydration.
 */
 const SearchOptions = dynamic(() => import("./search/SearchOptions.jsx"), {
+  ssr: false,
   loading: () => <SearchBarSkeleton />,
 });
 

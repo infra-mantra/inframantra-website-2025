@@ -1,10 +1,14 @@
 import React, { useState, useEffect, lazy } from "react";
+// Developer logo coverflow. Imported normally (server-rendered shell with a fixed-height
+// stage = no layout shift); it fetches the logos itself only when scrolled near.
+import DeveloperShowcase from "../components/shared/DeveloperShowcase.jsx";
 
 import Wrapper from "../components/shared/Wrapper.jsx";
 import dynamic from "next/dynamic";
 import moment from "moment/moment";
 import MainBanner1 from "../components/home/MainBanner.jsx";
 import LazyOnVisible from "../components/shared/LazyOnVisible.jsx";
+import useScrollReveal from "../components/shared/useScrollReveal.js";
 import { fetchHomeVideos } from "../components/lib/homeVideos.js";
 import {
   PremiumSkeleton,
@@ -57,6 +61,36 @@ const CtaForHome = dynamic(() => import("../components/shared/forms/CtaForHome.j
 });
 
 function Home({ allData, videos }) {
+  // Fade/rise sections in as they scroll into view (see useScrollReveal.js).
+  useScrollReveal();
+
+  // Perf: Premium Picks is a ~4000px client-only block (Swiper, location lookup,
+  // several fetches). Mounting it during hydration was the single largest chunk of
+  // main-thread work on load (mobile TBT / LCP render delay). Its space is already
+  // reserved by .premiumReserve and the skeleton shows meanwhile, so we mount it on
+  // the first user interaction, or once the browser is idle after `load` —
+  // whichever comes first. No layout shift, no visible design change.
+  const [premiumReady, setPremiumReady] = useState(false);
+  useEffect(() => {
+    let idleId;
+    let timer;
+    const events = ["scroll", "pointerdown", "keydown", "touchstart"];
+    const mount = () => setPremiumReady(true);
+    const onIdle = () => {
+      if (window.requestIdleCallback) idleId = window.requestIdleCallback(mount, { timeout: 4000 });
+      else timer = setTimeout(mount, 1500);
+    };
+    events.forEach((e) => window.addEventListener(e, mount, { passive: true, once: true }));
+    if (document.readyState === "complete") onIdle();
+    else window.addEventListener("load", onIdle, { once: true });
+    return () => {
+      events.forEach((e) => window.removeEventListener(e, mount));
+      window.removeEventListener("load", onIdle);
+      if (idleId && window.cancelIdleCallback) window.cancelIdleCallback(idleId);
+      clearTimeout(timer);
+    };
+  }, []);
+
   const bannerItems = [
     {
       image: allData.meta.bannerImage,
@@ -139,27 +173,34 @@ function Home({ allData, videos }) {
           without it. A preload only earns its place for images discovered late (CSS
           backgrounds, JS-inserted); this one is in the initial HTML. */}
       <MainBanner1 />
-      <div className="premiumReserve" style={{ minHeight: "578px" }}>
-        <PremiumPropertyMainComponent shorts={videos.shorts} />
+      <div className="premiumReserve">
+        {premiumReady ? (
+          <PremiumPropertyMainComponent shorts={videos.shorts} />
+        ) : (
+          <PremiumSkeleton />
+        )}
       </div>
       {/* Tighter rootMargin, same reason as the ServiceSection wrapper: at first
           paint the premiumReserve above is only 578px tall, so this sits ~1100px
           down and a 600px margin fired it immediately — putting its 43 KB WP fetch
           on the wire at High priority, directly against the LCP hero. The sections
           below keep the 600px default; they already sit far enough down. */}
-      <LazyOnVisible minHeight={520} rootMargin="200px" placeholder={<BlogsSkeleton />}>
+      {/* minHeight = each section's real height [phone, tablet, desktop], measured with
+          puppeteer at 390 / 820 / 1440px, so the swap from skeleton is shift-free. */}
+      <LazyOnVisible minHeight={[405, 426, 472]} rootMargin="200px" placeholder={<BlogsSkeleton />}>
         <BlogsMedia />
       </LazyOnVisible>
-      <LazyOnVisible minHeight={480} placeholder={<StatsSkeleton />}>
+      <LazyOnVisible minHeight={[153, 126, 118]} placeholder={<StatsSkeleton />}>
         <StatisticalInsightsSection />
       </LazyOnVisible>
-      <LazyOnVisible minHeight={520} placeholder={<GallerySkeleton />}>
+      <LazyOnVisible minHeight={[571, 658, 570]} placeholder={<GallerySkeleton />}>
         <ImageGallerySection />
       </LazyOnVisible>
-      <LazyOnVisible minHeight={520} placeholder={<ReviewsSkeleton />}>
+      <LazyOnVisible minHeight={[935, 1012, 660]} placeholder={<ReviewsSkeleton />}>
         <ReviewsWall current={allData.testimonial} videos={videos.testimonials} />
       </LazyOnVisible>
-      <LazyOnVisible minHeight={420} placeholder={<CtaSkeleton />}>
+      <DeveloperShowcase />
+      <LazyOnVisible minHeight={[1169, 779, 852]} placeholder={<CtaSkeleton />}>
         <CtaForHome name={"Form Submitted from Home page"} />
       </LazyOnVisible>
     </Wrapper>

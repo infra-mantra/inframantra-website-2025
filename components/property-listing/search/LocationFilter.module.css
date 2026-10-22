@@ -1,5 +1,5 @@
 /* Location filter: search box + city > locality tree.
-   Uses the listing filters' green accent (#0b6e21). Class names are prefixed
+   Uses the listing filters' green accent (var(--color-gold-dark)). Class names are prefixed
    lf- because this project's CSS module names are not hashed. */
 
 .lf-root {
@@ -7,7 +7,7 @@
   flex-direction: column;
   gap: 10px;
   margin: 10px 0 18px;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
 }
 
 /* ---------- Search ---------- */
@@ -21,11 +21,14 @@
   border-radius: 10px;
   background: #fafafa;
   color: #8a8a8a;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
 }
 
 .lf-search:focus-within {
-  border-color: #0b6e21;
+  border-color: var(--color-gold-dark);
   background: #fff;
   box-shadow: 0 0 0 3px rgba(11, 110, 33, 0.12);
 }
@@ -147,7 +150,9 @@
   gap: 4px;
   border: 1px solid transparent;
   border-radius: 10px;
-  transition: background 0.15s ease, border-color 0.15s ease;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
 }
 
 .lf-row:hover {
@@ -182,7 +187,7 @@
 }
 
 .lf-row.is-current > .lf-name {
-  color: #0b6e21;
+  color: var(--color-gold-dark);
   font-weight: 600;
 }
 
@@ -200,7 +205,7 @@
 }
 
 .lf-row.is-current .lf-count {
-  background: #0b6e21;
+  background: var(--color-gold-dark);
   color: #fff;
 }
 
@@ -216,12 +221,12 @@
   border: 0;
   border-radius: 8px;
   background: transparent;
-  color: #0b6e21;
+  color: var(--color-gold-dark);
   cursor: pointer;
 }
 
 .lf-toggle:hover {
-  background: #e3f1e6;
+  background: #fbf3e1;
 }
 
 .lf-chevron {
@@ -235,7 +240,7 @@
 .lf-localities {
   margin: 4px 0 6px 12px;
   padding-left: 10px;
-  border-left: 2px solid #e3f1e6;
+  border-left: 2px solid #fbf3e1;
 }
 
 .lf-row-sm .lf-name {
@@ -255,17 +260,20 @@
   font-family: inherit;
   font-size: 12px;
   cursor: pointer;
-  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    color 0.15s ease;
 }
 
 .lf-chip:hover {
-  border-color: #0b6e21;
-  color: #0b6e21;
+  border-color: var(--color-gold-dark);
+  color: var(--color-gold-dark);
 }
 
 .lf-chip.is-current {
-  border-color: #0b6e21;
-  background: #0b6e21;
+  border-color: var(--color-gold-dark);
+  background: var(--color-gold-dark);
   color: #fff;
 }
 
@@ -309,7 +317,7 @@
 .lf-toggle:focus-visible,
 .lf-chip:focus-visible,
 .lf-result:focus-visible {
-  outline: 2px solid #0b6e21;
+  outline: 2px solid var(--color-gold-dark);
   outline-offset: 1px;
 }
 
@@ -319,4 +327,104 @@
     animation: none;
     transition: none;
   }
+}
+
+/* ---------- at-a-glance chips (city row + localities) ---------- */
+.lf-cities,
+.lf-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.lf-cities {
+  margin-top: 10px;
+}
+
+.lf-chip.is-current {
+  border-color: var(--color-gold);
+  background: var(--color-gold);
+  color: var(--color-ink);
+  font-weight: var(--fw-medium);
+}
+
+.lf-chip.is-current .lf-count {
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--color-ink);
+}
+
+.lf-chip.is-within {
+  border-color: var(--color-gold);
+  background: #fbf3e1;
+}
+
+.lf-chip:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.lf-chip .lf-count {
+  min-width: 0;
+  padding: 0 6px;
+  background: #f3f3f3;
+  color: var(--color-ink-muted);
+  font-weight: var(--fw-regular);
+}
+
+.lf-chip-sm {
+  font-size: 11.5px;
+  padding: 3px 5px 3px 9px;
+}
+
+.lf-locs {
+  margin-top: 12px;
+}
+
+.lf-locs-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: var(--fs-small);
+  color: var(--color-ink-muted);
+}
+
+.lf-more {
+  padding: 3px 8px;
+  border: 0;
+  background: transparent;
+  color: var(--color-gold-dark);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: var(--fw-semibold);
+  cursor: pointer;
+}
+
+.lf-more:hover {
+  text-decoration: underline;
+}
+
+/* reserve roughly the chip rows' height while the tree loads (less sidebar shift) */
+.lf-skeleton {
+  min-height: 210px;
+  box-sizing: border-box;
+  padding-top: 10px;
+}
+
+.lf-tick {
+  font-size: 11px;
+  line-height: 1;
+  font-weight: var(--fw-bold);
+}
+
+.lf-locgroup + .lf-locgroup {
+  margin-top: 10px;
+}
+
+.lf-locgroup-name {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 11px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--color-ink);
 }

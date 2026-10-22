@@ -241,9 +241,20 @@ const PAGE_SIZE = 8;
 
 // ── Icons ─────────────────────────────────
 const GetQuotesIcon = () => (
-  <svg className={styles.downloadIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+  <svg
+    className={styles.downloadIcon}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+  >
     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-    <path d="M8 10h.01M12 10h.01M16 10h.01" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" />
+    <path
+      d="M8 10h.01M12 10h.01M16 10h.01"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="3"
+    />
   </svg>
 );
 
@@ -372,7 +383,7 @@ export default function ProjectsSection({ name }) {
       <PopUpForm
         popUpenable={popForm}
         onClickOff={onClickOff}
-        text="TO UNLOCK EXCLUSIVE DEALS"
+        text="To Unlock Exclusive Deals"
         name={name}
         phone="+91 86 9800 9900"
         id="nriProject"

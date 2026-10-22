@@ -415,7 +415,7 @@ const LuxuryApartmentsGurgaon = () => {
                 currentPageNumber={setCurrentPage}
               />
 
-              <h2>Featured Properties</h2>
+              <h2 className="section-title">Featured Properties</h2>
               <PremiumProperty premiumProperties={premiumProperties} />
 
               <FaqSection
@@ -491,7 +491,7 @@ const LuxuryApartmentsGurgaon = () => {
                 currentPageNumber={setCurrentPage}
               />
 
-              <h2>Featured Properties</h2>
+              <h2 className="section-title">Featured Properties</h2>
               <PremiumProperty premiumProperties={premiumProperties} />
 
               <FaqSection

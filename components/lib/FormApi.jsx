@@ -173,7 +173,7 @@ export default function EnquiryForm({ slug = "" }) {
 const containerStyle = {
   padding: "20px",
   background: "#f4f5f7",
-  fontFamily: "Arial",
+  fontFamily: "var(--font-body)",
   width: "100%",
   boxSizing: "border-box",
   margin: "20px 0",

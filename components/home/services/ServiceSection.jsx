@@ -9,13 +9,13 @@ function ServicesSection() {
 
   return (
     <div className={styles.servicesSectionWrapper}>
-      <div className={styles.servicesSectionHeader}>
+      <div className={styles.servicesSectionHeader} data-reveal>
         <h3 className={styles.servicesSectionTitle}>
           Your Home, <span>Our Hustle</span>
         </h3>
         <p>We simplify your property journey with expert support at every step.</p>
       </div>
-      <div className={styles.servicesSectionCardWrapperFirst}>
+      <div className={styles.servicesSectionCardWrapperFirst} data-reveal="stagger">
         {serviceCardDataSection.map((service, index) => (
           <ServicesCard
             key={service.title}

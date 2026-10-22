@@ -4,7 +4,7 @@
   right: 24px;
   bottom: 24px;
   z-index: 99990; /* under the assistant's chat window (99999) */
-  font-family: "Lexend Deca", sans-serif;
+  font-family: var(--font-body);
 }
 
 /* ---------------- launcher ---------------- */
@@ -17,16 +17,22 @@
   padding: 0;
   border: 0;
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 25%, #f6d389 0%, #e7b554 45%, #c9962f 100%);
+  background: radial-gradient(circle at 30% 25%, #f6d389 0%, var(--color-gold) 45%, #c9962f 100%);
   color: #fff;
   cursor: pointer;
-  box-shadow: 0 10px 26px rgba(201, 150, 47, 0.45), 0 2px 6px rgba(0, 0, 0, 0.12);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow:
+    0 10px 26px rgba(201, 150, 47, 0.45),
+    0 2px 6px rgba(0, 0, 0, 0.12);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .cdw-launcher:hover {
   transform: translateY(-2px);
-  box-shadow: 0 14px 32px rgba(201, 150, 47, 0.55), 0 3px 8px rgba(0, 0, 0, 0.14);
+  box-shadow:
+    0 14px 32px rgba(201, 150, 47, 0.55),
+    0 3px 8px rgba(0, 0, 0, 0.14);
 }
 
 .cdw-launcher:focus-visible {
@@ -57,7 +63,9 @@
   inset: 0;
   display: grid;
   place-items: center;
-  transition: opacity 0.25s ease, transform 0.3s ease;
+  transition:
+    opacity 0.25s ease,
+    transform 0.3s ease;
 }
 
 .cdw-launch-x {
@@ -100,7 +108,9 @@
   white-space: nowrap;
   opacity: 0;
   transform: translate(6px, -50%);
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
   pointer-events: none;
 }
 
@@ -133,16 +143,23 @@
   height: 340px;
   margin: -170px 0 0 -170px;
   border-radius: 50%;
-  background:
-    radial-gradient(circle at center, rgba(255, 255, 255, 0) 0 30px, rgba(255, 248, 230, 0.92) 31px 100%);
-  box-shadow: 0 18px 50px rgba(17, 17, 17, 0.16), inset 0 0 0 1px rgba(231, 181, 84, 0.35);
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0) 0 30px,
+    rgba(255, 248, 230, 0.92) 31px 100%
+  );
+  box-shadow:
+    0 18px 50px rgba(17, 17, 17, 0.16),
+    inset 0 0 0 1px rgba(231, 181, 84, 0.35);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   transform: scale(0.15);
   opacity: 0;
   pointer-events: none;
   z-index: 1;
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease;
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.25s ease;
 }
 
 .is-open .cdw-fan {
@@ -195,23 +212,31 @@
   border-radius: 50%;
   cursor: pointer;
   text-decoration: none;
-  box-shadow: 0 8px 20px rgba(17, 17, 17, 0.16), 0 0 0 3px #fff;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow:
+    0 8px 20px rgba(17, 17, 17, 0.16),
+    0 0 0 3px #fff;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .cdw-orb:hover,
 .cdw-orb:focus-visible {
   transform: scale(1.1);
-  box-shadow: 0 12px 26px rgba(17, 17, 17, 0.22), 0 0 0 3px #fff;
+  box-shadow:
+    0 12px 26px rgba(17, 17, 17, 0.22),
+    0 0 0 3px #fff;
   outline: none;
 }
 
 .cdw-orb:focus-visible {
-  box-shadow: 0 0 0 3px #fff, 0 0 0 6px rgba(231, 181, 84, 0.7);
+  box-shadow:
+    0 0 0 3px #fff,
+    0 0 0 6px rgba(231, 181, 84, 0.7);
 }
 
 .cdw-tone-gold {
-  background: radial-gradient(circle at 30% 25%, #f6d389, #e7b554 60%, #c9962f);
+  background: radial-gradient(circle at 30% 25%, #f6d389, var(--color-gold) 60%, #c9962f);
   color: #fff;
 }
 
@@ -244,7 +269,9 @@
   white-space: nowrap;
   opacity: 0;
   transform: translate(6px, -50%);
-  transition: opacity 0.18s ease, transform 0.18s ease;
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
   pointer-events: none;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
 }
@@ -295,8 +322,11 @@
    Refresh: brand-true colours, dark glass fan, red close state
    ========================================================================== */
 .cdw-fan {
-  background:
-    radial-gradient(circle at center, rgba(0, 0, 0, 0) 0 32px, rgba(22, 20, 18, 0.78) 33px 100%);
+  background: radial-gradient(
+    circle at center,
+    rgba(0, 0, 0, 0) 0 32px,
+    rgba(22, 20, 18, 0.78) 33px 100%
+  );
   box-shadow:
     0 24px 60px rgba(0, 0, 0, 0.35),
     inset 0 0 0 1px rgba(231, 181, 84, 0.45),
@@ -308,12 +338,16 @@
 .cdw-orb {
   width: 54px;
   height: 54px;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35), 0 0 0 3px rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.35),
+    0 0 0 3px rgba(255, 255, 255, 0.9);
 }
 .cdw-orb:hover,
 .cdw-orb:focus-visible {
   transform: scale(1.12);
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4), 0 0 0 3px #fff;
+  box-shadow:
+    0 14px 30px rgba(0, 0, 0, 0.4),
+    0 0 0 3px #fff;
 }
 .cdw-orb svg {
   width: 24px;
@@ -323,7 +357,7 @@
 
 /* AI assistant: brand gold */
 .cdw-tone-gold {
-  background: radial-gradient(circle at 30% 25%, #ffe2a1, #e7b554 55%, #b8841f);
+  background: radial-gradient(circle at 30% 25%, #ffe2a1, var(--color-gold) 55%, #b8841f);
   color: #2a1d05;
 }
 /* Callback: warm orange */
@@ -351,15 +385,22 @@
 
 /* Launcher turns red with a spinning ✕ when open */
 .cdw-launcher {
-  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.35s ease;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.35s ease;
 }
 .is-open .cdw-launcher {
   background: radial-gradient(circle at 30% 25%, #ff7a7a 0%, #ef4444 50%, #b91c1c 100%);
-  box-shadow: 0 10px 26px rgba(220, 38, 38, 0.45), 0 2px 6px rgba(0, 0, 0, 0.15);
+  box-shadow:
+    0 10px 26px rgba(220, 38, 38, 0.45),
+    0 2px 6px rgba(0, 0, 0, 0.15);
 }
 .is-open .cdw-launch-x {
   transform: rotate(180deg);
-  transition: opacity 0.25s ease, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition:
+    opacity 0.25s ease,
+    transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .is-open .cdw-online {
   opacity: 0;
@@ -385,7 +426,7 @@
 .cdw-orb:hover,
 .cdw-orb:focus-visible {
   transform: none;
-  border-color: #e7b554;
+  border-color: var(--color-gold);
   box-shadow: 0 8px 22px rgba(17, 17, 17, 0.16);
 }
 .cdw-orb svg {
@@ -446,19 +487,25 @@
 }
 .is-open .cdw-launch-x {
   transform: rotate(90deg);
-  transition: opacity 0.2s ease, transform 0.3s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.3s ease;
 }
 
 /* Launcher: dark with a gold chat icon + gold ring, "Contact Us" label always
    beside it (the label hides while the menu is open) */
 .cdw-launcher {
   background: #141414;
-  color: #f0c76c;
-  box-shadow: 0 0 0 2px rgba(231, 181, 84, 0.75), 0 10px 24px rgba(0, 0, 0, 0.28);
+  color: var(--color-gold-light);
+  box-shadow:
+    0 0 0 2px rgba(231, 181, 84, 0.75),
+    0 10px 24px rgba(0, 0, 0, 0.28);
 }
 .cdw-launcher:hover {
   background: #1f1f1f;
-  box-shadow: 0 0 0 2px #e7b554, 0 12px 28px rgba(0, 0, 0, 0.32);
+  box-shadow:
+    0 0 0 2px var(--color-gold),
+    0 12px 28px rgba(0, 0, 0, 0.32);
 }
 .cdw-launcher::before {
   border-color: rgba(231, 181, 84, 0.4);
@@ -485,7 +532,9 @@
 .is-open .cdw-launcher,
 .is-open .cdw-launcher:hover {
   background: #e5484d;
-  box-shadow: 0 0 0 2px rgba(229, 72, 77, 0.35), 0 8px 22px rgba(229, 72, 77, 0.35);
+  box-shadow:
+    0 0 0 2px rgba(229, 72, 77, 0.35),
+    0 8px 22px rgba(229, 72, 77, 0.35);
 }
 
 /* Keep the launcher still: no pulsing ring, no hover lift */
