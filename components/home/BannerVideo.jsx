@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import styles from "./Banner.module.css";
+import skel from "./BannerSkeleton.module.css";
 import { PROJECTS, PHOTO_VERSION } from "./heroProjects";
 
 /*
@@ -14,9 +15,13 @@ import { PROJECTS, PHOTO_VERSION } from "./heroProjects";
 
   Slides change every 5 seconds, with the arrows, or by swiping.
   Holding a finger on the banner pauses it.
+
+  Skeleton: a shimmer placeholder (<BannerSkeleton>) covers the banner until
+  the first photo has loaded, then fades out.
 */
 
 const SLIDE_MS = 5000;
+const SKELETON_MAX_MS = 6000; // never leave the skeleton up longer than this
 const IMG = "/banner/hero";
 
 const PinIcon = () => (
@@ -49,6 +54,24 @@ export function SlideArrow({ direction, onClick, label, className = "" }) {
         />
       </svg>
     </button>
+  );
+}
+
+// Shimmer placeholder drawn over the banner while the first photo loads.
+// Sits inside .slideshow (which must be position: relative/absolute).
+function BannerSkeleton({ hidden }) {
+  return (
+    <div
+      className={`${skel.skeleton} ${hidden ? skel.skeletonHidden : ""}`}
+      aria-hidden="true"
+    >
+      <span className={`${skel.block} ${skel.logo}`} />
+      <span className={`${skel.block} ${skel.dev}`} />
+      <span className={`${skel.block} ${skel.head}`} />
+      <span className={`${skel.block} ${skel.sub}`} />
+      <span className={`${skel.block} ${skel.price}`} />
+      <span className={`${skel.block} ${skel.loc}`} />
+    </div>
   );
 }
 
@@ -286,6 +309,28 @@ const BannerVideo = () => {
   // `active` = slide on screen, `prev` = slide fading out underneath it (-1 = none).
   const [{ active, prev }, setSlide] = useState({ active: 0, prev: -1 });
 
+  // Skeleton: visible until the first photo has loaded (or failed, or timed out).
+  const [imgReady, setImgReady] = useState(false);
+  const firstSlideRef = useRef(null);
+  useEffect(() => {
+    const img = firstSlideRef.current?.querySelector("img");
+    const done = () => setImgReady(true);
+    // With server rendering the image may already be loaded before React
+    // attaches onLoad, so check `complete` right away.
+    if (!img || (img.complete && img.naturalWidth > 0)) {
+      done();
+      return;
+    }
+    img.addEventListener("load", done);
+    img.addEventListener("error", done); // don't leave the skeleton stuck
+    const safety = setTimeout(done, SKELETON_MAX_MS);
+    return () => {
+      img.removeEventListener("load", done);
+      img.removeEventListener("error", done);
+      clearTimeout(safety);
+    };
+  }, []);
+
   // Slides 2-8 mount 2s after the page has loaded (or on the first scroll/tap/
   // mouse move, if sooner), so their images never compete with the first photo
   // while the page loads, yet are ready before the first change at 5s.
@@ -360,7 +405,11 @@ const BannerVideo = () => {
       <div className={styles.demoBanner}>
         <div className={styles.slideshow}>
           {/* First slide, painted immediately (the page's main image). */}
-          <div className={styles.slideBase} style={{ "--mbg": PROJECTS[0].mobile.bg }}>
+          <div
+            ref={firstSlideRef}
+            className={styles.slideBase}
+            style={{ "--mbg": PROJECTS[0].mobile.bg }}
+          >
             <HeroSlide p={PROJECTS[0]} priority />
           </div>
 
@@ -375,6 +424,9 @@ const BannerVideo = () => {
                 <HeroSlide p={p} />
               </div>
             ))}
+
+          {/* Placeholder until the first photo is ready */}
+          <BannerSkeleton hidden={imgReady} />
         </div>
       </div>
 

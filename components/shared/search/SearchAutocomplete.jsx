@@ -141,11 +141,7 @@ function CustomizedHook({ onSearch }) {
         charIndex++;
         setTyped(term.slice(0, charIndex));
         if (charIndex === term.length) {
-          if (phIndex === SEARCH_TERMS.length - 1) {
-            // Last term: rest here, fully typed, rather than erasing and looping.
-            setTypingSettled(true);
-            return;
-          }
+         
           deleting = true;
           timer = setTimeout(tick, 1500);
           return;

@@ -103,10 +103,10 @@ function NavigationBar({ pageBgd, onlyLogo = false, logoUrl }) {
   // Laid OVER the banner photo: frosted glass tinted dark, so the photo shows
   // through it blurred and the white logo/menu stay readable on any image.
   const glassStyle = {
-    background: "rgba(18, 18, 24, 0.28)",
-    backdropFilter: "blur(16px) saturate(150%)",
+   
+   
     WebkitBackdropFilter: "blur(16px) saturate(150%)",
-    borderBottom: "1px solid rgba(255, 255, 255, 0.12)",
+   
   };
   // over the photo: white text/logo; once scrolled past the hero on desktop the
   // bar turns light, so it flips to dark
@@ -120,9 +120,9 @@ function NavigationBar({ pageBgd, onlyLogo = false, logoUrl }) {
     // home keeps the dark glass band at every scroll position; other pages keep
     // the old transparent -> white behaviour. The spread must come AFTER this
     // line or `backgroundColor` wins and the band goes transparent.
-    backgroundColor: isMobile ? (scrolledPast90vh ? "white" : "transparent") : "transparent",
+    backgroundColor: isMobile ? (scrolledPast90vh ? "white" : "") : "",
     ...(homeGlass && isMobile
-      ? { ...glassStyle, backgroundColor: glassStyle.background, height: "8vh", alignItems: "center" }
+      ? { backgroundColor:(scrolledPast90vh ? "black" : ""), height: "8vh", alignItems: "center" }
       : {}),
   };
 

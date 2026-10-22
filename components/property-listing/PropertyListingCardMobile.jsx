@@ -200,7 +200,7 @@ function PropertyListingCardMobile({
                   </div>
 
                   {/* Description */}
-                  <div className={styles.description}>
+                  <div className={styles.description} data-nosnippet>
                     <p className={styles.clampTwoLines}>{property.description}</p>
                   </div>
 

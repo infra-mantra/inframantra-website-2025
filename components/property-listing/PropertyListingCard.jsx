@@ -249,7 +249,7 @@ function PropertyListingCard({
                       </p>
                     </div>
 
-                    <div className={styles.description}>
+                    <div   className={styles.description} data-nosnippet>
                       <p className={styles.clampTwoLines}>{prop.description}</p>
                     </div>
                     <div

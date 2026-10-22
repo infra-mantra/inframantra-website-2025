@@ -55,12 +55,7 @@
   max-width: 60%;
   margin-bottom: 12px;
 }
-.sub {
-  height: 14px;
-  width: 380px;
-  max-width: 80%;
-  margin-bottom: 28px;
-}
+
 
 /* A horizontal row of cards (Premium, Blogs). */
 .row {

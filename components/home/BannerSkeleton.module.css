@@ -1,0 +1,107 @@
+/* Skeleton shown over the banner until the first photo has loaded. */
+
+.skeleton {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  overflow: hidden;
+  background: #e6e8ec;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.4s ease, visibility 0s linear 0s;
+  pointer-events: none;
+}
+
+.skeletonHidden {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0s linear 0.4s;
+}
+
+/* moving shine */
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.55) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.block {
+  position: absolute;
+  background: #d3d6dc;
+  border-radius: 6px;
+}
+
+/* ---------- Desktop (wider than 1180px): copy on the photo ---------- */
+.logo {
+  top: 12%;
+  left: 5%;
+  width: 14%;
+  height: 16%;
+}
+.dev {
+  top: 31%;
+  left: 5%;
+  width: 8%;
+  height: 4%;
+}
+
+
+/* ---------- Phones / tablets (1180px and below): band + photo ---------- */
+@media (max-width: 1180px) {
+  .logo {
+    top: 6%;
+    left: 5%;
+    width: 30%;
+    height: 14%;
+  }
+  .dev {
+    top: 23%;
+    left: 5%;
+    width: 18%;
+    height: 4%;
+  }
+  .head {
+    top: 8%;
+    left: auto;
+    right: 5%;
+    width: 42%;
+    height: 7%;
+  }
+  .sub {
+    top: 18%;
+    left: auto;
+    right: 5%;
+    width: 32%;
+    height: 4%;
+  }
+  .price {
+    display: none;
+  }
+  .loc {
+    top: 25%;
+    left: auto;
+    right: 5%;
+    width: 36%;
+    height: 3.5%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton::after {
+    animation: none;
+  }
+}
