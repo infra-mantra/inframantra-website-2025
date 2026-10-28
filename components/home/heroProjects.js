@@ -46,25 +46,25 @@
 export const PHOTO_VERSION = "?v=8";
 
 export const PROJECTS = [
-  {
-    key: "aura",
-    slug: "aura-the-aerth-sector-79-gurugram",
-    name: "Aura The Aerth",
-    developer: "Aura The World",
-    location: "Sector 79, Southern Peripheral Road",
-    price: "1.91 Cr.",
-    logo: [419, 217],
-    place: {
-      head: "2.5, 3 & 3.5 BHK",
-      info: "right",
-      top: "30%",
-      theme: "light",
-      brand: "tl",
-      logo: { v: "hd2", w: 419, h: 217 },
-      dev: { k: "aura", w: 424, h: 120 },
-    },
-    mobile: { bg: "#0b2c51", logo: "pl-aura-hd2" },
-  },
+  // {
+  //   key: "aura",
+  //   slug: "aura-the-aerth-sector-79-gurugram",
+  //   name: "Aura The Aerth",
+  //   developer: "Aura The World",
+  //   location: "Sector 79, Southern Peripheral Road",
+  //   price: "1.91 Cr.",
+  //   logo: [419, 217],
+  //   place: {
+  //     head: "2.5, 3 & 3.5 BHK",
+  //     info: "right",
+  //     top: "30%",
+  //     theme: "light",
+  //     brand: "tl",
+  //     logo: { v: "hd2", w: 419, h: 217 },
+  //     dev: { k: "aura", w: 424, h: 120 },
+  //   },
+  //   mobile: { bg: "#0b2c51", logo: "pl-aura-hd2" },
+  // },
   {
     key: "satya",
     slug: "satya-levante-residences-sector-104-gurgaon",
