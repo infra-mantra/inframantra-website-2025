@@ -36,11 +36,11 @@
 }
 
 .prev {
-  left: -20px;
+  left: -50px;
 }
 
 .next {
-  right: -25px;
+  right: -50px;
 }
 
 /* Hide arrows on mobile */

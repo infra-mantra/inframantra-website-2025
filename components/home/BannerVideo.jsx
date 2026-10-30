@@ -88,12 +88,12 @@ function HeroPicture({ p, priority }) {
   const desktop = [1440, 1920, 2560, 3200];
   return (
     <picture>
-      <source
+      {/* <source
         media="(max-width: 1180px)"
         type="image/avif"
         srcSet={srcSet(base, "m", phone, "avif", PHOTO_VERSION)}
         sizes="100vw"
-      />
+      /> */}
       <source
         media="(max-width: 1180px)"
         type="image/webp"

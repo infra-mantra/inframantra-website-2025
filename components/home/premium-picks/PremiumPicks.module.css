@@ -11,9 +11,7 @@
 }
 
 @media (min-width: 1024px) {
-  .premiumCarouselContainer .swiper-slide {
-    width: 23.6% !important;
-  }
+
 }
 
 .title {
