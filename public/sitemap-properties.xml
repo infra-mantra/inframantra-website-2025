@@ -667,7 +667,7 @@
     <priority>0.50</priority>
   </url>
 
-         <url>
+    <url>
     <loc>https://inframantra.com/property/godrej-samaris-sector-53-gurgaon </loc>
     <lastmod>2026-03-15T09:56:14.147Z</lastmod>
     <priority>0.50</priority>
@@ -677,6 +677,55 @@
     <loc>https://inframantra.com/property/max-estates-the-terraces-sector-36a-gurgaon</loc>
     <lastmod>2026-03-15T09:56:14.147Z</lastmod>
     <priority>0.50</priority>
+
+
+    <url>
+    <loc>https://inframantra.com/property/spiti-floors-sector-99a-gurgaon</loc>
+    <lastmod>2026-03-15T09:56:14.147Z</lastmod>
+    <priority>0.80</priority>
+</url>
+
+<url>
+    <loc>https://inframantra.com/property/spiti-homes-sector-99a-gurgaon</loc>
+    <lastmod>2026-03-15T09:56:14.147Z</lastmod>
+    <priority>0.80</priority>
+</url>
+
+<url>
+    <loc>https://inframantra.com/property/aura-the-aerth-sector-79-gurugram</loc>
+    <lastmod>2026-03-15T09:56:14.147Z</lastmod>
+    <priority>0.80</priority>
+</url>
+
+<url>
+    <loc>https://inframantra.com/property/homeland-regalia-sector-77-mohali</loc>
+    <lastmod>2026-03-15T09:56:14.147Z</lastmod>
+    <priority>0.80</priority>
+</url>
+
+<url>
+    <loc>https://inframantra.com/property/noble-aurellia-sector-88-mohali</loc>
+    <lastmod>2026-03-15T09:56:14.147Z</lastmod>
+    <priority>0.80</priority>
+</url>
+
+<url>
+    <loc>https://inframantra.com/property/gillco-meraqui-sector-126-mohali</loc>
+    <lastmod>2026-03-15T09:56:14.147Z</lastmod>
+    <priority>0.80</priority>
+</url>
+
+<url>
+    <loc>https://inframantra.com/property/noble-callista-sector-66b-mohali</loc>
+    <lastmod>2026-03-15T09:56:14.147Z</lastmod>
+    <priority>0.80</priority>
+</url>
+
+<url>
+    <loc>https://inframantra.com/property/signature-global-tonino-lamborghini-residencies-sector-71-gurgaon</loc>
+    <lastmod>2026-03-15T09:56:14.147Z</lastmod>
+    <priority>0.80</priority>
+</url>
   </url>
 
 
