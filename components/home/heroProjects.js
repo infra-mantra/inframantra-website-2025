@@ -38,8 +38,6 @@
       logo       optional: a different project logo file (without .webp)
       dev        optional: a different developer logo file (without .webp)
       chip       true = colour logos on a dark band (soft white glow, no background)
-      logoScale  optional: make the phone/tablet project logo bigger, e.g. 1.3 = 30% larger
-      devScale   optional: same for the developer logo next to "by"
 
 */
 // Added to every banner photo URL. Bump it when any photo is regenerated under
@@ -82,7 +80,7 @@ export const BRAND = {
     { k: "satya-w", name: "Satya", w: 175 },
     { k: "whiteland-w", name: "Whiteland", w: 550 },
     { k: "ambience-w", name: "Ambience", w: 218 },
-    { k: "aura-w", name: "Aura", w: 423 },
+    // { k: "aura-w", name: "Aura", w: 423 },
     { k: "vatika-c", name: "Vatika", w: 181 },
   ],
   stats: [
@@ -95,25 +93,25 @@ export const BRAND = {
 };
 
 export const PROJECTS = [
-  {
-    key: "aura",
-    slug: "aura-the-aerth-sector-79-gurugram",
-    name: "Aura The Aerth",
-    developer: "Aura The World",
-    location: "Sector 79, Southern Peripheral Road",
-    price: "1.91 Cr.",
-    logo: [419, 217],
-    place: {
-      head: "2.5, 3 & 3.5 BHK",
-      info: "right",
-      top: "30%",
-      theme: "light",
-      brand: "tl",
-      logo: { v: "hd2", w: 419, h: 217 },
-      dev: { k: "aura", w: 424, h: 120 },
-    },
-    mobile: { bg: "#0b2c51", logo: "pl-aura-hd2" },
-  },
+  // {
+  //   key: "aura",
+  //   slug: "aura-the-aerth-sector-79-gurugram",
+  //   name: "Aura The Aerth",
+  //   developer: "Aura The World",
+  //   location: "Sector 79, Southern Peripheral Road",
+  //   price: "1.91 Cr.",
+  //   logo: [419, 217],
+  //   place: {
+  //     head: "2.5, 3 & 3.5 BHK",
+  //     info: "right",
+  //     top: "30%",
+  //     theme: "light",
+  //     brand: "tl",
+  //     logo: { v: "hd2", w: 419, h: 217 },
+  //     dev: { k: "aura", w: 424, h: 120 },
+  //   },
+  //   mobile: { bg: "#0b2c51", logo: "pl-aura-hd2" },
+  // },
   {
     key: "satya",
     slug: "satya-levante-residences-sector-104-gurgaon",
@@ -134,29 +132,43 @@ export const PROJECTS = [
       logo: { v: "c", w: 351, h: 200 },
       dev: { k: "satya", v: "box", w: 450, h: 450 },
     },
-    mobile: { bg: "#0c326f", logo: "pl-satya-mc", dev: "dv-satya-box", logoScale: 1.3, devScale: 1.8 },
+    mobile: { bg: "#0c326f", logo: "pl-satya-mc", dev: "dv-satya-box" },
   },
-  {
-    key: "westin",
-    slug: "whiteland-the-westin-residences-sector-103-gurugram",
-    name: "Westin Residences Gurugram",
-    developer: "Whiteland Corporations",
-    location: "Sector 103, Dwarka Expressway",
-    price: "7 Cr.",
-    logo: [466, 180],
+{
+  key: "westin",
+  slug: "whiteland-the-westin-residences-sector-103-gurugram",
+  name: "Westin Residences Gurugram",
+  developer: "Whiteland Corporations",
+  location: "Sector 103, Dwarka Expressway",
+  price: "7 Cr.",
+  // logo: [466, 180],
+  // place: {
+  //   head: "3 & 4 BHK",
+  //   sub: "Branded Residences",
+  //   info: "right",
+  //   top: "17%",
+  //   theme: "light",
+  //   strong: true,
+  //   brand: "stack",
+  //   logo: { v: "w", w: 533, h: 200 },
+  //   dev: { k: "whiteland", w: 551, h: 120 },
+  // },
+  // mobile: { bg: "#211a14", logo: "pl-westin-mw" },
+
+     logo: [466, 180],
     place: {
       head: "3 & 4 BHK",
       sub: "Branded Residences",
-      info: "right",
-      top: "17%",
-      theme: "light",
-      strong: true,
-      brand: "stack",
+      info: "left",
+      top: "22%",
+      theme: "dark",
+      brand: "tr",
+      brandX: "",
       logo: { v: "w", w: 533, h: 200 },
-      dev: { k: "whiteland", w: 551, h: 120 },
+      dev: { k: "whiteland",v:"w", w: 551, h: 120 },
     },
     mobile: { bg: "#211a14", logo: "pl-westin-mw" },
-  },
+},
   {
     key: "ambience",
     slug: "ambience-creacions-sector-22-gurugram",
