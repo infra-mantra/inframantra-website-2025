@@ -114,7 +114,7 @@ export const PROJECTS = [
     name: "Ambience Creacions",
     developer: "Ambience Group",
     location: "Sector 22, Old Gurgaon",
-    price: "5.95 Cr.",
+    price: "5.97 Cr.",
     logo: [371, 180],
     place: {
       head: "3, 4 & 5 BHK",
