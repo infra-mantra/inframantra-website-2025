@@ -9,10 +9,10 @@ const AboutUsPageHeader = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const BannerImage =
-    "https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/about%20us%20banner%20final.avif";
+    "https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/2000x436.png";
 
   const MobileBannerImage =
-    "https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/About%20us%20banner%20Phone.avif";
+    "https://inframantra.blr1.cdn.digitaloceanspaces.com/miscellaneous/750x436.png";
 
   // Full text content to show inside modal
   const fullText = (
@@ -50,7 +50,7 @@ const AboutUsPageHeader = () => {
               so phones downloaded it, then the 26 KB phone one after hydration, and the
               size-less <img> shifted everything below it (CLS ~0.4). width/height give
               the browser the aspect ratio up front; the source's own pair overrides it. */}
-          <picture>
+          <picture className={styles.aboutUsPageHeaderImg}>
             <source
               media="(max-width: 767px)"
               srcSet={MobileBannerImage}
